@@ -52,6 +52,7 @@ module FreeVikings
       @state = PlayingGameState.new(self)
 
       image_loader.join
+      @give_up = nil
     end # initialize
 
     def init_app_window
@@ -107,19 +108,20 @@ module FreeVikings
       return nil
     end # is_exit?
 
-    def game_over?
-      nil
-    end # game_over?
+    def give_up_game
+	@give_up = true
+    end
 
     def game_loop
-      while not self.game_over? do
+      loop do
 
 	if @team.nil? then
 	  # Prvni iterace. Bude se inicialisovat. Tady nemusime nic.
-	elsif @team.alive_size < @team.size then
+	elsif (@team.alive_size < @team.size) or (@give_up == true) then
 	  # Nekteri hrdinove mrtvi.
 	  puts '*** Some vikings died. Try once more.'
 	  @world.rewind_location
+	  @give_up = nil
 	elsif @team.alive_size == @team.size
 	  # Vsichni dosahli EXITu
 	  puts '*** Oh, great! Congratulations, level completed.'
@@ -148,7 +150,7 @@ module FreeVikings
 
 	# Cyklujeme, dokud se vsichni prezivsi nedostali do exitu
 	# nebo to hrac nevzdal
-	while not is_exit? do
+	while (not is_exit?) and (not @give_up) do
 
 	  # Zpracujeme udalosti:
 	  if event = RUDL::EventQueue.poll then
@@ -162,14 +164,15 @@ module FreeVikings
 	  repaint_status
 	  @app_window.blit(@status_view, [0, WIN_HEIGHT - STATUS_HEIGHT])
 
-	  @app_window.flip
-	  frames += 1
-
 	  unless (s = Time.now.sec) == 0 then
-	    puts "fps: #{frames / s}"
+	    @app_window.filled_polygon [[8,8],[60,8],[60,20],[8,20]], [0,0,0]
+	    @app_window.print([10,10], "fps: #{frames / s}", 0xFFFFFFFF)
 	  else
 	    frames = 0
 	  end
+
+	  @app_window.flip
+	  frames += 1
 	  
 	end # while not location.exited?
       end # while not self.game_over?

@@ -6,6 +6,7 @@
 require 'tiletype.rb'
 require 'exit.rb'
 require 'log4r'
+require 'script'
 
 module FreeVikings
 
@@ -95,13 +96,14 @@ module FreeVikings
     end
 
     def load_monsters(monster_manager)
-      duck = Duck.new
+      duckscript = Script.load 'scriptduck.rb'
+      duck = duckscript::KLASS.new
       slizzy = Slug.new
-      spittie = PlasmaShooter.new([1000, 350])
+      # spittie = PlasmaShooter.new([1000, 350])
 
       monster_manager.add_sprite slizzy
       monster_manager.add_sprite duck
-      monster_manager.add_sprite spittie
+      # monster_manager.add_sprite spittie
     end
 
     def load_exit(location)

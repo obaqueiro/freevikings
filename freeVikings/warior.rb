@@ -46,7 +46,7 @@ module FreeVikings
 
     def each_displayable
       yield self
-      yield weapon if @state.type == FightingVikingState
+      yield weapon if @state.class == FightingVikingState
     end
 
     private

@@ -85,6 +85,8 @@ module FreeVikings
 	@context.app_window.toggle_fullscreen
       when K_q
 	end_game if RUDL::Key.modifiers && K_LCTRL
+	when K_F6
+	@context.give_up_game
       end # case
     end # private method serve_keydown
 

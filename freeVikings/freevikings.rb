@@ -1,4 +1,4 @@
-#!/usr/bin/ruby -w
+#!/home/deti/igneus/dist/ruby-1.8.0/ruby
 
 # freevikings.rb
 # igneus 18.1.2004

@@ -12,7 +12,7 @@ module FreeVikings
   class Viking < Sprite
     # Sprite trida pro postavicky vikingu
 
-    BASE_VELOCITY = 40
+    BASE_VELOCITY = 65
 
     # Jeden logovaci kanal pro vsechny instance - staci to a spori se cas
     # procesoru i pamet
