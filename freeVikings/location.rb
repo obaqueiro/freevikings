@@ -18,7 +18,6 @@ module FreeVikings
 
     def initialize(loader)
       @spritemanager = SpriteManager.new(self)
-      @itemmanager = nil
       @map = Map.new(loader)
     end
 
@@ -29,11 +28,14 @@ module FreeVikings
     def paint(surface, center)
       @map.paint(surface, center)
       @spritemanager.paint(surface, centered_view_rect(background.w, background.h, surface.w, surface.h, center))
-
     end
 
     def background
       @map.background
+    end
+
+    def exited?
+      nil
     end
 
     def add_sprite(sprite)
@@ -47,20 +49,12 @@ module FreeVikings
       @spritemanager.delete sprite
     end
 
-    def add_item(item)
-      @itemmanager.add item
-    end
-
-    def is_position_valid?(sprite, position)
-      @spritemanager.is_position_valid? sprite, position
+    def sprites_on_rect(rect)
+      @spritemanager.sprites_on_rect rect
     end
 
     def blocks_on_rect(rect)
       @map.blocks_on_square rect
-    end
-
-    def sprites_on_rect(rect)
-      @spritemanager.sprites_on_rect rect
     end
 
     def is_position_valid?(sprite, position)

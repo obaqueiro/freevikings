@@ -8,10 +8,12 @@ require 'RUDL'
 
 require 'sprite.rb'
 require 'viking.rb'
+require 'hero.rb'
 require 'duck.rb'
 require 'slug.rb'
 require 'team.rb'
 require 'map.rb'
+require 'world.rb'
 require 'location.rb'
 require 'gamestate.rb'
 
@@ -32,16 +34,34 @@ module FreeVikings
     attr_reader :map
 
     def initialize
-      strategy = XMLMapLoadStrategy.new("first_loc.xml")
+      # Zobrazime logo a v oddelenem vlakne zacneme inicialisovat sprajty
+      # (nahrava se spousta obrazku, chvili to trva)
+      init_app_window
+      image_loader = Thread.new {init_sprites_and_images}
 
-      @location = Location.new(strategy)
+      @world = World.new
 
-      @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
-      @app_window.set_caption('freeVikings')
-
+      # Surfaces, ktere se pouzivaji k sestaveni zobrazeni nahledu hraci plochy
+      # a stavoveho radku s podobiznami vikingu
       @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT - STATUS_HEIGHT])
       @status_view = RUDL::Surface.new([WIN_WIDTH, STATUS_HEIGHT])
 
+      # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
+      # tridy, pokud usoudi, ze by se stav mel zmenit.
+      @state = PlayingGameState.new(self)
+
+      image_loader.join
+    end # initialize
+
+    def init_app_window
+      @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
+      @app_window.set_caption('freeVikings')
+      logo = RUDL::Surface.load_new 'fvlogo.tga'
+      @app_window.blit(logo, [@app_window.w/2-logo.w/2,@app_window.h/2-logo.h/2])
+      @app_window.flip
+    end # init_app_window
+
+    def init_sprites_and_images
       @face_bg = RUDL::Surface.load_new('face_bg.tga')
       @baleog_face_bw = RUDL::Surface.load_new('erik_face_unactive.gif')
       @baleog_face = RUDL::Surface.load_new('erik_face.tga')
@@ -52,19 +72,9 @@ module FreeVikings
       @erik = Viking.createSprinter("Erik")
       @olaf = Viking.createShielder("Olaf")
 
-      @team = Team.new(@erik, @baleog, @olaf)
-      @team.each { |v| @location.add_sprite v }
-
       @duck = Duck.new
-      @location.add_sprite @duck
-
       @slizzy = Slug.new
-      @location.add_sprite @slizzy
-
-      # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
-      # tridy, pokud usoudi, ze by se stav mel zmenit.
-      @state = PlayingGameState.new(self)
-    end # initialize
+    end # init_display
 
     def finalize
       puts "Ending the game."
@@ -90,35 +100,54 @@ module FreeVikings
 	end
 	i += 1
       }
-    end
+    end # repaint_status
+
+    def game_over?
+      nil
+    end # game_over?
 
     def game_loop
-      fps = 0
-      loop do
-	# Zpracujeme udalosti:
-	if event = RUDL::EventQueue.poll then
-	  @state.serve_event(event)
-	end # if je udalost
+      while not self.game_over? do
+	@world.next_location
+	location = @world.location
 
-	@location.update
-	@location.paint(@map_view, @team.active.center)
-	@app_window.blit(@map_view, [0,0])
+	@team = Team.new(@erik, @baleog, @olaf)
+	@team.each { |v|
+	  v.extend Hero # vsechny vikingy oznacime jako hrdiny
+	  location.add_sprite v }
 
-	# Nasledujici nefunguje pod RUDL <= 0.4 (potrebuje pristup k fcim 
-	# SDL_gfx):
-	# @app_window.print([10,10], "fps #{fps / (Timer.ticks / 1000)}", [255,255,255])
-	# Nasledujici radek - mimochodem opsany z oficialnich prikladu
-	# k RUDL 1.8, pod RUDL 1.4 pusobi beznadejne zatvrdnuti programu
-	# po ukonceni volanim exit.
-	# puts "FPS: #{fps / (Timer.ticks / 1000)}"
+	location.add_sprite @slizzy
+	location.add_sprite @duck
 
-	repaint_status
-	@app_window.blit(@status_view, [0, WIN_HEIGHT - STATUS_HEIGHT])
+	frames = 0 # pomocna promenna k vypoctu fps
+	while not location.exited? do
 
-	@app_window.flip
-	fps += 1
-      end # smycky loop
-    end # method game_loop
+	  # Zpracujeme udalosti:
+	  if event = RUDL::EventQueue.poll then
+	    @state.serve_event(event)
+	  end # if je udalost
+
+	  location.update
+	  location.paint(@map_view, @team.active.center)
+	  @app_window.blit(@map_view, [0,0])
+
+	  # Nasledujici nefunguje pod RUDL <= 0.4 (potrebuje pristup k fcim 
+	  # SDL_gfx):
+	  # @app_window.print([10,10], "fps #{frames / (Timer.ticks / 1000)}", [255,255,255])
+	  # Nasledujici radek - mimochodem opsany z oficialnich prikladu
+	  # k RUDL 1.8, pod RUDL 1.4 pusobi beznadejne zatvrdnuti programu
+	  # po ukonceni volanim exit.
+	  # puts "FPS: #{frames / (Timer.ticks / 1000)}"
+
+	  repaint_status
+	  @app_window.blit(@status_view, [0, WIN_HEIGHT - STATUS_HEIGHT])
+
+	  @app_window.flip
+	  frames += 1
+	  
+	end # while not location.exited?
+      end # while not self.game_over?
+    end # game_loop
 
   end
 end # module
