@@ -8,6 +8,7 @@
 require 'test/unit/testsuite'
 
 require 'testlocation.rb'
+require 'testxmllocloadstrategy.rb'
 require 'testmap.rb'
 require 'testspritemanager.rb'
 require 'testsprite.rb'
@@ -24,6 +25,7 @@ class FreeVikingsTestSuite
     suite = Test::Unit::TestSuite.new
 
     suite << TestLocation.suite
+    suite << TestXMLLocationLoadStrategy.suite
     suite << TestMap.suite
     suite << TestSpriteManager.suite
     suite << TestSprite.suite
