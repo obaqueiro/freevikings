@@ -27,7 +27,7 @@ module FreeVikings
       @name = name
       @state = StandingVikingState.new(self)
       @viking_log.debug("Viking #{@name} initialised.")
-      @last_position = @position = [121, 60]
+      @last_position = @position = [121, 20]
       @last_update_time = Time.now.to_f
       @move_validator = NullMoveValidator # objekt overujici moznost presunu na posici
       @energy = 3 # zivotni sila
@@ -51,11 +51,7 @@ module FreeVikings
 
     def hurt
       @energy -= 1
-      die if @energy <= 0
-    end
-
-    def die
-      @state = DeadVikingState.new(self, @state)
+      destroy if @energy <= 0
     end
 
     def alive?

@@ -57,30 +57,14 @@ module FreeVikings
     end
 
     # Vrati true nebo nil, podle toho, jestli je mozne vstoupit do obdelniku
-    # (daneho polem ctyr cisel) bez kolize ve vertikalnim smeru
-
-    def is_vertical_position_valid?(sprite, new_pos)
-      # kolize na svrchnim okraji:
-      colliding_blocks = @map.blocks_on_line([new_pos[0], new_pos[1], new_pos[0] + sprite.image.w, new_pos[1]])
-      # kolize na spodnim okraji:
-      colliding_blocks.concat @map.blocks_on_line([new_pos[0], new_pos[1] + sprite.image.h, new_pos[0] + sprite.image.w, new_pos[1] + sprite.image.h])
-
-      colliding_blocks.each do |block|
-	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.
-	return nil if block.solid == true
-      end
-      # az dosud nebyl nalezen pevny blok, posice je volna
-      return true
-    end
-
-    # Vrati true nebo nil, podle toho, jestli je mozne vstoupit do obdelniku
     # (daneho polem ctyr cisel) bez kolize v horisontalnim smeru
 
-    def is_horizontal_position_valid?(sprite, new_pos)
-      # kolize na levem okraji:
-      colliding_blocks = @map.blocks_on_line([new_pos[0], new_pos[1], new_pos[0], new_pos[1] + sprite.image.h])
-      # kolize na pravem okraji:
-      colliding_blocks.concat @map.blocks_on_line([new_pos[0] + sprite.image.w, new_pos[1], new_pos[0] + sprite.image.w, new_pos[1] + sprite.image.h])
+    def is_position_valid?(sprite, new_pos)
+      begin
+	colliding_blocks = @map.blocks_on_square([new_pos[0], new_pos[1], sprite.image.w, sprite.image.h])
+      rescue RuntimeError
+	return nil
+      end
 
       colliding_blocks.each do |block|
 	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.

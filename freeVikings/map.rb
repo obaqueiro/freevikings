@@ -97,62 +97,28 @@ module FreeVikings
       @blocks[line][column - 1]
     end
 
-    # Vezme definici primky v podobe pole [Ax, Ay, Bx, By]  a vrati 
-    # pole bloku, kterymi primka prochazi
-    # Funguje spravne jen pro vodorovne a k nim kolme primky 
-    # (x nebo y musi byt 0)
-
-    public    
-    def blocks_on_line(line)
-      colliding_blocks = Array.new
-      # inicialisace promennych iteracniho kroku:
-      step_horiz = step_vertic = 0
-      step_horiz = Map::TILE_SIZE if line[2] > line[0]
-      step_horiz = (- Map::TILE_SIZE) if line[2] < line[0]
-      step_vertic = Map::TILE_SIZE if line[3] > line[1]
-      step_vertic = (- Map::TILE_SIZE) if line[3] < line[1]
-      # iterovani po primce:
-      carry_on = true
-      horiz = line[0].round
-      vertic = line[1].round
-      loop do
-	# ziskani bloku:
-	@log.debug "block_on_line: asking for block at [#{horiz.to_s}, #{vertic.to_s}] (px)"
-	begin
-	  block = get_block([horiz, vertic])
-	rescue RuntimeError
-	  next
-	end
-	colliding_blocks.push(block) if block.is_a? TileType
-	# nastaveni iteracnich promennych:
-	horiz += step_horiz
-	vertic += step_vertic
-	# jestli uz jsme mimo primku, sup pryc:
-	if (step_horiz > 0 and horiz > line[2]) or
-	    (step_horiz < 0 and horiz < line[0]) or
-	    (step_vertic > 0 and vertic > line[3]) or
-	    (step_vertic < 0 and vertic < line[1]) then
-	  return colliding_blocks
-	end
-      end
-    end
-
     # vezme beznou definici ctverce v pixelech, vrati pole kolidujicich
     # dlazdic
 
+    public
     def blocks_on_square(square)
-      colliding_vlocks = []
+      @log.debug "blocks_on_square: Asked for blocks colliding with a square defined by [#{square[0]}, #{square[1]}, #{square[2]}, #{square[3]}](px)"
+      colliding_blocks = []
       # spocitat nejlevejsi a nejpravejsi index do kazdeho radku:
-      leftmost_i = square[0] / Map::TILE_SIZE
-      rightmost_i = (square[0] + square[2]) / Map::TILE_SIZE
+      leftmost_i = (square[0] / Map::TILE_SIZE).round
+      rightmost_i = ((square[0] + square[2]) / Map::TILE_SIZE).round
       # spocitat prvni a posledni radek:
-      top_line = square[1] / Map::TILE_SIZE
-      bottom_line = (square[1] + square[3]) / Map::TILE_SIZE
+      top_line = (square[1] / Map::TILE_SIZE).round
+      bottom_line = ((square[1] + square[3]) / Map::TILE_SIZE).round
       # z kazdeho radku vybrat patricny vyrez:
+      @log.debug "blocks_on_square: I'm going to extract blocks from a square [#{leftmost_i}, #{top_line}, #{rightmost_i}, #{bottom_line}](tiles)"
+      unless @blocks[top_line .. bottom_line].is_a? Array
+	@log.error "blocks_on_square: Invalid lines #{top_line} .. #{bottom_line}."
+	raise RuntimeError, "Invalid lines #{top_line} .. #{bottom_line}."
+      end
       @blocks[top_line .. bottom_line].each {|line|
 	colliding_blocks.concat line[leftmost_i .. rightmost_i]
       }
-
       return colliding_blocks
     end
 
