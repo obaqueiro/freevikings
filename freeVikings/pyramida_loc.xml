@@ -28,16 +28,16 @@ sloooooooooooooooosooooooooooooooorsssloooooooor
 oloooooooooooooooosooooooooooooooooCCsloooooooor
 oloooooooooooooooosoooooooooooooooooorloooAoooor
 oloooooooooooooooosoooooossssssoooooorloooooooor
-oloooooooooooooooxsooooossoooosoooooorloooooooor
-oloooffffffoooffffooooossooooosoooooorloooooooor
-olooooooooooooooooooooooooooooooooooooooooooooor
-oloooooAooooooooooooooooooooAoooooooooooooooooor
-olooooooooooooooooooooooooooooooooooooooooooooor
-osffffffffffffffffsffffffffffffffffffffffffffffs
+olooofffffoooooooxsooooossoooosoooooorloooooooor
+olooooooooooooffffooooossooooosoooooorloooooooor
+olooooooAoooooooooooooooooooooooooooooooooooooor
+olooooooooooooooooooooooooooAoooooooooooooooooor
+ooffffffffooooooooooooooooooooooooooooooooooooor
+oooooooooxffffffffsffffffffffffffffffffffffffffs
 </blocks>
     
     <!-- Startovni a koncove misto mapy: -->
-    <start horiz="150" vertic="50" />
+    <start horiz="160" vertic="260" />
     <exit horiz="1800" vertic="300" />
   </map>
   

@@ -78,14 +78,14 @@ module FreeVikings
 	  @blocktypes[code] = tiletype
 	}
       rescue => ex
-	@log.error "Cannot read XML node 'blocktypes' in datafile #{@source.path}. (" + ex.message + ")"
+	@log.error "Cannot read XML node 'map/blocktypes' in datafile #{@source.path}. (" + ex.message + ")"
       end
 
       # nacteni umisteni bloku
       begin
 	lines = @doc.root.elements["map"].elements["blocks"].text.split(/\n/)
       rescue => ex
-	@log.fatal "Cannot find 'blocks' XML element in datafile #{@source.path}. (" + ex.message + ")"
+	@log.fatal "Cannot find 'map/blocks' XML element in datafile #{@source.path}. (" + ex.message + ")"
 	exit 1
       end
       @max_width = @max_height = 0
@@ -126,7 +126,7 @@ module FreeVikings
 	x = exit_element.attributes['horiz'].to_i
 	y = exit_element.attributes['vertic'].to_i
       rescue
-	@log.error "Cannot find XML element 'exit' in datafile #{@source.path}."
+	@log.error "Cannot find XML element 'map/exit' in datafile #{@source.path}."
 	x = y = 300
       end
       location.exitter = Exit.new([x,y])
@@ -138,7 +138,7 @@ module FreeVikings
 	x = strt_element.attributes['horiz'].to_i
 	y = strt_element.attributes['vertic'].to_i
       rescue
-	@log.error "Cannot find XML element 'start' in datasource #{@source.path}."
+	@log.error "Cannot find XML element 'map/start' in datasource #{@source.path}."
 	x = y = 100
       end
       location.start = [x,y]
