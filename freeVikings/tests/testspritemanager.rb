@@ -25,8 +25,6 @@ class TestSpriteManager < RUNIT::TestCase
     @sprite = Sprite.new([90,90])
   end
 
-  attach_setup :setup
-
   def testSpritesOnRect
     @manager.add @sprite
     assert_equal @sprite, @manager.sprites_on_rect([85,85,60,60])[0], "There must be one sprite. I made it to be there."

@@ -14,11 +14,9 @@ include FreeVikings
 class TestLocation < RUNIT::TestCase
 
   def setup
-    @loc = @map = @manager = Location.new(TestingMapLoadStrategy.new)
+    @loc = @map = @manager = Location.new(Mock::TestingMapLoadStrategy.new)
     @sprite = Sprite.new
   end
-
-  attach_setup :setup
 
   def testBlocksOnRect
     assert_equal 4, @loc.blocks_on_rect([0.2,0.2,Map::TILE_SIZE*1.2,Map::TILE_SIZE*1.2]).size

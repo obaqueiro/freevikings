@@ -22,12 +22,12 @@ class TestExploreREXML < RUNIT::TestCase
     @doc = REXML::Document.new($xmltext)
   end
 
-  attach_setup :setup
-
   def testInvalidDocument
     # Pokud dokument neni platny, REXML pri jeho parsovani nemuze
-    # najit tridu REXML::Validation.
-    assert_exception (NameError) {
+    # najit tridu REXML::Validation. Pokud tedy mame stare REXML. Tehdy
+    # nastane NameError.
+    # Nove REXML vyhazuje vlastni vyjimku.
+    assert_exception (REXML::ParseException) {
       d = REXML::Document.new $invalidxmltext
     }
   end

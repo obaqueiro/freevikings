@@ -18,8 +18,6 @@ class TestMap < RUNIT::TestCase
     @map = Map.new(XMLLocationLoadStrategy.new("../locs/pyramida_loc.xml"))
   end
 
-  attach_setup :setup
-
   def testGetSolidBlock
     assert @map.blocks_on_square([0,0,50,50])[0].solid, "The first block in tho top left corner is solid. I made it solid."
   end

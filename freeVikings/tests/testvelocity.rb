@@ -13,8 +13,6 @@ class TestVelocity < RUNIT::TestCase
     @nulvelocity = Velocity.new
   end
 
-  attach_setup :setup
-
   def testNulVelocityHasNulValue
     assert_equal 0, @nulvelocity.value, "Velocity object with initial velocity 0 and acceleration 0 must have value 0."
   end

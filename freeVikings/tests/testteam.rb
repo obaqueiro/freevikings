@@ -17,8 +17,6 @@ class TestTeam < RUNIT::TestCase
     @team = Team.new(@viking1, @viking2, @viking3)
   end
 
-  attach_setup :setup
-
   def testFirstMemberIsActiveOnTheStart
     assert_equal @viking1, @team.active, "On the start of the team's big mission, the first added member should be active, shouldn't he?"
   end

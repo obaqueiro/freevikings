@@ -16,8 +16,6 @@ class TestVikingState < RUNIT::TestCase
     @viking = Viking.new([0,0])
   end
 
-  attach_setup :setup
-
   def testLeftDirectionAfterMoveLeft
     @viking.move_left
     assert_equal "left", @viking.state.direction, "The direction must be left after move_left call."

@@ -14,8 +14,6 @@ class TestSprite < RUNIT::TestCase
     @sprite = Sprite.new([90,90])
   end
 
-  attach_setup :setup
-
   def testSpriteSetsUpItsPositionCorrectly
     assert_equal 90, @sprite.left, "It must be 90. I've set it to be 90."
     assert_equal 90, @sprite.top, "It must be 90. I've set it to be 90."

@@ -16,8 +16,6 @@ class TestRect < RUNIT::TestCase
     @r1 = Rectangle.new 60,60,60,60
   end
 
-  attach_setup :setup
-
   def testContains
     r1 = Rectangle.new(0,0,60,60)
     r2 = Rectangle.new(10,10,2,2)

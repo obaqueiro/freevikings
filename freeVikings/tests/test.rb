@@ -5,7 +5,7 @@
 
 # Automaticke testy pro freeVikings.
 
-require 'rubyunit'
+require 'test/unit/testsuite'
 
 require 'testlocation.rb'
 require 'testmap.rb'
@@ -20,22 +20,30 @@ require 'testvikingstate.rb'
 
 class FreeVikingsTestSuite
 
-  def suite
-    suite = RUNIT::TestSuite.new
+  def self.suite
+    suite = Test::Unit::TestSuite.new
 
-    suite.add TestLocation.suite
-    suite.add TestMap.suite
-    suite.add TestSpriteManager.suite
-    suite.add TestSprite.suite
-    suite.add TestViking.suite
-    suite.add TestVelocity.suite
-    suite.add TestTeam.suite
-    suite.add TestRect.suite
-    suite.add TestExploreREXML.suite
-    suite.add TestVikingState.suite
+    suite << TestLocation.suite
+    suite << TestMap.suite
+    suite << TestSpriteManager.suite
+    suite << TestSprite.suite
+    suite << TestViking.suite
+    suite << TestVelocity.suite
+    suite << TestTeam.suite
+    suite << TestRect.suite
+    suite << TestExploreREXML.suite
+    suite << TestVikingState.suite
 
     return suite
   end
 end
 
-RUNIT::CUI::TestRunner.new(STDERR, $OPT_w)
+if ARGV[0] =~ /^[gG][tT][kK]$/ then
+  require 'testrunner.rb'
+  trm = Test::Unit::UI::GTK
+else
+  require 'test/unit/ui/console/testrunner'
+  trm = Test::Unit::UI::Console
+end
+
+trm::TestRunner.run(FreeVikingsTestSuite)
