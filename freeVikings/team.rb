@@ -26,6 +26,17 @@ module FreeVikings
       return self.active
     end
 
+    # jako aktivniho nastavi minuleho
+
+    def last
+      if @active > 0
+	@active = (@active - 1)
+      else
+	@active = @members.size - 1
+      end
+      return self.active
+    end
+
     def each
       @members.each {|m| yield m}
     end

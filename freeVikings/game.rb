@@ -44,12 +44,9 @@ module FreeVikings
       @baleog_face_bw = RUDL::Surface.load_new('baleog_face_unactive.gif')
       @baleog_face = RUDL::Surface.load_new('baleog_face.tga')
 
-      @baleog = Viking.new
-      @baleog.name = "Baleog"
-      @olaf = Viking.new
-      @olaf.name = "Olaf"
-      @erik = Viking.new
-      @erik.name = "Erik"
+      @baleog = Viking.createWarior("Baleog")
+      @erik = Viking.createSprinter("Erik")
+      @olaf = Viking.createShielder("Olaf")
 
       @team = Team.new(@baleog, @erik, @olaf)
       @team.each {|v| @manager.add v}

@@ -4,7 +4,7 @@
 require 'sprite.rb'
 require 'vikingstate.rb'
 require 'imagebank.rb'
-require 'movevalidator'
+require 'movevalidator.rb'
 require 'log4r'
 
 module FreeVikings
@@ -18,17 +18,28 @@ module FreeVikings
     attr_accessor :name
     attr_writer :move_validator
 
-    def initialize()
-      super
+    def initialize(name = "")
+      super()
       @viking_log = Log4r::Logger.new('viking_log')
       @viking_log.level = Log4r::INFO
       @viking_log.outputters = Log4r::StderrOutputter.new('viking_stderr_out')
-      init_images
-      @name = 'Swen'
+      @name = name
       @state = StandingVikingState.new(self)
       @viking_log.debug("Viking #{@name} initialised.")
       @last_position = @position = [121, 60]
       @move_validator = NullMoveValidator # objekt overujici moznost presunu na posici
+    end
+
+    def Viking.createWarior(name="")
+      return Warior.new(name)
+    end
+
+    def Viking.createSprinter(name="")
+      return Sprinter.new(name)
+    end
+
+    def Viking.createShielder(name="")
+      return Shielder.new(name)
     end
 
     def paint(surface)
@@ -136,15 +147,9 @@ module FreeVikings
       update_time
     end
 
-    private
-    def init_images
-      @image = ImageBank.new(self)
-      @image.add_pair('standing', Image.new('baleog_standing.png'))
-      @image.add_pair('moving_left', Image.new('baleog_left.png'))
-      @image.add_pair('moving_right', Image.new('baleog_right.png'))
-      @image.add_pair('stucked_left', Image.new('baleog_left.png'))
-      @image.add_pair('stucked_right', Image.new('baleog_right.png'))
-      @image.add_pair('falling', Image.new('baleog_standing.png'))
-    end
   end # class Viking
 end # module
+
+require 'warior.rb'
+require 'sprinter.rb'
+require 'shielder.rb'

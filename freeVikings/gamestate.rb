@@ -75,6 +75,8 @@ module FreeVikings
       when K_f
 	# Specialni klavesy:
       when K_RCTRL
+	@context.team.last
+      when K_PAGEUP
 	@context.team.next
       when K_F3
 	@context.app_window.toggle_fullscreen
