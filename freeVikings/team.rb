@@ -31,12 +31,13 @@ module FreeVikings
     # jako aktivniho nastavi minuleho
 
     def last(recursive_grade = 0)
+      raise NotATeamMemberAliveException.new("No member of the team is alive.") if recursive_grade > @members.size
       if @active > 0
 	@active = (@active - 1)
       else
 	@active = @members.size - 1
       end
-      last unless active.alive?
+      last(recursive_grade + 1) unless active.alive?
       return self.active
     end
 

@@ -12,17 +12,12 @@ module FreeVikings
   class Viking < Sprite
     # Sprite trida pro postavicky vikingu
 
-    BASE_VELOCITY = 100
-
-    attr_accessor :state
-    attr_accessor :name
-    attr_writer :move_validator
-    attr_reader :energy
+    BASE_VELOCITY = 60
 
     # Jeden logovaci kanal pro vsechny instance - staci to a spori se cas
     # procesoru i pamet
     @@viking_log = Log4r::Logger.new('viking_log')
-    @@viking_log.level = Log4r::DEBUG
+    @@viking_log.level = Log4r::OFF
     @@viking_log.outputters = Log4r::StderrOutputter.new('viking_stderr_out')
 
     def initialize(name = "")
@@ -47,6 +42,11 @@ module FreeVikings
     def Viking.createShielder(name="")
       return Shielder.new(name)
     end
+
+    attr_accessor :state
+    attr_accessor :name
+    attr_writer :move_validator
+    attr_reader :energy
 
     def paint(surface)
       surface.blit(@image.image(@state.to_s), coordinate_in_surface(surface))

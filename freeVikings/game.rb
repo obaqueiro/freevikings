@@ -31,6 +31,8 @@ module FreeVikings
     attr_reader :map
 
     def initialize
+      ObjectSpace.define_finalizer(self, Proc.new {finalize})
+
       strategy = XMLMapLoadStrategy.new("first_loc.xml")
 
       @location = Location.new(strategy)
@@ -61,6 +63,11 @@ module FreeVikings
       # tridy, pokud usoudi, ze by se stav mel zmenit.
       @state = PlayingGameState.new(self)
     end # initialize
+
+    def finalize
+      puts "Destroying the application window, ending the game."
+      exit
+    end # finalize
 
     def repaint_status
       # vybarveni pozadi pro podobenky vikingu:

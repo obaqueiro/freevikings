@@ -30,7 +30,7 @@ module FreeVikings
     # Obslouzi udalost tak, jak je to v danem stavu potreba.
 
     def serve_event(event)
-      exit if event.is_a? QuitEvent
+      end_game if event.is_a? QuitEvent
     end
 
     # Zajistime potomkum dostupnost predkovy metody:
@@ -82,7 +82,7 @@ module FreeVikings
       when K_F3
 	@context.app_window.toggle_fullscreen
       when K_q
-	exit if RUDL::Key.modifiers && K_LCTRL
+	end_game if RUDL::Key.modifiers && K_LCTRL
       end # case
     end # private method serve_keydown
 
@@ -92,19 +92,9 @@ module FreeVikings
 	@context.team.active.stop
       end
     end # private method serve_keyup
+
+    def end_game
+      @context.finalize
+    end # private method end_game
   end # class PlayingGameState
-
-  class InspectingGameState
-    # Stav Inspecting by mel umoznit prohlizeni mapy pomoci mysi a
-    # klikanim zjistovat informace o sprajtech a dlazdicich.
-
-    def serve_event(event)
-
-    end
-
-    def view_center
-      mouse_pos = [0,0]
-      mouse_pos
-    end
-  end # class InspectingGameState
 end # module

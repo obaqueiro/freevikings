@@ -7,15 +7,7 @@ require 'velocity.rb'
 
 module FreeVikings
 
-  GRAVITY = 10
-
-  # Stavy, ktere jsou Previous, umoznuji vratit se volanim metody previous do
-  # predchoziho stavu
-  module Previousable
-    def previous
-      @viking.state = @last_state
-    end
-  end
+  GRAVITY = 1
 
   class VikingState
     # Supertrida pro tridy Stavu vikinga
@@ -27,7 +19,7 @@ module FreeVikings
     def initialize(viking, last_state=nil)
       @viking = viking
       @velocity_horiz = Velocity.new
-      @velocity_vertic = Velocity.new(0, GRAVITY)
+      @velocity_vertic = Velocity.new
     end
 
     def to_s
@@ -178,7 +170,7 @@ module FreeVikings
 
     def initialize(viking, last_state)
       super(viking, last_state)
-      @velocity_vertic = Velocity.new(-14, GRAVITY)
+      @velocity_vertic = Velocity.new(Viking::BASE_VELOCITY)
       @velocity_horiz = last_state.velocity_vertic
     end
 
@@ -219,7 +211,7 @@ module FreeVikings
     def initialize(viking, last_state)
       super(viking, last_state)
       @last_state = last_state
-      @velocity_vertic.value = @viking.class::BASE_VELOCITY
+      @velocity_vertic = Velocity.new Viking::BASE_VELOCITY
       @velocity_horiz = last_state.velocity_horiz
     end
 
@@ -229,6 +221,14 @@ module FreeVikings
 
     def stuck
       @viking.state = StandingVikingState.new(@viking, self)
+    end
+
+    def move_left
+      @velocity_horiz.value = @velocity_horiz.value - Viking::BASE_VELOCITY / 2
+    end
+
+    def move_right
+      @velocity_horiz.value = @velocity_horiz.value + Viking::BASE_VELOCITY / 2
     end
 
     def stop

@@ -10,6 +10,7 @@ require 'rubyunit'
 require 'testmap.rb'
 # require 'testspritemanager.rb'
 require 'testvelocity.rb'
+require 'testteam.rb'
 
 class FreeVikingsTestSuite
 
@@ -19,6 +20,7 @@ class FreeVikingsTestSuite
     suite.add TestMap.suite
     # suite.add TestSpriteManager.suite
     suite.add TestVelocity.suite
+    suite.add TestTeam.suite
 
     return suite
   end
