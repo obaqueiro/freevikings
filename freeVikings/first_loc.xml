@@ -29,4 +29,7 @@
 1111111111111111111112211111111
 </blocks>
 
+<exit horiz="1120" vertic="320" />
+<start horiz="121" vertic="20" />
+
 </location>

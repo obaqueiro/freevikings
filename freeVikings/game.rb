@@ -95,21 +95,13 @@ module FreeVikings
     end # repaint_status
 
     def is_exit?
-      # Mozna lokace jeste nebyla inicialisovan:
-      if @world.location.nil? then
-	return 0
-      end
       # Pokud vsichni umreli, koncime:
       unless @team.alive? then
-	return 1
+	return true
       end
       # Pokud jsou vsichni zivi v exitu, koncime taky:
-      l = @world.location
-      on_exit = l.sprites_on_rect(l.exitter.rect)
-      on_exit.delete(l.exitter)
-      exited_vikings = on_exit.find_all {|sprite| @team.member? sprite}
       if exited_vikings.size == @team.alive_size then
-	return 2
+	return true
       end
       return nil
     end # is_exit?
@@ -121,35 +113,30 @@ module FreeVikings
     def game_loop
       while not self.game_over? do
 
-	case is_exit?
-	when 0
-	  # Svet dosud neinicialisovan
-	  @world.next_location
-	when 1
-	  # Vsichni vikingove umreli
-	  puts 'All the vikings died. Try once more.'
+	if @team.nil? then
+	  # Prvni iterace. Bude se inicialisovat. Tady nemusime nic.
+	elsif @team.alive_size < @team.size then
+	  # Nekteri hrdinove mrtvi.
+	  puts '*** Some vikings died. Try once more.'
 	  @world.rewind_location
-	when 2
-	  # Vsichni zivi vikingove v exitu
-	  if @team.alive_size == @team.size then
-	    puts 'Oh, great! Congratulations, level completed.'
-	    @world.next_location
-	  else
-	    puts 'All the vikings in the exit, but you\'ve lost some lives. Try again.'
-	    @world.rewind_location
+	elsif @team.alive_size == @team.size
+	  # Vsichni dosahli EXITu
+	  puts '*** Oh, great! Congratulations, level completed.'
+	  unless @world.next_location then
+	    puts '*** Congratulations! You explored all the world!'
+	    exit
 	  end
-	when nil
-	  # Tahle varianta by v techto mistech nemela nastat (nil znamena,
-	  # ze je vse v poradku a lokace nebyla dokoncena, tedy ma
-	  # hra pokracovat)
-	  puts '+++ Fatal error: location isn\'t exited and we skipped out of the location loop! Call the programmers! Cry! Everything\'s wrong!'
+	else
+	  # Situace, ktera by nemela nastat
+	  puts '*** Really strange situation. Nor the game loop is in it\'s first loop, nor the level completed, no vikings dead. Send a bug report, please.'
+	  exit 1
 	end
 
 	location = @world.location
 
-	@baleog = Viking.createWarior("Baleog")
-	@erik = Viking.createSprinter("Erik")
-	@olaf = Viking.createShielder("Olaf")
+	@baleog = Viking.createWarior("Baleog", location.start)
+	@erik = Viking.createSprinter("Erik", location.start)
+	@olaf = Viking.createShielder("Olaf", location.start)
 
 	@team = Team.new(@erik, @baleog, @olaf)
 	@team.each { |v|
@@ -171,14 +158,6 @@ module FreeVikings
 	  location.paint(@map_view, @team.active.center)
 	  @app_window.blit(@map_view, [0,0])
 
-	  # Nasledujici nefunguje pod RUDL <= 0.4 (potrebuje pristup k fcim 
-	  # SDL_gfx):
-	  # @app_window.print([10,10], "fps #{frames / (Timer.ticks / 1000)}", [255,255,255])
-	  # Nasledujici radek - mimochodem opsany z oficialnich prikladu
-	  # k RUDL 1.8, pod RUDL 1.4 pusobi beznadejne zatvrdnuti programu
-	  # po ukonceni volanim exit.
-	  # puts "FPS: #{frames / (Timer.ticks / 1000)}"
-
 	  repaint_status
 	  @app_window.blit(@status_view, [0, WIN_HEIGHT - STATUS_HEIGHT])
 
@@ -188,6 +167,16 @@ module FreeVikings
 	end # while not location.exited?
       end # while not self.game_over?
     end # game_loop
+
+    private
+
+    def exited_vikings
+      l = @world.location
+      on_exit = l.sprites_on_rect(l.exitter.rect)
+      on_exit.delete(l.exitter)
+      exited_vikings = on_exit.find_all {|sprite| @team.member? sprite}
+      return exited_vikings
+    end
 
   end
 end # module

@@ -54,15 +54,16 @@ module FreeVikings
       else
 	raise ArgumentError, "Argument mapfile of bad type #{mapfile.type}"
       end
+
+      @doc = REXML::Document.new(@source)
     end
 
     def load_map(blocks_matrix, blocktype_hash)
       @blocks = blocks_matrix
       @blocktypes = blocktype_hash
 
-      doc = REXML::Document.new(@source)
       # nacteni typu bloku
-      doc.elements.each("location/blocktypes/blocktype") { |blocktype|
+      @doc.elements.each("location/blocktypes/blocktype") { |blocktype|
 	code = blocktype.attributes["code"]
 	path = blocktype.attributes["path"]
 	tiletype = TileType.instance(code, path)
@@ -71,7 +72,7 @@ module FreeVikings
       }
 
       # nacteni umisteni bloku
-      lines = doc.root.elements["blocks"].text.split(/\n/)
+      lines = @doc.root.elements["blocks"].text.split(/\n/)
       @max_width = @max_height = 0
       # prochazime radky bloku:
       lines.each_index { |line_num|
@@ -102,7 +103,18 @@ module FreeVikings
     end
 
     def load_exit(location)
-      location.exitter = Exit.new([1120,320])
+      @doc.root.elements.each('exit') { |exit_element|
+	x = exit_element.attributes['horiz'].to_i
+	y = exit_element.attributes['vertic'].to_i
+	location.exitter = Exit.new([x,y])
+      }
+    end
+
+    def load_start(location)
+      strt_element = @doc.root.elements['start']
+      x = strt_element.attributes['horiz'].to_i
+      y = strt_element.attributes['vertic'].to_i
+      location.start = [x,y]
     end
 
   end # class XMLMapLoadStrategy

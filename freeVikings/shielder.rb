@@ -8,8 +8,8 @@ module FreeVikings
 
   class Shielder < Viking
 
-    def initialize(name="")
-      super(name)
+    def initialize(name, start_position)
+      super(name, start_position)
       init_images
     end
 

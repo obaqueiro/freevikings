@@ -18,8 +18,12 @@ module FreeVikings
 
     def initialize(loader)
       @spritemanager = SpriteManager.new(self)
+      @exitter = nil # objekt Exit - cesta do dalsi lokace
+      @start = [0,0] # misto, kde zacinaji vikingove svou misi
+
       loader.load_monsters(self)
       loader.load_exit(self)
+      loader.load_start(self)
       @map = Map.new(loader)
     end
 
@@ -49,6 +53,8 @@ module FreeVikings
     end
 
     attr_reader :exitter
+
+    attr_accessor :start
 
     def delete_sprite(sprite)
       @spritemanager.delete sprite

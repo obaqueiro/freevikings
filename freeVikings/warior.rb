@@ -11,8 +11,8 @@ require 'sword.rb'
 module FreeVikings
   class Warior < Viking
 
-    def initialize(name="")
-      super name
+    def initialize(name, start_position)
+      super name, start_position
       init_images
       @weapon = Sword.new
     end

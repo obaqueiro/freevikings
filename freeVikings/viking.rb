@@ -20,12 +20,12 @@ module FreeVikings
     @@viking_log.level = Log4r::OFF
     @@viking_log.outputters = Log4r::StderrOutputter.new('viking_stderr_out')
 
-    def initialize(name = "")
+    def initialize(name, start_position=[121,20])
       super()
       @name = name
       @state = StandingVikingState.new(self, VikingState.new(self, nil))
       @@viking_log.debug("Viking #{@name} initialised.")
-      @last_position = @position = [121, 20]
+      @last_position = @position = start_position
       @last_update_time = Time.now.to_f
       @move_validator = NullMoveValidator # objekt overujici moznost presunu na posici
       @energy = 3 # zivotni sila
@@ -33,16 +33,16 @@ module FreeVikings
       @portrait = Portrait.new('viking_face.tga', 'viking_face_unactive.tga', 'dead_face.png')
     end
 
-    def Viking.createWarior(name="")
-      return Warior.new(name)
+    def Viking.createWarior(name, start_position)
+      return Warior.new(name, start_position)
     end
 
-    def Viking.createSprinter(name="")
-      return Sprinter.new(name)
+    def Viking.createSprinter(name, start_position)
+      return Sprinter.new(name, start_position)
     end
 
-    def Viking.createShielder(name="")
-      return Shielder.new(name)
+    def Viking.createShielder(name, start_position)
+      return Shielder.new(name, start_position)
     end
 
     attr_accessor :state
