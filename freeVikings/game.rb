@@ -26,7 +26,7 @@ module FreeVikings
     attr_reader :map
 
     def initialize
-      @map = Map.new("first_loc_beta.xml")
+      @map = Map.new("first_loc.xml")
 
       @manager = SpriteManager.new(@map)
 
@@ -49,8 +49,9 @@ module FreeVikings
 	if event = RUDL::EventQueue.poll then
 	  @state.serve_event(event)
 	end # if je udalost
+
 	@map.paint(@app_window, viking.center)
-	@manager.paint(@app_window, centered_view_rect(@map.background.w, @map.background.h, @app_window.w, @app_window.h, @baleog.center))
+	@manager.paint(@app_window, centered_view_rect(@map.background.w, @map.background.h, @app_window.w, @app_window.h, viking.center))
 	@app_window.flip
       end # smycky loop
     end # method game_loop

@@ -35,21 +35,19 @@ module FreeVikings
 
     def move_left
       @state.move_left
-      @velocity_horis.value = - BASE_VELOCITY
       set_move
       start_moving_safely
     end
 
     def move_right
       @state.move_right
-      @velocity_horis.value = BASE_VELOCITY
       set_move
       start_moving_safely
     end
 
     def stop
       @state.stop
-      @velocity_horis.value = @velocity_vertic.value = 0
+      velocity_horiz.value = velocity_vertic.value = 0
     end
 
     def top
@@ -76,9 +74,9 @@ module FreeVikings
       time_now = Time.now.to_f
       time_delta = time_now - @last_update_time
       # Zde se musi posice zjistovat primo z instancni promenne, protoze
-      # pristupove metody ji aktualisuji
-      next_top = @position[1] + (@velocity_vertic.value * time_delta)
-      next_left = @position[0] + (@velocity_horis.value * time_delta)
+      # pristupove metody left a top ji aktualisuji
+      next_top = @position[1] + (velocity_vertic.value * time_delta)
+      next_left = @position[0] + (velocity_horiz.value * time_delta)
       return [next_left, next_top]
     end
 
@@ -88,9 +86,19 @@ module FreeVikings
 	update_time
       else
 	stop
-	@velocity_horis.value = @velocity_vertic.value = 0
+	velocity_horiz.value = velocity_vertic.value = 0
       end
       @viking_log.debug("#{@name}'s state: #{@state.to_s}")
+    end
+
+    private
+    def velocity_vertic
+      @state.velocity_vertic
+    end
+
+    private
+    def velocity_horiz
+      @state.velocity_horiz
     end
 
     private

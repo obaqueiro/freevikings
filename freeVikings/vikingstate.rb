@@ -3,13 +3,20 @@
 
 # Tridy pro stavy vikingu
 
+require 'velocity.rb'
+
 module FreeVikings
 
   class VikingState
     # Supertrida pro tridy Stavu vikinga
 
+    attr_reader :velocity_horiz
+    attr_reader :velocity_vertic
+
     def initialize(viking)
       @viking = viking
+      @velocity_horiz = Velocity.new
+      @velocity_vertic = Velocity.new
     end
 
     def to_s
@@ -73,19 +80,26 @@ module FreeVikings
     end
   end # class StandingVikingState
 
-  class WalkingVikingState < VikingState
-    # Supertrida pro tridy chuze, padani a splhani
-    def stop
-      @viking.state = StandingVikingState.new(@viking)
-    end
-
+  class MovingVikingState < VikingState
     def moving?
       true
     end
   end # class MovingVikingState
 
+  class WalkingVikingState < MovingVikingState
+    # Supertrida pro tridy chuze, padani a splhani
+    def stop
+      @viking.state = StandingVikingState.new(@viking)
+    end
+  end # class MovingVikingState
+
   class LeftWalkingVikingState < WalkingVikingState
     # viking jde doleva
+    def initialize(viking)
+      super(viking)
+      @velocity_horiz.value = - (@viking.class::BASE_VELOCITY)
+    end
+
     def to_s
       "moving_left"
     end
@@ -97,6 +111,11 @@ module FreeVikings
 
   class RightWalkingVikingState < WalkingVikingState
     # viking jde doprava
+    def initialize(viking)
+      super(viking)
+      velocity_horiz.value = @viking.class::BASE_VELOCITY
+    end
+
     def to_s
       "moving_right"
     end
@@ -105,4 +124,7 @@ module FreeVikings
       @viking.state = LeftWalkingVikingState.new(@viking)
     end
   end # class RightWalkingVikingState
+
+  class FallingVikingState < MovingVikingState
+  end # class FallingVikingState
 end # module FreeVikings

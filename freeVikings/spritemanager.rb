@@ -42,8 +42,14 @@ module FreeVikings
     # (daneho polem ctyr cisel) bez kolize
 
     def is_position_valid?(sprite, new_pos)
+      # kolize na levem okraji:
       colliding_blocks = @map.blocks_on_line([new_pos[0], new_pos[1], new_pos[0], new_pos[1] + sprite.image.h])
+      # kolize na pravem okraji:
       colliding_blocks.concat @map.blocks_on_line([new_pos[0] + sprite.image.w, new_pos[1], new_pos[0] + sprite.image.w, new_pos[1] + sprite.image.h])
+      # kolize na svrchnim okraji:
+      colliding_blocks.concat @map.blocks_on_line([new_pos[0], new_pos[1], new_pos[0] + sprite.image.w, new_pos[1]])
+      # kolize na spodnim okraji:
+      colliding_blocks.concat @map.blocks_on_line([new_pos[0], new_pos[1] + sprite.image.h, new_pos[0] + sprite.image.w, new_pos[1] + sprite.image.h])
 
       colliding_blocks.each do |block|
 	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.

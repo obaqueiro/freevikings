@@ -128,10 +128,10 @@ module FreeVikings
     colliding_blocks = Array.new
     # inicialisace promennych iteracniho kroku:
     step_horiz = step_vertic = 0
-    step_horiz = TILE_SIZE if line[2] > line[0]
-    step_horiz = (- TILE_SIZE) if line[2] < line[0]
+    step_horiz = Map::TILE_SIZE if line[2] > line[0]
+    step_horiz = (- Map::TILE_SIZE) if line[2] < line[0]
     step_vertic = Map::TILE_SIZE if line[3] > line[1]
-    step_vertic = (- TILE_SIZE) if line[3] < line[1]
+    step_vertic = (- Map::TILE_SIZE) if line[3] < line[1]
     # iterovani po primce:
     carry_on = true
     horiz = line[0]
