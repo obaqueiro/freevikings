@@ -14,6 +14,7 @@ require 'testsprite.rb'
 require 'testviking.rb'
 require 'testvelocity.rb'
 require 'testteam.rb'
+require 'testrect.rb'
 
 class FreeVikingsTestSuite
 
@@ -27,6 +28,7 @@ class FreeVikingsTestSuite
     suite.add TestViking.suite
     suite.add TestVelocity.suite
     suite.add TestTeam.suite
+    suite.add TestRect.suite
 
     return suite
   end

@@ -3,6 +3,8 @@
 
 # Spravce sprajtu.
 
+require 'rect.rb'
+
 module FreeVikings
 
   class SpriteManager
@@ -87,12 +89,9 @@ If no sprite is found, it returns an empty array.
     def sprites_on_rect(rect)
       found = Array.new
       @sprites.each do |sprite|
-	sprite_right = sprite.left + sprite.image.w
-	sprite_bottom = sprite.top + sprite.image.h
-	if ( (sprite.left > rect[0] and sprite.left < (rect[0] + rect[2])) and 
-	    (sprite.top > rect[1] and sprite.top < (rect[1] + rect[3])) ) or
-	    ( (sprite_right > rect[0] and sprite_right < (rect[0] + rect[2])) and
-	     (sprite.top > rect[1] and sprite.top < (rect[1] + rect[3])) ) then
+	r_rect = Rectangle.new(*rect)
+	r_sprite = Rectangle.new(*(sprite.rect))
+	if r_rect.collides? r_sprite
 	  found.push sprite
 	end # if
       end # do
