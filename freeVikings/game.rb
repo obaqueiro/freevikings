@@ -10,6 +10,7 @@ require 'sprite.rb'
 require 'viking.rb'
 require 'map.rb'
 require 'spritemanager.rb'
+require 'gamestate.rb'
 
 module FreeVikings
 
@@ -21,6 +22,9 @@ module FreeVikings
     WIN_WIDTH = 300
     WIN_HEIGHT = 300
 
+    attr_reader :viking
+    attr_reader :map
+
     def initialize
       @map = Map.new("first_loc_beta.xml")
 
@@ -31,33 +35,21 @@ module FreeVikings
       @baleog = Viking.new
       @baleog.name = "Baleog"
       @manager.add @baleog
+
+      @viking = @baleog
+
+      # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
+      # tridy, pokud usoudi, ze by se stav mel zmenit.
+      @state = PlayingGameState.new(self)
     end # initialize
 
     def game_loop
       loop do
 	# Zpracujeme udalosti:
 	if event = RUDL::EventQueue.poll then
-	  # Ukonceni hry:
-	  exit if event.is_a? QuitEvent
-	  # Stisk klavesy:
-	  if event.is_a?(KeyDownEvent)
-	    case event.key
-	      # Smerove klavesy:
-	    when K_LEFT
-	      @baleog.move_left
-	    when K_RIGHT
-	      @baleog.move_right
-	      # Funkcni klavesy:
-	    when K_SPACE
-	    when K_TAB
-	    when K_s
-	    when K_f
-	    end # case
-	  elsif event.is_a?(KeyUpEvent)
-	    @baleog.stop
-	  end # if elsif co je to za udalost?
+	  @state.serve_event(event)
 	end # if je udalost
-	@map.paint(@app_window, [@baleog.left, @baleog.top])
+	@map.paint(@app_window, viking.center)
 	@manager.paint(@app_window, centered_view_rect(@map.background.w, @map.background.h, @app_window.w, @app_window.h, @baleog.center))
 	@app_window.flip
       end # smycky loop

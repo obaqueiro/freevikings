@@ -25,7 +25,7 @@ module FreeVikings
       @name = 'Swen'
       @state = StandingVikingState.new(self)
       @viking_log.debug("Viking #{@name} initialised.")
-      @position = [70, 60]
+      @last_position = @position = [90, 60]
       @move_validator = NullMoveValidator # objekt overujici moznost presunu na posici
     end
 
@@ -37,12 +37,14 @@ module FreeVikings
       @state.move_left
       @velocity_horis.value = - BASE_VELOCITY
       set_move
+      start_moving_safely
     end
 
     def move_right
       @state.move_right
       @velocity_horis.value = BASE_VELOCITY
       set_move
+      start_moving_safely
     end
 
     def stop
@@ -73,6 +75,8 @@ module FreeVikings
     def next_position
       time_now = Time.now.to_f
       time_delta = time_now - @last_update_time
+      # Zde se musi posice zjistovat primo z instancni promenne, protoze
+      # pristupove metody ji aktualisuji
       next_top = @position[1] + (@velocity_vertic.value * time_delta)
       next_left = @position[0] + (@velocity_horis.value * time_delta)
       return [next_left, next_top]
@@ -80,8 +84,8 @@ module FreeVikings
 
     def update_position
       if @move_validator.is_position_valid?(self, next_position) then
-	@position = next_position
-	@last_update_time = Time.now.to_f
+	@last_position, @position = @position, next_position
+	update_time
       else
 	stop
 	@velocity_horis.value = @velocity_vertic.value = 0
@@ -90,8 +94,29 @@ module FreeVikings
     end
 
     private
-    def set_move
+    # zkontroluje, jestli muze vykrocit a pokud ne, nevykroci.
+    def start_moving_safely
+      unless @move_validator.is_position_valid?(self, next_position)
+	unmove
+      end
+    end
+
+    private
+    # vrati vikinga na posledni posici
+    def unmove
+      stop
+      @position = @last_position
+    end
+
+    private
+    # Aktualisuje cas posledni aktualisace posice
+    def update_time
       @last_update_time = Time.now.to_f
+    end
+
+    private
+    def set_move
+      update_time
     end
 
     private

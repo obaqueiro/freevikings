@@ -43,6 +43,7 @@ module FreeVikings
 
     def is_position_valid?(sprite, new_pos)
       colliding_blocks = @map.blocks_on_line([new_pos[0], new_pos[1], new_pos[0], new_pos[1] + sprite.image.h])
+      colliding_blocks.concat @map.blocks_on_line([new_pos[0] + sprite.image.w, new_pos[1], new_pos[0] + sprite.image.w, new_pos[1] + sprite.image.h])
 
       colliding_blocks.each do |block|
 	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.

@@ -111,10 +111,12 @@ module FreeVikings
 
   def get_block(coord)
     line = coord[1] / Map::TILE_SIZE
-    line += 1 if coord[1] % Map::TILE_SIZE > 0
+    line += 1 if (coord[1] % Map::TILE_SIZE) > 0
     column = coord[0] / Map::TILE_SIZE
-    column += 1 if coord[0] % Map::TILE_SIZE > 0
-    @blocks[line][column]
+    column += 1 if (coord[0] % Map::TILE_SIZE) > 0
+    # Sloupkovy index je nutne pred vracenim dekrementovat, protoze
+    # pri nacitani bloku se zacina az od indexu 1.
+    @blocks[line][column - 1]
   end
 
   # Vezme definici primky v podobe pole [Ax, Ay, Bx, By]  a vrati 
