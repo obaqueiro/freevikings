@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<location>
+
+<info>
+<title>First adventure</title>
+<author>Jakub Pavlík - severus@post.cz</author>
+</info>
+
+<blocktypes>
+<blocktype code="o" path="egypt_map/tile_type1.tga" />
+<blocktype code="s" path="egypt_map/tile_type4_all.tga" solid="solid" />
+<blocktype code="f" path="egypt_map/tile_type4_top.tga" solid="solid" />
+<blocktype code="C" path="egypt_map/tile_type4_bottom.tga" solid="solid" />
+<blocktype code="l" path="egypt_map/tile_type4_right.tga" solid="solid" />
+<blocktype code="r" path="egypt_map/tile_type4_left.tga" solid="solid" />
+<blocktype code="A" path="egypt_map/ankh_tile.tga" />
+<blocktype code="x" path="egypt_map/tile_stone.tga" solid="solid" />
+</blocktypes>
+
+<blocks>
+osCCCCCCCCCCCCCCCCsCCCCCCCCCCCCCCCCCCsCCCCCCCCCs
+oloooooooooooooooosooooooooooooooorsssloooooooor
+oloooooooooooooooosooooooooooooooooCCsloooooooor
+oloooooooooooooooosoooooooooooooooooorloooAoooor
+oloooooooooooooooosoooooossssssoooooorloooooooor
+oloooooooooooooooxsooooossoooosoooooorloooooooor
+oloooffffffoooffffooooossooooosoooooorloooooooor
+olooooooooooooooooooooooooooooooooooooooooooooor
+oloooooAooooooooooooooooooooAoooooooooooooooooor
+olooooooooooooooooooooooooooooooooooooooooooooor
+osffffffffffffffffsffffffffffffffffffffffffffffs
+</blocks>
+
+<exit horiz="600" vertic="90" />
+<start horiz="150" vertic="50" />
+
+</location>
