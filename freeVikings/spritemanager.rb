@@ -27,9 +27,11 @@ sprite.rb for implementation of this method).
 
     def add(sprite)
       @sprites.push(sprite)
-      sprite.each_displayable { |d|
-	d.move_validator = self if d.respond_to? :move_validator=
-      }
+    end
+
+    def delete(sprite)
+      sprite.destroy
+      @sprites.delete(sprite)
     end
 
 =begin

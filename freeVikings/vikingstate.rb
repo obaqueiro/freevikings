@@ -252,6 +252,7 @@ module FreeVikings
     end
 
     def stop
+      @viking.shoot
       @viking.state = StandingVikingState.new(@viking, self)
     end
   end # class BowStretchingVikingState
