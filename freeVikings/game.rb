@@ -9,6 +9,7 @@ require 'RUDL'
 require 'sprite.rb'
 require 'viking.rb'
 require 'duck.rb'
+require 'slug.rb'
 require 'team.rb'
 require 'map.rb'
 require 'location.rb'
@@ -58,6 +59,9 @@ module FreeVikings
 
       @duck = Duck.new
       @location.add_sprite @duck
+
+      @slizzy = Slug.new
+      @location.add_sprite @slizzy
 
       # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
       # tridy, pokud usoudi, ze by se stav mel zmenit.
