@@ -18,7 +18,7 @@ module FreeVikings
     def initialize(viking, last_state=nil)
       @viking = viking
       @velocity_horiz = Velocity.new
-      @velocity_vertic = Velocity.new
+      @velocity_vertic = Velocity.new(0, GRAVITY)
     end
 
     def to_s
@@ -30,6 +30,11 @@ module FreeVikings
     end
 
     def stop
+      @velocity_horiz.value = 0
+      @velocity_vertic.value = 0
+    end
+
+    def stuck
       nil
     end
 
@@ -109,6 +114,10 @@ module FreeVikings
     def move_right
       @viking.state = RightWalkingVikingState.new(@viking, self)
     end
+
+    def stuck
+      @viking.state = LeftStuckedVikingState.new(@viking, self)
+    end
   end # class LeftWalkingVikingState
 
   class RightWalkingVikingState < WalkingVikingState
@@ -125,8 +134,25 @@ module FreeVikings
     def move_left
       @viking.state = LeftWalkingVikingState.new(@viking, self)
     end
+
+    def stuck
+      @viking.state = RightStuckedVikingState.new(@viking, self)
+    end
   end # class RightWalkingVikingState
 
+  class LeftStuckedVikingState < LeftWalkingVikingState
+  end # class LeftStuckedVikingState
+
+  class RightStuckedVikingState < RightWalkingVikingState
+    def moving?
+      nil
+    end
+  end # class RightStuckedVikingState
+
   class FallingVikingState < MovingVikingState
+
+    def to_s
+      "falling"
+    end
   end # class FallingVikingState
 end # module FreeVikings

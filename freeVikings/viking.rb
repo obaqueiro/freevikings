@@ -47,7 +47,6 @@ module FreeVikings
 
     def stop
       @state.stop
-      velocity_horiz.value = velocity_vertic.value = 0
     end
 
     def top
@@ -85,9 +84,8 @@ module FreeVikings
 	@last_position, @position = @position, next_position
 	update_time
       else
-	# stop
-	# velocity_horiz.value = velocity_vertic.value = 0
 	unmove
+	@state.stuck
       end
       @viking_log.debug("#{@name}'s state: #{@state.to_s}")
     end
@@ -113,7 +111,6 @@ module FreeVikings
     private
     # vrati vikinga na posledni posici
     def unmove
-      stop
       @position = @last_position
     end
 
