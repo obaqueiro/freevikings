@@ -30,6 +30,12 @@ class TestRect < RUNIT::TestCase
     assert_nil r2.contains?(r1), "r2 does not contain r1."
   end
 
+  def testNearlyContains
+    r1 = Rectangle.new(60,0,60,60)
+    r2 = Rectangle.new(50,20,60,10)
+    assert r2.collides?(r1), "r2 collides with r1. It's a similar situation as a typical collision of the sword and a creature."
+  end
+
   def testNorthWestCornerCollision
     r2 = Rectangle.new 50,50,60,60
     assert @r1.collides?(r2), "r1 collides with r2 on it's northwest corner"
