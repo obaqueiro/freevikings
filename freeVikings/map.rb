@@ -2,6 +2,7 @@
 # igneus 20.1.2004
 
 require 'tiletype'
+require 'maploadstrategy'
 require 'log4r'
 require 'rexml/document'
 
@@ -17,12 +18,16 @@ module FreeVikings
       @log = Log4r::Logger.new('map log')
       outputter = Log4r::StderrOutputter.new('map_stderr_output')
       @log.outputters = outputter
-
       @log.level = Log4r::ERROR
+
       @blocktypes = Hash.new
       @blocks = Array.new
+      @loading_strategy = XMLMapLoadStrategy.new(map_path, @blocks, @blocktypes)
       @background = nil
-      load_xml_file(map_path)
+
+      @log.info('Loading map.')
+
+      @loading_strategy.load
 
       @log.info('Map initialised.')
     end
@@ -31,8 +36,8 @@ module FreeVikings
 
     def background
       if @background.nil?
-	@background = RUDL::Surface.new([@max_width * TILE_SIZE, @max_height * TILE_SIZE])
-
+	@background = RUDL::Surface.new([@loading_strategy.max_width * TILE_SIZE, @loading_strategy.max_height * TILE_SIZE])
+	
 	@blocks.each_index { |row_i|
 	  @blocks[row_i].each_index { |col_i|
 	    block_type = @blocks[row_i][col_i]
@@ -57,103 +62,72 @@ module FreeVikings
     def paint(surface, center_coordinate)
       left = center_coordinate[0] - (surface.w / 2)
       top = center_coordinate[1] - (surface.h / 2)
-
+      
       # Pozadovany stred nekde u zacatku mapy:
       left = 0 if center_coordinate[0] < (surface.w / 2)
       top = 0 if center_coordinate[1] < (surface.h / 2)
       # Pozadovany stred nekde u konce mapy:
       left = (background().w - surface.w) if center_coordinate[0] > (background().w - (surface.w / 2))
       top = (background().h - surface.h) if center_coordinate[1] > (background().h - (surface.h / 2))
-
+      
       surface.blit(background, [0,0], [left, top, left + surface.w, top + surface.h])
     end
 
     # nahraje mapu ze souboru
-
+    
     private
     def load_xml_file(map_path)
       map_file = File.new(map_path)
+    end # methody load_xml_file
 
-      doc = REXML::Document.new(map_file)
-
-      # nacteni typu bloku
-      doc.elements.each("location/blocktypes/blocktype") { |blocktype|
-	code = blocktype.attributes["code"]
-	path = blocktype.attributes["path"]
-	if path != ""
-	  @blocktypes[code] = TileType.instance(code, path)
-	end
-      }
-
-      # nacteni umisteni bloku
-      lines = doc.root.elements["blocks"].text.split('\n')
-      @max_width = @max_height = 0
-      # prochazime radky bloku:
-      lines.each_index { |line_num|
-	@max_height = line_num.dup if line_num > @max_height
-	@blocks.push(Array.new)
-	# prochazime bloky:
-	line = lines[line_num]
-	block_codes = line.split('\s*')
-	block_codes.each_index { |block_index|
-	  @max_width = block_index.dup if block_index > @max_width
-	  block_code = block_codes[block_index]
-	  unless @blocktypes[block_code].nil?
-	    @blocks[line_num][block_index] = @blocktypes[block_code]
-	    @log.debug("Setting reference to blocktype for block at index [" + line_num.to_s + "][" + block_index.to_s + "]")
-	  else
-	    @log.error("Blocktype couldn't be found in blocktypes' hash for blockcode #{block_code} (using mapfile #{map_path})")
-	  end
-	}
-      }
+    def get_block(coord)
+      coord[0] = coord[0].to_i
+      coord[1] = coord[1].to_i
+      line = coord[1] / Map::TILE_SIZE
+      line += 1 if (coord[1] % Map::TILE_SIZE) > 0
+      column = coord[0] / Map::TILE_SIZE
+      column += 1 if (coord[0] % Map::TILE_SIZE) > 0
+      # Sloupkovy index je nutne pred vracenim dekrementovat, protoze
+      # pri nacitani bloku se zacina az od indexu 1.
+      @log.debug("I\'m going to return a reference to a blocktype of [#{line}][#{column - 1}]")
+      @blocks[line][column - 1]
     end
-  end # methody load_xml_file
 
-  def get_block(coord)
-    coord[0] = coord[0].to_i
-    coord[1] = coord[1].to_i
-    line = coord[1] / Map::TILE_SIZE
-    line += 1 if (coord[1] % Map::TILE_SIZE) > 0
-    column = coord[0] / Map::TILE_SIZE
-    column += 1 if (coord[0] % Map::TILE_SIZE) > 0
-    # Sloupkovy index je nutne pred vracenim dekrementovat, protoze
-    # pri nacitani bloku se zacina az od indexu 1.
-    @log.debug("I\'m going to return a reference to a blocktype of [#{line}][#{column - 1}]")
-    @blocks[line][column - 1]
-  end
+    # Vezme definici primky v podobe pole [Ax, Ay, Bx, By]  a vrati 
+    # pole bloku, kterymi primka prochazi
+    # Funguje spravne jen pro vodorovne a k nim kolme primky 
+    # (x nebo y musi byt 0)
 
-  # Vezme definici primky v podobe pole [Ax, Ay, Bx, By]  a vrati 
-  # pole bloku, kterymi primka prochazi
-  # Funguje spravne jen pro vodorovne a k nim kolme primky 
-  # (x nebo y musi byt 0)
-
-  def blocks_on_line(line)
-    colliding_blocks = Array.new
-    # inicialisace promennych iteracniho kroku:
-    step_horiz = step_vertic = 0
-    step_horiz = Map::TILE_SIZE if line[2] > line[0]
-    step_horiz = (- Map::TILE_SIZE) if line[2] < line[0]
-    step_vertic = Map::TILE_SIZE if line[3] > line[1]
-    step_vertic = (- Map::TILE_SIZE) if line[3] < line[1]
-    # iterovani po primce:
-    carry_on = true
-    horiz = line[0]
-    vertic = line[1]
-    loop do
-      # ziskani bloku:
-      block = get_block([horiz, vertic])
-      colliding_blocks.push(block) if block.is_a? TileType
-      # nastaveni iteracnich promennych:
-      horiz += step_horiz
-      vertic += step_vertic
-      # jestli uz jsme mimo primku, sup pryc:
-      if (step_horiz > 0 and horiz > line[2]) or
-	  (step_horiz < 0 and horiz < line[0]) or
-	  (step_vertic > 0 and vertic > line[3]) or
-	  (step_vertic < 0 and vertic < line[1]) then
-	return colliding_blocks
+    public    
+    def blocks_on_line(line)
+      colliding_blocks = Array.new
+      # inicialisace promennych iteracniho kroku:
+      step_horiz = step_vertic = 0
+      step_horiz = Map::TILE_SIZE if line[2] > line[0]
+      step_horiz = (- Map::TILE_SIZE) if line[2] < line[0]
+      step_vertic = Map::TILE_SIZE if line[3] > line[1]
+      step_vertic = (- Map::TILE_SIZE) if line[3] < line[1]
+      # iterovani po primce:
+      carry_on = true
+      horiz = line[0]
+      vertic = line[1]
+      loop do
+	# ziskani bloku:
+	block = get_block([horiz, vertic])
+	colliding_blocks.push(block) if block.is_a? TileType
+	# nastaveni iteracnich promennych:
+	horiz += step_horiz
+	vertic += step_vertic
+	# jestli uz jsme mimo primku, sup pryc:
+	if (step_horiz > 0 and horiz > line[2]) or
+	    (step_horiz < 0 and horiz < line[0]) or
+	    (step_vertic > 0 and vertic > line[3]) or
+	    (step_vertic < 0 and vertic < line[1]) then
+	  return colliding_blocks
+	end
       end
     end
-  end
+
+  end # class Map
 
 end # modulu FreeVikings
