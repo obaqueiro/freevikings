@@ -12,7 +12,7 @@ module FreeVikings
     def initialize(*members)
       @members = []
       members.each {|m| @members.push m if m.is_a? Sprite}
-      @active = 0 # aktivni clen tymu
+      @active = 0 # index aktivniho clena tymu
     end
 
     def active
@@ -23,6 +23,7 @@ module FreeVikings
 
     def next
       @active = (@active + 1) % @members.size
+      self.next unless active.alive?
       return self.active
     end
 
@@ -34,6 +35,7 @@ module FreeVikings
       else
 	@active = @members.size - 1
       end
+      last unless active.alive?
       return self.active
     end
 

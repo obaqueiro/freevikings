@@ -29,6 +29,10 @@ module FreeVikings
       nil
     end
 
+    def alive?
+      true
+    end
+
     def stop
       @velocity_horiz.value = 0
       @velocity_vertic.value = 0
@@ -81,6 +85,10 @@ module FreeVikings
 
     def to_s
       "dead"
+    end
+
+    def alive?
+      nil
     end
   end # class DeadVikingState
 

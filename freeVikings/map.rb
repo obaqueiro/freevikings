@@ -92,7 +92,7 @@ module FreeVikings
       @log.debug("get_block: I\'m going to return a reference to a blocktype of [#{line}][#{column - 1}] (tiles)")
       unless @blocks[line].is_a? Array
 	@log.fatal "get_block: Line #{line} of blocks array of strange type #{@blocks[line].type}."
-	raise (RuntimeError, "get_block: Line #{line} of blocks array isn't an Array. (It's a #{@blocks[line].type} instance.)")
+	raise RuntimeError, "get_block: Line #{line} of blocks array isn't an Array. (It's a #{@blocks[line].type} instance.)"
       end
       @blocks[line][column - 1]
     end
@@ -118,7 +118,11 @@ module FreeVikings
       loop do
 	# ziskani bloku:
 	@log.debug "block_on_line: asking for block at [#{horiz.to_s}, #{vertic.to_s}] (px)"
-	block = get_block([horiz, vertic])
+	begin
+	  block = get_block([horiz, vertic])
+	rescue RuntimeError
+	  next
+	end
 	colliding_blocks.push(block) if block.is_a? TileType
 	# nastaveni iteracnich promennych:
 	horiz += step_horiz
@@ -131,6 +135,25 @@ module FreeVikings
 	  return colliding_blocks
 	end
       end
+    end
+
+    # vezme beznou definici ctverce v pixelech, vrati pole kolidujicich
+    # dlazdic
+
+    def blocks_on_square(square)
+      colliding_vlocks = []
+      # spocitat nejlevejsi a nejpravejsi index do kazdeho radku:
+      leftmost_i = square[0] / Map::TILE_SIZE
+      rightmost_i = (square[0] + square[2]) / Map::TILE_SIZE
+      # spocitat prvni a posledni radek:
+      top_line = square[1] / Map::TILE_SIZE
+      bottom_line = (square[1] + square[3]) / Map::TILE_SIZE
+      # z kazdeho radku vybrat patricny vyrez:
+      @blocks[top_line .. bottom_line].each {|line|
+	colliding_blocks.concat line[leftmost_i .. rightmost_i]
+      }
+
+      return colliding_blocks
     end
 
   end # class Map

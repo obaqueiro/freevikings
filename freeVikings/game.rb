@@ -43,6 +43,8 @@ module FreeVikings
       @face_bg = RUDL::Surface.load_new('face_bg.tga')
       @baleog_face_bw = RUDL::Surface.load_new('baleog_face_unactive.gif')
       @baleog_face = RUDL::Surface.load_new('baleog_face.tga')
+      @dead_face = RUDL::Surface.load_new('dead_face.png')
+      @energy_punkt = RUDL::Surface.load_new('energypunkt.tga')
 
       @baleog = Viking.createWarior("Baleog")
       @erik = Viking.createSprinter("Erik")
@@ -57,17 +59,28 @@ module FreeVikings
     end # initialize
 
     def repaint_status
-      # vykresleni pozadi pro podobenky vikingu:
+      # vybarveni pozadi pro podobenky vikingu:
       @status_view.fill([60,60,60])
-      3.times {|i| @status_view.blit(@face_bg, [i * 2 * VIKING_FACE_SIZE, 0])}
-      1.upto(2) {|i| @status_view.blit(@baleog_face_bw, [i * 2 * VIKING_FACE_SIZE, 0])}
-      @status_view.blit(@baleog_face, [0,0])
+      i = 0
+      @team.each { |vik|
+	@status_view.blit(@face_bg, [i * 2 * VIKING_FACE_SIZE, 0])
+	if vik.alive? then
+	  if @team.active == vik then
+	    @status_view.blit(@baleog_face, [i * 2 * VIKING_FACE_SIZE, 0])
+	  else
+	    @status_view.blit(@baleog_face_bw, [i * 2 * VIKING_FACE_SIZE, 0])
+	  end
+	  vik.energy.times {|j| @status_view.blit(@energy_punkt, [i*2*VIKING_FACE_SIZE + VIKING_FACE_SIZE + 2, j*@energy_punkt.h + 3])}
+	end
+	unless vik.alive?
+	  @status_view.blit(@dead_face, [i * 2 * VIKING_FACE_SIZE, 0])
+	end
+	i += 1
+      }
     end
 
     def game_loop
       fps = 0
-      repaint_status
-      @app_window.blit(@status_view, [0, WIN_HEIGHT - STATUS_HEIGHT])
       loop do
 	# Zpracujeme udalosti:
 	if event = RUDL::EventQueue.poll then
@@ -80,6 +93,9 @@ module FreeVikings
 	@app_window.blit(@map_view, [0,0])
 	# nefunguje pod RUDL <= 0.4 (potrebuje pristup k fcim SDL_gfx):
 	# @app_window.print([10,10], "fps #{fps / (Timer.ticks / 1000)}", [255,255,255])
+	repaint_status
+	@app_window.blit(@status_view, [0, WIN_HEIGHT - STATUS_HEIGHT])
+
 	@app_window.flip
 	fps += 1
       end # smycky loop

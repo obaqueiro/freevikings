@@ -17,6 +17,7 @@ module FreeVikings
     attr_accessor :state
     attr_accessor :name
     attr_writer :move_validator
+    attr_reader :energy
 
     def initialize(name = "")
       super()
@@ -29,6 +30,7 @@ module FreeVikings
       @last_position = @position = [121, 60]
       @last_update_time = Time.now.to_f
       @move_validator = NullMoveValidator # objekt overujici moznost presunu na posici
+      @energy = 3 # zivotni sila
     end
 
     def Viking.createWarior(name="")
@@ -45,6 +47,19 @@ module FreeVikings
 
     def paint(surface)
       surface.blit(@image.image(@state.to_s), coordinate_in_surface(surface))
+    end
+
+    def hurt
+      @energy -= 1
+      die if @energy <= 0
+    end
+
+    def die
+      @state = DeadVikingState.new(self, @state)
+    end
+
+    def alive?
+      @state.alive?
     end
 
     def move_left
