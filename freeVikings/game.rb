@@ -102,7 +102,7 @@ module FreeVikings
 	return true
       end
       # Pokud jsou vsichni zivi v exitu, koncime taky:
-      if exited_vikings.size == @team.alive_size then
+      if exited_sprites.size == @team.alive_size then
 	return true
       end
       return nil
@@ -180,12 +180,14 @@ module FreeVikings
 
     private
 
-    def exited_vikings
+    # Vrati pole vsech sprajtu, ktere se vyskytuji na exitu
+
+    def exited_sprites
       l = @world.location
       on_exit = l.sprites_on_rect(l.exitter.rect)
       on_exit.delete(l.exitter)
-      exited_vikings = on_exit.find_all {|sprite| @team.member? sprite}
-      return exited_vikings
+      exited_sprites = on_exit.find_all {|sprite| @team.member? sprite}
+      return exited_sprites
     end
 
   end

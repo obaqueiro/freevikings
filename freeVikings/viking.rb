@@ -2,6 +2,8 @@
 # igneus 20.1.2004
 
 require 'sprite.rb'
+require 'deadviking.rb'
+
 require 'vikingstate.rb'
 require 'imagebank.rb'
 require 'movevalidator.rb'
@@ -31,6 +33,8 @@ module FreeVikings
       @energy = 3 # zivotni sila
 
       @portrait = Portrait.new('viking_face.tga', 'viking_face_unactive.tga', 'dead_face.png')
+
+      @alive = true
     end
 
     def Viking.createWarior(name, start_position)
@@ -60,10 +64,6 @@ module FreeVikings
       destroy if @energy <= 0
     end
 
-    def alive?
-      @state.alive?
-    end
-
     def move_left
       @state.move_left
       set_move
@@ -79,7 +79,13 @@ module FreeVikings
     end
 
     def destroy
-      @state.destroy
+      @alive = nil
+      @move_validator.add_sprite DeadViking.new([left, top])
+      @move_validator.delete_sprite self
+    end
+
+    def alive?
+      @alive
     end
 
     def top

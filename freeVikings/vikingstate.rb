@@ -35,10 +35,6 @@ module FreeVikings
       nil
     end
 
-    def alive?
-      true
-    end
-
     def direction
       return 'left' if @velocity_horiz.value < 0
       return 'right' if @velocity_horiz.value > 0
@@ -50,10 +46,6 @@ module FreeVikings
 
     def stuck
       nil
-    end
-
-    def destroy
-      @viking.state = DeadVikingState.new(@viking, self)
     end
 
     def move_left
@@ -94,17 +86,6 @@ module FreeVikings
       "<id:#{id} vv:#{@velocity_vertic.value} vh:#{@velocity_horiz.value}>"
     end
   end # class VikingState
-
-  class DeadVikingState < VikingState
-
-    def to_s
-      "dead"
-    end
-
-    def alive?
-      nil
-    end
-  end # class DeadVikingState
 
   class StandingVikingState < VikingState
     def initialize(viking, last_state)
@@ -175,7 +156,7 @@ module FreeVikings
     def initialize(viking, last_state)
       super(viking, last_state)
       @velocity_vertic = Velocity.new(-4 * Viking::BASE_VELOCITY)
-      @velocity_horiz = last_state.velocity_vertic
+      @velocity_horiz = last_state.velocity_horiz
     end
 
     def to_s
