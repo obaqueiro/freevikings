@@ -11,10 +11,10 @@ module FreeVikings
 
   class Location
 
-    def initialize(maploader)
+    def initialize(loader)
       @spritemanager = SpriteManager.new(self)
       @itemmanager = nil
-      @map = Map.new(maploader)
+      @map = Map.new(loader)
     end
 
     def update

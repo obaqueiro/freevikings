@@ -27,7 +27,7 @@ module FreeVikings
 
       @log.info('Loading map.')
 
-      @loading_strategy.load(@blocks, @blocktypes)
+      @loading_strategy.load_map(@blocks, @blocktypes)
 
       @log.info('Map initialised.')
     end

@@ -20,7 +20,7 @@ module FreeVikings
     # Do hashe Blocktype_hash ulozi objekt TileType 
     # pro kazdy typ dlazdice, ktery se v souboru mapy vyskytne.
     # Nacte do pole bloku bloky a do pole typu jejich typy (objekty TileType)
-    def load(blocks_matrix, blocktype_hash)
+    def load_map(blocks_matrix, blocktype_hash)
     end
 
   end # class MapLoadStrategy
@@ -45,7 +45,7 @@ module FreeVikings
       end
     end
 
-    def load(blocks_matrix, blocktype_hash)
+    def load_map(blocks_matrix, blocktype_hash)
       @blocks = blocks_matrix
       @blocktypes = blocktype_hash
 

@@ -92,6 +92,7 @@ module FreeVikings
 	@app_window.blit(@map_view, [0,0])
 	# nefunguje pod RUDL <= 0.4 (potrebuje pristup k fcim SDL_gfx):
 	# @app_window.print([10,10], "fps #{fps / (Timer.ticks / 1000)}", [255,255,255])
+	puts "FPS: #{fps / (Timer.ticks / 1000)}"
 	repaint_status
 	@app_window.blit(@status_view, [0, WIN_HEIGHT - STATUS_HEIGHT])
 

@@ -87,6 +87,9 @@ module FreeVikings
       return @position[0]
     end
 
+    def space_func
+    end
+
     # vrati souradnice stredu aktualniho obrazku
 
     def center
@@ -112,7 +115,7 @@ module FreeVikings
     def update
       # Nyni muzeme aktualisovat posici:
       if @move_validator.is_position_valid?(self, next_position) then
-	@@viking_log.debug "update: Viking #{name} will move, his next position is all right."
+	@@viking_log.debug "update: Viking #{name}'s next position is all right."
 	@last_position, @position = @position, next_position
 	update_time
       else
@@ -123,7 +126,7 @@ module FreeVikings
       # Pokud muze zacit padat, zacne padat:
       lowerpos = next_position
       lowerpos[1] += 2
-      if @move_validator.is_position_valid?(self, lowerpos)
+      if not @state.is_a? FallingVikingState and @move_validator.is_position_valid?(self, lowerpos)
 	@state = FallingVikingState.new(self, @state)
 	@@viking_log.debug "update: #{@name} starts falling because there's a free space under him."
       end

@@ -16,9 +16,9 @@ module FreeVikings
 
     def value
       if @velocity > 0
-	@velocity -= (time_delta * @acceleration)
+	@velocity -= (time_delta * @acceleration.abs)
       elsif @velocity < 0
-	@velocity = - (@velocity.abs - (time_delta * @acceleration))
+	@velocity = - (@velocity.abs - (time_delta * @acceleration.abs))
       end
       return @velocity
     end

@@ -13,12 +13,18 @@ module FreeVikings
       init_images
     end
 
+    def space_func
+      @state = JumpingVikingState.new(self, @state)
+    end
+
     private
     def init_images
       @image = ImageBank.new(self)
       @image.add_pair('standing', Image.new('erik_standing.png'))
       @image.add_pair('moving_left', Image.new('erik_left.png'))
       @image.add_pair('moving_right', Image.new('erik_right.png'))
+      @image.add_pair('jumping', Image.new('erik_standing.png'))
+      @image.add_pair('stucked_', Image.new('erik_standing.png'))
       @image.add_pair('stucked_left', Image.new('erik_left.png'))
       @image.add_pair('stucked_right', Image.new('erik_right.png'))
       @image.add_pair('falling_', Image.new('erik_standing.png'))

@@ -7,7 +7,7 @@ require 'velocity.rb'
 
 module FreeVikings
 
-  GRAVITY = 30
+  GRAVITY = 400
 
   # Stavy, ktere jsou Previous, umoznuji vratit se volanim metody previous do
   # predchoziho stavu
@@ -47,8 +47,6 @@ module FreeVikings
     end
 
     def stop
-      @velocity_horiz.value = 0
-      @velocity_vertic.value = 0
     end
 
     def stuck
@@ -127,6 +125,10 @@ module FreeVikings
     def moving?
       true
     end
+
+    def stuck
+      @viking.state = StuckedVikingState.new(@viking, self)
+    end
   end # class MovingVikingState
 
   class WalkingVikingState < MovingVikingState
@@ -154,10 +156,6 @@ module FreeVikings
     def move_right
       @viking.state = RightWalkingVikingState.new(@viking, self)
     end
-
-    def stuck
-      @viking.state = StuckedVikingState.new(@viking, self)
-    end
   end # class LeftWalkingVikingState
 
   class RightWalkingVikingState < WalkingVikingState
@@ -174,11 +172,31 @@ module FreeVikings
     def move_left
       @viking.state = LeftWalkingVikingState.new(@viking, self)
     end
+  end # class RightWalkingVikingState
+
+  class JumpingVikingState < MovingVikingState
+
+    def initialize(viking, last_state)
+      super(viking, last_state)
+      @velocity_vertic = Velocity.new(-1300, GRAVITY)
+      @velocity_horiz = last_state.velocity_vertic
+    end
+
+    def to_s
+      'jumping'
+    end
+
+    def stop
+    end
 
     def stuck
-      @viking.state = StuckedVikingState.new(@viking, self)
+      @viking.state = FallingVikingState.new(@viking, self)
     end
-  end # class RightWalkingVikingState
+
+    def direction
+      ""
+    end
+  end # class JumpingVikingState
 
   class StuckedVikingState < StandingVikingState
 
@@ -211,6 +229,9 @@ module FreeVikings
 
     def stuck
       @viking.state = StandingVikingState.new(@viking, self)
+    end
+
+    def stop
     end
   end # class FallingVikingState
 

@@ -70,6 +70,7 @@ module FreeVikings
 	@context.team.active.move_right
 	# Funkcni klavesy:
       when K_SPACE
+	@context.team.active.space_func
       when K_TAB
       when K_s
       when K_f
