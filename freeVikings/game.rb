@@ -10,7 +10,7 @@ require 'sprite.rb'
 require 'viking.rb'
 require 'team.rb'
 require 'map.rb'
-require 'spritemanager.rb'
+require 'location.rb'
 require 'gamestate.rb'
 
 module FreeVikings
@@ -31,9 +31,8 @@ module FreeVikings
 
     def initialize
       strategy = XMLMapLoadStrategy.new("first_loc.xml")
-      @map = Map.new(strategy)
 
-      @manager = SpriteManager.new(@map)
+      @location = Location.new(strategy)
 
       @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
       @app_window.set_caption('freeVikings')
@@ -52,7 +51,7 @@ module FreeVikings
       @olaf = Viking.createShielder("Olaf")
 
       @team = Team.new(@erik, @baleog, @olaf)
-      @team.each {|v| @manager.add v}
+      @team.each {|v| @location.add_sprite v}
 
       # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
       # tridy, pokud usoudi, ze by se stav mel zmenit.
@@ -88,9 +87,8 @@ module FreeVikings
 	  @state.serve_event(event)
 	end # if je udalost
 
-	@map.paint(@map_view, @team.active.center)
-	@manager.paint(@map_view, centered_view_rect(@map.background.w, @map.background.h, @map_view.w, @map_view.h, team.active.center))
-
+	@location.update
+	@location.paint(@map_view, @team.active.center)
 	@app_window.blit(@map_view, [0,0])
 	# nefunguje pod RUDL <= 0.4 (potrebuje pristup k fcim SDL_gfx):
 	# @app_window.print([10,10], "fps #{fps / (Timer.ticks / 1000)}", [255,255,255])

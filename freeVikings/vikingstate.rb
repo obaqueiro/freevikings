@@ -7,7 +7,7 @@ require 'velocity.rb'
 
 module FreeVikings
 
-  GRAVITY = 50
+  GRAVITY = 30
 
   # Stavy, ktere jsou Previous, umoznuji vratit se volanim metody previous do
   # predchoziho stavu

@@ -28,7 +28,6 @@ module FreeVikings
     # 0 - topleft x; 1 - topleft y; 2 - bottomright x; 3 - bottomright y;
 
     def paint(surface, rect_of_location)
-      update
       @sprites.each { |sprite|
 	if sprite.top > rect_of_location[1] and
 	    sprite.top < rect_of_location[3] and
