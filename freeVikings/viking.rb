@@ -25,7 +25,7 @@ module FreeVikings
       @name = 'Swen'
       @state = StandingVikingState.new(self)
       @viking_log.debug("Viking #{@name} initialised.")
-      @last_position = @position = [90, 60]
+      @last_position = @position = [90, 55]
       @move_validator = NullMoveValidator # objekt overujici moznost presunu na posici
     end
 
@@ -85,8 +85,9 @@ module FreeVikings
 	@last_position, @position = @position, next_position
 	update_time
       else
-	stop
-	velocity_horiz.value = velocity_vertic.value = 0
+	# stop
+	# velocity_horiz.value = velocity_vertic.value = 0
+	unmove
       end
       @viking_log.debug("#{@name}'s state: #{@state.to_s}")
     end

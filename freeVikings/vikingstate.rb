@@ -7,13 +7,15 @@ require 'velocity.rb'
 
 module FreeVikings
 
+  GRAVITY = 9.8
+
   class VikingState
     # Supertrida pro tridy Stavu vikinga
 
     attr_reader :velocity_horiz
     attr_reader :velocity_vertic
 
-    def initialize(viking)
+    def initialize(viking, last_state=nil)
       @viking = viking
       @velocity_horiz = Velocity.new
       @velocity_vertic = Velocity.new
@@ -72,11 +74,11 @@ module FreeVikings
     end
 
     def move_left
-      @viking.state = LeftWalkingVikingState.new(@viking)
+      @viking.state = LeftWalkingVikingState.new(@viking, self)
     end
 
     def move_right
-      @viking.state = RightWalkingVikingState.new(@viking)
+      @viking.state = RightWalkingVikingState.new(@viking, self)
     end
   end # class StandingVikingState
 
@@ -89,14 +91,14 @@ module FreeVikings
   class WalkingVikingState < MovingVikingState
     # Supertrida pro tridy chuze, padani a splhani
     def stop
-      @viking.state = StandingVikingState.new(@viking)
+      @viking.state = StandingVikingState.new(@viking, self)
     end
   end # class MovingVikingState
 
   class LeftWalkingVikingState < WalkingVikingState
     # viking jde doleva
-    def initialize(viking)
-      super(viking)
+    def initialize(viking, last_state)
+      super(viking, last_state)
       @velocity_horiz.value = - (@viking.class::BASE_VELOCITY)
     end
 
@@ -105,13 +107,13 @@ module FreeVikings
     end
 
     def move_right
-      @viking.state = RightWalkingVikingState.new(@viking)
+      @viking.state = RightWalkingVikingState.new(@viking, self)
     end
   end # class LeftWalkingVikingState
 
   class RightWalkingVikingState < WalkingVikingState
     # viking jde doprava
-    def initialize(viking)
+    def initialize(viking, last_state)
       super(viking)
       velocity_horiz.value = @viking.class::BASE_VELOCITY
     end
@@ -121,7 +123,7 @@ module FreeVikings
     end
 
     def move_left
-      @viking.state = LeftWalkingVikingState.new(@viking)
+      @viking.state = LeftWalkingVikingState.new(@viking, self)
     end
   end # class RightWalkingVikingState
 
