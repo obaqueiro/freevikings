@@ -8,6 +8,7 @@ require 'RUDL'
 
 require 'sprite.rb'
 require 'viking.rb'
+require 'team.rb'
 require 'map.rb'
 require 'spritemanager.rb'
 require 'gamestate.rb'
@@ -25,7 +26,7 @@ module FreeVikings
     STATUS_HEIGHT = VIKING_FACE_SIZE
 
     attr_reader :app_window
-    attr_reader :viking
+    attr_reader :team
     attr_reader :map
 
     def initialize
@@ -45,9 +46,13 @@ module FreeVikings
 
       @baleog = Viking.new
       @baleog.name = "Baleog"
-      @manager.add @baleog
+      @olaf = Viking.new
+      @olaf.name = "Olaf"
+      @erik = Viking.new
+      @erik.name = "Erik"
 
-      @viking = @baleog
+      @team = Team.new(@baleog, @erik, @olaf)
+      @team.each {|v| @manager.add v}
 
       # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
       # tridy, pokud usoudi, ze by se stav mel zmenit.
@@ -72,8 +77,8 @@ module FreeVikings
 	  @state.serve_event(event)
 	end # if je udalost
 
-	@map.paint(@map_view, viking.center)
-	@manager.paint(@map_view, centered_view_rect(@map.background.w, @map.background.h, @map_view.w, @map_view.h, viking.center))
+	@map.paint(@map_view, @team.active.center)
+	@manager.paint(@map_view, centered_view_rect(@map.background.w, @map.background.h, @map_view.w, @map_view.h, team.active.center))
 
 	@app_window.blit(@map_view, [0,0])
 	# nefunguje pod RUDL <= 0.4 (potrebuje pristup k fcim SDL_gfx):

@@ -56,7 +56,7 @@ module FreeVikings
     def view_center
       # stred nahledu na mapu by mel byt ve stredu obrazku
       # hlavniho hrdiny
-      @context.viking.center
+      @context.team.active.center
     end
 
     private
@@ -65,15 +65,17 @@ module FreeVikings
       case keyevent.key
 	# Smerove klavesy:
       when K_LEFT
-	@context.viking.move_left
+	@context.team.active.move_left
       when K_RIGHT
-	@context.viking.move_right
+	@context.team.active.move_right
 	# Funkcni klavesy:
       when K_SPACE
       when K_TAB
       when K_s
       when K_f
 	# Specialni klavesy:
+      when K_RCTRL
+	@context.team.next
       when K_F3
 	@context.app_window.toggle_fullscreen
       when K_q
@@ -84,7 +86,7 @@ module FreeVikings
     def serve_keyup(keyevent)
       case keyevent.key
       when K_LEFT, K_RIGHT
-	@context.viking.stop
+	@context.team.active.stop
       end
     end # private method serve_keyup
   end # class PlayingGameState
