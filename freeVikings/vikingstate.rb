@@ -38,6 +38,10 @@ module FreeVikings
       nil
     end
 
+    def destroy
+      @viking.state = DeadVikingState.new(@viking, self)
+    end
+
     def move_left
       nil
     end
@@ -72,6 +76,13 @@ module FreeVikings
       nil
     end
   end # class VikingState
+
+  class DeadVikingState < VikingState
+
+    def to_s
+      "dead"
+    end
+  end # class DeadVikingState
 
   class StandingVikingState < VikingState
     def to_s

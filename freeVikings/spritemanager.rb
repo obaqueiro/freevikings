@@ -22,10 +22,13 @@ module FreeVikings
     end
 
     # Metoda dostane surface a pole ctyr cisel definujicich obdelnik z plochy
-    # aktualni lokace, jehoz obsah se ma na surface vykreslit. Po navratu 
-    # z metody budou na surface vykresleny vsechny sprajty.
+    # aktualni lokace, jehoz obsah se ma na surface vykreslit.
+    # Vykresli vsechny viditelne sprajty.
+    # Definice obdelnika:
+    # 0 - topleft x; 1 - topleft y; 2 - bottomright x; 3 - bottomright y;
 
     def paint(surface, rect_of_location)
+      update
       @sprites.each { |sprite|
 	if sprite.top > rect_of_location[1] and
 	    sprite.top < rect_of_location[3] and
@@ -34,6 +37,21 @@ module FreeVikings
 	  relative_left = sprite.left - rect_of_location[0]
 	  relative_top = sprite.top - rect_of_location[1]
 	  surface.blit(sprite.image, [relative_left, relative_top])
+	end
+      }
+    end
+
+    # Projde vsechny sprajty a zavola na nich update (v teto metode se hlavne
+    # aktualisuje posice, ale inteligentni obludy mohou napr. i premyslet).
+
+    def update
+      @sprites.each { |sprite|
+	# at je pekne aktualni:
+	sprite.update
+	# jestli se sprajt dostal mimo mapu, musi byt odstranen.
+	if sprite.top < 0 or sprite.top > @map.background.h or
+	    sprite.left < 0 or sprite.left > @map.background.w then
+	  sprite.destroy
 	end
       }
     end

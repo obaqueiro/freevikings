@@ -21,12 +21,13 @@ module FreeVikings
     def initialize(name = "")
       super()
       @viking_log = Log4r::Logger.new('viking_log')
-      @viking_log.level = Log4r::INFO
+      @viking_log.level = Log4r::DEBUG
       @viking_log.outputters = Log4r::StderrOutputter.new('viking_stderr_out')
       @name = name
       @state = StandingVikingState.new(self)
       @viking_log.debug("Viking #{@name} initialised.")
       @last_position = @position = [121, 60]
+      @last_update_time = Time.now.to_f
       @move_validator = NullMoveValidator # objekt overujici moznost presunu na posici
     end
 
@@ -62,13 +63,15 @@ module FreeVikings
       @state.stop
     end
 
+    def destroy
+      @state.destroy
+    end
+
     def top
-      update_position if moving?
       return @position[1]
     end
 
     def left
-      update_position if moving?
       return @position[0]
     end
 
@@ -93,12 +96,13 @@ module FreeVikings
       return [next_left, next_top]
     end
 
-    def update_position
+    # Aktualisuje posici vikinga.
+
+    def update
       if @move_validator.is_position_valid?(self, next_position) then
 	@last_position, @position = @position, next_position
 	update_time
       else
-	unmove
 	@state.stuck
       end
       @viking_log.debug("#{@name}'s state: #{@state.to_s}")

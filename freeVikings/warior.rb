@@ -23,6 +23,7 @@ module FreeVikings
       @image.add_pair('stucked_left', Image.new('baleog_left.png'))
       @image.add_pair('stucked_right', Image.new('baleog_right.png'))
       @image.add_pair('falling', Image.new('baleog_standing.png'))
+      @image.add_pair('dead', Image.new('dead.png'))
     end
 
   end # class
