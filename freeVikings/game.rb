@@ -11,6 +11,7 @@ require 'viking.rb'
 require 'hero.rb'
 require 'duck.rb'
 require 'slug.rb'
+require 'plasmashooter.rb'
 require 'team.rb'
 require 'map.rb'
 require 'world.rb'
@@ -163,6 +164,12 @@ module FreeVikings
 
 	  @app_window.flip
 	  frames += 1
+
+	  unless (s = Time.now.sec) == 0 then
+	    puts "fps: #{frames / s}"
+	  else
+	    frames = 0
+	  end
 	  
 	end # while not location.exited?
       end # while not self.game_over?

@@ -41,7 +41,6 @@ module FreeVikings
 	s = stroken.pop
 	if s.is_a? Monster
 	  s.hurt
-	  @move_validator.delete_sprite s
 	end
       end
     end

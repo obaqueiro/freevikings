@@ -97,9 +97,11 @@ module FreeVikings
     def load_monsters(monster_manager)
       duck = Duck.new
       slizzy = Slug.new
+      spittie = PlasmaShooter.new([1000, 350])
 
       monster_manager.add_sprite slizzy
       monster_manager.add_sprite duck
+      monster_manager.add_sprite spittie
     end
 
     def load_exit(location)

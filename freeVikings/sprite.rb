@@ -130,6 +130,7 @@ This method is called when the sprite is killed.
 =end
 
     def destroy
+      @move_validator.delete_sprite self
     end
 
 =begin

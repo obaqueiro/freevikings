@@ -28,7 +28,6 @@ sprite.rb for implementation of this method).
     end
 
     def delete(sprite)
-      sprite.destroy
       @sprites.delete(sprite)
     end
 
@@ -43,11 +42,15 @@ height. The coordinates are relative to the map loaded.
 
     def paint(surface, rect_of_location)
       @sprites.each { |entry|
+	locr = Rectangle.new(*rect_of_location)
 	entry.each_displayable { |sprite|
-	  if sprite.top > rect_of_location[1] and
-	      sprite.top < rect_of_location[3] and
-	      sprite.left > rect_of_location[0] and
-	      sprite.left < rect_of_location[2] then
+	  eir = 0
+	  sr = sprite.rect
+	  eir += 1 if sr.left > locr.left and sr.left < locr.right
+	  eir += 1 if sr.right > locr.left and sr.right < locr.right
+	  eir += 1 if sr.top > locr.top and sr.top < locr.bottom
+	  eir += 1 if sr.bottom > locr.top and sr.bottom < locr.bottom
+	  if eir >= 2 then
 	    relative_left = sprite.left - rect_of_location[0]
 	    relative_top = sprite.top - rect_of_location[1]
 	    surface.blit(sprite.image, [relative_left, relative_top])

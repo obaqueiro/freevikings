@@ -57,6 +57,7 @@ module FreeVikings
     attr_accessor :start
 
     def delete_sprite(sprite)
+      sprite.move_validator = nil
       @spritemanager.delete sprite
     end
 
