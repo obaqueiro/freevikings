@@ -44,6 +44,10 @@ III. License
 
 IV. How to play?
 
+At first type
+$ ruby freevikings.rb
+into your term.
+
 Use cursor keys to move the vikings, try to reach the EXIT place with
 all of them.
 Switch to the fullscreen mode by F3.
