@@ -16,6 +16,7 @@ require 'testvelocity.rb'
 require 'testteam.rb'
 require 'testrect.rb'
 require 'testrexml.rb'
+require 'testvikingstate.rb'
 
 class FreeVikingsTestSuite
 
@@ -31,6 +32,7 @@ class FreeVikingsTestSuite
     suite.add TestTeam.suite
     suite.add TestRect.suite
     suite.add TestExploreREXML.suite
+    suite.add TestVikingState.suite
 
     return suite
   end
