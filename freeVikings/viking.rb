@@ -12,6 +12,8 @@ module FreeVikings
   class Viking < Sprite
     # Sprite trida pro postavicky vikingu
 
+    BASE_VELOCITY = 100
+
     attr_accessor :state
     attr_accessor :name
     attr_writer :move_validator

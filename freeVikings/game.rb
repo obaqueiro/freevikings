@@ -20,8 +20,8 @@ module FreeVikings
     include RUDL::Constant
 
     VIKING_FACE_SIZE = 60
-    WIN_WIDTH = 6 * VIKING_FACE_SIZE
-    WIN_HEIGHT = WIN_WIDTH
+    WIN_WIDTH = 640 # 6 * VIKING_FACE_SIZE
+    WIN_HEIGHT = 480 # WIN_WIDTH
     STATUS_HEIGHT = 60
 
     attr_reader :app_window
@@ -58,11 +58,12 @@ module FreeVikings
       # vykresleni pozadi pro podobenky vikingu:
       @status_view.fill([60,60,60])
       3.times {|i| @status_view.blit(@face_bg, [i * 2 * VIKING_FACE_SIZE, 0])}
-      1.upto(3) {|i| @status_view.blit(@baleog_face_bw, [i * 2 * VIKING_FACE_SIZE, 0])}
+      1.upto(2) {|i| @status_view.blit(@baleog_face_bw, [i * 2 * VIKING_FACE_SIZE, 0])}
       @status_view.blit(@baleog_face, [0,0])
     end
 
     def game_loop
+    fps = 0
       loop do
 	# Zpracujeme udalosti:
 	if event = RUDL::EventQueue.poll then
@@ -75,7 +76,10 @@ module FreeVikings
 	@app_window.blit(@map_view, [0,0])
 	repaint_status
 	@app_window.blit(@status_view, [0, WIN_HEIGHT])
+	# nefunguje pod RUDL <= 0.4 (potrebuje pristup k fcim SDL_gfx):
+	# @app_window.print([10,10], "fps #{fps / (Timer.ticks / 1000)}", [255,255,255])
 	@app_window.flip
+	fps += 1
       end # smycky loop
     end # method game_loop
 

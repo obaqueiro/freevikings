@@ -164,7 +164,7 @@ module FreeVikings
 
     def initialize(viking, last_state)
       super(viking, last_state)
-      @velocity_vertic.value = @viking.class::BASE_VELOCITY
+      @velocity_vertic.value = @viking.class::BASE_VELOCITY * 1.6
       @velocity_horiz = last_state.velocity_horiz
     end
 
