@@ -72,6 +72,8 @@ module FreeVikings
       @image.add_pair('bow_stretching_right', Image.new('baleog_shooting_right.png'))
       @image.add_pair('fighting_left', i_left)
       @image.add_pair('fighting_right', i_right)
+
+      @portrait = Portrait.new 'baleog_face.tga', 'baleog_face_unactive.gif', 'dead_face.png'
     end
 
     def weapon_position

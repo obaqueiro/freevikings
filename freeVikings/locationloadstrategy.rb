@@ -102,7 +102,7 @@ module FreeVikings
     end
 
     def load_exit(location)
-      location.exit = Exit.new([1120,320])
+      location.exitter = Exit.new([1120,320])
     end
 
   end # class XMLMapLoadStrategy

@@ -67,11 +67,6 @@ module FreeVikings
       @baleog_face = RUDL::Surface.load_new(GFX_DIR+'/erik_face.tga')
       @dead_face = RUDL::Surface.load_new(GFX_DIR+'/dead_face.png')
       @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.tga')
-
-      @baleog = Viking.createWarior(GFX_DIR+"Baleog")
-      @erik = Viking.createSprinter(GFX_DIR+"Erik")
-      @olaf = Viking.createShielder(GFX_DIR+"Olaf")
-
     end # init_display
 
     def finalize
@@ -87,18 +82,37 @@ module FreeVikings
 	@status_view.blit(@face_bg, [i * 2 * VIKING_FACE_SIZE, 0])
 	if vik.alive? then
 	  if @team.active == vik then
-	    @status_view.blit(@baleog_face, [i * 2 * VIKING_FACE_SIZE, 0])
+	    @status_view.blit(vik.portrait.active, [i * 2 * VIKING_FACE_SIZE, 0])
+	  elsif not vik.alive?
+	    @status_view.blit(vik.portrait.kaput, [i * 2 * VIKING_FACE_SIZE, 0])
 	  else
-	    @status_view.blit(@baleog_face_bw, [i * 2 * VIKING_FACE_SIZE, 0])
+	    @status_view.blit(vik.portrait.unactive, [i * 2 * VIKING_FACE_SIZE, 0])
 	  end
 	  vik.energy.times {|j| @status_view.blit(@energy_punkt, [i*2*VIKING_FACE_SIZE + VIKING_FACE_SIZE + 2, j*@energy_punkt.h + 3])}
-	end
-	unless vik.alive?
-	  @status_view.blit(@dead_face, [i * 2 * VIKING_FACE_SIZE, 0])
 	end
 	i += 1
       }
     end # repaint_status
+
+    def is_exit?
+      # Mozna lokace jeste nebyla inicialisovan:
+      if @world.location.nil? then
+	return 0
+      end
+      # Pokud vsichni umreli, koncime:
+      unless @team.alive? then
+	return 1
+      end
+      # Pokud jsou vsichni zivi v exitu, koncime taky:
+      l = @world.location
+      on_exit = l.sprites_on_rect(l.exitter.rect)
+      on_exit.delete(l.exitter)
+      exited_vikings = on_exit.find_all {|sprite| @team.member? sprite}
+      if exited_vikings.size == @team.alive_size then
+	return 2
+      end
+      return nil
+    end # is_exit?
 
     def game_over?
       nil
@@ -106,8 +120,36 @@ module FreeVikings
 
     def game_loop
       while not self.game_over? do
-	@world.next_location
+
+	case is_exit?
+	when 0
+	  # Svet dosud neinicialisovan
+	  @world.next_location
+	when 1
+	  # Vsichni vikingove umreli
+	  puts 'All the vikings died. Try once more.'
+	  @world.rewind_location
+	when 2
+	  # Vsichni zivi vikingove v exitu
+	  if @team.alive_size == @team.size then
+	    puts 'Oh, great! Congratulations, level completed.'
+	    @world.next_location
+	  else
+	    puts 'All the vikings in the exit, but you\'ve lost some lives. Try again.'
+	    @world.rewind_location
+	  end
+	when nil
+	  # Tahle varianta by v techto mistech nemela nastat (nil znamena,
+	  # ze je vse v poradku a lokace nebyla dokoncena, tedy ma
+	  # hra pokracovat)
+	  puts '+++ Fatal error: location isn\'t exited and we skipped out of the location loop! Call the programmers! Cry! Everything\'s wrong!'
+	end
+
 	location = @world.location
+
+	@baleog = Viking.createWarior("Baleog")
+	@erik = Viking.createSprinter("Erik")
+	@olaf = Viking.createShielder("Olaf")
 
 	@team = Team.new(@erik, @baleog, @olaf)
 	@team.each { |v|
@@ -115,7 +157,10 @@ module FreeVikings
 	  location.add_sprite v }
 
 	frames = 0 # pomocna promenna k vypoctu fps
-	while not location.exited? do
+
+	# Cyklujeme, dokud se vsichni prezivsi nedostali do exitu
+	# nebo to hrac nevzdal
+	while not is_exit? do
 
 	  # Zpracujeme udalosti:
 	  if event = RUDL::EventQueue.poll then

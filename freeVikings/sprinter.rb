@@ -38,6 +38,8 @@ module FreeVikings
       @image.add_pair('falling_left', i_left)
       @image.add_pair('falling_right', i_right)
       @image.add_pair('dead', Image.new('dead.png'))
+
+      @portrait = Portrait.new 'erik_face.tga', 'erik_face_unactive.gif', 'dead_face.png'
     end
   end # class
 end # module

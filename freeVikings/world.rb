@@ -21,5 +21,10 @@ module FreeVikings
       strategy = XMLLocationLoadStrategy.new("first_loc.xml")
       @location = Location.new(strategy)
     end
+
+    def rewind_location
+      # zatim je tu svindl:
+      next_location
+    end
   end # class World
 end # module FreeVikings

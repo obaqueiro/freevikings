@@ -36,10 +36,6 @@ module FreeVikings
       @map.background
     end
 
-    def exited?
-      nil
-    end
-
     def add_sprite(sprite)
       @spritemanager.add sprite
       sprite.each_displayable { |d|
@@ -47,10 +43,12 @@ module FreeVikings
       }
     end
 
-    def exit=(exitter)
+    def exitter=(exitter)
       @spritemanager.add exitter
-      @exit = exitter
+      @exitter = exitter
     end
+
+    attr_reader :exitter
 
     def delete_sprite(sprite)
       @spritemanager.delete sprite

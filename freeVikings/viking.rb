@@ -29,6 +29,8 @@ module FreeVikings
       @last_update_time = Time.now.to_f
       @move_validator = NullMoveValidator # objekt overujici moznost presunu na posici
       @energy = 3 # zivotni sila
+
+      @portrait = Portrait.new('viking_face.tga', 'viking_face_unactive.tga', 'dead_face.png')
     end
 
     def Viking.createWarior(name="")
@@ -47,6 +49,7 @@ module FreeVikings
     attr_accessor :name
     attr_writer :move_validator
     attr_reader :energy
+    attr_reader :portrait
 
     def paint(surface)
       surface.blit(@image.image(@state.to_s), coordinate_in_surface(surface))

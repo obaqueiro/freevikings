@@ -56,7 +56,29 @@ module FreeVikings
 
     alias_method :each_displayable, :each
 
+    def each_alive
+      @members.each {|m| yield m if m.alive?}
+    end
+
+    def alive?
+      return true if alive_size > 0
+      return nil
+    end
+
+    def size
+      @members.size
+    end
+
+    def alive_size
+      @members.find_all {|m| m.alive?}.size
+    end
+
+    def member?(anybody)
+      @members.member? anybody
+    end
+
   end # class
+
 
   class NotATeamMemberAliveException < RuntimeError
   end
