@@ -4,18 +4,14 @@
 # Trida representujici roztomileho pomaleho a neskodneho trema ocima
 # na stopkach opatreneho kosmickeho slimaka.
 
-require 'sprite.rb'
-require 'monster.rb'
-require 'hero.rb'
-
 module FreeVikings
 
   class Slug < Sprite
 
     include Monster
     
-    def initialize
-      super [500,320]
+    def initialize(position)
+      super(position)
       init_images
     end
 

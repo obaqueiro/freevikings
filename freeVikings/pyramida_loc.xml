@@ -4,9 +4,15 @@
   <!-- Metainformace: -->
   
   <info>
-    <title>First adventure</title>
+    <title>Pyramis adventure</title>
     <author>Jakub Pavlík - severus@post.cz</author>
   </info>
+
+  <!-- Skripty k nahrani: -->
+  
+  <scripts>
+    <monsters path="pyramis_monsters.rb" />
+  </scripts>
   
   <!-- Definice rozmisteni bloku v mape -->
   
@@ -40,16 +46,5 @@ oooooooooxffffffffsffffffffffffffffffffffffffffs
     <start horiz="160" vertic="260" />
     <exit horiz="1800" vertic="300" />
   </map>
-  
-  <!-- Definice rozlozeni oblud: -->
-  
-  <monsters>
     
-    <script name="duck" path="duckscript.rb" />
-    <!-- <script name="slug" path="slugscript.rb" /> -->
-    
-    <monster type="duck" horiz="100" vertic="100" />
-    
-  </monsters>
-  
 </location>

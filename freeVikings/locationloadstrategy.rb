@@ -110,14 +110,19 @@ module FreeVikings
     end
 
     def load_monsters(monster_manager)
-      duckscript = Script.load 'scriptduck.rb'
-      duck = duckscript::KLASS.new
-      slizzy = Slug.new
-      # spittie = PlasmaShooter.new([1000, 350])
+      @log.debug "Starting loading monsters from scripts."
+      script_element = @doc.root.elements['scripts'].elements['monsters']
 
-      monster_manager.add_sprite slizzy
-      monster_manager.add_sprite duck
-      # monster_manager.add_sprite spittie
+      scriptpath = script_element.attributes['path']
+      @log.info "Loading script #{scriptpath}"
+      s = Script.new scriptpath
+
+      if s.const_defined? "MONSTERS" then
+	s::MONSTERS.each {|m| monster_manager.add_sprite m.dup}
+      else
+	@log.info "In scriptfile #{scriptpath}: constant MONSTERS hasn't been defined. Maybe the script doesn't provide monsters."
+      end
+      @log.info "Script #{scriptpath} successfully loaded."
     end
 
     def load_exit(location)
