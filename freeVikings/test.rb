@@ -7,8 +7,11 @@
 
 require 'rubyunit'
 
+require 'testlocation.rb'
 require 'testmap.rb'
-# require 'testspritemanager.rb'
+require 'testspritemanager.rb'
+require 'testsprite.rb'
+require 'testviking.rb'
 require 'testvelocity.rb'
 require 'testteam.rb'
 
@@ -17,8 +20,11 @@ class FreeVikingsTestSuite
   def suite
     suite = RUNIT::TestSuite.new
 
+    suite.add TestLocation.suite
     suite.add TestMap.suite
-    # suite.add TestSpriteManager.suite
+    suite.add TestSpriteManager.suite
+    suite.add TestSprite.suite
+    suite.add TestViking.suite
     suite.add TestVelocity.suite
     suite.add TestTeam.suite
 

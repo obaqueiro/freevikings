@@ -42,6 +42,18 @@ module FreeVikings
     def update
       unless @move_validator.is_position_valid?(self, [left, top])
 	@move_validator.delete_sprite self
+	return
+      end
+
+      stroken = @move_validator.sprites_on_rect(self.rect)
+      stroken.delete self
+      unless stroken.empty?
+	s = stroken.pop
+	if s.is_a? Monster
+	  s.destroy
+	  @move_validator.delete_sprite s
+	  @move_validator.delete_sprite self
+	end
       end
     end
   end # class Arrow

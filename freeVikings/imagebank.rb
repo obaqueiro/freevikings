@@ -42,7 +42,7 @@ module FreeVikings
     end
 
     def image
-      return @images[Time.now.to_i % @images.size].image
+      return @images[(Time.now.to_i / @delay) % @images.size].image
     end
 
   end # class Animation

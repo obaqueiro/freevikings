@@ -55,7 +55,7 @@ module FreeVikings
       @olaf = Viking.createShielder("Olaf")
 
       @team = Team.new(@erik, @baleog, @olaf)
-      @location.add_sprite @team
+      @team.each { |v| @location.add_sprite v }
 
       @duck = Duck.new
       @location.add_sprite @duck

@@ -15,6 +15,11 @@ module FreeVikings
     attr_reader :max_width
     attr_reader :max_height
 
+    def initialize
+      @log = Log4r::Logger.new('map loading log')
+      @log.outputters = Log4r::StderrOutputter.new('map loading out')
+    end
+
     # Pole Blocks_matrix inicialisuje jako dvojrozmerne pole a nacte do nej
     # dlazdice ze souboru mapy.
     # Do hashe Blocktype_hash ulozi objekt TileType 
@@ -32,9 +37,9 @@ module FreeVikings
     # ze ktereho bude mapa nactena.
 
     def initialize(mapfile)
-      @log = Log4r::Logger.new('map loading log')
+      super()
+
       @log.level = Log4r::ERROR
-      @log.outputters = Log4r::StderrOutputter.new('map loading out')
 
       if mapfile.is_a?(IO)
 	@source = mapfile

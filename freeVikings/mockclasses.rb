@@ -11,39 +11,32 @@ module FreeVikings
 
     class TestingMapLoadStrategy < MapLoadStrategy
 
-      def load(blocks, blocktype_hash)
-	solid = TestingTileType.createSolid
-	blocktype_hash['x'] = solid
-	soft  = TestingTileType.createSoft
-	blocktype_hash['o'] = soft
-	
-	blocks.push [solid, solid, solid, solid, solid]
-	blocks.push [solid, soft,  soft,  soft,  solid]
-	blocks.push [solid, soft,  soft,  soft,  solid]
-	blocks.push [solid, soft,  soft,  soft,  solid]
-	blocks.push [solid, soft,  soft,  soft,  solid]
-	blocks.push [solid, soft,  soft,  soft,  solid]
-	blocks.push [solid, solid, solid, solid, solid]
+      def load_map(blocks_matrix, blocktype_hash)
+	@blocks = blocks_matrix
+	@blocktypes = blocktype_hash
+
+	# nacteni typu bloku
+	x = @blocktypes['x'] = TileType.instance('x', '')
+	@blocktypes['x'].solid = true
+	o = @blocktypes['o'] = TileType.instance('o', '')
+	@blocktypes['o'].solid = false
+	# nacteni umisteni bloku
+	blcks = [
+	  [x, x, o, o, o, o, o, x],
+	  [x, x, o, o, o, o, o, x],
+	  [x, x, o, o, o, o, o, x],
+	  [x, x, o, o, o, o, o, x],
+	  [x, x, o, o, o, o, o, x],
+	  [x, x, o, o, o, o, o, x],
+	  [x, x, o, o, o, o, o, x],
+	  [x, x, x, x, x, x, x, x]
+	]
+	@max_width = @max_height = 0
+	# prochazime radky bloku:
+	blcks.each_index { |line_num|
+	  @blocks.push blcks[line_num]
+	}
       end
     end # class TestingMapLoadStrategy
-
-    class TestingTileType < TileType
-      attr_accessor :solid
-      attr_reader :image
-
-      def initialize(solid=true)
-	@solid = solid
-	@image = RUDL::Surface.new([40,40])
-      end
-
-      def TestingTileType.createSolid
-	return new(true)
-      end
-
-      def TestingTileType.createSoft
-	return new(false)
-      end
-    end # class TestingTileType
-
   end # module Mock
 end # module FreeVikings

@@ -1,15 +1,20 @@
 # location.rb
 # igneus 14.2.2005
 
-# Objekt Location je obalem, ktery skryva implementaci mapy apod.
+# Objekt Location je obalem, ktery skryva implementaci jednotlivych operaci
+# pred svymi spolupracovniky. Je pomerne velky, ale vetsinu funkci
+# deleguje.
 # Obsahuje sam nebo ve svych clenskych promennych vsechen stav urcite
 # lokality herniho sveta, ktera odpovida zhruba levelu ze hry Lost Vikings.
 
 require 'spritemanager.rb'
+require 'movevalidator.rb'
 
 module FreeVikings
 
   class Location
+
+    include MoveValidator
 
     def initialize(loader)
       @spritemanager = SpriteManager.new(self)
@@ -50,9 +55,27 @@ module FreeVikings
       @spritemanager.is_position_valid? sprite, position
     end
 
-    def blocks_on_square(square)
-      @map.blocks_on_square square
+    def blocks_on_rect(rect)
+      @map.blocks_on_square rect
     end
+
+    def sprites_on_rect(rect)
+      @spritemanager.sprites_on_rect rect
+    end
+
+    def is_position_valid?(sprite, position)
+      begin
+	colliding_blocks = blocks_on_rect([position[0], position[1], sprite.image.w, sprite.image.h])
+      rescue RuntimeError
+	return nil
+      end
+      colliding_blocks.each do |block|
+	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.
+	return nil if block.solid == true
+      end
+      # az dosud nebyl nalezen pevny blok, posice je volna
+      return true
+    end # is_position_valid?
 
     private
 

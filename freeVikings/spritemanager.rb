@@ -3,8 +3,6 @@
 
 # Spravce sprajtu.
 
-require 'movevalidator'
-
 module FreeVikings
 
   class SpriteManager
@@ -17,8 +15,6 @@ sprites, but a list of objects, which define a method each_displayable
 yielding all the sprites it wants to be displayed (see files team.rb and
 sprite.rb for implementation of this method).
 =end
-
-    include MoveValidator
 
     def initialize(map)
       @sprites = Array.new
@@ -82,28 +78,26 @@ all the sprites.
     end
 
 =begin
---- SpriteManager#is_position_valid?( sprite, position )
-Returns true or nil. True indicates that the rect computed from the sprite's
-image's size and the position (array of two Integers - the first keeps the
-distance of sprite's top left corner from the left edge of the map) is free.
-What does it mean? That the rect doesn't collide with any map's solid blocks.
-Collisions with the other sprites must be controlled separately.
+--- SpriteManager#sprites_on_rect(rect)
+It finds and in an Array returns all the sprites which can be found in the
+rectangle defined by the array rect given as parameter.
+If no sprite is found, it returns an empty array.
 =end
 
-    def is_position_valid?(sprite, position)
-      begin
-	colliding_blocks = @map.blocks_on_square([position[0], position[1], sprite.image.w, sprite.image.h])
-      rescue RuntimeError
-	return nil
-      end
-
-      colliding_blocks.each do |block|
-	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.
-	return nil if block.solid == true
-      end
-      # az dosud nebyl nalezen pevny blok, posice je volna
-      return true
+    def sprites_on_rect(rect)
+      found = Array.new
+      @sprites.each do |sprite|
+	sprite_right = sprite.left + sprite.image.w
+	sprite_bottom = sprite.top + sprite.image.h
+	if ( (sprite.left > rect[0] and sprite.left < (rect[0] + rect[2])) and 
+	    (sprite.top > rect[1] and sprite.top < (rect[1] + rect[3])) ) or
+	    ( (sprite_right > rect[0] and sprite_right < (rect[0] + rect[2])) and
+	     (sprite.top > rect[1] and sprite.top < (rect[1] + rect[3])) ) then
+	  found.push sprite
+	end # if
+      end # do
+      return found
     end
 
-  end
+  end # class SpriteManager
 end #module FreeVikings

@@ -16,18 +16,20 @@ module FreeVikings
     BASE_VELOCITY = 135
 
     attr_reader :moving
+    attr_writer :move_validator
 
-    def initialize
-      @image = Image.new('baleog.png')
-      @top = 60
-      @left = 70
+    def initialize(initial_position=[])
+      @image = Image.new('nobody.tga')
+
+      unless initial_position.empty?
+	@top = initial_position[1]
+	@left = initial_position[0]
+      else
+	@top = 60
+	@left = 70
+      end
+
       @moving = nil
-      @velocity_horis = Velocity.new
-      @velocity_vertic = Velocity.new
-    end
-
-    def paint(surface)
-      surface.blit(@image, coordinate_in_surface(surface))
     end
 
     # Metoda, kterou ma vsechno, co je zobrazitelne nebo obaluje
@@ -49,8 +51,17 @@ module FreeVikings
       @left
     end
 
+    def destroy
+    end
+
     def image
       @image.image
+    end
+
+    # Vrati obdelnik, ktery sprite zabira v aktualni lokaci
+
+    def rect
+      [left, top, left + image.w, top + image.h]
     end
 
     def move_left
@@ -61,14 +72,6 @@ module FreeVikings
 
     def stop
       @moving = nil
-    end
-
-    private
-    def coordinate_in_surface(surface)
-      coordinate = Array.new
-      coordinate[0] = left() % surface.w
-      coordinate[1] = top() % surface.h
-      return coordinate
     end
 
   end # class

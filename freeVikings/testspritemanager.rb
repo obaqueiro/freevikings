@@ -6,7 +6,7 @@
 require 'rubyunit'
 
 require 'spritemanager.rb'
-require 'map.rb'
+require 'location.rb'
 require 'mockclasses.rb'
 require 'sprite.rb'
 
@@ -16,36 +16,28 @@ include FreeVikings::Mock
 class TestSpriteManager < RUNIT::TestCase
 
   def setup
-    @map = Map.new(TestingMapLoadStrategy.new)
+    @map = Location.new(TestingMapLoadStrategy.new)
     @manager = SpriteManager.new(@map)
-    @sprite = Sprite.new
+    @sprite = Sprite.new([90,90])
   end
 
   attach_setup :setup
 
-  def testTopLeftValidPosition
-    valid_position = [1.5 * Map::TILE_SIZE, 1.5 * Map::TILE_SIZE]
-    assert @manager.is_position_valid?(@sprite, valid_position), "Sprite does not collide with any of the blocks - it's position should be considered valid."
+  def testSpritesOnRect
+    @manager.add @sprite
+    assert_equal @sprite, @manager.sprites_on_rect([85,85,60,60])[0], "There must be one sprite. I made it to be there."
   end
 
-  def testTopLeftInvalidPosition
-    invalid_position = [0,0]
-    assert_nil @manager.is_position_valid?(@sprite, invalid_position), "Sprite in this position collides with the solid blocks, it's position should be considered invalid."
+  def testSpritesOnRectFindsMoreSprites
+    @manager.add @sprite
+    @manager.add Sprite.new([82,82])
+    @manager.add Sprite.new([140,140])
+    assert_equal 3, @manager.sprites_on_rect([85,85,60,60]).size, "There are two sprites colliding with the specified rectangle."
   end
 
-  # Horni i levy okraj sprajtu tesne hranici s pevnymi bloky. Presto by posice
-  # mela byt platna.
-
-  def testValidPositionOnTheTilesEdge
-    assert @manager.is_position_valid?(@sprite, [Map::TILE_SIZE, Map::TILE_SIZE]), "Sprite is on the edge of the valid zone, but it's position should still be considered valid."
-  end
-
-  # Mam problem, vikingove chodi s nohama asi 10px pod urovni podlahy.
-  # To by nemelo byt mozne.
-
-  def testInvalidPositionWithFeetInTheBlock
-    position = [1.5*Map::TILE_SIZE, @map.background.h - (@sprite.image.h + Map::TILE_SIZE/2)]
-    assert_nil @manager.is_position_valid?(@sprite, position), "Sprite's position mustn't be considered valid when the sprite has it's bottom edge in the solid block"
+  def testSpritesOnRectDoesNotFindNotCollidingSprites
+    @manager.add Sprite.new([120,120])
+assert_equal 0, @manager.sprites_on_rect([10,10,10,10]).size, "The only sprite added does not collide with the specified rectangle."
   end
 
 end

@@ -3,9 +3,13 @@
 
 # Prisera neskodna.
 
+require 'monster.rb'
+
 module FreeVikings
 
   class Duck < Sprite
+
+    include Monster
 
     def initialize
       @image = Image.new('duck_left.tga')
