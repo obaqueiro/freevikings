@@ -60,9 +60,9 @@ module FreeVikings
     # Vrati true nebo nil, podle toho, jestli je mozne vstoupit do obdelniku
     # (daneho polem ctyr cisel) bez kolize v horisontalnim smeru
 
-    def is_position_valid?(sprite, new_pos)
+    def is_position_valid?(sprite, position)
       begin
-	colliding_blocks = @map.blocks_on_square([new_pos[0], new_pos[1], sprite.image.w, sprite.image.h])
+	colliding_blocks = @map.blocks_on_square([position[0], position[1], sprite.image.w, sprite.image.h])
       rescue RuntimeError
 	return nil
       end

@@ -18,7 +18,7 @@ module FreeVikings
       @log = Log4r::Logger.new('map log')
       outputter = Log4r::StderrOutputter.new('map_stderr_output')
       @log.outputters = outputter
-      @log.level = Log4r::DEBUG
+      @log.level = Log4r::OFF
 
       @blocktypes = Hash.new
       @blocks = Array.new
@@ -78,16 +78,14 @@ module FreeVikings
 
     public
     def blocks_on_square(square)
-      round_coords_in_square square
       @log.debug "blocks_on_square: Asked for blocks colliding with a square defined by [#{square[0]}, #{square[1]}, #{square[2]}, #{square[3]}](px)"
       colliding_blocks = []
       # spocitat nejlevejsi a nejpravejsi index do kazdeho radku:
-      leftmost_i = (square[0] / Map::TILE_SIZE)
-      rightmost_i = ((square[0] + square[2]) / Map::TILE_SIZE)
+      leftmost_i = (square[0] / Map::TILE_SIZE).to_f.floor
+      rightmost_i = ((square[0] + square[2]) / Map::TILE_SIZE).to_f.floor
       # spocitat prvni a posledni radek:
-      top_line = (square[1] / Map::TILE_SIZE).round
-      bottom_line = ((square[1] + square[3]) / Map::TILE_SIZE)
-      round_coords_in_square([leftmost_i, top_line, rightmost_i, bottom_line])
+      top_line = (square[1] / Map::TILE_SIZE).to_f.ceil
+      bottom_line = ((square[1] + square[3]) / Map::TILE_SIZE).to_f.ceil
       # z kazdeho radku vybrat patricny vyrez:
       @log.debug "blocks_on_square: I'm going to extract blocks from a square [#{leftmost_i}, #{top_line}, #{rightmost_i}, #{bottom_line}](tiles)"
       unless @blocks[top_line .. bottom_line].is_a? Array
@@ -99,19 +97,6 @@ module FreeVikings
 	colliding_blocks.concat(blocks) if blocks.is_a? Array
       }
       return colliding_blocks
-    end
-
-    # Zaokrouhli souradnice tak, ze se ctverec vzdy roztahne
-    # (nikdy se nesmrskne)
-
-    private
-    def round_coords_in_square(square)
-      # vlevo a nahore souradnice zaokrouhlime dolu:
-      square[0] = square[0] - (square[0] % 1)
-      square[1] = square[1] - (square[1] % 1)
-      # vpravo a dole souradnice zaokrouhlime nahoru:
-      square[2] = square[2] + (1 - (square[2] % 1))
-      square[3] = square[3] + (1 - (square[3] % 1))
     end
 
   end # class Map

@@ -19,8 +19,10 @@ module FreeVikings
     attr_writer :move_validator
     attr_reader :energy
 
+    # Jeden logovaci kanal pro vsechny instance - staci to a spori se cas
+    # procesoru i pamet
     @@viking_log = Log4r::Logger.new('viking_log')
-    @@viking_log.level = Log4r::DEBUG
+    @@viking_log.level = Log4r::OFF
     @@viking_log.outputters = Log4r::StderrOutputter.new('viking_stderr_out')
 
     def initialize(name = "")
@@ -62,13 +64,11 @@ module FreeVikings
     def move_left
       @state.move_left
       set_move
-      start_moving_safely
     end
 
     def move_right
       @state.move_right
       set_move
-      start_moving_safely
     end
 
     def stop
@@ -112,7 +112,9 @@ module FreeVikings
     def update
       # Nejprve zkusme, jestli by viking nemohl zacit padat.
       # Pokud muze zacit padat, zacne padat:
-      if @move_validator.is_position_valid?(self, [left, top + 5])
+      nextpos = next_position
+      nextpos[1] += 2
+      if @move_validator.is_position_valid?(self, nextpos)
 	@state = FallingVikingState.new(self, @state)
 	@@viking_log.debug "update: #{@name} starts falling"
       end
@@ -134,20 +136,6 @@ module FreeVikings
     private
     def velocity_horiz
       @state.velocity_horiz
-    end
-
-    private
-    # zkontroluje, jestli muze vykrocit a pokud ne, nevykroci.
-    def start_moving_safely
-      unless @move_validator.is_position_valid?(self, next_position)
-	unmove
-      end
-    end
-
-    private
-    # vrati vikinga na posledni posici
-    def unmove
-      @position = @last_position
     end
 
     private

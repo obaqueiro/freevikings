@@ -9,6 +9,14 @@ module FreeVikings
 
   GRAVITY = 50
 
+  # Stavy, ktere jsou Previous, umoznuji vratit se volanim metody previous do
+  # predchoziho stavu
+  module Previousable
+    def previous
+      @viking.state = @last_state
+    end
+  end
+
   class VikingState
     # Supertrida pro tridy Stavu vikinga
 
@@ -20,10 +28,13 @@ module FreeVikings
       @viking = viking
       @velocity_horiz = Velocity.new
       @velocity_vertic = Velocity.new(0, GRAVITY)
-      @last_state = last_state
     end
 
     def to_s
+      ""
+    end
+
+    def direction
       ""
     end
 
@@ -123,6 +134,10 @@ module FreeVikings
     def stop
       @viking.state = StandingVikingState.new(@viking, self)
     end
+
+    def to_s
+      "moving_" + direction
+    end
   end # class MovingVikingState
 
   class LeftWalkingVikingState < WalkingVikingState
@@ -132,8 +147,8 @@ module FreeVikings
       @velocity_horiz.value = - (@viking.class::BASE_VELOCITY)
     end
 
-    def to_s
-      "moving_left"
+    def direction
+      "left"
     end
 
     def move_right
@@ -141,7 +156,7 @@ module FreeVikings
     end
 
     def stuck
-      @viking.state = LeftStuckedVikingState.new(@viking, self)
+      @viking.state = StuckedVikingState.new(@viking, self)
     end
   end # class LeftWalkingVikingState
 
@@ -152,8 +167,8 @@ module FreeVikings
       velocity_horiz.value = @viking.class::BASE_VELOCITY
     end
 
-    def to_s
-      "moving_right"
+    def direction
+      "right"
     end
 
     def move_left
@@ -161,40 +176,37 @@ module FreeVikings
     end
 
     def stuck
-      @viking.state = RightStuckedVikingState.new(@viking, self)
+      @viking.state = StuckedVikingState.new(@viking, self)
     end
   end # class RightWalkingVikingState
 
-  class LeftStuckedVikingState < LeftWalkingVikingState
-    def moving?
-      nil
+  class StuckedVikingState < StandingVikingState
+
+    def initialize(viking, last_state)
+      super(viking, last_state)
+      @last_state = last_state
+    end
+
+    def direction
+      @last_state.direction
     end
 
     def to_s
-      "stucked_left"
+      "stucked_" + direction
     end
-  end # class LeftStuckedVikingState
-
-  class RightStuckedVikingState < RightWalkingVikingState
-    def moving?
-      nil
-    end
-
-    def to_s
-      "stucked_right"
-    end
-  end # class RightStuckedVikingState
+  end
 
   class FallingVikingState < MovingVikingState
 
     def initialize(viking, last_state)
       super(viking, last_state)
+      @last_state = last_state
       @velocity_vertic.value = @viking.class::BASE_VELOCITY
       @velocity_horiz = last_state.velocity_horiz
     end
 
     def to_s
-      "falling"
+      "falling_" + @last_state.direction
     end
 
     def stuck
