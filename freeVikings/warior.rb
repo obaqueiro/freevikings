@@ -77,7 +77,7 @@ module FreeVikings
     end
 
     def weapon_position
-      weapon_pos = [nil, top + (image.h / 2)]
+      weapon_pos = [nil, top + (image.h / 2) + 4]
       if @state.direction == 'right' then
 	weapon_pos[0] = left + 0.8 * image.w
       end

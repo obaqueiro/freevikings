@@ -6,6 +6,7 @@
 require 'tiletype.rb'
 require 'exit.rb'
 require 'log4r'
+require 'rexml/document'
 require 'script'
 
 module FreeVikings
@@ -58,8 +59,9 @@ module FreeVikings
       
       begin
 	@doc = REXML::Document.new(@source)
-      rescue NameError
-	@log.fatal "Datafile #{@source} has not a valid XML syntax."
+      rescue NameError => ex
+	@log.fatal "Datafile #{@source} cannot be open ( maybe it has not a valid XML syntax)."
+	@log.debug "Exception message: #{ex.message}"
       end
     end
 
@@ -111,9 +113,15 @@ module FreeVikings
 
     def load_monsters(monster_manager)
       @log.debug "Starting loading monsters from scripts."
-      script_element = @doc.root.elements['scripts'].elements['monsters']
-
-      scriptpath = script_element.attributes['path']
+      
+	begin
+	      script_element = @doc.root.elements['scripts'].elements['monsters']
+	      scriptpath = script_element.attributes['path']
+	rescue => ex
+		@log.error "Cannot load monster script."
+		@log.debug "Exception message: #{ex.message}"
+		return
+	end
       @log.info "Loading script #{scriptpath}"
       s = Script.new scriptpath
 

@@ -18,7 +18,7 @@ module FreeVikings
       @log = Log4r::Logger.new('map log')
       outputter = Log4r::StderrOutputter.new('map_stderr_output')
       @log.outputters = outputter
-      @log.level = Log4r::OFF
+      @log.level = Log4r::ERROR
 
       @blocktypes = Hash.new
       @blocks = Array.new
