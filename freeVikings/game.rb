@@ -48,7 +48,7 @@ module FreeVikings
       @erik = Viking.createSprinter("Erik")
       @olaf = Viking.createShielder("Olaf")
 
-      @team = Team.new(@baleog, @erik, @olaf)
+      @team = Team.new(@erik, @baleog, @olaf)
       @team.each {|v| @manager.add v}
 
       # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine

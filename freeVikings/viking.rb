@@ -21,7 +21,7 @@ module FreeVikings
     def initialize(name = "")
       super()
       @viking_log = Log4r::Logger.new('viking_log')
-      @viking_log.level = Log4r::DEBUG
+      @viking_log.level = Log4r::ERROR
       @viking_log.outputters = Log4r::StderrOutputter.new('viking_stderr_out')
       @name = name
       @state = StandingVikingState.new(self)

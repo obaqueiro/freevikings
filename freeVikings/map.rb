@@ -18,7 +18,7 @@ module FreeVikings
       @log = Log4r::Logger.new('map log')
       outputter = Log4r::StderrOutputter.new('map_stderr_output')
       @log.outputters = outputter
-      @log.level = Log4r::ERROR
+      @log.level = Log4r::DEBUG
 
       @blocktypes = Hash.new
       @blocks = Array.new
@@ -89,7 +89,11 @@ module FreeVikings
       column += 1 if (coord[0] % Map::TILE_SIZE) > 0
       # Sloupkovy index je nutne pred vracenim dekrementovat, protoze
       # pri nacitani bloku se zacina az od indexu 1.
-      @log.debug("I\'m going to return a reference to a blocktype of [#{line}][#{column - 1}]")
+      @log.debug("get_block: I\'m going to return a reference to a blocktype of [#{line}][#{column - 1}] (tiles)")
+      unless @blocks[line].is_a? Array
+	@log.fatal "get_block: Line #{line} of blocks array of strange type #{@blocks[line].type}."
+	raise (RuntimeError, "get_block: Line #{line} of blocks array isn't an Array. (It's a #{@blocks[line].type} instance.)")
+      end
       @blocks[line][column - 1]
     end
 
@@ -109,10 +113,11 @@ module FreeVikings
       step_vertic = (- Map::TILE_SIZE) if line[3] < line[1]
       # iterovani po primce:
       carry_on = true
-      horiz = line[0]
-      vertic = line[1]
+      horiz = line[0].round
+      vertic = line[1].round
       loop do
 	# ziskani bloku:
+	@log.debug "block_on_line: asking for block at [#{horiz.to_s}, #{vertic.to_s}] (px)"
 	block = get_block([horiz, vertic])
 	colliding_blocks.push(block) if block.is_a? TileType
 	# nastaveni iteracnich promennych:
