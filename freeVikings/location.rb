@@ -18,6 +18,8 @@ module FreeVikings
 
     def initialize(loader)
       @spritemanager = SpriteManager.new(self)
+      loader.load_monsters(self)
+      loader.load_exit(self)
       @map = Map.new(loader)
     end
 
@@ -43,6 +45,11 @@ module FreeVikings
       sprite.each_displayable { |d|
 	d.move_validator = self if d.respond_to? :move_validator=
       }
+    end
+
+    def exit=(exitter)
+      @spritemanager.add exitter
+      @exit = exitter
     end
 
     def delete_sprite(sprite)

@@ -2,7 +2,7 @@
 # igneus 20.1.2004
 
 require 'tiletype'
-require 'maploadstrategy'
+require 'locationloadstrategy'
 require 'log4r'
 require 'rexml/document'
 

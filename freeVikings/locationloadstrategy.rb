@@ -4,11 +4,12 @@
 # Objekty MapLoadStrategy umoznuji nacitani mapy ze souboru ruznych formatu.
 
 require 'tiletype.rb'
+require 'exit.rb'
 require 'log4r'
 
 module FreeVikings
 
-  class MapLoadStrategy
+  class LocationLoadStrategy
 
     # Nejdelsi delka radku v mape.
     # Inicialisovana az po zavolani load.
@@ -28,10 +29,15 @@ module FreeVikings
     def load_map(blocks_matrix, blocktype_hash)
     end
 
+    # Pomoci metody add_sprite rozhrani argumentu monster_manager
+    # nahraje prisery
+    def load_monsters(monster_manager)
+    end
+
   end # class MapLoadStrategy
 
 
-  class XMLMapLoadStrategy < MapLoadStrategy
+  class XMLLocationLoadStrategy < LocationLoadStrategy
 
     # Mapfile muze byt String nebo IO. Je to zdroj nebo jmeno zdroje, 
     # ze ktereho bude mapa nactena.
@@ -85,6 +91,18 @@ module FreeVikings
 	  end
 	}
       }
+    end
+
+    def load_monsters(monster_manager)
+      duck = Duck.new
+      slizzy = Slug.new
+
+      monster_manager.add_sprite slizzy
+      monster_manager.add_sprite duck
+    end
+
+    def load_exit(location)
+      location.exit = Exit.new([1120,320])
     end
 
   end # class XMLMapLoadStrategy

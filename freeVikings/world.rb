@@ -5,7 +5,7 @@
 # jejich nahravani a prechody.
 
 require 'location.rb'
-require 'maploadstrategy.rb'
+require 'locationloadstrategy.rb'
 
 module FreeVikings
 
@@ -18,7 +18,7 @@ module FreeVikings
     attr_reader :location
 
     def next_location
-      strategy = XMLMapLoadStrategy.new("first_loc.xml")
+      strategy = XMLLocationLoadStrategy.new("first_loc.xml")
       @location = Location.new(strategy)
     end
   end # class World

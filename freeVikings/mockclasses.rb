@@ -3,13 +3,13 @@
 
 # Sbirka trid uzitecnych pro testovani.
 
-require 'maploadstrategy.rb'
+require 'locationloadstrategy.rb'
 
 module FreeVikings
 
   module Mock
 
-    class TestingMapLoadStrategy < MapLoadStrategy
+    class TestingMapLoadStrategy < LocationLoadStrategy
 
       def load_map(blocks_matrix, blocktype_hash)
 	@blocks = blocks_matrix

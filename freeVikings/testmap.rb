@@ -7,7 +7,7 @@ require 'rubyunit'
 require 'RUDL'
 
 require 'map.rb'
-require 'maploadstrategy.rb'
+require 'locationloadstrategy.rb'
 require 'tiletype.rb'
 
 include FreeVikings
@@ -15,7 +15,7 @@ include FreeVikings
 class TestMap < RUNIT::TestCase
 
   def setup
-    @map = Map.new(XMLMapLoadStrategy.new("first_loc.xml"))
+    @map = Map.new(XMLLocationLoadStrategy.new("first_loc.xml"))
   end
 
   attach_setup :setup

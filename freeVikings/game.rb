@@ -72,8 +72,6 @@ module FreeVikings
       @erik = Viking.createSprinter("Erik")
       @olaf = Viking.createShielder("Olaf")
 
-      @duck = Duck.new
-      @slizzy = Slug.new
     end # init_display
 
     def finalize
@@ -115,9 +113,6 @@ module FreeVikings
 	@team.each { |v|
 	  v.extend Hero # vsechny vikingy oznacime jako hrdiny
 	  location.add_sprite v }
-
-	location.add_sprite @slizzy
-	location.add_sprite @duck
 
 	frames = 0 # pomocna promenna k vypoctu fps
 	while not location.exited? do
