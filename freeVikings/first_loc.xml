@@ -3,8 +3,8 @@
 
 <blocktypes>
 <blocktype code="0" path="" />
-<blocktype code="1" path="dlaz_kov1.png" />
-<blocktype code="2" path="dlaz_kov2.png" />
+<blocktype code="1" path="dlaz_kov1.png" solid="solid" />
+<blocktype code="2" path="dlaz_kov2.png" solid="solid" />
 </blocktypes>
 
 <blocks>

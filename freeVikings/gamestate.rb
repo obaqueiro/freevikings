@@ -73,6 +73,9 @@ module FreeVikings
       when K_TAB
       when K_s
       when K_f
+	# Specialni klavesy:
+      when K_F3
+	@context.app_window.toggle_fullscreen
       end # case
     end # private method serve_keydown
 

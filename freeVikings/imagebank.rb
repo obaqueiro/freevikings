@@ -48,7 +48,11 @@ module FreeVikings
     # Obrazek
 
     def initialize(image_path)
-      @image = RUDL::Surface.load_new(image_path)
+      if image_path.size != 0
+	@image = RUDL::Surface.load_new(image_path)
+      else
+	@image = RUDL::Surface::new([1,1])
+      end
     end
 
     def image

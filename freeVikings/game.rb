@@ -19,18 +19,29 @@ module FreeVikings
     include RUDL
     include RUDL::Constant
 
-    WIN_WIDTH = 300
-    WIN_HEIGHT = 300
+    VIKING_FACE_SIZE = 60
+    WIN_WIDTH = 6 * VIKING_FACE_SIZE
+    WIN_HEIGHT = WIN_WIDTH
+    STATUS_HEIGHT = 60
 
+    attr_reader :app_window
     attr_reader :viking
     attr_reader :map
 
     def initialize
-      @map = Map.new("hopsy_loc.xml")
+      @map = Map.new("first_loc.xml")
 
       @manager = SpriteManager.new(@map)
 
-      @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
+      @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT + STATUS_HEIGHT])
+      @app_window.set_caption('freeVikings')
+
+      @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT])
+      @status_view = RUDL::Surface.new([WIN_WIDTH, STATUS_HEIGHT])
+
+      @face_bg = RUDL::Surface.load_new('face_bg.tga')
+      @baleog_face_bw = RUDL::Surface.load_new('baleog_face_unactive.gif')
+      @baleog_face = RUDL::Surface.load_new('baleog_face.tga')
 
       @baleog = Viking.new
       @baleog.name = "Baleog"
@@ -43,6 +54,14 @@ module FreeVikings
       @state = PlayingGameState.new(self)
     end # initialize
 
+    def repaint_status
+      # vykresleni pozadi pro podobenky vikingu:
+      @status_view.fill([60,60,60])
+      3.times {|i| @status_view.blit(@face_bg, [i * 2 * VIKING_FACE_SIZE, 0])}
+      1.upto(3) {|i| @status_view.blit(@baleog_face_bw, [i * 2 * VIKING_FACE_SIZE, 0])}
+      @status_view.blit(@baleog_face, [0,0])
+    end
+
     def game_loop
       loop do
 	# Zpracujeme udalosti:
@@ -50,8 +69,12 @@ module FreeVikings
 	  @state.serve_event(event)
 	end # if je udalost
 
-	@map.paint(@app_window, viking.center)
-	@manager.paint(@app_window, centered_view_rect(@map.background.w, @map.background.h, @app_window.w, @app_window.h, viking.center))
+	@map.paint(@map_view, viking.center)
+	@manager.paint(@map_view, centered_view_rect(@map.background.w, @map.background.h, @map_view.w, @map_view.h, viking.center))
+
+	@app_window.blit(@map_view, [0,0])
+	repaint_status
+	@app_window.blit(@status_view, [0, WIN_HEIGHT])
 	@app_window.flip
       end # smycky loop
     end # method game_loop
