@@ -15,7 +15,7 @@ include FreeVikings
 class TestMap < RUNIT::TestCase
 
   def setup
-    @map = Map.new(XMLLocationLoadStrategy.new("../pyramida_loc.xml"))
+    @map = Map.new(XMLLocationLoadStrategy.new("../locs/pyramida_loc.xml"))
   end
 
   attach_setup :setup
