@@ -22,12 +22,12 @@ module FreeVikings
     @@viking_log.level = Log4r::OFF
     @@viking_log.outputters = Log4r::StderrOutputter.new('viking_stderr_out')
 
-    def initialize(name, start_position=[121,20])
+    def initialize(name, start_position=[0,0])
       super()
       @name = name
       @state = StandingVikingState.new(self, VikingState.new(self, nil))
       @@viking_log.debug("Viking #{@name} initialised.")
-      @last_position = @position = start_position
+      @position = start_position
       @last_update_time = Time.now.to_f
       @move_validator = NullLocation.new # objekt overujici moznost presunu na posici
       @energy = 3 # zivotni sila
@@ -128,7 +128,7 @@ module FreeVikings
       # Nyni muzeme aktualisovat posici:
       if @move_validator.is_position_valid?(self, next_position) then
 	@@viking_log.debug "update: Viking #{name}'s next position is all right."
-	@last_position, @position = @position, next_position
+	@position = next_position
 	update_time
       else
 	@@viking_log.debug "update: Viking #{name}'s next position isn't valid, he'll stuck now."
@@ -136,9 +136,7 @@ module FreeVikings
       end
       # Zkusme, jestli by viking nemohl zacit padat.
       # Pokud muze zacit padat, zacne padat:
-      lowerpos = next_position
-      lowerpos[1] += 2
-      if not @state.is_a? FallingVikingState and @move_validator.is_position_valid?(self, lowerpos)
+      if not @state.is_a? FallingVikingState and not on_ground?
 	@state = FallingVikingState.new(self, @state)
 	@@viking_log.debug "update: #{@name} starts falling because there's a free space under him."
       end
@@ -165,6 +163,15 @@ module FreeVikings
     private
     def set_move
       update_time
+    end
+
+    private
+    # Zjisti, jestli viking stoji na zemi (na pevne dlazdici)
+    def on_ground?
+      lowerpos = next_position
+      lowerpos[1] += 2
+      return nil if @move_validator.is_position_valid?(self, lowerpos)
+      return true
     end
 
   end # class Viking

@@ -35,8 +35,6 @@ but if you don't specify it, it's set to a default value.
       else
 	@position = [70,60]
       end
-
-      @moving = nil
     end
 
 =begin
@@ -106,15 +104,6 @@ Returns an array of [left, top]. It's only for comfort.
     end
 
 =begin
---- Sprite#position= (pos)
-Sets up the posiyion to pos. Pos must be an array of [left, top].
-=end
-
-    def position=(pos)
-      @position = pos.dup
-    end
-
-=begin
 --- Sprite#rect
 Returns FreeVikings::Rectangle instance saying where the sprite is and how
 much place it takes.
@@ -158,7 +147,6 @@ It's called when the sprite is moving where or how it should not be.
 =end
 
     def stop
-      @moving = nil
     end
 
 =begin
