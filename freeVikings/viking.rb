@@ -25,7 +25,7 @@ module FreeVikings
       @name = 'Swen'
       @state = StandingVikingState.new(self)
       @viking_log.debug("Viking #{@name} initialised.")
-      @last_position = @position = [90, 55]
+      @last_position = @position = [121, 60]
       @move_validator = NullMoveValidator # objekt overujici moznost presunu na posici
     end
 
@@ -70,6 +70,7 @@ module FreeVikings
     end
 
     def next_position
+      update_state
       time_now = Time.now.to_f
       time_delta = time_now - @last_update_time
       # Zde se musi posice zjistovat primo z instancni promenne, protoze
@@ -121,6 +122,14 @@ module FreeVikings
     end
 
     private
+    def update_state
+      # je volno pod vikingem? Jestli ano, zacne padat.
+      if @move_validator.is_vertical_position_valid?(self, [@position[0], @position[1] + 5])
+	@state = FallingVikingState.new(self, @state.dup)
+      end
+    end
+
+    private
     def set_move
       update_time
     end
@@ -131,6 +140,9 @@ module FreeVikings
       @image.add_pair('standing', Image.new('baleog_standing.png'))
       @image.add_pair('moving_left', Image.new('baleog_left.png'))
       @image.add_pair('moving_right', Image.new('baleog_right.png'))
+      @image.add_pair('stucked_left', Image.new('baleog_left.png'))
+      @image.add_pair('stucked_right', Image.new('baleog_right.png'))
+      @image.add_pair('falling', Image.new('baleog_standing.png'))
     end
   end # class Viking
 end # module

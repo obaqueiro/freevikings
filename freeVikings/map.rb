@@ -18,7 +18,7 @@ module FreeVikings
       outputter = Log4r::StderrOutputter.new('map_stderr_output')
       @log.outputters = outputter
 
-      @log.level = Log4r::DEBUG
+      @log.level = Log4r::ERROR
       @blocktypes = Hash.new
       @blocks = Array.new
       @background = nil
@@ -110,12 +110,15 @@ module FreeVikings
   end # methody load_xml_file
 
   def get_block(coord)
+    coord[0] = coord[0].to_i
+    coord[1] = coord[1].to_i
     line = coord[1] / Map::TILE_SIZE
     line += 1 if (coord[1] % Map::TILE_SIZE) > 0
     column = coord[0] / Map::TILE_SIZE
     column += 1 if (coord[0] % Map::TILE_SIZE) > 0
     # Sloupkovy index je nutne pred vracenim dekrementovat, protoze
     # pri nacitani bloku se zacina az od indexu 1.
+    @log.debug("I\'m going to return a reference to a blocktype of [#{line}][#{column - 1}]")
     @blocks[line][column - 1]
   end
 
