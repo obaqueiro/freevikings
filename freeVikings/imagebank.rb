@@ -52,6 +52,7 @@ module FreeVikings
 
     def initialize(image_path)
       if image_path.size != 0
+	image_path = GFX_DIR+'/'+image_path
 	@image = RUDL::Surface.load_new(image_path)
       else
 	@image = RUDL::Surface::new([1,1])

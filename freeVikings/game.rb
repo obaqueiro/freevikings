@@ -56,21 +56,21 @@ module FreeVikings
     def init_app_window
       @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
       @app_window.set_caption('freeVikings')
-      logo = RUDL::Surface.load_new 'fvlogo.tga'
+      logo = RUDL::Surface.load_new GFX_DIR+'/fvlogo.tga'
       @app_window.blit(logo, [@app_window.w/2-logo.w/2,@app_window.h/2-logo.h/2])
       @app_window.flip
     end # init_app_window
 
     def init_sprites_and_images
-      @face_bg = RUDL::Surface.load_new('face_bg.tga')
-      @baleog_face_bw = RUDL::Surface.load_new('erik_face_unactive.gif')
-      @baleog_face = RUDL::Surface.load_new('erik_face.tga')
-      @dead_face = RUDL::Surface.load_new('dead_face.png')
-      @energy_punkt = RUDL::Surface.load_new('energypunkt.tga')
+      @face_bg = RUDL::Surface.load_new(GFX_DIR+'/face_bg.tga')
+      @baleog_face_bw = RUDL::Surface.load_new(GFX_DIR+'/erik_face_unactive.gif')
+      @baleog_face = RUDL::Surface.load_new(GFX_DIR+'/erik_face.tga')
+      @dead_face = RUDL::Surface.load_new(GFX_DIR+'/dead_face.png')
+      @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.tga')
 
-      @baleog = Viking.createWarior("Baleog")
-      @erik = Viking.createSprinter("Erik")
-      @olaf = Viking.createShielder("Olaf")
+      @baleog = Viking.createWarior(GFX_DIR+"Baleog")
+      @erik = Viking.createSprinter(GFX_DIR+"Erik")
+      @olaf = Viking.createShielder(GFX_DIR+"Olaf")
 
     end # init_display
 

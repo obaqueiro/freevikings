@@ -11,9 +11,10 @@
 
 require 'game'
 
-# ========================================================================= #
-#          HLAVNI PROGRAM
-# ========================================================================= #
+module FreeVikings
+  GFX_DIR = 'gfx'
+end
+
 include FreeVikings
 
 Game.new.game_loop
