@@ -1,0 +1,69 @@
+			freeVikings
+
+			0.2 first pre-release
+
+			03/08/2005
+
+I. What the hell is this?
+
+In 1993 american Sillicon & Synapse made a very nice DOS game called
+Lost Vikings. FreeVikings project has been trying to make a simillar
+game from scratch. For fun without stupid restrictions of commercial
+software. At this time all the code is written in Ruby-it means that
+it isn't very fast (actually it's rather slow), but the development is
+quick and I really enjoy it.
+      The package you have just unpacked is a pre-release. It means
+you should expect problems. Try to solve them. You will find a lot of
+bugs. Please, report them (severus@post.cz).
+
+II. What will I need?
+
+Ruby >= 1.8.0 (www.ruby-lang.org) and some packages for it (raa.ruby-lang.org):
+- rudl >= 0.7
+- log4r
+- script
+- rubyunit (you don't actually need it, but without it you cannot run
+tests - it's only usefull for development)
+
+III. License
+
+    FreeVikings game is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License (file named GPL in this directory)
+    for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+IV. How to play?
+
+Use cursor keys to move the vikings, try to reach the EXIT place with
+all of them.
+Switch to the fullscreen mode by F3.
+Give up the level by pressing F6 (do this when one of the vikings
+stucks somewhere etc.)
+Quit the game by combo Ctrl-Q.
+Switch between the vikings by Ctrl or PgUp.
+-
+Baleog (the green one) has a sword and arc and he can clobber monsters
+by them. Press D to shoot an arrow, Space to use the sword.
+-
+Eric (the red guy) can jump (press Space), but it doesn't work well.
+
+V. Known bugs
+
+I'll mention only the most bad one. When the vikings are falling, they
+sometimes stuck somewhere in the air. Than you have to press the
+cursor keys quickly until they reach the ground. If you didn't do
+that, they would die.
+
+VI. Who wrote this pseudogame?
+
+Jakub Pavlik <severus@post.cz>
