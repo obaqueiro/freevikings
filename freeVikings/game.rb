@@ -54,7 +54,7 @@ module FreeVikings
       @olaf = Viking.createShielder("Olaf")
 
       @team = Team.new(@erik, @baleog, @olaf)
-      @team.each {|v| @location.add_sprite v}
+      @location.add_sprite @team
 
       @duck = Duck.new
       @location.add_sprite @duck
@@ -65,7 +65,7 @@ module FreeVikings
     end # initialize
 
     def finalize
-      puts "Destroying the application window, ending the game."
+      puts "Ending the game."
       exit
     end # finalize
 

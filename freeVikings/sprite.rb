@@ -30,6 +30,13 @@ module FreeVikings
       surface.blit(@image, coordinate_in_surface(surface))
     end
 
+    # Metoda, kterou ma vsechno, co je zobrazitelne nebo obaluje
+    # zobrazitelne. (vzor Skladba!)
+
+    def each_displayable
+      yield self
+    end
+
     # Vrati vzdalenost od vrsku
 
     def top

@@ -19,6 +19,10 @@ module FreeVikings
       @members[@active]
     end
 
+    def update
+      each {|m| m.update}
+    end
+
     # jako aktivniho nastavi dalsiho clena.
 
     def next(recursive_grade = 0)
@@ -44,6 +48,14 @@ module FreeVikings
     def each
       @members.each {|m| yield m}
     end
+
+    # Metoda vracejici vsechny sprajty.
+    # Slouzi k realisaci vzoru Skladba v zobrazovani sprajtu.
+    # Nutno rici, ze nepredpokladame, ze soucasti Teamu bude
+    # dalsi Team nebo jina Skladba. Jen proto each vyhovuje.
+
+    alias_method :each_displayable, :each
+
   end # class
 
   class NotATeamMemberAliveException < RuntimeError
