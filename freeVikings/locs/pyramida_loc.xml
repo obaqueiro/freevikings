@@ -11,7 +11,7 @@
   <!-- Skripty k nahrani: -->
   
   <scripts>
-    <monsters path="pyramis_monsters.rb" />
+    <monsters path="locs/pyramis_monsters.rb" />
   </scripts>
   
   <!-- Definice rozmisteni bloku v mape -->

@@ -113,24 +113,24 @@ module FreeVikings
 
     def load_monsters(monster_manager)
       @log.debug "Starting loading monsters from scripts."
-      
-	begin
-	      script_element = @doc.root.elements['scripts'].elements['monsters']
-	      scriptpath = script_element.attributes['path']
-	rescue => ex
-		@log.error "Cannot load monster script."
-		@log.debug "Exception message: #{ex.message}"
-		return
-	end
-      @log.info "Loading script #{scriptpath}"
-      s = Script.new scriptpath
+
+      begin
+	script_element = @doc.root.elements['scripts'].elements['monsters']
+	scriptfile = script_element.attributes['path']
+      rescue => ex
+	@log.error "Cannot load monster script."
+	@log.debug "Exception message: #{ex.message}"
+	return
+      end
+      @log.info "Loading script #{scriptfile}"
+      s = Script.new scriptfile
 
       if s.const_defined? "MONSTERS" then
 	s::MONSTERS.each {|m| monster_manager.add_sprite m.dup}
       else
-	@log.info "In scriptfile #{scriptpath}: constant MONSTERS hasn't been defined. Maybe the script doesn't provide monsters."
+	@log.info "In scriptfile #{scriptfile}: constant MONSTERS hasn't been defined. Maybe the script doesn't provide monsters."
       end
-      @log.info "Script #{scriptpath} successfully loaded."
+      @log.info "Script #{scriptfile} successfully loaded."
     end
 
     def load_exit(location)

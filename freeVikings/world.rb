@@ -10,6 +10,8 @@ require 'locationloadstrategy.rb'
 module FreeVikings
 
   class World
+
+    DATA_DIR = 'locs'
     
     def initialize
       @location = nil
@@ -40,7 +42,7 @@ module FreeVikings
 
     private
     def load_level
-      strategy = XMLLocationLoadStrategy.new(@locs[@level])
+      strategy = XMLLocationLoadStrategy.new(DATA_DIR + '/' + @locs[@level])
       @location = Location.new(strategy)      
     end
   end # class World

@@ -2,8 +2,6 @@
 # igneus 11.3.2005
 # Lokacni skript pridavajici potvory do lokace Pyramis
 
-require 'sprite.rb'
-require 'monster.rb'
 require 'slug.rb'
 
 MONSTERS = Array.new
