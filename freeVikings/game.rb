@@ -101,9 +101,15 @@ module FreeVikings
 	@location.update
 	@location.paint(@map_view, @team.active.center)
 	@app_window.blit(@map_view, [0,0])
-	# nefunguje pod RUDL <= 0.4 (potrebuje pristup k fcim SDL_gfx):
+
+	# Nasledujici nefunguje pod RUDL <= 0.4 (potrebuje pristup k fcim 
+	# SDL_gfx):
 	# @app_window.print([10,10], "fps #{fps / (Timer.ticks / 1000)}", [255,255,255])
-	puts "FPS: #{fps / (Timer.ticks / 1000)}"
+	# Nasledujici radek - mimochodem opsany z oficialnich prikladu
+	# k RUDL 1.8, pod RUDL 1.4 pusobi beznadejne zatvrdnuti programu
+	# po ukonceni volanim exit.
+	# puts "FPS: #{fps / (Timer.ticks / 1000)}"
+
 	repaint_status
 	@app_window.blit(@status_view, [0, WIN_HEIGHT - STATUS_HEIGHT])
 
