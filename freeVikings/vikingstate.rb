@@ -94,7 +94,7 @@ module FreeVikings
     end
 
     def to_s
-      "standing_" + direction
+      "standing_" + @direction
     end
 
     def move_left
@@ -175,15 +175,11 @@ module FreeVikings
 
     def initialize(viking, last_state)
       super(viking, last_state)
-      @last_state = last_state
-    end
-
-    def direction
-      @last_state.direction
+      @direction = last_state.direction
     end
 
     def to_s
-      "stucked_" + direction
+      "stucked_" + @direction
     end
   end
 
@@ -223,7 +219,7 @@ module FreeVikings
     end
 
     def to_s
-      "bow_stretching_" + direction
+      "bow_stretching_" + @direction
     end
 
     def stop
@@ -234,7 +230,7 @@ module FreeVikings
 
   class FightingVikingState < VikingState
     def to_s
-      "fighting_" + direction
+      "fighting_" + @direction
     end
 
     def stop
