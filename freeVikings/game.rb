@@ -20,9 +20,9 @@ module FreeVikings
     include RUDL::Constant
 
     VIKING_FACE_SIZE = 60
-    WIN_WIDTH = 640 # 6 * VIKING_FACE_SIZE
-    WIN_HEIGHT = 480 # WIN_WIDTH
-    STATUS_HEIGHT = 60
+    WIN_WIDTH = 640
+    WIN_HEIGHT = 480
+    STATUS_HEIGHT = VIKING_FACE_SIZE
 
     attr_reader :app_window
     attr_reader :viking
@@ -33,10 +33,10 @@ module FreeVikings
 
       @manager = SpriteManager.new(@map)
 
-      @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT + STATUS_HEIGHT])
+      @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
       @app_window.set_caption('freeVikings')
 
-      @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT])
+      @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT - STATUS_HEIGHT])
       @status_view = RUDL::Surface.new([WIN_WIDTH, STATUS_HEIGHT])
 
       @face_bg = RUDL::Surface.load_new('face_bg.tga')
@@ -63,7 +63,9 @@ module FreeVikings
     end
 
     def game_loop
-    fps = 0
+      fps = 0
+      repaint_status
+      @app_window.blit(@status_view, [0, WIN_HEIGHT - STATUS_HEIGHT])
       loop do
 	# Zpracujeme udalosti:
 	if event = RUDL::EventQueue.poll then
@@ -74,8 +76,6 @@ module FreeVikings
 	@manager.paint(@map_view, centered_view_rect(@map.background.w, @map.background.h, @map_view.w, @map_view.h, viking.center))
 
 	@app_window.blit(@map_view, [0,0])
-	repaint_status
-	@app_window.blit(@status_view, [0, WIN_HEIGHT])
 	# nefunguje pod RUDL <= 0.4 (potrebuje pristup k fcim SDL_gfx):
 	# @app_window.print([10,10], "fps #{fps / (Timer.ticks / 1000)}", [255,255,255])
 	@app_window.flip

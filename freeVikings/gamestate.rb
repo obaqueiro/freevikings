@@ -76,6 +76,8 @@ module FreeVikings
 	# Specialni klavesy:
       when K_F3
 	@context.app_window.toggle_fullscreen
+      when K_q
+	exit if RUDL::Key.modifiers && K_LCTRL
       end # case
     end # private method serve_keydown
 
