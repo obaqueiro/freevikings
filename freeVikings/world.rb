@@ -14,7 +14,7 @@ module FreeVikings
     def initialize
       @location = nil
       @level = -1
-      @locs = ['first_loc.xml', 'pyramida_loc.xml', 'hopsy_loc.xml']
+      @locs = ['pyramida_loc_2.xml', 'first_loc.xml', 'pyramida_loc.xml', 'hopsy_loc.xml']
       # Nastavime vychozi lokaci:
       next_location
     end

@@ -18,7 +18,7 @@ module FreeVikings
     attr_reader :max_height
 
     def initialize
-      @log = Log4r::Logger.new('map loading log')
+      @log = Log4r::Logger.new('location loading log')
       @log.outputters = Log4r::StderrOutputter.new('map loading out')
     end
 
@@ -64,16 +64,26 @@ module FreeVikings
       @blocktypes = blocktype_hash
 
       # nacteni typu bloku
-      @doc.elements.each("location/blocktypes/blocktype") { |blocktype|
-	code = blocktype.attributes["code"]
-	path = blocktype.attributes["path"]
-	tiletype = TileType.instance(code, path)
-	tiletype.solid = false unless blocktype.attributes["solid"] == "solid"
-	@blocktypes[code] = tiletype
-      }
+      begin
+	@doc.root.elements['map'].elements["blocktypes"].each_element { |blocktype|
+	  code = blocktype.attributes["code"]
+	  path = blocktype.attributes["path"]
+	  @log.debug "Loading new TileType with code '#{code}' and path '#{path}'"
+	  tiletype = TileType.instance(code, path)
+	  tiletype.solid = false unless blocktype.attributes["solid"] == "solid"
+	  @blocktypes[code] = tiletype
+	}
+      rescue => ex
+	@log.error "Cannot read XML node 'blocktypes' in datafile #{@source.path}. (" + ex.message + ")"
+      end
 
       # nacteni umisteni bloku
-      lines = @doc.root.elements["blocks"].text.split(/\n/)
+      begin
+	lines = @doc.root.elements["map"].elements["blocks"].text.split(/\n/)
+      rescue => ex
+	@log.fatal "Cannot find 'blocks' XML element in datafile #{@source.path}. (" + ex.message + ")"
+	exit 1
+      end
       @max_width = @max_height = 0
       # prochazime radky bloku:
       lines.each_index { |line_num|
@@ -107,17 +117,26 @@ module FreeVikings
     end
 
     def load_exit(location)
-      @doc.root.elements.each('exit') { |exit_element|
+      begin
+	exit_element = @doc.root.elements['map'].elements['exit']
 	x = exit_element.attributes['horiz'].to_i
 	y = exit_element.attributes['vertic'].to_i
-	location.exitter = Exit.new([x,y])
-      }
+      rescue
+	@log.error "Cannot find XML element 'exit' in datafile #{@source.path}."
+	x = y = 300
+      end
+      location.exitter = Exit.new([x,y])
     end
 
     def load_start(location)
-      strt_element = @doc.root.elements['start']
-      x = strt_element.attributes['horiz'].to_i
-      y = strt_element.attributes['vertic'].to_i
+      begin
+	strt_element = @doc.root.elements['map'].elements['start']
+	x = strt_element.attributes['horiz'].to_i
+	y = strt_element.attributes['vertic'].to_i
+      rescue
+	@log.error "Cannot find XML element 'start' in datasource #{@source.path}."
+	x = y = 100
+      end
       location.start = [x,y]
     end
 
