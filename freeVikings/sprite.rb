@@ -16,7 +16,7 @@ module FreeVikings
     BASE_VELOCITY = 135
 
     attr_reader :moving
-    attr_writer :move_validator
+    attr_accessor :move_validator
 
     def initialize(initial_position=[])
       @image = Image.new('nobody.tga')
@@ -51,6 +51,10 @@ module FreeVikings
       @left
     end
 
+    def position
+      [left, top]
+    end
+
     def destroy
     end
 
@@ -72,6 +76,9 @@ module FreeVikings
 
     def stop
       @moving = nil
+    end
+
+    def update
     end
 
   end # class

@@ -90,7 +90,7 @@ module FreeVikings
 
     def serve_keyup(keyevent)
       case keyevent.key
-      when K_LEFT, K_RIGHT, K_d
+      when K_LEFT, K_RIGHT, K_d, K_SPACE
 	@context.team.active.stop
       end
     end # private method serve_keyup

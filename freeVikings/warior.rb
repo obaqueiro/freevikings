@@ -6,6 +6,7 @@
 
 require 'viking.rb'
 require 'arrow.rb'
+require 'sword.rb'
 
 module FreeVikings
   class Warior < Viking
@@ -13,10 +14,24 @@ module FreeVikings
     def initialize(name="")
       super name
       init_images
+      @weapon = Sword.new
     end
+
+    attr_reader :weapon
 
     def d_func
       @state = BowStretchingVikingState.new(self, @state)
+    end
+
+    def space_func
+      @state = FightingVikingState.new self, @state
+
+      # Nasleduje mala necistota. Musime zbrani predat odkaz na lokaci,
+      # nebot mec neni registrovan jako sprajt, nybrz je jen yieldovan
+      # v iteratoru each_displayable jako soucast sprajtu vikinga
+      weapon.move_validator = @move_validator
+
+      weapon.set(weapon_position, @state.direction)
     end
 
     def shoot
@@ -27,6 +42,11 @@ module FreeVikings
       end
       arrow = Arrow.new([left + 30, top + (image.h / 2) - 7], Velocity.new(arrow_veloc))
       @move_validator.add_sprite arrow
+    end
+
+    def each_displayable
+      yield self
+      yield weapon if @state.type == FightingVikingState
     end
 
     private
@@ -50,6 +70,19 @@ module FreeVikings
       @image.add_pair('dead', Image.new('dead.png'))
       @image.add_pair('bow_stretching_left', Image.new('baleog_shooting_left.png'))
       @image.add_pair('bow_stretching_right', Image.new('baleog_shooting_right.png'))
+      @image.add_pair('fighting_left', i_left)
+      @image.add_pair('fighting_right', i_right)
+    end
+
+    def weapon_position
+      weapon_pos = [nil, top + (image.h / 2)]
+      if @state.direction == 'right' then
+	weapon_pos[0] = left + 0.8 * image.w
+      end
+      if @state.direction == 'left' then
+	weapon_pos[0] = left - (weapon.image.w - 0.2 * image.w)
+      end
+      return weapon_pos
     end
 
   end # class Warior

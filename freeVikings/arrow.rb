@@ -7,8 +7,6 @@ module FreeVikings
 
   class Arrow < Sprite
 
-    attr_writer :move_validator
-
     def initialize(start_pos, velocity)
       @images = ImageBank.new(self)
       @images.add_pair('left', Image.new('arrow_left.tga'))
