@@ -91,7 +91,7 @@ module FreeVikings
     # Vytvori obrazek. Zadanou cestu vezme relativne ke standardnimu
     # adresari obrazku.
 
-    def initialize(image_path)
+    def initialize(image_path='')
       if image_path.size != 0
 	image_path = GFX_DIR+'/'+image_path
 	@image = RUDL::Surface.load_new(image_path)
