@@ -7,16 +7,8 @@
 module FreeVikings
 
   module MoveValidator
-    def is_vertical_position_valid?(sprite, new_position)
-      true
-    end
-
-    def is_horizontal_position_valid?(sprite, new_position)
-      true
-    end
-
-    def is_position_valid?(sprite, new_position)
-      return (is_vertical_position_valid?(sprite, new_position) and is_horizontal_position_valid?(sprite, new_position))
+    def is_position_valid?(sprite, position)
+      nil
     end
   end
 

@@ -7,18 +7,20 @@ require 'velocity.rb'
 
 module FreeVikings
 
-  GRAVITY = 9.8
+  GRAVITY = 50
 
   class VikingState
     # Supertrida pro tridy Stavu vikinga
 
     attr_reader :velocity_horiz
     attr_reader :velocity_vertic
+    attr_reader :last_state
 
     def initialize(viking, last_state=nil)
       @viking = viking
       @velocity_horiz = Velocity.new
       @velocity_vertic = Velocity.new(0, GRAVITY)
+      @last_state = last_state
     end
 
     def to_s
@@ -78,6 +80,10 @@ module FreeVikings
 
     def f_func
       nil
+    end
+
+    def dump
+      "<id:#{id} vv:#{@velocity_vertic.value} vh:#{@velocity_horiz.value}>"
     end
   end # class VikingState
 
@@ -183,7 +189,7 @@ module FreeVikings
 
     def initialize(viking, last_state)
       super(viking, last_state)
-      @velocity_vertic.value = @viking.class::BASE_VELOCITY * 1.6
+      @velocity_vertic.value = @viking.class::BASE_VELOCITY
       @velocity_horiz = last_state.velocity_horiz
     end
 

@@ -48,10 +48,11 @@ module FreeVikings
       @sprites.each { |sprite|
 	# at je pekne aktualni:
 	sprite.update
-	# jestli se sprajt dostal mimo mapu, musi byt odstranen.
-	if sprite.top < 0 or sprite.top > @map.background.h or
+	# jestli se sprajt dostal mimo mapu, musi byt odstranen
+ 	if sprite.top < 0 or sprite.top > @map.background.h or
 	    sprite.left < 0 or sprite.left > @map.background.w then
 	  sprite.destroy
+	  @sprites.delete sprite
 	end
       }
     end

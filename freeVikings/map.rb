@@ -14,7 +14,7 @@ module FreeVikings
     # velikost strany dlazdice v pixelech
     TILE_SIZE = 40
 
-    def initialize(map_path)
+    def initialize(map_load_strategy)
       @log = Log4r::Logger.new('map log')
       outputter = Log4r::StderrOutputter.new('map_stderr_output')
       @log.outputters = outputter
@@ -22,12 +22,12 @@ module FreeVikings
 
       @blocktypes = Hash.new
       @blocks = Array.new
-      @loading_strategy = XMLMapLoadStrategy.new(map_path, @blocks, @blocktypes)
+      @loading_strategy = map_load_strategy
       @background = nil
 
       @log.info('Loading map.')
 
-      @loading_strategy.load
+      @loading_strategy.load(@blocks, @blocktypes)
 
       @log.info('Map initialised.')
     end
@@ -73,43 +73,21 @@ module FreeVikings
       surface.blit(background, [0,0], [left, top, left + surface.w, top + surface.h])
     end
 
-    # nahraje mapu ze souboru
-    
-    private
-    def load_xml_file(map_path)
-      map_file = File.new(map_path)
-    end # methody load_xml_file
-
-    def get_block(coord)
-      coord[0] = coord[0].to_i
-      coord[1] = coord[1].to_i
-      line = coord[1] / Map::TILE_SIZE
-      line += 1 if (coord[1] % Map::TILE_SIZE) > 0
-      column = coord[0] / Map::TILE_SIZE
-      column += 1 if (coord[0] % Map::TILE_SIZE) > 0
-      # Sloupkovy index je nutne pred vracenim dekrementovat, protoze
-      # pri nacitani bloku se zacina az od indexu 1.
-      @log.debug("get_block: I\'m going to return a reference to a blocktype of [#{line}][#{column - 1}] (tiles)")
-      unless @blocks[line].is_a? Array
-	@log.fatal "get_block: Line #{line} of blocks array of strange type #{@blocks[line].type}."
-	raise RuntimeError, "get_block: Line #{line} of blocks array isn't an Array. (It's a #{@blocks[line].type} instance.)"
-      end
-      @blocks[line][column - 1]
-    end
-
     # vezme beznou definici ctverce v pixelech, vrati pole kolidujicich
     # dlazdic
 
     public
     def blocks_on_square(square)
+      round_coords_in_square square
       @log.debug "blocks_on_square: Asked for blocks colliding with a square defined by [#{square[0]}, #{square[1]}, #{square[2]}, #{square[3]}](px)"
       colliding_blocks = []
       # spocitat nejlevejsi a nejpravejsi index do kazdeho radku:
-      leftmost_i = (square[0] / Map::TILE_SIZE).round
-      rightmost_i = ((square[0] + square[2]) / Map::TILE_SIZE).round
+      leftmost_i = (square[0] / Map::TILE_SIZE)
+      rightmost_i = ((square[0] + square[2]) / Map::TILE_SIZE)
       # spocitat prvni a posledni radek:
       top_line = (square[1] / Map::TILE_SIZE).round
-      bottom_line = ((square[1] + square[3]) / Map::TILE_SIZE).round
+      bottom_line = ((square[1] + square[3]) / Map::TILE_SIZE)
+      round_coords_in_square([leftmost_i, top_line, rightmost_i, bottom_line])
       # z kazdeho radku vybrat patricny vyrez:
       @log.debug "blocks_on_square: I'm going to extract blocks from a square [#{leftmost_i}, #{top_line}, #{rightmost_i}, #{bottom_line}](tiles)"
       unless @blocks[top_line .. bottom_line].is_a? Array
@@ -117,9 +95,23 @@ module FreeVikings
 	raise RuntimeError, "Invalid lines #{top_line} .. #{bottom_line}."
       end
       @blocks[top_line .. bottom_line].each {|line|
-	colliding_blocks.concat line[leftmost_i .. rightmost_i]
+	blocks = line[leftmost_i .. rightmost_i]
+	colliding_blocks.concat(blocks) if blocks.is_a? Array
       }
       return colliding_blocks
+    end
+
+    # Zaokrouhli souradnice tak, ze se ctverec vzdy roztahne
+    # (nikdy se nesmrskne)
+
+    private
+    def round_coords_in_square(square)
+      # vlevo a nahore souradnice zaokrouhlime dolu:
+      square[0] = square[0] - (square[0] % 1)
+      square[1] = square[1] - (square[1] % 1)
+      # vpravo a dole souradnice zaokrouhlime nahoru:
+      square[2] = square[2] + (1 - (square[2] % 1))
+      square[3] = square[3] + (1 - (square[3] % 1))
     end
 
   end # class Map

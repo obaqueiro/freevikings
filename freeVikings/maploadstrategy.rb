@@ -17,15 +17,21 @@ module FreeVikings
 
     # Pole Blocks_matrix inicialisuje jako dvojrozmerne pole a nacte do nej
     # dlazdice ze souboru mapy.
-    # Do hashe Blocktype_array ulozi objekt TileType 
+    # Do hashe Blocktype_hash ulozi objekt TileType 
     # pro kazdy typ dlazdice, ktery se v souboru mapy vyskytne.
+    # Nacte do pole bloku bloky a do pole typu jejich typy (objekty TileType)
+    def load(blocks_matrix, blocktype_hash)
+    end
+
+  end # class MapLoadStrategy
+
+
+  class XMLMapLoadStrategy < MapLoadStrategy
+
     # Mapfile muze byt String nebo IO. Je to zdroj nebo jmeno zdroje, 
     # ze ktereho bude mapa nactena.
 
-    def initialize(mapfile, blocks_matrix, blocktype_array)
-      @blocks = blocks_matrix
-      @blocktypes = blocktype_array
-
+    def initialize(mapfile)
       @log = Log4r::Logger.new('map loading log')
       @log.level = Log4r::ERROR
       @log.outputters = Log4r::StderrOutputter.new('map loading out')
@@ -39,16 +45,10 @@ module FreeVikings
       end
     end
 
-    # Nacte do pole bloku bloky a do pole typu jejich typy (objekty TileType)
-    def load
-    end
+    def load(blocks_matrix, blocktype_hash)
+      @blocks = blocks_matrix
+      @blocktypes = blocktype_hash
 
-  end # class MapLoadStrategy
-
-
-  class XMLMapLoadStrategy < MapLoadStrategy
-
-    def load
       doc = REXML::Document.new(@source)
       # nacteni typu bloku
       doc.elements.each("location/blocktypes/blocktype") { |blocktype|

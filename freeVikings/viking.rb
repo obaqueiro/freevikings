@@ -19,14 +19,15 @@ module FreeVikings
     attr_writer :move_validator
     attr_reader :energy
 
+    @@viking_log = Log4r::Logger.new('viking_log')
+    @@viking_log.level = Log4r::DEBUG
+    @@viking_log.outputters = Log4r::StderrOutputter.new('viking_stderr_out')
+
     def initialize(name = "")
       super()
-      @viking_log = Log4r::Logger.new('viking_log')
-      @viking_log.level = Log4r::ERROR
-      @viking_log.outputters = Log4r::StderrOutputter.new('viking_stderr_out')
       @name = name
       @state = StandingVikingState.new(self)
-      @viking_log.debug("Viking #{@name} initialised.")
+      @@viking_log.debug("Viking #{@name} initialised.")
       @last_position = @position = [121, 20]
       @last_update_time = Time.now.to_f
       @move_validator = NullMoveValidator # objekt overujici moznost presunu na posici
@@ -97,7 +98,6 @@ module FreeVikings
     end
 
     def next_position
-      update_state
       time_now = Time.now.to_f
       time_delta = time_now - @last_update_time
       # Zde se musi posice zjistovat primo z instancni promenne, protoze
@@ -110,13 +110,20 @@ module FreeVikings
     # Aktualisuje posici vikinga.
 
     def update
+      # Nejprve zkusme, jestli by viking nemohl zacit padat.
+      # Pokud muze zacit padat, zacne padat:
+      if @move_validator.is_position_valid?(self, [left, top + 5])
+	@state = FallingVikingState.new(self, @state)
+	@@viking_log.debug "update: #{@name} starts falling"
+      end
+      # Nyni muzeme aktualisovat posici:
       if @move_validator.is_position_valid?(self, next_position) then
 	@last_position, @position = @position, next_position
 	update_time
       else
 	@state.stuck
       end
-      @viking_log.debug("#{@name}'s state: #{@state.to_s}")
+      @@viking_log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
     end
 
     private
@@ -147,14 +154,6 @@ module FreeVikings
     # Aktualisuje cas posledni aktualisace posice
     def update_time
       @last_update_time = Time.now.to_f
-    end
-
-    private
-    def update_state
-      # je volno pod vikingem? Jestli ano, zacne padat.
-      if @move_validator.is_vertical_position_valid?(self, [@position[0], @position[1] + 5])
-	@state = FallingVikingState.new(self, @state.dup)
-      end
     end
 
     private
