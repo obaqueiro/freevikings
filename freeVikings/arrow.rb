@@ -8,20 +8,16 @@ module FreeVikings
   class Arrow < Sprite
 
     def initialize(start_pos, velocity)
+      super start_pos
       @images = ImageBank.new(self)
       @images.add_pair('left', Image.new('arrow_left.tga'))
       @images.add_pair('right', Image.new('arrow_right.tga'))
-      @start_pos = start_pos
       @velocity = velocity
       @start_time = Time.now.to_f
     end
 
-    def top
-      @start_pos[1]
-    end
-
     def left
-      @start_pos[0] + @velocity.value * (Time.now.to_f - @start_time)
+      @position[0] + @velocity.value * (Time.now.to_f - @start_time)
     end
 
     def destroy
@@ -48,7 +44,7 @@ module FreeVikings
       unless stroken.empty?
 	s = stroken.pop
 	if s.is_a? Monster
-	  s.destroy
+	  s.hurt
 	  @move_validator.delete_sprite s
 	  @move_validator.delete_sprite self
 	end

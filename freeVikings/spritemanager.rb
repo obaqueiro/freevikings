@@ -90,8 +90,7 @@ If no sprite is found, it returns an empty array.
       found = Array.new
       @sprites.each do |sprite|
 	r_rect = Rectangle.new(*rect)
-	r_sprite = Rectangle.new(*(sprite.rect))
-	if r_rect.collides? r_sprite
+	if r_rect.collides? sprite.rect
 	  found.push sprite
 	end # if
       end # do

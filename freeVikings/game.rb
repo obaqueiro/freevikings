@@ -32,8 +32,6 @@ module FreeVikings
     attr_reader :map
 
     def initialize
-      ObjectSpace.define_finalizer(self, Proc.new {finalize})
-
       strategy = XMLMapLoadStrategy.new("first_loc.xml")
 
       @location = Location.new(strategy)
@@ -45,8 +43,8 @@ module FreeVikings
       @status_view = RUDL::Surface.new([WIN_WIDTH, STATUS_HEIGHT])
 
       @face_bg = RUDL::Surface.load_new('face_bg.tga')
-      @baleog_face_bw = RUDL::Surface.load_new('baleog_face_unactive.gif')
-      @baleog_face = RUDL::Surface.load_new('baleog_face.tga')
+      @baleog_face_bw = RUDL::Surface.load_new('erik_face_unactive.gif')
+      @baleog_face = RUDL::Surface.load_new('erik_face.tga')
       @dead_face = RUDL::Surface.load_new('dead_face.png')
       @energy_punkt = RUDL::Surface.load_new('energypunkt.tga')
 

@@ -54,6 +54,10 @@ module FreeVikings
       left + w
     end
 
+    def to_a
+      @coordinates.dup
+    end
+
     private
 
     def collides_northwest?(rect)

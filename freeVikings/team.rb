@@ -19,10 +19,6 @@ module FreeVikings
       @members[@active]
     end
 
-    def update
-      each {|m| m.update}
-    end
-
     # jako aktivniho nastavi dalsiho clena.
 
     def next(recursive_grade = 0)
@@ -43,6 +39,10 @@ module FreeVikings
       end
       last(recursive_grade + 1) unless active.alive?
       return self.active
+    end
+
+    def update
+      each {|m| m.update}
     end
 
     def each

@@ -40,7 +40,7 @@ module FreeVikings
       unless stroken.empty?
 	s = stroken.pop
 	if s.is_a? Monster
-	  s.destroy
+	  s.hurt
 	  @move_validator.delete_sprite s
 	end
       end

@@ -14,9 +14,8 @@ module FreeVikings
     include Monster
     
     def initialize
+      super [500,320]
       init_images
-      @top = 320
-      @left = 500
     end
 
     def image
@@ -24,6 +23,11 @@ module FreeVikings
     end
 
     def update
+      caught = @move_validator.sprites_on_rect(self.rect)
+      caught.delete self
+      unless caught.empty?
+	caught.each { |c| c.hurt } if (Time.now.to_i % 2 == 0)
+      end
     end
 
     private

@@ -12,21 +12,13 @@ module FreeVikings
     include Monster
 
     def initialize
+      super [100,80]
       @image = Image.new('duck_left.tga')
       @counter = 0
-      @top = 17
     end
 
     def image
       @image.image
-    end
-
-    def left
-      100
-    end
-
-    def top
-      80
     end
 
     def update

@@ -7,6 +7,7 @@ require 'RUDL'
 
 require 'velocity.rb'
 require 'imagebank.rb'
+require 'rect.rb'
 
 module FreeVikings
 
@@ -22,11 +23,9 @@ module FreeVikings
       @image = Image.new('nobody.tga')
 
       unless initial_position.empty?
-	@top = initial_position[1]
-	@left = initial_position[0]
+	@position = initial_position.dup
       else
-	@top = 60
-	@left = 70
+	@position = [70,60]
       end
 
       @moving = nil
@@ -42,20 +41,28 @@ module FreeVikings
     # Vrati vzdalenost od vrsku
 
     def top
-      @top
+      @position[1]
     end
 
     # Vrati vzdalenost odleva
 
     def left
-      @left
+      @position[0]
     end
 
     def position
       [left, top]
     end
 
+    def position=(pos)
+      @position = pos.dup
+    end
+
     def destroy
+    end
+
+    def hurt
+      destroy # jednoduche organismy zraneni nepreziji
     end
 
     def image
@@ -65,7 +72,7 @@ module FreeVikings
     # Vrati obdelnik, ktery sprite zabira v aktualni lokaci
 
     def rect
-      [left, top, left + image.w, top + image.h]
+      Rectangle.new *[left, top, image.w, image.h]
     end
 
     def move_left
