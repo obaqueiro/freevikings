@@ -29,7 +29,7 @@ module FreeVikings
       @@viking_log.debug("Viking #{@name} initialised.")
       @last_position = @position = start_position
       @last_update_time = Time.now.to_f
-      @move_validator = NullMoveValidator # objekt overujici moznost presunu na posici
+      @move_validator = NullMoveValidator.new # objekt overujici moznost presunu na posici
       @energy = 3 # zivotni sila
 
       @portrait = Portrait.new('viking_face.tga', 'viking_face_unactive.tga', 'dead_face.png')

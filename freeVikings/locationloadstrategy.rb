@@ -55,8 +55,12 @@ module FreeVikings
       else
 	raise ArgumentError, "Argument mapfile of bad type #{mapfile.type}"
       end
-
-      @doc = REXML::Document.new(@source)
+      
+      begin
+	@doc = REXML::Document.new(@source)
+      rescue NameError
+	@log.fatal "Datafile #{@source} has not a valid XML syntax."
+      end
     end
 
     def load_map(blocks_matrix, blocktype_hash)

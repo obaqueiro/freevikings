@@ -37,6 +37,12 @@ module FreeVikings
 	  @blocks.push blcks[line_num]
 	}
       end
+
+      def load_exit(location)
+      end
+
+      def load_start(location)
+      end
     end # class TestingMapLoadStrategy
   end # module Mock
 end # module FreeVikings

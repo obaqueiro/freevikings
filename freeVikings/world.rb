@@ -14,7 +14,7 @@ module FreeVikings
     def initialize
       @location = nil
       @level = -1
-      @locs = ['pyramida_loc_2.xml', 'first_loc.xml', 'pyramida_loc.xml', 'hopsy_loc.xml']
+      @locs = ['pyramida_loc.xml', 'first_loc.xml', 'hopsy_loc.xml']
       # Nastavime vychozi lokaci:
       next_location
     end
@@ -22,7 +22,8 @@ module FreeVikings
     attr_reader :location
 
     def next_location
-      if @locs[@level += 1].nil? then
+      @level += 1
+      if @locs[@level].nil? then
 	# Zadna dalsi lokace v zasobe
 	return nil
       end
