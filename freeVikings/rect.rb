@@ -20,13 +20,12 @@ module FreeVikings
     end
 
     def collides?(rect)
-      if collides_northwest? rect or
-	  collides_southwest? rect or
-	  collides_northeast? rect or
-	  collides_southeast? rect then
+      if self.left <= rect.right and
+	  rect.left <= self.right and
+	  self.top <= rect.bottom and
+	  rect.top <= self.bottom then
 	return true
       end
-
       return false
     end
 
@@ -56,40 +55,6 @@ module FreeVikings
 
     def to_a
       @coordinates.dup
-    end
-
-    private
-
-    def collides_northwest?(rect)
-      if top > rect.top and top < rect.bottom and
-	  left > rect.left and left < rect.right then
-	return true
-      end
-      return nil
-    end
-
-    def collides_northeast?(rect)
-      if left < rect.left and right > rect.left and
-	   top < rect.bottom and bottom > rect.bottom then
-	return true
-      end
-      return nil 
-    end
-
-    def collides_southwest?(rect)
-      if bottom > rect.top and bottom < rect.bottom and
-	   left > rect.left and left < rect.right then
-	return true
-      end
-      return nil
-    end
-
-    def collides_southeast?(rect)
-      if left < rect.left and right > rect.left and
-	  top < rect.top and bottom > rect.top then
-	return true
-      end
-      return nil
     end
 
   end # class Rectangle

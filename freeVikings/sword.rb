@@ -38,11 +38,12 @@ module FreeVikings
       stroken = @move_validator.sprites_on_rect(self.rect)
       stroken.delete self
       unless stroken.empty?
-	s = stroken.pop
-	if s.is_a? Monster
-	  s.hurt
+	stroken.each do |s|
+	  if s.is_a? Monster
+	    s.hurt
+	  end
 	end
-      end
+      end # unless
     end
 
     private
