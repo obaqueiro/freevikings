@@ -62,6 +62,7 @@ module FreeVikings
       rescue NameError => ex
 	@log.fatal "Datafile #{@source} cannot be open ( maybe it has not a valid XML syntax)."
 	@log.debug "Exception message: #{ex.message}"
+	raise
       end
     end
 
