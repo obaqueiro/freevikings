@@ -15,7 +15,6 @@ module FreeVikings
     attr_reader :velocity_horiz
     attr_reader :velocity_vertic
     attr_reader :last_state
-    attr_reader :direction
 
     def initialize(viking, last_state=nil)
       @viking = viking
@@ -38,6 +37,12 @@ module FreeVikings
 
     def alive?
       true
+    end
+
+    def direction
+      return 'left' if @velocity_horiz.value < 0
+      return 'right' if @velocity_horiz.value > 0
+      return @direction
     end
 
     def stop
@@ -148,10 +153,6 @@ module FreeVikings
       @velocity_horiz.value = - (@viking.class::BASE_VELOCITY)
     end
 
-    def direction
-      "left"
-    end
-
     def move_right
       @viking.state = RightWalkingVikingState.new(@viking, self)
     end
@@ -164,10 +165,6 @@ module FreeVikings
       velocity_horiz.value = @viking.class::BASE_VELOCITY
     end
 
-    def direction
-      "right"
-    end
-
     def move_left
       @viking.state = LeftWalkingVikingState.new(@viking, self)
     end
@@ -177,7 +174,7 @@ module FreeVikings
 
     def initialize(viking, last_state)
       super(viking, last_state)
-      @velocity_vertic = Velocity.new(Viking::BASE_VELOCITY)
+      @velocity_vertic = Velocity.new(-4 * Viking::BASE_VELOCITY)
       @velocity_horiz = last_state.velocity_vertic
     end
 
@@ -190,10 +187,6 @@ module FreeVikings
 
     def stuck
       @viking.state = FallingVikingState.new(@viking, self)
-    end
-
-    def direction
-      ""
     end
   end # class JumpingVikingState
 
@@ -231,14 +224,15 @@ module FreeVikings
     end
 
     def move_left
-      @velocity_horiz.value = @velocity_horiz.value - Viking::BASE_VELOCITY / 2
+      @velocity_horiz.value = Viking::BASE_VELOCITY / 2
     end
 
     def move_right
-      @velocity_horiz.value = @velocity_horiz.value + Viking::BASE_VELOCITY / 2
+      @velocity_horiz.value = Viking::BASE_VELOCITY / 2
     end
 
     def stop
+      @velocity_horiz.value = 0
     end
   end # class FallingVikingState
 
