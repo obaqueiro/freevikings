@@ -13,7 +13,7 @@ module FreeVikings
     
     def initialize
       @location = nil
-      @level = 0
+      @level = -1
       @locs = ['first_loc.xml', 'hopsy_loc.xml']
       # Nastavime vychozi lokaci:
       next_location
@@ -22,22 +22,25 @@ module FreeVikings
     attr_reader :location
 
     def next_location
-      if @locs[@level].nil? then
+      if @locs[@level += 1].nil? then
 	# Zadna dalsi lokace v zasobe
 	return nil
       end
-      strategy = XMLLocationLoadStrategy.new(@locs[@level])
-      @level += 1
-      @location = Location.new(strategy)
+      load_level
     end
 
     def rewind_location
-      # zatim je tu svindl:
-      next_location
+      load_level
     end
 
     def initialised?
       @location.nil?
+    end
+
+    private
+    def load_level
+      strategy = XMLLocationLoadStrategy.new(@locs[@level])
+      @location = Location.new(strategy)      
     end
   end # class World
 end # module FreeVikings
