@@ -37,10 +37,17 @@ class Browser
   # loads a specified location file
 	
   def view(location_path)
+    @path = location_path
     @loc = Location.new(NonScriptLocationLoadStrategy.new(location_path))
     self.win_caption = TITLE + ': ' + File.basename(location_path)
     @view_center = [150,150] # stred zobrazovane oblasti mapy
     @center_move = [0,0] # rychlost pohybu h i v smeru
+  end
+
+  # reloads the loaded location
+
+  def review
+    view(@path)
   end
 
   # Updates view
@@ -69,6 +76,8 @@ class Browser
       when K_q
 	puts 'Quit event - Good bye!'
 	exit
+      when K_r
+	self.review
       when K_UP
 	@center_move[1] = - VIEW_MOVE
       when K_DOWN
