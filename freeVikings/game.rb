@@ -26,7 +26,7 @@ module FreeVikings
     attr_reader :map
 
     def initialize
-      @map = Map.new("first_loc.xml")
+      @map = Map.new("hopsy_loc.xml")
 
       @manager = SpriteManager.new(@map)
 

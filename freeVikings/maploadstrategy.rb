@@ -54,9 +54,9 @@ module FreeVikings
       doc.elements.each("location/blocktypes/blocktype") { |blocktype|
 	code = blocktype.attributes["code"]
 	path = blocktype.attributes["path"]
-	if path != ""
-	  @blocktypes[code] = TileType.instance(code, path)
-	end
+	tiletype = TileType.instance(code, path)
+	tiletype.solid = false unless blocktype.attributes["solid"] == "solid"
+	@blocktypes[code] = tiletype
       }
 
       # nacteni umisteni bloku
