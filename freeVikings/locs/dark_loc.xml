@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<location>
+  
+  <info>
+    <author>Jakub Pavlík</author>
+    <title>Dark place</title>
+  </info>
+  
+  <scripts></scripts>
+  
+  <map>
+    <blocktypes>
+      <blocktype code="b" path="dark_map/dark_bg.tga" />
+      <blocktype code="a" path="dark_map/dark_tile1.tga" solid="solid" />
+      <blocktype code="c" path="dark_map/dark_tile2.tga" solid="solid" />
+      <blocktype code="o" path="dark_map/dark_bg_dotted.tga" />
+    </blocktypes>
+    
+<blocks>
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aabbbbbobbbbobbbbobbbbobbbbobbbbobbbbobbbbobaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aabbbaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aabbbaaaacacacacacacacacacacacaaabbbbaaacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aabbbaaaaacacacacacacacacacacaaaabbbbaaaacacaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aabbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aabbbbbbaaaaaaaaaaaaaaaaaaaaaaaaacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aabbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+</blocks>
+  </map>
+  
+</location>
