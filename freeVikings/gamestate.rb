@@ -74,6 +74,8 @@ module FreeVikings
       when K_TAB
       when K_s
       when K_f
+      when K_d
+	@context.team.active.d_func
 	# Specialni klavesy:
       when K_RCTRL
 	@context.team.last
@@ -88,7 +90,7 @@ module FreeVikings
 
     def serve_keyup(keyevent)
       case keyevent.key
-      when K_LEFT, K_RIGHT
+      when K_LEFT, K_RIGHT, K_d
 	@context.team.active.stop
       end
     end # private method serve_keyup

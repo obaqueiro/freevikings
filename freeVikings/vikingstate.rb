@@ -15,18 +15,20 @@ module FreeVikings
     attr_reader :velocity_horiz
     attr_reader :velocity_vertic
     attr_reader :last_state
+    attr_reader :direction
 
     def initialize(viking, last_state=nil)
       @viking = viking
       @velocity_horiz = Velocity.new
       @velocity_vertic = Velocity.new
+      if last_state.nil?
+	@direction = "right"
+      else
+	@direction = last_state.direction
+      end
     end
 
     def to_s
-      ""
-    end
-
-    def direction
       ""
     end
 
@@ -100,8 +102,13 @@ module FreeVikings
   end # class DeadVikingState
 
   class StandingVikingState < VikingState
+    def initialize(viking, last_state)
+      super viking, last_state
+      @direction = last_state.direction
+    end
+
     def to_s
-      "standing"
+      "standing_" + direction
     end
 
     def move_left
@@ -234,5 +241,19 @@ module FreeVikings
     def stop
     end
   end # class FallingVikingState
+
+  class BowStretchingVikingState < VikingState
+    def initialize(viking, last_state)
+      super viking, last_state
+    end
+
+    def to_s
+      "bow_stretching_" + direction
+    end
+
+    def stop
+      @viking.state = StandingVikingState.new(@viking, self)
+    end
+  end # class BowStretchingVikingState
 
 end # module FreeVikings

@@ -26,9 +26,6 @@ module FreeVikings
     end
 
     def update
-      if @counter >= 100
-	@counter += 1
-      end
     end
   end
 end

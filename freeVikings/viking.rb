@@ -12,7 +12,7 @@ module FreeVikings
   class Viking < Sprite
     # Sprite trida pro postavicky vikingu
 
-    BASE_VELOCITY = 60
+    BASE_VELOCITY = 40
 
     # Jeden logovaci kanal pro vsechny instance - staci to a spori se cas
     # procesoru i pamet
@@ -23,7 +23,7 @@ module FreeVikings
     def initialize(name = "")
       super()
       @name = name
-      @state = StandingVikingState.new(self)
+      @state = StandingVikingState.new(self, VikingState.new(self, nil))
       @@viking_log.debug("Viking #{@name} initialised.")
       @last_position = @position = [121, 20]
       @last_update_time = Time.now.to_f
@@ -88,6 +88,9 @@ module FreeVikings
     end
 
     def space_func
+    end
+
+    def d_func
     end
 
     # vrati souradnice stredu aktualniho obrazku
