@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <location>
 
+<info>
+<title>First adventure</title>
+<author>Jakub Pavlík - severus@post.cz</author>
+</info>
+
 <blocktypes>
 <blocktype code="0" path="" />
 <blocktype code="1" path="dlaz_kov1.png" solid="solid" />

@@ -21,15 +21,16 @@ module FreeVikings
 
     # jako aktivniho nastavi dalsiho clena.
 
-    def next
+    def next(recursive_grade = 0)
+      raise NotATeamMemberAliveException.new("No member of the team is alive.") if recursive_grade > @members.size
       @active = (@active + 1) % @members.size
-      self.next unless active.alive?
+      self.next(recursive_grade += 1) unless active.alive?
       return self.active
     end
 
     # jako aktivniho nastavi minuleho
 
-    def last
+    def last(recursive_grade = 0)
       if @active > 0
 	@active = (@active - 1)
       else
@@ -43,4 +44,7 @@ module FreeVikings
       @members.each {|m| yield m}
     end
   end # class
+
+  class NotATeamMemberAliveException < RuntimeError
+  end
 end # module

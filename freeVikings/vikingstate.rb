@@ -7,7 +7,7 @@ require 'velocity.rb'
 
 module FreeVikings
 
-  GRAVITY = 400
+  GRAVITY = 10
 
   # Stavy, ktere jsou Previous, umoznuji vratit se volanim metody previous do
   # predchoziho stavu
@@ -178,7 +178,7 @@ module FreeVikings
 
     def initialize(viking, last_state)
       super(viking, last_state)
-      @velocity_vertic = Velocity.new(-1300, GRAVITY)
+      @velocity_vertic = Velocity.new(-14, GRAVITY)
       @velocity_horiz = last_state.velocity_vertic
     end
 

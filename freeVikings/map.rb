@@ -78,7 +78,7 @@ module FreeVikings
 
     public
     def blocks_on_square(square)
-      @log.debug "blocks_on_square: Asked for blocks colliding with a square defined by [#{square[0]}, #{square[1]}, #{square[2]}, #{square[3]}](px)"
+      @log.debug "blocks_on_square: Asked for blocks colliding with a rectangle defined by [#{square[0]}, #{square[1]}, #{square[2]}, #{square[3]}](px)"
       colliding_blocks = []
       # spocitat nejlevejsi a nejpravejsi index do kazdeho radku:
       leftmost_i = (square[0] / Map::TILE_SIZE).to_f.floor
@@ -97,6 +97,12 @@ module FreeVikings
 	colliding_blocks.concat(blocks) if blocks.is_a? Array
       }
       return colliding_blocks
+    end
+
+    # Vrati duplikat bloku daneho indexem radku a sloupecku.
+
+    def block_by_indexes(line, column)
+      return @blocks[line][column].dup
     end
 
   end # class Map

@@ -3,26 +3,27 @@
 
 # Sbirka trid uzitecnych pro testovani.
 
+require 'maploadstrategy.rb'
+
 module FreeVikings
 
   module Mock
 
     class TestingMapLoadStrategy < MapLoadStrategy
 
-      def load(blocks_matrix, blocktype_hash)
-	blocktype_hash['x'] = (solid = TestingTileType.createSolid)
-	blocktype_hash['o'] = (soft = TestingTileType.createSoft)
+      def load(blocks, blocktype_hash)
+	solid = TestingTileType.createSolid
+	blocktype_hash['x'] = solid
+	soft  = TestingTileType.createSoft
+	blocktype_hash['o'] = soft
 	
-	blocks_matrix.push [solid, solid, solid, solid, solid]
-	blocks_matrix.push [solid, soft,  soft,  soft,  solid]
-	blocks_matrix.push [solid, soft,  soft,  soft,  solid]
-	blocks_matrix.push [solid, soft,  soft,  soft,  solid]
-	blocks_matrix.push [solid, soft,  soft,  soft,  solid]
-	blocks_matrix.push [solid, soft,  soft,  soft,  solid]
-	blocks_matrix.push [solid, solid, solid, solid, solid]
-
-	@max_width = blocks_matrix[0].size
-	@max_height = blocks_matrix.size
+	blocks.push [solid, solid, solid, solid, solid]
+	blocks.push [solid, soft,  soft,  soft,  solid]
+	blocks.push [solid, soft,  soft,  soft,  solid]
+	blocks.push [solid, soft,  soft,  soft,  solid]
+	blocks.push [solid, soft,  soft,  soft,  solid]
+	blocks.push [solid, soft,  soft,  soft,  solid]
+	blocks.push [solid, solid, solid, solid, solid]
       end
     end # class TestingMapLoadStrategy
 
@@ -30,7 +31,7 @@ module FreeVikings
       attr_accessor :solid
       attr_reader :image
 
-      def initialize(solid)
+      def initialize(solid=true)
 	@solid = solid
 	@image = RUDL::Surface.new([40,40])
       end

@@ -15,12 +15,19 @@ module FreeVikings
     end
 
     def value
-      if @velocity > 0
-	@velocity -= (time_delta * @acceleration.abs)
-      elsif @velocity < 0
-	@velocity = - (@velocity.abs - (time_delta * @acceleration.abs))
+      if @acceleration < 0 then
+	if @velocity > 0 then
+	  return @velocity - (@acceleration.abs * time_elapsed)
+	end
       end
-      return @velocity
+      if @acceleration > 0 then
+	if @velocity >= 0 then
+	  return @velocity + (@acceleration * time_elapsed)
+	end
+      end
+      if @acceleration == 0
+	return @velocity
+      end
     end
 
     def value=(velocity)
@@ -28,11 +35,9 @@ module FreeVikings
     end
 
     private
-    def time_delta
-      time_now = Time.now.to_f
-      delta = @last_actualisation_time - time_now
-      @last_actualisation_time = time_now
-      return delta
+    def time_elapsed
+      @last_actualisation_time = Time.now.to_f
+      return @last_actualisation_time
     end
 
   end #class
