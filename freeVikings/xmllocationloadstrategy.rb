@@ -11,15 +11,27 @@ module FreeVikings
 
     # Mapfile muze byt String nebo IO. Je to zdroj nebo jmeno zdroje, 
     # ze ktereho bude mapa nactena.
+    # Pokud druhy argument neni nastaven na nil, pred predanim zdroje XML do
+    # REXML zkontroluje, zda zdroj je platnym jmenem textoveho souboru a 
+    # pripadne vyhodi vyjimku.
 
-    def initialize(mapfile)
+    def initialize(mapfile, data_source_control=true)
       super()
 
       @log.level = Log4r::ERROR
 
-      begin
-	@doc = REXML::Document.new(@source)
+      if data_source_control != nil then
+        unless File.file? mapfile
+          message = "Not such a file - #{mapfile}"
+          @log.error message
+          raise InvalidDataSourceException, message
+        end
       end
+
+      @source = File.expand_path mapfile
+      @doc = REXML::Document.new(@source)
+
+      content_check
     end
 
     def load_map(blocks_matrix, blocktype_hash)
@@ -38,6 +50,7 @@ module FreeVikings
 	}
       rescue => ex
 	@log.error "Cannot read XML node 'map/blocktypes' in datafile #{source_name}. (" + ex.message + ")"
+        raise
       end
 
       # nacteni umisteni bloku
@@ -122,6 +135,38 @@ module FreeVikings
       return @source
     end
 
+    # Zkontroluje, zda zdrojovy dokument obsahuje vsechny povinne
+    # elementy.
+
+    def content_check
+      begin
+        raise CompulsoryElementMissingException.new('location', source_name) if @doc.root.nil? 
+        raise CompulsoryElementMissingException.new('blocks', source_name) if @doc.root.elements['blocks'].nil?
+      rescue => ex
+        @log.error "Incomplete location data found in datafile #{source_name}." + "(" + ex.message + ")"
+        raise
+      end
+    end
+
   end # class XMLMapLoadStrategy
+
+
+
+  # Vyjimka vyhazovana pri pokusu o cteni neplatneho zdroje (typicky 
+  # neexistujici soubor)
+  class InvalidDataSourceException < RuntimeError
+  end
+
+  # Vyjimka vyhazovana pokud datovy soubor neobsahuje vsechny povinne casti.
+  class CompulsoryElementMissingException < RuntimeError
+
+    def initialize(missing_element, file)
+      @msg = "Compulsory element " + missing_element + " missing in datafile " + file + " ."
+    end
+
+    def message
+      @msg
+    end
+  end
 
 end # module FreeVikings

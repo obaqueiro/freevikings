@@ -18,9 +18,23 @@ class TestXMLLocationLoadStrategy < Test::Unit::TestCase
 </location>
 EOS
 
+  @@valid_syntax = '<location><info></info></location>'
+
   def testInvalidSyntax
-    assert_raises(NameError) {
-      s = XMLLocationLoadStrategy.new(@@invalid_syntax)
+    assert_raises(REXML::ParseException) {
+      s = XMLLocationLoadStrategy.new(@@invalid_syntax, nil)
+    }
+  end
+
+  def testFailsToParseStringWhenSourceControlOn
+    assert_raises(InvalidDataSourceException) {
+      s = XMLLocationLoadStrategy.new(@@valid_syntax, true)
+    }
+  end
+
+  def testExceptionOnNotExistingFileLoading
+    assert_raises(InvalidDataSourceException) {
+      XMLLocationLoadStrategy.new('XXXXXXxxxxxxxXXXXXXXXXX.lblabla')
     }
   end
 

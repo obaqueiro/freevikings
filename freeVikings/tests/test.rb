@@ -19,6 +19,8 @@ require 'testrect.rb'
 require 'testrexml.rb'
 require 'testvikingstate.rb'
 
+require 'ext/test/test.rb'
+
 class FreeVikingsTestSuite
 
   def self.suite
@@ -35,6 +37,8 @@ class FreeVikingsTestSuite
     suite << TestRect.suite
     suite << TestExploreREXML.suite
     suite << TestVikingState.suite
+
+    suite << FreeVikingsExtensionsTestSuite.suite
 
     return suite
   end
