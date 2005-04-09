@@ -9,6 +9,9 @@ require 'rexml/document'
 
 $xmltext = <<-EOS
 <main>
+<anything>
+<goodBye />
+</anything>
 </main>
 EOS
 
@@ -30,6 +33,17 @@ class TestExploreREXML < RUNIT::TestCase
     assert_exception (REXML::ParseException) {
       d = REXML::Document.new $invalidxmltext
     }
+  end
+
+  def testValidStringDocumentRootIsNotNil
+    d = REXML::Document.new $xmltext
+    assert_not_nil d.root, 'Document initialised by the valid XML String has to have non-nil root attribute'
+  end
+
+  def testValidFileDocumentRootIsNotNil
+    fr = File.open('../locs/pyramida_loc.xml')
+    d = REXML::Document.new(fr)
+    assert_not_nil d.root, 'Document initialised by the valid XML file name has to have non-nil root attribute'
   end
 
 end

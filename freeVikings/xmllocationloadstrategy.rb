@@ -18,7 +18,9 @@ module FreeVikings
     def initialize(mapfile, data_source_control=true)
       super()
 
-      @log.level = Log4r::ERROR
+      @log.level = Log4r::OFF
+
+      @source = mapfile
 
       if data_source_control != nil then
         unless File.file? mapfile
@@ -26,9 +28,9 @@ module FreeVikings
           @log.error message
           raise InvalidDataSourceException, message
         end
+        @source = File.open mapfile
       end
 
-      @source = File.expand_path mapfile
       @doc = REXML::Document.new(@source)
 
       content_check
@@ -132,7 +134,9 @@ module FreeVikings
     # Vrati jmeno nacitaneho zdroje
 
     def source_name
-      return @source
+      return @source if @source.is_a? String
+      return @source.path if @source.is_a? File
+      return @source.id.to_s
     end
 
     # Zkontroluje, zda zdrojovy dokument obsahuje vsechny povinne
@@ -141,7 +145,7 @@ module FreeVikings
     def content_check
       begin
         raise CompulsoryElementMissingException.new('location', source_name) if @doc.root.nil? 
-        raise CompulsoryElementMissingException.new('blocks', source_name) if @doc.root.elements['blocks'].nil?
+        raise CompulsoryElementMissingException.new('blocks', source_name) if @doc.root.elements['map'].elements['blocks'].nil?
       rescue => ex
         @log.error "Incomplete location data found in datafile #{source_name}." + "(" + ex.message + ")"
         raise
