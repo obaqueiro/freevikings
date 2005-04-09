@@ -23,6 +23,8 @@ module communicate with the interpreted through it's API.
 static void define_modules();
 static void define_SpriteManager_class();
 
+void silent_log_func();
+
 
 /* Extension library global variables: */
 VALUE free_vikings_module;
@@ -53,4 +55,5 @@ static void define_SpriteManager_class()
   rb_define_method(sprite_manager_klass, "add", sm_add, 1);
   rb_define_method(sprite_manager_klass, "delete", sm_delete, 1);
   rb_define_method(sprite_manager_klass, "include?", sm_include_sprite, 1);
+  rb_define_method(sprite_manager_klass, "sprites_on_rect", sm_sprites_on_rect, 1);
 }
