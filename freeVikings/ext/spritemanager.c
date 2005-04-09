@@ -50,4 +50,6 @@ static void define_SpriteManager_class()
   sprite_manager_klass = rb_define_class_under(extensions_module, SPRITE_MANAGER_CLASS_NAME, rb_cObject);
 
   rb_define_method(sprite_manager_klass, "initialize", sm_initialize, 1);
+  rb_define_method(sprite_manager_klass, "add", sm_add, 1);
+  rb_define_method(sprite_manager_klass, "include?", sm_include_sprite, 1);
 }
