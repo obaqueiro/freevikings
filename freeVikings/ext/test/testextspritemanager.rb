@@ -16,6 +16,7 @@ class TestExtensionSpriteManager < RUNIT::TestCase
 
   def setup
     @loc = Location.new(Mock::TestingMapLoadStrategy.new)
+    @manager = SpriteManager.new(@loc)
     @sprite = Sprite.new([90,90])
   end
 
@@ -25,9 +26,14 @@ class TestExtensionSpriteManager < RUNIT::TestCase
     end
   end
 
-  def testInclude?
-    @manager = SpriteManager.new(@loc)
+  def testIncludesAddedSprite
     @manager.add @sprite
     assert(@manager.include?(@sprite), 'SpriteManager must know about the sprite just added.')
+  end
+
+  def testDoesNotIncludeDeletedSprite
+    @manager.add @sprite
+    @manager.delete @sprite
+    assert_nil(@manager.include?(@sprite), 'SpriteManager mustn\'t remember the deleted sprite!')
   end
 end

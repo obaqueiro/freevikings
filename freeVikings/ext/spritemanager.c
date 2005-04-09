@@ -51,5 +51,6 @@ static void define_SpriteManager_class()
 
   rb_define_method(sprite_manager_klass, "initialize", sm_initialize, 1);
   rb_define_method(sprite_manager_klass, "add", sm_add, 1);
+  rb_define_method(sprite_manager_klass, "delete", sm_delete, 1);
   rb_define_method(sprite_manager_klass, "include?", sm_include_sprite, 1);
 }
