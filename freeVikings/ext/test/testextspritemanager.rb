@@ -26,10 +26,6 @@ class TestExtensionSpriteManager < RUNIT::TestCase
     end
   end
 
-  def testAddSprite
-    @manager.add @sprite
-  end
-
   def testAddTwoSprites
     @manager.add @sprite
     @manager.add Sprite.new
