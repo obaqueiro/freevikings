@@ -24,8 +24,8 @@ end
 
 class Browser
 
-  VIEW_MOVE = 2
-  VIEW_SIZE = 300
+  VIEW_MOVE = 10
+  VIEW_SIZE = {'h' => 640, 'v' => 480}
   TITLE = 'freeVikings Location Browser'
 
   include FreeVikings
@@ -43,7 +43,7 @@ class Browser
     @path = location_path
     @loc = Location.new(XMLLocationLoadStrategy.new(location_path))
     self.win_caption = TITLE + ': ' + File.basename(location_path)
-    @view_center = [VIEW_SIZE/2, VIEW_SIZE/2] # stred zobrazovane oblasti mapy
+    @view_center = [VIEW_SIZE['h']/2, VIEW_SIZE['v']/2] # stred zobrazovane oblasti mapy
     @center_move = [0,0] # rychlost pohybu h i v smeru
   end
 
@@ -119,7 +119,7 @@ class Browser
   # Opens the display window
 
   def open_win
-    @win = RUDL::DisplaySurface.new [VIEW_SIZE, VIEW_SIZE]
+    @win = RUDL::DisplaySurface.new [VIEW_SIZE['h'], VIEW_SIZE['v']]
     self.win_caption = TITLE
   end
 
@@ -128,8 +128,8 @@ class Browser
   # Converts position in window onto the position in location
 
   def winpos_to_locpos(winpos)
-    x = @view_center[0] - VIEW_SIZE/2 + winpos[0]
-    y = @view_center[1] - VIEW_SIZE/2 + winpos[1]
+    x = @view_center[0] - VIEW_SIZE['h']/2 + winpos[0]
+    y = @view_center[1] - VIEW_SIZE['v']/2 + winpos[1]
     return [x,y]
   end
 end
