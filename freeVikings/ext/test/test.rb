@@ -6,6 +6,7 @@
 require 'test/unit/testsuite'
 
 require 'ext/test/testextspritemanager.rb'
+require 'ext/test/testrubynamespaceproblem.rb'
 
 class FreeVikingsExtensionsTestSuite
 
@@ -13,6 +14,7 @@ class FreeVikingsExtensionsTestSuite
     suite = Test::Unit::TestSuite.new
 
     suite << TestExtensionSpriteManager.suite
+    suite << TestRubyNamespaceProblem.suite
 
     return suite
   end
