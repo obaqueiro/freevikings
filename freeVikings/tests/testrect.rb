@@ -8,9 +8,9 @@ require 'rubyunit'
 
 require 'rect.rb'
 
-include FreeVikings
-
 class TestRect < RUNIT::TestCase
+
+  include FreeVikings
 
   def setup
     @r1 = Rectangle.new 60,60,60,60

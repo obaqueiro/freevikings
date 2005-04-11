@@ -9,6 +9,8 @@ require 'velocity.rb'
 
 class TestVelocity < RUNIT::TestCase
 
+  include FreeVikings
+
   def setup
     @nulvelocity = Velocity.new
   end

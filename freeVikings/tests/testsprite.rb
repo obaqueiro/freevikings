@@ -10,6 +10,8 @@ require 'sprite.rb'
 
 class TestSprite < RUNIT::TestCase
 
+  include FreeVikings
+
   def setup
     @sprite = Sprite.new([90,90])
   end

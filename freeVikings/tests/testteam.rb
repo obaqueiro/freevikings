@@ -10,6 +10,8 @@ require 'viking.rb'
 
 class TestTeam < RUNIT::TestCase
 
+  include FreeVikings
+
   def setup
     @viking1 = Viking.new 'Hans'
     @viking2 = Viking.new 'Olle'

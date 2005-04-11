@@ -12,6 +12,8 @@ require 'vikingstate.rb'
 
 class TestVikingState < RUNIT::TestCase
 
+  include FreeVikings
+
   def setup
     @viking = Viking.new([0,0])
   end

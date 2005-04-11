@@ -14,10 +14,10 @@ module FreeVikings
   GFX_DIR = "../gfx"
 end
 
-include FreeVikings
-include FreeVikings::Mock
-
 class TestSpriteManager < RUNIT::TestCase
+
+  include FreeVikings
+  include FreeVikings::Mock
 
   def setup
     @map = Location.new(TestingMapLoadStrategy.new)

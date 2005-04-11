@@ -9,9 +9,9 @@ require 'mockclasses.rb'
 
 require 'location.rb'
 
-include FreeVikings
-
 class TestLocation < RUNIT::TestCase
+
+  include FreeVikings
 
   def setup
     @loc = @map = @manager = Location.new(Mock::TestingMapLoadStrategy.new)

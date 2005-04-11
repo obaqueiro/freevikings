@@ -12,6 +12,8 @@ require 'xmllocationloadstrategy.rb'
 
 class TestXMLLocationLoadStrategy < Test::Unit::TestCase
 
+  include FreeVikings
+
   @@invalid_syntax = <<-EOS
 <location>
 <info><map></info></mao>

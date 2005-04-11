@@ -10,9 +10,9 @@ require 'map.rb'
 require 'locationloadstrategy.rb'
 require 'tiletype.rb'
 
-include FreeVikings
-
 class TestMap < RUNIT::TestCase
+
+  include FreeVikings
 
   def setup
     @map = Map.new(XMLLocationLoadStrategy.new("../locs/pyramida_loc.xml"))
