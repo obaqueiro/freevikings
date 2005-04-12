@@ -46,6 +46,8 @@ static void define_SM_class(void)
 {
   sprite_manager_klass = rb_define_class_under(extensions_module, "SpriteManager", rb_cObject);
 
+  // SpriteManager#initialize
+  rb_define_method(sprite_manager_klass, "initialize", (VALUE (*)(...)) SMExtensionContext::initialize_new_SpriteManager, 1);
   // SpriteManager#add
   rb_define_method(sprite_manager_klass, "add", (VALUE (*)(...)) SMExtensionContext::add_sprite, 1);
   // SpriteManager#include?

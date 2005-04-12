@@ -8,17 +8,16 @@
 */
 
 #include <vector>
-#include "ruby.h"
-
-using std::vector;
-
 
 class SpriteManager
 {
 public:
+  typedef std::vector<VALUE> valuevector;
+
   VALUE add(VALUE sprite);
+  VALUE is_sprite_included(VALUE sprite);
 
 private:
   VALUE _self;
-  vector<VALUE> _sprites;
+  valuevector _sprites;
 };

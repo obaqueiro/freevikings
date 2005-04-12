@@ -12,6 +12,7 @@
 */
 
 #include <map>
+
 #include "spritemanager.hpp"
 
 using std::map;
@@ -26,5 +27,10 @@ public:
 
 
 private:
-  static map<VALUE, SpriteManager> __managers;
+  typedef std::map<VALUE, SpriteManager*> value_to_manager_map;
+
+  static SpriteManager __manager;
+  static value_to_manager_map __managers;
+
+  static SpriteManager* get_manager(VALUE manager);
 };
