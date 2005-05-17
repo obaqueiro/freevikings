@@ -65,18 +65,6 @@ sprites can call.
     attr_accessor :move_validator
 
 =begin
---- Sprite#each_displayable
-It yields some objects, that should be displayed. All of them have a method
-called image which returns a RUDL::Surface object.
-Have you ever heard about design patterns in programming? Of course you have.
-Here it smells like a Suite.
-=end
-
-    def each_displayable
-      yield self
-    end
-
-=begin
 --- Sprite#top
 Returns sprite's top-left corner's distance from the top edge of the map.
 =end

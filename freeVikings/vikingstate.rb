@@ -83,7 +83,7 @@ module FreeVikings
     end
 
     def dump
-      "<id:#{id} vv:#{@velocity_vertic.value} vh:#{@velocity_horiz.value}>"
+      "<id:#{object_id} vv:#{@velocity_vertic.value} vh:#{@velocity_horiz.value}>"
     end
   end # class VikingState
 

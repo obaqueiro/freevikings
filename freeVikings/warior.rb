@@ -14,7 +14,6 @@ module FreeVikings
     def initialize(name, start_position)
       super name, start_position
       init_images
-      @weapon = Sword.new
     end
 
     attr_reader :weapon
@@ -24,14 +23,6 @@ module FreeVikings
     end
 
     def space_func
-      @state = FightingVikingState.new self, @state
-
-      # Nasleduje mala necistota. Musime zbrani predat odkaz na lokaci,
-      # nebot mec neni registrovan jako sprajt, nybrz je jen yieldovan
-      # v iteratoru each_displayable jako soucast sprajtu vikinga
-      weapon.move_validator = @move_validator
-
-      weapon.set(weapon_position, @state.direction)
     end
 
     def shoot
@@ -42,11 +33,6 @@ module FreeVikings
       end
       arrow = Arrow.new([left + 30, top + (image.h / 2) - 7], Velocity.new(arrow_veloc))
       @move_validator.add_sprite arrow
-    end
-
-    def each_displayable
-      yield self
-      yield weapon if @state.class == FightingVikingState
     end
 
     private
@@ -74,17 +60,6 @@ module FreeVikings
       @image.add_pair('fighting_right', i_right)
 
       @portrait = Portrait.new 'baleog_face.tga', 'baleog_face_unactive.gif', 'dead_face.png'
-    end
-
-    def weapon_position
-      weapon_pos = [nil, top + (image.h / 2) + 4]
-      if @state.direction == 'right' then
-	weapon_pos[0] = left + 0.8 * image.w
-      end
-      if @state.direction == 'left' then
-	weapon_pos[0] = left - (weapon.image.w - 0.2 * image.w)
-      end
-      return weapon_pos
     end
 
   end # class Warior

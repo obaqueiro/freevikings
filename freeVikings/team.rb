@@ -49,13 +49,6 @@ module FreeVikings
       @members.each {|m| yield m}
     end
 
-    # Metoda vracejici vsechny sprajty.
-    # Slouzi k realisaci vzoru Skladba v zobrazovani sprajtu.
-    # Nutno rici, ze nepredpokladame, ze soucasti Teamu bude
-    # dalsi Team nebo jina Skladba. Jen proto each vyhovuje.
-
-    alias_method :each_displayable, :each
-
     def each_alive
       @members.each {|m| yield m if m.alive?}
     end

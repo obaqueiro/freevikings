@@ -42,9 +42,7 @@ module FreeVikings
 
     def add_sprite(sprite)
       @spritemanager.add sprite
-      sprite.each_displayable { |d|
-	d.move_validator = self if d.respond_to? :move_validator=
-      }
+      sprite.move_validator = self if sprite.respond_to? :move_validator=
     end
 
     def exitter=(exitter)

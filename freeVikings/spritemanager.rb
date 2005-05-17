@@ -12,10 +12,6 @@ module FreeVikings
 =begin
 SpriteManager object keeps an array of all the sprites that should be
 regularly redisplayed.
-The Suite design pattern is used, so it does not really keep a list of
-sprites, but a list of objects, which define a method each_displayable
-yielding all the sprites it wants to be displayed (see files team.rb and
-sprite.rb for implementation of this method).
 =end
 
     def initialize(map)
@@ -41,44 +37,39 @@ height. The coordinates are relative to the map loaded.
 =end
 
     def paint(surface, rect_of_location)
-      @sprites.each { |entry|
+      @sprites.each { |sprite|
 	locr = Rectangle.new(*rect_of_location)
-	entry.each_displayable { |sprite|
-	  eir = 0
-	  sr = sprite.rect
-	  eir += 1 if sr.left > locr.left and sr.left < locr.right
-	  eir += 1 if sr.right > locr.left and sr.right < locr.right
-	  eir += 1 if sr.top > locr.top and sr.top < locr.bottom
-	  eir += 1 if sr.bottom > locr.top and sr.bottom < locr.bottom
-	  if eir >= 2 then
-	    relative_left = sprite.left - rect_of_location[0]
-	    relative_top = sprite.top - rect_of_location[1]
-	    surface.blit(sprite.image, [relative_left, relative_top])
-	  end
-	}
+        eir = 0
+        sr = sprite.rect
+        eir += 1 if sr.left > locr.left and sr.left < locr.right
+        eir += 1 if sr.right > locr.left and sr.right < locr.right
+        eir += 1 if sr.top > locr.top and sr.top < locr.bottom
+        eir += 1 if sr.bottom > locr.top and sr.bottom < locr.bottom
+        if eir >= 2 then
+          relative_left = sprite.left - rect_of_location[0]
+          relative_top = sprite.top - rect_of_location[1]
+          surface.blit(sprite.image, [relative_left, relative_top])
+        end
       }
     end
 
 =begin
 --- SpriteManager#update
-It updates the state of manager and calls update on every sprite (don't forget
-we've got each_displayable methods).
 It is mainly used in the game loop, where it's called before redisplaying
 all the sprites.
 =end
 
     def update
       @sprites.each { |entry|
-	entry.each_displayable { |sprite|
-	  # at je pekne aktualni:
-	  sprite.update
-	  # jestli se sprajt dostal mimo mapu, musi byt odstranen
-	  if sprite.top < 0 or sprite.top > @map.background.h or
-	      sprite.left < 0 or sprite.left > @map.background.w then
-	    sprite.destroy
-	    @sprites.delete sprite
-	  end
-	}
+        sprite = entry
+        # at je pekne aktualni:
+        sprite.update
+        # jestli se sprajt dostal mimo mapu, musi byt odstranen
+        if sprite.top < 0 or sprite.top > @map.background.h or
+            sprite.left < 0 or sprite.left > @map.background.w then
+          sprite.destroy
+          @sprites.delete sprite
+        end
       }
     end
 
