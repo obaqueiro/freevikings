@@ -3,7 +3,7 @@
 
 CPP=g++
 
-RUBY_H=-I/usr/lib/ruby/1.8/i586-linux
+RUBY_H=-I/usr/lib/ruby/1.8/i386-linux-gnu
 
 all: extspritemanager.so
 
