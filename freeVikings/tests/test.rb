@@ -52,4 +52,4 @@ else
   trm = Test::Unit::UI::Console
 end
 
-trm::TestRunner.run(FreeVikingsTestSuite, trm::TestRunner::VERBOSE)
+trm::TestRunner.run(FreeVikingsTestSuite, Test::Unit::UI::VERBOSE)
