@@ -48,7 +48,7 @@ assert(@manager.include?(@sprite), 'The sprite was just added to the manager, it
     assert_nil(@manager2.include?(@sprite), "SpriteManagers shouldn't have their public sprites list, but every should have it's own, so we'll be able to have more than one SpriteManager.")
   end
 
-  def testMethodDeleteExists
-assert_respond_to(:delete, @manager, "SpriteManager must have a 'delete' method deleting a sprite from the manager's sprites list.")
-  end
+  #def testMethodDeleteExists
+  #assert_respond_to(:delete, @manager, "SpriteManager must have a 'delete' method deleting a sprite from the manager's sprites list.")
+  #end
 end
