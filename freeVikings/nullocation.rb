@@ -34,10 +34,6 @@ module FreeVikings
       []
     end
 
-    def blocks_on_rect(rect)
-      []
-    end
-
     def is_position_valid?(sprite, position)
       true
     end

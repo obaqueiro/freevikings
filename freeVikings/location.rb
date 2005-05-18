@@ -63,10 +63,6 @@ module FreeVikings
       @spritemanager.sprites_on_rect rect
     end
 
-    def blocks_on_rect(rect)
-      @map.blocks_on_square rect
-    end
-
     def is_position_valid?(sprite, position)
       begin
 	colliding_blocks = blocks_on_rect([position[0], position[1], sprite.image.w, sprite.image.h])
@@ -80,6 +76,10 @@ module FreeVikings
       # az dosud nebyl nalezen pevny blok, posice je volna
       return true
     end # is_position_valid?
+
+    def blocks_on_rect(rect)
+      @map.blocks_on_square(rect)
+    end
 
     private
 

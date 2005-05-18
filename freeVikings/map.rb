@@ -59,7 +59,6 @@ module FreeVikings
     # vezme beznou definici ctverce v pixelech, vrati pole kolidujicich
     # dlazdic
 
-    public
     def blocks_on_square(square)
       @log.debug "blocks_on_square: Asked for blocks colliding with a rectangle defined by [#{square[0]}, #{square[1]}, #{square[2]}, #{square[3]}](px)"
       colliding_blocks = []
@@ -80,6 +79,14 @@ module FreeVikings
 	colliding_blocks.concat(blocks) if blocks.is_a? Array
       }
       return colliding_blocks
+    end
+
+    # Urci, zda je vymezena oblast volna.
+
+    def area_free?(square)
+      tiles = blocks_on_square(square)
+      tiles.each {|t| return nil if t.solid?}
+      return true
     end
 
     # Vrati duplikat bloku daneho indexem radku a sloupecku.

@@ -11,6 +11,7 @@ module FreeVikings
   class TileType
 
     attr_accessor :solid
+    alias_method :solid?, :solid
 
     @@instances = Hash.new
 
