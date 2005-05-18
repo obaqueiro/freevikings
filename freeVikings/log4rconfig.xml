@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<!-- Ruby's Log4r modules's configuration file. -->
+
+<log4r_config>
+
+<logger name="location loading log" level="FATAL">
+<outputter>stdout</outputter>
+</logger>
+
+<logger name="map log" level="FATAL">
+<outputter>stderr</outputter>
+</logger>
+
+<logger name="viking log" level="INFO">
+<outputter>stderr</outputter>
+</logger>
+
+</log4r_config>
