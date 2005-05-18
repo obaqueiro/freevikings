@@ -3,27 +3,31 @@
 
 # Sada testovych pripadu pro tridu Map
 
-require 'rubyunit'
-require 'RUDL'
+require 'testtilesowner.rb'
 
 require 'map.rb'
 require 'locationloadstrategy.rb'
 require 'tiletype.rb'
+require 'mockclasses.rb'
 
-class TestMap < RUNIT::TestCase
+class TestMap < TestTilesOwner
 
   include FreeVikings
 
   def setup
-    @map = Map.new(XMLLocationLoadStrategy.new("../locs/pyramida_loc.xml"))
+    @map = Map.new(Mock::TestingMapLoadStrategy.new)
   end
 
   def testGetSolidBlock
     assert @map.blocks_on_square([0,0,50,50])[0].solid, "The first block in tho top left corner is solid. I made it solid."
   end
 
+  def testAreaFree
+    assert_equal nil, @map.area_free?([0,0,50,50]), "There are solid blocks in this area, so it is not free."
+  end
+
   def testGetBlockByIndex
-    assert_not_nil @map.block_by_indexes(1,1), "The block on indexes 0,0 must not be nil."
+    assert_not_nil @map.block_by_indexes(1,1), "The block on indexes 1, 1 must not be nil."
   end
 
 
@@ -33,7 +37,7 @@ class TestMap < RUNIT::TestCase
   end
 
   def testGetBlockOutOfLocation
-    assert_exception(RuntimeError, "Block is out of map, it should not be returned.") {
+    assert_raise(RuntimeError, "Block is out of map, it should not be returned.") {
       @map.blocks_on_square([Map::TILE_SIZE*15, Map::TILE_SIZE * 15, 60, 60])
     }
   end
