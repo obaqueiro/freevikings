@@ -18,8 +18,6 @@ module FreeVikings
     def initialize(mapfile, data_source_control=true)
       super()
 
-      @log.level = Log4r::OFF
-
       @source = mapfile
 
       if data_source_control != nil then

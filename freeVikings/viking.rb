@@ -16,17 +16,12 @@ module FreeVikings
 
     BASE_VELOCITY = 65
 
-    # Jeden logovaci kanal pro vsechny instance - staci to a spori se cas
-    # procesoru i pamet
-    @@viking_log = Log4r::Logger.new('viking_log')
-    @@viking_log.level = Log4r::OFF
-    @@viking_log.outputters = Log4r::StderrOutputter.new('viking_stderr_out')
-
     def initialize(name, start_position=[0,0])
       super()
+      @log = Log4r::Logger['viking log']
       @name = name
       @state = StandingVikingState.new(self, VikingState.new(self, nil))
-      @@viking_log.debug("Viking #{@name} initialised.")
+      @log.debug("Viking #{@name} initialised.")
       @position = start_position
       @last_update_time = Time.now.to_f
       @move_validator = NullLocation.new # objekt overujici moznost presunu na posici
@@ -127,21 +122,21 @@ module FreeVikings
     def update
       # Nyni muzeme aktualisovat posici:
       if @move_validator.is_position_valid?(self, next_position) then
-	@@viking_log.debug "update: Viking #{name}'s next position is all right."
+	@log.debug "update: Viking #{name}'s next position is all right."
 	@position = next_position
 	update_time
       else
-	@@viking_log.debug "update: Viking #{name}'s next position isn't valid, he'll stuck now."
+	@log.debug "update: Viking #{name}'s next position isn't valid, he'll stuck now."
 	@state.stuck
       end
       # Zkusme, jestli by viking nemohl zacit padat.
       # Pokud muze zacit padat, zacne padat:
       if not @state.is_a? FallingVikingState and not on_ground?
 	@state = FallingVikingState.new(self, @state)
-	@@viking_log.debug "update: #{@name} starts falling because there's a free space under him."
+	@log.debug "update: #{@name} starts falling because there's a free space under him."
       end
 
-      @@viking_log.info("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
+      @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
     end
 
     private

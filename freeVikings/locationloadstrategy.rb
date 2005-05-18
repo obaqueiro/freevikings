@@ -19,8 +19,7 @@ module FreeVikings
     attr_reader :max_height
 
     def initialize
-      @log = Log4r::Logger.new('location loading log')
-      @log.outputters = Log4r::StderrOutputter.new('map loading out')
+      @log = Log4r::Logger['location loading log']
     end
 
     # Pole Blocks_matrix inicialisuje jako dvojrozmerne pole a nacte do nej

@@ -15,10 +15,7 @@ module FreeVikings
     TILE_SIZE = 40
 
     def initialize(map_load_strategy)
-      @log = Log4r::Logger.new('map log')
-      outputter = Log4r::StderrOutputter.new('map_stderr_output')
-      @log.outputters = outputter
-      @log.level = Log4r::FATAL
+      @log = Log4r::Logger['map log']
 
       @blocktypes = Hash.new
       @blocks = Array.new
@@ -36,21 +33,7 @@ module FreeVikings
 
     def background
       if @background.nil?
-	@background = RUDL::Surface.new([@loading_strategy.max_width * TILE_SIZE, @loading_strategy.max_height * TILE_SIZE])
-	
-	@blocks.each_index { |row_i|
-	  @blocks[row_i].each_index { |col_i|
-	    block_type = @blocks[row_i][col_i]
-	    if block_type.nil?
-	      @log.error("Blocktype object for block [#{row_i}][#{row_i}] wasn't found in map's internal hash.")
-	    end
-	    if block_type.is_a? TileType
-	      @background.blit(block_type.image, [col_i * TILE_SIZE, (row_i - 1) * TILE_SIZE])
-	    else
-	      @log.error("Found blocktype object of strange type #{block_type.type.to_s} at index [" + row_i.to_s + '][' + col_i.to_s + '] (expected TileType)')
-	    end
-	  }
-	}
+        create_background
       end
       return @background
     end # method background
@@ -103,6 +86,29 @@ module FreeVikings
 
     def block_by_indexes(line, column)
       return @blocks[line][column].dup
+    end
+
+    private
+
+    # Vytvori novou RUDL::Surface @background a napatla na ni pozadi mapy
+    # (obrazky vsech pevnych dlazdic)
+
+    def create_background
+      @background = RUDL::Surface.new([@loading_strategy.max_width * TILE_SIZE, @loading_strategy.max_height * TILE_SIZE])
+	
+      @blocks.each_index { |row_i|
+        @blocks[row_i].each_index { |col_i|
+          block_type = @blocks[row_i][col_i]
+          if block_type.nil?
+            @log.error("Blocktype object for block [#{row_i}][#{row_i}] wasn't found in map's internal hash.")
+          end
+          if block_type.is_a? TileType
+            @background.blit(block_type.image, [col_i * TILE_SIZE, (row_i - 1) * TILE_SIZE])
+          else
+            @log.error("Found blocktype object of strange type #{block_type.type.to_s} at index [" + row_i.to_s + '][' + col_i.to_s + '] (expected TileType)')
+          end
+        }
+      }
     end
 
   end # class Map
