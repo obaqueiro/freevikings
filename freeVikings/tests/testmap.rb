@@ -3,14 +3,14 @@
 
 # Sada testovych pripadu pro tridu Map
 
-require 'testtilesowner.rb'
+require 'test/unit'
 
 require 'map.rb'
 require 'locationloadstrategy.rb'
 require 'tiletype.rb'
 require 'mockclasses.rb'
 
-class TestMap < TestTilesOwner
+class TestMap < Test::Unit::TestCase
 
   include FreeVikings
 
