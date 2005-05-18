@@ -20,7 +20,7 @@ class TestTeam < RUNIT::TestCase
   end
 
   def testFirstMemberIsActiveOnTheStart
-    assert_equal @viking1, @team.active, "On the start of the team's big mission, the first added member should be active, shouldn't he?"
+    assert_equal @viking1, @team.active, "On the start of the team\'s big mission, the first added member should be active, shouldn\'t he?"
   end
 
   def testNextValue
@@ -53,5 +53,14 @@ class TestTeam < RUNIT::TestCase
     assert_exception (NotATeamMemberAliveException) {
       @team.last
     }
+  end
+
+  def testAliveSizeAllAlive
+    assert_equal 3, @team.alive_size
+  end
+
+  def testAliveSizeAfterMemberLoss
+    @viking1.destroy
+    assert_equal 2, @team.alive_size
   end
 end

@@ -44,6 +44,12 @@ class FreeVikingsTestSuite
   end
 end
 
+# load Log4r configuration:
+require 'log4r/configurator'
+Log4r::Configurator.load_xml_file('../log4rconfig.xml')
+Log4r::Logger.global.level = Log4r::OFF # vystup testu nesmi byt rusen
+#
+
 if ARGV[0] =~ /^[gG][tT][kK]$/ then
   require 'testrunner.rb'
   trm = Test::Unit::UI::GTK
