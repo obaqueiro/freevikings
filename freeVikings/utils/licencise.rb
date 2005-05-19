@@ -30,7 +30,7 @@ ARGV.each do |processed_file|
 
   data = []
   while d = data_unprocessed.shift do
-    break unless (d =~ /^#/) or (d =~ /^\s*$/)
+    break unless (d =~ /^#!/)
     data.push d
   end
   data.push $prepended
