@@ -17,11 +17,13 @@ $prepended = "# No license notice."
 opts.each do |option, argument|
   case option
   when "--prepend"
-    $prepended = File.open(argument).to_a.join('\n')
+    $prepended = File.open(argument).to_a.join("\n")
   end
 end
 
 ARGV.each do |processed_file|
+  puts processed_file
+
   fr = File.open processed_file
   data_unprocessed = fr.to_a
   fr.close
