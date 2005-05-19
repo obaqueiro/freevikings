@@ -1,0 +1,106 @@
+			freeVikings
+
+			0.2 second pre-release
+
+			05/19/2005
+
+I. About FreeVikings
+
+FreeVikings is a free clone of a very nice,
+well-playable and well-enjoyable, logicle DOS
+game "Lost Vikings" from the early nineties.
+The goal is to make the three viking guys
+(the green one is Baleog, the red one Eric 
+and the yellow one Olaf) escape from several
+terrible places through the EXIT point.
+
+(I've got a nice legend for FreeVikings, 
+but you will have to wait for the 0.2 official
+release to read it.)
+
+II. About pre-releases
+
+The development of FreeVikings started, as I can
+remember, in January. Release 0.1 was there in
+March. It was uncomplete, but playable.
+I decided to make 0.2 release soon, but things didn't
+go on as I wanted them to.
+So I started with releasing pre-versions.
+They're intended to show that the development
+continues, that the young Czech programmer greenhorn
+didn't die. That the three vikings are still OK
+and free.
+These pre-releases are unstable development versions
+for brave testers and code-readers (code-reader is
+a programmer-like creature which reads interesting 
+source code files instead of fairy-tales before
+he falls asleep). The game experience isn't very
+shiny...
+
+III. Dependencies
+
+To run FreeVikings, you should have installed
+on your system:
+
+* Ruby >= 1.8.0
+
+and it's extensions:
+
+* RUDL >= 0.7 (this depends on the SDL libs)
+* Log4r
+* Test::Unit (also written as test/unit)
+* RubyUnit (may be left out in future versions)
+* script
+* REXML
+
+You can obtain Ruby at
+>>> http://www.ruby-lang.org
+and all the extensions (and also some interesting
+programs, including FreeVikings) at
+>>> http://raa.ruby-lang.org
+
+IV. Installation and Getting started
+
+Don't install. Unpack the tarball
+% tar -xvzf freevikings-0.2-pre2
+% cd freeVikings-0.2-pre2
+and run the freevikings.rb script:
+% ruby freevikings.rb
+
+V. Platform
+
+I've tested FreeVikings on GNU/Linux (distros
+Mandrake 9.0 and Fedora Core 3) and MS Windows XP.
+But you should be able to run this game whereever 
+you can install the Ruby language's interpreter, 
+because I don't use any platform-dependent 
+features.
+
+VI. Game controls
+
+Use arrow keys to move the vikings left and right,
+Ctrl and PageUp to switch between them,
+Baleog (the green one) can release an arrow
+when you press D.
+Everyone who has ever played Lost Vikings knows
+that the vikings should be able to do more, but 
+I havent't implemented any other features yet.
+(In the previous release Baleog could use his sword.
+I removed this, because the mechanism was terrible
+and had slowed the game down rapidly.)
+
+VII. License
+
+GNU/GPL. See GPL file in this directory.
+
+VII. Ideas, Bug reports, Contributions, ...
+
+You're intended to send me any bug reports,
+ideas to improve the game, etc.
+You can also change the source code and send me 
+a patch (or make and distribute your own modified
+version of FreeVikings in terms of GNU/GPL).
+The last way to help is to make some better
+graphics (you can see I am not a very good gimper).
+
+Jakub Pavlik <severus@post.cz>
