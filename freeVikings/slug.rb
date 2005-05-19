@@ -20,7 +20,7 @@ module FreeVikings
     end
 
     def update
-      caught = @move_validator.sprites_on_rect(self.rect)
+      caught = @location.sprites_on_rect(self.rect)
       caught.delete self
       unless caught.empty?
 	  caught.each { |c| c.hurt if c.is_a? Hero} if (Time.now.sec % 2 == 0)

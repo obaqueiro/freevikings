@@ -30,18 +30,18 @@ module FreeVikings
     end
 
     def update
-      unless @move_validator.is_position_valid?(self, [left, top])
-	@move_validator.delete_sprite self
+      unless @location.is_position_valid?(self, [left, top])
+	@location.delete_sprite self
 	return
       end
 
-      stroken = @move_validator.sprites_on_rect(self.rect)
+      stroken = @location.sprites_on_rect(self.rect)
       stroken.delete self
       unless stroken.empty?
 	s = stroken.pop
 	if s.is_a? @hunted_type
 	  s.hurt
-	  @move_validator.delete_sprite self
+	  @location.delete_sprite self
 	end
       end
     end

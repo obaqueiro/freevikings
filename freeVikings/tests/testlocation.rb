@@ -53,4 +53,14 @@ class TestLocation < RUNIT::TestCase
     assert_nil @loc.is_position_valid?(@sprite, position), "Sprite's position mustn't be considered valid when the sprite has it's bottom edge in the solid block"
   end
 
+  def testMoveValidatorAttrSet
+    @loc.add_sprite @sprite
+    assert_equal @loc, @sprite.move_validator, "When the sprite is added to the location, it's attribute move_validator should be set as a pointer to the location object."
+  end
+
+  def testLocationAttrSet
+    @loc.add_sprite @sprite
+    assert_equal @loc, @sprite.location, "When the sprite is added to the location, it's attribute location should be set as a pointer to the location object."
+  end
+
 end
