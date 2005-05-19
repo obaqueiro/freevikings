@@ -8,13 +8,10 @@
 # lokality herniho sveta, ktera odpovida zhruba levelu ze hry Lost Vikings.
 
 require 'spritemanager.rb'
-require 'movevalidator.rb'
 
 module FreeVikings
 
   class Location
-
-    include MoveValidator
 
     def initialize(loader)
       @spritemanager = SpriteManager.new(self)
