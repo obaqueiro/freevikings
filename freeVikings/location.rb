@@ -39,8 +39,7 @@ module FreeVikings
 
     def add_sprite(sprite)
       @spritemanager.add sprite
-      sprite.move_validator = self if sprite.respond_to? :move_validator=
-      sprite.location = self if sprite.respond_to? :location=
+      sprite.location = self
     end
 
     def exitter=(exitter)
@@ -53,7 +52,7 @@ module FreeVikings
     attr_accessor :start
 
     def delete_sprite(sprite)
-      sprite.move_validator = nil
+      sprite.location = nil
       @spritemanager.delete sprite
     end
 

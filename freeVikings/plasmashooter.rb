@@ -24,7 +24,7 @@ module FreeVikings
     def update
       if Time.now.to_f > @last_update + DELAY then
 	@last_update = Time.now.to_f
-	@move_validator.add_sprite RedShot.new([left, top+10], Velocity.new(-55))
+	@location.add_sprite RedShot.new([left, top+10], Velocity.new(-55))
       end
     end
   end # class PlasmaShooter

@@ -32,7 +32,7 @@ module FreeVikings
 	arrow_veloc = -60
       end
       arrow = Arrow.new([left + 30, top + (image.h / 2) - 7], Velocity.new(arrow_veloc))
-      @move_validator.add_sprite arrow
+      @location.add_sprite arrow
     end
 
     private

@@ -60,12 +60,8 @@ their position is valid, whether they collide with any other sprites etc.).
 So when the sprite is placed in the location, the location gives it a reference
 to an object (actually self) which has all the information and methods
 sprites can call.
---- Sprite#move_validator
---- Sprite#move_validator=
-The deprecated synonyms.
 =end
 
-    attr_accessor :move_validator
     attr_accessor :location
 
 =begin
@@ -111,7 +107,7 @@ This method is called when the sprite is killed.
 =end
 
     def destroy
-      @move_validator.delete_sprite self
+      @location.delete_sprite self
     end
 
 =begin

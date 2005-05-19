@@ -40,7 +40,7 @@ module FreeVikings
       end
       # Jestli uz mrtvola strasila dost dlouho, zmizi:
       if @state > LAST_STATE then
-	@move_validator.delete_sprite self
+	@location.delete_sprite self
       end
     end
   end # class DeadViking

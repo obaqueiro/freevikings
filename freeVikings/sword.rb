@@ -35,7 +35,7 @@ module FreeVikings
     end
 
     def update
-      stroken = @move_validator.sprites_on_rect(self.rect)
+      stroken = @location.sprites_on_rect(self.rect)
       stroken.delete self
       unless stroken.empty?
 	stroken.each do |s|

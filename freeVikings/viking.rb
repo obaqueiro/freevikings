@@ -24,7 +24,7 @@ module FreeVikings
       @log.debug("Viking #{@name} initialised.")
       @position = start_position
       @last_update_time = Time.now.to_f
-      @move_validator = NullLocation.new # objekt overujici moznost presunu na posici
+      @location = NullLocation.new # objekt overujici moznost presunu na posici
       @energy = 3 # zivotni sila
 
       @portrait = Portrait.new('viking_face.tga', 'viking_face_unactive.tga', 'dead_face.png')
@@ -46,7 +46,6 @@ module FreeVikings
 
     attr_accessor :state
     attr_accessor :name
-    attr_writer :move_validator
     attr_reader :energy
     attr_reader :portrait
 
@@ -75,8 +74,8 @@ module FreeVikings
 
     def destroy
       @alive = nil
-      @move_validator.add_sprite DeadViking.new([left, top])
-      @move_validator.delete_sprite self
+      @location.add_sprite DeadViking.new([left, top])
+      @location.delete_sprite self
     end
 
     def alive?
@@ -121,7 +120,7 @@ module FreeVikings
 
     def update
       # Nyni muzeme aktualisovat posici:
-      if @move_validator.is_position_valid?(self, next_position) then
+      if @location.is_position_valid?(self, next_position) then
 	@log.debug "update: Viking #{name}'s next position is all right."
 	@position = next_position
 	update_time
@@ -165,7 +164,7 @@ module FreeVikings
     def on_ground?
       lowerpos = next_position
       lowerpos[1] += 2
-      return nil if @move_validator.is_position_valid?(self, lowerpos)
+      return nil if @location.is_position_valid?(self, lowerpos)
       return true
     end
 
