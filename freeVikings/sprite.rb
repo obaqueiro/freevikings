@@ -3,8 +3,6 @@
 
 # Tridy sprajtu pro hru FreeVikings
 
-require 'RUDL'
-
 require 'velocity.rb'
 require 'imagebank.rb'
 require 'rect.rb'

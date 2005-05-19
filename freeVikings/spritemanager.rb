@@ -3,8 +3,6 @@
 
 # Spravce sprajtu.
 
-require 'rect.rb'
-
 module FreeVikings
 
   class SpriteManager
