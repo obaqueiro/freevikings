@@ -44,15 +44,25 @@ class TestVikingState < RUNIT::TestCase
     assert @state.velocity_horiz < 0, "The sprite will be moving left. It's horizontal velocity must be negative."
   end
 
-  def testStateChangesDontMakeChaos
+  def testHorizontalStateChangesDontMakeChaos
     @state.move_left
     @state.move_right
     assert_equal 'right', @state.direction, "The horizontal state has been changed twice, but it should still be consistent."
   end
 
-  def testZeroVelocityWhenStanding
+  def testZeroHorizontalVelocityWhenStanding
     @state.stop
-assert_equal 0, @state.velocity_horiz, "Standing sprite must have zero velocity."
+    assert_equal 0, @state.velocity_horiz, "Standing sprite must have zero velocity."
+  end
+
+  def testZeroVerticalVelocityWhenStanding
+    @state.stop
+    assert_equal 0, @state.velocity_vertic, "Standing sprite must have zero velocity."
+  end
+
+  def testPositiveVerticalVelocityWhenFalling
+    @state.fall
+    assert @state.velocity_vertic > 0, "Falling sprite must have a positive vertical velocity."
   end
 
 end

@@ -37,8 +37,8 @@ module FreeVikings
         @vertical_state = VerticalState.new
       end
 
-      attr_accessor :horizontal_state
-      attr_accessor :vertical_state
+      attr_writer :horizontal_state
+      attr_writer :vertical_state
 
       def moving?
         @vertical_state.moving? or @horizontal_state.moving?
@@ -76,6 +76,7 @@ module FreeVikings
       end
 
       def velocity_vertic
+        @vertical_state.velocity
       end
 
       # akce klavesy mezernik, zpravidla boj nebo pouziti specialni schopnosti
@@ -101,12 +102,10 @@ module FreeVikings
       end
     end # class VikingState
 
-    class VerticalState
-    end # class VerticalState
-
   end # module Future
 
 end # module FreeVikings
 
-# Vlozime tridy HorizontalState:
+# Vlozime tridy HorizontalState a VerticalState:
 require "horizontalstate.rb"
+require "verticalstate.rb"

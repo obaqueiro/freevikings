@@ -21,9 +21,19 @@ module FreeVikings
 
     VELOCITY_BASE = 1
 
-    def initialize(wrapper, direction=nil)
+=begin
+--- HorizontalState.new( wrapper, direction=nil )
+Creates a new HorizontalState object. Argument wrapper is the VikingState
+object which will use this new HorizontalState.
+Direction is a String ("right" or "left"). Most of the HorizontalState
+subclasses ignore this argument, only StandingState uses it.
+Maybe one day this argument will be removed and two classes -
+LeftStandingState and RightStandingState - added.
+=end
+
+    def initialize(wrapper, direction='right')
       @wrapper = wrapper
-      @direction = direction or @direction = "right"
+      @direction = direction
     end
 
     attr_reader :direction
@@ -43,7 +53,7 @@ module FreeVikings
 
   class LeftWalkingState < HorizontalState
 
-    def initialize(wrapper, direction=nil)
+    def initialize(wrapper, direction='right')
       super(wrapper, direction)
       @velocity = Velocity.new(-VELOCITY_BASE)
       @direction = "left"
@@ -52,7 +62,7 @@ module FreeVikings
 
   class RightWalkingState < HorizontalState
     
-    def initialize(wrapper, direction=nil)
+    def initialize(wrapper, direction='right')
       super(wrapper, direction)
       @velocity = Velocity.new(VELOCITY_BASE)
       @direction = "right"
@@ -61,7 +71,7 @@ module FreeVikings
 
   class StandingState < HorizontalState
 
-    def initialize(wrapper, direction=nil)
+    def initialize(wrapper, direction='right')
       super(wrapper, direction)
       @velocity = Velocity.new 0
     end
