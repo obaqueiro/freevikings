@@ -164,12 +164,14 @@ module FreeVikings
 	  repaint_status
 	  @app_window.blit(@status_view, [0, WIN_HEIGHT - STATUS_HEIGHT])
 
-	  #unless (s = Time.now.sec) == 0 then
-	  #  @app_window.filled_polygon [[8,8],[60,8],[60,20],[8,20]], [0,0,0]
-	  #  @app_window.print([10,10], "fps: #{frames / s}", 0xFFFFFFFF)
-	  #else
-	  #  frames = 0
-	  #end
+	  if FreeVikings::OPTIONS["display_fps"] then
+	    @app_window.filled_polygon [[8,8],[60,8],[60,20],[8,20]], [0,0,0]
+            unless (s = Time.now.sec) == 0 
+              @app_window.print([10,10], "fps: #{frames / s}", 0xFFFFFFFF)
+            else
+              frames = 0
+            end
+	  end
 
 	  @app_window.flip
 	  frames += 1

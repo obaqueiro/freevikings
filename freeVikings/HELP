@@ -1,0 +1,22 @@
+freevikings.rb
+
+Description:
+
+A DOS game 'Lost Vikings' clonned using the Ruby 
+programming language.
+Guide the three viking friends, Eric, Baleog and Olaf,
+through chambers full of enemies. Find and kill Tomator,
+the galagtic devil collecting interesting forms of life.
+
+Game controls:
+
+move the viking left and right - cursor keys
+switch between the vikings     - PgUp or Ctrl
+release the arrow (Baleog only)- d
+jump (Eric only)               - space
+
+Options:
+
+--help		-h	Prints out this help and halts.
+--profile 	-p	Profiling (only for development)
+--fps		-F	Prints frames per second on the game screen

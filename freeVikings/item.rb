@@ -22,8 +22,5 @@ module FreeVikings
     def image
       RUDL::Surface.new([40,40])
     end
-
-    def picked_up(picker)
-    end
   end
 end

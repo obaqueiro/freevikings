@@ -13,31 +13,44 @@ require 'getoptlong'
 
 require 'game'
 
-options = GetoptLong.new(
-["--profile", "-p", GetoptLong::NO_ARGUMENT]
-)
+module FreeVikings
+  GFX_DIR = 'gfx'
+  OPTIONS = {}
+end
 
-OPTS = {}
+include FreeVikings
+
+options = GetoptLong.new(
+                         ["--profile", "-p", GetoptLong::NO_ARGUMENT],
+                         ["--fps",     "-F", GetoptLong::NO_ARGUMENT],
+                         ["--help",    "-h", GetoptLong::NO_ARGUMENT]
+)
 
 options.each do |option, argument|
   case option
   when "--profile"
-    OPTS['profile'] = true
+    FreeVikings::OPTIONS['profile'] = true
+  when "--fps"
+    FreeVikings::OPTIONS['display_fps'] = true
+  when "--help"
+    File.open('HELP') do |f|
+      f.each_line {|l| puts l}
+    end
+    puts
+    exit
   end
 end
 
-if OPTS['profile'] then
-require 'profile'
-end
-
-module FreeVikings
-  GFX_DIR = 'gfx'
+# This must be out of the block scope in which all the other
+# options are processed.
+# Ruby stdlib's 'profile' does terrible things when loaded in the block's
+# scope (try yourself!).
+if OPTIONS['profile'] then
+  require 'profile'
 end
 
 # load Log4r configuration:
 require 'log4r/configurator'
 Log4r::Configurator.load_xml_file('log4rconfig.xml')
-
-include FreeVikings
 
 Game.new.game_loop
