@@ -14,9 +14,9 @@ module FreeVikings
 
     GRAVITY = 1
 
-    module State
-      # State is a mixin. It contains methods which all the state
-      # objects (both vertical and horizontal) have.
+    module StateProprieties
+      # StateProprieties is a mixin. It contains all the proprieties
+      # common for all the (both vertical and horizontal) State objects.
 
       def moving?
       end
@@ -30,13 +30,15 @@ module FreeVikings
       # A VikingState object carries out all the state changes.
       # Encapsulates information about vikings's velocity and direction.
 
-      include State
-
-      attr_reader :velocity_horiz
-      attr_reader :velocity_vertic
+      include StateProprieties
 
       def initialize
+        @horizontal_state = StandingState.new self
+        @vertical_state = VerticalState.new
       end
+
+      attr_accessor :horizontal_state
+      attr_accessor :vertical_state
 
       def moving?
         @vertical_state.moving? or @horizontal_state.moving?
@@ -54,11 +56,11 @@ module FreeVikings
       end
 
       def move_left
-        nil
+        @horizontal_state.move_left
       end
 
       def move_right
-        nil
+        @horizontal_state.move_right
       end
 
       def move_up
@@ -67,6 +69,13 @@ module FreeVikings
 
       def move_down
         nil
+      end
+
+      def velocity_horiz
+        @horizontal_state.velocity
+      end
+
+      def velocity_vertic
       end
 
       # akce klavesy mezernik, zpravidla boj nebo pouziti specialni schopnosti
@@ -93,11 +102,11 @@ module FreeVikings
     end # class VikingState
 
     class VerticalState
-    end
-
-    class VerticalState
-    end
+    end # class VerticalState
 
   end # module Future
 
 end # module FreeVikings
+
+# Vlozime tridy HorizontalState:
+require "horizontalstate.rb"

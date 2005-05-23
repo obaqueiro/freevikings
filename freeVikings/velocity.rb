@@ -6,8 +6,6 @@ module FreeVikings
   class Velocity
     # trida pro praci s rychlosti
 
-    attr_accessor :acceleration
-
     def initialize(velocity = 0)
       @initial_velocity = velocity
     end

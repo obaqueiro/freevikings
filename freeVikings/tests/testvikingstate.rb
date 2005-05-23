@@ -14,6 +14,8 @@ class TestVikingState < RUNIT::TestCase
 
   include FreeVikings
 
+  VikingState = Future::VikingState
+
   def setup
     @state = VikingState.new
   end
@@ -26,6 +28,31 @@ class TestVikingState < RUNIT::TestCase
   def testRightDirectionAfterMoveRight
     @state.move_right
     assert_equal "right", @state.direction, "The direction must be right after move_right call."
+  end
+
+  def testInitialDirectionIsRight
+    assert_equal 'right', @state.direction, "I want the initial direction to be 'right'."
+  end
+
+  def testRightVelocityIsPositive
+    @state.move_right
+    assert @state.velocity_horiz > 0, "The sprite will be moving right. It's horizontal velocity must be positive."
+  end
+
+  def testLeftVelocityIsNegative
+    @state.move_left
+    assert @state.velocity_horiz < 0, "The sprite will be moving left. It's horizontal velocity must be negative."
+  end
+
+  def testStateChangesDontMakeChaos
+    @state.move_left
+    @state.move_right
+    assert_equal 'right', @state.direction, "The horizontal state has been changed twice, but it should still be consistent."
+  end
+
+  def testZeroVelocityWhenStanding
+    @state.stop
+assert_equal 0, @state.velocity_horiz, "Standing sprite must have zero velocity."
   end
 
 end
