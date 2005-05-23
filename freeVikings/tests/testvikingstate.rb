@@ -1,4 +1,4 @@
-# testoldvikingstate.rb
+# testvikingstate.rb
 # igneus 11.3.2005
 
 # Sada testovych pripadu pro stavove prechody vikingu.
@@ -8,24 +8,24 @@
 require 'rubyunit'
 
 require 'viking.rb'
-require 'oldvikingstate.rb'
+require 'vikingstate.rb'
 
-class TestOldVikingState < RUNIT::TestCase
+class TestVikingState < RUNIT::TestCase
 
   include FreeVikings
 
   def setup
-    @viking = Viking.new([0,0])
+    @state = VikingState.new
   end
 
   def testLeftDirectionAfterMoveLeft
-    @viking.move_left
-    assert_equal "left", @viking.state.direction, "The direction must be left after move_left call."
+    @state.move_left
+    assert_equal "left", @state.direction, "The direction must be left after move_left call."
   end
 
   def testRightDirectionAfterMoveRight
-    @viking.move_right
-    assert_equal "right", @viking.state.direction, "The direction must be right after move_right call."
+    @state.move_right
+    assert_equal "right", @state.direction, "The direction must be right after move_right call."
   end
 
 end
