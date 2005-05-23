@@ -11,8 +11,7 @@
 
 require 'getoptlong'
 
-require 'game'
-
+# All the game's globals and classes are defined inside this module.
 module FreeVikings
   GFX_DIR = 'gfx'
   OPTIONS = {}
@@ -52,5 +51,8 @@ end
 # load Log4r configuration:
 require 'log4r/configurator'
 Log4r::Configurator.load_xml_file('log4rconfig.xml')
+
+# All the setup's done, we can start the game.
+require 'game'
 
 Game.new.game_loop

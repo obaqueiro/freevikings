@@ -14,7 +14,7 @@ module FreeVikings
     end
 
     def space_func
-      @state = JumpingVikingState.new(self, @state)
+      # @state = JumpingVikingState.new(self, @state)
     end
 
     private

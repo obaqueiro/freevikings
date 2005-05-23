@@ -4,7 +4,7 @@
 require 'sprite.rb'
 require 'deadviking.rb'
 
-require 'vikingstate.rb'
+require 'oldvikingstate.rb'
 require 'imagebank.rb'
 require 'nullocation.rb'
 require 'log4r'
