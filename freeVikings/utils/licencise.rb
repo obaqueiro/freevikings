@@ -13,6 +13,7 @@ opts = GetoptLong.new(
 )
 
 $prepended = "# No license notice."
+$empty_line = "\n"
 
 opts.each do |option, argument|
   case option
@@ -33,7 +34,12 @@ ARGV.each do |processed_file|
     break unless (d =~ /^#!/)
     data.push d
   end
+  data_unprocessed.unshift d
+
+  data.push $empty_line if data.size > 0
   data.push $prepended
+  data.push $empty_line
+
   data.concat data_unprocessed
 
   fw = File.open processed_file, "w"
