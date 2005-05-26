@@ -49,8 +49,10 @@ if OPTIONS['profile'] then
 end
 
 # load Log4r configuration:
+require 'log4r'
 require 'log4r/configurator'
 Log4r::Configurator.load_xml_file('log4rconfig.xml')
+Log4r::Logger.global.level = Log4r::OFF # vystup testu nesmi byt rusen
 
 # All the setup's done, we can start the game.
 require 'game'
