@@ -19,6 +19,7 @@ require 'testrect.rb'
 require 'testrexml.rb'
 require 'testoldvikingstate.rb'
 require 'testvikingstate.rb'
+require 'testvikingstatetostring.rb'
 
 require 'ext/test/test.rb'
 
@@ -39,6 +40,7 @@ class FreeVikingsTestSuite
     suite << TestExploreREXML.suite
     suite << TestOldVikingState.suite
     suite << TestVikingState.suite
+    suite << TestVikingStateToString.suite
 
     suite << FreeVikingsExtensionsTestSuite.suite
 

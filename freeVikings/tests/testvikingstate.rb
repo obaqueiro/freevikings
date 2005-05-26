@@ -5,12 +5,12 @@
 # (Potrebuji provest par optimalizacnich uprav a chci mit jistotu, ze nenadelam
 # neporadek.)
 
-require 'rubyunit'
+require 'test/unit'
 
 require 'viking.rb'
 require 'vikingstate.rb'
 
-class TestVikingState < RUNIT::TestCase
+class TestVikingState < Test::Unit::TestCase
 
   include FreeVikings
 
@@ -60,9 +60,37 @@ class TestVikingState < RUNIT::TestCase
     assert_equal 0, @state.velocity_vertic, "Standing sprite must have zero velocity."
   end
 
+  def testNotMovingWhenStanding
+    assert_equal false, @state.moving?, "Sprite does not fall or rise or walk, it is not moving."
+  end
+
   def testPositiveVerticalVelocityWhenFalling
     @state.fall
     assert @state.velocity_vertic > 0, "Falling sprite must have a positive vertical velocity."
+  end
+
+  def testMovingWhenFalling
+    @state.fall
+    assert_equal true, @state.moving?, "Falling sprite is moving."
+  end
+
+  def testDescendStopsTheFall
+    @state.fall
+    @state.descend
+    assert_equal 0, @state.velocity_vertic, "The falling sprite descended, it should not carry on falling."
+  end
+
+  def testStopWorks
+    @state.move_right
+    @state.stop
+    assert_equal 0, @state.velocity_horiz, "I was really terrified \ 
+when I found out that the important method VikingState#stop has \
+empty definition. More similar mistakes and we are somewhere in the hell..."
+  end
+
+  def testNegativeVerticalVelocityWhenRising
+    @state.rise
+assert @state.velocity_vertic < 0, "The velocity must be less then zero when the sprite is rising."
   end
 
 end

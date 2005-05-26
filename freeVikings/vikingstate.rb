@@ -5,6 +5,20 @@
 
 require 'velocity.rb'
 
+=begin
+= VikingState
+Instance of VikingState describes an internal state of specific Viking 
+(or any other Sprite) object. (Word 'state' means the movement state here.) 
+It provides methods to change the state and to check the some important state 
+values (direction of vertical and horizontal movement, x and y axis velocity,
+symbolic name  of the image which represents the viking in his topical state).
+
+Internally VikingState is implemented as two objects. One is an instance 
+of HorizontalState's subclass and has the y-axis movement data.
+The X-axis movement data are covered in an instance of VerticalState's
+subclass.
+=end
+
 module FreeVikings
 
   # Module Future protects the development version of the VikingState class
@@ -12,17 +26,26 @@ module FreeVikings
 
   module Future
 
-    GRAVITY = 1
-
     module StateProprieties
       # StateProprieties is a mixin. It contains all the proprieties
       # common for all the (both vertical and horizontal) State objects.
 
+      VELOCITY_BASE = 1
+    end
+
+    module MovingStateProprieties
       def moving?
+        true
       end
 
       def to_s
-        ""
+        'moving'
+      end
+    end
+
+    module NotMovingStateProprieties
+      def moving?
+        false
       end
     end
 
@@ -32,9 +55,12 @@ module FreeVikings
 
       include StateProprieties
 
+      CNTR = CNCTNTR = CONCATENATOR = '_'
+
       def initialize
+        # On the beginning the viking does not move in any axis.
         @horizontal_state = StandingState.new self
-        @vertical_state = VerticalState.new
+        @vertical_state = OnGroundState.new self
       end
 
       attr_writer :horizontal_state
@@ -49,12 +75,9 @@ module FreeVikings
       end
 
       def stop
+        @horizontal_state.stop
       end
       
-      def stuck
-        nil
-      end
-
       def move_left
         @horizontal_state.move_left
       end
@@ -63,12 +86,12 @@ module FreeVikings
         @horizontal_state.move_right
       end
 
-      def move_up
-        nil
+      def descend
+        @vertical_state.descend
       end
 
-      def move_down
-        nil
+      def fall
+        @vertical_state.fall
       end
 
       def velocity_horiz
@@ -99,6 +122,10 @@ module FreeVikings
 
       def dump
         "<id:#{object_id} vv:#{velocity_vertic.value} vh:#{velocity_horiz.value}>"
+      end
+
+      def to_s
+        @vertical_state.to_s + CNTR + @horizontal_state.to_s + CNTR + @horizontal_state.direction
       end
     end # class VikingState
 

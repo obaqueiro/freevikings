@@ -12,14 +12,15 @@ of some other objects containing different state information.
 (About movement in the x and y axis, usage of special abilities etc.)
 VikingState just dispatches the calls and has only few to do self.
 HorizontalState is an abstract class. Objects of it's subclasses contain
-data about the x-axis movement.
+data about the x-axis movement. E.g. LeftWalkingState describes an internal
+state of a viking going to the left side.
 =end
 
 module FreeVikings
 
   class HorizontalState
 
-    VELOCITY_BASE = 1
+    include Future::StateProprieties
 
 =begin
 --- HorizontalState.new( wrapper, direction=nil )
@@ -46,12 +47,18 @@ LeftStandingState and RightStandingState - added.
       @wrapper.horizontal_state = RightWalkingState.new @wrapper, @direction
     end
 
+    def stop
+      @wrapper.horizontal_state = StandingState.new @wrapper, @direction
+    end
+
     def velocity
       @velocity.value
     end
   end # class HorizontalState
 
   class LeftWalkingState < HorizontalState
+
+    include Future::MovingStateProprieties
 
     def initialize(wrapper, direction='right')
       super(wrapper, direction)
@@ -61,6 +68,8 @@ LeftStandingState and RightStandingState - added.
   end # class LeftWalkingState
 
   class RightWalkingState < HorizontalState
+
+    include Future::MovingStateProprieties
     
     def initialize(wrapper, direction='right')
       super(wrapper, direction)
@@ -71,9 +80,15 @@ LeftStandingState and RightStandingState - added.
 
   class StandingState < HorizontalState
 
+    include Future::NotMovingStateProprieties
+
     def initialize(wrapper, direction='right')
       super(wrapper, direction)
       @velocity = Velocity.new 0
+    end
+
+    def to_s
+      'standing'
     end
   end # class StandingState
 
