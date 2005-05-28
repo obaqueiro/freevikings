@@ -24,6 +24,10 @@ module FreeVikings
       @velocity.value
     end
 
+    def rise
+      @wrapper.vertical_state = RisingState.new @wrapper
+    end
+
     def fall
       @wrapper.vertical_state = FallingState.new @wrapper
     end
@@ -35,7 +39,6 @@ module FreeVikings
 
 
   class OnGroundState < VerticalState
-
     include Future::NotMovingStateProprieties
 
     def initialize(wrapper)
@@ -49,7 +52,6 @@ module FreeVikings
   end # class OnGroundState
 
   class FallingState < VerticalState
-
     include Future::MovingStateProprieties
 
     def initialize(wrapper)
@@ -61,4 +63,17 @@ module FreeVikings
       'falling'
     end
   end # class FallingState
+
+  class RisingState < VerticalState
+    include Future::MovingStateProprieties
+
+    def initialize(wrapper)
+      super wrapper
+      @velocity = Velocity.new( - VELOCITY_BASE)
+    end
+
+    def to_s
+      'rising'
+    end
+  end # class RisingState
 end # module FreeVikings

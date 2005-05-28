@@ -86,6 +86,10 @@ module FreeVikings
         @horizontal_state.move_right
       end
 
+      def rise
+        @vertical_state.rise
+      end
+
       def descend
         @vertical_state.descend
       end
