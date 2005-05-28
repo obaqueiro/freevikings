@@ -98,6 +98,10 @@ module FreeVikings
         @vertical_state.fall
       end
 
+      def falling?
+        return true if velocity_vertic > 0
+      end
+
       def velocity_horiz
         @horizontal_state.velocity
       end
@@ -106,26 +110,8 @@ module FreeVikings
         @vertical_state.velocity
       end
 
-      # akce klavesy mezernik, zpravidla boj nebo pouziti specialni schopnosti
-
-      def space_func
-        nil
-      end
-
-      # akce klavesy s, zpravidla prechod do specialniho stavu
-
-      def s_func
-        nil
-      end
-
-      # akce klavesy F, zpravidla zruseni specialniho stavu vikinga
-
-      def f_func
-        nil
-      end
-
       def dump
-        "<id:#{object_id} vv:#{velocity_vertic.value} vh:#{velocity_horiz.value}>"
+        "<id:#{object_id} vv:#{velocity_vertic} vh:#{velocity_horiz}>"
       end
 
       def to_s

@@ -4,7 +4,7 @@
 require 'sprite.rb'
 require 'deadviking.rb'
 
-require 'oldvikingstate.rb'
+require 'vikingstate.rb'
 require 'imagebank.rb'
 require 'nullocation.rb'
 require 'log4r'
@@ -20,7 +20,7 @@ module FreeVikings
       super()
       @log = Log4r::Logger['viking log']
       @name = name
-      @state = StandingVikingState.new(self, VikingState.new(self, nil))
+      @state = Future::VikingState.new
       @log.debug("Viking #{@name} initialised.")
       @position = start_position
       @last_update_time = Time.now.to_f
@@ -106,13 +106,17 @@ module FreeVikings
       @state.moving?
     end
 
+    def falling?
+      @state.falling?
+    end
+
     def next_position
       time_now = Time.now.to_f
       time_delta = time_now - @last_update_time
       # Zde se musi posice zjistovat primo z instancni promenne, protoze
       # pristupove metody left a top ji aktualisuji
-      next_top = @position[1] + (velocity_vertic.value * time_delta)
-      next_left = @position[0] + (velocity_horiz.value * time_delta)
+      next_top = @position[1] + (velocity_vertic * time_delta)
+      next_left = @position[0] + (velocity_horiz * time_delta)
       return [next_left, next_top]
     end
 
@@ -126,12 +130,12 @@ module FreeVikings
 	update_time
       else
 	@log.debug "update: Viking #{name}'s next position isn't valid, he'll stuck now."
-	@state.stuck
+	@state.stop
       end
       # Zkusme, jestli by viking nemohl zacit padat.
       # Pokud muze zacit padat, zacne padat:
-      if not @state.is_a? FallingVikingState and not on_ground?
-	@state = FallingVikingState.new(self, @state)
+      if not @state.falling? and not on_ground?
+	@state.fall
 	@log.debug "update: #{@name} starts falling because there's a free space under him."
       end
 

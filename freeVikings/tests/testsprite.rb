@@ -4,16 +4,18 @@
 # Sada testovych pripadu pro tridu Sprite. S testy jsem otalel dlouho,
 # ale ted chci tridu vycistit, tak budou testici potreba.
 
-require 'rubyunit'
+require 'test/unit'
 
 require 'sprite.rb'
 
-class TestSprite < RUNIT::TestCase
+class TestSprite < Test::Unit::TestCase
 
   include FreeVikings
 
+  STARTPOS = [90,90]
+
   def setup
-    @sprite = Sprite.new([90,90])
+    @sprite = Sprite.new(STARTPOS)
   end
 
   def testSpriteSetsUpItsPositionCorrectly

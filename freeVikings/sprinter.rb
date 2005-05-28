@@ -25,11 +25,10 @@ module FreeVikings
 
       @image = ImageBank.new(self)
 
-      @image.add_pair('standing_', i_standing)
-      @image.add_pair('standing_left', i_left)
-      @image.add_pair('standing_right', i_right)
-      @image.add_pair('moving_left', i_left)
-      @image.add_pair('moving_right', i_right)
+      @image.add_pair('onground_standing_left', i_left)
+      @image.add_pair('onground_standing_right', i_right)
+      @image.add_pair('onground_moving_left', i_left)
+      @image.add_pair('onground_moving_right', i_right)
       @image.add_pair('jumping', i_standing)
       @image.add_pair('stucked_', i_standing)
       @image.add_pair('stucked_left', i_left)
