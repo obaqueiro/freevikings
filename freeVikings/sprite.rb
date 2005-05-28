@@ -34,7 +34,7 @@ but if you don't specify it, it's set to a default value.
 	@position = [70,60]
       end
 
-      @alive = true
+      @energy = 1
       @location = NullLocation.new
     end
 
@@ -108,7 +108,7 @@ This method is called when the sprite is killed.
 =end
 
     def destroy
-      @alive = false
+      @energy = 0
       @location.delete_sprite self
     end
 
@@ -119,7 +119,8 @@ cannot carry on living.
 =end
 
     def hurt
-      destroy # jednoduche organismy zraneni nepreziji
+      @energy -= 1
+      destroy if @energy <= 0
     end
 
 =begin
@@ -128,7 +129,7 @@ Returns true if sprite is still alive, false otherwise.
 =end
 
     def alive?
-      @alive
+      @energy > 0
     end
 
 =begin

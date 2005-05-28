@@ -42,8 +42,7 @@ module FreeVikings
       return Shielder.new(name, start_position)
     end
 
-    attr_accessor :state
-    attr_accessor :name
+    attr_reader :name
     attr_reader :energy
     attr_reader :portrait
 
@@ -88,10 +87,16 @@ module FreeVikings
       return @position[0]
     end
 
-    def space_func
+    def space_func_on
     end
 
-    def d_func
+    def space_func_off
+    end
+
+    def d_func_on
+    end
+
+    def d_func_off
     end
 
     # vrati souradnice stredu aktualniho obrazku

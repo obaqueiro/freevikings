@@ -24,7 +24,6 @@ module FreeVikings
     # Vrati souradnice bodu, na ktery by se melo centrovat zobrazeni
 
     def view_center
-      [0,0]
     end
 
     # Obslouzi udalost tak, jak je to v danem stavu potreba.
@@ -70,12 +69,12 @@ module FreeVikings
 	@context.team.active.move_right
 	# Funkcni klavesy:
       when K_SPACE
-	@context.team.active.space_func
+	@context.team.active.space_func_on
       when K_TAB
       when K_s
       when K_f
       when K_d
-	@context.team.active.d_func
+	@context.team.active.d_func_on
 	# Specialni klavesy:
       when K_RCTRL
 	@context.team.last
@@ -84,16 +83,20 @@ module FreeVikings
       when K_F3
 	@context.app_window.toggle_fullscreen
       when K_q
-	end_game if RUDL::Key.modifiers && K_LCTRL
-	when K_F6
+        end_game
+      when K_F6
 	@context.give_up_game
       end # case
     end # private method serve_keydown
 
     def serve_keyup(keyevent)
       case keyevent.key
-      when K_LEFT, K_RIGHT, K_d, K_SPACE
+      when K_LEFT, K_RIGHT
 	@context.team.active.stop
+      when K_SPACE
+        @context.team.active.space_func_off
+      when K_d
+        @context.team.active.d_func_off
       end
     end # private method serve_keyup
 
