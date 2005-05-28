@@ -21,7 +21,6 @@ module FreeVikings
     def init_images
       i_left = Image.new('erik_left.png')
       i_right = Image.new('erik_right.png')
-      i_standing = Image.new('erik_standing.png')
 
       @image = ImageBank.new(self)
 
@@ -29,14 +28,10 @@ module FreeVikings
       @image.add_pair('onground_standing_right', i_right)
       @image.add_pair('onground_moving_left', i_left)
       @image.add_pair('onground_moving_right', i_right)
-      @image.add_pair('jumping', i_standing)
-      @image.add_pair('stucked_', i_standing)
-      @image.add_pair('stucked_left', i_left)
-      @image.add_pair('stucked_right', i_right)
-      @image.add_pair('falling_', i_standing)
-      @image.add_pair('falling_left', i_left)
-      @image.add_pair('falling_right', i_right)
-      @image.add_pair('dead', Image.new('dead.png'))
+      @image.add_pair('falling_standing_right', i_right)
+      @image.add_pair('falling_standing_left', i_left)
+      @image.add_pair('falling_moving_right', i_right)
+      @image.add_pair('falling_moving_left', i_left)
 
       @portrait = Portrait.new 'erik_face.tga', 'erik_face_unactive.gif', 'dead_face.png'
     end

@@ -23,6 +23,12 @@ class TestViking < TestSprite
     @viking.update
     assert_equal false, @viking.falling?, 'Viking should not be falling, he should think he is on ground (actually MockLocation does not provide any ground).'
   end
+
+  def testDoesNotStopDuringAWalk
+    @viking.move_right
+    2.times {@viking.update}
+    assert_equal false, @viking.standing?, "Viking must not stop when he has no collisions with map blocks and we haven't told him to."
+  end
 end
 
 

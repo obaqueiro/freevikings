@@ -19,7 +19,7 @@ module FreeVikings
     attr_reader :weapon
 
     def d_func
-      @state = BowStretchingVikingState.new(self, @state)
+      shoot
     end
 
     def space_func
@@ -47,16 +47,10 @@ module FreeVikings
       @image.add_pair('onground_standing_right', i_right)
       @image.add_pair('onground_moving_left', i_left)
       @image.add_pair('onground_moving_right', i_right)
-      @image.add_pair('stucked_left', i_left)
-      @image.add_pair('stucked_right', i_right)
-      @image.add_pair('falling_', i_standing)
-      @image.add_pair('falling_left', i_left)
-      @image.add_pair('falling_right', i_right)
-      @image.add_pair('dead', Image.new('dead.png'))
-      @image.add_pair('bow_stretching_left', Image.new('baleog_shooting_left.png'))
-      @image.add_pair('bow_stretching_right', Image.new('baleog_shooting_right.png'))
-      @image.add_pair('fighting_left', i_left)
-      @image.add_pair('fighting_right', i_right)
+      @image.add_pair('falling_standing_right', i_right)
+      @image.add_pair('falling_standing_left', i_left)
+      @image.add_pair('falling_moving_right', i_right)
+      @image.add_pair('falling_moving_left', i_left)
 
       @portrait = Portrait.new 'baleog_face.tga', 'baleog_face_unactive.gif', 'dead_face.png'
     end

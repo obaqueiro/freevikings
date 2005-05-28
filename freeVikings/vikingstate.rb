@@ -77,6 +77,10 @@ module FreeVikings
       def stop
         @horizontal_state.stop
       end
+
+      def standing?
+        velocity_horiz == 0
+      end
       
       def move_left
         @horizontal_state.move_left
@@ -99,7 +103,7 @@ module FreeVikings
       end
 
       def falling?
-        return true if velocity_vertic > 0
+        velocity_vertic > 0
       end
 
       def velocity_horiz

@@ -28,8 +28,6 @@ module FreeVikings
       @energy = 3 # zivotni sila
 
       @portrait = Portrait.new('viking_face.tga', 'viking_face_unactive.tga', 'dead_face.png')
-
-      @alive = true
     end
 
     def Viking.createWarior(name, start_position)
@@ -73,13 +71,13 @@ module FreeVikings
     end
 
     def destroy
-      @alive = nil
+      @energy = 0
       @location.add_sprite DeadViking.new([left, top])
       @location.delete_sprite self
     end
 
     def alive?
-      @alive
+      @energy > 0
     end
 
     def top
@@ -110,6 +108,10 @@ module FreeVikings
       @state.falling?
     end
 
+    def standing?
+      @state.standing?
+    end
+
     def next_position
       time_now = Time.now.to_f
       time_delta = time_now - @last_update_time
@@ -131,6 +133,7 @@ module FreeVikings
       else
 	@log.debug "update: Viking #{name}'s next position isn't valid, he'll stuck now."
 	@state.stop
+        @state.descend
       end
       # Zkusme, jestli by viking nemohl zacit padat.
       # Pokud muze zacit padat, zacne padat:
@@ -144,12 +147,12 @@ module FreeVikings
 
     private
     def velocity_vertic
-      @state.velocity_vertic
+      @state.velocity_vertic * BASE_VELOCITY
     end
 
     private
     def velocity_horiz
-      @state.velocity_horiz
+      @state.velocity_horiz * BASE_VELOCITY
     end
 
     private

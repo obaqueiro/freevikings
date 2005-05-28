@@ -22,4 +22,9 @@ class TestSprite < Test::Unit::TestCase
     assert_equal 90, @sprite.left, "It must be 90. I've set it to be 90."
     assert_equal 90, @sprite.top, "It must be 90. I've set it to be 90."
   end
+
+  def testKilledIsNotAlive
+    @sprite.destroy
+    assert_equal false, @sprite.alive?
+  end
 end

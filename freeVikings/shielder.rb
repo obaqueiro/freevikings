@@ -25,12 +25,10 @@ module FreeVikings
       @image.add_pair('onground_standing_right', i_right)
       @image.add_pair('onground_moving_left', i_left)
       @image.add_pair('onground_moving_right', i_right)
-      @image.add_pair('stucked_left', i_left)
-      @image.add_pair('stucked_right', i_right)
-      @image.add_pair('falling_', i_standing)
-      @image.add_pair('falling_left', i_left)
-      @image.add_pair('falling_right', i_right)
-      @image.add_pair('dead', Image.new('dead.png'))
+      @image.add_pair('falling_standing_right', i_right)
+      @image.add_pair('falling_standing_left', i_left)
+      @image.add_pair('falling_moving_right', i_right)
+      @image.add_pair('falling_moving_left', i_left)
     end
 
   end # class
