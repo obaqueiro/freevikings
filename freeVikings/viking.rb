@@ -43,6 +43,7 @@ module FreeVikings
     end
 
     attr_reader :name
+    attr_reader :state
     attr_reader :energy
     attr_reader :portrait
 
