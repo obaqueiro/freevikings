@@ -20,7 +20,7 @@ module FreeVikings
 
   class HorizontalState
 
-    include Future::StateProprieties
+    include StateProprieties
 
 =begin
 --- HorizontalState.new( wrapper, direction=nil )
@@ -58,7 +58,7 @@ LeftStandingState and RightStandingState - added.
 
   class LeftWalkingState < HorizontalState
 
-    include Future::MovingStateProprieties
+    include MovingStateProprieties
 
     def initialize(wrapper, direction='right')
       super(wrapper, direction)
@@ -69,7 +69,7 @@ LeftStandingState and RightStandingState - added.
 
   class RightWalkingState < HorizontalState
 
-    include Future::MovingStateProprieties
+    include MovingStateProprieties
     
     def initialize(wrapper, direction='right')
       super(wrapper, direction)
@@ -80,7 +80,7 @@ LeftStandingState and RightStandingState - added.
 
   class StandingState < HorizontalState
 
-    include Future::NotMovingStateProprieties
+    include NotMovingStateProprieties
 
     def initialize(wrapper, direction='right')
       super(wrapper, direction)

@@ -55,6 +55,7 @@ VikingState. See VikingState documentation for more details.
     end
 
     def d_on
+      @owner.stop
       @active_ability = D_ABILITY
     end
 

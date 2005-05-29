@@ -14,7 +14,7 @@ module FreeVikings
 
   class VerticalState
 
-    include Future::StateProprieties
+    include StateProprieties
 
     def initialize(wrapper)
       @wrapper = wrapper
@@ -39,7 +39,7 @@ module FreeVikings
 
 
   class OnGroundState < VerticalState
-    include Future::NotMovingStateProprieties
+    include NotMovingStateProprieties
 
     def initialize(wrapper)
       super wrapper
@@ -52,7 +52,7 @@ module FreeVikings
   end # class OnGroundState
 
   class FallingState < VerticalState
-    include Future::MovingStateProprieties
+    include MovingStateProprieties
 
     def initialize(wrapper)
       super wrapper
@@ -65,7 +65,7 @@ module FreeVikings
   end # class FallingState
 
   class RisingState < VerticalState
-    include Future::MovingStateProprieties
+    include MovingStateProprieties
 
     def initialize(wrapper)
       super wrapper

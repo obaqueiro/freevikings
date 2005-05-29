@@ -14,8 +14,6 @@ class TestVikingState < Test::Unit::TestCase
 
   include FreeVikings
 
-  VikingState = Future::VikingState
-
   def setup
     @state = VikingState.new
   end

@@ -20,7 +20,7 @@ module FreeVikings
       super()
       @log = Log4r::Logger['viking log']
       @name = name
-      @state = Future::VikingState.new
+      @state = VikingState.new
       @log.debug("Viking #{@name} initialised.")
       @position = start_position
       @last_update_time = Time.now.to_f

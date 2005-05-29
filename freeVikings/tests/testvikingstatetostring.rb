@@ -15,7 +15,7 @@ class TestVikingStateToString < Test::Unit::TestCase
   include FreeVikings
 
   def setup
-    @state = Future::VikingState.new
+    @state = VikingState.new
   end
 
   def testStandingOnGround
