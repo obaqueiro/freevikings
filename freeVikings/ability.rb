@@ -121,7 +121,5 @@ VikingState. See VikingState documentation for more details.
     def space_on
       @shield_use = ! @shield_use
     end
-
-    alias_method :space_off, :space_on
   end # class ShielderAbility
 end # module FreeVikings

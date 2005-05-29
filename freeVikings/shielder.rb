@@ -24,6 +24,16 @@ module FreeVikings
 
     alias_method :_update, :update
 
+    def shield_use
+      return 'top' if @ability.shield_use == ShielderAbility::SHIELD_TOP
+      return 'left' if @state.direction == 'left'
+      return 'right'
+    end
+
+    def space_func_on
+      @ability.space_on
+    end
+
     private
     def init_images
       i_left = Image.new('olaf_left.png')
@@ -48,7 +58,12 @@ module FreeVikings
 
     def initialize(shielder)
       @shielder = shielder
-      @image = ImageBank.new(self, {'top' => Image.new('shield_top.png')})
+      @image = ImageBank.new(self, 
+                             {'top' => Image.new('shield_top.png'),
+                              'left' => Image.new('shield_left.png'),
+                              'right' => Image.new('shield_right.png')}
+                             )
+      @position = []
     end
 
     def update
@@ -56,11 +71,24 @@ module FreeVikings
         destroy
         return
       end
-      @position = [@shielder.left, @shielder.top - 10]
-    end
+      @position[0] = case state
+                     when 'top'
+                       @shielder.left
+                     when 'left'
+                       @shielder.left - 20
+                     when 'right'
+                       @shielder.rect.right
+                     end # case state
+      @position[1] = case state
+                     when 'top'
+                       @shielder.top - 10
+                     when 'left', 'right'
+                       @shielder.top + 10
+                     end # case state
+    end # method update
 
     def state
-      'top'
+      @shielder.shield_use
     end
   end # class Shield
 end # module FreeVikings
