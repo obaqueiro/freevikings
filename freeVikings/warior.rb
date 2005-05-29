@@ -7,6 +7,7 @@
 require 'viking.rb'
 require 'arrow.rb'
 require 'sword.rb'
+require 'ability.rb'
 
 module FreeVikings
   class Warior < Viking
@@ -14,15 +15,18 @@ module FreeVikings
     def initialize(name, start_position)
       super name, start_position
       init_images
+      @ability = WariorAbility.new self
+      @state.ability = @ability
     end
 
     attr_reader :weapon
 
-    def d_func
-      shoot
+    def d_func_on
+      @ability.d_on
     end
 
-    def space_func
+    def d_func_off
+      @ability.d_off
     end
 
     def shoot
@@ -51,6 +55,12 @@ module FreeVikings
       @image.add_pair('falling_standing_left', i_left)
       @image.add_pair('falling_moving_right', i_right)
       @image.add_pair('falling_moving_left', i_left)
+
+      i_shootleft = Image.new('baleog_shooting_left.png')
+      i_shootright = Image.new('baleog_shooting_right.png')
+
+      @image.add_pair('onground_bow-stretching_left', i_shootleft)
+      @image.add_pair('onground_bow-stretching_right', i_shootright)
 
       @portrait = Portrait.new 'baleog_face.tga', 'baleog_face_unactive.gif', 'dead_face.png'
     end

@@ -134,7 +134,7 @@ Returns true if sprite is still alive, false otherwise.
 
 =begin
 --- Sprite#image
-Returns RUDL::Surface object used to display sprite on the display.
+Returns the sprite's image (RUDL::Surface object).
 =end
 
     def image
@@ -143,7 +143,7 @@ Returns RUDL::Surface object used to display sprite on the display.
 
 =begin
 --- Sprite#stop
-It's called when the sprite is moving where or how it should not be.
+Stops sprite's x-axis movement.
 =end
 
     def stop
@@ -151,7 +151,7 @@ It's called when the sprite is moving where or how it should not be.
 
 =begin
 --- Sprite#update
-It's periodically called to let the sprite update it's internal state.
+Update is periodically called to let the sprite update it's internal state.
 =end
 
     def update

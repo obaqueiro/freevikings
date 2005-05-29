@@ -8,6 +8,7 @@
 require 'test/unit'
 
 require 'vikingstate.rb'
+require 'ability.rb'
 
 class TestVikingStateToString < Test::Unit::TestCase
 
@@ -33,5 +34,17 @@ class TestVikingStateToString < Test::Unit::TestCase
     @state.move_right
     @state.descend
     assert_equal "onground_moving_right", @state.to_s
+  end
+
+  def testAbilityActive
+    @state.ability = MockAbility.new
+    assert_equal "onground_mocking_right", @state.to_s
+  end
+end
+
+
+class MockAbility < FreeVikings::Ability
+  def to_s
+    'mocking'
   end
 end
