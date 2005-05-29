@@ -85,13 +85,14 @@ VikingState. See VikingState documentation for more details.
   class SprinterAbility < Ability
 
     SPACE_ABILITY = 'jumping'
+    D_ABILITY = 'sprinting'
 
     def initialize(owner)
       super owner
     end
 
     def space_on
-      unless @active_ability == SPACE_ABILITY
+      unless @active_ability
         @active_ability = SPACE_ABILITY
         @owner.jump
       end
@@ -104,4 +105,23 @@ VikingState. See VikingState documentation for more details.
       end
     end
   end # class SprinterAbility
+
+  class ShielderAbility < Ability
+
+    SHIELD_TOP = true
+    SHIELD_FRONT = false
+
+    def initialize(owner)
+      super owner
+      @shield_use = SHIELD_TOP
+    end
+
+    attr_reader :shield_use
+
+    def space_on
+      @shield_use = ! @shield_use
+    end
+
+    alias_method :space_off, :space_on
+  end # class ShielderAbility
 end # module FreeVikings

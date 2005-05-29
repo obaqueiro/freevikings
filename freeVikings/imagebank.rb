@@ -19,9 +19,12 @@ module FreeVikings
   class ImageBank
     # Soubor obrazku pro mnozinu stavu sprajtu
 
-    def initialize(sprite=nil)
+    def initialize(sprite=nil, hash=nil)
       @images = Hash.new
       @sprite = sprite # odkaz na vyuzivajici sprite
+      unless hash.nil?
+        hash.each_key {|key| add_pair(key, hash[key])}
+      end
     end
 
     def add_pair(state, image_object)

@@ -11,7 +11,18 @@ module FreeVikings
     def initialize(name, start_position)
       super(name, start_position)
       init_images
+      @ability = ShielderAbility.new self
+      @state.ability = @ability
+      @shield = Shield.new self
     end
+
+    def location=(location)
+      @location = location
+      @location.add_sprite @shield
+      @shield.update
+    end
+
+    alias_method :_update, :update
 
     private
     def init_images
@@ -31,5 +42,25 @@ module FreeVikings
       @image.add_pair('falling_moving_left', i_left)
     end
 
-  end # class
-end # module
+  end # class Shielder
+
+  class Shield < Sprite
+
+    def initialize(shielder)
+      @shielder = shielder
+      @image = ImageBank.new(self, {'top' => Image.new('shield_top.png')})
+    end
+
+    def update
+      unless @shielder.alive?
+        destroy
+        return
+      end
+      @position = [@shielder.left, @shielder.top - 10]
+    end
+
+    def state
+      'top'
+    end
+  end # class Shield
+end # module FreeVikings

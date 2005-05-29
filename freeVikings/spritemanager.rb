@@ -58,8 +58,7 @@ all the sprites.
 =end
 
     def update
-      @sprites.each { |entry|
-        sprite = entry
+      @sprites.each { |sprite|
         # at je pekne aktualni:
         sprite.update
         # jestli se sprajt dostal mimo mapu, musi byt odstranen

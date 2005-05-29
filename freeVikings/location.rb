@@ -8,6 +8,7 @@
 # lokality herniho sveta, ktera odpovida zhruba levelu ze hry Lost Vikings.
 
 require 'spritemanager.rb'
+require 'nullocation.rb'
 
 module FreeVikings
 
@@ -52,7 +53,7 @@ module FreeVikings
     attr_accessor :start
 
     def delete_sprite(sprite)
-      sprite.location = nil
+      sprite.location = NullLocation.new
       @spritemanager.delete sprite
     end
 
