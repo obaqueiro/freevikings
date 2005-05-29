@@ -29,6 +29,14 @@ class TestViking < TestSprite
     2.times {@viking.update}
     assert_equal false, @viking.standing?, "Viking must not stop when he has no collisions with map blocks and we haven't told him to."
   end
+
+  def testHasLeftMethod
+    assert_respond_to @viking, :left
+  end
+
+  def testMethodLeftWorks
+    assert_equal 0, @viking.left
+  end
 end
 
 

@@ -40,7 +40,15 @@ module FreeVikings
       init_app_window
       image_loader = Thread.new {init_sprites_and_images}
 
-      @world = World.new
+      # Pokud bylo z prikazove radky vyzadano spusteni urcitych lokaci,
+      # vytvorime z nich novy svet. Jinak rozjedeme parbu v implicitnim svete.
+      unless FreeVikings::OPTIONS['locations'].empty?
+        @world = World.new(*(FreeVikings::OPTIONS['locations']))
+      else
+        @world = World.new('pyramida_loc.xml',
+                           'first_loc.xml',
+                           'hopsy_loc.xml')
+      end
 
       # Surfaces, ktere se pouzivaji k sestaveni zobrazeni nahledu hraci plochy
       # a stavoveho radku s podobiznami vikingu

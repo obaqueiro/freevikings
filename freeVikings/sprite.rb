@@ -29,9 +29,9 @@ but if you don't specify it, it's set to a default value.
       @image = Image.new('nobody.tga')
 
       unless initial_position.empty?
-	@position = initial_position.dup
+	@rect = Rectangle.new(initial_position[0], initial_position[1], 0, 0)
       else
-	@position = [70,60]
+	@rect = Rectangle.new(0,0,0,0)
       end
 
       @energy = 1
@@ -40,8 +40,7 @@ but if you don't specify it, it's set to a default value.
 
 =begin
 --- Sprite::BASE_VELOCITY
-It's a constant mostly for internal use. It contains sprite's normal velocity
-in pixels per second.
+Contains sprite's normal velocity in pixels per second.
 =end
 
     BASE_VELOCITY = 60
@@ -71,7 +70,7 @@ Returns sprite's top-left corner's distance from the top edge of the map.
 =end
 
     def top
-      @position[1]
+      @rect.top
     end
 
 =begin
@@ -80,7 +79,7 @@ Returns sprite's top-left corner's distance from the left edge of the map.
 =end
 
     def left
-      @position[0]
+      @rect.left
     end
 
 =begin
@@ -89,7 +88,7 @@ Returns an array of [left, top]. It's only for comfort.
 =end
 
     def position
-      [left, top]
+      [@rect.left, @rect.top]
     end
 
 =begin

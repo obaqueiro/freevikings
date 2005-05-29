@@ -11,17 +11,22 @@ module FreeVikings
 
     def initialize(start_pos, velocity)
       super(start_pos)
-      @velocity = velocity
+      if velocity.is_a? Numeric
+        @velocity = Velocity.new velocity
+      else
+        @velocity = velocity
+      end
       @start_time = Time.now.to_f
       @hunted_type = Sprite
     end
 
     def left
-      @position[0] + @velocity.value * (Time.now.to_f - @start_time)
+      @rect.left + @velocity.value * (Time.now.to_f - @start_time)
     end
 
     def destroy
       @velocity = Velocity.new
+      @energy = 0
     end
 
     def state

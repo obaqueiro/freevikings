@@ -33,16 +33,32 @@ module FreeVikings
       @coordinates[0]
     end
 
+    def left=(i)
+      @coordinates[0] = i
+    end
+
     def top
       @coordinates[1]
+    end
+
+    def top=(i)
+      @coordinates[1] = i
     end
 
     def w
       @coordinates[2]
     end
 
+    def w=(i)
+      @coordinates[2] = i
+    end
+
     def h
       @coordinates[3]
+    end
+
+    def h=(i)
+      @coordinates[3] = i
     end
 
     def bottom

@@ -34,6 +34,17 @@ module FreeVikings
       @ability.space_on
     end
 
+    alias_method :_velocity_vertic, :velocity_vertic
+
+    SHIELD_GLIDE_ANTIACCELERATION = 0.5
+
+    def velocity_vertic
+      if @ability.shield_use == ShielderAbility::SHIELD_TOP
+        return _velocity_vertic * SHIELD_GLIDE_ANTIACCELERATION
+      end
+      return _velocity_vertic
+    end
+
     private
     def init_images
       i_left = Image.new('olaf_left.png')
@@ -63,7 +74,7 @@ module FreeVikings
                               'left' => Image.new('shield_left.png'),
                               'right' => Image.new('shield_right.png')}
                              )
-      @position = []
+      @rect = Rectangle.new 0,0,0,0
     end
 
     def update
@@ -71,20 +82,22 @@ module FreeVikings
         destroy
         return
       end
-      @position[0] = case state
+      @rect.left = case state
                      when 'top'
-                       @shielder.left
+                       @shielder.left 
                      when 'left'
-                       @shielder.left - 20
+                       @shielder.left - 20 - 1
                      when 'right'
-                       @shielder.rect.right
+                       @shielder.rect.right + 1
                      end # case state
-      @position[1] = case state
+      @rect.top = case state
                      when 'top'
-                       @shielder.top - 10
+                       @shielder.top - 10 - 1
                      when 'left', 'right'
                        @shielder.top + 10
                      end # case state
+      @rect.h = image.h
+      @rect.w = image.w
     end # method update
 
     def state

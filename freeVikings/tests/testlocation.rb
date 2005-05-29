@@ -3,13 +3,13 @@
 
 # Sada testovych pripadu pro objekty Location.
 
-require 'rubyunit'
+require 'test/unit'
 
 require 'mockclasses.rb'
 
 require 'location.rb'
 
-class TestLocation < RUNIT::TestCase
+class TestLocation < Test::Unit::TestCase
 
   include FreeVikings
 
@@ -61,7 +61,7 @@ class TestLocation < RUNIT::TestCase
   def testLocationAttrUnsetAfterDelete
     @loc.add_sprite @sprite
     @loc.delete_sprite @sprite
-    assert_equal nil, @sprite.location, "When the sprite is deleted of the location, it's attribute location must be set to nil."
+    assert_instance_of NullLocation, @sprite.location, "When the sprite is deleted of the location, it's attribute location must be set to nil."
   end
 
 end

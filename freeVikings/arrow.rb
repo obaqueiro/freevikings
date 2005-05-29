@@ -4,6 +4,7 @@
 # Trida zastupujici sip
 
 require 'shot.rb'
+require 'monster.rb'
 
 module FreeVikings
 

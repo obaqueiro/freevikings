@@ -12,6 +12,7 @@ require 'testxmllocloadstrategy.rb'
 require 'testmap.rb'
 require 'testspritemanager.rb'
 require 'testsprite.rb'
+require 'testarrow.rb'
 require 'testviking.rb'
 require 'testvelocity.rb'
 require 'testteam.rb'
@@ -32,6 +33,7 @@ class FreeVikingsTestSuite
     suite << TestMap.suite
     suite << TestSpriteManager.suite
     suite << TestSprite.suite
+    suite << TestArrow.suite
     suite << TestViking.suite
     suite << TestVelocity.suite
     suite << TestTeam.suite
@@ -53,8 +55,15 @@ Log4r::Logger.global.level = Log4r::OFF # vystup testu nesmi byt rusen
 #
 
 if ARGV[0] =~ /^[gG][tT][kK]$/ then
+  puts 'GTK UI'
   require 'testrunner.rb'
   trm = Test::Unit::UI::GTK
+elsif ARGV[0] =~ /^[tT][kK]$/
+  puts 'Tk UI'
+  require 'test/unit/ui/tk/testrunner'
+  trm = Test::Unit::UI::Tk
+  trm::TestRunner.run(FreeVikingsTestSuite)
+  exit
 else
   require 'test/unit/ui/console/testrunner'
   trm = Test::Unit::UI::Console

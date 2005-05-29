@@ -40,6 +40,15 @@ options.each do |option, argument|
   end
 end
 
+# Commandline arguments which weren't processed as options remained
+# in the ARGV array. We consider them filenames of XML documents
+# describing FreeVikings location.
+unless ARGV.empty?
+  FreeVikings::OPTIONS['locations'] = ARGV
+else
+  FreeVikings::OPTIONS['locations'] = []
+end
+
 # This must be out of the block scope in which all the other
 # options are processed.
 # Ruby stdlib's 'profile' does terrible things when loaded in the block's

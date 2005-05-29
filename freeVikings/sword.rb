@@ -11,7 +11,7 @@ module FreeVikings
     # direction is 'right' or 'left'
 
     def initialize
-      super([0,0])
+      #super([0,0])
       init_images
       @direction = 'right'
       @position = [0,0]

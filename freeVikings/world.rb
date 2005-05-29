@@ -13,10 +13,10 @@ module FreeVikings
 
     DATA_DIR = 'locs'
     
-    def initialize
+    def initialize(*locs)
       @location = nil
       @level = -1
-      @locs = ['pyramida_loc.xml', 'first_loc.xml', 'hopsy_loc.xml']
+      @locs = locs
       # Nastavime vychozi lokaci:
       next_location
     end
