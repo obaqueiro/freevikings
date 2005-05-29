@@ -27,6 +27,8 @@ One argument - owner of the ability (usually a viking) - is accepted.
       @active_ability = nil
     end
 
+    attr_reader :active_ability
+
     def d_on
     end
 

@@ -19,7 +19,17 @@ module FreeVikings
       @state.ability = @ability
     end
 
-    attr_reader :weapon
+    alias_method :_move_left, :move_left
+
+    def move_left
+      _move_left unless @ability.active_ability
+    end
+
+    alias_method :_move_right, :move_right
+
+    def move_right
+      _move_right unless @ability.active_ability
+    end
 
     def d_func_on
       @ability.d_on
