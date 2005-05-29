@@ -143,7 +143,7 @@ module FreeVikings
       end
       # Zkusme, jestli by viking nemohl zacit padat.
       # Pokud muze zacit padat, zacne padat:
-      if not @state.falling? and not on_ground?
+      if not @state.rising? and not @state.falling? and not on_ground?
 	@state.fall
 	@log.debug "update: #{@name} starts falling because there's a free space under him."
       end

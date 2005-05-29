@@ -98,6 +98,10 @@ VikingState.
       @vertical_state.rise
     end
 
+    def rising?
+      velocity_vertic < 0
+    end
+
     def descend
       @vertical_state.descend
     end

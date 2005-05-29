@@ -11,6 +11,15 @@ to use the sword and throw arrows.
 
 Instances of class Ability can be used as "Null Objects", they don't do
 anything. All the specifics are in Ability's subclasses.
+
+== Ability activating/unactivating methods
+--- Ability#d_on
+--- Ability#d_off
+--- Ability#space_on
+--- Ability#space_off
+Activating and unactivating of vikings' abilities is traditionally
+connected with keys d, f and space. Methods controlling
+the abilities are called after the keys.
 =end
 
   class Ability
@@ -35,6 +44,12 @@ One argument - owner of the ability (usually a viking) - is accepted.
     def d_off
     end
 
+    def space_on
+    end
+
+    def space_off
+    end
+
 =begin
 --- Ability#to_s
 This method doesn't behave as to_s methods usually do (e.g. in Ruby's 
@@ -42,10 +57,8 @@ stdlib classes' instances). It returns a String if the Ability is active
 and nil otherwise. It is because of the usage of Ability objects in
 VikingState. See VikingState documentation for more details.
 =end
+    alias_method :to_s, :active_ability
 
-    def to_s
-      @active_ability
-    end
   end # class Ability
 
   class WariorAbility < Ability
@@ -68,4 +81,27 @@ VikingState. See VikingState documentation for more details.
       end
     end
   end # class WariorAbility
+
+  class SprinterAbility < Ability
+
+    SPACE_ABILITY = 'jumping'
+
+    def initialize(owner)
+      super owner
+    end
+
+    def space_on
+      unless @active_ability == SPACE_ABILITY
+        @active_ability = SPACE_ABILITY
+        @owner.jump
+      end
+    end
+
+    def space_off
+      if @active_ability == SPACE_ABILITY
+        @active_ability = nil
+        @owner.state.descend
+      end
+    end
+  end # class SprinterAbility
 end # module FreeVikings
