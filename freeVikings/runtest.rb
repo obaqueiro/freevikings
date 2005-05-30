@@ -3,6 +3,10 @@
 # runtest.rb
 # Skript pro spousteni testu, ktere jsou v oddelenem adresari.
 
+# nahrajeme nastaveni log4r (to je pouzivano v nekterych z testovanych trid)
+require 'log4r'
+require 'log4rsetupload.rb'
+
 $:.push File.expand_path('.')
 $:.push File.expand_path('tests')
 Dir.chdir 'tests'

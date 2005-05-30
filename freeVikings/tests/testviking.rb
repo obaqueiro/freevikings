@@ -46,6 +46,7 @@ end
 class MockLocation
   def initialize
     @position_validator_proc = Proc.new {|sprite, position| true}
+    @sprites_on_rect = []
   end
 
   def add_sprite(sprite)
@@ -58,5 +59,11 @@ class MockLocation
 
   def is_position_valid?(sprite, position)
     return @position_validator_proc.call(sprite, position)
+  end
+
+  attr_writer :sprites_on_rect
+
+  def sprites_on_rect(rect)
+    @sprites_on_rect.dup
   end
 end

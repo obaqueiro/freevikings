@@ -20,6 +20,7 @@ require 'testrect.rb'
 require 'testrexml.rb'
 require 'testvikingstate.rb'
 require 'testvikingstatetostring.rb'
+require 'testcollisiontest.rb'
 
 require 'ext/test/test.rb'
 
@@ -41,18 +42,13 @@ class FreeVikingsTestSuite
     suite << TestExploreREXML.suite
     suite << TestVikingState.suite
     suite << TestVikingStateToString.suite
+    suite << TestCollisionTest.suite
 
     suite << FreeVikingsExtensionsTestSuite.suite
 
     return suite
   end
 end
-
-# load Log4r configuration:
-require 'log4r/configurator'
-Log4r::Configurator.load_xml_file('../log4rconfig.xml')
-Log4r::Logger.global.level = Log4r::OFF # vystup testu nesmi byt rusen
-#
 
 if ARGV[0] =~ /^[gG][tT][kK]$/ then
   puts 'GTK UI'

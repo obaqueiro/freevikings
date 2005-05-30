@@ -10,6 +10,7 @@
 # Dlazdice : 40x40 px
 
 require 'getoptlong'
+require 'log4r'
 
 # All the game's globals and classes are defined inside this module.
 module FreeVikings
@@ -57,11 +58,7 @@ if OPTIONS['profile'] then
   require 'profile'
 end
 
-# load Log4r configuration:
-require 'log4r'
-require 'log4r/configurator'
-Log4r::Configurator.load_xml_file('log4rconfig.xml')
-Log4r::Logger.global.level = Log4r::OFF # vystup testu nesmi byt rusen
+require 'log4rsetupload' # load Log4r configuration now
 
 # All the setup's done, we can start the game.
 require 'game'

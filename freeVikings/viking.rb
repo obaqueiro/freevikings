@@ -8,6 +8,7 @@ require 'vikingstate.rb'
 require 'imagebank.rb'
 require 'nullocation.rb'
 require 'log4r'
+require 'collisiontest.rb'
 
 module FreeVikings
 
@@ -141,6 +142,9 @@ module FreeVikings
 	@state.stop
         @state.descend
       end
+      if @state.falling? and on_ground? then
+        @state.descend
+      end
       # Zkusme, jestli by viking nemohl zacit padat.
       # Pokud muze zacit padat, zacne padat:
       if not @state.rising? and not @state.falling? and not on_ground?
@@ -175,10 +179,24 @@ module FreeVikings
     private
     # Zjisti, jestli viking stoji na zemi (na pevne dlazdici)
     def on_ground?
+      # stoji viking na stite?
+      return true if on_shield?
+      # je pod vikingem volne misto?
       lowerpos = next_position
       lowerpos[1] += 2
       return nil if @location.is_position_valid?(self, lowerpos)
+      # viking stoji na pevne zemi:
       return true
+    end
+
+    private
+    def on_shield?
+      shield = @location.sprites_on_rect(rect).find {|s| s.is_a? Shield}
+      if shield and CollisionTest.bottom_collision?(rect, shield.rect) then
+        return true
+      else
+        return false
+      end
     end
 
   end # class Viking
