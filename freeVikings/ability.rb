@@ -64,6 +64,7 @@ VikingState. See VikingState documentation for more details.
   class WariorAbility < Ability
 
     D_ABILITY = 'bow-stretching'
+    SPACE_ABILITY = 'sword-fighting'
 
     def initialize(owner)
       super owner
@@ -77,6 +78,18 @@ VikingState. See VikingState documentation for more details.
     def d_off
       if @active_ability == D_ABILITY
         @owner.shoot
+        @active_ability = NO_ABILITY
+      end
+    end
+
+    def space_on
+      @active_ability = SPACE_ABILITY
+      @owner.draw_sword
+    end
+
+    def space_off
+      if @active_ability == SPACE_ABILITY then
+        @owner.hide_sword
         @active_ability = NO_ABILITY
       end
     end

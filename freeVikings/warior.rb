@@ -17,6 +17,7 @@ module FreeVikings
       init_images
       @ability = WariorAbility.new self
       @state.ability = @ability
+      @sword = Sword.new self     
     end
 
     alias_method :_move_left, :move_left
@@ -39,6 +40,14 @@ module FreeVikings
       @ability.d_off
     end
 
+    def space_func_on
+      @ability.space_on
+    end
+
+    def space_func_off
+      @ability.space_off
+    end
+
     def shoot
       if state.direction == "right"
 	arrow_veloc = 60
@@ -47,6 +56,15 @@ module FreeVikings
       end
       arrow = Arrow.new([left + 30, top + (image.h / 2) - 7], Velocity.new(arrow_veloc))
       @location.add_sprite arrow
+    end
+
+    # vytasi mec
+    def draw_sword
+      @location.add_sprite @sword
+    end
+
+    def hide_sword
+      @location.delete_sprite @sword
     end
 
     private
@@ -71,6 +89,9 @@ module FreeVikings
 
       @image.add_pair('onground_bow-stretching_left', i_shootleft)
       @image.add_pair('onground_bow-stretching_right', i_shootright)
+
+      @image.add_pair('onground_sword-fighting_left', i_left)
+      @image.add_pair('onground_sword-fighting_right', i_right)
 
       @portrait = Portrait.new 'baleog_face.tga', 'baleog_face_unactive.gif', 'dead_face.png'
     end

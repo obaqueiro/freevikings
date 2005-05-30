@@ -3,47 +3,49 @@
 
 # Trida representujici kratky vikinsky mec
 
+require 'rect.rb'
+
 module FreeVikings
 
   class Sword < Sprite
 
-    # position is an two-element array,
-    # direction is 'right' or 'left'
-
-    def initialize
-      #super([0,0])
-      init_images
+    def initialize(owner)
+      @owner = owner
       @direction = 'right'
-      @position = [0,0]
-    end
-
-    def set(position, direction)
-      @position = position
-      @direction = direction
+      @rect = Rectangle.new 0,0,0,0
+      init_images
     end
 
     def left
-      @position[0]
+      @rect.left
     end
 
     def top
-      @position[1]
+      @rect.top
     end
 
     def state
-      @direction
+      @owner.state.direction
     end
 
     def update
+      @rect.w = image.w
+      @rect.h = image.h
+
+      @rect.top = @owner.top + @owner.rect.h / 2.2
+
+      @rect.left = case @owner.state.direction
+                   when 'left'
+                     @owner.left - self.rect.w + @owner.rect.w/5
+                   when 'right'
+                     @owner.left + @owner.rect.w - @owner.rect.w/5
+                   end
+
       stroken = @location.sprites_on_rect(self.rect)
-      stroken.delete self
-      unless stroken.empty?
-	stroken.each do |s|
-	  if s.is_a? Monster
-	    s.hurt
-	  end
-	end
-      end # unless
+      stroken.delete_if {|s| s == self or not s.is_a? Monster}
+      stroken.each do |s|
+        s.hurt
+      end
     end
 
     private
