@@ -10,16 +10,24 @@ class Apex < FreeVikings::Sprite
     super(position)
     @image = FreeVikings::Image.new 'apex.tga'
   end
+
+  def update
+    colliding_sprites = @location.sprites_on_rect(rect)
+    colliding_sprites.delete_if {|s| s.is_a? Apex}
+    colliding_sprites.each {|s| s.hurt}
+  end
 end
+
+TS = 40 # tile side length
 
 MONSTERS = []
 
 # Bodaky v dire v horni chodbe:
-4.times {|i| MONSTERS.push Apex.new([1320 + i*40, 290])}
+4.times {|i| MONSTERS.push Apex.new([33*TS + i*TS, 7*TS])}
 
 # Bodaky na schode dolu:
-MONSTERS.push Apex.new [200, 480]
-MONSTERS.push Apex.new [240, 520]
+MONSTERS.push Apex.new [5*TS, 14*TS]
+MONSTERS.push Apex.new [6*TS, 15*TS]
 
 # Bodaky v dire dole:
-11.times {|i| MONSTERS.push Apex.new([280 + 40*i, 840])}
+11.times {|i| MONSTERS.push Apex.new([7*TS + i*TS, 23*TS])}
