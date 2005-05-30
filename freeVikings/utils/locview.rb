@@ -6,6 +6,9 @@
 $:.push(File.expand_path('..'))
 
 require 'RUDL'
+require 'log4r'
+
+require 'log4rsetupload' # nastaveni log4r
 
 require 'map'
 require 'location'
