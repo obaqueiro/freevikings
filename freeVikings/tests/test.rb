@@ -22,8 +22,6 @@ require 'testvikingstate.rb'
 require 'testvikingstatetostring.rb'
 require 'testcollisiontest.rb'
 
-require 'ext/test/test.rb'
-
 class FreeVikingsTestSuite
 
   def self.suite
@@ -43,8 +41,6 @@ class FreeVikingsTestSuite
     suite << TestVikingState.suite
     suite << TestVikingStateToString.suite
     suite << TestCollisionTest.suite
-
-    suite << FreeVikingsExtensionsTestSuite.suite
 
     return suite
   end
