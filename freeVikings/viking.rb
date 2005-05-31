@@ -23,7 +23,7 @@ module FreeVikings
       @name = name
       @state = VikingState.new
       @log.debug("Viking #{@name} initialised.")
-      @position = start_position
+      @rect = Rectangle.new start_position[0], start_position[1], 0, 0
       @last_update_time = Time.now.to_f
       @location = NullLocation.new # objekt overujici moznost presunu na posici
       @energy = 3 # zivotni sila
@@ -82,11 +82,11 @@ module FreeVikings
     end
 
     def top
-      return @position[1]
+      @rect.top
     end
 
     def left
-      return @position[0]
+      @rect.left
     end
 
     def space_func_on
@@ -124,9 +124,9 @@ module FreeVikings
       time_delta = time_now - @last_update_time
       # Zde se musi posice zjistovat primo z instancni promenne, protoze
       # pristupove metody left a top ji aktualisuji
-      next_top = @position[1] + (velocity_vertic * time_delta)
-      next_left = @position[0] + (velocity_horiz * time_delta)
-      return [next_left, next_top]
+      next_top = @rect.top + (velocity_vertic * time_delta)
+      next_left = @rect.left + (velocity_horiz * time_delta)
+      Rectangle.new next_left, next_top, image.w, image.h
     end
 
     # Aktualisuje posici vikinga.
@@ -135,7 +135,7 @@ module FreeVikings
       # Nyni muzeme aktualisovat posici:
       if @location.is_position_valid?(self, next_position) then
 	@log.debug "update: Viking #{name}'s next position is all right."
-	@position = next_position
+	@rect = next_position
 	update_time
       else
 	@log.debug "update: Viking #{name}'s next position isn't valid, he'll stuck now."

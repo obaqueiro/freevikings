@@ -20,6 +20,8 @@ module FreeVikings
     end
 
     def update
+      @rect.h = image.h
+      @rect.w = image.w
       caught = @location.sprites_on_rect(self.rect)
       caught.delete self
       unless caught.empty?

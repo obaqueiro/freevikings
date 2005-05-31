@@ -22,6 +22,14 @@ module FreeVikings
 
     private_class_method :new
 
+    # Vymaze vsechny instance z interniho slovniku tridy.
+    # Tuto metodu je treba zavolat vzdy pred nahravanim 
+    # typu dlazdic z nove lokace.
+
+    def TileType.clear
+      @@instances.clear
+    end
+
     # Pokud uz pro dany kod existuje instance, vrati ji, v opacnem pripade 
     # vytvori novou.
 

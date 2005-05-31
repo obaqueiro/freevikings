@@ -20,6 +20,7 @@ module FreeVikings
 
     def initialize
       @log = Log4r::Logger['location loading log']
+      TileType.clear
     end
 
     # Pole Blocks_matrix inicialisuje jako dvojrozmerne pole a nacte do nej

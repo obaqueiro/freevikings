@@ -34,7 +34,7 @@ class TestSpriteManager < RUNIT::TestCase
     @manager.add @sprite
     @manager.add Sprite.new([82,82])
     @manager.add Sprite.new([140,140])
-    assert_equal 3, @manager.sprites_on_rect([85,85,60,60]).size, "There are two sprites colliding with the specified rectangle."
+    assert_equal 3, @manager.sprites_on_rect([80,80,60,60]).size, "There are two sprites colliding with the specified rectangle."
   end
 
   def testSpritesOnRectDoesNotFindNotCollidingSprites

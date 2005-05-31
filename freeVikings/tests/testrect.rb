@@ -60,4 +60,10 @@ class TestRect < RUNIT::TestCase
     r2 = Rectangle.new(10,10,2,2)
     assert r2.collides?(r1), "r2 contains r1, so r1 collides with r2"
   end
+
+  def testIndexingLeft
+    r = Rectangle.new 1, 2, 3, 4
+    assert_equal 1, r.left
+    assert_equal 1, r[0]
+  end
 end

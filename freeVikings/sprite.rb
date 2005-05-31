@@ -98,7 +98,7 @@ much place it takes.
 =end
 
     def rect
-      Rectangle.new *[left, top, image.w, image.h]
+      @rect
     end
 
 =begin

@@ -5,10 +5,10 @@
 
 module FreeVikings
 
-  class Rectangle
+  class Rectangle < Array
 
     def initialize(*coordinates)
-      @coordinates = coordinates[0..3]
+      super(coordinates[0..3])
     end
 
     def contains?(rect)
@@ -30,35 +30,35 @@ module FreeVikings
     end
 
     def left
-      @coordinates[0]
+      at 0
     end
 
     def left=(i)
-      @coordinates[0] = i
+      self[0] = i
     end
 
     def top
-      @coordinates[1]
+      at 1
     end
 
     def top=(i)
-      @coordinates[1] = i
+      self[1] = i
     end
 
     def w
-      @coordinates[2]
+      at 2
     end
 
     def w=(i)
-      @coordinates[2] = i
+      self[2] = i
     end
 
     def h
-      @coordinates[3]
+      at 3
     end
 
     def h=(i)
-      @coordinates[3] = i
+      self[3] = i
     end
 
     def bottom
@@ -70,7 +70,7 @@ module FreeVikings
     end
 
     def to_a
-      @coordinates.dup
+      Array.new self[0..3]
     end
 
   end # class Rectangle
