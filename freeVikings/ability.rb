@@ -126,7 +126,7 @@ VikingState. See VikingState documentation for more details.
 
     def initialize(owner)
       super owner
-      @shield_use = SHIELD_TOP
+      @shield_use = SHIELD_FRONT
     end
 
     attr_reader :shield_use
