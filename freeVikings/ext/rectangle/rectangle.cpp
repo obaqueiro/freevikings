@@ -14,7 +14,10 @@ Rectangle::Rectangle()
 
 Rectangle::Rectangle(int left, int top, int width, int height)
 {
-
+  _left = left;
+  _top = top;
+  _width = width;
+  _height = height;
 }
 
 int Rectangle::left()
