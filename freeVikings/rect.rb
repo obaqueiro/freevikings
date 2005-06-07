@@ -11,14 +11,6 @@ module FreeVikings
       super(coordinates[0..3])
     end
 
-    def contains?(rect)
-      if left <= rect.left and top <= rect.top and
-	  right >= rect.right and bottom >= rect.bottom then
-	return true
-      end
-      return nil
-    end
-
     def collides?(rect)
       if self.left <= rect.right and
 	  rect.left <= self.right and

@@ -25,7 +25,7 @@ class TestLocation < Test::Unit::TestCase
   def testSpritesOnRect
     sprite = Sprite.new([90,90])
     @loc.add_sprite sprite
-    assert_equal 1, @loc.sprites_on_rect([80,80,20,20]).size, "I made one sprite waiting on position [12,12], so there must be one found."
+    assert_equal 1, @loc.sprites_on_rect(Rectangle.new(80,80,20,20)).size, "I made one sprite waiting on position [12,12], so there must be one found."
   end
 
   def testTopLeftValidPosition

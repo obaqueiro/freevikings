@@ -7,6 +7,7 @@
 require 'test/unit'
 
 require 'ext/test/testextensionrect.rb'
+require 'ext/test/testextensionrectanglerectfeatures.rb'
 
 class FreeVikingsExtensoinsTestSuite
   
@@ -14,6 +15,7 @@ class FreeVikingsExtensoinsTestSuite
     suite = Test::Unit::TestSuite.new
 
     suite << TestExtensionRectangle.suite
+    suite << TestExtensionRectangleRectFeatures.suite
 
     suite
   end

@@ -49,4 +49,29 @@ class TestExtensionRectangle < Test::Unit::TestCase
     assert_equal @r[3], @r.height
   end
 
+  def testShortNamedMethods
+    assert_equal @r.width, @r.w
+    assert_equal @r.height, @r.h
+  end
+
+  def testLeftAtrWriter
+    @r.left = 9003
+    assert_equal 9003, @r.left
+  end
+
+  def testTopAttrWriter
+    @r.top = 3009
+    assert_equal 3009, @r.top
+  end
+
+  def testHeightAttrWriter
+    @r.h = 162
+    assert_equal 162, @r.h
+  end
+
+  def testWidthAttrWriter
+    @r.w = 261
+    assert_equal 261, @r.w
+  end
+
 end

@@ -3,8 +3,6 @@
 
 # Trida representujici kratky vikinsky mec
 
-require 'rect.rb'
-
 module FreeVikings
 
   class Sword < Sprite
@@ -32,14 +30,14 @@ module FreeVikings
       @rect.w = image.w
       @rect.h = image.h
 
-      @rect.top = @owner.top + @owner.rect.h / 2.2
+      @rect.top = (@owner.top + @owner.rect.h / 2.2).to_i
 
-      @rect.left = case @owner.state.direction
+      @rect.left = (case @owner.state.direction
                    when 'left'
                      @owner.left - self.rect.w + @owner.rect.w/5
                    when 'right'
                      @owner.left + @owner.rect.w - @owner.rect.w/5
-                   end
+                   end).to_i
 
       stroken = @location.sprites_on_rect(self.rect)
       stroken.delete_if {|s| s == self or not s.is_a? Monster}

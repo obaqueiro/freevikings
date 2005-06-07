@@ -3,9 +3,13 @@
 
 # Spravce sprajtu.
 
+require 'ext/Rectangle'
+
 module FreeVikings
 
   class SpriteManager
+
+    include FreeVikings::Extensions::Rectangle
 
 =begin
 SpriteManager object keeps an array of all the sprites that should be
@@ -80,8 +84,7 @@ If no sprite is found, it returns an empty array.
     def sprites_on_rect(rect)
       found = Array.new
       @sprites.each do |sprite|
-	r_rect = Rectangle.new(*rect)
-	if r_rect.collides? sprite.rect
+	if rect.collides? sprite.rect
 	  found.push sprite
 	end # if
       end # do
