@@ -79,6 +79,18 @@ module FreeVikings
       @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.tga')
     end # init_display
 
+    def init_vikings_team(location)
+      @baleog = Viking.createWarior("Baleog", location.start)
+      @erik = Viking.createSprinter("Erik", location.start)
+      @olaf = Viking.createShielder("Olaf", location.start)
+      @team = Team.new(@erik, @baleog, @olaf)
+      # vsechny vikingy oznacime jako hrdiny:
+      @team.each { |v|
+        v.extend Hero
+        location.add_sprite v 
+      }
+    end # init_vikings_team
+
     def finalize
       puts "Ending the game."
       exit
@@ -122,9 +134,9 @@ module FreeVikings
 
     def game_loop
       loop do
-
 	if @team.nil? then
-	  # Prvni iterace. Bude se inicialisovat. Tady nemusime nic.
+          location = @world.location
+          init_vikings_team(location)
 	elsif (@team.alive_size < @team.size) or (@give_up == true) then
 	  # Nekteri hrdinove mrtvi.
 	  puts '*** Some vikings died. Try once more.'
@@ -143,16 +155,6 @@ module FreeVikings
 	  exit 1
 	end
 
-	location = @world.location
-
-	@baleog = Viking.createWarior("Baleog", location.start)
-	@erik = Viking.createSprinter("Erik", location.start)
-	@olaf = Viking.createShielder("Olaf", location.start)
-
-	@team = Team.new(@erik, @baleog, @olaf)
-	@team.each { |v|
-	  v.extend Hero # vsechny vikingy oznacime jako hrdiny
-	  location.add_sprite v }
 
 	frames = 0 # pomocna promenna k vypoctu fps
 

@@ -28,7 +28,7 @@ regularly redisplayed.
 =begin
 --- SpriteManager#paint( surface, rect_of_location )
 This method takes a RUDL::Surface object (surface) and paints onto it all the
-sprites which can be found in a rect defined by an four-entry-array
+sprites which can be found in a rect defined by a Rectangle
 rect_of_location. The rect definition contains a left coordinate of the top
 left corner, top coordinate of the top left corner, rect's width and it's
 height. The coordinates are relative to the map loaded.
@@ -36,7 +36,7 @@ height. The coordinates are relative to the map loaded.
 
     def paint(surface, rect_of_location)
       @sprites.each { |sprite|
-	locr = Rectangle.new(*rect_of_location)
+        locr = rect_of_location
         eir = 0
         sr = sprite.rect
         eir += 1 if sr.left > locr.left and sr.left < locr.right

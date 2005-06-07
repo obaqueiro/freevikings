@@ -32,7 +32,7 @@ module FreeVikings
     # vrati surface s aktualnim pozadim
 
     def background
-      if @background.nil?
+      unless @background
         create_background
       end
       return @background
@@ -79,20 +79,6 @@ module FreeVikings
 	colliding_blocks.concat(blocks) if blocks.is_a? Array
       }
       return colliding_blocks
-    end
-
-    # Urci, zda je vymezena oblast volna.
-
-    def area_free?(square)
-      tiles = blocks_on_square(square)
-      tiles.each {|t| return nil if t.solid?}
-      return true
-    end
-
-    # Vrati duplikat bloku daneho indexem radku a sloupecku.
-
-    def block_by_indexes(line, column)
-      return @blocks[line][column].dup
     end
 
     private

@@ -53,7 +53,7 @@ module FreeVikings
 
       @image = ImageBank.new(self)
 
-      @image.add_pair('onground_standing_left', i_left)
+      # @image.add_pair('onground_standing_left', i_left)
       @image.add_pair('onground_standing_right', i_right)
       @image.add_pair('onground_moving_left', i_left)
       @image.add_pair('onground_moving_right', i_right)

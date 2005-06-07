@@ -35,10 +35,11 @@ module FreeVikings
     # vrati surface s obrazkem pro prislusny stav
 
     def image
-      if @images[@sprite.state.to_s].nil?
-	raise RuntimeError, "No image assigned for a state #{@sprite.state.to_s}"
+      begin
+        @images[@sprite.state.to_s].image
+      rescue NoMethodError
+	raise RuntimeError, "No image assigned for a state #{@sprite.state.to_s}."
       end
-      @images[@sprite.state.to_s].image
     end
   end
 

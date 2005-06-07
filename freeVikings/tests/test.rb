@@ -7,6 +7,8 @@
 
 require 'test/unit/testsuite'
 
+require '../ext/test/test.rb'
+
 require 'testlocation.rb'
 require 'testxmllocloadstrategy.rb'
 require 'testmap.rb'
@@ -26,6 +28,8 @@ class FreeVikingsTestSuite
 
   def self.suite
     suite = Test::Unit::TestSuite.new
+
+    suite << FreeVikingsExtensoinsTestSuite.suite
 
     suite << TestLocation.suite
     suite << TestXMLLocationLoadStrategy.suite
