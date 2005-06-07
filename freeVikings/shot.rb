@@ -20,10 +20,6 @@ module FreeVikings
       @hunted_type = Sprite
     end
 
-    def left
-      @rect.left + @velocity.value * (Time.now.to_f - @start_time)
-    end
-
     def destroy
       @velocity = Velocity.new
       @energy = 0
@@ -35,6 +31,8 @@ module FreeVikings
     end
 
     def update
+      @rect.left += @velocity.value * (Time.now.to_f - @start_time)
+
       unless @location.is_position_valid?(self, [left, top])
 	@location.delete_sprite self
 	return
@@ -42,11 +40,12 @@ module FreeVikings
 
       stroken = @location.sprites_on_rect(self.rect)
       stroken.delete self
-      unless stroken.empty?
+      while not stroken.empty? do
 	s = stroken.pop
 	if s.is_a? @hunted_type
 	  s.hurt
 	  @location.delete_sprite self
+          return
 	end
       end
     end
