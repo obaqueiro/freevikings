@@ -3,6 +3,6 @@
 
 all: Rectangle.so
 
-Rectangle.so:
+Rectangle.so: rectangle/*
 	cd rectangle && make
 	cp rectangle/Rectangle.so .
