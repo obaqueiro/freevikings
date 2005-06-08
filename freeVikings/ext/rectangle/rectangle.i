@@ -31,7 +31,6 @@
 %typemap(out) bool Rectangle::collides 
 	"$result = ($1 != false) ? Qtrue : Qfalse;";
 
-
 /* Nahrajeme deklaraci tridy: */
 %include "rectangle.hpp";
 

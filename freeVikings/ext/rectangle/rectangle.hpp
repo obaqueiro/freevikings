@@ -8,32 +8,35 @@
 class Rectangle
 {
 public:
+  /* Data types: */
+  typedef double Numeric;
+
   /* Constructors: */
   Rectangle();
-  Rectangle(int left, int top, int width, int height);
+  Rectangle(Numeric left, Numeric top, Numeric width, Numeric height);
 
   /* Attribute readers: */
-  int left();
-  int top();
-  int width();
-  int height();
+  Numeric left();
+  Numeric top();
+  Numeric width();
+  Numeric height();
 
   /* Pseudo-attribute-readers (utilities for better understanding) */
-  int right();
-  int bottom();
+  Numeric right();
+  Numeric bottom();
 
   /* Attribute writers: */
-  int set_left(int x);
-  int set_top(int y);
-  int set_height(int h);
-  int set_width(int w);
+  Numeric set_left(Numeric x);
+  Numeric set_top(Numeric y);
+  Numeric set_height(Numeric h);
+  Numeric set_width(Numeric w);
 
   /* Indexing: */
-  int at(int index);
+  Numeric at(Numeric index);
 
   /* Collision detection: */
   bool collides(Rectangle &rect);
 
 private:
-  int _left, _top, _width, _height;
+  Numeric _left, _top, _width, _height;
 };

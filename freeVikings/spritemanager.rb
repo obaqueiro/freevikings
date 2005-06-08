@@ -3,14 +3,14 @@
 
 # Spravce sprajtu.
 
-#require 'ext/Rectangle'
-require 'rect.rb'
+require 'ext/Rectangle'
+#require 'rect.rb'
 
 module FreeVikings
 
-  class SpriteManager
+  Rectangle = FreeVikings::Extensions::Rectangle::Rectangle
 
-    #include FreeVikings::Extensions::Rectangle
+  class SpriteManager
 
 =begin
 SpriteManager object keeps an array of all the sprites that should be

@@ -12,7 +12,7 @@ Rectangle::Rectangle()
   _left = _top = _width = _height = 0;
 }
 
-Rectangle::Rectangle(int left, int top, int width, int height)
+Rectangle::Rectangle(Rectangle::Numeric left, Rectangle::Numeric top, Rectangle::Numeric width, Rectangle::Numeric height)
 {
   _left = left;
   _top = top;
@@ -20,52 +20,52 @@ Rectangle::Rectangle(int left, int top, int width, int height)
   _height = height;
 }
 
-int Rectangle::left()
+Rectangle::Numeric Rectangle::left()
 {
   return _left;
 }
 
-int Rectangle::top()
+Rectangle::Numeric Rectangle::top()
 {
   return _top;
 }
 
-int Rectangle::width()
+Rectangle::Numeric Rectangle::width()
 {
   return _width;
 }
 
-int Rectangle::height()
+Rectangle::Numeric Rectangle::height()
 {
   return _height;
 }
 
-int Rectangle::right()
+Rectangle::Numeric Rectangle::right()
 {
   return _left + _width;
 }
 
-int Rectangle::bottom()
+Rectangle::Numeric Rectangle::bottom()
 {
   return _top + _height;
 }
 
-int Rectangle::set_left(int x)
+Rectangle::Numeric Rectangle::set_left(Rectangle::Numeric x)
 {
   return _left = x;
 }
 
-int Rectangle::set_top(int y)
+Rectangle::Numeric Rectangle::set_top(Rectangle::Numeric y)
 {
   return _top = y;
 }
 
-int Rectangle::set_height(int h)
+Rectangle::Numeric Rectangle::set_height(Rectangle::Numeric h)
 {
   return _height = h;
 }
 
-int Rectangle::set_width(int w)
+Rectangle::Numeric Rectangle::set_width(Rectangle::Numeric w)
 {
   return _width = w;
 }
@@ -74,9 +74,9 @@ int Rectangle::set_width(int w)
  Because SWIG doesn't support C++ operator functions, Rectangle#[] method
  is implemented as an alias of Rectangle#at. */
 
-int Rectangle::at(int index)
+Rectangle::Numeric Rectangle::at(Rectangle::Numeric index)
 {
-  switch (index) {
+  switch ((int) index) {
   case 0:
     return _left;
     break;
