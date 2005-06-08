@@ -67,7 +67,14 @@ module FreeVikings
       @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
       @app_window.set_caption('freeVikings')
       logo = RUDL::Surface.load_new GFX_DIR+'/fvlogo.tga'
-      @app_window.blit(logo, [@app_window.w/2-logo.w/2,@app_window.h/2-logo.h/2])
+      @app_window.blit(logo, [(@app_window.w/2) - (logo.w/2),\
+                         (@app_window.h/3) - (logo.h/2)])
+      font = TrueTypeFont.new('fonts/adlibn.ttf', 16)
+      @app_window.blit(font.render('freeVikings Copyright (c) 2005 Jakub Pavlik', true, [255,255,255]), [50,250])
+      @app_window.blit(font.render('freeVikings come to you as free software under GNU/GPL;', true, [255,255,255]), [50,270])
+      @app_window.blit(font.render("They are provided with aim of usability,", true, [255,255,255]), [50,290])
+      @app_window.blit(font.render("but with ABSOLUTELY NO WARRANTY.", true, [255,255,255]), [50,310])
+
       @app_window.flip
     end # init_app_window
 
