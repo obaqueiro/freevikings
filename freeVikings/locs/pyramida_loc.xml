@@ -43,7 +43,7 @@ oooooooooxffffffffsffffffffffffffffffffffffffffs
 </blocks>
     
     <!-- Startovni a koncove misto mapy: -->
-    <start horiz="160" vertic="260" />
+    <start horiz="100" vertic="260" />
     <exit horiz="1800" vertic="300" />
   </map>
     

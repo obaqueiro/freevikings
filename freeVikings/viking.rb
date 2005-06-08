@@ -126,7 +126,7 @@ module FreeVikings
       # pristupove metody left a top ji aktualisuji
       next_top = @rect.top + (velocity_vertic * time_delta)
       next_left = @rect.left + (velocity_horiz * time_delta)
-      Rectangle.new next_left.to_i, next_top.to_i, image.w, image.h
+      Rectangle.new next_left, next_top, image.w, image.h
     end
 
     # Aktualisuje posici vikinga.

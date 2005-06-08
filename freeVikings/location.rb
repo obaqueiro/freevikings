@@ -63,7 +63,7 @@ module FreeVikings
 
     def is_position_valid?(sprite, position)
       begin
-	colliding_blocks = blocks_on_rect([position[0], position[1], sprite.image.w, sprite.image.h])
+	colliding_blocks = blocks_on_rect([position[0], position[1], sprite.rect.w, sprite.rect.h])
       rescue RuntimeError
 	return nil
       end
@@ -111,7 +111,7 @@ module FreeVikings
       end
       bottom_right_left = top_left_left + view_width
       bottom_right_top = top_left_top + view_height
-      [top_left_left, top_left_top, bottom_right_left, bottom_right_top]
+      Rectangle.new(top_left_left, top_left_top, bottom_right_left, bottom_right_top)
     end
 
   end # class Location

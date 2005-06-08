@@ -6,13 +6,14 @@
 require 'velocity.rb'
 require 'imagebank.rb'
 
-require 'ext/Rectangle'
+#require 'ext/Rectangle'
+require 'rect.rb'
 
 module FreeVikings
 
   class Sprite
 
-    include FreeVikings::Extensions::Rectangle
+    #include FreeVikings::Extensions::Rectangle
 
 =begin
 =FreeVikings::Sprite class

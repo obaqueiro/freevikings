@@ -3,13 +3,14 @@
 
 # Spravce sprajtu.
 
-require 'ext/Rectangle'
+#require 'ext/Rectangle'
+require 'rect.rb'
 
 module FreeVikings
 
   class SpriteManager
 
-    include FreeVikings::Extensions::Rectangle
+    #include FreeVikings::Extensions::Rectangle
 
 =begin
 SpriteManager object keeps an array of all the sprites that should be
@@ -39,8 +40,9 @@ height. The coordinates are relative to the map loaded.
 =end
 
     def paint(surface, rect_of_location)
+      locr = rect_of_location
+      raise(ArgumentError, "Wrong type of argument: #{locr.class} should be: Rectangle") unless locr.kind_of? Rectangle
       @sprites.each { |sprite|
-        locr = rect_of_location
         eir = 0
         sr = sprite.rect
         eir += 1 if sr.left > locr.left and sr.left < locr.right
