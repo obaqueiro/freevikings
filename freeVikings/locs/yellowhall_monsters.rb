@@ -5,7 +5,11 @@
 require 'slug.rb'
 require 'plasmashooter.rb'
 require 'switch.rb'
+require 'robot.rb'
+
 require 'imagebank.rb'
+
+include FreeVikings
 
 MONSTERS = Array.new
 
@@ -33,3 +37,4 @@ switch = FreeVikings::Switch.new([580, 410], true, switch_action, switch_images)
 
 MONSTERS.push shooter
 MONSTERS.push switch
+MONSTERS.push FreeVikings::Robot.new([800, 400], 120)

@@ -48,8 +48,12 @@ module FreeVikings
 
     MSEC_PER_SEC = 1000
 
-    def initialize(delay = 1)
-      @images = Array.new
+    def initialize(delay = 1, images=nil)
+      if images
+        @images = images
+      else
+        @images = Array.new
+      end
       @delay = delay
     end
 
