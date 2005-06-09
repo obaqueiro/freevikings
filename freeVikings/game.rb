@@ -148,6 +148,8 @@ module FreeVikings
 	  # Nekteri hrdinove mrtvi.
 	  puts '*** Some vikings died. Try once more.'
 	  @world.rewind_location
+          location = @world.location
+          init_vikings_team(location)
 	  @give_up = nil
 	elsif @team.alive_size == @team.size
 	  # Vsichni dosahli EXITu
