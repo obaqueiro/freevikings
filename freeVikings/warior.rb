@@ -48,7 +48,10 @@ module FreeVikings
       @ability.space_off
     end
 
-    def shoot
+    def release_arrow
+      unless @ability.active_ability == 'bow_stretching'
+        raise RuntimeError, "The bow hasn't been stretched and it is told to release an arrow. It's an impossible mission, the world's gone mad..."
+      end
       if state.direction == "right"
 	arrow_veloc = 60
       else

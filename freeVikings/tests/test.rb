@@ -16,6 +16,7 @@ require 'testspritemanager.rb'
 require 'testsprite.rb'
 require 'testarrow.rb'
 require 'testviking.rb'
+require 'testwarior.rb'
 require 'testvelocity.rb'
 require 'testteam.rb'
 require 'testrect.rb'
@@ -38,6 +39,7 @@ class FreeVikingsTestSuite
     suite << TestSprite.suite
     suite << TestArrow.suite
     suite << TestViking.suite
+    suite << TestWarior.suite
     suite << TestVelocity.suite
     suite << TestTeam.suite
     suite << TestRect.suite

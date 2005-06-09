@@ -1,7 +1,7 @@
 # mockclasses.rb
 # igneus 13.2.2005
 
-# Sbirka trid uzitecnych pro testovani.
+# Collection of mock classes which are useful for unit testing.
 
 require 'locationloadstrategy.rb'
 
@@ -9,6 +9,8 @@ module FreeVikings
 
   module Mock
 
+    # A location loading Strategy (for Location tests).
+    # It doesn't parse any XML files => the tests are quicker.
     class TestingMapLoadStrategy < LocationLoadStrategy
 
       def load_map(blocks_matrix, blocktype_hash)
@@ -44,5 +46,34 @@ module FreeVikings
       def load_start(location)
       end
     end # class TestingMapLoadStrategy
+
+    # A corrupted class MockLocation.
+    # A mock location has no internal mechanism, it just stores
+    # the data we want her to return from method calls.
+    class MockLocation
+      def initialize
+        @position_validator_proc = Proc.new {|sprite, position| true}
+        @sprites_on_rect = []
+      end
+
+      def add_sprite(sprite)
+      end
+
+      def delete_sprite(sprite)
+      end
+
+      attr_accessor :position_validator_proc
+      
+      def is_position_valid?(sprite, position)
+        return @position_validator_proc.call(sprite, position)
+      end
+
+      attr_writer :sprites_on_rect
+
+      def sprites_on_rect(rect)
+        @sprites_on_rect.dup
+      end
+    end
+
   end # module Mock
 end # module FreeVikings

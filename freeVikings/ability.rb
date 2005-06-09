@@ -77,12 +77,13 @@ VikingState. See VikingState documentation for more details.
 
     def d_off
       if @active_ability == D_ABILITY
-        @owner.shoot
+        @owner.release_arrow
         @active_ability = NO_ABILITY
       end
     end
 
     def space_on
+      @owner.stop
       @active_ability = SPACE_ABILITY
       @owner.draw_sword
     end
