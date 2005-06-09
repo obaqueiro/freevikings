@@ -3,6 +3,8 @@
 
 # Cervena strela do automatickych ohnometu
 
+require 'shot.rb'
+
 module FreeVikings
 
   class RedShot < Shot

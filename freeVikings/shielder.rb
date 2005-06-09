@@ -86,9 +86,9 @@ module FreeVikings
                      when 'top'
                        @shielder.left 
                      when 'left'
-                       @shielder.left - 20 - 1
+                       @shielder.left - 20 - 2
                      when 'right'
-                       @shielder.rect.right + 1
+                       @shielder.rect.right + 2
                      end # case state
       @rect.top = case state
                      when 'top'
@@ -98,6 +98,8 @@ module FreeVikings
                      end # case state
       @rect.h = image.h
       @rect.w = image.w
+
+      @location.sprites_on_rect(self.rect).each {|s| s.destroy if s.kind_of? Shot}
     end # method update
 
     def state

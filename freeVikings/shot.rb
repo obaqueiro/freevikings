@@ -23,6 +23,7 @@ module FreeVikings
     def destroy
       @velocity = Velocity.new
       @energy = 0
+      @location.delete_sprite self
     end
 
     def state
@@ -42,9 +43,12 @@ module FreeVikings
       stroken.delete self
       while not stroken.empty? do
 	s = stroken.pop
+        if s.is_a? Shield
+          destroy
+        end
 	if s.is_a? @hunted_type
 	  s.hurt
-	  @location.delete_sprite self
+          destroy
           return
 	end
       end

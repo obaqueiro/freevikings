@@ -96,7 +96,7 @@ module FreeVikings
       s = Script.new scriptfile
 
       if s.const_defined? "MONSTERS" then
-	s::MONSTERS.each {|m| monster_manager.add_sprite m.dup}
+	s::MONSTERS.each {|m| monster_manager.add_sprite m}
       else
 	@log.info "In scriptfile #{scriptfile}: constant MONSTERS hasn't been defined. Maybe the script doesn't provide monsters."
       end
