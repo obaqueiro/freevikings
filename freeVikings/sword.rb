@@ -7,10 +7,13 @@ module FreeVikings
 
   class Sword < Sprite
 
+    WIDTH = 47
+    HEIGHT = 10
+
     def initialize(owner)
       @owner = owner
       @direction = 'right'
-      @rect = Rectangle.new 0,0,0,0
+      @rect = Rectangle.new 0,0,WIDTH, HEIGHT
       init_images
     end
 

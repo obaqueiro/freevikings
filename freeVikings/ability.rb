@@ -83,6 +83,7 @@ VikingState. See VikingState documentation for more details.
     end
 
     def space_on
+      return if @owner.falling?
       @owner.stop
       @active_ability = SPACE_ABILITY
       @owner.draw_sword

@@ -12,8 +12,12 @@ module FreeVikings
     STATE_DURATION = 1.1
     LAST_STATE = 2
 
+    HEIGHT = 100
+    WIDTH = 80
+
     def initialize(position)
       super(position)
+      @rect = Rectangle.new(position[0], position[1], WIDTH, HEIGHT)
       @image = ImageBank.new(self)
       im1 = Image.new('dead.png')
       im2 = Image.new('dead2.png')

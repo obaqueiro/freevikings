@@ -16,6 +16,8 @@ module FreeVikings
     # Sprite trida pro postavicky vikingu
 
     BASE_VELOCITY = 65
+    WIDTH = 80
+    HEIGHT = 100
 
     def initialize(name, start_position=[0,0])
       super()
@@ -23,7 +25,7 @@ module FreeVikings
       @name = name
       @state = VikingState.new
       @log.debug("Viking #{@name} initialised.")
-      @rect = Rectangle.new start_position[0], start_position[1], 0, 0
+      @rect = Rectangle.new start_position[0], start_position[1], WIDTH, HEIGHT
       @last_update_time = Time.now.to_f
       @location = NullLocation.new # objekt overujici moznost presunu na posici
       @energy = 3 # zivotni sila
@@ -126,7 +128,7 @@ module FreeVikings
       # pristupove metody left a top ji aktualisuji
       next_top = @rect.top + (velocity_vertic * time_delta)
       next_left = @rect.left + (velocity_horiz * time_delta)
-      Rectangle.new next_left, next_top, image.w, image.h
+      Rectangle.new next_left, next_top, WIDTH, HEIGHT
     end
 
     # Aktualisuje posici vikinga.

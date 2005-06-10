@@ -27,8 +27,22 @@ module FreeVikings
       end
     end
 
+=begin
+--- ImageBank#add_pair(state, image_object)
+Associates the FreeVikings::Image object with a state state (usually a String,
+eventually a Numeric, a boolean value or something else).
+It controls if the image has sizes equal to the sizes of the sprite which is 
+the ImageBank's owner. If the sizes aren't same, RuntimeError is thrown.
+This exception is thrown after the image is associated with the state, so you 
+can just catch the exception and go on without problems.
+=end
+
     def add_pair(state, image_object)
       @images[state] = image_object
+      if image_object.w != @sprite.rect.w or
+          image_object.h != @sprite.rect.h then
+        raise RuntimeError, "A problem accured while associating image #{image_object.name} with the state #{state.to_s} (owner of the ImageBank: #{@sprite.to_s}): It is strange to have an image of size #{image_object.w}x#{image_object.h} and a sprite of size #{@sprite.rect.w}x#{@sprite.rect.h} (usually the sizes should be same)."
+      end
       return self
     end
 
@@ -108,10 +122,21 @@ module FreeVikings
       else
 	@image = RUDL::Surface::new([1,1])
       end
+      @name = image_path
     end
+
+    attr_reader :name
 
     def image
       @image
+    end
+
+    def w
+      @image.w
+    end
+
+    def h
+      @image.h
     end
   end # class Image
 
