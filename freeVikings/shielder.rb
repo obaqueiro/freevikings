@@ -69,12 +69,14 @@ module FreeVikings
 
     def initialize(shielder)
       @shielder = shielder
-      @image = ImageBank.new(self, 
-                             {'top' => Image.new('shield_top.png'),
-                              'left' => Image.new('shield_left.png'),
-                              'right' => Image.new('shield_right.png')}
-                             )
-      @rect = Rectangle.new 0,0,0,0
+      @rect = Rectangle.new 0,0,15,80
+      begin
+        @image = ImageBank.new self
+        @image.add_pair 'left', Image.new('shield_left.png')
+        @image.add_pair 'right', Image.new('shield_right.png')
+        @image.add_pair 'top', Image.new('shield_top.png')        
+      rescue RuntimeError
+      end
     end
 
     def update
