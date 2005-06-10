@@ -54,21 +54,25 @@ module FreeVikings
       def initialize
         @position_validator_proc = Proc.new {|sprite, position| true}
         @sprites_on_rect = []
+        @sprites = []
       end
 
+      attr_accessor :sprites
+      attr_writer :sprites_on_rect
+      attr_accessor :position_validator_proc
+
       def add_sprite(sprite)
+        @sprites << sprite
+        sprite.location = self
       end
 
       def delete_sprite(sprite)
+        @sprites.delete sprite
       end
-
-      attr_accessor :position_validator_proc
       
       def is_position_valid?(sprite, position)
         return @position_validator_proc.call(sprite, position)
       end
-
-      attr_writer :sprites_on_rect
 
       def sprites_on_rect(rect)
         @sprites_on_rect.dup
