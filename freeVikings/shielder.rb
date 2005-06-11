@@ -4,6 +4,8 @@
 # Trida na miru pro Olafa. Shielder ma stit, umi se jim branit a plachtit
 # na nem.
 
+require 'shield.rb'
+
 module FreeVikings
 
   class Shielder < Viking
@@ -65,47 +67,4 @@ module FreeVikings
 
   end # class Shielder
 
-  class Shield < Sprite
-
-    def initialize(shielder)
-      @shielder = shielder
-      @rect = Rectangle.new 0,0,15,80
-      begin
-        @image = ImageBank.new self
-        @image.add_pair 'left', Image.new('shield_left.png')
-        @image.add_pair 'right', Image.new('shield_right.png')
-        @image.add_pair 'top', Image.new('shield_top.png')        
-      rescue RuntimeError
-      end
-    end
-
-    def update
-      unless @shielder.alive?
-        destroy
-        return
-      end
-      @rect.left = case state
-                     when 'top'
-                       @shielder.left 
-                     when 'left'
-                       @shielder.left - 20 - 2
-                     when 'right'
-                       @shielder.rect.right + 2
-                     end # case state
-      @rect.top = case state
-                     when 'top'
-                       @shielder.top - 10 - 1
-                     when 'left', 'right'
-                       @shielder.top + 10
-                     end # case state
-      @rect.h = image.h
-      @rect.w = image.w
-
-      @location.sprites_on_rect(self.rect).each {|s| s.destroy if s.kind_of? Shot}
-    end # method update
-
-    def state
-      @shielder.shield_use
-    end
-  end # class Shield
 end # module FreeVikings

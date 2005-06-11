@@ -49,8 +49,8 @@ module FreeVikings
     end
 
     def release_arrow
-      unless @ability.active_ability == 'bow_stretching'
-        raise RuntimeError, "The bow hasn't been stretched and it is told to release an arrow. It's an impossible mission, the world's gone mad..."
+      unless @ability.active_ability == @ability.class::D_ABILITY
+        raise ReleaseArrowWithoutBowStretchingException, "The bow hasn't been stretched and it is told to release an arrow. It's an impossible mission, the world's gone mad..."
       end
       if state.direction == "right"
 	arrow_veloc = 60
@@ -97,6 +97,11 @@ module FreeVikings
       @image.add_pair('onground_sword-fighting_right', i_right)
 
       @portrait = Portrait.new 'baleog_face.tga', 'baleog_face_unactive.gif', 'dead_face.png'
+    end
+
+    # Vyjimka, ktera je vyhozena, pokud je zavolana methoda
+    # release_arrow bez toho, ze by luk byl natazen
+    class ReleaseArrowWithoutBowStretchingException < RuntimeError
     end
 
   end # class Warior

@@ -58,6 +58,19 @@ class TestWarior < Test::Unit::TestCase
     @samsson.destroy
     assert_equal 0, @loc.sprites.size, "There should be no sprites in the location, the warior is dead and the sword should have disappeared."
   end
+
+  def testReleaseArrowWithoutBowStretching
+    assert_raise( FreeVikings::Warior::ReleaseArrowWithoutBowStretchingException, "The bow hasn't been stretched, it can't be able to shoot then.An exception should be thrown." ) do
+      @samsson.release_arrow
+    end
+  end
+
+  def testReleaseArrowWithAStretchedBow
+    @samsson.d_func_on
+    assert_nothing_raised("The bow has been stretched, so we should be able to release an arrow now. No exception should be thrown.") do
+      @samsson.release_arrow
+    end
+  end
 end # class TestWarior
 
 
