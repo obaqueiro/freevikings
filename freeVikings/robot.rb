@@ -21,8 +21,12 @@ module FreeVikings
 
     MAX_LIVES = 3
 
+    WIDTH = 50
+    HEIGHT = 80
+
     def initialize(position, walk_length)
       super(position)
+      @rect.w = WIDTH; @rect.h = HEIGHT
       init_images
       @start_position = position
       @direction = 'right'

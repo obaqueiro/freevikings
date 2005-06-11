@@ -4,16 +4,20 @@
 
 <log4r_config>
 
-<logger name="location loading log" level="FATAL">
-<outputter>stderr</outputter>
-</logger>
+  <logger name="location loading log" level="FATAL">
+    <outputter>stderr</outputter>
+  </logger>
 
-<logger name="map log" level="FATAL">
-<outputter>stderr</outputter>
-</logger>
+  <logger name="map log" level="FATAL">
+    <outputter>stderr</outputter>
+  </logger>
 
-<logger name="viking log" level="INFO">
-<outputter>stderr</outputter>
-</logger>
+  <logger name="viking log" level="INFO">
+    <outputter>stderr</outputter>
+  </logger>
+
+  <logger name="images log" level="OFF">
+    <outputter>stderr</outputter>
+  </logger>
 
 </log4r_config>

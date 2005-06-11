@@ -11,9 +11,13 @@ module FreeVikings
 
     include Monster
 
-    def initialize(position, on=false, action=nil, images=nil)
+    WIDTH = 30
+    HEIGHT = 30
+
+    def initialize(position, on=false, action=Proc.new, images=nil)
       super position
       @state = on
+      @rect = Rectangle.new(position[0], position[1], WIDTH, HEIGHT)
 
       unless images
         images = {
@@ -24,7 +28,6 @@ module FreeVikings
 
       @image = ImageBank.new(self, images)
       @action = action
-      @rect = Rectangle.new(position[0], position[1], image.w + 40, image.h)
     end
 
     attr_reader :state
@@ -46,7 +49,7 @@ module FreeVikings
 
     def switch
       @state = (not @state)
-      @action.call(@state) if @action.kind_of? Proc
+      @action.call(@state)
     end
   end # class Switch
 end # module FreeVikings

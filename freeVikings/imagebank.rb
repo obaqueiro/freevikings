@@ -13,6 +13,7 @@
 #                   ve stavovem radku.
 
 require 'RUDL'
+require 'log4r'
 
 module FreeVikings
 
@@ -20,9 +21,13 @@ module FreeVikings
     # Soubor obrazku pro mnozinu stavu sprajtu
 
     def initialize(sprite=nil, hash=nil)
+      @log = Log4r::Logger['images log']
+
+      @log.info "Creating a new ImageBank for sprite #{sprite} #{ hash ? "Pre-prepared images hash was provided." : "." }"
+
       @images = Hash.new
       @sprite = sprite # odkaz na vyuzivajici sprite
-      unless hash.nil?
+      if hash then
         hash.each_key {|key| add_pair(key, hash[key])}
       end
     end
@@ -38,6 +43,7 @@ can just catch the exception and go on without problems.
 =end
 
     def add_pair(state, image_object)
+      @log.debug "Associating image #{image_object.to_s} - #{image_object.name} with a state #{state.to_s}"
       @images[state] = image_object
       if image_object.w != @sprite.rect.w or
           image_object.h != @sprite.rect.h then
@@ -68,14 +74,17 @@ can just catch the exception and go on without problems.
 
     MSEC_PER_SEC = 1000
 
-    def initialize(delay = 1, images=nil)
+    def initialize(delay = 1, images=nil, name="Unnamed Animation")
       if images
         @images = images
       else
         @images = Array.new
       end
       @delay = delay
+      @name = name
     end
+
+    attr_reader :name
 
     def add(image_object)
       @images << image_object
@@ -84,6 +93,14 @@ can just catch the exception and go on without problems.
 
     def image
       return @images[(Time.now.to_i / @delay) % @images.size].image
+    end
+
+    def w
+      image.w
+    end
+
+    def h
+      image.h
     end
 
   end # class AnimationSuite
