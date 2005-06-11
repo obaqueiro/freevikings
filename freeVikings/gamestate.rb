@@ -82,7 +82,7 @@ module FreeVikings
 	@context.team.next
       when K_F3
 	@context.app_window.toggle_fullscreen
-      when K_q
+      when K_q, K_ESCAPE
         end_game
       when K_F6
 	@context.give_up_game
