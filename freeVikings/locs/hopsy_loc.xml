@@ -42,7 +42,7 @@
 </blocks>
   
     <exit horiz="1040" vertic="1000" />
-    <start horiz="50" vertic="50" />
+    <start horiz="50" vertic="60" />
     
   </map>
 
