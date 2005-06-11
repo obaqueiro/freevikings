@@ -20,6 +20,8 @@ module FreeVikings
       @hunted_type = Sprite
     end
 
+    attr_reader :hunted_type
+
     def destroy
       @velocity = Velocity.new
       @energy = 0
@@ -43,9 +45,6 @@ module FreeVikings
       stroken.delete self
       while not stroken.empty? do
 	s = stroken.pop
-        if s.is_a? Shield
-          destroy
-        end
 	if s.is_a? @hunted_type
 	  s.hurt
           destroy

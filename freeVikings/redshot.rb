@@ -4,6 +4,7 @@
 # Cervena strela do automatickych ohnometu
 
 require 'shot.rb'
+require 'hero.rb'
 
 module FreeVikings
 
@@ -11,6 +12,7 @@ module FreeVikings
 
     def initialize(startpos, velocity)
       super(startpos, velocity)
+      @rect.w = 15; @rect.h = 10
       @hunted_type = Hero
       @image = ImageBank.new self
       @image.add_pair 'left', Image.new('redshoot_left.tga')

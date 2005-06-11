@@ -15,6 +15,7 @@ require 'testmap.rb'
 require 'testspritemanager.rb'
 require 'testsprite.rb'
 require 'testarrow.rb'
+require 'testshield.rb'
 require 'testviking.rb'
 require 'testwarior.rb'
 require 'testvelocity.rb'
@@ -24,6 +25,7 @@ require 'testrexml.rb'
 require 'testvikingstate.rb'
 require 'testvikingstatetostring.rb'
 require 'testcollisiontest.rb'
+require 'testimagebank.rb'
 
 class FreeVikingsTestSuite
 
@@ -38,6 +40,7 @@ class FreeVikingsTestSuite
     suite << TestSpriteManager.suite
     suite << TestSprite.suite
     suite << TestArrow.suite
+    suite << TestShield.suite
     suite << TestViking.suite
     suite << TestWarior.suite
     suite << TestVelocity.suite
@@ -47,6 +50,7 @@ class FreeVikingsTestSuite
     suite << TestVikingState.suite
     suite << TestVikingStateToString.suite
     suite << TestCollisionTest.suite
+    suite << TestImageBank.suite
 
     return suite
   end

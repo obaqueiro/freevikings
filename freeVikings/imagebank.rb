@@ -41,7 +41,7 @@ can just catch the exception and go on without problems.
       @images[state] = image_object
       if image_object.w != @sprite.rect.w or
           image_object.h != @sprite.rect.h then
-        raise RuntimeError, "A problem accured while associating image #{image_object.name} with the state #{state.to_s} (owner of the ImageBank: #{@sprite.to_s}): It is strange to have an image of size #{image_object.w}x#{image_object.h} and a sprite of size #{@sprite.rect.w}x#{@sprite.rect.h} (usually the sizes should be same)."
+        raise ImageWithBadSizesException, "A problem accured while associating image #{image_object.name} with the state #{state.to_s} (owner of the ImageBank: #{@sprite.to_s}): It is strange to have an image of size #{image_object.w}x#{image_object.h} and a sprite of size #{@sprite.rect.w}x#{@sprite.rect.h} (usually the sizes should be same)."
       end
       return self
     end
@@ -55,7 +55,13 @@ can just catch the exception and go on without problems.
 	raise RuntimeError, "No image assigned for a state #{@sprite.state.to_s}."
       end
     end
-  end
+
+    # Vyjimky teto tridy jsou vyhazovany, pokud dojde k pokusu o zarazeni
+    # obrazku, jenz velikosti neodpovida velikosti spritu, jemuz dana 
+    # ImageBank patri.
+    class ImageWithBadSizesException < RuntimeError
+    end
+  end # class ImageBank
 
   class AnimationSuite
     # Skladba obrazku nebo animaci animujicich stav sprajtu
@@ -118,7 +124,11 @@ can just catch the exception and go on without problems.
     def initialize(image_path='')
       if image_path.size != 0
 	image_path = GFX_DIR+'/'+image_path
-	@image = RUDL::Surface.load_new(image_path)
+        begin
+          @image = RUDL::Surface.load_new(image_path)
+        rescue SDLError => ex
+          raise ImageFileNotFoundException, ex.message
+        end
       else
 	@image = RUDL::Surface::new([1,1])
       end
@@ -138,6 +148,12 @@ can just catch the exception and go on without problems.
     def h
       @image.h
     end
+
+    # Vyjimka tohoto typu je vyhozena, pokud soubor s obrazkem, ktery ma 
+    # byt nahran, neexistuje.
+    class ImageFileNotFoundException < RuntimeError
+    end
+
   end # class Image
 
 end
