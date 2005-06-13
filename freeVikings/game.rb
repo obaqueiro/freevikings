@@ -28,7 +28,7 @@ module FreeVikings
     VIKING_FACE_SIZE = 60
     WIN_WIDTH = 640
     WIN_HEIGHT = 480
-    STATUS_HEIGHT = VIKING_FACE_SIZE
+    BOTTOMPANEL_HEIGHT = VIKING_FACE_SIZE
 
     attr_reader :app_window
     attr_reader :team
@@ -52,8 +52,8 @@ module FreeVikings
 
       # Surfaces, ktere se pouzivaji k sestaveni zobrazeni nahledu hraci plochy
       # a stavoveho radku s podobiznami vikingu
-      @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT - STATUS_HEIGHT])
-      @status_view = RUDL::Surface.new([WIN_WIDTH, STATUS_HEIGHT])
+      @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT - BOTTOMPANEL_HEIGHT])
+      @bottompanel_view = RUDL::Surface.new([WIN_WIDTH, BOTTOMPANEL_HEIGHT])
 
       # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
       # tridy, pokud usoudi, ze by se stav mel zmenit.
@@ -120,8 +120,8 @@ module FreeVikings
 	  location.paint(@map_view, @team.active.center)
 	  @app_window.blit(@map_view, [0,0])
 
-	  repaint_status
-	  @app_window.blit(@status_view, [0, WIN_HEIGHT - STATUS_HEIGHT])
+	  repaint_bottompanel
+	  @app_window.blit(@bottompanel_view, [0, WIN_HEIGHT - BOTTOMPANEL_HEIGHT])
 
 	  if FreeVikings::OPTIONS["display_fps"] then
 	    @app_window.filled_polygon [[8,8],[60,8],[60,20],[8,20]], [0,0,0]
@@ -178,25 +178,25 @@ module FreeVikings
     end # init_vikings_team
 
     private
-    def repaint_status
+    def repaint_bottompanel
       # vybarveni pozadi pro podobenky vikingu:
-      @status_view.fill([60,60,60])
+      @bottompanel_view.fill([60,60,60])
       i = 0
       @team.each { |vik|
-	@status_view.blit(@face_bg, [i * 2 * VIKING_FACE_SIZE, 0])
+	@bottompanel_view.blit(@face_bg, [i * 2 * VIKING_FACE_SIZE, 0])
 	if vik.alive? then
 	  if @team.active == vik then
-	    @status_view.blit(vik.portrait.active, [i * 2 * VIKING_FACE_SIZE, 0])
+	    @bottompanel_view.blit(vik.portrait.active, [i * 2 * VIKING_FACE_SIZE, 0])
 	  elsif not vik.alive?
-	    @status_view.blit(vik.portrait.kaput, [i * 2 * VIKING_FACE_SIZE, 0])
+	    @bottompanel_view.blit(vik.portrait.kaput, [i * 2 * VIKING_FACE_SIZE, 0])
 	  else
-	    @status_view.blit(vik.portrait.unactive, [i * 2 * VIKING_FACE_SIZE, 0])
+	    @bottompanel_view.blit(vik.portrait.unactive, [i * 2 * VIKING_FACE_SIZE, 0])
 	  end
-	  vik.energy.times {|j| @status_view.blit(@energy_punkt, [i*2*VIKING_FACE_SIZE + VIKING_FACE_SIZE + 2, j*@energy_punkt.h + 3])}
+	  vik.energy.times {|j| @bottompanel_view.blit(@energy_punkt, [i*2*VIKING_FACE_SIZE + VIKING_FACE_SIZE + 2, j*@energy_punkt.h + 3])}
 	end
 	i += 1
       }
-    end # repaint_status
+    end # repaint_bottompanel
 
     private
     def is_exit?
