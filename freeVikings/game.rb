@@ -184,16 +184,17 @@ module FreeVikings
       i = 0
       @team.each { |vik|
 	@bottompanel_view.blit(@face_bg, [i * 2 * VIKING_FACE_SIZE, 0])
-	if vik.alive? then
-	  if @team.active == vik then
-	    @bottompanel_view.blit(vik.portrait.active, [i * 2 * VIKING_FACE_SIZE, 0])
-	  elsif not vik.alive?
-	    @bottompanel_view.blit(vik.portrait.kaput, [i * 2 * VIKING_FACE_SIZE, 0])
-	  else
-	    @bottompanel_view.blit(vik.portrait.unactive, [i * 2 * VIKING_FACE_SIZE, 0])
-	  end
-	  vik.energy.times {|j| @bottompanel_view.blit(@energy_punkt, [i*2*VIKING_FACE_SIZE + VIKING_FACE_SIZE + 2, j*@energy_punkt.h + 3])}
-	end
+	#if vik.alive? then
+        portrait_img = if @team.active == vik && vik.alive? then
+                         vik.portrait.active
+                       elsif not vik.alive?
+                         vik.portrait.kaput
+                       else
+                         vik.portrait.unactive
+                       end
+        @bottompanel_view.blit(portrait_img, [i * 2 * VIKING_FACE_SIZE, 0])
+        vik.energy.times {|j| @bottompanel_view.blit(@energy_punkt, [i*2*VIKING_FACE_SIZE + VIKING_FACE_SIZE + 2, j*@energy_punkt.h + 3])}
+	#end
 	i += 1
       }
     end # repaint_bottompanel

@@ -20,25 +20,36 @@ end
 
 include FreeVikings
 
+def print_help_and_exit
+  File.open('HELP') do |f|
+    f.each_line {|l| puts l}
+  end
+  puts
+  exit
+end
+
 options = GetoptLong.new(
                          ["--profile", "-p", GetoptLong::NO_ARGUMENT],
                          ["--fps",     "-F", GetoptLong::NO_ARGUMENT],
                          ["--help",    "-h", GetoptLong::NO_ARGUMENT]
 )
 
-options.each do |option, argument|
-  case option
-  when "--profile"
-    FreeVikings::OPTIONS['profile'] = true
-  when "--fps"
-    FreeVikings::OPTIONS['display_fps'] = true
-  when "--help"
-    File.open('HELP') do |f|
-      f.each_line {|l| puts l}
+begin
+  options.each do |option, argument|
+    case option
+    when "--profile"
+      FreeVikings::OPTIONS['profile'] = true
+    when "--fps"
+      FreeVikings::OPTIONS['display_fps'] = true
+    when "--help"
+      print_help_and_exit
     end
-    puts
-    exit
-  end
+  end # options.each block
+rescue GetoptLong::InvalidOption => ioex
+  print "ERROR: "
+  puts ioex.message
+  puts
+  print_help_and_exit
 end
 
 # Commandline arguments which weren't processed as options remained

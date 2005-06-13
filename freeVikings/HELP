@@ -24,4 +24,4 @@ Options:
 At the end of the argument list you can list filenames of location files.
 You can mix up your own world in this way.
 
-E.g.: freevikings.rb --fps first_loc.xml hopsy_loc.xml
+E.g.: freevikings.rb first_loc.xml hopsy_loc.xml
