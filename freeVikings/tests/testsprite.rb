@@ -23,6 +23,12 @@ class TestSprite < Test::Unit::TestCase
     assert_equal 90, @sprite.top, "It must be 90. I've set it to be 90."
   end
 
+  def testSpriteInitWithWidthAndHeight
+    s = Sprite.new([90,90,12,5])
+    assert_equal 12, s.rect.w
+    assert_equal 5, s.rect.h
+  end
+
   def testKilledIsNotAlive
     @sprite.destroy
     assert_equal false, @sprite.alive?

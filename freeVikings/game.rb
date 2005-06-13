@@ -38,7 +38,7 @@ module FreeVikings
       # Zobrazime logo a v oddelenem vlakne zacneme inicialisovat sprajty
       # (nahrava se spousta obrazku, chvili to trva)
       init_app_window
-      image_loader = Thread.new {init_sprites_and_images}
+      init_bottompanel_gfx
 
       # Pokud bylo z prikazove radky vyzadano spusteni urcitych lokaci,
       # vytvorime z nich novy svet. Jinak rozjedeme parbu v implicitnim svete.
@@ -59,86 +59,25 @@ module FreeVikings
       # tridy, pokud usoudi, ze by se stav mel zmenit.
       @state = PlayingGameState.new(self)
 
-      image_loader.join
       @give_up = nil
     end # initialize
 
-    def init_app_window
-      @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
-      @app_window.set_caption('freeVikings')
-      logo = RUDL::Surface.load_new GFX_DIR+'/fvlogo.tga'
-      @app_window.blit(logo, [(@app_window.w/2) - (logo.w/2),\
-                         (@app_window.h/3) - (logo.h/2)])
-      font = TrueTypeFont.new('fonts/adlibn.ttf', 16)
-      @app_window.blit(font.render('freeVikings Copyright (c) 2005 Jakub Pavlik', true, [255,255,255]), [50,250])
-      @app_window.blit(font.render('freeVikings come to you as free software under GNU/GPL;', true, [255,255,255]), [50,270])
-      @app_window.blit(font.render("They are provided with aim of usability,", true, [255,255,255]), [50,290])
-      @app_window.blit(font.render("but with ABSOLUTELY NO WARRANTY.", true, [255,255,255]), [50,310])
+    public
 
-      @app_window.flip
-    end # init_app_window
-
-    def init_sprites_and_images
-      @face_bg = RUDL::Surface.load_new(GFX_DIR+'/face_bg.tga')
-      @baleog_face_bw = RUDL::Surface.load_new(GFX_DIR+'/erik_face_unactive.gif')
-      @baleog_face = RUDL::Surface.load_new(GFX_DIR+'/erik_face.tga')
-      @dead_face = RUDL::Surface.load_new(GFX_DIR+'/dead_face.png')
-      @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.tga')
-    end # init_display
-
-    def init_vikings_team(location)
-      @baleog = Viking.createWarior("Baleog", location.start)
-      @erik = Viking.createSprinter("Erik", location.start)
-      @olaf = Viking.createShielder("Olaf", location.start)
-      @team = Team.new(@erik, @baleog, @olaf)
-      # vsechny vikingy oznacime jako hrdiny:
-      @team.each { |v|
-        v.extend Hero
-        location.add_sprite v 
-      }
-    end # init_vikings_team
-
-    def finalize
-      puts "Ending the game."
-      exit
-    end # finalize
-
-    def repaint_status
-      # vybarveni pozadi pro podobenky vikingu:
-      @status_view.fill([60,60,60])
-      i = 0
-      @team.each { |vik|
-	@status_view.blit(@face_bg, [i * 2 * VIKING_FACE_SIZE, 0])
-	if vik.alive? then
-	  if @team.active == vik then
-	    @status_view.blit(vik.portrait.active, [i * 2 * VIKING_FACE_SIZE, 0])
-	  elsif not vik.alive?
-	    @status_view.blit(vik.portrait.kaput, [i * 2 * VIKING_FACE_SIZE, 0])
-	  else
-	    @status_view.blit(vik.portrait.unactive, [i * 2 * VIKING_FACE_SIZE, 0])
-	  end
-	  vik.energy.times {|j| @status_view.blit(@energy_punkt, [i*2*VIKING_FACE_SIZE + VIKING_FACE_SIZE + 2, j*@energy_punkt.h + 3])}
-	end
-	i += 1
-      }
-    end # repaint_status
-
-    def is_exit?
-      # Pokud vsichni umreli, koncime:
-      unless @team.alive? then
-	return true
-      end
-      # Pokud jsou vsichni zivi v exitu, koncime taky:
-      if exited_sprites.size == @team.alive_size then
-	return true
-      end
-      return nil
-    end # is_exit?
-
+    # This method is called by the GameState when a player presses
+    # the give up key (F6 by default).
+    # Causes location reloading.
     def give_up_game
 	@give_up = true
     end
 
+    # Method 'game_loop' contains two nested loops.
+    # In the first one every iteration means one played location.
+    # A new iteration starts whenever a player finishes or gives up a location
+    # or if all the vikings are dead or if the remainder of them finishes the
+    # location.
+    # The second loop updates all the sprites (heroes and their enemies)
+    # regularly and refreshes the screen.
     def game_loop
       loop do
 	if @team.nil? then
@@ -154,10 +93,11 @@ module FreeVikings
 	elsif @team.alive_size == @team.size
 	  # Vsichni dosahli EXITu
 	  puts '*** Oh, great! Congratulations, level completed.'
-	  unless @world.next_location then
+	  unless location = @world.next_location then
 	    puts '*** Congratulations! You explored all the world!'
 	    exit
 	  end
+          init_vikings_team(location)
 	else
 	  # Situace, ktera by nemela nastat
 	  puts '*** Really strange situation. Nor the game loop is in it\'s first loop, nor the level completed, no vikings dead. Send a bug report, please.'
@@ -200,9 +140,79 @@ module FreeVikings
     end # game_loop
 
     private
+    def init_app_window
+      @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
+      @app_window.set_caption('freeVikings')
+      logo = RUDL::Surface.load_new GFX_DIR+'/fvlogo.tga'
+      @app_window.blit(logo, [(@app_window.w/2) - (logo.w/2), (@app_window.h/3) - (logo.h/2)])
+      font = TrueTypeFont.new('fonts/adlibn.ttf', 16)
+      @app_window.blit(font.render('freeVikings Copyright (c) 2005 Jakub Pavlik', true, [255,255,255]), [50,250])
+      @app_window.blit(font.render('freeVikings come to you as free software under GNU/GPL;', true, [255,255,255]), [50,270])
+      @app_window.blit(font.render("They are provided with aim of usability,", true, [255,255,255]), [50,290])
+      @app_window.blit(font.render("but with ABSOLUTELY NO WARRANTY.", true, [255,255,255]), [50,310])
+
+      @app_window.flip
+    end # init_app_window
+
+    private
+    def init_bottompanel_gfx
+      @face_bg = RUDL::Surface.load_new(GFX_DIR+'/face_bg.tga')
+      @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.tga')
+    end # init_display
+
+    # Method init_vikings_team must be called when a location is loaded
+    # (or reloaded).
+    # It recreates all the three vikings and sets them up
+    # to start their way on the right place in the new loaded location.
+    private
+    def init_vikings_team(location)
+      @baleog = Viking.createWarior("Baleog", location.start)
+      @erik = Viking.createSprinter("Erik", location.start)
+      @olaf = Viking.createShielder("Olaf", location.start)
+      @team = Team.new(@erik, @baleog, @olaf)
+      # vsechny vikingy oznacime jako hrdiny:
+      @team.each { |v|
+        v.extend Hero
+        location.add_sprite v 
+      }
+    end # init_vikings_team
+
+    private
+    def repaint_status
+      # vybarveni pozadi pro podobenky vikingu:
+      @status_view.fill([60,60,60])
+      i = 0
+      @team.each { |vik|
+	@status_view.blit(@face_bg, [i * 2 * VIKING_FACE_SIZE, 0])
+	if vik.alive? then
+	  if @team.active == vik then
+	    @status_view.blit(vik.portrait.active, [i * 2 * VIKING_FACE_SIZE, 0])
+	  elsif not vik.alive?
+	    @status_view.blit(vik.portrait.kaput, [i * 2 * VIKING_FACE_SIZE, 0])
+	  else
+	    @status_view.blit(vik.portrait.unactive, [i * 2 * VIKING_FACE_SIZE, 0])
+	  end
+	  vik.energy.times {|j| @status_view.blit(@energy_punkt, [i*2*VIKING_FACE_SIZE + VIKING_FACE_SIZE + 2, j*@energy_punkt.h + 3])}
+	end
+	i += 1
+      }
+    end # repaint_status
+
+    private
+    def is_exit?
+      # Pokud vsichni umreli, koncime:
+      unless @team.alive? then
+	return true
+      end
+      # Pokud jsou vsichni zivi v exitu, koncime taky:
+      if exited_sprites.size == @team.alive_size then
+	return true
+      end
+      return nil
+    end # is_exit?
 
     # Vrati pole vsech sprajtu, ktere se vyskytuji na exitu
-
+    private
     def exited_sprites
       l = @world.location
       on_exit = l.sprites_on_rect(l.exitter.rect)

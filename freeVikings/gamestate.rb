@@ -38,7 +38,8 @@ module FreeVikings
     private
 
     def end_game
-      @context.finalize
+      puts "Ending the game."
+      exit
     end # private method end_game
 
   end # class GameState
