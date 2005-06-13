@@ -1,8 +1,7 @@
 # game.rb
 # igneus 28.1.2005
 
-# Objekt Game spravuje stav hry a da se rici, ze je jeho ukolem hru ridit.
-# Mj. obsahuje hlavni herni cyklus.
+# The Game class. (Documentation is in the code comments.)
 
 require 'RUDL'
 
@@ -20,21 +19,54 @@ require 'gamestate.rb'
 
 module FreeVikings
 
+=begin
+= Game
+One Game object rules the program all the time we play.
+It reacts on the events, updates the screen.
+From it's internals you should definitely know about one attribute - 
+((|@world|)).
+It's a World object and contains information about locations which the vikings
+should explore and escape from. Maybe you expect another attribute which 
+contains the currently loaded location. It isn't here, it's a local variable in
+method ((<Game#game_loop>)).
+=end
   class Game
 
     include RUDL
     include RUDL::Constant
 
-    VIKING_FACE_SIZE = 60
+=begin
+--- Game::WIN_WIDTH
+--- Game::WIN_HEIGHT
+Window size.
+=end
     WIN_WIDTH = 640
     WIN_HEIGHT = 480
+=begin
+--- Game::VIKING_FACE_SIZE
+--- Game::BOTTOMPANEL_HEIGHT
+Code-explaining constants used almost to count up positions inside the game
+window.
+=end
+    VIKING_FACE_SIZE = 60
     BOTTOMPANEL_HEIGHT = VIKING_FACE_SIZE
 
-    attr_reader :app_window
-    attr_reader :team
-    attr_reader :map
 
-    def initialize
+=begin
+--- Game.new(locations=[])
+Initializes a new Game object, but doesn't start the game. Although you can't
+create two Game objects at one time, because during the initialization a new
+SDL window is openned. (This could be changed in future versions.)
+The main initialization work is to prepare the World for the vikings.
+At first the argument ((|locations|)) is checked if it contains any elements
+(it should be an Array). If so, every element is given into 
+((<World.new>)) as a filename of the location definition file (filenames have 
+to be relative to the directory 'locs' in freeVikings distribution directory!).
+If the ((|locations|)) argument is empty, global configuration set up by the
+FreeVikings initialization procedure is searched. If it is also empty,
+default world is loaded.
+=end
+    def initialize(locations=[])
       # Zobrazime logo a v oddelenem vlakne zacneme inicialisovat sprajty
       # (nahrava se spousta obrazku, chvili to trva)
       init_app_window
@@ -42,7 +74,9 @@ module FreeVikings
 
       # Pokud bylo z prikazove radky vyzadano spusteni urcitych lokaci,
       # vytvorime z nich novy svet. Jinak rozjedeme parbu v implicitnim svete.
-      unless FreeVikings::OPTIONS['locations'].empty?
+      if not locations.empty?
+        @world = World.new(*locations)
+      elsif not FreeVikings::OPTIONS['locations'].empty?
         @world = World.new(*(FreeVikings::OPTIONS['locations']))
       else
         @world = World.new('pyramida_loc.xml',
@@ -64,20 +98,32 @@ module FreeVikings
 
     public
 
-    # This method is called by the GameState when a player presses
-    # the give up key (F6 by default).
-    # Causes location reloading.
+    attr_reader :app_window
+    attr_reader :team
+
+=begin
+--- Game#give_up_game
+This method is called by the GameState when a player presses
+the give up key (F6 by default). Causes location reloading.
+=end
     def give_up_game
 	@give_up = true
     end
 
-    # Method 'game_loop' contains two nested loops.
-    # In the first one every iteration means one played location.
-    # A new iteration starts whenever a player finishes or gives up a location
-    # or if all the vikings are dead or if the remainder of them finishes the
-    # location.
-    # The second loop updates all the sprites (heroes and their enemies)
-    # regularly and refreshes the screen.
+=begin
+--- Game#game_loop
+When this method is called, the real fun begins (well, I know freeVikings
+don't provide the real fun yet, but after a long startup procedure you
+could be able to think about the simple game like about a piece of fun).
+On the screen appears a strange place and three small vikings.
+Method 'game_loop' contains two nested loops.
+In the first one every iteration means one played location.
+A new iteration starts whenever a player finishes or gives up a location
+or if all the vikings are dead or if the remainder of them finishes the
+location.
+The second loop updates all the sprites (heroes and their enemies)
+regularly and refreshes the screen.
+=end
     def game_loop
       loop do
 	if @team.nil? then
@@ -212,7 +258,7 @@ module FreeVikings
       return nil
     end # is_exit?
 
-    # Vrati pole vsech sprajtu, ktere se vyskytuji na exitu
+    # Returns an Array with all the sprites colliding with the EXIT object.
     private
     def exited_sprites
       l = @world.location
