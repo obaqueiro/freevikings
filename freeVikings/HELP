@@ -20,6 +20,7 @@ Options:
 --help		-h	Prints out this help and halts.
 --profile 	-p	Profiling (only for development)
 --fps		-F	Prints frames per second on the game screen
+--fullscreen    -f      Starts the game in the fullscreen mode
 
 At the end of the argument list you can list filenames of location files.
 You can mix up your own world in this way.

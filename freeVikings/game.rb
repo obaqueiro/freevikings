@@ -189,6 +189,7 @@ regularly and refreshes the screen.
     def init_app_window
       @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
       @app_window.set_caption('freeVikings')
+      @app_window.toggle_fullscreen if FreeVikings::OPTIONS['fullscreen']
       logo = RUDL::Surface.load_new GFX_DIR+'/fvlogo.tga'
       @app_window.blit(logo, [(@app_window.w/2) - (logo.w/2), (@app_window.h/3) - (logo.h/2)])
       font = TrueTypeFont.new('fonts/adlibn.ttf', 16)

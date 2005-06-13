@@ -31,6 +31,7 @@ end
 options = GetoptLong.new(
                          ["--profile", "-p", GetoptLong::NO_ARGUMENT],
                          ["--fps",     "-F", GetoptLong::NO_ARGUMENT],
+                         ["--fullscreen", "-f", GetoptLong::NO_ARGUMENT],
                          ["--help",    "-h", GetoptLong::NO_ARGUMENT]
 )
 
@@ -41,6 +42,8 @@ begin
       FreeVikings::OPTIONS['profile'] = true
     when "--fps"
       FreeVikings::OPTIONS['display_fps'] = true
+    when "--fullscreen"
+      FreeVikings::OPTIONS['fullscreen'] = true
     when "--help"
       print_help_and_exit
     end
