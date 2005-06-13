@@ -26,6 +26,7 @@ require 'testvikingstate.rb'
 require 'testvikingstatetostring.rb'
 require 'testcollisiontest.rb'
 require 'testimagebank.rb'
+require 'testgame.rb'
 
 class FreeVikingsTestSuite
 
@@ -51,6 +52,7 @@ class FreeVikingsTestSuite
     suite << TestVikingStateToString.suite
     suite << TestCollisionTest.suite
     suite << TestImageBank.suite
+    suite << TestGame.suite
 
     return suite
   end
