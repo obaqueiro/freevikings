@@ -31,7 +31,7 @@ switch_action = Proc.new do |switch_state|
   else
     shooter.off
   end
-  puts shooter.firing?.to_s
+  # puts shooter.firing?.to_s
 end
 switch = FreeVikings::Switch.new([580, 410], true, switch_action, switch_images)
 

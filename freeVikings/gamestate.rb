@@ -34,6 +34,13 @@ module FreeVikings
 
     # Zajistime potomkum dostupnost predkovy metody:
     alias :parent_serve_event :serve_event
+
+    private
+
+    def end_game
+      @context.finalize
+    end # private method end_game
+
   end # class GameState
 
 
@@ -100,8 +107,5 @@ module FreeVikings
       end
     end # private method serve_keyup
 
-    def end_game
-      @context.finalize
-    end # private method end_game
   end # class PlayingGameState
 end # module
