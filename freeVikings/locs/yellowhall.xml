@@ -40,13 +40,13 @@ JAAAAAAAAAAAAAAAAAAAAAAAAAAAJ
 l----RAAAAAAAAAAAAAAAAAAAAAAJ
 AAAAAJAAAAAAAAAAAAAAAAAAAAAAJ
 AAAAAJAAAAAAAAAAAAAAAAAAAAAAJ
-AAAAAl----RAAAAAAL----------r
-AAAAAAAAAAl------rAAAAAAAAAAA
+AAAAAl----------------------r
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 </blocks>
     
     <!-- Startovni a koncove misto mapy: -->
     <start horiz="240" vertic="380" />
-    <exit horiz="600" vertic="300" />
+    <exit horiz="1080" vertic="400" />
   </map>
     
 </location>
