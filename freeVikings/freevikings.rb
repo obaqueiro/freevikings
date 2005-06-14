@@ -74,16 +74,9 @@ if OPTIONS['profile'] then
   require 'profile'
 end
 
-FreeVikings::Init.new
-
-require 'log4rsetupload' # load Log4r configuration now
-
 require 'ext/Rectangle'
 module FreeVikings
   include FreeVikings::Extensions::Rectangle
 end
 
-# All the setup's done, we can start the game.
-require 'game'
-
-Game.new.game_loop
+FreeVikings::Init.new

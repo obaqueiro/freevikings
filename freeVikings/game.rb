@@ -50,16 +50,12 @@ I have a good mood for it, I will make ((|@state|)) go away.
 == Constants
 =end
 
+    WIN_WIDTH = 640
+    WIN_HEIGHT = 480
+
     include RUDL
     include RUDL::Constant
 
-=begin
---- Game::WIN_WIDTH
---- Game::WIN_HEIGHT
-Window size.
-=end
-    WIN_WIDTH = 640
-    WIN_HEIGHT = 480
 =begin
 --- Game::VIKING_FACE_SIZE
 --- Game::BOTTOMPANEL_HEIGHT
