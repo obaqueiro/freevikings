@@ -73,7 +73,7 @@ window.
 =begin
 == Public instance methods
 
---- Game.new(locations=[])
+--- Game.new(window, locations=[])
 Initializes a new Game object, but doesn't start the game. Although you can't
 create two Game objects at one time, because during the initialization a new
 SDL window is openned. (This could be changed in future versions.)
@@ -100,10 +100,9 @@ containing two specified locations, but the third one gives you more
 freedom to make the world as you want it to be. (E.g. you don't have to use 
 the standard (({World})) class.)
 =end
-    def initialize(locations=[])
-      # Zobrazime logo a v oddelenem vlakne zacneme inicialisovat sprajty
-      # (nahrava se spousta obrazku, chvili to trva)
-      init_app_window
+    def initialize(window, locations=[])
+      @app_window = window
+
       init_bottompanel_gfx
 
       if locations.is_a? World then
@@ -218,22 +217,6 @@ regularly and refreshes the screen.
 	end # while not location.exited?
       end # while not self.game_over?
     end # game_loop
-
-    private
-    def init_app_window
-      @app_window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
-      @app_window.set_caption('freeVikings')
-      @app_window.toggle_fullscreen if FreeVikings::OPTIONS['fullscreen']
-      logo = RUDL::Surface.load_new GFX_DIR+'/fvlogo.tga'
-      @app_window.blit(logo, [(@app_window.w/2) - (logo.w/2), (@app_window.h/3) - (logo.h/2)])
-      font = TrueTypeFont.new('fonts/adlibn.ttf', 16)
-      @app_window.blit(font.render('freeVikings Copyright (c) 2005 Jakub Pavlik', true, [255,255,255]), [50,250])
-      @app_window.blit(font.render('freeVikings come to you as free software under GNU/GPL;', true, [255,255,255]), [50,270])
-      @app_window.blit(font.render("They are provided with aim of usability,", true, [255,255,255]), [50,290])
-      @app_window.blit(font.render("but with ABSOLUTELY NO WARRANTY.", true, [255,255,255]), [50,310])
-
-      @app_window.flip
-    end # init_app_window
 
     private
     def init_bottompanel_gfx

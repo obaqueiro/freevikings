@@ -12,6 +12,8 @@
 require 'getoptlong'
 require 'log4r'
 
+require 'init.rb'
+
 # All the game's globals and classes are defined inside this module.
 module FreeVikings
   GFX_DIR = 'gfx'
@@ -71,6 +73,8 @@ end
 if OPTIONS['profile'] then
   require 'profile'
 end
+
+FreeVikings::Init.new
 
 require 'log4rsetupload' # load Log4r configuration now
 
