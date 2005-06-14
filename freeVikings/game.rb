@@ -21,16 +21,34 @@ module FreeVikings
 
 =begin
 = Game
+All the stones which the house is built of are important. Classes are 
+such stones. (({Game})) is a roof over the house made of stones. Since 
+the roof is finished, you can live in the house. Roof makes the house 
+habitable.
+(({Game})) makes the game playable.
+
 One Game object rules the program all the time we play.
 It reacts on the events, updates the screen.
-From it's internals you should definitely know about one attribute - 
-((|@world|)).
-It's a World object and contains information about locations which the vikings
-should explore and escape from. Maybe you expect another attribute which 
-contains the currently loaded location. It isn't here, it's a local variable in
-method ((<Game#game_loop>)).
+
+From it's internals I will mention one attribute - ((|@world|)).
+It's a (({World})) object and contains information about locations which 
+the vikings should explore and escape from. Maybe you expect another attribute 
+which contains the currently loaded location. It isn't here, it's a local 
+variable in method ((<Game#game_loop>)).
+
+Then there is one more attribute. I don't want to talk much about it.
+It's a bit stinking attribute... It's name is ((|@state|)). If you have ever 
+heard about the Design patterns, you understand. When I was designing 
+the (({Game})) class, I was really excited about the design patterns and 
+I had a very nice idea of using the State design pattern to implement
+the game menu etc. Now I think that idea isn't good any more and as soon as
+I have a good mood for it, I will make ((|@state|)) go away.
 =end
   class Game
+
+=begin
+== Constants
+=end
 
     include RUDL
     include RUDL::Constant
@@ -53,18 +71,34 @@ window.
 
 
 =begin
+== Public instance methods
+
 --- Game.new(locations=[])
 Initializes a new Game object, but doesn't start the game. Although you can't
 create two Game objects at one time, because during the initialization a new
 SDL window is openned. (This could be changed in future versions.)
 The main initialization work is to prepare the World for the vikings.
-At first the argument ((|locations|)) is checked if it contains any elements
-(it should be an Array). If so, every element is given into 
-((<World.new>)) as a filename of the location definition file (filenames have 
-to be relative to the directory 'locs' in freeVikings distribution directory!).
+At first the argument ((|locations|)) is checked if is an instance of class 
+World. Then it is taken as a prepared world and nothing more is done with it.
+If argument ((|locations|)) is of some other type, a check is made if it 
+contains any elements (normally it should be an Array). 
+If so, every element is given into ((<World.new>)) as a filename 
+of the location definition file (filenames have to be relative to 
+the directory 'locs' in freeVikings distribution directory!).
 If the ((|locations|)) argument is empty, global configuration set up by the
 FreeVikings initialization procedure is searched. If it is also empty,
 default world is loaded.
+
+Examples:
+* (({Game.new}))
+* (({Game.new(["first_loc.xml", "pyramida_loc.xml"])}))
+* (({Game.new(World.new("first_loc.xml", "pyramida_loc.xml"))}))
+
+The first example initializes the game and loads the default level set.
+The second and third one are equal, they both make a game with a world 
+containing two specified locations, but the third one gives you more
+freedom to make the world as you want it to be. (E.g. you don't have to use 
+the standard (({World})) class.)
 =end
     def initialize(locations=[])
       # Zobrazime logo a v oddelenem vlakne zacneme inicialisovat sprajty
@@ -72,9 +106,9 @@ default world is loaded.
       init_app_window
       init_bottompanel_gfx
 
-      # Pokud bylo z prikazove radky vyzadano spusteni urcitych lokaci,
-      # vytvorime z nich novy svet. Jinak rozjedeme parbu v implicitnim svete.
-      if not locations.empty?
+      if locations.is_a? World then
+        @world = locations
+      elsif not locations.empty?
         @world = World.new(*locations)
       elsif not FreeVikings::OPTIONS['locations'].empty?
         @world = World.new(*(FreeVikings::OPTIONS['locations']))
@@ -114,7 +148,7 @@ the give up key (F6 by default). Causes location reloading.
 --- Game#game_loop
 When this method is called, the real fun begins (well, I know freeVikings
 don't provide the real fun yet, but after a long startup procedure you
-could be able to think about the simple game like about a piece of fun).
+could think about the simple game like about a fun).
 On the screen appears a strange place and three small vikings.
 Method 'game_loop' contains two nested loops.
 In the first one every iteration means one played location.
