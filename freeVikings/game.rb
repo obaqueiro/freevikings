@@ -51,12 +51,7 @@ I have a good mood for it, I will make ((|@state|)) go away.
 
 =begin
 == Constants
-=end
 
-    WIN_WIDTH = 640
-    WIN_HEIGHT = 480
-
-=begin
 --- Game::VIKING_FACE_SIZE
 --- Game::BOTTOMPANEL_HEIGHT
 Code-explaining constants used almost to count up positions inside the game

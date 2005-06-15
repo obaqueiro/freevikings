@@ -15,10 +15,6 @@ module FreeVikings
 
   class Init
 
-    WIN_WIDTH = 640
-    WIN_HEIGHT = 480
-
-
     def initialize
       load_logo
       load_font

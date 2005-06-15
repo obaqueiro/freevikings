@@ -18,6 +18,9 @@ require 'init.rb'
 module FreeVikings
   GFX_DIR = 'gfx'
   OPTIONS = {}
+
+  WIN_WIDTH = 640
+  WIN_HEIGHT = 480
 end
 
 include FreeVikings
