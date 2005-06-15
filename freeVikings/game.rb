@@ -46,15 +46,15 @@ I have a good mood for it, I will make ((|@state|)) go away.
 =end
   class Game
 
+    include RUDL
+    include RUDL::Constant
+
 =begin
 == Constants
 =end
 
     WIN_WIDTH = 640
     WIN_HEIGHT = 480
-
-    include RUDL
-    include RUDL::Constant
 
 =begin
 --- Game::VIKING_FACE_SIZE
@@ -70,31 +70,40 @@ window.
 == Public instance methods
 
 --- Game.new(window, locations=[])
-Initializes a new Game object, but doesn't start the game. Although you can't
-create two Game objects at one time, because during the initialization a new
-SDL window is openned. (This could be changed in future versions.)
-The main initialization work is to prepare the World for the vikings.
-At first the argument ((|locations|)) is checked if is an instance of class 
-World. Then it is taken as a prepared world and nothing more is done with it.
-If argument ((|locations|)) is of some other type, a check is made if it 
-contains any elements (normally it should be an Array). 
-If so, every element is given into ((<World.new>)) as a filename 
-of the location definition file (filenames have to be relative to 
-the directory 'locs' in freeVikings distribution directory!).
-If the ((|locations|)) argument is empty, global configuration set up by the
-FreeVikings initialization procedure is searched. If it is also empty,
-default world is loaded.
+Argument ((|window|)) should be a RUDL::Surface (or RUDL::DisplaySurface).
+It is used as a main game screen.
+About the second argument, ((|locations|)), will I write later.
+An initialization prepares the Game instance for use, but doesn't start 
+the game. It doesn't change the contents of the window ((|window|)) and doesn't
+receive any user events.
+It means you theoretically could create two Game objects, both working with
+the same window, and use them subsequently (or, if you were a devil, both
+at once in a multithreaded application). But I wouldn't do that...
+
+The main work of ((<Game::new>)) is to prepare the world (represented by an
+instance of class World) for the vikings. The second argument, ((|locations|)),
+says how to build that world.
+* If ((|locations|)) is a World instance, it is used without any changes.
+* If it's method empty? returns true, it is used as an Array of filenames
+  relative to the 'locs' directory. (The 'locs' directory in freeVikings
+  distribution contains locations in a form of XML.files.) All the listed 
+  locations are loaded.
+* If ((|locations|)) is empty, a global freeVikings configuration is searched
+  for locations to load. If there aren't any, a default locations set is 
+  loaded.
 
 Examples:
-* (({Game.new}))
-* (({Game.new(["first_loc.xml", "pyramida_loc.xml"])}))
-* (({Game.new(World.new("first_loc.xml", "pyramida_loc.xml"))}))
+* (({Game.new(win)}))
+* (({Game.new(win, ["first_loc.xml", "pyramida_loc.xml"])}))
+* (({Game.new(win, World.new("first_loc.xml", "pyramida_loc.xml"))}))
 
 The first example initializes the game and loads the default level set.
 The second and third one are equal, they both make a game with a world 
 containing two specified locations, but the third one gives you more
 freedom to make the world as you want it to be. (E.g. you don't have to use 
-the standard (({World})) class.)
+the standard World class.)
+All the three examples expect you have created a RUDL::DisplaySurface 
+((|win |)) before.
 =end
     def initialize(window, locations=[])
       @app_window = window
