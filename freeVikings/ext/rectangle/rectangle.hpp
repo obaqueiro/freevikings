@@ -13,6 +13,7 @@ public:
 
   /* Constructors: */
   Rectangle();
+  Rectangle(const Rectangle &rect);
   Rectangle(Numeric left, Numeric top, Numeric width, Numeric height);
 
   /* Attribute readers: */
@@ -33,6 +34,10 @@ public:
 
   /* Indexing: */
   Numeric at(Numeric index);
+
+  /* Functions for compatibility with standard Ruby's class Array: */
+  bool empty();
+  Numeric size();
 
   /* Collision detection: */
   bool collides(Rectangle &rect);

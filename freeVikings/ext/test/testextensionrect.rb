@@ -74,4 +74,16 @@ class TestExtensionRectangle < Test::Unit::TestCase
     assert_equal 261, @r.w
   end
 
+  def testEmptyMethod
+    assert_equal false, @r.empty?, "Rectangle is never empty, but it must provide method 'empty?' for compatibility with Array."
+  end
+
+  def testSizeMethod
+    assert_equal 4, @r.size, "For compatibility with class Array Rectangle should have a method 'size'. It always returns 4."
+  end
+
+  def testDup
+    assert_not_same @r, @r.dup, "Method 'dup' should create a completely new object."
+  end
+
 end

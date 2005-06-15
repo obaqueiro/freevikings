@@ -12,6 +12,14 @@ Rectangle::Rectangle()
   _left = _top = _width = _height = 0;
 }
 
+Rectangle::Rectangle(const Rectangle &rect)
+{
+  _left = rect._left;
+  _top = rect._top;
+  _width = rect._width;
+  _height = rect._height;
+}
+
 Rectangle::Rectangle(Rectangle::Numeric left, Rectangle::Numeric top, Rectangle::Numeric width, Rectangle::Numeric height)
 {
   _left = left;
@@ -92,6 +100,16 @@ Rectangle::Numeric Rectangle::at(Rectangle::Numeric index)
   default:
     throw "Index out of bounds.";
   }
+}
+
+bool Rectangle::empty()
+{
+  return false;
+}
+
+Rectangle::Numeric Rectangle::size()
+{
+  return 4;
 }
 
 bool Rectangle::collides(Rectangle &rect)

@@ -15,5 +15,5 @@ rectangle.o: rectangle.cpp rectangle.hpp
 rectangle_wrap.o: rectangle_wrap.cxx
 	g++ -c rectangle_wrap.cxx -I$(RUBY_HEADERS)
 
-rectangle_wrap.cxx: rectangle.i
+rectangle_wrap.cxx: rectangle.i rectangle.cpp rectangle.hpp
 	swig -c++ -ruby rectangle.i
