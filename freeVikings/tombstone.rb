@@ -18,7 +18,7 @@ module FreeVikings
     HEIGHT = 50
     WIDTH = 50
 
-    STATES = [['stone', 'tombstone.tga', 3], 
+    STATES = [['stone', 'tombstone.tga', 2.5], 
               ['puff1', 'puff_cloud1.tga', 0.5],
               ['puff2', 'puff_cloud2.tga', 0.5]]
 
