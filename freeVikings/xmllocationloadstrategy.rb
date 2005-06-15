@@ -38,47 +38,8 @@ module FreeVikings
       @blocks = blocks_matrix
       @blocktypes = blocktype_hash
 
-      # nacteni typu bloku
-      begin
-	@doc.root.elements['map'].elements["blocktypes"].each_element { |blocktype|
-	  code = blocktype.attributes["code"]
-	  path = blocktype.attributes["path"]
-	  @log.debug "Loading new TileType with code '#{code}' and path '#{path}'"
-	  tiletype = TileType.instance(code, path)
-	  tiletype.solid = false unless blocktype.attributes["solid"] == "solid"
-	  @blocktypes[code] = tiletype
-	}
-      rescue => ex
-	@log.error "Cannot read XML node 'map/blocktypes' in datafile #{source_name}. (" + ex.message + ")"
-        raise
-      end
-
-      # nacteni umisteni bloku
-      begin
-	lines = @doc.root.elements["map"].elements["blocks"].text.split(/\n/)
-      rescue => ex
-	@log.fatal "Cannot find 'map/blocks' XML element in datafile #{source_name}. (" + ex.message + ")"
-	raise
-      end
-      @max_width = @max_height = 0
-      # prochazime radky bloku:
-      lines.each_index { |line_num|
-	@max_height = line_num if line_num > @max_height
-	@blocks.push(Array.new)
-	# prochazime bloky:
-	line = lines[line_num]
-	block_codes = line.split(/\s*/)
-	block_codes.each_index { |block_index|
-	  @max_width = block_index if block_index > @max_width
-	  block_code = block_codes[block_index]
-	  unless @blocktypes[block_code].nil?
-	    @blocks[line_num][block_index] = @blocktypes[block_code]
-	    @log.debug("Setting reference to blocktype for block at index [" + line_num.to_s + "][" + block_index.to_s + "]")
-	  else
-	    @log.error("Blocktype couldn't be found in blocktypes' hash for blockcode #{block_code} (using mapsource #{source_name})")
-	  end
-	}
-      }
+      load_tiletypes
+      load_tiles
     end
 
     def load_monsters(monster_manager)
@@ -129,6 +90,55 @@ module FreeVikings
 
     private
 
+    # nahraje typy bloku
+
+    def load_tiletypes
+      begin
+	@doc.root.elements['map'].elements["blocktypes"].each_element { |blocktype|
+	  code = blocktype.attributes["code"]
+	  path = blocktype.attributes["path"]
+	  @log.debug "Loading new TileType with code '#{code}' and path '#{path}'"
+	  tiletype = TileType.instance(code, path)
+	  tiletype.solid = false unless blocktype.attributes["solid"] == "solid"
+	  @blocktypes[code] = tiletype
+	}
+      rescue => ex
+	@log.error "Cannot read XML node 'map/blocktypes' in datafile #{source_name}. (" + ex.message + ")"
+        raise
+      end
+    end
+
+    # nahraje umisteni bloku
+
+    def load_tiles
+      # nacteni umisteni bloku
+      begin
+	lines = @doc.root.elements["map"].elements["blocks"].text.split(/\n/)
+      rescue => ex
+	@log.fatal "Cannot find 'map/blocks' XML element in datafile #{source_name}. (" + ex.message + ")"
+	raise
+      end
+      @max_width = @max_height = 0
+      # prochazime radky bloku:
+      lines.each_index { |line_num|
+	@max_height = line_num if line_num > @max_height
+	@blocks.push(Array.new)
+	# prochazime bloky:
+	line = lines[line_num]
+	block_codes = line.split(/\s*/)
+	block_codes.each_index { |block_index|
+	  @max_width = block_index if block_index > @max_width
+	  block_code = block_codes[block_index]
+	  unless @blocktypes[block_code].nil?
+	    @blocks[line_num][block_index] = @blocktypes[block_code]
+	    @log.debug("Setting reference to blocktype for block at index [" + line_num.to_s + "][" + block_index.to_s + "]")
+	  else
+	    @log.error("Blocktype couldn't be found in blocktypes' hash for blockcode #{block_code} (using mapsource #{source_name})")
+	  end
+	}
+      }
+    end
+
     # Vrati jmeno nacitaneho zdroje
 
     def source_name
@@ -150,7 +160,7 @@ module FreeVikings
       end
     end
 
-  end # class XMLMapLoadStrategy
+  end # class XMLLocationLoadStrategy
 
 
 
