@@ -42,6 +42,8 @@ but if you don't specify it, it's set to a default value.
 
       @energy = 1
       @location = NullLocation.new
+
+      init_images if self.respond_to? :init_images
     end
 
 =begin

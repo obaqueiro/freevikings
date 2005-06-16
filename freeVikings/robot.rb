@@ -25,13 +25,11 @@ module FreeVikings
     HEIGHT = 80
 
     def initialize(position, walk_length)
-      super(position)
-      @rect.w = WIDTH; @rect.h = HEIGHT
-      init_images
+      @walk_length = walk_length
+      super(position.concat([WIDTH, HEIGHT]))
       @start_position = position
       @direction = 'right'
       @angry = false
-      @walk_length = walk_length
       @last_update_time = time
       @last_bash = 0
       @energy = MAX_LIVES
@@ -61,6 +59,25 @@ module FreeVikings
     end
 
     private
+
+    def init_images
+      i_right = AnimationSuite.new(1, [
+                                     Image.new('robot_right.tga'),
+                                     Image.new('robot_right_handdown.tga')
+                                   ])
+      i_left = AnimationSuite.new(1, [
+                                    Image.new('robot_left.tga'),
+                                    Image.new('robot_left_handdown.tga')
+                                  ])
+
+      images = {
+        'left' => i_left,
+        'left_angry' => Image.new('robot_left_angry.tga'),
+        'right' => i_right,
+        'right_angry' => Image.new('robot_right_angry.tga')
+      }
+      @image = ImageBank.new(self, images)
+    end
 
     def update_position
       @rect.w = image.w
@@ -97,25 +114,6 @@ module FreeVikings
       if @angry and (time >= @last_update_time + ANGER_DURATION) then
         @angry = false
       end
-    end
-
-    def init_images
-      i_right = AnimationSuite.new(1, [
-                                     Image.new('robot_right.tga'),
-                                     Image.new('robot_right_handdown.tga')
-                                   ])
-      i_left = AnimationSuite.new(1, [
-                                    Image.new('robot_left.tga'),
-                                    Image.new('robot_left_handdown.tga')
-                                  ])
-
-      images = {
-        'left' => i_left,
-        'left_angry' => Image.new('robot_left_angry.tga'),
-        'right' => i_right,
-        'right_angry' => Image.new('robot_right_angry.tga')
-      }
-      @image = ImageBank.new(self, images)
     end
 
     def time

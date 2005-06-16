@@ -12,7 +12,6 @@ module FreeVikings
     
     def initialize(position)
       super(position)
-      init_images
     end
 
     def image
@@ -29,7 +28,6 @@ module FreeVikings
       end
     end
 
-    private
     def init_images
       left = Image.new('slizzy_left.tga')
       right = Image.new('slizzy_right.tga')
