@@ -27,7 +27,6 @@ module FreeVikings
       @log.debug("Viking #{@name} initialised.")
       @rect = Rectangle.new start_position[0], start_position[1], WIDTH, HEIGHT
       @last_update_time = Time.now.to_f
-      @location = NullLocation.new # objekt overujici moznost presunu na posici
       @energy = 3 # zivotni sila
 
       @portrait = Portrait.new('viking_face.tga', 'viking_face_unactive.tga', 'dead_face.png')

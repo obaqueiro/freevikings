@@ -3,6 +3,7 @@
 
 # Spravce sprajtu.
 
+require 'group.rb'
 require 'ext/Rectangle'
 #require 'rect.rb'
 
@@ -10,27 +11,19 @@ module FreeVikings
 
   Rectangle = FreeVikings::Extensions::Rectangle::Rectangle
 
-  class SpriteManager
+  class SpriteManager < Group
 
 =begin
-SpriteManager object keeps an array of all the sprites that should be
-regularly redisplayed.
-=end
+= SpriteManager
+SpriteManager object is a ((<Group>)) of all the sprites that should be
+regularly redisplayed. It has all the methods inherited from ((<Group>)),
+to learn more about them, see the superclasse's documentation.
 
-    def initialize(map)
-      @sprites = Array.new
-      @map = map
-    end
+--- SpriteManager.new
+--- SpriteManager#add(object)
+--- SpriteManager#delete(member)
+--- SpriteManager#include?(object)
 
-    def add(sprite)
-      @sprites.push(sprite)
-    end
-
-    def delete(sprite)
-      @sprites.delete(sprite)
-    end
-
-=begin
 --- SpriteManager#paint( surface, rect_of_location )
 This method takes a RUDL::Surface object (surface) and paints onto it all the
 sprites which can be found in a rect defined by a Rectangle
@@ -42,7 +35,7 @@ height. The coordinates are relative to the map loaded.
     def paint(surface, rect_of_location)
       locr = rect_of_location
       raise(ArgumentError, "Wrong type of argument: #{locr.class} should be: Rectangle") unless locr.kind_of? Rectangle
-      @sprites.each { |sprite|
+      @members.each { |sprite|
         eir = 0
         sr = sprite.rect
         eir += 1 if sr.left > locr.left and sr.left < locr.right
@@ -64,15 +57,14 @@ all the sprites.
 =end
 
     def update
-      @sprites.each { |sprite|
+      @members.each { |sprite|
         # at je pekne aktualni:
         sprite.update
         # jestli se sprajt dostal mimo mapu, musi byt odstranen
-        if sprite.top < 0 or sprite.top > @map.background.h or
-            sprite.left < 0 or sprite.left > @map.background.w then
-          sprite.destroy
-          @sprites.delete sprite
-        end
+        #unless sprite.location.rect_inside?(sprite.rect) then
+        #  sprite.destroy
+        #  @members.delete sprite
+        #end
       }
     end
 
@@ -85,7 +77,7 @@ If no sprite is found, it returns an empty array.
 
     def sprites_on_rect(rect)
       found = Array.new
-      @sprites.each do |sprite|
+      @members.each do |sprite|
 	if rect.collides? sprite.rect
 	  found.push sprite
 	end # if

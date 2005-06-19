@@ -33,4 +33,10 @@ class TestMap < Test::Unit::TestCase
     }
   end
 
+  def testRect
+    msg = "Map's rect begins at the top-left corner."
+    assert_equal @map.rect.left, 0, msg
+    assert_equal @map.rect.top, 0, msg
+  end
+
 end # class TestMap

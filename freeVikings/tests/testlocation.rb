@@ -61,7 +61,7 @@ class TestLocation < Test::Unit::TestCase
   def testLocationAttrUnsetAfterDelete
     @loc.add_sprite @sprite
     @loc.delete_sprite @sprite
-    assert_instance_of NullLocation, @sprite.location, "When the sprite is deleted of the location, it's attribute location must be set to nil."
+    assert_instance_of NullLocation, @sprite.location, "When the sprite is deleted from the location, it's attribute location must be set to nil."
   end
 
 end

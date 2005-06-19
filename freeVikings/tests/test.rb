@@ -12,7 +12,6 @@ require '../ext/test/test.rb'
 require 'testlocation.rb'
 require 'testxmllocloadstrategy.rb'
 require 'testmap.rb'
-require 'testspritemanager.rb'
 require 'testsprite.rb'
 require 'testarrow.rb'
 require 'testshield.rb'
@@ -26,7 +25,9 @@ require 'testvikingstate.rb'
 require 'testvikingstatetostring.rb'
 require 'testcollisiontest.rb'
 require 'testimagebank.rb'
+require 'testgroup.rb'
 require 'testactiveobject.rb'
+require 'testspritemanager.rb'
 
 class FreeVikingsTestSuite
 
@@ -38,7 +39,6 @@ class FreeVikingsTestSuite
     suite << TestLocation.suite
     suite << TestXMLLocationLoadStrategy.suite
     suite << TestMap.suite
-    suite << TestSpriteManager.suite
     suite << TestSprite.suite
     suite << TestArrow.suite
     suite << TestShield.suite
@@ -52,7 +52,9 @@ class FreeVikingsTestSuite
     suite << TestVikingStateToString.suite
     suite << TestCollisionTest.suite
     suite << TestImageBank.suite
+    suite << TestGroup.suite
     suite << TestActiveObject.suite
+    suite << TestSpriteManager.suite
 
     return suite
   end

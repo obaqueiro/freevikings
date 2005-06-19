@@ -38,5 +38,9 @@ module FreeVikings
       true
     end
 
+    def rect_inside?(rect)
+      raise RuntimeError, "Method 'rect_inside?' should never be called over NullLocation object. It has sense in full-featured Location instances only."
+    end
+
   end # class NullLocation
 end # module FreeVikings

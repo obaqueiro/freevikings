@@ -46,8 +46,10 @@ module FreeVikings
       @velocity = Velocity.new 0
     end
 
+    STRING_VALUE = 'onground'
+
     def to_s
-      'onground'
+      STRING_VALUE
     end
   end # class OnGroundState
 
@@ -59,8 +61,10 @@ module FreeVikings
       @velocity = Velocity.new VELOCITY_BASE
     end
 
+    STRING_VALUE = 'falling'
+
     def to_s
-      'falling'
+      STRING_VALUE
     end
   end # class FallingState
 
@@ -72,8 +76,10 @@ module FreeVikings
       @velocity = Velocity.new( - VELOCITY_BASE)
     end
 
+    STRING_VALUE = 'rising'
+
     def to_s
-      'rising'
+      STRING_VALUE
     end
   end # class RisingState
 end # module FreeVikings

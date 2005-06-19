@@ -27,7 +27,11 @@ module FreeVikings
       @loading_strategy.load_map(@blocks, @blocktypes)
 
       @log.info('Map initialised.')
+
+      @rect = Rectangle.new(0, 0, @loading_strategy.max_width, @loading_strategy.max_height)
     end
+
+    attr_reader :rect
 
     # vrati surface s aktualnim pozadim
 

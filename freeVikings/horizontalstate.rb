@@ -87,8 +87,10 @@ LeftStandingState and RightStandingState - added.
       @velocity = Velocity.new 0
     end
 
+    STRING_VALUE = 'standing'
+
     def to_s
-      'standing'
+      STRING_VALUE
     end
   end # class StandingState
 

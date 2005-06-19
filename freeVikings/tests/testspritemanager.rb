@@ -3,7 +3,7 @@
 
 # Testove pripady pro tridu SpriteManager
 
-require 'rubyunit'
+require 'testgroup.rb'
 
 require 'spritemanager.rb'
 require 'location.rb'
@@ -14,15 +14,15 @@ module FreeVikings
   GFX_DIR = "../gfx"
 end
 
-class TestSpriteManager < RUNIT::TestCase
+class TestSpriteManager < TestGroup
 
   include FreeVikings
   include FreeVikings::Mock
 
   def setup
     @map = Location.new(TestingMapLoadStrategy.new)
-    @manager = SpriteManager.new(@map)
-    @sprite = Sprite.new([90,90])
+    @group = @manager = SpriteManager.new
+    @object = @sprite = Sprite.new([90,90])
   end
 
   def testSpritesOnRect

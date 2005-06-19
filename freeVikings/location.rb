@@ -14,14 +14,14 @@ module FreeVikings
   class Location
 
     def initialize(loader)
-      @spritemanager = SpriteManager.new(self)
       @exitter = nil # objekt Exit - cesta do dalsi lokace
       @start = [0,0] # misto, kde zacinaji vikingove svou misi
 
+      @map = Map.new(loader)
+      @spritemanager = SpriteManager.new
       loader.load_monsters(self)
       loader.load_exit(self)
       loader.load_start(self)
-      @map = Map.new(loader)
     end
 
     def update
@@ -59,6 +59,10 @@ module FreeVikings
 
     def sprites_on_rect(rect)
       @spritemanager.sprites_on_rect rect
+    end
+
+    def rect_inside?(rect)
+      @map.rect.collides? rect
     end
 
     def is_position_valid?(sprite, position)
