@@ -12,7 +12,9 @@ require 'platform.rb'
 
 module FreeVikings
 
-  class Shield < Platform
+  class Shield < Sprite
+
+    include Platform
 
     WIDTH = 15
     HEIGHT = 80

@@ -15,6 +15,6 @@ It would be very inefficient. Most of the platforms in the game
 are made of map's tiles. Platform objects are there for platforms which
 move or do any other nifty games.
 =end
-  class Platform < Sprite
+  module Platform
   end # class Platform
 end # module FreeVikings
