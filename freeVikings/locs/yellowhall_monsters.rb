@@ -40,7 +40,7 @@ end
 switch_1 = FreeVikings::Switch.new([520,410], true, switch_1_action, switch_images)
 
 # A bridge
-Y_VALUES = [300, 480]
+Y_VALUES = [260, 480]
 bridge = FreeVikings::FallingBridge.new 600, *Y_VALUES
 
 # An action for switch_2

@@ -25,6 +25,8 @@
 <blocktype code="l" path="yellow_map/tile_base_leftup.tga" solid="solid" />
 <blocktype code="-" path="yellow_map/tile_base.tga" solid="solid" />
 <blocktype code="J" path="yellow_map/tile_base_right.tga" solid="solid" />
+<blocktype code=":" path="yellow_map/tile_base_leftend.tga" solid="solid" />
+<blocktype code=";" path="yellow_map/tile_base_rightend.tga" solid="solid" />
     </blocktypes>
 
 <blocks>
@@ -32,7 +34,7 @@ JAAAAAAAAAAAAAAAAAAAAAAAAAAAJ
 JAAAAAAAAAAAAAAAAAAAAAAAAAAAJ
 JAAAAAAAAAAAAAAAAAAAAAAAAAAAJ
 JAAAAAAAAAAAAAAAAAAAAAAAAAAAJ
-JAAAAAAAAAAAAAAAAAAAAAAAAAAAJ
+JAAAAAAA:---;AAAAAAAAAAAAAAAJ
 JAAAAAAAAAAAAAAAAAAAAAAAAAAAJ
 JAAAAAAAAAAAAAAAAAAAAAAAAAAAJ
 JAAAAAAAAAAAAAAAAAAAAAAAAAAAJ
