@@ -17,13 +17,19 @@ module FreeVikings
     def initialize(script_name)
       module_eval "MONSTERS = []"
       super script_name
+      if self::MONSTERS.empty? then
+        raise NoMonstersDefinedException, "No monsters have been defined in the script."
+      end
     end
 
     def monsters
-      if self::MONSTERS.empty?
-	Log4r::Logger['freeVikings log'].info "In scriptfile #{scriptfile}: constant MONSTERS hasn't been defined. Maybe the script doesn't provide monsters."
-      end
       return self::MONSTERS
     end
-  end
+
+    # This exception is raised when the script is all right, but does not
+    # define any monsters. (It should always define some - it's a monster
+    # script!)
+    class NoMonstersDefinedException < RuntimeError
+    end
+  end # class MonsterScript
 end # module FreeVikings

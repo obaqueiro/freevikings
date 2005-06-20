@@ -29,6 +29,7 @@ require 'testactiveobject.rb'
 require 'testgroup.rb'
 require 'testspritemanager.rb'
 require 'testactiveobjectmanager.rb'
+require 'testmonsterscript.rb'
 
 class FreeVikingsTestSuite
 
@@ -57,6 +58,7 @@ class FreeVikingsTestSuite
     suite << TestGroup.suite
     suite << TestSpriteManager.suite
     suite << TestActiveObjectManager.suite
+    suite << TestMonsterScript.suite
 
     return suite
   end

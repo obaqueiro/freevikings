@@ -50,12 +50,28 @@ module FreeVikings
 	script_element = @doc.root.elements['scripts'].elements['monsters']
 	scriptfile = script_element.attributes['path']
       rescue => ex
-	@log.error "Cannot load monster script."
-	@log.debug "Exception message: #{ex.message}"
+	@log.error "Cannot get the monster-script's filename from the datafile. Exception message: #{ex.message}"
 	return
       end
-      @log.info "Loading script #{scriptfile}"
-      s = MonsterScript.new scriptfile
+
+      @log.info "Loading monsters from script #{scriptfile}"
+
+      # Pri nahravani skriptu muze nastat velke mnozstvi vyjimecnych situaci:
+      begin
+        s = MonsterScript.new scriptfile
+      rescue SyntaxError
+        @log.error "Syntax error in the monster-script #{scriptfile}. " \
+        "Cannot load the monsters."
+        return
+      rescue NameError => ne
+        @log.error "NameError in the monster-script #{scriptfile}." \
+        "(#{ne.message}) Cannot load the monsters."
+        return
+      rescue MonsterScript::NoMonstersDefinedException
+        @log.error "Script loaded successfully, but didn't define any new " \
+        "monsters."
+      end
+
       s::MONSTERS.each {|m| monster_manager.add_sprite m}
       @log.info "Script #{scriptfile} successfully loaded."
     end
@@ -66,7 +82,8 @@ module FreeVikings
 	x = exit_element.attributes['horiz'].to_i
 	y = exit_element.attributes['vertic'].to_i
       rescue
-	@log.error "Cannot find XML element 'map/exit' in datafile #{source_name}."
+	@log.error "Cannot find XML element 'map/exit'" \
+        " in datafile #{source_name}."
 	x = y = 300
       end
       location.exitter = Exit.new([x,y])
