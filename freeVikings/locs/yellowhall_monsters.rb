@@ -11,9 +11,6 @@ require 'imagebank.rb'
 
 include FreeVikings
 
-MONSTERS = Array.new
-
-#MONSTERS.push FreeVikings::Slug.new([500,440])
 shooter = FreeVikings::PlasmaShooter.new [700, 430]
 
 shooter.instance_eval do
@@ -35,6 +32,6 @@ switch_action = Proc.new do |switch_state|
 end
 switch = FreeVikings::Switch.new([580, 410], true, switch_action, switch_images)
 
-MONSTERS.push shooter
-MONSTERS.push switch
-MONSTERS.push FreeVikings::Robot.new([800, 400], 120)
+LOCATION.add_sprite shooter
+LOCATION.add_sprite switch
+LOCATION.add_sprite FreeVikings::Robot.new([800, 400], 120)
