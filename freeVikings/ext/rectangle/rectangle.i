@@ -27,6 +27,7 @@
 %rename("h=") Rectangle::set_height;
 %rename("w=") Rectangle::set_width;
 %rename("empty?") Rectangle::empty;
+%rename("eql?") Rectangle::eql;
 
 /* Mapa typovych konversi pro metodu Rectangle#collides? */
 %typemap(out) bool Rectangle::collides 
@@ -34,6 +35,10 @@
 
 %typemap(out) bool Rectangle::empty
 	"$result = ($1 != false) ? Qtrue : Qfalse;";
+
+%typemap(out) bool Rectangle::eql 
+	"$result = ($1 != false) ? Qtrue : Qfalse;";
+
 
 /* Nahrajeme deklaraci tridy: */
 %include "rectangle.hpp";

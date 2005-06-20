@@ -86,4 +86,8 @@ class TestExtensionRectangle < Test::Unit::TestCase
     assert_not_same @r, @r.dup, "Method 'dup' should create a completely new object."
   end
 
+  def testEql
+    assert(Rectangle.new(1,2,3,4).eql?(Rectangle.new(1,2,3,4)))
+  end
+
 end

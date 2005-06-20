@@ -7,6 +7,8 @@
 
 #include "rectangle.hpp"
 
+#include <stdio.h>
+
 Rectangle::Rectangle()
 {
   _left = _top = _width = _height = 0;
@@ -120,4 +122,15 @@ bool Rectangle::collides(Rectangle &rect)
   } else {
     return false;
   }
+}
+
+bool Rectangle::eql(Rectangle &rect)
+{
+  if (this->left() == rect.left() &&
+      this->right() == rect.right() &&
+      this->width() == rect.width() &&
+      this->height() == rect.height())
+    return true;
+  else
+    return false;
 }

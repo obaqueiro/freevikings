@@ -42,6 +42,9 @@ public:
   /* Collision detection: */
   bool collides(Rectangle &rect);
 
+  /* Comparison: */
+  bool eql(Rectangle &rect);
+
 private:
   Numeric _left, _top, _width, _height;
 };
