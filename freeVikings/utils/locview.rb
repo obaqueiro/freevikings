@@ -1,4 +1,5 @@
-#!/bin/env ruby
+#!/usr/bin/ruby
+
 # locview.rb
 # Location browser designed as a development tool (it's also a powerfull
 # cheating tool)
@@ -16,8 +17,11 @@ require 'locationloadstrategy'
 
 require 'sprite'; require 'monster'
 
+require 'ext/Rectangle'
+
 module FreeVikings
   GFX_DIR = File.expand_path 'gfx'
+  Rectangle = Extensions::Rectangle::Rectangle
 end
 
 class NonScriptLocationLoadStrategy < FreeVikings::XMLLocationLoadStrategy
