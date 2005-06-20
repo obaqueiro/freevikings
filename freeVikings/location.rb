@@ -34,8 +34,8 @@ module FreeVikings
     def paint(surface, center)
       @map.paint(surface, center)
       displayed_rect = centered_view_rect(background.w, background.h, surface.w, surface.h, center)
-      @spritemanager.paint(surface, displayed_rect)
       @activeobjectmanager.paint(surface, displayed_rect)
+      @spritemanager.paint(surface, displayed_rect)
     end
 
     def background
@@ -72,6 +72,10 @@ module FreeVikings
 
     def delete_active_object(object)
       @activeobjectmanager.delete object
+    end
+
+    def active_objects_on_rect(rect)
+      @activeobjectmanager.members_on_rect(rect)
     end
 
     def rect_inside?(rect)

@@ -37,11 +37,12 @@ module FreeVikings
       @rect.left += @velocity.value * (Time.now.to_f - @start_time)
 
       unless @location.is_position_valid?(self, [left, top])
-	@location.delete_sprite self
+        destroy
 	return
       end
 
       stroken = @location.sprites_on_rect(self.rect)
+      stroken.concat @location.active_objects_on_rect(self.rect)
       while not stroken.empty? do
 	s = stroken.pop
 	if s.is_a? @hunted_type

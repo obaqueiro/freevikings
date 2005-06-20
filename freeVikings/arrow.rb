@@ -14,10 +14,7 @@ module FreeVikings
   class Arrow < Shot
 
     def initialize(start_pos, velocity)
-      super start_pos, velocity
-
-      @rect.w = WIDTH
-      @rect.h = HEIGHT
+      super([start_pos[0], start_pos[1], WIDTH, HEIGHT], velocity)
 
       @image = ImageBank.new(self)
       @image.add_pair('left', Image.new('arrow_left.tga'))
