@@ -31,9 +31,9 @@ module FreeVikings
     def load_map(blocks_matrix, blocktype_hash)
     end
 
-    # Pomoci metody add_sprite rozhrani argumentu monster_manager
-    # nahraje prisery
-    def load_monsters(monster_manager)
+    # Nahraje vsechny skripty (jejich pomoci se do lokace pridavaji prisery,
+    # predmety a jine ohavnosti)
+    def load_scripts(location)
     end
 
   end # class MapLoadStrategy

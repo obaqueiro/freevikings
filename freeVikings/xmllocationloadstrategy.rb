@@ -43,7 +43,7 @@ module FreeVikings
       load_tiles
     end
 
-    def load_monsters(monster_manager)
+    def load_scripts(location)
       @log.debug "Starting loading monsters from scripts."
 
       begin
@@ -58,7 +58,7 @@ module FreeVikings
 
       # Pri nahravani skriptu muze nastat velke mnozstvi vyjimecnych situaci:
       begin
-        s = MonsterScript.new scriptfile
+        s = MonsterScript.new(scriptfile) {|script| eval "script::LOCATION = location"}
       rescue SyntaxError
         @log.error "Syntax error in the monster-script #{scriptfile}. " \
         "Cannot load the monsters."
@@ -72,7 +72,7 @@ module FreeVikings
         "monsters."
       end
 
-      s::MONSTERS.each {|m| monster_manager.add_sprite m}
+      s::MONSTERS.each {|m| location.add_sprite m}
       @log.info "Script #{scriptfile} successfully loaded."
     end
 

@@ -17,7 +17,7 @@ module FreeVikings
     def initialize(script_name)
       module_eval "MONSTERS = []"
       super script_name
-      if self::MONSTERS.empty? then
+      if self::MONSTERS.empty? and not defined?(self::LOCATION) then
         raise NoMonstersDefinedException, "No monsters have been defined in the script."
       end
     end

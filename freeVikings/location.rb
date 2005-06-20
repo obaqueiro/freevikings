@@ -19,7 +19,7 @@ module FreeVikings
 
       @map = Map.new(loader)
       @spritemanager = SpriteManager.new
-      loader.load_monsters(self)
+      loader.load_scripts(self)
       loader.load_exit(self)
       loader.load_start(self)
     end
