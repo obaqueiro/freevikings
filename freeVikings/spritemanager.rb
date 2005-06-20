@@ -61,10 +61,10 @@ all the sprites.
         # at je pekne aktualni:
         sprite.update
         # jestli se sprajt dostal mimo mapu, musi byt odstranen
-        #unless sprite.location.rect_inside?(sprite.rect) then
-        #  sprite.destroy
-        #  @members.delete sprite
-        #end
+        unless sprite.location.rect_inside?(sprite.rect) then
+          sprite.destroy
+          @members.delete sprite
+        end
       }
     end
 

@@ -19,16 +19,19 @@ module FreeVikings
 
       @blocktypes = Hash.new
       @blocks = Array.new
-      @loading_strategy = map_load_strategy
+      loading_strategy = map_load_strategy
       @background = nil
 
       @log.info('Loading map.')
 
-      @loading_strategy.load_map(@blocks, @blocktypes)
+      loading_strategy.load_map(@blocks, @blocktypes)
 
       @log.info('Map initialised.')
 
-      @rect = Rectangle.new(0, 0, @loading_strategy.max_width, @loading_strategy.max_height)
+      @max_width = loading_strategy.max_width
+      @max_height = loading_strategy.max_height
+
+      @rect = Rectangle.new(0, 0, @max_width * TILE_SIZE, @max_height * TILE_SIZE)
     end
 
     attr_reader :rect
@@ -91,7 +94,7 @@ module FreeVikings
     # (obrazky vsech pevnych dlazdic)
 
     def create_background
-      @background = RUDL::Surface.new([@loading_strategy.max_width * TILE_SIZE, @loading_strategy.max_height * TILE_SIZE])
+      @background = RUDL::Surface.new([@rect.width, @rect.height])
 	
       @blocks.each_index { |row_i|
         @blocks[row_i].each_index { |col_i|
