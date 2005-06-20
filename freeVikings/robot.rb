@@ -58,8 +58,6 @@ module FreeVikings
       _hurt
     end
 
-    private
-
     def init_images
       i_right = AnimationSuite.new(1, [
                                      Image.new('robot_right.tga'),
@@ -78,6 +76,8 @@ module FreeVikings
       }
       @image = ImageBank.new(self, images)
     end
+
+    private
 
     def update_position
       @rect.w = image.w
