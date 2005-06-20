@@ -7,6 +7,7 @@ module FreeVikings
 = Entity
 Entity is a superclass for all the classes which appear in the freeVikings'
 world. It's most famous subclass is ((<Sprite>)).
+Everything that has it's image and it's place on the world is an Entity.
 =end
   class Entity
 

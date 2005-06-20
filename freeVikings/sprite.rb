@@ -7,14 +7,9 @@ require 'entity.rb'
 require 'velocity.rb'
 require 'imagebank.rb'
 
-require 'ext/Rectangle'
-#require 'rect.rb'
-
 module FreeVikings
 
   class Sprite < Entity
-
-    include FreeVikings::Extensions::Rectangle
 
 =begin
 =FreeVikings::Sprite class

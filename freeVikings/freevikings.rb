@@ -78,8 +78,9 @@ if OPTIONS['profile'] then
 end
 
 require 'ext/Rectangle'
+
 module FreeVikings
-  Rectangle = FreeVikings::Extensions::Rectangle::Rectangle
+  Rectangle = Extensions::Rectangle::Rectangle
 end
 
 FreeVikings::Init.new
