@@ -8,18 +8,15 @@ sprites. It's only updated when a key is pressed over it or if it's stroken
 by some gun.
 =end
 
+require 'entity.rb'
+
 module FreeVikings
 
-  class ActiveObject
+  class ActiveObject < Entity
 
-    def initialize(position)
-      @rect = Rectangle.new(position[0], 
-                            position[1], 
-                            position[2] ? position[2] : 0, 
-                            position[3] ? position[3] : 0)
+    def initialize(initial_position=[])
+      super(initial_position)
     end
-
-    attr_reader :rect
 
     def activate
     end

@@ -12,6 +12,7 @@ require '../ext/test/test.rb'
 require 'testlocation.rb'
 require 'testxmllocloadstrategy.rb'
 require 'testmap.rb'
+require 'testentity.rb'
 require 'testsprite.rb'
 require 'testarrow.rb'
 require 'testshield.rb'
@@ -41,6 +42,7 @@ class FreeVikingsTestSuite
     suite << TestLocation.suite
     suite << TestXMLLocationLoadStrategy.suite
     suite << TestMap.suite
+    suite << TestEntity.suite
     suite << TestSprite.suite
     suite << TestArrow.suite
     suite << TestShield.suite

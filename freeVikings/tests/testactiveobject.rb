@@ -8,14 +8,14 @@
 # presses the 'activate' or 'unactivate' key or some weapon hurts the
 # ActiveObject).
 
-require 'test/unit'
+require 'testentity.rb'
 
 require 'activeobject.rb'
 
-class TestActiveObject < Test::Unit::TestCase
+class TestActiveObject < TestEntity
 
   def setup
-    @object = FreeVikings::ActiveObject.new [0,0,0,0]
+    @entity = @object = FreeVikings::ActiveObject.new(STARTPOS)
   end
 
   def testActiveObjectClassExists

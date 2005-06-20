@@ -44,6 +44,7 @@ module FreeVikings
 
       stroken = @location.sprites_on_rect(self.rect)
       stroken.concat @location.active_objects_on_rect(self.rect)
+
       stroken.delete_if {|s| s == self or not s.is_a? Monster}
       stroken.each do |s|
         s.hurt

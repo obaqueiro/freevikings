@@ -3,6 +3,7 @@
 
 # Tridy sprajtu pro hru FreeVikings
 
+require 'entity.rb'
 require 'velocity.rb'
 require 'imagebank.rb'
 
@@ -11,7 +12,7 @@ require 'ext/Rectangle'
 
 module FreeVikings
 
-  class Sprite
+  class Sprite < Entity
 
     include FreeVikings::Extensions::Rectangle
 
@@ -30,20 +31,8 @@ but if you don't specify it, it's set to a default value.
 =end
 
     def initialize(initial_position=[])
-      @image = Image.new('nobody.tga')
-
-      unless initial_position.empty?
-	@rect = Rectangle.new(initial_position[0], initial_position[1], 0, 0)
-        @rect.w = initial_position[2] if initial_position[2]
-        @rect.h = initial_position[3] if initial_position[3]
-      else
-	@rect = Rectangle.new(0,0,0,0)
-      end
-
+      super(initial_position)
       @energy = 1
-      @location = NullLocation.new
-
-      init_images if self.respond_to? :init_images
     end
 
 =begin

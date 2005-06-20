@@ -10,7 +10,7 @@ require 'mockclasses.rb'
 class TestArrow < TestSprite
 
   def setup
-    @arrow = @sprite = FreeVikings::Arrow.new([90,90], 0)
+    @arrow = @sprite = @entity = FreeVikings::Arrow.new([90,90], 0)
     @locat = Location.new(FreeVikings::Mock::TestingMapLoadStrategy.new)
   end
 

@@ -12,7 +12,7 @@ class TestViking < TestSprite
   include Mock
 
   def setup
-    @sprite = Viking.new('Wulftan', STARTPOS) # a viking for TestSprite tests
+    @entity = @sprite = Viking.new('Wulftan', STARTPOS) # a viking for TestSprite tests
     @viking = Viking.new('Donnas', [0,0])
     @location = MockLocation.new
     @viking.location = @location
