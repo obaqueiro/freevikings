@@ -33,5 +33,5 @@ end
 switch = FreeVikings::Switch.new([580, 410], true, switch_action, switch_images)
 
 LOCATION.add_sprite shooter
-LOCATION.add_sprite switch
+LOCATION.add_active_object switch
 LOCATION.add_sprite FreeVikings::Robot.new([800, 400], 120)

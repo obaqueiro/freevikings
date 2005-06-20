@@ -15,7 +15,7 @@ require 'activeobject.rb'
 class TestActiveObject < Test::Unit::TestCase
 
   def setup
-    @object = FreeVikings::ActiveObject.new
+    @object = FreeVikings::ActiveObject.new [0,0,0,0]
   end
 
   def testActiveObjectClassExists

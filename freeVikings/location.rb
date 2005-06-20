@@ -7,7 +7,9 @@
 # Obsahuje sam nebo ve svych clenskych promennych vsechen stav urcite
 # lokality herniho sveta, ktera odpovida zhruba levelu ze hry Lost Vikings.
 
+require 'map.rb'
 require 'spritemanager.rb'
+require 'activeobjectmanager.rb'
 
 module FreeVikings
 
@@ -19,6 +21,7 @@ module FreeVikings
 
       @map = Map.new(loader)
       @spritemanager = SpriteManager.new
+      @activeobjectmanager = ActiveObjectManager.new
       loader.load_scripts(self)
       loader.load_exit(self)
       loader.load_start(self)
@@ -30,16 +33,13 @@ module FreeVikings
 
     def paint(surface, center)
       @map.paint(surface, center)
-      @spritemanager.paint(surface, centered_view_rect(background.w, background.h, surface.w, surface.h, center))
+      displayed_rect = centered_view_rect(background.w, background.h, surface.w, surface.h, center)
+      @spritemanager.paint(surface, displayed_rect)
+      @activeobjectmanager.paint(surface, displayed_rect)
     end
 
     def background
       @map.background
-    end
-
-    def add_sprite(sprite)
-      sprite.location = self
-      @spritemanager.add sprite
     end
 
     def exitter=(exitter)
@@ -51,6 +51,11 @@ module FreeVikings
 
     attr_accessor :start
 
+    def add_sprite(sprite)
+      sprite.location = self
+      @spritemanager.add sprite
+    end
+
     def delete_sprite(sprite)
       @spritemanager.delete sprite
       sprite.location = NullLocation.new # nullocation.rb is required at 
@@ -59,6 +64,14 @@ module FreeVikings
 
     def sprites_on_rect(rect)
       @spritemanager.sprites_on_rect rect
+    end
+
+    def add_active_object(object)
+      @activeobjectmanager.add object
+    end
+
+    def delete_active_object(object)
+      @activeobjectmanager.delete object
     end
 
     def rect_inside?(rect)

@@ -12,6 +12,15 @@ module FreeVikings
 
   class ActiveObject
 
+    def initialize(position)
+      @rect = Rectangle.new(position[0], 
+                            position[1], 
+                            position[2] ? position[2] : 0, 
+                            position[3] ? position[3] : 0)
+    end
+
+    attr_reader :rect
+
     def activate
     end
 

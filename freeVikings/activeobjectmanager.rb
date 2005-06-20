@@ -6,8 +6,11 @@
 ActiveObjectManager is a ((<Group>)) of ((<ActiveObject>))s.
 =end
 
+require 'group.rb'
+
 module FreeVikings
 
   class ActiveObjectManager < Group
+    include PaintableGroup
   end # class ActiveObjectManager
 end # module FreeVikings

@@ -10,6 +10,6 @@ class TestActiveObjectManager < TestGroup
 
   def setup
     @group = ActiveObjectManager.new
-    @object = ActiveObject.new
+    @object = ActiveObject.new [90,90,12,12]
   end
 end

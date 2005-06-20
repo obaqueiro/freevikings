@@ -19,7 +19,7 @@ class TestGroup < Test::Unit::TestCase
 
   def setup
     @group = Group.new
-    @object = Object.new
+    @object = Sprite.new [90,90,12,12]
   end
 
   def testAddInclude
@@ -32,4 +32,22 @@ class TestGroup < Test::Unit::TestCase
     @group.delete @object
     assert_equal false, @group.include?(@object), "Group mustn't contain a deleted object."
   end
+
+  def testMembersOnRect
+    @group.add @object
+    assert_equal @object, @group.members_on_rect(Rectangle.new(85,85,60,60))[0], "There must be one sprite. I made it to be there."
+  end
+
+  def testMembersOnRectFindsMoreMembers
+    @group.add @object
+    @group.add Sprite.new([82,82])
+    @group.add Sprite.new([140,140])
+    assert_equal 3, @group.members_on_rect(Rectangle.new(80,80,60,60)).size, "There are two members colliding with the specified rectangle."
+  end
+
+  def testMembersOnRectDoesNotFindNotCollidingMembers
+    @group.add Sprite.new([120,120])
+assert_equal 0, @group.members_on_rect(Rectangle.new(10,10,10,10)).size, "The only sprite added does not collide with the specified rectangle."
+  end
+
 end
