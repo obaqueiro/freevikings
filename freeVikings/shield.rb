@@ -8,12 +8,21 @@ can be used as a solid platform for vikings who can jump onto it (I know only
 one such viking - his name is Erik).
 =end
 
+require 'platform.rb'
+
 module FreeVikings
 
-  class Shield < Sprite
+  class Shield < Platform
 
     WIDTH = 15
     HEIGHT = 80
+
+=begin
+--- Shield.new(shielder)
+This is an irregular method. It creates a Sprite, but it's only argument
+isn't an Array or a Rectangle, but another Sprite - the shielder.
+It's a man (or woman, monster, ...) who carries the shield.
+=end
 
     def initialize(shielder)
       @shielder = shielder
@@ -66,8 +75,6 @@ module FreeVikings
       @shielder.shield_use
     end
     
-    private
-
     def init_images
       # Zde je velmi dulezite zachovat poradi nahravani obrazku, aby se
       # nahraly opravdu vsechny.

@@ -195,7 +195,7 @@ module FreeVikings
 
     private
     def on_shield?
-      shield = @location.sprites_on_rect(rect).find {|s| s.is_a? Shield}
+      shield = @location.sprites_on_rect(rect).find {|s| s.is_a? Platform}
       if shield and CollisionTest.bottom_collision?(rect, shield.rect) then
         return true
       else
