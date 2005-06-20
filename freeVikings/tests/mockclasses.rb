@@ -33,7 +33,8 @@ module FreeVikings
 	  [x, x, o, o, o, o, o, x],
 	  [x, x, x, x, x, x, x, x]
 	]
-	@max_width = @max_height = 0
+	@max_width = blcks[0].size
+        @max_height = blcks.size
 	# prochazime radky bloku:
 	blcks.each_index { |line_num|
 	  @blocks.push blcks[line_num]

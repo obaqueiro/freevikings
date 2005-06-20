@@ -64,4 +64,8 @@ class TestLocation < Test::Unit::TestCase
     assert_instance_of NullLocation, @sprite.location, "When the sprite is deleted from the location, it's attribute location must be set to nil."
   end
 
+  def testRectInside
+    assert @loc.rect_inside?(Rectangle.new(2,2,5,5)), "Rectangle [2,2,5,5] is inside the location."
+  end
+
 end

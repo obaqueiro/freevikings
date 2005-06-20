@@ -34,9 +34,14 @@ class TestMap < Test::Unit::TestCase
   end
 
   def testRect
-    msg = "Map's rect begins at the top-left corner."
-    assert_equal @map.rect.left, 0, msg
-    assert_equal @map.rect.top, 0, msg
+    r = Rectangle.new(0, 0, Map::TILE_SIZE * 8, Map::TILE_SIZE * 8)
+    assert(r.eql?(@map.rect), "The two rectangles (#{r.to_s} and #{@map.rect.to_s}) should contain the same numbers => eql? is expected to be true.")
   end
 
 end # class TestMap
+
+class FreeVikings::Rectangle
+  def to_s
+    "[#{left}, #{top}, #{width}, #{height}]"
+  end
+end

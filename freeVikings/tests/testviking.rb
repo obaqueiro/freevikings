@@ -39,4 +39,11 @@ class TestViking < TestSprite
   def testMethodLeftWorks
     assert_equal 0, @viking.left
   end
+
+  def testAddedToTheLocation
+    v = Viking.new('Raymund BlueTooth', STARTPOS)
+    loc = MockLocation.new
+    loc.add_sprite v
+    assert_equal loc, v.location, "MockLocation should have set viking's 'location' attribute."
+  end
 end
