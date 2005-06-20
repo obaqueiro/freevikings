@@ -114,6 +114,7 @@ All the three examples expect you have created a RUDL::DisplaySurface
       else
         @world = World.new('pyramida_loc.xml',
                            'first_loc.xml',
+                           'yellowhall.xml',
                            'hopsy_loc.xml')
       end
 
