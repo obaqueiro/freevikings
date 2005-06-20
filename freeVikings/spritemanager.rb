@@ -61,9 +61,14 @@ all the sprites.
         # at je pekne aktualni:
         sprite.update
         # jestli se sprajt dostal mimo mapu, musi byt odstranen
-        unless sprite.location.rect_inside?(sprite.rect) then
-          sprite.destroy
-          @members.delete sprite
+        begin
+          unless sprite.location.rect_inside?(sprite.rect) then
+            sprite.destroy
+            @members.delete sprite
+          end
+        rescue NullLocation::NullLocationException
+          Log4r::Logger['freeVikings log'].fatal "Sprite #{sprite} doesn't have it's 'location' attribute set to a valid Location class."
+          raise
         end
       }
     end

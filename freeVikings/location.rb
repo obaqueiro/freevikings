@@ -43,8 +43,8 @@ module FreeVikings
     end
 
     def exitter=(exitter)
-      @spritemanager.add exitter
       @exitter = exitter
+      add_sprite exitter
     end
 
     attr_reader :exitter

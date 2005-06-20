@@ -20,4 +20,8 @@
     <outputter>stderr</outputter>
   </logger>
 
+  <logger name="freeVikings log" level="DEBUG">
+    <outputter>stderr</outputter>
+  </logger>
+
 </log4r_config>
