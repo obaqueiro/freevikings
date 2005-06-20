@@ -26,6 +26,11 @@ module FreeVikings
 
     alias_method :_update, :update
 
+    def update
+      _update
+      @shield.unofficial_update
+    end
+
     def shield_use
       return 'top' if @ability.shield_use == ShielderAbility::SHIELD_TOP
       return 'left' if @state.direction == 'left'

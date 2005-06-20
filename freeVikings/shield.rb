@@ -21,11 +21,23 @@ module FreeVikings
       init_images
     end
 
+    # This method doesn't do much. The real update stuff has moved
+    # into the unofficial_update method. See comments to learn why.
+
     def update
       unless @shielder.alive?
         destroy
         return
       end
+    end # method update
+
+    # Method unofficial_update is a hack to ensure the Shield is updated
+    # just after the Shielder. Simply: after the Shielder is updated, it calls
+    # unofficial_update over his shield.
+    # It's important to update them subsequently,
+    # because they have to move together.
+
+    def unofficial_update
       @rect.left = case state
                      when 'top'
                        @shielder.rect.left 
@@ -48,7 +60,7 @@ module FreeVikings
           s.destroy
         end
       end
-    end # method update
+    end
 
     def state
       @shielder.shield_use
