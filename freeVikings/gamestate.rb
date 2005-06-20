@@ -51,10 +51,10 @@ module FreeVikings
       super(context)
     end
 
-    def serve_event(event)
+    def serve_event(event, location)
       parent_serve_event(event)
       if event.is_a? KeyDownEvent
-	serve_keydown(event)
+	serve_keydown(event, location)
       elsif event.is_a? KeyUpEvent
 	serve_keyup(event)
       end # if
@@ -68,7 +68,7 @@ module FreeVikings
 
     private
 
-    def serve_keydown(keyevent)
+    def serve_keydown(keyevent, location)
       case keyevent.key
 	# Smerove klavesy:
       when K_LEFT
@@ -78,22 +78,23 @@ module FreeVikings
 	# Funkcni klavesy:
       when K_SPACE
 	@context.team.active.space_func_on
-      when K_TAB
-      when K_s
-      when K_f
       when K_d
 	@context.team.active.d_func_on
+      when K_s
+        location.active_objects_on_rect(@context.team.active.rect).each { |o| o.activate }
+      when K_f
+        location.active_objects_on_rect(@context.team.active.rect).each { |o| o.deactivate }
 	# Specialni klavesy:
       when K_RCTRL
 	@context.team.last
       when K_PAGEUP
 	@context.team.next
+      when K_q, K_ESCAPE
+        end_game
       when K_F3
 	@context.app_window.toggle_fullscreen
       when K_F4
         FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
-      when K_q, K_ESCAPE
-        end_game
       when K_F6
 	@context.give_up_game
       end # case

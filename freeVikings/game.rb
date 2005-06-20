@@ -192,7 +192,7 @@ regularly and refreshes the screen.
 
 	  # Zpracujeme udalosti:
 	  if event = RUDL::EventQueue.poll then
-	    @state.serve_event(event)
+	    @state.serve_event(event, location)
 	  end # if je udalost
 
 	  location.update

@@ -3,11 +3,12 @@
 
 # Prepinac
 
+require 'activeobject.rb'
 require 'monster.rb'
 
 module FreeVikings
 
-  class Switch < Sprite
+  class Switch < ActiveObject
 
     include Monster
 
@@ -33,6 +34,14 @@ module FreeVikings
     attr_reader :state
     attr_accessor :action
 
+    def activate
+      switch
+    end
+
+    def deactivate
+      switch
+    end
+
     def hurt
       switch
     end
@@ -43,6 +52,10 @@ module FreeVikings
 
     def off?
       not @state
+    end
+
+    def image
+      @image.image
     end
 
     private
