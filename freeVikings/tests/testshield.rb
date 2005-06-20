@@ -52,14 +52,14 @@ class TestShield < Test::Unit::TestCase
   def testShieldStopsPlasmaShot
     shot = RedShot.new [0,0], 0
     @location.sprites_on_rect = [shot, @shield]
-    @shield.update
+    @shield.unofficial_update
     assert_equal false, shot.alive?, "Shield should have killed the colliding RedShot."
   end
 
   def testShieldDoesNotStopAnArrow
     arrow = Arrow.new [0,0], 0
     @location.sprites_on_rect = [arrow, @shield]
-    @shield.update
+    @shield.unofficial_update
     assert_equal true, arrow.alive?, "Shield shouldn't have killed an arrow, because Baleog must be able to shoot through Olaf's shield."
   end
 
