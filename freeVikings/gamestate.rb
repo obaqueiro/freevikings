@@ -90,6 +90,8 @@ module FreeVikings
 	@context.team.next
       when K_F3
 	@context.app_window.toggle_fullscreen
+      when K_F4
+        FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
       when K_q, K_ESCAPE
         end_game
       when K_F6
