@@ -25,9 +25,10 @@ require 'testvikingstate.rb'
 require 'testvikingstatetostring.rb'
 require 'testcollisiontest.rb'
 require 'testimagebank.rb'
-require 'testgroup.rb'
 require 'testactiveobject.rb'
+require 'testgroup.rb'
 require 'testspritemanager.rb'
+require 'testactiveobjectmanager.rb'
 
 class FreeVikingsTestSuite
 
@@ -52,9 +53,10 @@ class FreeVikingsTestSuite
     suite << TestVikingStateToString.suite
     suite << TestCollisionTest.suite
     suite << TestImageBank.suite
-    suite << TestGroup.suite
     suite << TestActiveObject.suite
+    suite << TestGroup.suite
     suite << TestSpriteManager.suite
+    suite << TestActiveObjectManager.suite
 
     return suite
   end

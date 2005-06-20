@@ -25,4 +25,8 @@ class TestActiveObject < Test::Unit::TestCase
   def testMethodActivateExists
     assert_respond_to @object, :activate, "ActiveObject should have a method called 'activate' which is called when the player pushes the 'S' key over it."
   end
+
+  def testMethodDeactivateExists
+assert_respond_to @object, :deactivate, "ActiveObject should have a method called 'deactivate' which is called when the player pushes the 'F' key over it."
+  end
 end
