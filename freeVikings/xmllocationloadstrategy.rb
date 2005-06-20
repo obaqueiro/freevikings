@@ -4,6 +4,7 @@
 # Strategie nahravani map z xml datovych souboru.
 
 require 'locationloadstrategy.rb'
+require 'monsterscript.rb'
 
 module FreeVikings
 
@@ -54,13 +55,8 @@ module FreeVikings
 	return
       end
       @log.info "Loading script #{scriptfile}"
-      s = Script.new scriptfile
-
-      if s.const_defined? "MONSTERS" then
-	s::MONSTERS.each {|m| monster_manager.add_sprite m}
-      else
-	@log.info "In scriptfile #{scriptfile}: constant MONSTERS hasn't been defined. Maybe the script doesn't provide monsters."
-      end
+      s = MonsterScript.new scriptfile
+      s::MONSTERS.each {|m| monster_manager.add_sprite m}
       @log.info "Script #{scriptfile} successfully loaded."
     end
 
