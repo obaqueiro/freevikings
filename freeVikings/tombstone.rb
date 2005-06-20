@@ -18,10 +18,6 @@ module FreeVikings
     HEIGHT = 50
     WIDTH = 50
 
-    STATES = [['stone', 'tombstone.tga', 2.5], 
-              ['puff1', 'puff_cloud1.tga', 0.5],
-              ['puff2', 'puff_cloud2.tga', 0.5]]
-
     def initialize(initial_position)
       pos = initial_position
       if pos.size >= 4 then
@@ -30,9 +26,8 @@ module FreeVikings
       pos.w = WIDTH
       pos.h = HEIGHT
       super pos
-      init_images
       @appear_time = Time.now.to_i
-      @state = 0
+      @state = StateStone.new
     end
 
     def hurt
@@ -40,24 +35,57 @@ module FreeVikings
     end
 
     def update
-      if Time.now.to_i >= @appear_time + STATES[@state][2] then
-        @appear_time += STATES[@state][2]
-        @state += 1
+      if Time.now.to_i >= @appear_time + @state.duration then
+        @appear_time += @state.duration
+        if @state.next.nil? then
+          destroy
+          return
+        else
+          @state = @state.next.new
+        end
       end
-      destroy if @state == STATES.size
     end
 
-    def state
-      STATES[@state][0]
+    def image
+      @state.image.image
     end
+
+    attr_reader :state
 
     private
 
-    def init_images
-      @image = ImageBank.new self
-      STATES.each do |s|
-        @image.add_pair s[0], Image.new(s[1])
+    class State
+      attr_reader :to_s
+      attr_reader :image
+      attr_reader :duration
+      attr_reader :next
+    end # class TombStoneState
+
+    class StateStone < State
+      def initialize
+        @to_s = 'stone'
+        @image = Image.new 'tombstone.tga'
+        @duration = 2.5
+        @next = StateBigCloud
       end
-    end
+    end # class StateStone
+
+    class StateBigCloud < State
+      def initialize
+        @to_s = 'puff1'
+        @image = Image.new 'puff_cloud1.tga'
+        @duration = 0.5
+        @next = StateSmallCloud
+      end
+    end # class StateBigCloud
+
+    class StateSmallCloud < State
+      def initialize
+        @to_s = 'puff2'
+        @image = Image.new 'puff_cloud2.tga'
+        @duration = 0.5
+        @next = nil
+      end
+    end # class StateSmallCloud
   end # class Tombstone
 end # module FreeVikings
