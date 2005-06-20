@@ -4,12 +4,8 @@
 # Spravce sprajtu.
 
 require 'group.rb'
-require 'ext/Rectangle'
-#require 'rect.rb'
 
 module FreeVikings
-
-  Rectangle = FreeVikings::Extensions::Rectangle::Rectangle
 
   class SpriteManager < Group
 
@@ -58,13 +54,14 @@ all the sprites.
 
     def update
       @members.each { |sprite|
-        # at je pekne aktualni:
-        sprite.update
-        # jestli se sprajt dostal mimo mapu, musi byt odstranen
+        # If the sprite has got out of the map, we kill it.
+        # In the other case the sprite is updated.
         begin
           unless sprite.location.rect_inside?(sprite.rect) then
             sprite.destroy
             @members.delete sprite
+          else
+            sprite.update
           end
         rescue NullLocation::NullLocationException
           Log4r::Logger['freeVikings log'].fatal "Sprite #{sprite} doesn't have it's 'location' attribute set to a valid Location class."

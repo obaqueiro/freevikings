@@ -22,7 +22,6 @@ module FreeVikings
       @rect.h = image.h
       @rect.w = image.w
       caught = @location.sprites_on_rect(self.rect)
-      caught.delete self
       unless caught.empty?
 	  caught.each { |c| c.hurt if c.is_a? Hero} if (Time.now.sec % 2 == 0)
       end

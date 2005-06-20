@@ -79,7 +79,7 @@ end
 
 require 'ext/Rectangle'
 module FreeVikings
-  include FreeVikings::Extensions::Rectangle
+  Rectangle = FreeVikings::Extensions::Rectangle::Rectangle
 end
 
 FreeVikings::Init.new

@@ -20,7 +20,7 @@
     <outputter>stderr</outputter>
   </logger>
 
-  <logger name="freeVikings log" level="DEBUG">
+  <logger name="freeVikings log" level="ERROR">
     <outputter>stderr</outputter>
   </logger>
 

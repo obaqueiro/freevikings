@@ -42,6 +42,6 @@ end # class TestMap
 
 class FreeVikings::Rectangle
   def to_s
-    "[#{left}, #{top}, #{width}, #{height}]"
+    "[#{left}, #{top}, #{w}, #{h}]"
   end
 end

@@ -42,7 +42,6 @@ module FreeVikings
       end
 
       stroken = @location.sprites_on_rect(self.rect)
-      stroken.delete self
       while not stroken.empty? do
 	s = stroken.pop
 	if s.is_a? @hunted_type

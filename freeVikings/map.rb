@@ -94,7 +94,7 @@ module FreeVikings
     # (obrazky vsech pevnych dlazdic)
 
     def create_background
-      @background = RUDL::Surface.new([@rect.width, @rect.height])
+      @background = RUDL::Surface.new([@rect.w, @rect.h])
 	
       @blocks.each_index { |row_i|
         @blocks[row_i].each_index { |col_i|

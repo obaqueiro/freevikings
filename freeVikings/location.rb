@@ -38,8 +38,8 @@ module FreeVikings
     end
 
     def add_sprite(sprite)
-      @spritemanager.add sprite
       sprite.location = self
+      @spritemanager.add sprite
     end
 
     def exitter=(exitter)
@@ -52,9 +52,9 @@ module FreeVikings
     attr_accessor :start
 
     def delete_sprite(sprite)
+      @spritemanager.delete sprite
       sprite.location = NullLocation.new # nullocation.rb is required at 
                                          # the end of file
-      @spritemanager.delete sprite
     end
 
     def sprites_on_rect(rect)
