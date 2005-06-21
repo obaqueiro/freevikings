@@ -2,6 +2,7 @@
 # igneus 21.6.2005
 
 require 'entity.rb'
+require 'singleton'
 
 module FreeVikings
 
@@ -27,4 +28,20 @@ otherwise.)
       true
     end
   end # class Item
+
+  class NullItem < Item
+    include Singleton
+
+    def initialize
+      super([0,0,0,0])
+    end
+
+    def apply(user)
+      false
+    end
+
+    def null?
+      true
+    end
+  end
 end # module FreeVikings

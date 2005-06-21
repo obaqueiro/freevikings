@@ -84,6 +84,8 @@ module FreeVikings
         location.active_objects_on_rect(@context.team.active.rect).each { |o| o.activate }
       when K_f
         location.active_objects_on_rect(@context.team.active.rect).each { |o| o.deactivate }
+      when K_u
+        @context.team.active.use_item
 	# Specialni klavesy:
       when K_RCTRL
 	@context.team.last

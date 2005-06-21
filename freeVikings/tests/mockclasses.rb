@@ -78,6 +78,10 @@ module FreeVikings
       def sprites_on_rect(rect)
         @sprites_on_rect.dup
       end
+
+      def items_on_rect(rect)
+        []
+      end
     end
 
   end # module Mock

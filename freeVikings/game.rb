@@ -224,6 +224,7 @@ regularly and refreshes the screen.
     private
     def init_bottompanel_gfx
       @face_bg = RUDL::Surface.load_new(GFX_DIR+'/face_bg.tga')
+      @item_bg = RUDL::Surface.load_new(GFX_DIR+'/item_bg.tga')
       @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.tga')
     end # init_display
 
@@ -271,9 +272,10 @@ regularly and refreshes the screen.
         # paint inventory contents:
         item_positions = [[0,0],        [ITEM_SIZE,0],
                           [0,ITEM_SIZE],[ITEM_SIZE, ITEM_SIZE]]
-        vik.inventory.each_index do |k|
-          break if k.nil?
+        0.upto(3) do |k|
           item_position = [item_positions[k][0] + face_position[0] + VIKING_FACE_SIZE, item_positions[k][1]]
+          @bottompanel_view.blit(@item_bg, item_position)
+          next if vik.inventory[k].null?
           @bottompanel_view.blit(vik.inventory[k].image, item_position)
         end
 

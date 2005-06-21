@@ -32,5 +32,20 @@ Everything that has it's image and it's place on the world is an Entity.
     end
 
     attr_reader :rect
+
+=begin
+--- Entity#null?
+Maybe you don't know anything about the Desigh Patterns. Then you should know
+about one of them, it's known as 'Null Object'. How does it work?
+Some methods normally return a regular object or ((|nil|)). Then you must
+control what you have (((|nil|)) usually doesn't have the methods you need).
+Instead of ((|nil|)) you can often return an object which has no contents,
+but provides all the methods. This is a Null Object.
+Only Null Objects return ((|true|)) from this predicate method.
+=end
+
+    def null?
+      false
+    end
   end # class Entity
 end # module FreeVikings

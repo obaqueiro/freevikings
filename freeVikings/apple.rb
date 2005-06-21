@@ -16,5 +16,12 @@ hurted viking (it adds him one energy point if he isn't totally healthy).
     def init_images
       @image = Image.new 'apple.tga'
     end
+
+    def apply(user)
+      if user.respond_to? :heal then
+        return user.heal
+      end
+      return false
+    end
   end # class Apple
 end # module FreeVikings

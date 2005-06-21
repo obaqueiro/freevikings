@@ -50,4 +50,8 @@ class TestInventory < Test::Unit::TestCase
     @inventory.erase_active
     assert_equal s, @inventory.active, "The first item was active. It was erased, now the second one should be active."
   end
+
+  def testGetNullItem
+    assert_kind_of FreeVikings::NullItem, @inventory.fourth, "The inventory is empry, so it should return a NullItem object."
+  end
 end

@@ -53,7 +53,7 @@ Some basic ideas:
     end
 
     def active
-      @items[@active_index]
+      at(@active_index)
     end
 
     attr_reader :active_index
@@ -66,19 +66,19 @@ Some basic ideas:
     end
 
     def first
-      @items[0]
+      at 0
     end
 
     def second
-      @items[1]
+      at 1
     end
 
     def third
-      @items[2]
+      at 2
     end
 
     def fourth
-      @items[3]
+      at 3
     end
 
     def each
@@ -90,7 +90,15 @@ Some basic ideas:
     end
 
     def [](index)
-      @items[index]
+      at index
+    end
+
+    def at(index)
+      if @items[index] then
+        return @items[index]
+      else
+        return NullItem.instance
+      end
     end
 
     class IndexOutOfBoundsException < RuntimeError

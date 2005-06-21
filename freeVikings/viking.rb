@@ -20,6 +20,7 @@ module FreeVikings
     BASE_VELOCITY = 65
     WIDTH = 80
     HEIGHT = 100
+    MAX_ENERGY = 3
 
     def initialize(name, start_position=[0,0])
       super()
@@ -29,7 +30,7 @@ module FreeVikings
       @log.debug("Viking #{@name} initialised.")
       @rect = Rectangle.new start_position[0], start_position[1], WIDTH, HEIGHT
       @last_update_time = Time.now.to_f
-      @energy = 3 # zivotni sila
+      @energy = MAX_ENERGY # zivotni sila
 
       @portrait = Portrait.new('viking_face.tga', 'viking_face_unactive.tga', 'dead_face.png')
 
@@ -62,6 +63,15 @@ module FreeVikings
     def hurt
       @energy -= 1
       destroy if @energy <= 0
+    end
+
+    def heal
+      if @energy < MAX_ENERGY
+        @energy += 1
+        return true
+      else
+        return false
+      end
     end
 
     def move_left
@@ -106,6 +116,12 @@ module FreeVikings
     end
 
     def d_func_off
+    end
+
+    def use_item
+      if @inventory.active.apply(self) then
+        @inventory.erase_active
+      end
     end
 
     # vrati souradnice stredu aktualniho obrazku
