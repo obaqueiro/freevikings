@@ -1,14 +1,16 @@
 # viking.rb
 # igneus 20.1.2004
 
+require 'log4r'
+
 require 'sprite.rb'
 require 'deadviking.rb'
 
 require 'vikingstate.rb'
 require 'imagebank.rb'
 require 'nullocation.rb'
-require 'log4r'
 require 'collisiontest.rb'
+require 'inventory.rb'
 
 module FreeVikings
 
@@ -30,7 +32,11 @@ module FreeVikings
       @energy = 3 # zivotni sila
 
       @portrait = Portrait.new('viking_face.tga', 'viking_face_unactive.tga', 'dead_face.png')
+
+      @inventory = Inventory.new
     end
+
+    attr_reader :inventory
 
     def Viking.createWarior(name, start_position)
       return Warior.new(name, start_position)
@@ -133,6 +139,8 @@ module FreeVikings
     # Aktualisuje posici vikinga.
 
     def update
+      collect_items # sebere vsechno, na co narazi :o)
+
       @rect.h = image.h
       @rect.w = image.w
 
@@ -200,6 +208,14 @@ module FreeVikings
         return true
       else
         return false
+      end
+    end
+
+    private
+    def collect_items
+      @location.items_on_rect(rect).each do |i|
+        @location.delete_item i
+        @inventory.put i
       end
     end
 

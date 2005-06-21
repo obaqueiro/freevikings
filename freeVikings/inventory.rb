@@ -81,6 +81,18 @@ Some basic ideas:
       @items[3]
     end
 
+    def each
+      @items.each {|i| yield i}
+    end
+
+    def each_index
+      @items.each_index {|i| yield i}
+    end
+
+    def [](index)
+      @items[index]
+    end
+
     class IndexOutOfBoundsException < RuntimeError
     end
   end # class Inventory

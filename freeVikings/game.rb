@@ -58,8 +58,10 @@ Code-explaining constants used almost to count up positions inside the game
 window.
 =end
     VIKING_FACE_SIZE = 60
-    BOTTOMPANEL_HEIGHT = VIKING_FACE_SIZE
-
+    INVENTORY_VIEW_SIZE = 60
+    LIVE_SIZE = 20
+    BOTTOMPANEL_HEIGHT = VIKING_FACE_SIZE + LIVE_SIZE
+    ITEM_SIZE = 30
 
 =begin
 == Public instance methods
@@ -247,9 +249,11 @@ regularly and refreshes the screen.
       # vybarveni pozadi pro podobenky vikingu:
       @bottompanel_view.fill([60,60,60])
       i = 0
+
       @team.each { |vik|
-	@bottompanel_view.blit(@face_bg, [i * 2 * VIKING_FACE_SIZE, 0])
-	#if vik.alive? then
+        # paint face:
+        face_position = [i * (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE), 0]
+	@bottompanel_view.blit(@face_bg, face_position)
         portrait_img = if @team.active == vik && vik.alive? then
                          vik.portrait.active
                        elsif not vik.alive?
@@ -257,9 +261,22 @@ regularly and refreshes the screen.
                        else
                          vik.portrait.unactive
                        end
-        @bottompanel_view.blit(portrait_img, [i * 2 * VIKING_FACE_SIZE, 0])
-        vik.energy.times {|j| @bottompanel_view.blit(@energy_punkt, [i*2*VIKING_FACE_SIZE + VIKING_FACE_SIZE + 2, j*@energy_punkt.h + 3])}
-	#end
+        @bottompanel_view.blit(portrait_img, face_position)
+        # paint the lives:
+        lives_y = VIKING_FACE_SIZE
+        vik.energy.times {|j| 
+          live_position = [face_position[0] + j * LIVE_SIZE, lives_y]
+          @bottompanel_view.blit(@energy_punkt, live_position)
+        }
+        # paint inventory contents:
+        item_positions = [[0,0],        [ITEM_SIZE,0],
+                          [0,ITEM_SIZE],[ITEM_SIZE, ITEM_SIZE]]
+        vik.inventory.each_index do |k|
+          break if k.nil?
+          item_position = [item_positions[k][0] + face_position[0] + VIKING_FACE_SIZE, item_positions[k][1]]
+          @bottompanel_view.blit(vik.inventory[k].image, item_position)
+        end
+
 	i += 1
       }
     end # repaint_bottompanel

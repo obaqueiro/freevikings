@@ -24,6 +24,7 @@ otherwise.)
 =end
 
     def apply(user)
+      true
     end
   end # class Item
 end # module FreeVikings
