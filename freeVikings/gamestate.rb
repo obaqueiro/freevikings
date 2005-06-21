@@ -28,12 +28,21 @@ module FreeVikings
 
     # Obslouzi udalost tak, jak je to v danem stavu potreba.
 
-    def serve_event(event)
+    def serve_event(event, location)
       end_game if event.is_a? QuitEvent
+
+      if event.is_a? KeyDownEvent
+	serve_keydown(event, location)
+      elsif event.is_a? KeyUpEvent
+	serve_keyup(event, location)
+      end # if
     end
 
-    # Zajistime potomkum dostupnost predkovy metody:
-    alias :parent_serve_event :serve_event
+    def serve_keydown(event, location)
+    end
+
+    def serve_keyup(event, location)
+    end
 
     private
 
@@ -46,19 +55,6 @@ module FreeVikings
 
 
   class PlayingGameState < GameState
-
-    def initialize(context)
-      super(context)
-    end
-
-    def serve_event(event, location)
-      parent_serve_event(event)
-      if event.is_a? KeyDownEvent
-	serve_keydown(event, location)
-      elsif event.is_a? KeyUpEvent
-	serve_keyup(event)
-      end # if
-    end # method serve_event
 
     def view_center
       # stred nahledu na mapu by mel byt ve stredu obrazku
@@ -86,6 +82,8 @@ module FreeVikings
         location.active_objects_on_rect(@context.team.active.rect).each { |o| o.deactivate }
       when K_u
         @context.team.active.use_item
+      when K_p
+        @context.pause
 	# Specialni klavesy:
       when K_RCTRL
 	@context.team.last
@@ -102,7 +100,7 @@ module FreeVikings
       end # case
     end # private method serve_keydown
 
-    def serve_keyup(keyevent)
+    def serve_keyup(keyevent, location)
       case keyevent.key
       when K_LEFT, K_RIGHT
 	@context.team.active.stop
@@ -112,6 +110,15 @@ module FreeVikings
         @context.team.active.d_func_off
       end
     end # private method serve_keyup
-
   end # class PlayingGameState
+
+  class PausedGameState < GameState
+
+    def serve_keydown(event, location)
+      case event.key
+      when K_p
+        @context.unpause
+      end
+    end
+  end # class PausedGameState
 end # module

@@ -33,6 +33,14 @@ module FreeVikings
       @spritemanager.update
     end
 
+    def pause
+      @spritemanager.pause
+    end
+
+    def unpause
+      @spritemanager.unpause
+    end
+
     def paint(surface, center)
       @map.paint(surface, center)
       displayed_rect = centered_view_rect(background.w, background.h, surface.w, surface.h, center)

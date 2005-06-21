@@ -52,6 +52,14 @@ all the sprites.
       }
     end
 
+    def pause
+      @members.each {|m| m.pause}
+    end
+
+    def unpause
+      @members.each {|m| m.unpause}
+    end
+
 =begin
 --- SpriteManager#sprites_on_rect(rect)
 It finds and in an Array returns all the sprites which can be found in the

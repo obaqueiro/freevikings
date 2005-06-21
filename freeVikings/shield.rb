@@ -43,7 +43,7 @@ It's a man (or woman, monster, ...) who carries the shield.
 
     def update
       unless @shielder.alive?
-        destroy
+        @location.delete_sprite self # 'destroy' wouldn't do anything
         return
       end
     end # method update

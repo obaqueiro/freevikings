@@ -141,6 +141,16 @@ the give up key (F6 by default). Causes location reloading.
 	@give_up = true
     end
 
+    def pause
+      @world.location.pause
+      @state = PausedGameState.new self
+    end
+
+    def unpause
+      @world.location.unpause
+      @state = PlayingGameState.new self
+    end
+
 =begin
 --- Game#game_loop
 When this method is called, the real fun begins (well, I know freeVikings
@@ -193,7 +203,8 @@ regularly and refreshes the screen.
 	    @state.serve_event(event, location)
 	  end # if je udalost
 
-	  location.update
+	  location.update unless @state.kind_of? PausedGameState
+
 	  location.paint(@map_view, @team.active.center)
 	  @app_window.blit(@map_view, [0,0])
 

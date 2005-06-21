@@ -4,16 +4,18 @@
 # Tridy sprajtu pro hru FreeVikings
 
 require 'entity.rb'
-require 'velocity.rb'
+require 'pausable.rb'
 require 'imagebank.rb'
 
 module FreeVikings
 
   class Sprite < Entity
 
+    include Pausable
+
 =begin
 =FreeVikings::Sprite class
-Class Sprite represents an object which has to periodicaly update it's
+Class Sprite represents an object which needs to periodicaly update it's
 internal state. It's sense of life is to be displayed, so it also has some
 attributes containing it's position in the location and it's bitmap
 representation.
@@ -39,7 +41,7 @@ Contains sprite's normal velocity in pixels per second.
 
 =begin
 --- Sprite#moving
-Returns true if the sprite is moving, else returns nil.
+Returns true if the sprite is moving, nil otherwise.
 =end
 
     attr_reader :moving
@@ -87,13 +89,7 @@ Returns an array of [left, top]. It's only for comfort.
 --- Sprite#rect
 Returns FreeVikings::Rectangle instance saying where the sprite is and how
 much place it takes.
-=end
 
-    def rect
-      @rect
-    end
-
-=begin
 --- Sprite#destroy
 This method is called when the sprite is killed.
 =end
