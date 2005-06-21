@@ -1,6 +1,8 @@
 # inventory.rb
 # igneus 21.6.2005
 
+require 'item.rb'
+
 module FreeVikings
 
 =begin

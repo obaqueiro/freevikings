@@ -32,6 +32,12 @@ It's a man (or woman, monster, ...) who carries the shield.
       init_images
     end
 
+    # Not Thor himself is able to destroy Olaf's shield.
+
+    def destroy
+      false
+    end
+
     # This method doesn't do much. The real update stuff has moved
     # into the unofficial_update method. See comments to learn why.
 

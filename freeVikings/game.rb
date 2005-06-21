@@ -225,6 +225,7 @@ regularly and refreshes the screen.
     def init_bottompanel_gfx
       @face_bg = RUDL::Surface.load_new(GFX_DIR+'/face_bg.tga')
       @item_bg = RUDL::Surface.load_new(GFX_DIR+'/item_bg.tga')
+      @selection_box = RUDL::Surface.load_new(GFX_DIR+'/selection.tga')
       @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.tga')
     end # init_display
 
@@ -277,6 +278,9 @@ regularly and refreshes the screen.
           @bottompanel_view.blit(@item_bg, item_position)
           next if vik.inventory[k].null?
           @bottompanel_view.blit(vik.inventory[k].image, item_position)
+          if vik.inventory.active_index == k then
+            @bottompanel_view.blit(@selection_box, item_position)
+          end
         end
 
 	i += 1

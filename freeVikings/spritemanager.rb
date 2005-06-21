@@ -41,7 +41,7 @@ all the sprites.
         begin
           unless sprite.location.rect_inside?(sprite.rect) then
             sprite.destroy
-            @members.delete sprite
+            # @members.delete sprite
           else
             sprite.update
           end
