@@ -14,6 +14,7 @@ require 'testxmllocloadstrategy.rb'
 require 'testmap.rb'
 require 'testentity.rb'
 require 'testsprite.rb'
+require 'testitem.rb'
 require 'testarrow.rb'
 require 'testshield.rb'
 require 'testviking.rb'
@@ -30,6 +31,7 @@ require 'testactiveobject.rb'
 require 'testgroup.rb'
 require 'testspritemanager.rb'
 require 'testactiveobjectmanager.rb'
+require 'testitemmanager.rb'
 require 'testmonsterscript.rb'
 require 'testinventory.rb'
 
@@ -45,6 +47,7 @@ class FreeVikingsTestSuite
     suite << TestMap.suite
     suite << TestEntity.suite
     suite << TestSprite.suite
+    suite << TestItem.suite
     suite << TestArrow.suite
     suite << TestShield.suite
     suite << TestViking.suite
@@ -61,6 +64,7 @@ class FreeVikingsTestSuite
     suite << TestGroup.suite
     suite << TestSpriteManager.suite
     suite << TestActiveObjectManager.suite
+    suite << TestItemManager.suite
     suite << TestMonsterScript.suite
     suite << TestInventory.suite
 
