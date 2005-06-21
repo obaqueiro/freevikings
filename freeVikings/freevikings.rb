@@ -21,6 +21,8 @@ module FreeVikings
 
   WIN_WIDTH = 640
   WIN_HEIGHT = 480
+
+  CODE_DIRS = ['monsters', 'ext']
 end
 
 include FreeVikings
@@ -77,10 +79,13 @@ if OPTIONS['profile'] then
   require 'profile'
 end
 
+$:.concat FreeVikings::CODE_DIRS
+
 require 'ext/Rectangle'
 
 module FreeVikings
   Rectangle = Extensions::Rectangle::Rectangle
 end
+
 
 FreeVikings::Init.new

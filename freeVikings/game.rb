@@ -5,14 +5,9 @@
 
 require 'RUDL'
 
-require 'sprite.rb'
 require 'viking.rb'
 require 'hero.rb'
-require 'duck.rb'
-require 'slug.rb'
-require 'plasmashooter.rb'
 require 'team.rb'
-require 'map.rb'
 require 'world.rb'
 require 'location.rb'
 require 'gamestate.rb'

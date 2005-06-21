@@ -2,13 +2,11 @@
 # igneus 9.6.2005
 # Lokacni skript pridavajici potvory do lokace Yellow Hall
 
-require 'slug.rb'
-require 'plasmashooter.rb'
+require 'monsters/plasmashooter.rb'
+require 'monsters/robot.rb'
+require 'monsters/bridge.rb'
 require 'switch.rb'
-require 'robot.rb'
-require 'bridge.rb'
 require 'apple.rb'
-
 require 'imagebank.rb'
 
 include FreeVikings

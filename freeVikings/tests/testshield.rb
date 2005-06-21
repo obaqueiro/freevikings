@@ -8,7 +8,7 @@ require 'test/unit'
 require 'mockclasses.rb'
 
 require 'shield.rb'
-require 'redshot.rb'
+require 'monsters/redshot.rb'
 require 'arrow.rb'
 require 'hero.rb'
 

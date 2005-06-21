@@ -3,7 +3,7 @@
 
 # Mixin oznacujici tridu jako tridu nepratel.
 
-require 'tombstone.rb'
+require 'monsters/tombstone.rb'
 
 module FreeVikings
   
