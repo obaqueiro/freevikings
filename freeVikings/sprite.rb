@@ -126,13 +126,7 @@ Returns true if sprite is still alive, false otherwise.
 =begin
 --- Sprite#image
 Returns the sprite's image (RUDL::Surface object).
-=end
 
-    def image
-      @image.image
-    end
-
-=begin
 --- Sprite#stop
 Stops sprite's x-axis movement.
 =end

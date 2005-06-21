@@ -12,5 +12,8 @@ Items are absolutely passive Entities.
 =end
 
   class ItemManager < Group
+    
+    include PaintableGroup
+
   end # class ItemManager
 end # module FreeVikings

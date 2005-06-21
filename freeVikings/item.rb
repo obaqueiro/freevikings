@@ -18,6 +18,9 @@ It supports one operation - application (see ((<Item#apply>))).
 Applies the item onto the ((|user|)). ((|user|)) is expected to be 
 a ((<Sprite>)). Results of an application can be very different - a change
 of weather, some other ((<Entity>))'s death, ...
+It returns ((|true|)) if the application is successfull (then the ((<Item>)) 
+can be erased from the viking's ((<Inventory>)), ((|false|)) is returned 
+otherwise.)
 =end
 
     def apply(user)

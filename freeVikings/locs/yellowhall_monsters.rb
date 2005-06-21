@@ -7,6 +7,7 @@ require 'plasmashooter.rb'
 require 'switch.rb'
 require 'robot.rb'
 require 'bridge.rb'
+require 'apple.rb'
 
 require 'imagebank.rb'
 
@@ -57,4 +58,7 @@ LOCATION.add_sprite shooter
 LOCATION.add_active_object switch_1
 LOCATION.add_sprite FreeVikings::Robot.new([800, 400], 120)
 LOCATION.add_sprite bridge
+
 LOCATION.add_active_object switch_2
+
+LOCATION.add_item Apple.new([400,80])

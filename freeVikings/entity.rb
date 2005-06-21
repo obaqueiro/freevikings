@@ -27,6 +27,10 @@ Everything that has it's image and it's place on the world is an Entity.
       init_images if self.respond_to? :init_images
     end
 
+    def image
+      @image.image
+    end
+
     attr_reader :rect
   end # class Entity
 end # module FreeVikings

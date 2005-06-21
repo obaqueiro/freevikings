@@ -38,7 +38,7 @@ module FreeVikings
     private
 
     def end_game
-      puts "Ending the game."
+      puts "*** Ending the game."
       exit
     end # private method end_game
 

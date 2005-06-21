@@ -10,6 +10,7 @@
 require 'map.rb'
 require 'spritemanager.rb'
 require 'activeobjectmanager.rb'
+require 'itemmanager.rb'
 
 module FreeVikings
 
@@ -22,6 +23,7 @@ module FreeVikings
       @map = Map.new(loader)
       @spritemanager = SpriteManager.new
       @activeobjectmanager = ActiveObjectManager.new
+      @itemmanager = ItemManager.new
       loader.load_scripts(self)
       loader.load_exit(self)
       loader.load_start(self)
@@ -35,6 +37,7 @@ module FreeVikings
       @map.paint(surface, center)
       displayed_rect = centered_view_rect(background.w, background.h, surface.w, surface.h, center)
       @activeobjectmanager.paint(surface, displayed_rect)
+      @itemmanager.paint(surface, displayed_rect)
       @spritemanager.paint(surface, displayed_rect)
     end
 
@@ -76,6 +79,18 @@ module FreeVikings
 
     def active_objects_on_rect(rect)
       @activeobjectmanager.members_on_rect(rect)
+    end
+
+    def add_item(item)
+      @itemmanager.add item
+    end
+
+    def delete_item(item)
+      @itemmanager.delete item
+    end
+
+    def items_on_rect(rect)
+      @itemmanager.members_on_rect(rect)
     end
 
     def rect_inside?(rect)
