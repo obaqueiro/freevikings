@@ -203,7 +203,7 @@ regularly and refreshes the screen.
 	    @state.serve_event(event, location)
 	  end # if je udalost
 
-	  location.update unless @state.kind_of? PausedGameState
+	  location.update unless @state.paused?
 
 	  location.paint(@map_view, @team.active.center)
 	  @app_window.blit(@map_view, [0,0])
@@ -285,7 +285,9 @@ regularly and refreshes the screen.
           next if vik.inventory[k].null?
           @bottompanel_view.blit(vik.inventory[k].image, item_position)
           if vik.inventory.active_index == k then
-            @bottompanel_view.blit(@selection_box, item_position)
+            if not (@state.paused? and Time.now.to_i % 2 == 0) then
+              @bottompanel_view.blit(@selection_box, item_position)
+            end
           end
         end
 

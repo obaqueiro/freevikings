@@ -44,6 +44,10 @@ module FreeVikings
     def serve_keyup(event, location)
     end
 
+    def paused?
+      false
+    end
+
     private
 
     def end_game
@@ -82,7 +86,7 @@ module FreeVikings
         location.active_objects_on_rect(@context.team.active.rect).each { |o| o.deactivate }
       when K_u
         @context.team.active.use_item
-      when K_p
+      when K_p, K_TAB
         @context.pause
 	# Specialni klavesy:
       when K_RCTRL
@@ -116,9 +120,35 @@ module FreeVikings
 
     def serve_keydown(event, location)
       case event.key
-      when K_p
+      when K_p, K_TAB
         @context.unpause
+      when K_UP
+        if active_inventory.active_index >= 2 then
+          active_inventory.active_index -= 2
+        end
+      when K_DOWN
+        if active_inventory.active_index <= 1 then
+          active_inventory.active_index += 2
+        end
+      when K_LEFT
+        if active_inventory.active_index % 2 == 1 then
+          active_inventory.active_index -= 1
+        end
+      when K_RIGHT
+        if active_inventory.active_index % 2 == 0 then
+          active_inventory.active_index += 1
+        end
       end
+    end
+
+    def paused?
+      true
+    end
+
+    private
+
+    def active_inventory
+      @context.team.active.inventory
     end
   end # class PausedGameState
 end # module
