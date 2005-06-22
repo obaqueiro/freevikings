@@ -49,7 +49,7 @@ begin
     when "--profile"
       FreeVikings::OPTIONS['profile'] = true
     when "--extensions"
-      FreeVikings::OPTIONS['extensions'] = true
+      FreeVikings::OPTIONS['extensions'] = true       
     when "--fps"
       FreeVikings::OPTIONS['display_fps'] = true
     when "--fullscreen"
