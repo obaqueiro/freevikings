@@ -8,7 +8,11 @@ module FreeVikings
   class Rectangle < Array
 
     def initialize(*coordinates)
-      super(coordinates[0..3])
+      if coordinates.size >= 4 then
+        super(coordinates[0..3])
+      else
+        super(coordinates[0][0..3])
+      end
     end
 
     def collides?(rect)

@@ -55,4 +55,10 @@ class TestRect < Test::Unit::TestCase
     assert_equal 1, r.left
     assert_equal 1, r[0]
   end
+
+  def testInitializationByRectangle
+    r = @R.new 1, 1, 2, 3
+    s = @R.new r
+    assert_equal r.left, s.left, "s was initialized by values from r, so their 'left' values should be the same."
+  end
 end

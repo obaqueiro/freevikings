@@ -37,6 +37,7 @@ end
 
 options = GetoptLong.new(
                          ["--profile", "-p", GetoptLong::NO_ARGUMENT],
+                         ["--extensions", "-x", GetoptLong::NO_ARGUMENT],
                          ["--fps",     "-F", GetoptLong::NO_ARGUMENT],
                          ["--fullscreen", "-f", GetoptLong::NO_ARGUMENT],
                          ["--help",    "-h", GetoptLong::NO_ARGUMENT]
@@ -47,6 +48,8 @@ begin
     case option
     when "--profile"
       FreeVikings::OPTIONS['profile'] = true
+    when "--extensions"
+      FreeVikings::OPTIONS['extensions'] = true
     when "--fps"
       FreeVikings::OPTIONS['display_fps'] = true
     when "--fullscreen"
@@ -81,11 +84,6 @@ end
 
 $:.concat FreeVikings::CODE_DIRS
 
-require 'ext/Rectangle'
-
-module FreeVikings
-  Rectangle = Extensions::Rectangle::Rectangle
-end
-
+require "alternatives.rb"
 
 FreeVikings::Init.new
