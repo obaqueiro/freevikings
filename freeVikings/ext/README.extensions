@@ -1,6 +1,6 @@
-	-----------------------------------------------
-		freeVikings compiled extensions
-	-----------------------------------------------
+	---------------------------------------------------
+		= freeVikings compiled extensions =
+	---------------------------------------------------
 
 06/23/2005
 
@@ -18,3 +18,23 @@ Czech people say "the golden road is in the middle". And I decided to use
 this golden way. I have started rewriting the critical classes in C++
 as Ruby extensions. I still have the beauty and ellegance of Ruby, and, 
 where I need it, the Power of C++.
+
+== USAGE ==
+
+The C++ written compiled extensions are disabled by default, because not
+everyone can compile them (as mentioned above, not everyone has all the tools
+needed to a successfull compilation) and not everyone needs them.
+If you have the extensions compiled and want to enjoy the better performance,
+run freeVikings with -x (or --extensions) commandline option.
+
+== COMPILATION ==
+
+To build the compiled extensions, you will need SWIG (www.swig.org) and 
+a C++ compiler. (I don't know which work and which do not, I have only 
+tried g++ from the GNU Compiler Collection.) No additional libraries are 
+needed.
+I haven't learned yet how to tell GNU/automake and GNU/autoconf to do what
+you want them to, so you have to modify ext/rectangle/Makefile first.
+If you are ready, run make and pray. Maybe the extensions will compile well.
+If there were any problems, report them, I'll try to solve them.
+(My e-mail address is in the central README file.)

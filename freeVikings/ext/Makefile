@@ -1,8 +1,10 @@
 # Makefile pro rozsireni Ruby napsana v C++ pro hru freeVikings.
 # igneus 7.6.2005
 
-all: Rectangle.so
+RECTANGLE_EXT=Rectangle.so
 
-Rectangle.so: rectangle/*
+all: $(RECTANGLE_EXT)
+
+$(RECTANGLE_EXT): rectangle/*
 	cd rectangle && make
-	cp rectangle/Rectangle.so .
+	cp rectangle/$(RECTANGLE_EXT) .
