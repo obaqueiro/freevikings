@@ -1,0 +1,20 @@
+	-----------------------------------------------
+		freeVikings compiled extensions
+	-----------------------------------------------
+
+06/23/2005
+
+Maybe you are one of those who can't afford a strong machine which
+executes milliards of instructions per seconds. Then you can't play
+freeVikings well, because all the source code is interpreted at runtime
+and the game is very slow on old machines.
+
+I have the same problem. My development machine becomes ancient (it was built
+up in 1996 I think) and my own game runs very slowly on it. There is a way from
+this terrible situation - to rewrite freeVikings into some of the compiled
+languages such as C or C++. But I don't like those. For me it's very 
+uncomfortable to use them. I like Ruby.
+Czech people say "the golden road is in the middle". And I decided to use
+this golden way. I have started rewriting the critical classes in C++
+as Ruby extensions. I still have the beauty and ellegance of Ruby, and, 
+where I need it, the Power of C++.
