@@ -13,8 +13,7 @@ class Apex < FreeVikings::Sprite
 
   def update
     colliding_sprites = @location.sprites_on_rect(rect)
-    colliding_sprites.delete_if {|s| s.is_a? Apex}
-    colliding_sprites.each {|s| s.hurt}
+    colliding_sprites.each {|s| s.hurt if s.kind_of? Hero}
   end
 end
 
