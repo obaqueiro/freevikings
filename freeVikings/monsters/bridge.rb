@@ -4,6 +4,7 @@
 # A bridge for the vikings.
 
 require 'platform'
+require 'sprite.rb'
 
 module FreeVikings
 

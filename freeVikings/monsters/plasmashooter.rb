@@ -3,7 +3,7 @@
 
 # Automaticky vystrelovac plazmovych strel
 
-require 'redshot.rb'
+require 'monsters/redshot.rb'
 
 module FreeVikings
 

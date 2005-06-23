@@ -258,6 +258,7 @@ regularly and refreshes the screen.
       @bottompanel_view.fill([60,60,60])
       i = 0
 
+      time = Time.now.to_f
       @team.each { |vik|
         # paint face:
         face_position = [i * (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE), 0]
@@ -282,10 +283,12 @@ regularly and refreshes the screen.
         0.upto(3) do |k|
           item_position = [item_positions[k][0] + face_position[0] + VIKING_FACE_SIZE, item_positions[k][1]]
           @bottompanel_view.blit(@item_bg, item_position)
-          next if vik.inventory[k].null?
-          @bottompanel_view.blit(vik.inventory[k].image, item_position)
+          unless vik.inventory[k].null?
+            @bottompanel_view.blit(vik.inventory[k].image, item_position)
+          end
           if vik.inventory.active_index == k then
-            if not (@state.paused? and Time.now.to_i % 2 == 0) then
+            if (not @state.paused?) or 
+                (@state.paused? and (not @team.active == vik or time % 1 > 0.2))
               @bottompanel_view.blit(@selection_box, item_position)
             end
           end

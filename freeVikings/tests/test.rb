@@ -72,19 +72,20 @@ class FreeVikingsTestSuite
   end
 end
 
+verbosity = Test::Unit::UI::VERBOSE
+
 if ARGV[0] =~ /^[gG][tT][kK]$/ then
   puts 'GTK UI'
   require 'testrunner.rb'
   trm = Test::Unit::UI::GTK
-elsif ARGV[0] =~ /^[tT][kK]$/
+  trm::TestRunner.run(FreeVikingsTestSuite, verbosity)
+elsif ARGV[0] =~ /^[tT][kK]$/ then
   puts 'Tk UI'
   require 'test/unit/ui/tk/testrunner'
   trm = Test::Unit::UI::Tk
   trm::TestRunner.run(FreeVikingsTestSuite)
-  exit
 else
   require 'test/unit/ui/console/testrunner'
   trm = Test::Unit::UI::Console
+  trm::TestRunner.run(FreeVikingsTestSuite, verbosity)
 end
-
-trm::TestRunner.run(FreeVikingsTestSuite, Test::Unit::UI::VERBOSE)

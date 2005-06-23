@@ -13,6 +13,10 @@ class TestInventory < Test::Unit::TestCase
     @inventory = FreeVikings::Inventory.new
   end
 
+  def testInitialActiveIndexIsZero
+    assert_equal 0, @inventory.active_index, "When a new Inventory is initialized, it's active slot should be 0, even if it is empty."
+  end
+
   def testEmpty
     assert @inventory.empty?, "Inventory is empty."
   end
@@ -57,7 +61,7 @@ class TestInventory < Test::Unit::TestCase
 
   def testPutIntoAFullInventoryRaisesException
     4.times {@inventory.put(Object.new)}
-    assert_raise (FreeVikings::Inventory::NoSlotFreeException, "You can't put an Item into a full Inventory. An exception should be thrown.") do
+    assert_raise(FreeVikings::Inventory::NoSlotFreeException, "You can't put an Item into a full Inventory. An exception should be thrown.") do
       @inventory.put(Object.new)
     end
   end

@@ -119,25 +119,31 @@ module FreeVikings
   class PausedGameState < GameState
 
     def serve_keydown(event, location)
-      case event.key
-      when K_p, K_TAB
-        @context.unpause
-      when K_UP
-        if active_inventory.active_index >= 2 then
-          active_inventory.active_index -= 2
+      begin
+        case event.key
+        when K_p, K_TAB
+          @context.unpause
+        when K_UP
+          if active_inventory.active_index >= 2 then
+            active_inventory.active_index -= 2
+          end
+        when K_DOWN
+          if active_inventory.active_index <= 1 then
+            active_inventory.active_index += 2
+          end
+        when K_LEFT
+          if active_inventory.active_index % 2 == 1 then
+            active_inventory.active_index -= 1
+          end
+        when K_RIGHT
+          if active_inventory.active_index % 2 == 0 then
+            active_inventory.active_index += 1
+          end
         end
-      when K_DOWN
-        if active_inventory.active_index <= 1 then
-          active_inventory.active_index += 2
-        end
-      when K_LEFT
-        if active_inventory.active_index % 2 == 1 then
-          active_inventory.active_index -= 1
-        end
-      when K_RIGHT
-        if active_inventory.active_index % 2 == 0 then
-          active_inventory.active_index += 1
-        end
+      rescue Inventory::EmptySlotRequiredException
+        # This exception doesn't mean anything bad for us. The player
+        # just tried to move the selection in the inventory
+        # onto a slot which doesn't have any item inside.
       end
     end
 
