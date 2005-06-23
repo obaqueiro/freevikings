@@ -65,8 +65,13 @@ class Browser
   def update
     @view_center[0] += @center_move[0]
     @view_center[1] += @center_move[1]
-    serve_event RUDL::EventQueue.poll
+    RUDL::EventQueue.get.each do |event|
+      serve_event event
+    end
+    @loc.update
     @loc.paint @win, @view_center
+    pos = mouse_position_in_location
+    @win.print([10,10], "[#{pos[0]}, #{pos[1]}]", 0xFFFFFFFF)
     @win.flip
   end
 	
@@ -77,6 +82,13 @@ class Browser
   end
 
   private
+
+  # Returns the position of the mouse relative to the topleft 
+  # corner of the location
+
+  def mouse_position_in_location
+    winpos_to_locpos(RUDL::Mouse.pos)
+  end
 
   # Serves event
 	
