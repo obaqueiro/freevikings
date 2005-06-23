@@ -54,4 +54,11 @@ class TestInventory < Test::Unit::TestCase
   def testGetNullItem
     assert_kind_of FreeVikings::NullItem, @inventory.fourth, "The inventory is empry, so it should return a NullItem object."
   end
+
+  def testPutIntoAFullInventoryRaisesException
+    4.times {@inventory.put(Object.new)}
+    assert_raise (FreeVikings::Inventory::NoSlotFreeException) do
+      @inventory.put(Object.new)
+    end
+  end
 end

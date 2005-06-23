@@ -39,7 +39,11 @@ Some basic ideas:
     end
 
     def put(item)
-      @items.push item unless full?
+      if full? then
+        raise NoSlotFreeException, "There is no free inventory slot " \
+        " to place the item #{item} into."
+      end
+      @items.push item
     end
 
     def erase_active
@@ -103,7 +107,22 @@ Some basic ideas:
       end
     end
 
+=begin
+== Inventory::IndexOutOfBoundsException
+This exception is raised by the slot-accessing methods 
+(((<Inventory#active_index=>)), ((<Inventory#first>)), ((<Inventory#second>)),
+((<Inventory#third>)), ((<Inventory#fourth>)), ((<Inventory#at>)), 
+((<Inventory#[]>))) when a non-existing slot is required.
+=end
     class IndexOutOfBoundsException < RuntimeError
+    end
+
+=begin
+== Inventory::NoSlotFreeException
+An type of exception raised by ((<Inventory#put>)) if there is no free slot 
+in the ((<Inventory>)) to put the Item into.
+=end
+    class NoSlotFreeException < RuntimeError
     end
   end # class Inventory
 end # module FreeVikings
