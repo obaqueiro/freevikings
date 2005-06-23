@@ -188,8 +188,7 @@ regularly and refreshes the screen.
           init_vikings_team(location)
 	else
 	  # Situace, ktera by nemela nastat
-	  puts '*** Really strange situation. Nor the game loop is in it\'s first loop, nor the level completed, no vikings dead. Send a bug report, please.'
-	  exit 1
+	  raise FatalError, '*** Really strange situation. Nor the game loop is in it\'s first loop, nor the level completed, no vikings dead. Send a bug report, please.'
 	end
 
 
