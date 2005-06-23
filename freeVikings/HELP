@@ -1,5 +1,8 @@
 freevikings.rb
 
+ruby freevikings.rb [-fFhpx] [--fullscreen] [--fps] [--help] [--profile] 
+			[--extensions] [list-of-locations]
+
 Description:
 
 A DOS game 'Lost Vikings' clonned using the Ruby 
@@ -18,11 +21,18 @@ jump (Eric only)               - space
 Options:
 
 --help		-h	Prints out this help and halts.
---profile 	-p	Profiling (only for development)
---fps		-F	Prints frames per second on the game screen
 --fullscreen    -f      Starts the game in the fullscreen mode
+--extensions	-x	Uses compiled C++ extensions instead of some of the
+			critical classes. You must have built these extensions 
+			to use this option successfully.
+--fps		-F	Prints frames per second on the game screen
+--profile 	-p	Profiling (only for development)
 
-At the end of the argument list you can list filenames of location files.
-You can mix up your own world in this way.
+At the end of the argument list you can append a list of filenames (relative 
+to the directory locs!) of location files. You can mix up your own world 
+in this way.
 
 E.g.: freevikings.rb first_loc.xml hopsy_loc.xml
+
+This example starts a special game built of levels from locs/first_loc.xml and
+locs/hopsy_loc.xml.

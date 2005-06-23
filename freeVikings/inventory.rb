@@ -68,6 +68,9 @@ Some basic ideas:
       if i > MAX_INDEX then
         raise IndexOutOfBoundsException, "Index #{i} does not point at a valid slot of the inventory."
       end
+      unless @items[i]
+        raise EmptySlotRequiredException, "Slot #{i} is empty, it cannot be made active."
+      end
       @active_index = i
     end
 
@@ -123,6 +126,15 @@ An type of exception raised by ((<Inventory#put>)) if there is no free slot
 in the ((<Inventory>)) to put the Item into.
 =end
     class NoSlotFreeException < RuntimeError
+    end
+
+=begin
+== Inventory::EmptySlotRequiredException
+This exception is raised when an attempt is made to access an empty slot.
+((<Inventory#active_index=>)) raises it when an empty slot is being made 
+active.
+=end
+    class EmptySlotRequiredException < RuntimeError
     end
   end # class Inventory
 end # module FreeVikings

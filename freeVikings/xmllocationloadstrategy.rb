@@ -50,7 +50,7 @@ module FreeVikings
 	script_element = @doc.root.elements['scripts'].elements['monsters']
 	scriptfile = script_element.attributes['path']
       rescue => ex
-	@log.error "Cannot get the monster-script's filename from the datafile. Exception message: #{ex.message}"
+	@log.info "Cannot get the monster-script's filename from the datafile. Maybe no scripts are connected with this location. Message from the caught bottom-level exception: #{ex.message}"
 	return
       end
 
