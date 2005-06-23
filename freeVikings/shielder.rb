@@ -68,6 +68,8 @@ module FreeVikings
       @image.add_pair('falling_standing_left', i_left)
       @image.add_pair('falling_moving_right', i_right)
       @image.add_pair('falling_moving_left', i_left)
+
+      @portrait = Portrait.new 'olaf_face.tga', 'olaf_face_unactive.gif', 'dead_face.png'
     end
 
   end # class Shielder

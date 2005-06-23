@@ -35,7 +35,7 @@ module FreeVikings
       @last_update_time = Time.now.to_f
       @energy = MAX_ENERGY # zivotni sila
 
-      @portrait = Portrait.new('viking_face.tga', 'viking_face_unactive.tga', 'dead_face.png')
+      @portrait = nil
 
       @inventory = Inventory.new
     end
