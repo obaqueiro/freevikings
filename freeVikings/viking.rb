@@ -12,10 +12,13 @@ require 'nullocation.rb'
 require 'collisiontest.rb'
 require 'inventory.rb'
 
+=begin
+= Viking
+=end
+
 module FreeVikings
 
   class Viking < Sprite
-    # Sprite trida pro postavicky vikingu
 
     BASE_VELOCITY = 65
     WIDTH = 80

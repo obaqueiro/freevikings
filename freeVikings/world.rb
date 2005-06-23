@@ -5,7 +5,7 @@
 # jejich nahravani a prechody.
 
 require 'location.rb'
-require 'locationloadstrategy.rb'
+require 'xmllocationloadstrategy.rb'
 
 module FreeVikings
 

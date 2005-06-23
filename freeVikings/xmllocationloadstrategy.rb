@@ -5,6 +5,7 @@
 
 require 'locationloadstrategy.rb'
 require 'monsterscript.rb'
+require 'map.rb'
 
 module FreeVikings
 
@@ -15,6 +16,9 @@ module FreeVikings
     # Pokud druhy argument neni nastaven na nil, pred predanim zdroje XML do
     # REXML zkontroluje, zda zdroj je platnym jmenem textoveho souboru a 
     # pripadne vyhodi vyjimku.
+
+    MIN_TILES_X = 640 / Map::TILE_SIZE
+    MIN_TILES_Y = 480 / Map::TILE_SIZE
 
     def initialize(mapfile, data_source_control=true)
       super()
@@ -150,6 +154,8 @@ module FreeVikings
 	  end
 	}
       }
+      raise LocationNotLargeEnoughException, "Location is not #{MIN_TILES_X} broad, it isn't valid and cannot be loaded." if @max_width < MIN_TILES_X
+      raise LocationNotLargeEnoughException, "Location is not #{MIN_TILES_Y} high, it isn't valid and cannot be loaded." if @max_height < MIN_TILES_Y
     end
 
     # Vrati jmeno nacitaneho zdroje
@@ -194,4 +200,8 @@ module FreeVikings
     end
   end
 
+  # Vyjimka vyhazovana, pokud je mapa lokace prilis mala (na vysku nebo 
+  # na sirku nema ani jednu obrazovku)
+  class LocationNotLargeEnoughException < RuntimeError
+  end
 end # module FreeVikings

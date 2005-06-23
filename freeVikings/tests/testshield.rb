@@ -9,6 +9,7 @@ require 'mockclasses.rb'
 
 require 'shield.rb'
 require 'monsters/redshot.rb'
+require 'monsters/robot.rb'
 require 'arrow.rb'
 require 'hero.rb'
 
@@ -54,6 +55,10 @@ class TestShield < Test::Unit::TestCase
     @location.sprites_on_rect = [shot, @shield]
     @shield.unofficial_update
     assert_equal false, shot.alive?, "Shield should have killed the colliding RedShot."
+  end
+
+  def testShieldStopsMonster
+    tweak
   end
 
   def testShieldDoesNotStopAnArrow

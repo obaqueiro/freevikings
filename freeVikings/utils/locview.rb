@@ -13,7 +13,7 @@ require 'log4rsetupload' # nastaveni log4r
 
 require 'map'
 require 'location'
-require 'locationloadstrategy'
+require 'xmllocationloadstrategy'
 
 require 'sprite'; require 'monster'
 

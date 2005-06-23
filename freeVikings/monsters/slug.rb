@@ -4,6 +4,8 @@
 # Trida representujici roztomileho pomaleho a neskodneho trema ocima
 # na stopkach opatreneho kosmickeho slimaka.
 
+require 'hero.rb'
+
 module FreeVikings
 
   class Slug < Sprite

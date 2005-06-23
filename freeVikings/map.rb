@@ -2,7 +2,6 @@
 # igneus 20.1.2004
 
 require 'tiletype'
-require 'xmllocationloadstrategy'
 require 'log4r'
 require 'rexml/document'
 
