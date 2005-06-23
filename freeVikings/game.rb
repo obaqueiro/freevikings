@@ -110,9 +110,10 @@ All the three examples expect you have created a RUDL::DisplaySurface
         @world = World.new(*(FreeVikings::OPTIONS['locations']))
       else
         @world = World.new('pyramida_loc.xml',
-                           'first_loc.xml',
-                           'yellowhall.xml',
-                           'hopsy_loc.xml')
+                           # 'first_loc.xml',
+                           # 'hopsy_loc.xml',
+                           'yellowhall.xml'
+                           )
       end
 
       # Surfaces, ktere se pouzivaji k sestaveni zobrazeni nahledu hraci plochy
