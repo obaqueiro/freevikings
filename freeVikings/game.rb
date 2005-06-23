@@ -11,6 +11,7 @@ require 'team.rb'
 require 'world.rb'
 require 'location.rb'
 require 'gamestate.rb'
+require 'bottompanel.rb'
 
 module FreeVikings
 
@@ -43,20 +44,6 @@ I have a good mood for it, I will make ((|@state|)) go away.
 
     include RUDL
     include RUDL::Constant
-
-=begin
-== Constants
-
---- Game::VIKING_FACE_SIZE
---- Game::BOTTOMPANEL_HEIGHT
-Code-explaining constants used almost to count up positions inside the game
-window.
-=end
-    VIKING_FACE_SIZE = 60
-    INVENTORY_VIEW_SIZE = 60
-    LIVE_SIZE = 20
-    BOTTOMPANEL_HEIGHT = VIKING_FACE_SIZE + LIVE_SIZE
-    ITEM_SIZE = 30
 
 =begin
 == Public instance methods
@@ -100,7 +87,7 @@ All the three examples expect you have created a RUDL::DisplaySurface
     def initialize(window, locations=[])
       @app_window = window
 
-      init_bottompanel_gfx
+      # init_bottompanel_gfx
 
       if locations.is_a? World then
         @world = locations
@@ -118,12 +105,12 @@ All the three examples expect you have created a RUDL::DisplaySurface
 
       # Surfaces, ktere se pouzivaji k sestaveni zobrazeni nahledu hraci plochy
       # a stavoveho radku s podobiznami vikingu
-      @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT - BOTTOMPANEL_HEIGHT])
-      @bottompanel_view = RUDL::Surface.new([WIN_WIDTH, BOTTOMPANEL_HEIGHT])
-
+      @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT - BottomPanel::HEIGHT])
       # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
       # tridy, pokud usoudi, ze by se stav mel zmenit.
       @state = PlayingGameState.new(self)
+
+      @bottompanel = nil
 
       @give_up = nil
     end # initialize
@@ -145,11 +132,13 @@ the give up key (F6 by default). Causes location reloading.
     def pause
       @world.location.pause
       @state = PausedGameState.new self
+      @bottompanel.browse_inventory = true
     end
 
     def unpause
       @world.location.unpause
       @state = PlayingGameState.new self
+      @bottompanel.browse_inventory = false
     end
 
 =begin
@@ -170,13 +159,13 @@ regularly and refreshes the screen.
       loop do
 	if @team.nil? then
           location = @world.location
-          init_vikings_team(location)
+          @team = init_vikings_team(location)
 	elsif (@team.alive_size < @team.size) or (@give_up == true) then
 	  # Nekteri hrdinove mrtvi.
 	  puts '*** Some vikings died. Try once more.'
 	  @world.rewind_location
           location = @world.location
-          init_vikings_team(location)
+          @team = init_vikings_team(location)
 	  @give_up = nil
 	elsif @team.alive_size == @team.size
 	  # Vsichni dosahli EXITu
@@ -185,15 +174,17 @@ regularly and refreshes the screen.
 	    puts '*** Congratulations! You explored all the world!'
 	    exit
 	  end
-          init_vikings_team(location)
+          @team = init_vikings_team(location)
 	else
 	  # Situace, ktera by nemela nastat
 	  raise FatalError, '*** Really strange situation. Nor the game loop is in it\'s first loop, nor the level completed, no vikings dead. Send a bug report, please.'
 	end
 
+        @bottompanel = BottomPanel.new @team
 
 	frames = 0 # pomocna promenna k vypoctu fps
 
+        # Tady zacina udalostni cyklus bezici behem hry.
 	# Cyklujeme, dokud se vsichni prezivsi nedostali do exitu
 	# nebo to hrac nevzdal
 	while (not is_exit?) and (not @give_up) do
@@ -208,8 +199,8 @@ regularly and refreshes the screen.
 	  location.paint(@map_view, @team.active.center)
 	  @app_window.blit(@map_view, [0,0])
 
-	  repaint_bottompanel
-	  @app_window.blit(@bottompanel_view, [0, WIN_HEIGHT - BOTTOMPANEL_HEIGHT])
+
+	  @app_window.blit(@bottompanel.image, [0, WIN_HEIGHT - BottomPanel::HEIGHT])
 
 	  if FreeVikings::OPTIONS["display_fps"] then
 	    @app_window.filled_polygon [[8,8],[60,8],[60,20],[8,20]], [0,0,0]
@@ -227,14 +218,6 @@ regularly and refreshes the screen.
       end # while not self.game_over?
     end # game_loop
 
-    private
-    def init_bottompanel_gfx
-      @face_bg = RUDL::Surface.load_new(GFX_DIR+'/face_bg.tga')
-      @item_bg = RUDL::Surface.load_new(GFX_DIR+'/item_bg.tga')
-      @selection_box = RUDL::Surface.load_new(GFX_DIR+'/selection.tga')
-      @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.tga')
-    end # init_display
-
     # Method init_vikings_team must be called when a location is loaded
     # (or reloaded).
     # It recreates all the three vikings and sets them up
@@ -244,59 +227,14 @@ regularly and refreshes the screen.
       @baleog = Viking.createWarior("Baleog", location.start)
       @erik = Viking.createSprinter("Erik", location.start)
       @olaf = Viking.createShielder("Olaf", location.start)
-      @team = Team.new(@erik, @baleog, @olaf)
+      team = Team.new(@erik, @baleog, @olaf)
       # vsechny vikingy oznacime jako hrdiny:
-      @team.each { |v|
+      team.each { |v|
         v.extend Hero
         location.add_sprite v 
       }
+      team
     end # init_vikings_team
-
-    private
-    def repaint_bottompanel
-      # vybarveni pozadi pro podobenky vikingu:
-      @bottompanel_view.fill([60,60,60])
-      i = 0
-
-      time = Time.now.to_f
-      @team.each { |vik|
-        # paint face:
-        face_position = [i * (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE), 0]
-	@bottompanel_view.blit(@face_bg, face_position)
-        portrait_img = if @team.active == vik && vik.alive? then
-                         vik.portrait.active
-                       elsif not vik.alive?
-                         vik.portrait.kaput
-                       else
-                         vik.portrait.unactive
-                       end
-        @bottompanel_view.blit(portrait_img, face_position)
-        # paint the lives:
-        lives_y = VIKING_FACE_SIZE
-        vik.energy.times {|j| 
-          live_position = [face_position[0] + j * LIVE_SIZE, lives_y]
-          @bottompanel_view.blit(@energy_punkt, live_position)
-        }
-        # paint inventory contents:
-        item_positions = [[0,0],        [ITEM_SIZE,0],
-                          [0,ITEM_SIZE],[ITEM_SIZE, ITEM_SIZE]]
-        0.upto(3) do |k|
-          item_position = [item_positions[k][0] + face_position[0] + VIKING_FACE_SIZE, item_positions[k][1]]
-          @bottompanel_view.blit(@item_bg, item_position)
-          unless vik.inventory[k].null?
-            @bottompanel_view.blit(vik.inventory[k].image, item_position)
-          end
-          if vik.inventory.active_index == k then
-            if (not @state.paused?) or 
-                (@state.paused? and (not @team.active == vik or time % 1 > 0.2))
-              @bottompanel_view.blit(@selection_box, item_position)
-            end
-          end
-        end
-
-	i += 1
-      }
-    end # repaint_bottompanel
 
     private
     def is_exit?
