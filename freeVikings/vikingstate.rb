@@ -74,6 +74,14 @@ VikingState.
       @vertical_state.moving? or @horizontal_state.moving?
     end
 
+    def moving_horizontally?
+      @horizontal_state.moving?
+    end
+
+    def moving_vertically?
+      @vertical_state.moving?
+    end
+
     def direction
       @horizontal_state.direction
     end

@@ -91,4 +91,13 @@ empty definition. More similar mistakes and we are somewhere in the hell..."
 assert @state.velocity_vertic < 0, "The velocity must be less then zero when the sprite is rising."
   end
 
+  def testMovingHorizontally
+    @state.move_left
+    assert @state.moving_horizontally?, "Method 'moving_horizontally?' must return true when moving left."
+  end
+
+  def testMovingVertically
+    @state.fall
+    assert @state.moving_vertically?, "Method 'moving_vertically?' must return true when falling."
+  end
 end

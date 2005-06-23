@@ -145,37 +145,28 @@ module FreeVikings
       @state.standing?
     end
 
-    def next_position
-      time_now = Time.now.to_f
-      time_delta = time_now - @last_update_time
-      # Zde se musi posice zjistovat primo z instancni promenne, protoze
-      # pristupove metody left a top ji aktualisuji
-      next_top = @rect.top + (velocity_vertic * time_delta)
-      next_left = @rect.left + (velocity_horiz * time_delta)
-      Rectangle.new next_left, next_top, WIDTH, HEIGHT
-    end
-
     # Aktualisuje posici vikinga.
 
     def update
       collect_items # sebere vsechno, na co narazi :o)
 
-      @rect.h = image.h
-      @rect.w = image.w
-
       # Nyni muzeme aktualisovat posici:
-      if @location.is_position_valid?(self, next_position) then
+      next_pos = Rectangle.new(next_left, next_top, @rect.w, @rect.h)
+      if @location.is_position_valid?(self, next_pos) then
 	@log.debug "update: Viking #{name}'s next position is all right."
-	@rect = next_position
-	update_time
+        @rect = next_pos
       else
-	@log.debug "update: Viking #{name}'s next position isn't valid, he'll stuck now."
-	@state.stop
-        @state.descend
+        next_pos.left = @rect.left
+        if @location.is_position_valid?(self, next_pos) then
+          @log.debug "update: Viking #{name} cannot move horizontally, but his vertical coordinate was updated successfully."
+          @rect = next_pos
+        end
       end
+
       if @state.falling? and on_ground? then
         @state.descend
       end
+
       # Zkusme, jestli by viking nemohl zacit padat.
       # Pokud muze zacit padat, zacne padat:
       if not @state.rising? and not @state.falling? and not on_ground?
@@ -183,7 +174,28 @@ module FreeVikings
 	@log.debug "update: #{@name} starts falling because there's a free space under him."
       end
 
+      @rect.h = image.h
+      @rect.w = image.w
+
+      # vse obnoveno, zaznamename si cas
+      update_time
+
       @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
+    end
+
+    private
+    def next_left
+      next_left = @rect.left + (velocity_horiz * time_delta_since_last_update)
+    end
+
+    private
+    def next_top
+      next_top = @rect.top + (velocity_vertic * time_delta_since_last_update)
+    end
+
+    private
+    def next_position
+      Rectangle.new next_left, next_top, @rect.w, @rect.h
     end
 
     private
@@ -203,6 +215,11 @@ module FreeVikings
     end
 
     private
+    def time_delta_since_last_update
+      Time.now.to_f - @last_update_time
+    end
+
+    private
     def set_move
       update_time
     end
@@ -213,8 +230,10 @@ module FreeVikings
       # stoji viking na stite?
       return true if on_shield?
       # je pod vikingem volne misto?
-      lowerpos = next_position
-      lowerpos.top += 2
+      lowerpos = Rectangle.new(@rect.left, 
+                               @rect.top + 2, 
+                               @rect.w, 
+                               @rect.h)
       return nil if @location.is_position_valid?(self, lowerpos)
       # viking stoji na pevne zemi:
       return true

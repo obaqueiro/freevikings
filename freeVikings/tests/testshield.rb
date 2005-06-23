@@ -57,10 +57,6 @@ class TestShield < Test::Unit::TestCase
     assert_equal false, shot.alive?, "Shield should have killed the colliding RedShot."
   end
 
-  def testShieldStopsMonster
-    tweak
-  end
-
   def testShieldDoesNotStopAnArrow
     arrow = Arrow.new [0,0], 0
     @location.sprites_on_rect = [arrow, @shield]

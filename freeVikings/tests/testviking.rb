@@ -46,4 +46,19 @@ class TestViking < TestSprite
     loc.add_sprite v
     assert_equal loc, v.location, "MockLocation should have set viking's 'location' attribute."
   end
+
+  def testCannotMoveHorizontallyButCanVertically
+    @location.add_sprite @viking
+    # During the update, viking calls is_position_valid? several times:
+    answers_array = [
+      false, # question: Can I move horizontally and vertically? (update)
+      true, # question: Can I move vertically? (update)
+      true # question: Can I fall deeper? (on_ground?)
+    ]
+    @location.position_validator_proc = Proc.new { answers_array.shift }
+    @viking.state.fall
+    @viking.move_left
+    @viking.update
+    assert_equal 'falling_moving_left', @viking.state.to_s, "Viking can't move horizontally. He won't change his y-axis position, but his state should stay 'left moving', because he must continue moving as soon as he is able to."
+  end
 end

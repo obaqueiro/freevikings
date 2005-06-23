@@ -24,11 +24,11 @@ module FreeVikings
     WIDTH = 50
     HEIGHT = 80
 
-    def initialize(position, walk_length)
+    def initialize(position, walk_length, direction='right')
       @walk_length = walk_length
       super(position.concat([WIDTH, HEIGHT]))
       @start_position = position
-      @direction = 'right'
+      @direction = direction
       @angry = false
       @last_update_time = time
       @last_bash = 0
