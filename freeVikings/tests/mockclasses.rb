@@ -4,6 +4,7 @@
 # Collection of mock classes which are useful for unit testing.
 
 require 'locationloadstrategy.rb'
+require 'ticker.rb'
 
 module FreeVikings
 
@@ -56,11 +57,13 @@ module FreeVikings
         @position_validator_proc = Proc.new {|sprite, position| true}
         @sprites_on_rect = []
         @sprites = []
+        @ticker = Ticker.new
       end
 
       attr_accessor :sprites
       attr_writer :sprites_on_rect
       attr_accessor :position_validator_proc
+      attr_reader :ticker
 
       def add_sprite(sprite)
         @sprites << sprite
