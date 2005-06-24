@@ -19,7 +19,7 @@ module FreeVikings
     end
 
     def space_func_on
-      return if not on_ground? and not @jump_start
+      return if not on_some_surface? and not @jump_start
       @ability.space_on
     end
 
@@ -30,7 +30,7 @@ module FreeVikings
 
     def jump
       @state.rise
-      @jump_start = Time.now.to_f unless @jump_start
+      @jump_start = @location.ticker.now unless @jump_start
     end
 
     alias_method :_update, :update
@@ -38,7 +38,7 @@ module FreeVikings
     def update
       _update
       if not @jump_start.nil?
-        if (Time.now.to_f - @jump_start) >= JUMP_DURATION
+        if (@location.ticker.now - @jump_start) >= JUMP_DURATION
           space_func_off
         end
       end

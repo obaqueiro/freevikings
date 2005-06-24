@@ -11,6 +11,7 @@ require 'imagebank.rb'
 require 'nullocation.rb'
 require 'collisiontest.rb'
 require 'inventory.rb'
+require 'map.rb' # kvuli const. TILE_SIZE
 
 =begin
 = Viking
@@ -147,34 +148,64 @@ module FreeVikings
     def update
       collect_items # sebere vsechno, na co narazi :o)
 
-      # Nyni muzeme aktualisovat posici:
+      unless (move_xy or move_y_only) then
+        @log.warn "update: Viking #{name} cannot move in any axis. He could have stucked."
+      end
+
+      try_to_descend
+      try_to_fall
+      update_rect_w_h
+
+      @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
+    end
+
+    private
+    def move_xy
       next_pos = Rectangle.new(next_left, next_top, @rect.w, @rect.h)
       if @location.is_position_valid?(self, next_pos) then
 	@log.debug "update: Viking #{name}'s next position is all right."
         @rect = next_pos
+        return true
       else
-        next_pos.left = @rect.left
-        if @location.is_position_valid?(self, next_pos) then
-          @log.debug "update: Viking #{name} cannot move horizontally, but his vertical coordinate was updated successfully."
-          @rect = next_pos
-        end
+        return false
       end
+    end
 
-      if @state.falling? and on_ground? then
-        @state.descend
+    private
+    def move_y_only
+      next_pos = Rectangle.new(@rect.left, next_top, @rect.w, @rect.h)
+      if @location.is_position_valid?(self, next_pos) then
+        @log.debug "update: Viking #{name} cannot move horizontally, but his vertical coordinate was updated successfully."
+        @rect = next_pos
+        return true
+      else
+        @log.debug "update: Viking #{name} cannot move in any axis."
+        return false
       end
+    end
 
+    private
+    def try_to_fall
       # Zkusme, jestli by viking nemohl zacit padat.
       # Pokud muze zacit padat, zacne padat:
-      if not @state.rising? and not @state.falling? and not on_ground?
+      if not @state.rising? and not @state.falling? and not on_some_surface?
 	@state.fall
 	@log.debug "update: #{@name} starts falling because there's a free space under him."
       end
+    end
 
+    private
+    def try_to_descend
+      if @state.falling? and on_some_surface? then
+        @state.descend
+        descend if on_ground?
+      end
+    end
+
+    private
+    def update_rect_w_h
       @rect.h = image.h
       @rect.w = image.w
-
-      @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
     end
 
     private
@@ -206,10 +237,10 @@ module FreeVikings
     # Zjisti, jestli viking stoji na zemi (na pevne dlazdici)
     def on_ground?
       # stoji viking na stite?
-      return true if on_shield?
+      # return true if on_shield?
       # je pod vikingem volne misto?
       lowerpos = Rectangle.new(@rect.left, 
-                               @rect.top + 2, 
+                               @rect.top + @location.ticker.delta * BASE_VELOCITY, 
                                @rect.w, 
                                @rect.h)
       return nil if @location.is_position_valid?(self, lowerpos)
@@ -228,11 +259,21 @@ module FreeVikings
     end
 
     private
+    def on_some_surface?
+      on_ground? or on_shield?
+    end
+
+    private
     def collect_items
       @location.items_on_rect(rect).each do |i|
         @location.delete_item i
         @inventory.put i
       end
+    end
+
+    private
+    def descend
+      @rect.top += Map::TILE_SIZE - (@rect.bottom % Map::TILE_SIZE)
     end
 
   end # class Viking

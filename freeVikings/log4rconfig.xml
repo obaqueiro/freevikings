@@ -21,12 +21,13 @@
     <outputter>stderr</outputter>
   </logger>
 
+  <!-- Log for Map classe's debugging output -->
   <logger name="map log" level="FATAL">
     <outputter>stderr</outputter>
   </logger>
 
   <!-- Log mainly used for vikings' states' dumps -->
-  <logger name="viking log" level="INFO">
+  <logger name="viking log" level="OFF">
     <outputter>stderr</outputter>
   </logger>
 

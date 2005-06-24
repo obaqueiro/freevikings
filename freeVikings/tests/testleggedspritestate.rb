@@ -62,6 +62,11 @@ class TestLeggedSpriteState < Test::Unit::TestCase
     assert @state.velocity_vertic > 0, "Falling sprite must have a positive vertical velocity."
   end
 
+  def testFalling?
+    @state.fall
+    assert @state.falling?, "'falling?' should return true, 'fall' was called just a millisecond ago."
+  end
+
   def testMovingWhenFalling
     @state.fall
     assert_equal true, @state.moving?, "Falling sprite is moving."
