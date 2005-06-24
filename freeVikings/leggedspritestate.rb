@@ -103,5 +103,11 @@ module FreeVikings
     def dump
       "<id:#{object_id} vv:#{velocity_vertic} vh:#{velocity_horiz}>"
     end
+
+    def to_s
+      @vertical_state.to_s + CNTR + \
+      @horizontal_state.to_s + CNTR + \
+      @horizontal_state.direction
+    end
   end # class LeggedSpriteState
 end # module FreeVikings

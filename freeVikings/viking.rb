@@ -32,7 +32,6 @@ module FreeVikings
       @state = VikingState.new
       @log.debug("Viking #{@name} initialised.")
       @rect = Rectangle.new start_position[0], start_position[1], WIDTH, HEIGHT
-      @last_update_time = Time.now.to_f
       @energy = MAX_ENERGY # zivotni sila
 
       @portrait = nil
@@ -79,12 +78,10 @@ module FreeVikings
 
     def move_left
       @state.move_left
-      set_move
     end
 
     def move_right
       @state.move_right
-      set_move
     end
 
     def stop
@@ -177,20 +174,17 @@ module FreeVikings
       @rect.h = image.h
       @rect.w = image.w
 
-      # vse obnoveno, zaznamename si cas
-      update_time
-
       @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
     end
 
     private
     def next_left
-      next_left = @rect.left + (velocity_horiz * time_delta_since_last_update)
+      next_left = @rect.left + (velocity_horiz * @location.ticker.delta)
     end
 
     private
     def next_top
-      next_top = @rect.top + (velocity_vertic * time_delta_since_last_update)
+      next_top = @rect.top + (velocity_vertic * @location.ticker.delta)
     end
 
     private
@@ -206,22 +200,6 @@ module FreeVikings
     private
     def velocity_horiz
       @state.velocity_horiz * BASE_VELOCITY
-    end
-
-    private
-    # Aktualisuje cas posledni aktualisace posice
-    def update_time
-      @last_update_time = Time.now.to_f
-    end
-
-    private
-    def time_delta_since_last_update
-      Time.now.to_f - @last_update_time
-    end
-
-    private
-    def set_move
-      update_time
     end
 
     private

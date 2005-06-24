@@ -11,6 +11,7 @@ require 'map.rb'
 require 'spritemanager.rb'
 require 'activeobjectmanager.rb'
 require 'itemmanager.rb'
+require 'ticker.rb'
 
 module FreeVikings
 
@@ -19,6 +20,8 @@ module FreeVikings
     def initialize(loader)
       @exitter = nil # objekt Exit - cesta do dalsi lokace
       @start = [0,0] # misto, kde zacinaji vikingove svou misi
+
+      @ticker = Ticker.new
 
       @map = Map.new(loader)
       @spritemanager = SpriteManager.new
@@ -29,7 +32,10 @@ module FreeVikings
       loader.load_start(self)
     end
 
+    attr_reader :ticker
+
     def update
+      @ticker.tick
       @spritemanager.update
     end
 
