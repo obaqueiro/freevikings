@@ -21,11 +21,12 @@ module FreeVikings
 
     WIDTH = 80
     HEIGHT = 24
+    VELOCITY = 13
 
     def initialize(left, *ys)
       @y = ys
       super([left, @y[0], WIDTH, HEIGHT])
-      @velocity = Velocity.new 8
+      @velocity = Velocity.new VELOCITY
       @last_update_time = Time.now.to_i
     end
 
@@ -36,7 +37,7 @@ module FreeVikings
     def update
       if @rect.top != @y.first then
         delta = @velocity.value * (Time.now.to_i - @last_update_time)
-        delta = 1 if delta < 10
+        delta = 1 if delta < (VELOCITY + 5)
         delta *= -1 if @y.first - @y.last < 0
         @rect.top += delta
       end

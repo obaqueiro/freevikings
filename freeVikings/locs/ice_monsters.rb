@@ -9,6 +9,7 @@ require 'group'
 require 'sprite'
 require 'monster'
 require 'apple'
+require 'monsters/bear'
 
 # === CONSTANTS:
 
@@ -23,22 +24,6 @@ module IceLand
   
   SWITCH_GFX = {'true' => Image.new('ice_map/ice_switch_on.tga'),
                 'false' => Image.new('ice_map/ice_switch_off.tga')}
-
-  class Bear < Sprite
-
-    WIDTH = 80
-    HEIGHT = 80
-
-    include FreeVikings::Monster
-
-    def initialize(position)
-      super([position[0], position[1], WIDTH, HEIGHT])
-    end
-
-    def init_images
-      @image = FreeVikings::Image.new('bear_left.tga')
-    end
-  end
 
   class IceSwitch < FreeVikings::Switch
     def initialize(position, initial_state)
