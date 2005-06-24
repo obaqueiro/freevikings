@@ -101,8 +101,11 @@ module FreeVikings
       @portrait = Portrait.new 'baleog_face.tga', 'baleog_face_unactive.gif', 'dead_face.png'
     end
 
-    # Vyjimka, ktera je vyhozena, pokud je zavolana methoda
-    # release_arrow bez toho, ze by luk byl natazen
+=begin
+== ReleaseArrowWithoutBowStretchingException
+Before the arrow can be released, warior's bow must be stretched.
+Unless it is stretched, ((<Warior#release_arrow>)) throws this exception.
+=end
     class ReleaseArrowWithoutBowStretchingException < RuntimeError
     end
 

@@ -38,10 +38,16 @@ class TestWarior < Test::Unit::TestCase
   end
 
   def testCutWhenFalling
-    @samsson.update # zjisti, ze ma pod sebou volno a zacne padat
+    @samsson.fall # zjisti, ze ma pod sebou volno a zacne padat
     assert @samsson.falling?
     @samsson.space_func_on
     assert_equal false, @samsson.sword_fighting?, "Warior can't cut when he's falling."
+  end
+
+  def testShootWhenFalling
+    @samsson.fall
+    @samsson.d_func_on
+    assert_equal false, @samsson.bow_stretching?, "Warior can't shoot when he is falling."
   end
 
   def testSwordFightingWorks
@@ -79,6 +85,14 @@ end # class TestWarior
 class FreeVikings::Warior
   def sword_fighting?
     @ability.active_ability == 'sword-fighting'
+  end
+
+  def bow_stretching?
+    @ability.active_ability == 'bow-stretching'
+  end
+
+  def fall
+    @state.fall
   end
 end
 # Mimochodem nadherne se tu ukazuje flexibilitu syntaxe jazyka Ruby.

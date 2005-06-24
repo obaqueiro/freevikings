@@ -71,6 +71,7 @@ VikingState. See VikingState documentation for more details.
     end
 
     def d_on
+      return if @owner.falling?
       @owner.stop
       @active_ability = D_ABILITY
     end
