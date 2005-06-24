@@ -35,7 +35,7 @@ module FreeVikings
     end
 
     def update
-      if Time.now.to_i >= @appear_time + @state.duration then
+      if @location.ticker.now >= @appear_time + @state.duration then
         @appear_time += @state.duration
         if @state.next.nil? then
           destroy

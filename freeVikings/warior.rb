@@ -12,6 +12,8 @@ require 'ability.rb'
 module FreeVikings
   class Warior < Viking
 
+    ARROW_VELOCITY = 80
+
     def initialize(name, start_position)
       super name, start_position
       init_images
@@ -53,9 +55,9 @@ module FreeVikings
         raise ReleaseArrowWithoutBowStretchingException, "The bow hasn't been stretched and it is told to release an arrow. It's an impossible mission, the world's gone mad..."
       end
       if state.direction == "right"
-	arrow_veloc = 60
+	arrow_veloc = ARROW_VELOCITY
       else
-	arrow_veloc = -60
+	arrow_veloc = - ARROW_VELOCITY
       end
       arrow = Arrow.new([left + 30, top + (image.h / 2) - 7], Velocity.new(arrow_veloc))
       @location.add_sprite arrow

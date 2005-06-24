@@ -16,7 +16,6 @@ module FreeVikings
       else
         @velocity = velocity
       end
-      @start_time = Time.now.to_f
       @hunted_type = Sprite
     end
 
@@ -34,7 +33,7 @@ module FreeVikings
     end
 
     def update
-      @rect.left += @velocity.value * (Time.now.to_f - @start_time)
+      @rect.left += @velocity.value * @location.ticker.delta
 
       unless @location.is_position_valid?(self, [left, top])
         destroy

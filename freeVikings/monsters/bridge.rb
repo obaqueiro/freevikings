@@ -27,7 +27,6 @@ module FreeVikings
       @y = ys
       super([left, @y[0], WIDTH, HEIGHT])
       @velocity = Velocity.new VELOCITY
-      @last_update_time = Time.now.to_i
     end
 
     def next
@@ -36,12 +35,11 @@ module FreeVikings
 
     def update
       if @rect.top != @y.first then
-        delta = @velocity.value * (Time.now.to_i - @last_update_time)
+        delta = @velocity.value * @location.ticker.delta
         delta = 1 if delta < (VELOCITY + 5)
         delta *= -1 if @y.first - @y.last < 0
         @rect.top += delta
       end
-      @last_update_time = Time.now.to_i
     end
   end # class FallingBridge
 end # module FreeVikings

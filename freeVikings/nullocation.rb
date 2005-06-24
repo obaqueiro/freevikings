@@ -10,6 +10,7 @@ module FreeVikings
   class NullLocation < Location
 
     def initialize(loader=nil)
+      @ticker = Ticker.new
     end
 
     def update

@@ -15,8 +15,8 @@ module FreeVikings
     def initialize(startpos, direction='left')
       super(startpos)
       @image = Image.new('spitter_1.tga')
-      @last_update = time
       @firing = true
+      @last_update = 0
     end
 
     def destroy
@@ -40,8 +40,8 @@ module FreeVikings
     end
 
     def update
-      if time > @last_update + DELAY then
-	@last_update = time
+      if @location.ticker.now > @last_update + DELAY then
+	@last_update = @location.ticker.now
         shoot
       end
     end
@@ -52,10 +52,6 @@ module FreeVikings
       if @firing then
         @location.add_sprite RedShot.new([left, top+10], Velocity.new(- SHOT_VELOCITY))
       end
-    end
-
-    def time
-      Time.now.to_i
     end
   end # class PlasmaShooter
 end # module FreeVikings

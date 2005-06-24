@@ -13,6 +13,12 @@ on older machines.) Pause says the sprite: "Hi, Sprite, save your internal
 state and go to bed, you won't be updated all the night."
 On the other side unpause says: "Good morning! Take a shower and get dressed,
 you must go to work!"
+
+A notice for developers (for me at first): in freeVikings' sprite classes
+a small synchronisation utility class, Ticker is widely used. But it cannot be
+used here! You never know if the class which mixes ((<Pausable>)) in has
+an attribute @location pointing to a Location with a Ticker!
+Only Time can be used in ((<Pausable>)).
 =end
 
   module Pausable

@@ -28,7 +28,11 @@ module FreeVikings
       @image.add_pair '3', im3
 
       @state = 0
-      @last_update_time = Time.now.to_i
+    end
+
+    def location=(loc)
+      @location = loc
+      @last_state_change = @location.ticker.now
     end
 
     def state
@@ -38,9 +42,9 @@ module FreeVikings
     def update
       # Jednou za kratky cas se zmeni stav a mozna i obrazek. Az dojdeme
       # k poslednimu stavu, mrtvola zmizi.
-      if ((now = Time.now.to_i) - @last_update_time) > STATE_DURATION
+      if (@location.ticker.now - @last_state_change) > STATE_DURATION then
 	@state += 1
-	@last_update_time = now
+        @last_state_change = @location.ticker.now
       end
       # Jestli uz mrtvola strasila dost dlouho, zmizi:
       if @state > LAST_STATE then

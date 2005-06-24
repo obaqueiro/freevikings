@@ -30,7 +30,7 @@ module FreeVikings
       @start_position = position
       @direction = direction
       @angry = false
-      @last_update_time = time
+      @anger_start = 0
       @last_bash = 0
       @energy = MAX_LIVES
     end
@@ -48,13 +48,13 @@ module FreeVikings
       update_direction
       update_anger
       bash_strange_beings
-      @last_update_time = time
     end
 
     alias_method :_hurt, :hurt
 
     def hurt
       @angry = true
+      @anger_start = @location.ticker.now
       _hurt
     end
 
@@ -82,7 +82,7 @@ module FreeVikings
     def update_position
       @rect.w = image.w
       @rect.h = image.h
-      x_change = velocity * (time - @last_update_time)
+      x_change = velocity * @location.ticker.delta
       if @direction == 'right' then
         @rect.left += x_change
       else
@@ -100,24 +100,20 @@ module FreeVikings
     end
 
     def bash_strange_beings
-      return if time < @last_bash + BASH_DELAY
+      return if @location.ticker.now < @last_bash + BASH_DELAY
       @location.sprites_on_rect(@rect).each {|s|
         if s.kind_of? Hero
           s.hurt
           s.hurt if @angry # nastvany robot ublizuje dvakrat za kolo
-          @last_bash = time
+          @last_bash = @location.ticker.now
         end
       }
     end
 
     def update_anger
-      if @angry and (time >= @last_update_time + ANGER_DURATION) then
+      if @angry and (@location.ticker.now >= @anger_start + ANGER_DURATION) then
         @angry = false
       end
-    end
-
-    def time
-      Time.now.to_i
     end
 
     def velocity
