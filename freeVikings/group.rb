@@ -27,6 +27,10 @@ module FreeVikings
     def members_on_rect(rect)
       @members.find_all { |member| rect.collides? member.rect }
     end
+
+    def each
+      @members.each {|m| yield m}
+    end
   end # class Group
 
   module PaintableGroup
