@@ -51,7 +51,7 @@ module FreeVikings
     private
 
     def end_game
-      puts "*** Ending the game."
+      Log4r::Logger['init log'].info "Ending the game."
       exit
     end # private method end_game
 

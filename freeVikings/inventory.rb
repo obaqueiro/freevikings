@@ -46,6 +46,11 @@ Some basic ideas:
       @items.push item
     end
 
+=begin
+--- Inventory#erase_active
+Removes the active item from the inventory and returns it.
+=end
+
     def erase_active
       @items.delete_at @active_index
     end

@@ -39,7 +39,7 @@ module FreeVikings
     def start_game
       @log.info "Starting the game."
       Game.new(@window).game_loop
-      @log.info "Ending the game."
+      # Game#game_loop never returns, because exit is called inside.
     end
 
     def load_logo
