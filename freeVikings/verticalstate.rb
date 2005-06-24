@@ -4,6 +4,8 @@
 # Abstraktni trida VerticalState a jeji podtridy.
 # Soucast noveho pojeti myslenky VikingState.
 
+require 'stateproprieties.rb'
+
 =begin
 = VerticalState
 VerticalState subclasses' objects are used in VikingState to hold

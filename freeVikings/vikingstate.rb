@@ -1,34 +1,9 @@
-# oldvikingstate.rb
+# vikingstate.rb
 # igneus 24.1.2005
 
-# Tridy pro stavy vikingu
-
-require 'velocity.rb'
+require 'leggedspritestate.rb'
 
 module FreeVikings
-
-  module StateProprieties
-    # StateProprieties is a mixin. It contains all the proprieties
-    # common for all the (both vertical and horizontal) State objects.
-
-    VELOCITY_BASE = 1
-  end
-
-  module MovingStateProprieties
-    def moving?
-      true
-    end
-
-    def to_s
-      'moving'
-    end
-  end
-
-  module NotMovingStateProprieties
-    def moving?
-      false
-    end
-  end
 
 =begin
 = VikingState
@@ -43,21 +18,13 @@ of HorizontalState's subclass and has the y-axis movement data.
 The X-axis movement data are covered in an instance of VerticalState's
 subclass.
 =end
-  class VikingState
 
-    include StateProprieties
-
-    CNTR = CNCTNTR = CONCATENATOR = '_'
+  class VikingState < LeggedSpriteState
 
     def initialize
-      # On the beginning the viking does not move in any axis.
-      @horizontal_state = StandingState.new self
-      @vertical_state = OnGroundState.new self
+      super()
       @ability = Ability.new
     end
-
-    attr_writer :horizontal_state
-    attr_writer :vertical_state
 
 =begin
 --- VikingState#ability=(ability)
@@ -69,70 +36,6 @@ the viking's state and image, so a reference to it must be given to the
 VikingState.
 =end
     attr_writer :ability
-
-    def moving?
-      @vertical_state.moving? or @horizontal_state.moving?
-    end
-
-    def moving_horizontally?
-      @horizontal_state.moving?
-    end
-
-    def moving_vertically?
-      @vertical_state.moving?
-    end
-
-    def direction
-      @horizontal_state.direction
-    end
-
-    def stop
-      @horizontal_state.stop
-    end
-
-    def standing?
-      velocity_horiz == 0
-    end
-      
-    def move_left
-      @horizontal_state.move_left
-    end
-
-    def move_right
-      @horizontal_state.move_right
-    end
-
-    def rise
-      @vertical_state.rise
-    end
-
-    def rising?
-      velocity_vertic < 0
-    end
-
-    def descend
-      @vertical_state.descend
-    end
-
-    def fall
-      @vertical_state.fall
-    end
-
-    def falling?
-      velocity_vertic > 0
-    end
-
-    def velocity_horiz
-      @horizontal_state.velocity
-    end
-
-    def velocity_vertic
-      @vertical_state.velocity
-    end
-
-    def dump
-      "<id:#{object_id} vv:#{velocity_vertic} vh:#{velocity_horiz}>"
-    end
 
 =begin
 --- VikingState#to_s

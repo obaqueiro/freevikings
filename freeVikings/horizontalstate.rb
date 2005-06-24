@@ -5,6 +5,8 @@
 # Ty se staraji o stavove informace vikinga co se tyce pohybu
 # v horizontalnim smeru.
 
+require 'stateproprieties.rb'
+
 =begin
 = HorizontalState
 The new solution of VikingState uses an object VikingState as a wrapper
