@@ -4,7 +4,7 @@
 
 <log4r_config>
 
-  <!-- Log for initialization output (see init.rb) -->
+  <!-- Log for initialization and top-level output (see init.rb, game.rb) -->
   <logger name="init log" level="INFO">
     <outputter>stdout</outputter>
   </logger>

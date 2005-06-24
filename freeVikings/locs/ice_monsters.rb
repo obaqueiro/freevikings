@@ -26,7 +26,14 @@ module IceLand
 
   class Bear < Sprite
 
+    WIDTH = 80
+    HEIGHT = 80
+
     include FreeVikings::Monster
+
+    def initialize(position)
+      super([position[0], position[1], WIDTH, HEIGHT])
+    end
 
     def init_images
       @image = FreeVikings::Image.new('bear_left.tga')

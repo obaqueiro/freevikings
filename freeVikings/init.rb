@@ -21,6 +21,7 @@ module FreeVikings
       load_logo
       load_font
       open_window
+      display_logo
 
       configure_log4r
 
@@ -30,7 +31,6 @@ module FreeVikings
 
       @log.info "Log4r logging mechanisms initialized."
 
-      display_logo
       start_game
     end
 

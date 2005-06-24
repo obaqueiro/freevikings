@@ -87,7 +87,7 @@ All the three examples expect you have created a RUDL::DisplaySurface
     def initialize(window, locations=[])
       @app_window = window
 
-      # init_bottompanel_gfx
+      @log = Log4r::Logger['init log']
 
       if locations.is_a? World then
         @world = locations
@@ -162,16 +162,16 @@ regularly and refreshes the screen.
           @team = init_vikings_team(location)
 	elsif (@team.alive_size < @team.size) or (@give_up == true) then
 	  # Nekteri hrdinove mrtvi.
-	  puts '*** Some vikings died. Try once more.'
+	  @log.info "Some vikings died. Try once more."
 	  @world.rewind_location
           location = @world.location
           @team = init_vikings_team(location)
 	  @give_up = nil
 	elsif @team.alive_size == @team.size
 	  # Vsichni dosahli EXITu
-	  puts '*** Oh, great! Congratulations, level completed.'
+	  @log.info "Oh, great! Congratulations, level completed."
 	  unless location = @world.next_location then
-	    puts '*** Congratulations! You explored all the world!'
+	    @log.info "Congratulations! You explored all the world!"
 	    exit
 	  end
           @team = init_vikings_team(location)
