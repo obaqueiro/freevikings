@@ -33,6 +33,7 @@ module FreeVikings
     end
 
     attr_reader :ticker
+    attr_reader :map
 
     def update
       @ticker.tick
@@ -113,22 +114,20 @@ module FreeVikings
     end
 
     def is_position_valid?(sprite, position)
+      validated_rect = Rectangle.new(position[0], position[1], sprite.rect.w, sprite.rect.h)
       begin
-	colliding_blocks = blocks_on_rect([position[0], position[1], sprite.rect.w, sprite.rect.h])
+	colliding_blocks = @map.blocks_on_rect(validated_rect)
       rescue RuntimeError
-	return nil
+	return false
       end
+      colliding_blocks.concat @map.static_objects.members_on_rect(validated_rect)
       colliding_blocks.each do |block|
 	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.
-	return nil if block.solid == true
+	return false if block.solid == true
       end
       # az dosud nebyl nalezen pevny blok, posice je volna
       return true
     end # is_position_valid?
-
-    def blocks_on_rect(rect)
-      @map.blocks_on_square(rect)
-    end
 
     private
 

@@ -14,6 +14,14 @@ class TestMap < Test::Unit::TestCase
 
   include FreeVikings
 
+  def rect
+    Rectangle.new 90, 90, 60, 60
+  end
+
+  def solid?
+    true
+  end
+
   def setup
     @map = Map.new(Mock::TestingMapLoadStrategy.new)
   end
@@ -36,6 +44,11 @@ class TestMap < Test::Unit::TestCase
   def testRect
     r = Rectangle.new(0, 0, Map::TILE_SIZE * 8, Map::TILE_SIZE * 8)
     assert(r.eql?(@map.rect), "The two rectangles (#{r.to_s} and #{@map.rect.to_s}) should contain the same numbers => eql? is expected to be true.")
+  end
+
+  def testStaticObject
+    @map.static_objects.add self
+    assert_equal self, @map.static_objects.members_on_rect(Rectangle.new(80,80,10,10))[0], "A TestMap instance was added into a Map as a solid static object."
   end
 
 end # class TestMap

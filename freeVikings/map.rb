@@ -1,9 +1,11 @@
 # map.rb
 # igneus 20.1.2004
 
-require 'tiletype'
 require 'log4r'
 require 'rexml/document'
+
+require 'tiletype.rb'
+require 'group.rb'
 
 module FreeVikings
 
@@ -21,6 +23,8 @@ module FreeVikings
       loading_strategy = map_load_strategy
       @background = nil
 
+      (@static_objects = Group.new).extend(PaintableGroup)
+
       @log.info('Loading map.')
 
       loading_strategy.load_map(@blocks, @blocktypes)
@@ -34,6 +38,7 @@ module FreeVikings
     end
 
     attr_reader :rect
+    attr_reader :static_objects
 
     # vrati surface s aktualnim pozadim
 
@@ -59,7 +64,10 @@ module FreeVikings
       left = (background().w - surface.w) if center_coordinate[0] > (background().w - (surface.w / 2))
       top = (background().h - surface.h) if center_coordinate[1] > (background().h - (surface.h / 2))
       
-      surface.blit(background, [0,0], [left, top, left + surface.w, top + surface.h])
+      paint_rect = [left, top, left + surface.w, top + surface.h]
+      surface.blit(background, [0,0], paint_rect)
+
+      @static_objects.paint(surface, paint_rect)
     end
 
     # vezme beznou definici ctverce v pixelech, vrati pole kolidujicich
@@ -86,6 +94,8 @@ module FreeVikings
       }
       return colliding_blocks
     end
+
+    alias_method :blocks_on_rect, :blocks_on_square
 
     private
 
