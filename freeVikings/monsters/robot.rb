@@ -6,18 +6,19 @@
 
 require 'monster.rb'
 require 'sprite.rb'
+require 'monstermixins.rb'
 
 module FreeVikings
 
   class Robot < Sprite
 
     include Monster
+    include MonsterMixins::HeroBashing
 
     VELOCITY_NORMAL = 9
     VELOCITY_ANGRY = 50
 
     ANGER_DURATION = 8
-    BASH_DELAY = 3
 
     MAX_LIVES = 3
 
@@ -47,7 +48,7 @@ module FreeVikings
       update_position
       update_direction
       update_anger
-      bash_strange_beings
+      bash_heroes
     end
 
     alias_method :_hurt, :hurt
@@ -97,17 +98,6 @@ module FreeVikings
       if @direction == 'left' and @rect.left <= @start_position[0] then
         @direction = 'right'
       end
-    end
-
-    def bash_strange_beings
-      return if @location.ticker.now < @last_bash + BASH_DELAY
-      @location.sprites_on_rect(@rect).each {|s|
-        if s.kind_of? Hero
-          s.hurt
-          s.hurt if @angry # nastvany robot ublizuje dvakrat za kolo
-          @last_bash = @location.ticker.now
-        end
-      }
     end
 
     def update_anger

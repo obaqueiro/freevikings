@@ -9,6 +9,7 @@ require 'group'
 require 'sprite'
 require 'monster'
 require 'apple'
+require 'killtoy'
 require 'monsters/bear'
 
 # === CONSTANTS:
@@ -46,6 +47,7 @@ module IceLand
     def update
       @rect.left += velocity_horiz * @location.ticker.delta
       turn if on_turn_point?
+      bash_heroes
     end
 
     private
@@ -147,6 +149,7 @@ include IceLand
 # === ITEMS:
 
 LOCATION.add_item Apple.new([360 + 5,170])
+LOCATION.add_item Killtoy.new([985, 330])
 
 # === ACTIVE OBJECTS:
 

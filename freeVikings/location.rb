@@ -44,6 +44,7 @@ module FreeVikings
     end
 
     def unpause
+      @ticker.restart
       @spritemanager.unpause
     end
 

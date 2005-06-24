@@ -61,5 +61,9 @@ values.
     def delta
       @now - @old
     end
+
+    def restart
+      @old = @now = Time.now.to_f
+    end
   end # class Ticker
 end # module FreeVikings

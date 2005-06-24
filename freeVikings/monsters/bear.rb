@@ -5,18 +5,20 @@
 
 require 'leggedspritestate.rb'
 require 'leggedspritemixins.rb'
+require 'monster.rb'
+require 'monstermixins.rb'
 
 module FreeVikings
 
   class Bear < Sprite
 
+    include Monster
+    include MonsterMixins::HeroBashing
     include LeggedSpriteMixins::Walking
 
     WIDTH = 60
     HEIGHT = 80
     BASE_VELOCITY = 50
-
-    include Monster
 
     def initialize(position)
       super([position[0], position[1], WIDTH, HEIGHT])
@@ -24,6 +26,10 @@ module FreeVikings
     end
 
     attr_reader :state
+
+    def update
+      bash_heroes
+    end
 
     def init_images
       anim_left = AnimationSuite.new(0.3, 
