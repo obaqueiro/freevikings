@@ -9,8 +9,8 @@ module FreeVikings
 
   class PlasmaShooter < Sprite
 
-    DELAY = 2
-    SHOT_VELOCITY = 55
+    DELAY = 4.5
+    SHOT_VELOCITY = 85
 
     def initialize(startpos, direction='left')
       super(startpos)
