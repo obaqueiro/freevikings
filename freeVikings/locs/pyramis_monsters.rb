@@ -4,4 +4,4 @@
 
 require 'monsters/slug.rb'
 
-MONSTERS.push FreeVikings::Slug.new([640,320])
+MONSTERS.push FreeVikings::Slug.new([640,360])

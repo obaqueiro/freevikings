@@ -29,6 +29,7 @@
     </blocktypes>
 
 <blocks>
+oooooooooooooooooooooooooooooooooooooooooooooooo
 ssCCCCCCCCCCCCCCCCsCCCCCCCCCCCCCCCCCCsCCCCCCCCCs
 sloooooooooooooooosooooooooooooooorsssloooooooor
 oloooooooooooooooosooooooooooooooooCCsloooooooor
@@ -40,11 +41,12 @@ olooooooAoooooooooooooooooooooooooooooooooooooor
 olooooooooooooooooooooooooooAoooooooooooooooooor
 ooffffffffooooooooooooooooooooooooooooooooooooor
 oooooooooxffffffffsffffffffffffffffffffffffffffs
+oooooooooooooooooooooooooooooooooooooooooooooooo
 </blocks>
     
     <!-- Startovni a koncove misto mapy: -->
-    <start horiz="100" vertic="260" />
-    <exit horiz="1800" vertic="300" />
+    <start horiz="100" vertic="300" />
+    <exit horiz="1800" vertic="340" />
   </map>
     
 </location>
