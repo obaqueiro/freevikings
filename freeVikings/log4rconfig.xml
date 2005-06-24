@@ -4,6 +4,12 @@
 
 <log4r_config>
 
+  <!-- Log for initialization output (see init.rb) -->
+  <logger name="init log" level="INFO">
+    <outputter>stdout</outputter>
+  </logger>
+
+  <!-- Log for Location Loading Strategies output -->
   <logger name="location loading log" level="ERROR">
     <outputter>stderr</outputter>
   </logger>
@@ -12,14 +18,18 @@
     <outputter>stderr</outputter>
   </logger>
 
+  <!-- Log mainly used for vikings' states' dumps -->
   <logger name="viking log" level="INFO">
     <outputter>stderr</outputter>
   </logger>
 
+  <!-- Log for image related classes (from imagebank.rb) -->
   <logger name="images log" level="OFF">
     <outputter>stderr</outputter>
   </logger>
 
+  <!-- Log for every class which doesn't need it's own (mainly for small
+       classes not widely used in the game engine) -->
   <logger name="freeVikings log" level="ERROR">
     <outputter>stderr</outputter>
   </logger>

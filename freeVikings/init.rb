@@ -16,29 +16,44 @@ module FreeVikings
   class Init
 
     def initialize
+      @log = MockLogger.new
+
       load_logo
       load_font
       open_window
-      display_logo
+
       configure_log4r
+
+      exlog = @log
+      @log = Log4r::Logger['init log']
+      exlog.each {|l| @log.info l}
+
+      @log.info "Log4r logging mechanisms initialized."
+
+      display_logo
       start_game
     end
 
     private
 
     def start_game
+      @log.info "Starting the game."
       Game.new(@window).game_loop
+      @log.info "Ending the game."
     end
 
     def load_logo
+      @log.info "Loading the freeVikings logo."
       @logo = RUDL::Surface.load_new GFX_DIR+'/fvlogo.tga'
     end
 
     def load_font
+      @log.info "Loading default font."
       @font = RUDL::TrueTypeFont.new('fonts/adlibn.ttf', 16)
     end
 
     def open_window
+      @log.info "Initializing the game window."
       @window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
       @window.set_caption('freeVikings')
       @window.toggle_fullscreen if FreeVikings::OPTIONS['fullscreen']
@@ -58,4 +73,8 @@ module FreeVikings
       require 'log4rsetupload'
     end
   end # class Init
+
+  class MockLogger < Array
+    alias_method :info, :push
+  end
 end # module FreeVikings
