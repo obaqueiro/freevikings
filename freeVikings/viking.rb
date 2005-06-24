@@ -12,6 +12,7 @@ require 'nullocation.rb'
 require 'collisiontest.rb'
 require 'inventory.rb'
 require 'map.rb' # kvuli const. TILE_SIZE
+require 'leggedspritemixins.rb'
 
 =begin
 = Viking
@@ -20,6 +21,8 @@ require 'map.rb' # kvuli const. TILE_SIZE
 module FreeVikings
 
   class Viking < Sprite
+
+    include LeggedSpriteMixins::Walking
 
     BASE_VELOCITY = 65
     WIDTH = 80
@@ -77,18 +80,6 @@ module FreeVikings
       end
     end
 
-    def move_left
-      @state.move_left
-    end
-
-    def move_right
-      @state.move_right
-    end
-
-    def stop
-      @state.stop
-    end
-
     def destroy
       @energy = 0
       @location.add_sprite DeadViking.new([left, top])
@@ -137,10 +128,6 @@ module FreeVikings
 
     def falling?
       @state.falling?
-    end
-
-    def standing?
-      @state.standing?
     end
 
     # Aktualisuje posici vikinga.
@@ -224,13 +211,13 @@ module FreeVikings
     end
 
     private
-    def velocity_vertic
-      @state.velocity_vertic * BASE_VELOCITY
+    def velocity_horiz
+      @state.velocity_horiz * BASE_VELOCITY
     end
 
     private
-    def velocity_horiz
-      @state.velocity_horiz * BASE_VELOCITY
+    def velocity_vertic
+      @state.velocity_vertic * BASE_VELOCITY
     end
 
     private

@@ -25,6 +25,62 @@ module IceLand
   SWITCH_GFX = {'true' => Image.new('ice_map/ice_switch_on.tga'),
                 'false' => Image.new('ice_map/ice_switch_off.tga')}
 
+  # WalkingBear.
+  # The Bear which walks around his initial position.
+  class WalkingBear < FreeVikings::Bear
+
+    VELOCITY = 50
+
+    RIGHT = 1
+    LEFT = -1
+
+    def initialize(position, max_walk_length=100)
+      super(position)
+      @max_walk_length = max_walk_length
+      @teritory_center = @rect.left + @rect.w / 2
+      @walk_length = 0
+      rand <= 0.5 ? move_left : move_right
+      new_walk_length
+    end
+
+    def update
+      @rect.left += velocity_horiz * @location.ticker.delta
+      turn if on_turn_point?
+    end
+
+    private
+
+    def new_walk_length
+      @walk_length = rand * @max_walk_length
+      @dest = @teritory_center + (@state.velocity_horiz * @walk_length)
+    end
+
+    def turn
+      move_left if @rect.left >= @teritory_center
+      move_right if @rect.left <= @teritory_center
+
+      n = new_walk_length
+      # puts @state.direction, " ", n
+    end
+
+    def on_turn_point?
+      if @state.velocity_horiz < 0 and 
+          @rect.left <= @dest then
+        return true
+      end
+      if @state.velocity_horiz > 0 and 
+          @rect.left >= @dest then
+        return true
+      end
+
+      return false
+    end
+
+    def velocity_horiz
+      @state.velocity_horiz * BASE_VELOCITY
+    end
+  end # class WalkingBear
+
   class IceSwitch < FreeVikings::Switch
     def initialize(position, initial_state)
       super(position, initial_state, nil, IceLand::SWITCH_GFX)
@@ -113,5 +169,5 @@ switchgroup.each {|m| LOCATION.add_active_object m }
 # === MONSTERS:
 
 # The nice fair bear who stands on the first corridor
-bear = Bear.new([300, 320])
+bear = WalkingBear.new([850, 320], 400)
 LOCATION.add_sprite(bear)

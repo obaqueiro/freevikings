@@ -14,9 +14,9 @@ module FreeVikings
     include Monster
 
     VELOCITY_NORMAL = 9
-    VELOCITY_ANGRY = 20
+    VELOCITY_ANGRY = 50
 
-    ANGER_DURATION = 3
+    ANGER_DURATION = 8
     BASH_DELAY = 3
 
     MAX_LIVES = 3

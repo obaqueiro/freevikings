@@ -4,13 +4,17 @@
 # A nice Bear which can be dangerous too.
 
 require 'leggedspritestate.rb'
+require 'leggedspritemixins.rb'
 
 module FreeVikings
 
   class Bear < Sprite
 
+    include LeggedSpriteMixins::Walking
+
     WIDTH = 60
     HEIGHT = 80
+    BASE_VELOCITY = 50
 
     include Monster
 
@@ -22,7 +26,7 @@ module FreeVikings
     attr_reader :state
 
     def init_images
-      anim_left = AnimationSuite.new(0.75, 
+      anim_left = AnimationSuite.new(0.3, 
                                      [Image.new('bear_left.tga'),
                                      Image.new('bear_left_walk.tga')]
                                      )
