@@ -14,6 +14,9 @@ It supports one operation - application (see ((<Item#apply>))).
 
   class Item < Entity
 
+    WIDTH = 30
+    HEIGHT = 30
+
 =begin
 --- Item#apply(user)
 Applies the item onto the ((|user|)). ((|user|)) is expected to be 

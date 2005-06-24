@@ -67,7 +67,7 @@ module FreeVikings
       paint_rect = [left, top, left + surface.w, top + surface.h]
       surface.blit(background, [0,0], paint_rect)
 
-      @static_objects.paint(surface, paint_rect)
+      @static_objects.paint(surface, Rectangle.new(*paint_rect))
     end
 
     # vezme beznou definici ctverce v pixelech, vrati pole kolidujicich

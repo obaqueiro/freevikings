@@ -11,6 +11,7 @@ require 'monster'
 require 'apple'
 require 'killtoy'
 require 'monsters/bear'
+require 'map'
 
 # === CONSTANTS:
 
@@ -18,10 +19,39 @@ module IceLand
 
   include FreeVikings
 
+  DEBUG = true
+
+  def IceLand.dbg(text)
+    if DEBUG
+      print '///'
+      puts text
+    end
+  end
+
   module FirstCorridor
+    CEILING = 280
+    FLOOR = CEILING + 3 * FreeVikings::Map::TILE_SIZE
+    END_X = 1480
+    APPLEBAY_X = 320
     BAY_SWITCHGROUP_Y = 230
     BAYS_X = [640, 840, 1040]
+    BEAR_START_X = 850
   end # module FirstCorridor
+
+  class IceBoard
+    WIDTH = 80
+    HEIGHT = 22
+    def initialize(position)
+      @rect = FreeVikings::Rectangle.new position[0], position[1], WIDTH, HEIGHT
+      @image = FreeVikings::Image.new('ice_map/iceboard.tga')
+      @solid = true
+    end
+    attr_reader :rect
+    attr_reader :solid
+    def image
+      @image.image
+    end
+  end # class IceBoard
   
   SWITCH_GFX = {'true' => Image.new('ice_map/ice_switch_on.tga'),
                 'false' => Image.new('ice_map/ice_switch_off.tga')}
@@ -62,7 +92,7 @@ module IceLand
       move_right if @rect.left <= @teritory_center
 
       n = new_walk_length
-      # puts @state.direction, " ", n
+      IceLand.dbg "#{@state.direction} #{n}"
     end
 
     def on_turn_point?
@@ -114,15 +144,18 @@ module IceLand
     end
 
     def update_combination
-      0.upto(@combination.size) do |i|
+      IceLand.dbg 'Switchgroup update.'
+      @combination.size.times do |i|
         if @members[i] and @combination[i] == @members[i].state then
           next
         else
           open = false
+          @proc.call open
           return
         end
       end
       open = true
+      @proc.call open
     end
 
     def open?
@@ -139,6 +172,27 @@ module IceLand
       @proc.call @open
     end
   end # class SwitchGroup
+
+  class TrapDoorGroup < Array
+    def initialize(*members)
+      self.concat members
+      @in = false
+    end
+
+    def in
+      unless @in
+        each {|m| LOCATION.map.static_objects.add m}
+        @in = true
+      end
+    end
+
+    def out
+      if @in
+        each {|m| LOCATION.map.static_objects.delete m}
+        @in = false
+      end
+    end
+  end # class TrapDoorGroup
 end # module IceLand
 
 
@@ -146,23 +200,54 @@ include FreeVikings
 include IceLand
 
 
+# === STATIC OBJECTS:
+
+applebay_trapdoors = TrapDoorGroup.new
+2.times do |i|
+  x = FirstCorridor::APPLEBAY_X + i*IceBoard::WIDTH
+  y = FirstCorridor::CEILING - IceBoard::HEIGHT
+  applebay_trapdoors << IceBoard.new([x, y])
+end
+applebay_trapdoors.in
+
+secondcorridor_trapdoors = TrapDoorGroup.new
+2.times do |i|
+  x = FirstCorridor::END_X - 4*Map::TILE_SIZE + i*IceBoard::WIDTH
+  y = FirstCorridor::CEILING - IceBoard::HEIGHT
+  secondcorridor_trapdoors << IceBoard.new([x, y])
+end
+secondcorridor_trapdoors.in
+
+
 # === ITEMS:
 
-LOCATION.add_item Apple.new([360 + 5,170])
+LOCATION.add_item Apple.new([FirstCorridor::APPLEBAY_X + 2*Map::TILE_SIZE - 0.5*Apple::WIDTH,170])
 LOCATION.add_item Killtoy.new([985, 330])
 
 # === ACTIVE OBJECTS:
 
 # The first switch in the first corridor. Erik can reach it only with 
 # Olaf's help. It does nothing.
-switch = Switch.new([360 + 5, 80], false, Proc.new {}, IceLand::SWITCH_GFX)
+appleswitch_proc = Proc.new do |switch_state|
+  if switch_state then
+    secondcorridor_trapdoors.out
+  else
+    secondcorridor_trapdoors.in
+  end
+end
+switch = Switch.new([FirstCorridor::APPLEBAY_X + (2 * Map::TILE_SIZE) - Switch::WIDTH/2, 80], false, appleswitch_proc, IceLand::SWITCH_GFX)
 LOCATION.add_active_object switch
 
 # The group of three switches over the first corridor. Erik can reach every 
 # of them.
+swtchgrp_update_proc = Proc.new do |switchgroup_state|
+  if switchgroup_state then
+    applebay_trapdoors.out
+  end
+end
 switchgroup = SwitchGroup.new(
-                              [true, false, false],
-                              Proc.new {|state| nil},
+                              [false, true, true],
+                              swtchgrp_update_proc,
                               IceSwitch.new([IceLand::FirstCorridor::BAYS_X[0] + 40 + 5, FirstCorridor::BAY_SWITCHGROUP_Y], false),
                               IceSwitch.new([IceLand::FirstCorridor::BAYS_X[1] + 40 + 5, FirstCorridor::BAY_SWITCHGROUP_Y], false),
                               IceSwitch.new([IceLand::FirstCorridor::BAYS_X[2] + 40 + 5, FirstCorridor::BAY_SWITCHGROUP_Y], false)
@@ -172,5 +257,5 @@ switchgroup.each {|m| LOCATION.add_active_object m }
 # === MONSTERS:
 
 # The nice fair bear who stands on the first corridor
-bear = WalkingBear.new([850, 320], 400)
+bear = WalkingBear.new([FirstCorridor::BEAR_START_X, 320], 400)
 LOCATION.add_sprite(bear)
