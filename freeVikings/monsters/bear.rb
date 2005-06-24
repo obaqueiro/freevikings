@@ -33,9 +33,9 @@ module FreeVikings
 
       imgs = {
         'onground_standing_left' => Image.new('bear_left.tga'),
-        'onground_standing_right' => Image.new('bear_right.tga')
+        'onground_standing_right' => Image.new('bear_right.tga'),
         'onground_moving_left' => anim_left,
-        'onground_moving_right' = anim_right
+        'onground_moving_right' => anim_right
       }
       @image = ImageBank.new(self, imgs)
     end

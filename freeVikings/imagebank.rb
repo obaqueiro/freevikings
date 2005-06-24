@@ -17,8 +17,13 @@ require 'log4r'
 
 module FreeVikings
 
+=begin
+= ImageBank
+((<ImageBank>)) is an associative container which binds a Sprite, it's states
+and images for these states.
+=end
+
   class ImageBank
-    # Soubor obrazku pro mnozinu stavu sprajtu
 
     def initialize(sprite=nil, hash=nil)
       @log = Log4r::Logger['images log']
@@ -52,22 +57,47 @@ can just catch the exception and go on without problems.
       return self
     end
 
-    # vrati surface s obrazkem pro prislusny stav
+=begin
+--- ImageBank#image
+Returns the Image for owner's recent state.
+=end
 
     def image
       begin
         @images[@sprite.state.to_s].image
       rescue NoMethodError
-	raise RuntimeError, "No image assigned for a state #{@sprite.state.to_s}."
+	raise NoImageAssignedException.new(state)
       end
     end
 
-    # Vyjimky teto tridy jsou vyhazovany, pokud dojde k pokusu o zarazeni
-    # obrazku, jenz velikosti neodpovida velikosti spritu, jemuz dana 
-    # ImageBank patri.
+=begin
+== ImageWithBadSizesException
+This exception is thrown when an image which has different sizes than
+the owner is added into an ((<ImageBank>)). It's important that the exception
+is thrown just ((*after*)) the image is added, so if you expect it, you
+can catch the exception and carry on whistling...
+=end
     class ImageWithBadSizesException < RuntimeError
     end
+
+=begin
+== NoImageAssignedException
+Exceptions of this type are thrown by ((<ImageBank#image>)) if there
+is no image for the owner's state in the ((<ImageBank>)).
+=end
+    class NoImageAssignedException < RuntimeError
+      def initialize(state)
+@message = "No image assigned for a state #{state.to_s}."
+      end
+    end # class NoImageAssignedException
   end # class ImageBank
+
+
+=begin
+= AnimationSuite
+((<AnimationSuite>)) is a simple class which allows you to use animated
+images (e.g. inside an ((<ImageBank>))).
+=end
 
   class AnimationSuite
     # Skladba obrazku nebo animaci animujicich stav sprajtu
@@ -106,6 +136,13 @@ can just catch the exception and go on without problems.
   end # class AnimationSuite
 
 
+=begin
+= Portrait
+A ((<Portrait>)) keeps three images. They are called active, unactive and 
+kaput. Every of the three vikings has his own ((<Portrait>)) object with 
+his face's images used on the BottomPanel.
+=end
+
   class Portrait
 
     def initialize(active_path, unactive_path, kaput_path)
@@ -132,8 +169,13 @@ can just catch the exception and go on without problems.
   end # class Portrait
 
 
+=begin
+= Image
+((<Image>)) is a wrapper class for Image data (at the moment the internal datatype
+is RUDL::Surface, but it can change).
+=end
+
   class Image
-    # Obrazek
 
     # Vytvori obrazek. Zadanou cestu vezme relativne ke standardnimu
     # adresari obrazku.
