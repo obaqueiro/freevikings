@@ -1,16 +1,16 @@
-# testleggedspritestate.rb
+# testsophisticatedspritestate.rb
 # igneus 28.6.2005
 
 # Test cases for LeggedSpriteState.
 
 require 'test/unit'
 
-class TestLeggedSpriteState < Test::Unit::TestCase
+class TestSophisticatedSpriteState < Test::Unit::TestCase
 
   include FreeVikings
 
   def setup
-    @state = LeggedSpriteState.new
+    @state = SophisticatedSpriteState.new
   end
 
   def testLeftDirectionAfterMoveLeft

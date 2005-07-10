@@ -2,7 +2,7 @@
 # igneus 28.6.2005
 
 =begin
-= LeggedSpriteState
+= SophisticatedSpriteState
 For a long time only the vikings needed to have a sophisticated
 State object to keep information about their movement. The other sprites
 haven't needed such a complicated and powerful mechanism. They haven't
@@ -11,12 +11,8 @@ pattern (Shot or Robot). But simple enemies make no fun.
 So I decided to make VikingState more general and create some more
 complicated creatures such as a Bear.
 
-The name ((<LeggedSpriteState>)) doesn't mean Sprites using it must have
-leggs. But both Viking and Bear have them and I haven't found nothing more 
-these two types have together.
-
-((<LeggedSpriteState>)) makes it possible for the Sprite to walk, jump and 
-fall.
+((<SophisticatedSpriteState>)) makes it possible for the Sprite to walk, 
+jump and fall.
 =end
 
 require 'stateproprieties.rb'
@@ -25,7 +21,7 @@ require 'horizontalstate.rb'
 
 module FreeVikings
 
-  class LeggedSpriteState
+  class SophisticatedSpriteState
 
     include StateProprieties
 
@@ -109,5 +105,5 @@ module FreeVikings
       @horizontal_state.to_s + CNTR + \
       @horizontal_state.direction
     end
-  end # class LeggedSpriteState
+  end # class SophisticatedSpriteState
 end # module FreeVikings

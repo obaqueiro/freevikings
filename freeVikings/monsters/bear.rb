@@ -3,8 +3,8 @@
 
 # A nice Bear which can be dangerous too.
 
-require 'leggedspritestate.rb'
-require 'leggedspritemixins.rb'
+require 'sophisticatedspritestate.rb'
+require 'sophisticatedspritemixins.rb'
 require 'monster.rb'
 require 'monstermixins.rb'
 
@@ -14,7 +14,7 @@ module FreeVikings
 
     include Monster
     include MonsterMixins::HeroBashing
-    include LeggedSpriteMixins::Walking
+    include SophisticatedSpriteMixins::Walking
 
     WIDTH = 60
     HEIGHT = 80
@@ -22,7 +22,7 @@ module FreeVikings
 
     def initialize(position)
       super([position[0], position[1], WIDTH, HEIGHT])
-      @state = LeggedSpriteState.new
+      @state = SophisticatedSpriteState.new
     end
 
     attr_reader :state

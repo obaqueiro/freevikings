@@ -12,7 +12,7 @@ require 'nullocation.rb'
 require 'collisiontest.rb'
 require 'inventory.rb'
 require 'map.rb' # kvuli const. TILE_SIZE
-require 'leggedspritemixins.rb'
+require 'sophisticatedspritemixins.rb'
 
 =begin
 = Viking
@@ -22,7 +22,7 @@ module FreeVikings
 
   class Viking < Sprite
 
-    include LeggedSpriteMixins::Walking
+    include SophisticatedSpriteMixins::Walking
 
     BASE_VELOCITY = 65
     WIDTH = 80

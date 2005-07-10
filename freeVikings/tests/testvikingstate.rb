@@ -5,11 +5,11 @@
 # (Potrebuji provest par optimalizacnich uprav a chci mit jistotu, ze nenadelam
 # neporadek.)
 
-require 'testleggedspritestate.rb'
+require 'testsophisticatedspritestate.rb'
 
 require 'vikingstate.rb'
 
-class TestVikingState < TestLeggedSpriteState
+class TestVikingState < TestSophisticatedSpriteState
 
   def setup
     @state = VikingState.new

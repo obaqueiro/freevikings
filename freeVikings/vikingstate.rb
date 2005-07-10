@@ -1,7 +1,7 @@
 # vikingstate.rb
 # igneus 24.1.2005
 
-require 'leggedspritestate.rb'
+require 'sophisticatedspritestate.rb'
 
 module FreeVikings
 
@@ -19,7 +19,7 @@ The X-axis movement data are covered in an instance of VerticalState's
 subclass.
 =end
 
-  class VikingState < LeggedSpriteState
+  class VikingState < SophisticatedSpriteState
 
     def initialize
       super()
