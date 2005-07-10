@@ -190,9 +190,9 @@ regularly and refreshes the screen.
 	while (not is_exit?) and (not @give_up) do
 
 	  # Zpracujeme udalosti:
-	  if event = RUDL::EventQueue.poll then
+	  RUDL::EventQueue.get.each do |event|
 	    @state.serve_event(event, location)
-	  end # if je udalost
+	  end
 
 	  location.update unless @state.paused?
 
