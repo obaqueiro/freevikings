@@ -113,20 +113,39 @@ module FreeVikings
       @map.rect.collides? rect
     end
 
-    def is_position_valid?(sprite, position)
-      validated_rect = Rectangle.new(position[0], position[1], sprite.rect.w, sprite.rect.h)
+=begin
+--- Location#area_free?(rect)
+Returns ((|true|)) if area specified by ((|rect|)) is free of solid map blocks,
+((|false|)) otherwise.
+=end
+
+    def area_free?(rect)
       begin
-	colliding_blocks = @map.blocks_on_rect(validated_rect)
+	colliding_blocks = @map.blocks_on_rect(rect)
       rescue RuntimeError
 	return false
       end
-      colliding_blocks.concat @map.static_objects.members_on_rect(validated_rect)
+      colliding_blocks.concat @map.static_objects.members_on_rect(rect)
       colliding_blocks.each do |block|
 	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.
 	return false if block.solid == true
       end
       # az dosud nebyl nalezen pevny blok, posice je volna
       return true
+    end
+
+=begin
+--- Location#is_position_valid?(sprite, position)
+!!! DEPRECATED !!!
+Don't use this, look at (({Location#area_free?})).
+
+Checks if ((|sprite|)) can move to ((|position|)) (Array, Rectangle or 
+something similar). It uses ((|sprite|))'s method rect.
+=end
+
+    def is_position_valid?(sprite, position)
+      validated_rect = Rectangle.new(position[0], position[1], sprite.rect.w, sprite.rect.h)
+      return area_free?(validated_rect)
     end # is_position_valid?
 
     private

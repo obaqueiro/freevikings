@@ -149,7 +149,7 @@ module FreeVikings
     private
     def move_xy
       next_pos = Rectangle.new(next_left, next_top, @rect.w, @rect.h)
-      if @location.is_position_valid?(self, next_pos) then
+      if @location.area_free?(next_pos) then
 	@log.debug "update: Viking #{name}'s next position is all right."
         @rect = next_pos
         return true
@@ -161,7 +161,7 @@ module FreeVikings
     private
     def move_y_only
       next_pos = Rectangle.new(@rect.left, next_top, @rect.w, @rect.h)
-      if @location.is_position_valid?(self, next_pos) then
+      if @location.area_free?(next_pos) then
         @log.debug "update: Viking #{name} cannot move horizontally, but his vertical coordinate was updated successfully."
         @rect = next_pos
         return true
@@ -230,7 +230,7 @@ module FreeVikings
                                @rect.top + @location.ticker.delta * BASE_VELOCITY, 
                                @rect.w, 
                                @rect.h)
-      return nil if @location.is_position_valid?(self, lowerpos)
+      return nil if @location.area_free?(lowerpos)
       # viking stoji na pevne zemi:
       return true
     end

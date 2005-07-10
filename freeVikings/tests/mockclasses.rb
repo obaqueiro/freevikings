@@ -78,6 +78,10 @@ module FreeVikings
         return @position_validator_proc.call(sprite, position)
       end
 
+      def area_free?(area)
+        return is_position_valid?(nil, area)
+      end
+
       def sprites_on_rect(rect)
         @sprites_on_rect.dup
       end

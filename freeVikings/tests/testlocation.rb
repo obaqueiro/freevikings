@@ -53,6 +53,10 @@ class TestLocation < Test::Unit::TestCase
     assert @loc.is_position_valid?(@sprite, [Map::TILE_SIZE*2, Map::TILE_SIZE]), "Sprite is on the edge of the valid zone, but it's position should still be considered valid."
   end
 
+  def testAreaFree
+    assert(@loc.area_free?(self.rect), "Specified rectangular area is free.")
+  end
+
   # Mam problem, vikingove chodi s nohama asi 10px pod urovni podlahy.
   # To by nemelo byt mozne.
 
