@@ -35,7 +35,7 @@ module FreeVikings
     def update
       @rect.left += @velocity.value * @location.ticker.delta
 
-      unless @location.is_position_valid?(self, [left, top])
+      unless @location.area_free? @rect
         destroy
 	return
       end

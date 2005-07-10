@@ -74,12 +74,8 @@ module FreeVikings
         @sprites.delete sprite
       end
       
-      def is_position_valid?(sprite, position)
-        return @position_validator_proc.call(sprite, position)
-      end
-
       def area_free?(area)
-        return is_position_valid?(nil, area)
+        return @position_validator_proc.call(nil, area)
       end
 
       def sprites_on_rect(rect)

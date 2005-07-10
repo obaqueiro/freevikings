@@ -134,20 +134,6 @@ Returns ((|true|)) if area specified by ((|rect|)) is free of solid map blocks,
       return true
     end
 
-=begin
---- Location#is_position_valid?(sprite, position)
-!!! DEPRECATED !!!
-Don't use this, look at (({Location#area_free?})).
-
-Checks if ((|sprite|)) can move to ((|position|)) (Array, Rectangle or 
-something similar). It uses ((|sprite|))'s method rect.
-=end
-
-    def is_position_valid?(sprite, position)
-      validated_rect = Rectangle.new(position[0], position[1], sprite.rect.w, sprite.rect.h)
-      return area_free?(validated_rect)
-    end # is_position_valid?
-
     private
 
     # vraci pole ctyr prvku definujicich obdelnik centrovany predanymi 
