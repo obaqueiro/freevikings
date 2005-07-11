@@ -77,7 +77,16 @@ module IceLand
     def update
       @rect.left += velocity_horiz * @location.ticker.delta
       turn if on_turn_point?
-      super
+      bash_heroes
+      serve_shield_collision {
+        if @state.direction == 'left' then
+          move_right
+        else
+          move_left
+        end
+
+        new_walk_length
+      }
     end
 
     private

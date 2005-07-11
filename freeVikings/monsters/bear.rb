@@ -29,13 +29,7 @@ module FreeVikings
 
     def update
       bash_heroes
-      
-      if stopped_by_shield? then
-        puts 'Shield!'
-        @state.stop
-      elsif @state.standing? then
-        @state.move_right
-      end
+      serve_shield_collision { @state.stop }
     end
 
     def init_images
@@ -55,6 +49,16 @@ module FreeVikings
         'onground_moving_right' => anim_right
       }
       @image = ImageBank.new(self, imgs)
+    end
+
+    private
+
+    def serve_shield_collision
+      if stopped_by_shield? then
+        yield
+      elsif @state.standing? then
+        @state.move_right
+      end
     end
   end # class Bear
 end # module FreeVikings
