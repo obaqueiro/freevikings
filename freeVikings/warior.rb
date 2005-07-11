@@ -74,9 +74,9 @@ module FreeVikings
 
     private
     def init_images
-      i_left = Image.new('baleog_left.png')
-      i_right = Image.new('baleog_right.png')
-      i_standing = Image.new('baleog_standing.png')
+      i_left = Image.load('baleog_left.png')
+      i_right = Image.load('baleog_right.png')
+      i_standing = Image.load('baleog_standing.png')
 
       @image = ImageBank.new(self)
 
@@ -89,8 +89,8 @@ module FreeVikings
       @image.add_pair('falling_moving_right', i_right)
       @image.add_pair('falling_moving_left', i_left)
 
-      i_shootleft = Image.new('baleog_shooting_left.png')
-      i_shootright = Image.new('baleog_shooting_right.png')
+      i_shootleft = Image.load('baleog_shooting_left.png')
+      i_shootright = Image.load('baleog_shooting_right.png')
 
       @image.add_pair('onground_bow-stretching_left', i_shootleft)
       @image.add_pair('onground_bow-stretching_right', i_shootright)

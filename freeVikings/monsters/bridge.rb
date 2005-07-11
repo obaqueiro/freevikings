@@ -13,7 +13,7 @@ module FreeVikings
     include Platform
 
     def init_images
-      @image = Image.new 'yellow_map/small_bridge.tga'
+      @image = Image.load 'yellow_map/small_bridge.tga'
     end
   end # class Bridge
 

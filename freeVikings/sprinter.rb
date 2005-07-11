@@ -46,8 +46,8 @@ module FreeVikings
 
     private
     def init_images
-      i_left = Image.new('erik_left.png')
-      i_right = Image.new('erik_right.png')
+      i_left = Image.load('erik_left.png')
+      i_right = Image.load('erik_right.png')
 
       @image = ImageBank.new(self)
 

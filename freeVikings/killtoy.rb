@@ -19,7 +19,7 @@ module FreeVikings
     KILLRECT_HEIGHT = 350
 
     def init_images
-      @image = Image.new 'killtoy.tga'
+      @image = Image.load 'killtoy.tga'
     end
 
     def apply(user)

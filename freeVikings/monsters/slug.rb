@@ -30,9 +30,9 @@ module FreeVikings
     end
 
     def init_images
-      left = Image.new('slizzy_left.tga')
-      right = Image.new('slizzy_right.tga')
-      standing = Image.new('slizzy_standing.tga')
+      left = Image.load('slizzy_left.tga')
+      right = Image.load('slizzy_right.tga')
+      standing = Image.load('slizzy_standing.tga')
       @anim = AnimationSuite.new(0.4)
       @anim.add(left).add(standing).add(right).add(standing)
     end

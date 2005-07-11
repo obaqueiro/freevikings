@@ -22,8 +22,8 @@ module FreeVikings
 
       unless images
         images = {
-          'true' => Image.new('switch_green.tga'),
-          'false' => Image.new('switch_red.tga')
+          'true' => Image.load('switch_green.tga'),
+          'false' => Image.load('switch_red.tga')
         }
       end
 

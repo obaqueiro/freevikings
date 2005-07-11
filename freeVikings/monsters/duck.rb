@@ -13,7 +13,7 @@ module FreeVikings
 
     def initialize
       super [100,80]
-      @image = Image.new('duck_left.tga')
+      @image = Image.load('duck_left.tga')
       @counter = 0
     end
 

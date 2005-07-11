@@ -19,9 +19,9 @@ module FreeVikings
       super(position)
       @rect = Rectangle.new(position[0], position[1], WIDTH, HEIGHT)
       @image = ImageBank.new(self)
-      im1 = Image.new('dead.png')
-      im2 = Image.new('dead2.png')
-      im3 = Image.new('dead3.png')
+      im1 = Image.load('dead.png')
+      im2 = Image.load('dead2.png')
+      im3 = Image.load('dead3.png')
       @image.add_pair '0', im1
       @image.add_pair '1', im2
       @image.add_pair '2', im3

@@ -61,19 +61,19 @@ module FreeVikings
 
     def init_images
       i_right = AnimationSuite.new(1, [
-                                     Image.new('robot_right.tga'),
-                                     Image.new('robot_right_handdown.tga')
+                                     Image.load('robot_right.tga'),
+                                     Image.load('robot_right_handdown.tga')
                                    ])
       i_left = AnimationSuite.new(1, [
-                                    Image.new('robot_left.tga'),
-                                    Image.new('robot_left_handdown.tga')
+                                    Image.load('robot_left.tga'),
+                                    Image.load('robot_left_handdown.tga')
                                   ])
 
       images = {
         'left' => i_left,
-        'left_angry' => Image.new('robot_left_angry.tga'),
+        'left_angry' => Image.load('robot_left_angry.tga'),
         'right' => i_right,
-        'right_angry' => Image.new('robot_right_angry.tga')
+        'right_angry' => Image.load('robot_right_angry.tga')
       }
       @image = ImageBank.new(self, images)
     end

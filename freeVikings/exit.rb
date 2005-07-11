@@ -11,7 +11,7 @@ module FreeVikings
 
     def initialize(position)
       super position
-      @image = Image.new 'exit.tga'
+      @image = Image.load 'exit.tga'
     end
   end
 end

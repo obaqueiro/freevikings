@@ -64,7 +64,7 @@ module FreeVikings
     class StateStone < State
       def initialize
         @to_s = 'stone'
-        @image = Image.new 'tombstone.tga'
+        @image = Image.load 'tombstone.tga'
         @duration = 2.5
         @next = StateBigCloud
       end
@@ -73,7 +73,7 @@ module FreeVikings
     class StateBigCloud < State
       def initialize
         @to_s = 'puff1'
-        @image = Image.new 'puff_cloud1.tga'
+        @image = Image.load 'puff_cloud1.tga'
         @duration = 0.5
         @next = StateSmallCloud
       end
@@ -82,7 +82,7 @@ module FreeVikings
     class StateSmallCloud < State
       def initialize
         @to_s = 'puff2'
-        @image = Image.new 'puff_cloud2.tga'
+        @image = Image.load 'puff_cloud2.tga'
         @duration = 0.5
         @next = nil
       end

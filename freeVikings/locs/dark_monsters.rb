@@ -8,7 +8,7 @@ class Apex < FreeVikings::Sprite
 
   def initialize(position)
     super(position)
-    @image = FreeVikings::Image.new 'apex.tga'
+    @image = FreeVikings::Image.load 'apex.tga'
   end
 
   def update

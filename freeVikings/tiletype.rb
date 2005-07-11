@@ -16,7 +16,11 @@ module FreeVikings
     @@instances = Hash.new
 
     def initialize(image_path)
-      @image = Image.new(image_path)
+      if image_path and image_path.size != 0 then
+        @image = Image.load(image_path)
+      else
+        @image = Image.new
+      end
       @solid = true
     end
 

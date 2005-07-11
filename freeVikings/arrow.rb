@@ -17,8 +17,8 @@ module FreeVikings
       super([start_pos[0], start_pos[1], WIDTH, HEIGHT], velocity)
 
       @image = ImageBank.new(self)
-      @image.add_pair('left', Image.new('arrow_left.tga'))
-      @image.add_pair('right', Image.new('arrow_right.tga'))
+      @image.add_pair('left', Image.load('arrow_left.tga'))
+      @image.add_pair('right', Image.load('arrow_right.tga'))
       @hunted_type = Monster
     end
   end # class Arrow

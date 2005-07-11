@@ -15,14 +15,14 @@ include FreeVikings
 shooter = FreeVikings::PlasmaShooter.new [730, 430]
 
 shooter.instance_eval do
-  @image = Image.new 'yellow_map/yellow_spitter.tga'
+  @image = Image.load 'yellow_map/yellow_spitter.tga'
 end
 
 # Images which are used in this location for switches instead of
 # the default look
 switch_images = {
-  'true' => Image.new('yellow_map/switch_on.tga'),
-  'false' => Image.new('yellow_map/switch_off.tga')
+  'true' => Image.load('yellow_map/switch_on.tga'),
+  'false' => Image.load('yellow_map/switch_off.tga')
 }
 
 # A Proc called when the state of switch_1 is changed

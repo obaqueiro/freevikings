@@ -22,7 +22,7 @@ Everything that has it's image and it's place on the world is an Entity.
       end
 
       @location = NullLocation.new
-      @image = Image.new('nobody.tga')
+      @image = Image.load('nobody.tga')
 
       init_images if self.respond_to? :init_images
     end

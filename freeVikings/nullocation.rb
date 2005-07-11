@@ -20,7 +20,7 @@ module FreeVikings
     end
 
     def background
-      Image.new
+      Image.load
     end
 
     def add_sprite(sprite)

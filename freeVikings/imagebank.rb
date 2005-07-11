@@ -146,9 +146,9 @@ his face's images used on the BottomPanel.
   class Portrait
 
     def initialize(active_path, unactive_path, kaput_path)
-      @active = Image.new(active_path)
-      @unactive = Image.new(unactive_path)
-      @kaput = Image.new(kaput_path)
+      @active = Image.load(active_path)
+      @unactive = Image.load(unactive_path)
+      @kaput = Image.load(kaput_path)
     end
 
     def image
@@ -177,21 +177,33 @@ is RUDL::Surface, but it can change).
 
   class Image
 
-    # Vytvori obrazek. Zadanou cestu vezme relativne ke standardnimu
-    # adresari obrazku.
+=begin
+--- Image.new(filename='')
+Loads image data from file. If no filename specified, makes an empty image 
+of size 1*1px.
+=end
 
-    def initialize(image_path='')
-      if image_path.size != 0
-	image_path = GFX_DIR+'/'+image_path
+    def initialize(filename='')
+      if filename.size != 0
         begin
-          @image = RUDL::Surface.load_new(image_path)
+          @image = RUDL::Surface.load_new(filename)
         rescue SDLError => ex
           raise ImageFileNotFoundException, ex.message
         end
       else
 	@image = RUDL::Surface::new([1,1])
       end
-      @name = image_path
+      @name = filename
+    end
+
+=begin
+--- Image.load(filename)
+Loads image placed relatively to the directory specified in the constant
+(({GFX_DIR})).
+=end
+
+    def Image.load(filename)
+      Image.new(GFX_DIR+'/'+filename)
     end
 
     attr_reader :name

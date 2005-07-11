@@ -14,7 +14,7 @@ module FreeVikings
 
     def initialize(startpos, direction='left')
       super(startpos)
-      @image = Image.new('spitter_1.tga')
+      @image = Image.load('spitter_1.tga')
       @firing = true
       @last_update = 0
     end

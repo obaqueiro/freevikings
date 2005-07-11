@@ -33,17 +33,17 @@ module FreeVikings
 
     def init_images
       anim_left = AnimationSuite.new(0.3, 
-                                     [Image.new('bear_left.tga'),
-                                     Image.new('bear_left_walk.tga')]
+                                     [Image.load('bear_left.tga'),
+                                     Image.load('bear_left_walk.tga')]
                                      )
       anim_right = AnimationSuite.new(0.75, 
-                                     [Image.new('bear_right.tga'),
-                                     Image.new('bear_right_walk.tga')]
+                                     [Image.load('bear_right.tga'),
+                                     Image.load('bear_right_walk.tga')]
                                      )
 
       imgs = {
-        'onground_standing_left' => Image.new('bear_left.tga'),
-        'onground_standing_right' => Image.new('bear_right.tga'),
+        'onground_standing_left' => Image.load('bear_left.tga'),
+        'onground_standing_right' => Image.load('bear_right.tga'),
         'onground_moving_left' => anim_left,
         'onground_moving_right' => anim_right
       }

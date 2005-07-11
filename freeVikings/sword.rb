@@ -53,8 +53,8 @@ module FreeVikings
 
     private
     def init_images
-      left = Image.new('sword_left.png')
-      right = Image.new('sword_right.png')
+      left = Image.load('sword_left.png')
+      right = Image.load('sword_right.png')
       @image = ImageBank.new self
       @image.add_pair 'left', left
       @image.add_pair 'right', right

@@ -14,7 +14,7 @@ hurted viking (it adds him one energy point if he isn't totally healthy).
   class Apple < Item
 
     def init_images
-      @image = Image.new 'apple.tga'
+      @image = Image.load 'apple.tga'
     end
 
     def apply(user)

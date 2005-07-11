@@ -54,9 +54,9 @@ module FreeVikings
 
     private
     def init_images
-      i_left = Image.new('olaf_left.png')
-      i_right = Image.new('olaf_right.png')
-      i_standing = Image.new('olaf_standing.png')
+      i_left = Image.load('olaf_left.png')
+      i_right = Image.load('olaf_right.png')
+      i_standing = Image.load('olaf_standing.png')
 
       @image = ImageBank.new(self)
 
