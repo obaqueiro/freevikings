@@ -11,7 +11,8 @@ the movement state data.
 The mixins described below should ease the work with programming new
 Sophisticated Sprites.
 
-They are all encapsulated in a namespace module ((<SophisticatedSpriteMixins>)).
+They are all encapsulated in a namespace module 
+((<SophisticatedSpriteMixins>)).
 =end
 
 module FreeVikings

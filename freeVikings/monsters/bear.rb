@@ -29,6 +29,13 @@ module FreeVikings
 
     def update
       bash_heroes
+      
+      if stopped_by_shield? then
+        puts 'Shield!'
+        @state.stop
+      elsif @state.standing? then
+        @state.move_right
+      end
     end
 
     def init_images

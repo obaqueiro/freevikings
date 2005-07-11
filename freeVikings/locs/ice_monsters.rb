@@ -77,7 +77,7 @@ module IceLand
     def update
       @rect.left += velocity_horiz * @location.ticker.delta
       turn if on_turn_point?
-      bash_heroes
+      super
     end
 
     private

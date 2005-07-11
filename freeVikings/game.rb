@@ -130,11 +130,22 @@ the give up key (F6 by default). Causes location reloading.
 	@give_up = true
     end
 
+=begin
+--- Game#pause
+Pauses all the (({Sprite}))s and switches into the inventory browsing mode.
+=end
+
     def pause
       @world.location.pause
       @state = PausedGameState.new self
       @bottompanel.browse_inventory = true
     end
+
+=begin
+--- Game#unpause
+After ((<Game#pause>)) switches back to the playing mode and unpauses the
+(({Sprite}))s.
+=end
 
     def unpause
       @world.location.unpause

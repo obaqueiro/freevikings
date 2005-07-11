@@ -141,6 +141,7 @@ module FreeVikings
 
       try_to_descend
       try_to_fall
+      fall_if_head_on_the_ceiling
       update_rect_w_h
 
       @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
@@ -186,6 +187,13 @@ module FreeVikings
       if @state.falling? and on_some_surface? then
         @state.descend
         descend if on_ground?
+      end
+    end
+
+    private
+    def fall_if_head_on_the_ceiling
+      if @state.rising? and not @location.area_free?(next_position) then
+        @state.fall
       end
     end
 
