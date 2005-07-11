@@ -125,6 +125,7 @@ All the three examples expect you have created a RUDL::DisplaySurface
 This method is called by the GameState when a player presses
 the give up key (F6 by default). Causes location reloading.
 =end
+
     def give_up_game
 	@give_up = true
     end
@@ -214,9 +215,9 @@ regularly and refreshes the screen.
 	  @app_window.flip
 	  frames += 1
 	  
-	end # while not location.exited?
-      end # while not self.game_over?
-    end # game_loop
+	end # while (not is_exit?) and (not @give_up)
+      end # loop
+    end # public method game_loop
 
     # Method init_vikings_team must be called when a location is loaded
     # (or reloaded).
@@ -238,26 +239,7 @@ regularly and refreshes the screen.
 
     private
     def is_exit?
-      # Pokud vsichni umreli, koncime:
-      unless @team.alive? then
-	return true
-      end
-      # Pokud jsou vsichni zivi v exitu, koncime taky:
-      if exited_sprites.size == @team.alive_size then
-	return true
-      end
-      return nil
+      @world.location.exitter.team_exited?(@team)
     end # is_exit?
-
-    # Returns an Array with all the sprites colliding with the EXIT object.
-    private
-    def exited_sprites
-      l = @world.location
-      on_exit = l.sprites_on_rect(l.exitter.rect)
-      on_exit.delete(l.exitter)
-      exited_sprites = on_exit.find_all {|sprite| @team.member? sprite}
-      return exited_sprites
-    end
-
   end
 end # module

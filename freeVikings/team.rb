@@ -55,7 +55,7 @@ module FreeVikings
 
     def alive?
       return true if alive_size > 0
-      return nil
+      return false
     end
 
     def size
