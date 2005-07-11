@@ -1,11 +1,13 @@
 # location.rb
 # igneus 14.2.2005
 
-# Objekt Location je obalem, ktery skryva implementaci jednotlivych operaci
-# pred svymi spolupracovniky. Je pomerne velky, ale vetsinu funkci
-# deleguje.
-# Obsahuje sam nebo ve svych clenskych promennych vsechen stav urcite
-# lokality herniho sveta, ktera odpovida zhruba levelu ze hry Lost Vikings.
+=begin
+= Location
+(({Location})) object wraps all the data structures which together make
+a level of the freeVikings game.
+Methods are provided to access the members and their most important methods
+are delegated.
+=end
 
 require 'map.rb'
 require 'spritemanager.rb'
@@ -16,6 +18,16 @@ require 'ticker.rb'
 module FreeVikings
 
   class Location
+
+=begin
+
+== Constructor
+
+--- Location.new(loader)
+A new (({Location})) object is initialized using data given by the 
+((|loader|)). The object given as parameter is expected to be
+a (({LocationLoadStrategy})) instance or to provide the same public interface.
+=end
 
     def initialize(loader)
       @exitter = nil # objekt Exit - cesta do dalsi lokace
@@ -32,22 +44,108 @@ module FreeVikings
       loader.load_start(self)
     end
 
+=begin
+== Attribute readers & writers
+
+As mentioned above, ((<Location>)) is a thick data bundle.
+You can access a lot of it's members directly through the accessor methods
+documented above, a few are accessible through the delegated methods 
+(which are listed in the ((<Actions>)) section) only.
+=end
+
+=begin
+--- Location#ticker
+Returns a (({Ticker})) object of the ((<Location>)). (({Ticker})) is a simple 
+object which provides time information for the object 
+inside the ((<Location>)).
+=end
+
     attr_reader :ticker
+
+=begin
+--- Location#map
+Returns a (({Map})) object which takes care of the static objects 
+(mainly blocks) in the game.
+=end
+
     attr_reader :map
+
+=begin
+--- Location#activeobjectmanager
+Returns an (({ActiveObjectManager})) which manages the ((<Location>))'s active 
+objects. (To learn more about active objects study documentation for classes
+(({ActiveObject})) and (({ActiveObjectManager})).)
+=end
+
+    attr_reader :activeobjectmanager
+
+=begin
+--- Location#exitter
+--- Location#exitter=(exitter)
+Methods to access ((<Location>))'s exitter. (({Exitter})) is 
+a (({FreeVikings::Exit})) object. It is a special Sprite which denotes 
+the exit point of the ((<Location>)).
+The level is completed when all the three vikings stand on the exitter.
+=end
+
+    attr_reader :exitter
+
+    def exitter=(exitter)
+      @exitter = exitter
+      add_sprite exitter
+    end
+
+=begin
+--- Location#start
+Returns an (({Array})) of size 2 which contains the coordinates 
+(in order [x,y] as usual) of the entry point of the ((<Location>)).
+=end
+
+    attr_accessor :start
+
+=begin
+== Actions
+=end
+
+=begin
+--- Location#update
+Updates everything which needs to be updated regularly. This method is called
+once per game loop iteration, before refreshing the display.
+=end
 
     def update
       @ticker.tick
       @spritemanager.update
     end
 
+=begin
+--- Location#pause
+Tells all the (({Sprite}))s in the ((<Location>)) to temporarily stop 
+all their activities.
+=end
+
     def pause
       @spritemanager.pause
     end
+
+=begin
+--- Location#unpause
+Unpauses the (({Sprite}))s after ((<Location#pause>)).
+=end
 
     def unpause
       @ticker.restart
       @spritemanager.unpause
     end
+
+=begin
+--- Location#paint(surface, center)
+Paints a cutout (centered with ((|center|))) of it's contents (map blocks,
+sprites, items etc.) onto ((|surface|)).
+((|surface|)) must be of type (({RUDL::Surface})), ((|center|)) is expected 
+to be an (({Array})) of size 2 containing valid horizontal and vertical 
+coordinate.
+=end
 
     def paint(surface, center)
       @map.paint(surface, center)
@@ -57,23 +155,31 @@ module FreeVikings
       @spritemanager.paint(surface, displayed_rect)
     end
 
+=begin
+--- Location#background
+Returns a (({RUDL::Surface})) with (({Map})) blocks painted.
+=end
+
     def background
       @map.background
     end
 
-    def exitter=(exitter)
-      @exitter = exitter
-      add_sprite exitter
-    end
-
-    attr_reader :exitter
-
-    attr_accessor :start
+=begin
+--- Location#add_sprite(sprite)
+Adds the (({Sprite})) ((|sprite|)) into the ((<Location>)). As a side effect
+((|sprite|))'s attribute 'location' is set to the ((<Location>)) itself.
+=end
 
     def add_sprite(sprite)
       sprite.location = self
       @spritemanager.add sprite
     end
+
+=begin
+--- Location#delete_sprite(sprite)
+Deletes the (({Sprite})) ((|sprite|)) from the ((<Location>)). As a side 
+effect sets ((|sprite|))'s attribute 'location' to a (({NullLocation})) object.
+=end
 
     def delete_sprite(sprite)
       @spritemanager.delete sprite
@@ -81,33 +187,76 @@ module FreeVikings
                                          # the end of file
     end
 
+=begin
+--- Location#sprites_on_rect(rect)
+Returns an (({Array})) of all the (({Sprite}))s colliding with 
+a (({Rectangle})) ((|rect|)). Type of ((|rect|)) must be (({Rectangle})) or 
+any other which responds to 'collides?'.
+=end
+
     def sprites_on_rect(rect)
       @spritemanager.sprites_on_rect rect
     end
+
+=begin
+--- Location#add_active_object(object)
+Adds an (({ActiveObject})) into the ((<Location>)).
+=end
 
     def add_active_object(object)
       @activeobjectmanager.add object
     end
 
+=begin
+--- Location#delete_active_object(object)
+Deletes an (({ActiveObject})) from the ((<Location>)).
+=end
+
     def delete_active_object(object)
       @activeobjectmanager.delete object
     end
+
+=begin
+--- Location#active_objects_on_rect(rect)
+=end
 
     def active_objects_on_rect(rect)
       @activeobjectmanager.members_on_rect(rect)
     end
 
+=begin
+--- Location#add_item(item)
+=end
+
     def add_item(item)
       @itemmanager.add item
     end
+
+=begin
+--- Location#delete_item(item)
+=end
 
     def delete_item(item)
       @itemmanager.delete item
     end
 
+=begin
+--- Location#items_on_rect(rect)
+=end
+
     def items_on_rect(rect)
       @itemmanager.members_on_rect(rect)
     end
+
+=begin
+== Predicates
+=end
+
+=begin
+--- Location#rect_inside?(rect)
+Returns ((|true|)) if (({Rectangle})) ((|rect|)) or it's part is inside 
+the ((<Location>)) or ((|false|)) if it isn't.
+=end
 
     def rect_inside?(rect)
       @map.rect.collides? rect
@@ -115,8 +264,8 @@ module FreeVikings
 
 =begin
 --- Location#area_free?(rect)
-Returns ((|true|)) if area specified by ((|rect|)) is free of solid map blocks,
-((|false|)) otherwise.
+Returns ((|true|)) if area specified by the (({Rectangle})) ((|rect|)) 
+is free of solid map blocks, ((|false|)) otherwise.
 =end
 
     def area_free?(rect)

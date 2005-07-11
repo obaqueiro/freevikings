@@ -64,12 +64,11 @@ module FreeVikings
       begin
         s = MonsterScript.new(scriptfile) {|script| eval "script::LOCATION = location"}
       rescue SyntaxError
-        @log.error "Syntax error in the monster-script #{scriptfile}. " \
-        "Cannot load the monsters."
+        @log.error "Syntax error in the script #{scriptfile}. "
         return
       rescue NameError => ne
-        @log.error "NameError in the monster-script #{scriptfile}." \
-        "(#{ne.message}) Cannot load the monsters."
+        @log.error "NameError in the script #{scriptfile}." \
+        "(#{ne.message})"
         return
       rescue MonsterScript::NoMonstersDefinedException
         @log.error "Script loaded successfully, but didn't define any new " \

@@ -24,7 +24,7 @@ module FreeVikings
 
 
 =begin
---- BottomPanel#new(team)
+--- BottomPanel.new(team)
 Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
 =end
 
