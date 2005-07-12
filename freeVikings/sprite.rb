@@ -78,6 +78,17 @@ Returns sprite's top-left corner's distance from the left edge of the map.
     end
 
 =begin
+--- Sprite#center
+Returns ((<Sprite>))'s center coordinates as an (({Array})) of size 2.
+It is used mainly to center the displayed location view according
+to the active viking's position.
+=end
+
+    def center
+      [@rect.left + (@rect.w / 2), @rect.top + (@rect.h / 2)]
+    end
+
+=begin
 --- Sprite#position
 Returns an array of [left, top]. It's only for comfort.
 =end

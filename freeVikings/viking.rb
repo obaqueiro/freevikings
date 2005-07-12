@@ -24,10 +24,35 @@ module FreeVikings
 
     include SophisticatedSpriteMixins::Walking
 
+=begin
+--- Viking::BASE_VELOCITY
+Viking's default velocity in pixels per second.
+=end
+
     BASE_VELOCITY = 65
+
+=begin
+--- Viking::WIDTH
+--- Viking::HEIGHT
+Sizes of the vikings' graphics.
+=end
+
     WIDTH = 80
     HEIGHT = 100
+
+=begin
+--- Viking::MAX_ENERGY
+Initial number of energy points. The viking should never have more then 
+on the beginninig.
+=end
+
     MAX_ENERGY = 3
+
+=begin
+--- Viking.new(name, start_position=[0,0])
+Creates a new viking. Parameter ((|name|)) is a (({String})),
+((|start_position|)) should be an (({Array})) or a (({Rectangle})).
+=end
 
     def initialize(name, start_position=[0,0])
       super()
@@ -43,7 +68,12 @@ module FreeVikings
       @inventory = Inventory.new
     end
 
-    attr_reader :inventory
+=begin
+--- Viking.createWarior(name, start_position)
+--- Viking.createSprinter(name, start_position)
+--- Viking.createShielder(name, start_position)
+Factory methods which create subclasses' instances.
+=end
 
     def Viking.createWarior(name, start_position)
       return Warior.new(name, start_position)
@@ -57,19 +87,62 @@ module FreeVikings
       return Shielder.new(name, start_position)
     end
 
+=begin
+--- Viking#name => aString
+Returns ((<Viking>))'s name.
+=end
+
     attr_reader :name
+
+=begin
+--- Viking#state => aVikingState
+Returns ((<Viking>))'s state. To learn more about it, study documentation 
+for class (({VikingState})).
+=end
+
     attr_reader :state
+
+=begin
+--- Viking#energy => aFixnum
+Returns ((<Viking>))'s energy as a number which shouldn't ever overgrow
+((<Viking::MAX_ENERGY>)) and descend under zero.
+=end
+
     attr_reader :energy
+
+=begin
+--- Viking#portrait => aPortrait
+Returns a (({Portrait})) of the ((<Viking>)).
+=end
+
     attr_reader :portrait
 
-    def paint(surface)
-      surface.blit(@image.image(@state.to_s), coordinate_in_surface(surface))
-    end
+=begin
+--- Viking#inventory => anInventory
+((<Viking>))'s (({Inventory})).
+=end
+
+    attr_reader :inventory
+
+=begin
+--- Viking#hurt => anInteger
+Takes the ((<Viking>)) off one energy point.
+If the energy falls onto zero, ((<Viking#destroy>)) is called.
+Returns his energy after the injury.
+=end
 
     def hurt
       @energy -= 1
       destroy if @energy <= 0
+      return @energy
     end
+
+=begin
+--- Viking#heal => aBoolean
+If the ((<Viking>)) doesn't have full energy (see ((<Viking::MAX_ENERGY>))), 
+adds him one energy point and returns ((|true|)).
+Otherwise ((|false|)) is returned and nothing added.
+=end
 
     def heal
       if @energy < MAX_ENERGY
@@ -80,23 +153,28 @@ module FreeVikings
       end
     end
 
+=begin
+--- Viking#destroy => aViking
+Sets energy to zero, deletes the ((<Viking>)) from the (({Location})) and
+adds a new (({Sprite})) representing a corpse into it.
+This method is called when the ((<Viking>)) is killed directly 
+without any discussion (e.g. when a skyscraper falls onto his uncovered head) 
+or when his energy falls onto zero (see ((<Viking#hurt>))).
+Returns the ((<Viking>)) itself.
+=end
+
     def destroy
       @energy = 0
       @location.add_sprite DeadViking.new([left, top])
       @location.delete_sprite self
+      self
     end
 
-    def alive?
-      @energy > 0
-    end
-
-    def top
-      @rect.top
-    end
-
-    def left
-      @rect.left
-    end
+=begin
+--- Viking#space_func_on
+--- Viking#space_func_off
+Switch on/off ((<Viking>))'s first special ability.
+=end
 
     def space_func_on
     end
@@ -104,33 +182,37 @@ module FreeVikings
     def space_func_off
     end
 
+=begin
+--- Viking#d_func_on
+--- Viking#d_func_off
+Switch on/off ((<Viking>))'s second special ability.
+=end
+
     def d_func_on
     end
 
     def d_func_off
     end
 
+=begin
+--- Viking#use_item => aBoolean
+Tries to use the active (({Item})) from the ((<Viking>))'s (({Inventory})).
+If it is successfull, the used (({Item})) is ejected and ((|true|)) returned, 
+((|false|)) otherwise.
+=end
+
     def use_item
       if @inventory.active.apply(self) then
         @inventory.erase_active
+        return true
       end
+      return false
     end
 
-    # vrati souradnice stredu aktualniho obrazku
-
-    def center
-      [left + (@image.image.w / 2), top + (@image.image.w / 2)]
-    end
-
-    def moving?
-      @state.moving?
-    end
-
-    def falling?
-      @state.falling?
-    end
-
-    # Aktualisuje posici vikinga.
+=begin
+--- Viking#update => nil
+Updates ((<Viking>))'s internal state.
+=end
 
     def update
       collect_items # sebere vsechno, na co narazi :o)
@@ -145,7 +227,11 @@ module FreeVikings
       update_rect_w_h
 
       @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
+
+      nil
     end
+
+
 
     private
     def move_xy

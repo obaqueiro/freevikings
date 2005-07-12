@@ -71,7 +71,7 @@ VikingState. See VikingState documentation for more details.
     end
 
     def d_on
-      return if @owner.falling?
+      return if @owner.state.falling?
       @owner.stop
       @active_ability = D_ABILITY
     end
@@ -84,7 +84,7 @@ VikingState. See VikingState documentation for more details.
     end
 
     def space_on
-      return if @owner.falling?
+      return if @owner.state.falling?
       @owner.stop
       @active_ability = SPACE_ABILITY
       @owner.draw_sword
