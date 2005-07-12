@@ -22,24 +22,24 @@ class TestWarior < Test::Unit::TestCase
   def testWalkWhenCutting
     @samsson.space_func_on # tasi mec
     @samsson.move_left
-    assert_equal false, @samsson.moving?, "Warior Samsson can't walk, he is cutting now."
+    assert_equal false, @samsson.state.moving?, "Warior Samsson can't walk, he is cutting now."
   end
 
   def testWalkWhenShooting
     @samsson.d_func_on # nasadi sip na tetivu
     @samsson.move_left
-    assert_equal false, @samsson.moving?, "Warior Samsson can't walk, he is stretching his bow and preparing for a shoot now."
+    assert_equal false, @samsson.state.moving?, "Warior Samsson can't walk, he is stretching his bow and preparing for a shoot now."
   end
 
   def testStopWhenCutDuringAWalk
     @samsson.move_left
     @samsson.space_func_on
-    assert_equal false, @samsson.moving?, "Warior Samsson must stop walking when he wants to cut."
+    assert_equal false, @samsson.state.moving?, "Warior Samsson must stop walking when he wants to cut."
   end
 
   def testCutWhenFalling
     @samsson.fall # zjisti, ze ma pod sebou volno a zacne padat
-    assert @samsson.falling?
+    assert @samsson.state.falling?
     @samsson.space_func_on
     assert_equal false, @samsson.sword_fighting?, "Warior can't cut when he's falling."
   end

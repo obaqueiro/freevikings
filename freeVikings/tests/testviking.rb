@@ -23,7 +23,7 @@ class TestViking < TestSprite
       return false if position[1] != 0
     end
     @viking.update
-    assert_equal false, @viking.falling?, 'Viking should not be falling, he should think he is on ground (actually MockLocation does not provide any ground).'
+    assert_equal false, @viking.state.falling?, 'Viking should not be falling, he should think he is on ground (actually MockLocation does not provide any ground).'
   end
 
   def testDoesNotStopDuringAWalk
@@ -60,5 +60,13 @@ class TestViking < TestSprite
     @viking.move_left
     @viking.update
     assert_equal 'falling_moving_left', @viking.state.to_s, "Viking can't move horizontally. He won't change his y-axis position, but his state should stay 'left moving', because he must continue moving as soon as he is able to."
+  end
+
+  def testHurtReturnValueIsInteger
+    assert_equal 2, @viking.hurt, "Viking#hurt should return number of energy points after the injury."
+  end
+
+  def testDestroyReturnsSelf
+    assert_equal @viking, @viking.destroy, "Viking#destroy should return the Viking itself."
   end
 end
