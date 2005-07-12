@@ -66,7 +66,7 @@ Returns the Image for owner's recent state.
       begin
         @images[@sprite.state.to_s].image
       rescue NoMethodError
-	raise NoImageAssignedException.new(state)
+	raise NoImageAssignedException.new(@sprite.state)
       end
     end
 
@@ -87,8 +87,10 @@ is no image for the owner's state in the ((<ImageBank>)).
 =end
     class NoImageAssignedException < RuntimeError
       def initialize(state)
-@message = "No image assigned for a state #{state.to_s}."
+        @message = "No image assigned for a state #{state.to_s}."
       end
+      attr_reader :message
+      alias_method :to_s, :message
     end # class NoImageAssignedException
   end # class ImageBank
 

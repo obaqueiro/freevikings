@@ -7,6 +7,8 @@
 require 'monster.rb'
 require 'sprite.rb'
 require 'monstermixins.rb'
+require 'sophisticatedspritestate.rb'
+require 'sophisticatedspritemixins.rb'
 
 module FreeVikings
 
@@ -14,6 +16,8 @@ module FreeVikings
 
     include Monster
     include MonsterMixins::HeroBashing
+    include MonsterMixins::ShieldSensitive
+    include SophisticatedSpriteMixins::Walking
 
     VELOCITY_NORMAL = 9
     VELOCITY_ANGRY = 50
@@ -28,33 +32,27 @@ module FreeVikings
     def initialize(position, walk_length, direction='right')
       @walk_length = walk_length
       super(position.concat([WIDTH, HEIGHT]))
-      @start_position = position
-      @direction = direction
-      @angry = false
+      @state = RobotState.new
       @anger_start = 0
+      @start_position = position
       @last_bash = 0
       @energy = MAX_LIVES
     end
 
-    def state
-      if @angry
-        return @direction + '_angry'
-      else
-        return @direction
-      end
-    end
+    attr_reader :state
 
     def update
       update_position
       update_direction
       update_anger
       bash_heroes
+      serve_shield_collision { stop }
     end
 
     alias_method :_hurt, :hurt
 
     def hurt
-      @angry = true
+      @state.angry = true
       @anger_start = @location.ticker.now
       _hurt
     end
@@ -70,10 +68,12 @@ module FreeVikings
                                   ])
 
       images = {
-        'left' => i_left,
-        'left_angry' => Image.load('robot_left_angry.tga'),
-        'right' => i_right,
-        'right_angry' => Image.load('robot_right_angry.tga')
+        'onground_standing_left' => i_left,
+        'onground_moving_left' => i_left,
+        'onground_angry_left' => Image.load('robot_left_angry.tga'),
+        'onground_standing_right' => i_right,
+        'onground_moving_right' => i_right,
+        'onground_angry_right' => Image.load('robot_right_angry.tga')
       }
       @image = ImageBank.new(self, images)
     end
@@ -81,34 +81,47 @@ module FreeVikings
     private
 
     def update_position
-      @rect.w = image.w
-      @rect.h = image.h
-      x_change = velocity * @location.ticker.delta
-      if @direction == 'right' then
-        @rect.left += x_change
-      else
-        @rect.left -= x_change
-      end
+      @rect.left += velocity_horiz * @location.ticker.delta
     end
 
     def update_direction
-      if @direction == 'right' and @rect.left >= @start_position[0] + @walk_length then
-        @direction = 'left'
+      if @state.direction == 'right' and @rect.left >= @start_position[0] + @walk_length then
+        @state.move_left
       end
-      if @direction == 'left' and @rect.left <= @start_position[0] then
-        @direction = 'right'
+      if @state.direction == 'left' and @rect.left <= @start_position[0] then
+        @state.move_right
       end
     end
 
     def update_anger
-      if @angry and (@location.ticker.now >= @anger_start + ANGER_DURATION) then
-        @angry = false
+      if @state.angry and (@location.ticker.now >= @anger_start + ANGER_DURATION) then
+        @state.angry = false
       end
     end
 
-    def velocity
-      return VELOCITY_ANGRY if @angry
-      VELOCITY_NORMAL
+    def velocity_horiz
+      if @state.angry then
+        v = VELOCITY_ANGRY
+      else
+        v = VELOCITY_NORMAL
+      end
+      v *= @state.velocity_horiz
+      return v
+    end
+
+    class RobotState < SophisticatedSpriteState
+      def initialize
+        super
+        @angry = false
+      end
+
+      attr_accessor :angry
+
+      def to_s
+        @vertical_state.to_s + CNTR + \
+        (@angry ? 'angry' : @horizontal_state.to_s) + CNTR + \
+        @horizontal_state.direction
+      end
     end
   end # class Robot
 end # module FreeVikings

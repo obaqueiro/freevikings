@@ -16,12 +16,5 @@ module FreeVikings
       @location.delete_sprite self
       l.add_sprite Tombstone.new(Rectangle.new(@rect))
     end
-
-    def stopped_by_shield?
-      if @location.sprites_on_rect(self.rect).find {|s| s.kind_of? Shield} then
-        return true
-      end
-      return false
-    end
   end
 end

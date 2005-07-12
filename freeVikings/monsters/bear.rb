@@ -14,6 +14,7 @@ module FreeVikings
 
     include Monster
     include MonsterMixins::HeroBashing
+    include MonsterMixins::ShieldSensitive
     include SophisticatedSpriteMixins::Walking
 
     WIDTH = 60
@@ -49,16 +50,6 @@ module FreeVikings
         'onground_moving_right' => anim_right
       }
       @image = ImageBank.new(self, imgs)
-    end
-
-    private
-
-    def serve_shield_collision
-      if stopped_by_shield? then
-        yield
-      elsif @state.standing? then
-        @state.move_right
-      end
     end
   end # class Bear
 end # module FreeVikings
