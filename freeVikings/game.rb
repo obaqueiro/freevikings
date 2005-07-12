@@ -237,7 +237,7 @@ regularly and refreshes the screen.
 	end # while (not is_exit?) and (not @give_up)
 
         if FreeVikings::OPTIONS['profile'] then
-          # Profiler__::stop_profile
+          exit # the END block which prints out profiler output will be called
         end
 
       end # loop
