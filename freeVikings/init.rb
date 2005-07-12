@@ -49,7 +49,7 @@ module FreeVikings
 
     def load_font
       @log.info "Loading default font."
-      @font = RUDL::TrueTypeFont.new('fonts/adlibn.ttf', 16)
+      @font = FreeVikings::FONTS['big'] = RUDL::TrueTypeFont.new('fonts/adlibn.ttf', 16)
     end
 
     def open_window

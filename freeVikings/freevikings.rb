@@ -16,13 +16,16 @@ require 'init.rb'
 
 # All the game's globals and classes are defined inside this module.
 module FreeVikings
-  GFX_DIR = 'gfx'
-  OPTIONS = {}
+  GFX_DIR = 'gfx' # directory with graphics
+  OPTIONS = {} # hash with long options as keys
 
+  # main application window sizes
   WIN_WIDTH = 640
   WIN_HEIGHT = 480
 
-  CODE_DIRS = ['monsters', 'ext']
+  CODE_DIRS = ['monsters', 'ext'] # directories with additional source files
+
+  FONTS = {} # a hash of fonts
 end
 
 include FreeVikings

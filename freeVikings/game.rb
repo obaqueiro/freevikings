@@ -169,9 +169,13 @@ regularly and refreshes the screen.
 =end
     def game_loop
       loop do
+        paint_loading_screen(@app_window)
+
 	if @team.nil? then
-          location = @world.location
+          location = nil
+          location = @world.location 
           @team = init_vikings_team(location)
+          # location = @world.location
 	elsif (@team.alive_size < @team.size) or (@give_up == true) then
 	  # Nekteri hrdinove mrtvi.
 	  @log.info "Some vikings died. Try once more."
@@ -252,5 +256,12 @@ regularly and refreshes the screen.
     def is_exit?
       @world.location.exitter.team_exited?(@team)
     end # is_exit?
-  end
-end # module
+
+    private
+    def paint_loading_screen(screen)
+      screen.fill 0x0000000
+      screen.blit(FreeVikings::FONTS['big'].render('LOADING', true, [255,255,255]), [280,180])
+      screen.flip
+    end
+  end # class Game
+end # module FreeVikings
