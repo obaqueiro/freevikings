@@ -278,7 +278,10 @@ Updates ((<Viking>))'s internal state.
 
     private
     def fall_if_head_on_the_ceiling
-      if @state.rising? and not @location.area_free?(next_position) then
+      head_area = next_position
+      head_area.h = 20
+      if @state.rising? and 
+          not @location.area_free?(head_area) then
         @state.fall
       end
     end
