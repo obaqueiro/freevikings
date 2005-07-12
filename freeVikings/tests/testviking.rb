@@ -69,4 +69,19 @@ class TestViking < TestSprite
   def testDestroyReturnsSelf
     assert_equal @viking, @viking.destroy, "Viking#destroy should return the Viking itself."
   end
+
+  def testLongFallHurts
+    @location.ticker = CorruptedTicker.new
+
+    @viking.instance_eval { fall }
+
+    # time needed for a fall long enough to hurt the viking:
+    @location.ticker.delta = (FreeVikings::Viking::HEIGHT * 4) / 
+              (FreeVikings::Viking::BASE_VELOCITY)
+
+    @viking.update
+    @viking.instance_eval { descend }
+
+    assert_equal 2, @viking.energy, "The long fall must hurt the viking."
+  end
 end

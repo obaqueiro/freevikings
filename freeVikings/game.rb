@@ -200,6 +200,10 @@ regularly and refreshes the screen.
 
 	frames = 0 # pomocna promenna k vypoctu fps
 
+        if FreeVikings::OPTIONS['profile'] then
+          Profiler__::start_profile
+        end
+
         # Tady zacina udalostni cyklus bezici behem hry.
 	# Cyklujeme, dokud se vsichni prezivsi nedostali do exitu
 	# nebo to hrac nevzdal
@@ -231,6 +235,11 @@ regularly and refreshes the screen.
 	  frames += 1
 	  
 	end # while (not is_exit?) and (not @give_up)
+
+        if FreeVikings::OPTIONS['profile'] then
+          # Profiler__::stop_profile
+        end
+
       end # loop
     end # public method game_loop
 

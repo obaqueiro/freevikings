@@ -82,7 +82,11 @@ end
 # Ruby stdlib's 'profile' does terrible things when loaded in the block's
 # scope (try yourself!).
 if OPTIONS['profile'] then
-  require 'profile'
+  require 'profiler'
+
+  END {
+    Profiler__::print_profile(STDERR)
+  }
 end
 
 $:.concat FreeVikings::CODE_DIRS

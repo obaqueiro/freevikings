@@ -66,6 +66,8 @@ Creates a new viking. Parameter ((|name|)) is a (({String})),
       @portrait = nil
 
       @inventory = Inventory.new
+
+      @start_fall = -1
     end
 
 =begin
@@ -231,7 +233,45 @@ Updates ((<Viking>))'s internal state.
       nil
     end
 
+=begin
+--- Viking#fall
+This method causes the ((<Viking>)) to fall. For this purpose you can also use
 
+(({aViking.state.fall}))
+
+where ((|aViking|)) is ((<Viking>)) instance, but don't do this, because
+((<Viking#fall>)) does important work for the mechanism of fall injury
+detection.
+=end
+
+    def fall
+      @start_fall = @rect.top
+      @state.fall
+    end
+
+=begin
+--- Viking#descend
+This method causes the ((<Viking>)) to descend. 
+If the fall has been too long, the ((<Viking>)) is hurt (you are also usually 
+hurt when you fall from the third floor) unless the fall is slown down
+(e.g. by the (({Shield}))).
+Don't use
+
+(({aViking.state.descend}))
+
+because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
+=end
+
+    def descend
+      if on_ground? then
+        @rect.top += Map::TILE_SIZE - (@rect.bottom % Map::TILE_SIZE)
+      end
+      @fall_height = @rect.top - @start_fall
+      fall_velocity = velocity_vertic
+      @state.descend
+      # 
+      hurt if (@fall_height >= 3 * HEIGHT and fall_velocity >= BASE_VELOCITY)
+    end
 
     private
     def move_xy
@@ -263,7 +303,7 @@ Updates ((<Viking>))'s internal state.
       # Zkusme, jestli by viking nemohl zacit padat.
       # Pokud muze zacit padat, zacne padat:
       if not @state.rising? and not @state.falling? and not on_some_surface?
-	@state.fall
+	fall
 	@log.debug "update: #{@name} starts falling because there's a free space under him."
       end
     end
@@ -271,8 +311,8 @@ Updates ((<Viking>))'s internal state.
     private
     def try_to_descend
       if @state.falling? and on_some_surface? then
-        @state.descend
-        descend if on_ground?
+        descend
+        # descend if on_ground?
       end
     end
 
@@ -353,11 +393,6 @@ Updates ((<Viking>))'s internal state.
         @location.delete_item i
         @inventory.put i
       end
-    end
-
-    private
-    def descend
-      @rect.top += Map::TILE_SIZE - (@rect.bottom % Map::TILE_SIZE)
     end
 
   end # class Viking

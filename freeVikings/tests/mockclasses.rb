@@ -63,7 +63,7 @@ module FreeVikings
       attr_accessor :sprites
       attr_writer :sprites_on_rect
       attr_accessor :position_validator_proc
-      attr_reader :ticker
+      attr_accessor :ticker
 
       def add_sprite(sprite)
         @sprites << sprite
@@ -86,6 +86,13 @@ module FreeVikings
         []
       end
     end
+
+    class CorruptedTicker
+      attr_accessor :ticks
+      attr_accessor :old
+      attr_accessor :now
+      attr_accessor :delta
+    end # class CorruptedTicker
 
   end # module Mock
 end # module FreeVikings

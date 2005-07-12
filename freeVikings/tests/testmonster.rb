@@ -4,6 +4,7 @@
 require 'test/unit'
 
 require 'monster.rb'
+require 'monstermixins.rb'
 require 'shield.rb'
 require 'shielder.rb'
 require 'location.rb'
@@ -12,6 +13,7 @@ require 'mockclasses.rb'
 class TestMonster < Test::Unit::TestCase
 
   include FreeVikings::Monster
+  include FreeVikings::MonsterMixins::ShieldSensitive
 
   include FreeVikings
   include FreeVikings::Mock
