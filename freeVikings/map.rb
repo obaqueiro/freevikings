@@ -7,13 +7,30 @@ require 'rexml/document'
 require 'tiletype.rb'
 require 'group.rb'
 
+=begin
+= Map
+A ((<Map>)) object is a data structure to store a map built of tiles.
+All the ((<Map>))'s members are objects of the game world which don't change
+in any circumstances, they are totally static and are used to make floors
+and walls and/or to make the level pretty.
+=end
+
 module FreeVikings
 
   class Map
-    # dlazdicova mapa
 
-    # velikost strany dlazdice v pixelech
+=begin
+--- Map::TILE_SIZE
+((<Map>))'s tiles are squares with a side length ((<Map::TILE_SIZE>)).
+=end
+
     TILE_SIZE = 40
+
+=begin
+--- Map.new(map_load_strategy)
+Initializes a new ((<Map>)) with data from ((|map_load_strategy|)).
+((|map_load_strategy|)) should be a (({LocationLoadStrategy})) instance.
+=end
 
     def initialize(map_load_strategy)
       @log = Log4r::Logger['map log']
@@ -37,7 +54,18 @@ module FreeVikings
       @rect = Rectangle.new(0, 0, @max_width * TILE_SIZE, @max_height * TILE_SIZE)
     end
 
+=begin
+--- Map#rect
+Returns a (({Rectangle})) with ((<Map>))'s sizes. In fact only 'w' and 'h'
+attributes of the returned object are important.
+=end
+
     attr_reader :rect
+
+=begin
+--- Map#static_objects
+=end
+
     attr_reader :static_objects
 
     # vrati surface s aktualnim pozadim
