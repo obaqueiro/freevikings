@@ -35,7 +35,7 @@ module FreeVikings
       []
     end
 
-    def is_position_valid?(sprite, position)
+    def area_free?(rect)
       true
     end
 

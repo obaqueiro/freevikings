@@ -270,7 +270,9 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
       fall_velocity = velocity_vertic
       @state.descend
       # 
-      hurt if (@fall_height >= 3 * HEIGHT and fall_velocity >= BASE_VELOCITY)
+      if (@fall_height >= 3 * HEIGHT and fall_velocity >= BASE_VELOCITY) then
+        @log.debug "descend: #{@name} has felt from a big height (#{@fall_height}) and is hurt."
+      end
     end
 
     private
@@ -311,8 +313,8 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
     private
     def try_to_descend
       if @state.falling? and on_some_surface? then
+        @log.debug "try_to_descend: #{@name} descended onto some solid surface."
         descend
-        # descend if on_ground?
       end
     end
 
@@ -320,8 +322,8 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
     def fall_if_head_on_the_ceiling
       head_area = next_position
       head_area.h = 20
-      if @state.rising? and 
-          not @location.area_free?(head_area) then
+      if @state.rising? and not @location.area_free?(head_area) then
+        @log.debug "fall_if_head_on_the_ceiling: #{@name} stroke ceiling with his head and starts falling."
         @state.fall
       end
     end
@@ -367,6 +369,7 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
                                @rect.top + @location.ticker.delta * BASE_VELOCITY, 
                                @rect.w, 
                                @rect.h)
+      puts 'on_ground?'
       return nil if @location.area_free?(lowerpos)
       # viking stoji na pevne zemi:
       return true

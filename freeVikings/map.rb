@@ -68,7 +68,7 @@ Initializes a new ((<Map>)) with data from ((|map_load_strategy|)).
 
       @max_width = loading_strategy.max_width
       @max_height = loading_strategy.max_height
-
+   
       @rect = Rectangle.new(0, 0, @max_width * TILE_SIZE, @max_height * TILE_SIZE)
     end
 
@@ -145,32 +145,6 @@ is free of solid map blocks, ((|false|)) otherwise.
 	return false if block.solid == true
       end
       # az dosud nebyl nalezen pevny blok, posice je volna
-      return true
-    end
-
-    def edge_free?(rect)
-      leftmost_i = (rect[0] / Map::TILE_SIZE).to_f.floor
-      rightmost_i = ((rect[0] + rect[2]) / Map::TILE_SIZE).to_f.floor
-      top_line = (rect[1] / Map::TILE_SIZE).to_f.ceil
-      bottom_line = ((rect[1] + rect[3]) / Map::TILE_SIZE).to_f.ceil
-
-      @blocks[top_line][leftmost_i .. rightmost_i].each do |b|
-        return false if b.solid?
-      end
-      @blocks[bottom_line][leftmost_i .. rightmost_i].each do |b|
-        return false if b.solid?
-      end
-
-      top_line.upto(bottom_line) do |l|
-        if @blocks[l][leftmost_i].solid? or @blocks[l][rightmost_i].solid?
-          return false 
-        end
-      end
-
-      @static_objects.members_on_rect(rect).each do |o|
-        return false if o.solid
-      end
-
       return true
     end
 

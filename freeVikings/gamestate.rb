@@ -89,7 +89,7 @@ module FreeVikings
       when K_p, K_TAB
         @context.pause
 	# Specialni klavesy:
-      when K_RCTRL
+      when K_RCTRL, K_PAGEDOWN
 	@context.team.previous
       when K_PAGEUP
 	@context.team.next
@@ -99,7 +99,7 @@ module FreeVikings
 	@context.app_window.toggle_fullscreen
       when K_F4
         FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
-      when K_F6
+      when K_F2
 	@context.give_up_game
       end # case
     end # private method serve_keydown

@@ -269,7 +269,7 @@ is free of solid map blocks, ((|false|)) otherwise.
 =end
 
     def area_free?(rect)
-      @map.edge_free? rect
+      @map.area_free? rect
     end
 
     private
