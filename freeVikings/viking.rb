@@ -29,7 +29,7 @@ module FreeVikings
 Viking's default velocity in pixels per second.
 =end
 
-    BASE_VELOCITY = 100
+    BASE_VELOCITY = 70
 
 =begin
 --- Viking::WIDTH
