@@ -8,7 +8,7 @@ require 'imagebank'
 
 module FreeVikings
 
-  class TileType
+  class Tile
 
     attr_accessor :solid
     alias_method :solid?, :solid
@@ -30,14 +30,14 @@ module FreeVikings
     # Tuto metodu je treba zavolat vzdy pred nahravanim 
     # typu dlazdic z nove lokace.
 
-    def TileType.clear
+    def Tile.clear
       @@instances.clear
     end
 
     # Pokud uz pro dany kod existuje instance, vrati ji, v opacnem pripade 
     # vytvori novou.
 
-    def TileType.instance(code, image_path)
+    def Tile.instance(code, image_path)
       unless @@instances[code].nil? then
 	return @@instances[code]
       end
@@ -47,7 +47,7 @@ module FreeVikings
     end
 
     def image
-      @image.image
+      return @image.image
     end
   end # class
 end # module

@@ -20,14 +20,14 @@ module FreeVikings
 
     def initialize
       @log = Log4r::Logger['location loading log']
-      TileType.clear
+      Tile.clear
     end
 
     # Pole Blocks_matrix inicialisuje jako dvojrozmerne pole a nacte do nej
     # dlazdice ze souboru mapy.
-    # Do hashe Blocktype_hash ulozi objekt TileType 
+    # Do hashe Blocktype_hash ulozi objekt Tile 
     # pro kazdy typ dlazdice, ktery se v souboru mapy vyskytne.
-    # Nacte do pole bloku bloky a do pole typu jejich typy (objekty TileType)
+    # Nacte do pole bloku bloky a do pole typu jejich typy (objekty Tile)
     def load_map(blocks_matrix, blocktype_hash)
     end
 

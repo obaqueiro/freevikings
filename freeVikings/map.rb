@@ -18,7 +18,7 @@ At this time a ((<Map>)) contains two types of objects - ((*tiles*)) and
 
 == Tiles
 
-Tiles are all singleton instances of class (({TileType})). Squares with sizes
+Tiles are all singleton instances of class (({Tile})). Squares with sizes
 ((<Map::TILE_SIZE>)). They are piled into a grid. The grid is built once
 when the level is loaded and there is no way to change it during the
 game.
@@ -212,10 +212,10 @@ is free of solid map blocks, ((|false|)) otherwise.
           if block_type.nil?
             @log.error("Blocktype object for block [#{row_i}][#{row_i}] wasn't found in map's internal hash.")
           end
-          if block_type.is_a? TileType
+          if block_type.is_a? Tile
             @background.blit(block_type.image, [col_i * TILE_SIZE, (row_i - 1) * TILE_SIZE])
           else
-            @log.error("Found blocktype object of strange type #{block_type.type.to_s} at index [" + row_i.to_s + '][' + col_i.to_s + '] (expected TileType)')
+            @log.error("Found blocktype object of strange type #{block_type.type.to_s} at index [" + row_i.to_s + '][' + col_i.to_s + '] (expected Tile)')
           end
         }
       }

@@ -113,8 +113,8 @@ module FreeVikings
 	@doc.root.elements['map'].elements["blocktypes"].each_element { |blocktype|
 	  code = blocktype.attributes["code"]
 	  path = blocktype.attributes["path"]
-	  @log.debug "Loading new TileType with code '#{code}' and path '#{path}'"
-	  tiletype = TileType.instance(code, path)
+	  @log.debug "Loading new Tile with code '#{code}' and path '#{path}'"
+	  tiletype = Tile.instance(code, path)
 	  tiletype.solid = false unless blocktype.attributes["solid"] == "solid"
 	  @blocktypes[code] = tiletype
 	}
