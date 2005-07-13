@@ -7,7 +7,16 @@
 
 require 'test/unit/testsuite'
 
-require '../ext/test/test.rb'
+# Some people don't compile the extensions, but they should be able to
+# run tests, so here is a simple way not to load the extensions if
+# they don't exist.
+begin
+  require '../ext/test/test.rb'
+  $extensions_loaded = true
+rescue LoadError
+  puts '+++ COULD NOT LOAD THE COMPILED EXTENSIONS.'
+  $extensions_loaded = false
+end
 
 require 'testlocation.rb'
 require 'testxmllocloadstrategy.rb'
@@ -42,7 +51,9 @@ class FreeVikingsTestSuite
   def self.suite
     suite = Test::Unit::TestSuite.new
 
-    suite << FreeVikingsExtensoinsTestSuite.suite
+    if $extensions_loaded then
+      suite << FreeVikingsExtensoinsTestSuite.suite
+    end
 
     suite << TestLocation.suite
     suite << TestXMLLocationLoadStrategy.suite
