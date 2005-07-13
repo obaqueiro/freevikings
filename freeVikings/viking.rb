@@ -369,7 +369,6 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
                                @rect.top + @location.ticker.delta * BASE_VELOCITY, 
                                @rect.w, 
                                @rect.h)
-      puts 'on_ground?'
       return nil if @location.area_free?(lowerpos)
       # viking stoji na pevne zemi:
       return true

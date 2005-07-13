@@ -70,6 +70,8 @@ Initializes a new ((<Map>)) with data from ((|map_load_strategy|)).
       @max_height = loading_strategy.max_height
    
       @rect = Rectangle.new(0, 0, @max_width * TILE_SIZE, @max_height * TILE_SIZE)
+
+      create_background
     end
 
 =begin

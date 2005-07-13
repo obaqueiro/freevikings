@@ -28,15 +28,37 @@ module IceLand
     end
   end
 
+  CORRIDOR_HEIGHT = 3 * FreeVikings::Map::TILE_SIZE
+
   module FirstCorridor
     CEILING = 280
-    FLOOR = CEILING + 3 * FreeVikings::Map::TILE_SIZE
+    FLOOR = CEILING + CORRIDOR_HEIGHT
     END_X = 1480
     APPLEBAY_X = 320
     BAY_SWITCHGROUP_Y = 230
     BAYS_X = [640, 840, 1040]
     BEAR_START_X = 850
   end # module FirstCorridor
+
+  module SecondCorridor
+    FLOOR = 6*FreeVikings::Map::TILE_SIZE
+  end # module SecondCorridor
+
+  module FourthCorridor
+    include FreeVikings
+    # The corridor before the last.
+    # Baleog must help his friend Erik with the bear and the switch.
+    # Two arrows through the hole in the wall...
+    CEILING = 13 * Map::TILE_SIZE
+    FLOOR = CEILING + CORRIDOR_HEIGHT
+    END_X = 47 * Map::TILE_SIZE
+  end # module FourthCorridor
+
+  module CorridorToExit
+    FLOOR = 21*FreeVikings::Map::TILE_SIZE
+    BEGIN_X = 320
+    END_X = 1920
+  end # module CorridorToExit
 
   # IceBoard
   # A peace of ice used as a simple trapdoor; a static object
@@ -204,6 +226,18 @@ module IceLand
       end
     end
   end # class TrapDoorGroup
+
+  class TwoTrapDoors < TrapDoorGroup
+    def initialize(position)
+      temp = []
+      2.times do |i|
+        x = position[0] + i*IceBoard::WIDTH
+        y = position[1]
+        temp << IceBoard.new([x, y])
+      end
+      super temp[0], temp[1]
+    end
+  end # class TwoTrapDoors
 end # module IceLand
 
 
@@ -212,21 +246,16 @@ include IceLand
 
 
 # === STATIC OBJECTS:
-
-applebay_trapdoors = TrapDoorGroup.new
-2.times do |i|
-  x = FirstCorridor::APPLEBAY_X + i*IceBoard::WIDTH
-  y = FirstCorridor::CEILING - IceBoard::HEIGHT
-  applebay_trapdoors << IceBoard.new([x, y])
-end
+pos = [FirstCorridor::APPLEBAY_X, FirstCorridor::CEILING-IceBoard::HEIGHT]
+applebay_trapdoors = TwoTrapDoors.new(pos)
 applebay_trapdoors.in
 
-secondcorridor_trapdoors = TrapDoorGroup.new
-2.times do |i|
-  x = FirstCorridor::END_X - 4*Map::TILE_SIZE + i*IceBoard::WIDTH
-  y = FirstCorridor::CEILING - IceBoard::HEIGHT
-  secondcorridor_trapdoors << IceBoard.new([x, y])
-end
+pos = [FirstCorridor::APPLEBAY_X, FirstCorridor::FLOOR + 1]
+downshaft_trapdoors = TwoTrapDoors.new(pos)
+downshaft_trapdoors.in
+
+pos = [FirstCorridor::END_X - 4*Map::TILE_SIZE, FirstCorridor::CEILING - IceBoard::HEIGHT]
+secondcorridor_trapdoors = TwoTrapDoors.new(pos)
 secondcorridor_trapdoors.in
 
 
@@ -265,8 +294,27 @@ switchgroup = SwitchGroup.new(
                               )
 switchgroup.each {|m| LOCATION.add_active_object m }
 
+# The switch in the fourth corridor.
+# It opens Erik the way to freedom and to his friends, but his hand
+# isn't long enough to touch it.
+last_eriks_switch = Switch.new([FourthCorridor::END_X+Map::TILE_SIZE, FourthCorridor::CEILING+Map::TILE_SIZE+5], false, Proc.new{}, IceLand::SWITCH_GFX)
+LOCATION.add_active_object last_eriks_switch
+
 # === MONSTERS:
 
 # The nice fair bear who stands on the first corridor
 bear = WalkingBear.new([FirstCorridor::BEAR_START_X, 320], 400)
 LOCATION.add_sprite(bear)
+
+# The bear which Erik must clobber on his own
+second_bear = WalkingBear.new([1780, SecondCorridor::FLOOR - Bear::HEIGHT], 230)
+LOCATION.add_sprite second_bear
+
+# Bears in the last corridor. Just for fun for Baleog.
+center = CorridorToExit::BEGIN_X + ((CorridorToExit::END_X - CorridorToExit::BEGIN_X) / 2)
+trace_length = (center - CorridorToExit::BEGIN_X) - 100 - 30
+y = CorridorToExit::FLOOR - Bear::HEIGHT
+exitbear_1 = WalkingBear.new([center - 100, y], trace_length)
+exitbear_2 = WalkingBear.new([center + 100, y], trace_length)
+LOCATION.add_sprite exitbear_1
+LOCATION.add_sprite exitbear_2

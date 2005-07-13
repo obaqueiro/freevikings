@@ -24,8 +24,19 @@ module FreeVikings
   WIN_HEIGHT = 480
 
   CODE_DIRS = ['monsters', 'ext'] # directories with additional source files
+  DATA_DIR = 'locs' # directory with location data
 
   FONTS = {} # a hash of fonts
+
+  @@runlevel = 'START'
+
+  def FreeVikings.runlevel
+    @@runlevel
+  end
+
+  def FreeVikings.runlevel=(level)
+    @@runlevel = level
+  end
 end
 
 include FreeVikings

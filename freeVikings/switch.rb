@@ -15,7 +15,7 @@ module FreeVikings
     WIDTH = 30
     HEIGHT = 30
 
-    def initialize(position, on=false, action=Proc.new, images=nil)
+    def initialize(position, on=false, action=Proc.new {}, images=nil)
       super position
       @state = on
       @rect = Rectangle.new(position[0], position[1], WIDTH, HEIGHT)

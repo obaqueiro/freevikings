@@ -16,6 +16,8 @@ module FreeVikings
   class Init
 
     def initialize
+      FreeVikings.runlevel = 'INITIALIZATION'
+
       @log = MockLogger.new
 
       load_logo
