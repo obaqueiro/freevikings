@@ -90,7 +90,7 @@ module FreeVikings
         @context.pause
 	# Specialni klavesy:
       when K_RCTRL
-	@context.team.last
+	@context.team.previous
       when K_PAGEUP
 	@context.team.next
       when K_q, K_ESCAPE

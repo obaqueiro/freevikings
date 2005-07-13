@@ -27,8 +27,8 @@ class TestTeam < RUNIT::TestCase
     assert_equal @viking2, @team.next, "Next should return the next member of the team."
   end
 
-  def testLastValue
-    assert_equal @viking3, @team.last, "Last should return the member before the active."
+  def testPreviousValue
+    assert_equal @viking3, @team.previous, "'previous' should return the member before the active."
   end
 
   def testRightActiveMemberAfterNext
@@ -36,22 +36,22 @@ class TestTeam < RUNIT::TestCase
     assert_equal @viking2, @team.active, "After next the next member should be considered active."
   end
 
-  def testRightActiveMemberAfterLast
-    @team.last
-    assert_equal @viking3, @team.active, "Call to last should change the active member pointer."
+  def testRightActiveMemberAfterPrevious
+    @team.previous
+    assert_equal @viking3, @team.active, "Call to previous should change the active member pointer."
   end
 
   def testExceptionIfNoMoreMemberAliveToBeMadeActiveOnNext
     @team.each {|v| v.destroy }
-    assert_exception (NotATeamMemberAliveException) {
+    assert_exception (Team::NotATeamMemberAliveException) {
       @team.next
     }
   end
 
-  def testExceptionIfNoMoreMemberAliveToBeMadeActiveOnLast
+  def testExceptionIfNoMoreMemberAliveToBeMadeActiveOnPrevious
     @team.each {|v| v.destroy }
-    assert_exception (NotATeamMemberAliveException) {
-      @team.last
+    assert_exception (Team::NotATeamMemberAliveException) {
+      @team.previous
     }
   end
 
