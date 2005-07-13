@@ -3,7 +3,7 @@
 
 # Objekty MapLoadStrategy umoznuji nacitani mapy ze souboru ruznych formatu.
 
-require 'tiletype.rb'
+require 'tile.rb'
 require 'exit.rb'
 require 'log4r'
 require 'rexml/document'
@@ -20,7 +20,6 @@ module FreeVikings
 
     def initialize
       @log = Log4r::Logger['location loading log']
-      Tile.clear
     end
 
     # Pole Blocks_matrix inicialisuje jako dvojrozmerne pole a nacte do nej

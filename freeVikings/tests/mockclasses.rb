@@ -19,9 +19,9 @@ module FreeVikings
 	@blocktypes = blocktype_hash
 
 	# nacteni typu bloku
-	x = @blocktypes['x'] = Tile.instance('x', '')
+	x = @blocktypes['x'] = Tile.new
 	@blocktypes['x'].solid = true
-	o = @blocktypes['o'] = Tile.instance('o', '')
+	o = @blocktypes['o'] = Tile.new
 	@blocktypes['o'].solid = false
 	# nacteni umisteni bloku
 	blcks = [

@@ -4,7 +4,7 @@
 require 'log4r'
 require 'rexml/document'
 
-require 'tiletype.rb'
+require 'tile.rb'
 require 'group.rb'
 
 =begin

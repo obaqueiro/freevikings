@@ -110,13 +110,13 @@ module FreeVikings
 
     def load_tiletypes
       begin
-	@doc.root.elements['map'].elements["blocktypes"].each_element { |blocktype|
-	  code = blocktype.attributes["code"]
-	  path = blocktype.attributes["path"]
+	@doc.root.elements['map'].elements["blocktypes"].each_element { |blocktype_element|
+	  code = blocktype_element.attributes["code"]
+	  path = blocktype_element.attributes["path"]
 	  @log.debug "Loading new Tile with code '#{code}' and path '#{path}'"
-	  tiletype = Tile.instance(code, path)
-	  tiletype.solid = false unless blocktype.attributes["solid"] == "solid"
-	  @blocktypes[code] = tiletype
+	  new_blocktype = Tile.new path
+	  new_blocktype.solid = false unless blocktype_element.attributes["solid"] == "solid"
+	  @blocktypes[code] = new_blocktype
 	}
       rescue => ex
 	@log.error "Cannot read XML node 'map/blocktypes' in datafile #{source_name}. (" + ex.message + ")"

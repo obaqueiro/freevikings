@@ -7,7 +7,7 @@ require 'test/unit'
 
 require 'map.rb'
 require 'locationloadstrategy.rb'
-require 'tiletype.rb'
+require 'tile.rb'
 require 'mockclasses.rb'
 
 class TestMap < Test::Unit::TestCase
