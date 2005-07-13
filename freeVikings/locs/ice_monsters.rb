@@ -19,7 +19,7 @@ module IceLand
 
   include FreeVikings
 
-  DEBUG = true
+  DEBUG = false
 
   def IceLand.dbg(text)
     if DEBUG
@@ -38,6 +38,8 @@ module IceLand
     BEAR_START_X = 850
   end # module FirstCorridor
 
+  # IceBoard
+  # A peace of ice used as a simple trapdoor; a static object
   class IceBoard
     WIDTH = 80
     HEIGHT = 22
