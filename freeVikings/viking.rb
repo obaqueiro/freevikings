@@ -29,7 +29,7 @@ module FreeVikings
 Viking's default velocity in pixels per second.
 =end
 
-    BASE_VELOCITY = 65
+    BASE_VELOCITY = 100
 
 =begin
 --- Viking::WIDTH
@@ -401,3 +401,4 @@ end # module
 require 'warior.rb'
 require 'sprinter.rb'
 require 'shielder.rb'
+ 
