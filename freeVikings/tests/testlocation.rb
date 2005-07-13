@@ -29,10 +29,6 @@ class TestLocation < Test::Unit::TestCase
     @sprite = Sprite.new
   end
 
-  def testBlocksOnRect
-    assert_equal 4, @loc.map.blocks_on_rect([0.2,0.2,Map::TILE_SIZE*1.2,Map::TILE_SIZE*1.2]).size
-  end
-
   def testSpritesOnRect
     sprite = Sprite.new([90,90])
     @loc.add_sprite sprite

@@ -128,25 +128,69 @@ of (({Fixnum}))s.
     end
 
 =begin
---- Map#blocks_on_square(rect)
---- Map#blocks_on_rect(rect)
-Returns all the ((<Tiles>)) from the area specified by a (({Rectangle}))
-((|rect|)).
+--- Map#area_free?(rect)
+Returns ((|true|)) if area specified by the (({Rectangle})) ((|rect|)) 
+is free of solid map blocks, ((|false|)) otherwise.
 =end
 
-    def blocks_on_square(square)
-      @log.debug "blocks_on_square: Asked for blocks colliding with a rectangle defined by [#{square[0]}, #{square[1]}, #{square[2]}, #{square[3]}](px)"
+    def area_free?(rect)
+      begin
+	colliding_blocks = blocks_on_rect(rect)
+      rescue RuntimeError
+	return false
+      end
+      colliding_blocks.concat @static_objects.members_on_rect(rect)
+      colliding_blocks.each do |block|
+	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.
+	return false if block.solid == true
+      end
+      # az dosud nebyl nalezen pevny blok, posice je volna
+      return true
+    end
+
+    def edge_free?(rect)
+      leftmost_i = (rect[0] / Map::TILE_SIZE).to_f.floor
+      rightmost_i = ((rect[0] + rect[2]) / Map::TILE_SIZE).to_f.floor
+      top_line = (rect[1] / Map::TILE_SIZE).to_f.ceil
+      bottom_line = ((rect[1] + rect[3]) / Map::TILE_SIZE).to_f.ceil
+
+      @blocks[top_line][leftmost_i .. rightmost_i].each do |b|
+        return false if b.solid?
+      end
+      @blocks[bottom_line][leftmost_i .. rightmost_i].each do |b|
+        return false if b.solid?
+      end
+
+      top_line.upto(bottom_line) do |l|
+        if @blocks[l][leftmost_i].solid? or @blocks[l][rightmost_i].solid?
+          return false 
+        end
+      end
+
+      @static_objects.members_on_rect(rect).each do |o|
+        return false if o.solid
+      end
+
+      return true
+    end
+
+    private
+
+    # Returns all the tiles from the area specified by rect
+
+    def blocks_on_rect(rect)
+      @log.debug "blocks_on_rect: Asked for blocks colliding with a rectangle defined by [#{rect[0]}, #{rect[1]}, #{rect[2]}, #{rect[3]}](px)"
       colliding_blocks = []
       # spocitat nejlevejsi a nejpravejsi index do kazdeho radku:
-      leftmost_i = (square[0] / Map::TILE_SIZE).to_f.floor
-      rightmost_i = ((square[0] + square[2]) / Map::TILE_SIZE).to_f.floor
+      leftmost_i = (rect[0] / Map::TILE_SIZE).to_f.floor
+      rightmost_i = ((rect[0] + rect[2]) / Map::TILE_SIZE).to_f.floor
       # spocitat prvni a posledni radek:
-      top_line = (square[1] / Map::TILE_SIZE).to_f.ceil
-      bottom_line = ((square[1] + square[3]) / Map::TILE_SIZE).to_f.ceil
+      top_line = (rect[1] / Map::TILE_SIZE).to_f.ceil
+      bottom_line = ((rect[1] + rect[3]) / Map::TILE_SIZE).to_f.ceil
       # z kazdeho radku vybrat patricny vyrez:
-      @log.debug "blocks_on_square: I'm going to extract blocks from a square [#{leftmost_i}, #{top_line}, #{rightmost_i}, #{bottom_line}](tiles)"
+      @log.debug "blocks_on_rect: I'm going to extract blocks from a rect [#{leftmost_i}, #{top_line}, #{rightmost_i}, #{bottom_line}](tiles)"
       unless @blocks[top_line .. bottom_line].is_a? Array
-	@log.error "blocks_on_square: Invalid lines #{top_line} .. #{bottom_line}."
+	@log.error "blocks_on_rect: Invalid lines #{top_line} .. #{bottom_line}."
 	raise RuntimeError, "Invalid lines #{top_line} .. #{bottom_line}."
       end
       @blocks[top_line .. bottom_line].each {|line|
@@ -155,10 +199,6 @@ Returns all the ((<Tiles>)) from the area specified by a (({Rectangle}))
       }
       return colliding_blocks
     end
-
-    alias_method :blocks_on_rect, :blocks_on_square
-
-    private
 
     # Creates a new RUDL::Surface @background and paints images of all the
     # tiles onto it.

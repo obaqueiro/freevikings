@@ -24,20 +24,23 @@ class TestMap < Test::Unit::TestCase
 
   def setup
     @map = Map.new(Mock::TestingMapLoadStrategy.new)
+    Map.module_eval do
+      public :blocks_on_rect
+    end
   end
 
   def testGetSolidBlock
-    assert @map.blocks_on_square([0,0,50,50])[0].solid, "The first block in tho top left corner is solid. I made it solid."
+    assert @map.blocks_on_rect([0,0,50,50])[0].solid, "The first block in tho top left corner is solid. I made it solid."
   end
 
   def testGetAllCollidingBlocks
     ts = Map::TILE_SIZE
-    assert_equal 4, @map.blocks_on_square([ts-2, 2*ts-2, ts, ts]).size, "Defined square collides with four tiles."
+    assert_equal 4, @map.blocks_on_rect([ts-2, 2*ts-2, ts, ts]).size, "Defined square collides with four tiles."
   end
 
   def testGetBlockOutOfLocation
     assert_raise(RuntimeError, "Block is out of map, it should not be returned.") {
-      @map.blocks_on_square([Map::TILE_SIZE*15, Map::TILE_SIZE * 15, 60, 60])
+      @map.blocks_on_rect([Map::TILE_SIZE*15, Map::TILE_SIZE * 15, 60, 60])
     }
   end
 

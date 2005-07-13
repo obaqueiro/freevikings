@@ -269,18 +269,7 @@ is free of solid map blocks, ((|false|)) otherwise.
 =end
 
     def area_free?(rect)
-      begin
-	colliding_blocks = @map.blocks_on_rect(rect)
-      rescue RuntimeError
-	return false
-      end
-      colliding_blocks.concat @map.static_objects.members_on_rect(rect)
-      colliding_blocks.each do |block|
-	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.
-	return false if block.solid == true
-      end
-      # az dosud nebyl nalezen pevny blok, posice je volna
-      return true
+      @map.edge_free? rect
     end
 
     private
