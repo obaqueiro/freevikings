@@ -12,7 +12,7 @@
     </formatter>
   </outputter>
 
-  <logger name="init log" level="INFO">
+  <logger name="init log" level="ERROR">
     <outputter>initout</outputter>
   </logger>
 
