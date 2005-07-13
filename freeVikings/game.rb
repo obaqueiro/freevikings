@@ -185,7 +185,7 @@ regularly and refreshes the screen.
 	  @give_up = nil
 	elsif @team.alive_size == @team.size
 	  # Vsichni dosahli EXITu
-	  @log.info "Oh, great! Congratulations, level completed."
+	  @log.info "Level completed."
 	  unless location = @world.next_location then
 	    @log.info "Congratulations! You explored all the world!"
 	    exit

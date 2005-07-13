@@ -263,7 +263,7 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
 =end
 
     def descend
-      if on_ground? then
+      if on_ground? and not (@rect.bottom % Map::TILE_SIZE == 0) then
         @rect.top += Map::TILE_SIZE - (@rect.bottom % Map::TILE_SIZE)
       end
       @fall_height = @rect.top - @start_fall

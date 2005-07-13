@@ -5,7 +5,7 @@ require 'test/unit'
 
 require 'monster.rb'
 require 'mockclasses.rb'
-require 'tombstone.rb'
+require 'monsters/tombstone.rb'
 
 class TestMonster < Test::Unit::TestCase
 
@@ -21,6 +21,6 @@ class TestMonster < Test::Unit::TestCase
 
   def testAddsTombStoneWhenDies
     destroy
-    assert(@location.sprites.find {|s| s.kind_of? TombStone}, "When a Monster is dying, it must add a TombStone into a Location.")
+    assert(@location.sprites.find {|s| s.kind_of? Tombstone}, "When a Monster is dying, it must add a TombStone into a Location.")
   end
 end
