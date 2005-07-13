@@ -8,11 +8,29 @@ require 'tiletype.rb'
 require 'group.rb'
 
 =begin
+
 = Map
-A ((<Map>)) object is a data structure to store a map built of tiles.
-All the ((<Map>))'s members are objects of the game world which don't change
-in any circumstances, they are totally static and are used to make floors
-and walls and/or to make the level pretty.
+
+A ((<Map>)) object is a data structure to store static game objects,
+objects of the game world which don't change in any circumstances.
+At this time a ((<Map>)) contains two types of objects - ((*tiles*)) and 
+((*static objects*)).
+
+== Tiles
+
+Tiles are all singleton instances of class (({TileType})). Squares with sizes
+((<Map::TILE_SIZE>)). They are piled into a grid. The grid is built once
+when the level is loaded and there is no way to change it during the
+game.
+Some of them are solid and make walls and floors, the others
+are soft and they are there just for good look.
+
+== Static objects
+
+Static objects can also be solid or soft, but they aren't placed regularly 
+in a grid and can have any size. You can add them anytime you want and
+delete them later. The static objects are stored in a public attribute
+((|static_objects|)) which is of type (({Group})).
 =end
 
 module FreeVikings
@@ -64,11 +82,17 @@ attributes of the returned object are important.
 
 =begin
 --- Map#static_objects
+Returns a (({Group})) of ((<Static objects>)).
 =end
 
     attr_reader :static_objects
 
-    # vrati surface s aktualnim pozadim
+=begin
+--- Map#background
+A (({RUDL::Surface})) with all the map tiles painted. It's created only once 
+when it's first required. (remember the ((<Tiles>)) can't be changed during
+the game.)
+=end
 
     def background
       unless @background
@@ -77,9 +101,14 @@ attributes of the returned object are important.
       return @background
     end # method background
 
-    # Vykresli na surface tak velky kus mapy, jak to pujde, pricemz
-    # jej vybere v okoli souradnice center_coordinate.
-    # To je pole, ktere obsahuje vzdalenost odleva a shora.
+=begin
+--- Map#paint(surface, center_coordinate)
+Paints onto the (({RUDL::Surface})) ((|surface|)) all the ((<Tiles>)) and
+((<Static objects>)) which can be found in an area (({surface.w})) wide
+and (({surface.h})) high with a center in ((|center_coordinate|)).
+((|center_coordinate|)) is expected to be a two-element  (({Array})) 
+of (({Fixnum}))s.
+=end
 
     def paint(surface, center_coordinate)
       left = center_coordinate[0] - (surface.w / 2)
@@ -98,8 +127,12 @@ attributes of the returned object are important.
       @static_objects.paint(surface, Rectangle.new(*paint_rect))
     end
 
-    # vezme beznou definici ctverce v pixelech, vrati pole kolidujicich
-    # dlazdic
+=begin
+--- Map#blocks_on_square(rect)
+--- Map#blocks_on_rect(rect)
+Returns all the ((<Tiles>)) from the area specified by a (({Rectangle}))
+((|rect|)).
+=end
 
     def blocks_on_square(square)
       @log.debug "blocks_on_square: Asked for blocks colliding with a rectangle defined by [#{square[0]}, #{square[1]}, #{square[2]}, #{square[3]}](px)"
@@ -127,8 +160,8 @@ attributes of the returned object are important.
 
     private
 
-    # Vytvori novou RUDL::Surface @background a napatla na ni pozadi mapy
-    # (obrazky vsech pevnych dlazdic)
+    # Creates a new RUDL::Surface @background and paints images of all the
+    # tiles onto it.
 
     def create_background
       @background = RUDL::Surface.new([@rect.w, @rect.h])
