@@ -44,6 +44,11 @@ module IceLand
     FLOOR = 6*FreeVikings::Map::TILE_SIZE
   end # module SecondCorridor
 
+  module ThirdCorridor
+    FLOOR = 11 * FreeVikings::Map::TILE_SIZE
+    BEGIN_X = 42 * FreeVikings::Map::TILE_SIZE
+  end
+
   module FourthCorridor
     include FreeVikings
     # The corridor before the last.
@@ -51,6 +56,7 @@ module IceLand
     # Two arrows through the hole in the wall...
     CEILING = 13 * Map::TILE_SIZE
     FLOOR = CEILING + CORRIDOR_HEIGHT
+    BEGIN_X = 21 * Map::TILE_SIZE
     END_X = 47 * Map::TILE_SIZE
   end # module FourthCorridor
 
@@ -258,6 +264,9 @@ pos = [FirstCorridor::END_X - 4*Map::TILE_SIZE, FirstCorridor::CEILING - IceBoar
 secondcorridor_trapdoors = TwoTrapDoors.new(pos)
 secondcorridor_trapdoors.in
 
+pos = [FourthCorridor::BEGIN_X, FourthCorridor::FLOOR]
+trapdoors_to_exit_corridor = TwoTrapDoors.new pos
+trapdoors_to_exit_corridor.in
 
 # === ITEMS:
 
@@ -294,10 +303,25 @@ switchgroup = SwitchGroup.new(
                               )
 switchgroup.each {|m| LOCATION.add_active_object m }
 
+# The switch in the third corridor which opens the shaft down for Baleog
+# and Olaf
+pr = Proc.new {|state| 
+  if state then
+    downshaft_trapdoors.in
+  else
+    downshaft_trapdoors.out
+  end
+}
+downshaft_trapdoor_opening_switch = Switch.new([ThirdCorridor::BEGIN_X+4*Map::TILE_SIZE, ThirdCorridor::FLOOR-2*Map::TILE_SIZE], true, pr, IceLand::SWITCH_GFX)
+LOCATION.add_active_object(downshaft_trapdoor_opening_switch)
+
 # The switch in the fourth corridor.
 # It opens Erik the way to freedom and to his friends, but his hand
 # isn't long enough to touch it.
-last_eriks_switch = Switch.new([FourthCorridor::END_X+Map::TILE_SIZE, FourthCorridor::CEILING+Map::TILE_SIZE+5], false, Proc.new{}, IceLand::SWITCH_GFX)
+pr = Proc.new {
+  trapdoors_to_exit_corridor.out  
+}
+last_eriks_switch = Switch.new([FourthCorridor::END_X+Map::TILE_SIZE, FourthCorridor::CEILING+Map::TILE_SIZE+5], false, pr, IceLand::SWITCH_GFX)
 LOCATION.add_active_object last_eriks_switch
 
 # === MONSTERS:
@@ -309,6 +333,13 @@ LOCATION.add_sprite(bear)
 # The bear which Erik must clobber on his own
 second_bear = WalkingBear.new([1780, SecondCorridor::FLOOR - Bear::HEIGHT], 230)
 LOCATION.add_sprite second_bear
+
+# The bear from the fourth corridor
+floor_begin_x = FourthCorridor::BEGIN_X + 3 * Map::TILE_SIZE
+floor_length = FourthCorridor::END_X - floor_begin_x
+center_x = floor_begin_x + floor_length / 2
+bear_from_c4 = WalkingBear.new([center_x, FourthCorridor::FLOOR - Bear::HEIGHT], floor_length/2 * 3/5)
+LOCATION.add_sprite bear_from_c4
 
 # Bears in the last corridor. Just for fun for Baleog.
 center = CorridorToExit::BEGIN_X + ((CorridorToExit::END_X - CorridorToExit::BEGIN_X) / 2)

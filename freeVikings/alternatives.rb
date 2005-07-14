@@ -8,8 +8,18 @@
 # implementation.
 
 if FreeVikings::OPTIONS["extensions"] then
+
   require "ext/Rectangle"
   FreeVikings::Rectangle = FreeVikings::Extensions::Rectangle::Rectangle
+  # add a missing method:
+  class FreeVikings::Rectangle
+    def to_a
+      [left, top, width, height]
+    end
+  end
+
 else
+
   require "rect.rb"
+
 end

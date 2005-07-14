@@ -90,4 +90,8 @@ class TestExtensionRectangle < Test::Unit::TestCase
     assert(Rectangle.new(1,2,3,4).eql?(Rectangle.new(1,2,3,4)))
   end
 
+  #def testConversionToArray
+  #  assert_equal [20,12,30,15], @r.to_a
+  #end
+
 end

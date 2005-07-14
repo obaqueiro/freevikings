@@ -66,17 +66,19 @@ paint and draw graphics.
 # few milliseconds.
 
     def clobber_monsters
-      stroken = @location.sprites_on_rect(self.rect)
-      stroken.concat @location.active_objects_on_rect(self.rect)
-
       unless @monsters_damaged
+        stroken = @location.sprites_on_rect(self.rect)
+        stroken.concat @location.active_objects_on_rect(self.rect)
+
         stroken.each do |s|
           if s.kind_of? Monster then
             s.hurt
             @monsters_damaged = true
           end
         end
+        return true
       end
+      return false
     end
 
     def init_images

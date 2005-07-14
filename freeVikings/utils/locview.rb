@@ -6,6 +6,11 @@
 
 $:.push(File.expand_path('..'))
 
+module FreeVikings
+  GFX_DIR = File.expand_path 'gfx'
+  OPTIONS = {}
+end
+
 require 'RUDL'
 require 'log4r'
 
@@ -17,12 +22,7 @@ require 'xmllocationloadstrategy'
 
 require 'sprite'; require 'monster'
 
-require 'ext/Rectangle'
-
-module FreeVikings
-  GFX_DIR = File.expand_path 'gfx'
-  Rectangle = Extensions::Rectangle::Rectangle
-end
+require 'alternatives'
 
 class NonScriptLocationLoadStrategy < FreeVikings::XMLLocationLoadStrategy
   def load_monsters(location)
@@ -127,8 +127,18 @@ class Browser
       end
     end
     if event.is_a? RUDL::MouseButtonDownEvent then
-      a = winpos_to_locpos(event.pos)
-      puts 'clicked: h:' + a[0].to_s + ' v:' + a[1].to_s
+      if event.button == 1 then
+        a = winpos_to_locpos(event.pos)
+        puts 'clicked: h:' + a[0].to_s + ' v:' + a[1].to_s
+      elsif event.button == 2 then
+        pos = winpos_to_locpos(event.pos)
+        @loc.sprites_on_rect(Rectangle.new(pos[0], pos[1], 1, 1)).each {|s| 
+          s.hurt
+        }
+        @loc.active_objects_on_rect(Rectangle.new(pos[0], pos[1], 1, 1)).each {|o| 
+          o.hurt
+        }
+      end
     end
     if event.is_a? RUDL::QuitEvent then
       exit
