@@ -44,6 +44,7 @@ require 'testitemmanager.rb'
 require 'testmonsterscript.rb'
 require 'testinventory.rb'
 require 'testmonster.rb'
+require 'testsword.rb'
 
 class FreeVikingsTestSuite
 
@@ -80,6 +81,7 @@ class FreeVikingsTestSuite
     suite << TestMonsterScript.suite
     suite << TestInventory.suite
     suite << TestMonster.suite
+    suite << TestSword.suite
 
     return suite
   end

@@ -14,6 +14,7 @@ module FreeVikings
       @owner = owner
       @direction = 'right'
       @rect = Rectangle.new 0,0,WIDTH, HEIGHT
+      @monsters_damaged = false
       init_images
     end
 
@@ -29,29 +30,55 @@ module FreeVikings
       @owner.state.direction
     end
 
+=begin
+--- Sword#draw
+This method must be called when a ((<Sword>)) is drawn from the sheath.
+Don't confuse with methods for drawing onto the screen.
+In the freeVikings code 'paint' identifier is used for methods which
+paint and draw graphics.
+=end
+
+    def draw
+      @monsters_damaged = false
+    end
+
     def update
-      @rect.w = image.w
-      @rect.h = image.h
-
-      @rect.top = (@owner.top + @owner.rect.h / 2.2).to_i
-
-      @rect.left = (case @owner.state.direction
-                   when 'left'
-                     @owner.left - self.rect.w + @owner.rect.w/5
-                   when 'right'
-                     @owner.left + @owner.rect.w - @owner.rect.w/5
-                   end).to_i
-
-      stroken = @location.sprites_on_rect(self.rect)
-      stroken.concat @location.active_objects_on_rect(self.rect)
-
-      stroken.delete_if {|s| s == self or not s.is_a? Monster}
-      stroken.each do |s|
-        s.hurt
-      end
+      update_position
+      clobber_monsters
     end
 
     private
+
+    def update_position
+      @rect.top = (@owner.rect.top + @owner.rect.h / 2.2).to_i
+      @rect.left = (case @owner.state.direction
+                   when 'left'
+                     @owner.rect.left - self.rect.w + @owner.rect.w/5
+                   when 'right'
+                     @owner.rect.left + @owner.rect.w - @owner.rect.w/5
+                   end).to_i
+    end
+
+# The Sword damages monsters only once per use.
+# A 'use' is a time between it's drawn and hidden in the sheath again.
+# So you can't just say Baleog to stand with a sword in front of him.
+# On quicker computers this trick would kill armies of dragons in a
+# few milliseconds.
+
+    def clobber_monsters
+      stroken = @location.sprites_on_rect(self.rect)
+      stroken.concat @location.active_objects_on_rect(self.rect)
+
+      unless @monsters_damaged
+        stroken.each do |s|
+          if s.kind_of? Monster then
+            s.hurt
+            @monsters_damaged = true
+          end
+        end
+      end
+    end
+
     def init_images
       left = Image.load('sword_left.png')
       right = Image.load('sword_right.png')
