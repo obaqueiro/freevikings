@@ -12,7 +12,7 @@ module FreeVikings
     def initialize(start_pos, velocity)
       super(start_pos)
       if velocity.is_a? Numeric
-        @velocity = Velocity.new velocity
+        @velocity = velocity
       else
         @velocity = velocity
       end
@@ -22,18 +22,18 @@ module FreeVikings
     attr_reader :hunted_type
 
     def destroy
-      @velocity = Velocity.new
+      @velocity = 0
       @energy = 0
       @location.delete_sprite self
     end
 
     def state
-      return "right" if @velocity.value > 0
+      return "right" if @velocity > 0
       return "left"
     end
 
     def update
-      @rect.left += @velocity.value * @location.ticker.delta
+      @rect.left += @velocity * @location.ticker.delta
 
       unless @location.area_free? @rect
         destroy

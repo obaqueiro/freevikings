@@ -6,7 +6,6 @@
 require 'entity.rb'
 require 'pausable.rb'
 require 'imagebank.rb'
-require 'velocity.rb'
 
 module FreeVikings
 

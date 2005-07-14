@@ -40,6 +40,7 @@ LeftStandingState and RightStandingState - added.
     end
 
     attr_reader :direction
+    attr_reader :velocity
 
     def move_left
       @wrapper.horizontal_state = LeftWalkingState.new @wrapper, @direction
@@ -52,10 +53,6 @@ LeftStandingState and RightStandingState - added.
     def stop
       @wrapper.horizontal_state = StandingState.new @wrapper, @direction
     end
-
-    def velocity
-      @velocity.value
-    end
   end # class HorizontalState
 
   class LeftWalkingState < HorizontalState
@@ -64,7 +61,7 @@ LeftStandingState and RightStandingState - added.
 
     def initialize(wrapper, direction='right')
       super(wrapper, direction)
-      @velocity = Velocity.new(-VELOCITY_BASE)
+      @velocity = -VELOCITY_BASE
       @direction = "left"
     end
   end # class LeftWalkingState
@@ -75,7 +72,7 @@ LeftStandingState and RightStandingState - added.
     
     def initialize(wrapper, direction='right')
       super(wrapper, direction)
-      @velocity = Velocity.new(VELOCITY_BASE)
+      @velocity = VELOCITY_BASE
       @direction = "right"
     end
   end # class RightWalkingState
@@ -86,7 +83,7 @@ LeftStandingState and RightStandingState - added.
 
     def initialize(wrapper, direction='right')
       super(wrapper, direction)
-      @velocity = Velocity.new 0
+      @velocity = 0
     end
 
     STRING_VALUE = 'standing'

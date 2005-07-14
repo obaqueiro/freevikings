@@ -22,9 +22,7 @@ module FreeVikings
       @wrapper = wrapper
     end
 
-    def velocity
-      @velocity.value
-    end
+    attr_reader :velocity
 
     def rise
       @wrapper.vertical_state = RisingState.new @wrapper
@@ -45,7 +43,7 @@ module FreeVikings
 
     def initialize(wrapper)
       super wrapper
-      @velocity = Velocity.new 0
+      @velocity = 0
     end
 
     STRING_VALUE = 'onground'
@@ -60,7 +58,7 @@ module FreeVikings
 
     def initialize(wrapper)
       super wrapper
-      @velocity = Velocity.new VELOCITY_BASE
+      @velocity = VELOCITY_BASE
     end
 
     STRING_VALUE = 'falling'
@@ -75,7 +73,7 @@ module FreeVikings
 
     def initialize(wrapper)
       super wrapper
-      @velocity = Velocity.new( - VELOCITY_BASE)
+      @velocity = - VELOCITY_BASE
     end
 
     STRING_VALUE = 'rising'

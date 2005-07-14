@@ -28,7 +28,6 @@ require 'testarrow.rb'
 require 'testshield.rb'
 require 'testviking.rb'
 require 'testwarior.rb'
-require 'testvelocity.rb'
 require 'testteam.rb'
 require 'testrect.rb'
 require 'testrexml.rb'
@@ -65,7 +64,6 @@ class FreeVikingsTestSuite
     suite << TestShield.suite
     suite << TestViking.suite
     suite << TestWarior.suite
-    suite << TestVelocity.suite
     suite << TestTeam.suite
     suite << TestRect.suite
     suite << TestExploreREXML.suite

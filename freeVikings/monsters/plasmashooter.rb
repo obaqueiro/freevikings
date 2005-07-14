@@ -50,7 +50,7 @@ module FreeVikings
 
     def shoot
       if @firing then
-        @location.add_sprite RedShot.new([left, top+10], Velocity.new(- SHOT_VELOCITY))
+        @location.add_sprite RedShot.new([left, top+10], -SHOT_VELOCITY)
       end
     end
   end # class PlasmaShooter

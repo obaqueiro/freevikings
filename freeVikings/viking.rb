@@ -272,6 +272,7 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
       # 
       if (@fall_height >= 3 * HEIGHT and fall_velocity >= BASE_VELOCITY) then
         @log.debug "descend: #{@name} has felt from a big height (#{@fall_height}) and is hurt."
+        hurt
       end
     end
 
