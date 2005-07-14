@@ -27,16 +27,6 @@ module FreeVikings
   DATA_DIR = 'locs' # directory with location data
 
   FONTS = {} # a hash of fonts
-
-  @@runlevel = 'START'
-
-  def FreeVikings.runlevel
-    @@runlevel
-  end
-
-  def FreeVikings.runlevel=(level)
-    @@runlevel = level
-  end
 end
 
 include FreeVikings

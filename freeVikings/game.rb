@@ -169,8 +169,6 @@ regularly and refreshes the screen.
 =end
     def game_loop
       loop do
-        FreeVikings.runlevel = 'LEVEL LOADING'
-
         paint_loading_screen(@app_window)
 
 	if @team.nil? then
@@ -206,7 +204,6 @@ regularly and refreshes the screen.
           Profiler__::start_profile
         end
 
-        FreeVikings::runlevel = 'PLAYING'
         # Tady zacina udalostni cyklus bezici behem hry.
 	# Cyklujeme, dokud se vsichni prezivsi nedostali do exitu
 	# nebo to hrac nevzdal
