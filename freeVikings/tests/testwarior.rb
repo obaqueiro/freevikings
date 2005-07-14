@@ -14,8 +14,12 @@ class TestWarior < Test::Unit::TestCase
   include FreeVikings
 
   def setup
-    @samsson = Viking.createWarior('Samsson', [0,0])
     @loc = MockLocation.new
+
+    @loc.ticker = CorruptedTicker.new
+    @loc.ticker.now = 100
+
+    @samsson = Viking.createWarior('Samsson', [0,0])
     @loc.add_sprite @samsson
   end
 
@@ -77,6 +81,50 @@ class TestWarior < Test::Unit::TestCase
       @samsson.release_arrow
     end
   end
+
+  def testShootTwoArrowsWithADelay
+    # the first arrow:
+    @samsson.shoot_process
+
+    # delay:
+    @loc.ticker.now = @loc.ticker.now + (2 * Warior::DELAY_BETWEEN_ARROWS)
+
+    # the second arrow:
+    @samsson.shoot_process
+
+    assert_equal 2, @loc.count_arrows_inside, "We have shot two arrows with a delay long enough between them."
+  end
+
+  def testCannotShootTwoArrowsWithoutADelay
+    # the first arrow:
+    @samsson.shoot_process
+
+    # the second arrow:
+    @samsson.shoot_process
+
+    assert_equal 1, @loc.count_arrows_inside, "The second arrow should not have been shot because there wasn't a delay long enough between the two shots."
+  end
+
+  def testDoesNotRestartTheDelayTimeOnUnsuccessfulShootKeyPress
+    @loc.ticker.now = 100
+
+    # the first arrow:
+    @samsson.shoot_process
+
+    # delay - a half of the one which is needed
+    @loc.ticker.now += FreeVikings::Warior::DELAY_BETWEEN_ARROWS * 0.5
+
+    # try to shoot the second arrow (unsuccessfully)
+    @samsson.shoot_process
+
+    # the rest of the delay between two shots
+    @loc.ticker.now += FreeVikings::Warior::DELAY_BETWEEN_ARROWS * 0.6
+
+    # now we should be able to shoot
+    @samsson.shoot_process
+
+    assert_equal 2, @loc.count_arrows_inside, "When we try to shoot during the delay, it should not involve it's duration. There must be two arrows in the location."
+  end
 end # class TestWarior
 
 
@@ -94,9 +142,21 @@ class FreeVikings::Warior
   def fall
     @state.fall
   end
+
+  # calls both the methods needed to shoot an arrow
+  def shoot_process
+    d_func_on # stretch the bow
+    d_func_off # release an arrow
+  end
 end
 # Mimochodem nadherne se tu ukazuje flexibilitu syntaxe jazyka Ruby.
 # Kdyz nechci, nemusim vypisovat "module FreeVikings...",
 # proste napisu "class FreeVikings::Warior" a Ruby tomu rozumi stejne dobre.
 # Rozkosne uplatneni pravidla nejmensiho prekvapeni. O tehle moznosti jsem 
 # nevedel, dokud jsem ji nevyzkousel.
+
+class FreeVikings::Mock::MockLocation
+  def count_arrows_inside
+    return ( @sprites.find_all {|s| s.kind_of? FreeVikings::Arrow} ).size
+  end
+end

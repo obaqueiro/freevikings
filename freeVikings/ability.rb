@@ -71,16 +71,19 @@ VikingState. See VikingState documentation for more details.
     end
 
     def d_on
-      return if @owner.state.falling?
+      return false if @owner.state.falling?
       @owner.stop
       @active_ability = D_ABILITY
+      return true
     end
 
     def d_off
       if @active_ability == D_ABILITY
         @owner.release_arrow
         @active_ability = NO_ABILITY
+        return true
       end
+      return false
     end
 
     def space_on
