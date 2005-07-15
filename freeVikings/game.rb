@@ -99,7 +99,8 @@ All the three examples expect you have created a RUDL::DisplaySurface
         @world = World.new('pyramida_loc.xml',
                            # 'first_loc.xml',
                            # 'hopsy_loc.xml',
-                           'yellowhall.xml'
+                           'yellowhall.xml',
+			   'ice_loc.xml'
                            )
       end
 
