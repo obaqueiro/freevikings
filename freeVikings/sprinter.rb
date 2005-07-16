@@ -8,37 +8,40 @@ module FreeVikings
 
   class Sprinter < Viking
 
-    JUMP_DURATION = 1.75
+    JUMP_HEIGHT = 1.3 * Viking::HEIGHT
 
     def initialize(name, start_position)
       super(name, start_position)
       init_images
       @ability = SprinterAbility.new self
       @state.ability = @ability
-      @jump_start = nil
+      @jump_start_y = nil 
     end
 
     def space_func_on
-      return if not on_some_surface? and not @jump_start
+      return if not on_some_surface?
       @ability.space_on
     end
 
     def space_func_off
       @ability.space_off
-      @jump_start = nil
+      @jump_start_y = nil
     end
 
     def jump
       @state.rise
-      @jump_start = @location.ticker.now unless @jump_start
+      @jump_start_y = @rect.bottom unless @jump_start_y
     end
 
     alias_method :_update, :update
 
     def update
       _update
-      if not @jump_start.nil?
-        if (@location.ticker.now - @jump_start) >= JUMP_DURATION
+      if not @jump_start_y.nil?
+        # Nasledujici podminka ma smysl pouze ve svete, kde osa y ma nulu 
+        # nahore; v normalnim svete by bylo nutne prehodit
+        # mensence a mensitele v rozdilu.
+        if (@jump_start_y - @rect.bottom) >= JUMP_HEIGHT
           space_func_off
         end
       end
