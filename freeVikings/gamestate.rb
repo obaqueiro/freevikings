@@ -29,7 +29,9 @@ module FreeVikings
     # Obslouzi udalost tak, jak je to v danem stavu potreba.
 
     def serve_event(event, location)
-      end_game if event.is_a? QuitEvent
+      if event.is_a? QuitEvent then
+        end_game
+      end
 
       if event.is_a? KeyDownEvent
 	serve_keydown(event, location)

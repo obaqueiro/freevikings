@@ -39,8 +39,8 @@ a (({LocationLoadStrategy})) instance or to provide the same public interface.
       @spritemanager = SpriteManager.new
       @activeobjectmanager = ActiveObjectManager.new
       @itemmanager = ItemManager.new
-      loader.load_scripts(self)
       loader.load_exit(self)
+      loader.load_scripts(self)
       loader.load_start(self)
     end
 
