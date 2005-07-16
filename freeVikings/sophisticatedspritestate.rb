@@ -68,6 +68,16 @@ module FreeVikings
       @horizontal_state.move_right
     end
 
+    def move_back
+      if direction == 'left' then
+        move_right
+      elsif direction == 'right' then
+        move_left
+      else
+        raise "#{direction} is not a valid direction value."
+      end
+    end
+
     def rise
       @vertical_state.rise
     end
@@ -86,6 +96,14 @@ module FreeVikings
 
     def falling?
       velocity_vertic > 0
+    end
+
+    def knockout
+      @horizontal_state.knockout
+    end
+
+    def unknockout
+      @horizontal_state.unknockout
     end
 
     def velocity_horiz

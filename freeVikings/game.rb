@@ -215,6 +215,8 @@ regularly and refreshes the screen.
 	    @state.serve_event(event, location)
 	  end
 
+          @team.next unless @team.active.alive?
+
 	  location.update unless @state.paused?
 
 	  location.paint(@map_view, @team.active.center)

@@ -23,6 +23,17 @@ class TestSophisticatedSpriteState < Test::Unit::TestCase
     assert_equal "right", @state.direction, "The direction must be right after move_right call."
   end
 
+  def testMoveBackChangesDirection
+    @state.move_right
+    @state.move_back
+    assert_equal 'left', @state.direction, "Call to 'move_back' must change the direction."
+  end
+
+  def testMoveBackStartsMovement
+    @state.move_back
+    assert @state.moving?, "The sprite is moving back, so it is moving."
+  end
+
   def testInitialDirectionIsRight
     assert_equal 'right', @state.direction, "I want the initial direction to be 'right'."
   end
@@ -99,6 +110,31 @@ assert @state.velocity_vertic < 0, "The velocity must be less then zero when the
   def testMovingVertically
     @state.fall
     assert @state.moving_vertically?, "Method 'moving_vertically?' must return true when falling."
+  end
+
+  def testKnockedOutNotMoving
+    @state.move_left
+    @state.knockout
+    assert_equal false, @state.moving?, "Sprite is knocked out, it isn't moving."
+  end
+
+  def testCannotMoveWhenKnockedOut
+    @state.knockout
+    @state.move_left
+    assert_equal false, @state.moving?, "Knockedout sprite can't move until it is unknockedout."
+  end
+
+  def testMovableAgainAfterUnknockout
+    @state.knockout
+    @state.unknockout
+    @state.move_left
+    assert @state.moving?, "Knockedout sprite can move again after 'unknockout' method is called."
+  end
+
+  def testCannotChangeHorizStateToStandingWhenKnockedOut
+    @state.knockout
+    @state.stop
+    assert(!(@state.to_s =~ /standing/), "When the sprite is knocked out, it mustn't be able to change to the Standing state directly")
   end
 
 end

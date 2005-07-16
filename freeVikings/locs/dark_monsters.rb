@@ -7,7 +7,7 @@ require 'imagebank'
 class Apex < FreeVikings::Sprite
 
   def initialize(position)
-    super(position)
+    super(Rectangle.new(position[0], position[1], 40, 40))
     @image = FreeVikings::Image.load 'apex.tga'
   end
 

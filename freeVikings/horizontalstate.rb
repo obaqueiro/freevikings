@@ -53,6 +53,13 @@ LeftStandingState and RightStandingState - added.
     def stop
       @wrapper.horizontal_state = StandingState.new @wrapper, @direction
     end
+
+    def knockout
+      @wrapper.horizontal_state = KnockedOutState.new @wrapper, @direction
+    end
+
+    def unknockout
+    end
   end # class HorizontalState
 
   class LeftWalkingState < HorizontalState
@@ -92,5 +99,34 @@ LeftStandingState and RightStandingState - added.
       STRING_VALUE
     end
   end # class StandingState
+
+  class KnockedOutState < HorizontalState
+
+    include NotMovingStateProprieties
+
+    def initialize(wrapper, direction='right')
+      super(wrapper, direction)
+      @velocity = 0
+    end
+
+    STRING_VALUE = 'knocked-out'
+
+    def to_s
+      STRING_VALUE
+    end
+
+    def move_left
+    end
+
+    def move_right
+    end
+
+    def stop
+    end
+
+    def unknockout
+      @wrapper.horizontal_state = StandingState.new @wrapper, @direction
+    end
+  end # class KnockedOutState
 
 end
