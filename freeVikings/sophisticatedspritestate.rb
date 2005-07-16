@@ -102,6 +102,10 @@ module FreeVikings
       @horizontal_state.knockout
     end
 
+    def knocked_out?
+      @horizontal_state.kind_of? KnockedOutState
+    end
+
     def unknockout
       @horizontal_state.unknockout
     end

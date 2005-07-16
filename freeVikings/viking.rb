@@ -13,6 +13,7 @@ require 'collisiontest.rb'
 require 'inventory.rb'
 require 'map.rb' # kvuli const. TILE_SIZE
 require 'sophisticatedspritemixins.rb'
+require 'timelock.rb'
 
 =begin
 = Viking
@@ -49,6 +50,14 @@ on the beginninig.
     MAX_ENERGY = 3
 
 =begin
+--- Viking::KNOCK_OUT_DURATION
+Time in seconds for which the viking is unusable after he is knocked
+out (e.g. when he falls from a high place).
+=end
+
+    KNOCK_OUT_DURATION = 4
+
+=begin
 --- Viking.new(name, start_position=[0,0])
 Creates a new viking. Parameter ((|name|)) is a (({String})),
 ((|start_position|)) should be an (({Array})) or a (({Rectangle})).
@@ -68,6 +77,7 @@ Creates a new viking. Parameter ((|name|)) is a (({String})),
       @inventory = Inventory.new
 
       @start_fall = -1
+      @knockout_duration = TimeLock.new
     end
 
 =begin
@@ -137,6 +147,17 @@ Returns his energy after the injury.
       @energy -= 1
       destroy if @energy <= 0
       return @energy
+    end
+
+=begin
+--- Viking#hurt_and_knockout => anInteger
+Hurts the viking and knocks him out for ((<Viking::KNOCK_OUT_DURATION>)) seconds.
+=end
+
+    def hurt_and_knockout
+      @state.knockout
+      @knockout_duration = TimeLock.new KNOCK_OUT_DURATION, @location.ticker
+      hurt
     end
 
 =begin
@@ -219,13 +240,16 @@ Updates ((<Viking>))'s internal state.
     def update
       collect_items # sebere vsechno, na co narazi :o)
 
-      unless (move_xy or move_y_only) then
+      update_knockout
+
+      unless (move_xy or move_y_only)
         @log.warn "update: Viking #{name} cannot move in any axis. He could have stucked."
       end
 
-      try_to_descend
       try_to_fall
       fall_if_head_on_the_ceiling
+      try_to_descend
+
       update_rect_w_h
 
       @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
@@ -272,7 +296,7 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
       # 
       if (@fall_height >= 3 * HEIGHT and fall_velocity >= BASE_VELOCITY) then
         @log.debug "descend: #{@name} has felt from a big height (#{@fall_height}) and is hurt."
-        hurt
+        hurt_and_knockout
       end
     end
 
@@ -280,7 +304,7 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
     def move_xy
       next_pos = Rectangle.new(next_left, next_top, @rect.w, @rect.h)
       if @location.area_free?(next_pos) then
-	@log.debug "update: Viking #{name}'s next position is all right."
+	@log.debug "move_xy: Viking #{name}'s next position is all right."
         @rect = next_pos
         return true
       else
@@ -292,11 +316,11 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
     def move_y_only
       next_pos = Rectangle.new(@rect.left, next_top, @rect.w, @rect.h)
       if @location.area_free?(next_pos) then
-        @log.debug "update: Viking #{name} cannot move horizontally, but his vertical coordinate was updated successfully."
+        @log.debug "move_y_only: Viking #{name} cannot move horizontally, but his vertical coordinate was updated successfully."
         @rect = next_pos
         return true
       else
-        @log.debug "update: Viking #{name} cannot move in any axis."
+        @log.debug "move_y_only: Viking #{name} cannot move in any axis."
         return false
       end
     end
@@ -307,7 +331,7 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
       # Pokud muze zacit padat, zacne padat:
       if not @state.rising? and not @state.falling? and not on_some_surface?
 	fall
-	@log.debug "update: #{@name} starts falling because there's a free space under him."
+	@log.debug "try_to_fall: #{@name} starts falling because there's a free space under him."
       end
     end
 
@@ -325,7 +349,7 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
       head_area.h = 20
       if @state.rising? and not @location.area_free?(head_area) then
         @log.debug "fall_if_head_on_the_ceiling: #{@name} stroke ceiling with his head and starts falling."
-        @state.fall
+        fall
       end
     end
 
@@ -333,6 +357,13 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
     def update_rect_w_h
       @rect.h = image.h
       @rect.w = image.w
+    end
+
+    private
+    def update_knockout
+      if @state.knocked_out? and @knockout_duration.free? then
+        @state.unknockout
+      end
     end
 
     private
