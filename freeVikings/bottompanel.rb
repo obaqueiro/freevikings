@@ -8,6 +8,8 @@ during the game. It displays vikings' faces, energy and contents of their
 inventories.
 =end
 
+require 'bottompanelstate.rb'
+
 module FreeVikings
 
   class BottomPanel
@@ -23,17 +25,6 @@ module FreeVikings
     WIDTH = 640
 
 =begin
---- BottomPanel::STATE_NORMAL
---- BottomPanel::STATE_BROWSING
---- BottomPanel::STATE_EXCHANGE
-Possible values of ((<BottomPanel#browse_state>)).
-=end
-
-    STATE_NORMAL = 0
-    STATE_BROWSING = 1
-    STATE_EXCHANGE = 2
-
-=begin
 --- BottomPanel.new(team)
 Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
 =end
@@ -41,22 +32,50 @@ Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
     def initialize(team)
       @team = team
       @image = RUDL::Surface.new [WIDTH, HEIGHT]
-      @browse_state = STATE_NORMAL
+      @state = NormalBottomPanelState.new @team
       init_gfx
     end
 
 =begin
---- BottomPanel#browse_state=(boolean)
---- BottomPanel#browse_state
+--- BottomPanel#set_browse_inventory
 
-BottomPanel has two modes:
-(1) browsing the inventory (the selection frame in the inventory of the
-    active viking is blinking)
-(2) normal
-The mode can be set from outside.
 =end
 
-    attr_accessor :browse_state
+    def set_browse_inventory
+      if @state.normal? then
+        @state = InventoryBrowsingBottomPanelState.new @team
+      elsif @state.inventory_browsing?
+        @state = NormalBottomPanelState.new @team
+      end
+
+      return @state
+    end
+
+    def set_items_exchange
+      if @state.inventory_browsing? then
+        @state = ItemsExchangeBottomPanelState.new @team
+      elsif @state.items_exchange?
+        @browse_state = InventoryBrowsingBottomPanelState.new @team
+      end
+
+      return @state
+    end
+
+    def up
+      @state.up
+    end
+
+    def down
+      @state.down
+    end
+
+    def left
+      @state.left
+    end
+
+    def right
+      @state.right
+    end
 
 =begin
 --- BotomPanel#paint(surface)
@@ -95,11 +114,16 @@ size.
           item_position = [item_positions[k][0] + face_position[0] + VIKING_FACE_SIZE, item_positions[k][1]]
           surface.blit(@item_bg, item_position)
           unless vik.inventory[k].null?
-            surface.blit(vik.inventory[k].image, item_position)
+            if (@state.normal?) or
+                (@state.inventory_browsing?) or
+                (@state.items_exchange? and (not @team.active == vik or k != vik.inventory.active_index or time % ACTIVE_SELECTION_BLINK_DELAY > 0.2)) then
+              surface.blit(vik.inventory[k].image, item_position)
+            end
           end
           if vik.inventory.active_index == k then
-            if (browse_state == STATE_NORMAL) or 
-                (browse_state == STATE_BROWSING and (not @team.active == vik or time % ACTIVE_SELECTION_BLINK_DELAY > 0.2))
+            if (@state.normal?) or
+                (@state.items_exchange?) or
+                (@state.inventory_browsing? and (not @team.active == vik or time % ACTIVE_SELECTION_BLINK_DELAY > 0.2)) then
               surface.blit(@selection_box, item_position)
             end
           end

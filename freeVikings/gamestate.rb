@@ -64,7 +64,7 @@ module FreeVikings
 
     def initialize(context)
       super context
-      @context.bottompanel.browse_state = BottomPanel::STATE_NORMAL
+      @context.bottompanel
     end
 
     def view_center
@@ -77,7 +77,6 @@ module FreeVikings
 
     def serve_keydown(keyevent, location)
       case keyevent.key
-	# Smerove klavesy:
       when K_LEFT
 	@context.team.active.move_left
       when K_RIGHT
@@ -94,8 +93,8 @@ module FreeVikings
       when K_e, K_u
         @context.team.active.use_item
       when K_p, K_TAB
+        @context.bottompanel.set_browse_inventory
         @context.pause
-	# Specialni klavesy:
       when K_RCTRL, K_PAGEDOWN
 	@context.team.previous
       when K_PAGEUP
@@ -123,11 +122,12 @@ module FreeVikings
     end # private method serve_keyup
   end # class PlayingGameState
 
+
+
   class PausedGameState < GameState
 
     def initialize(context)
       super context
-      @context.bottompanel.browse_state = BottomPanel::STATE_BROWSING
     end
 
     def serve_keydown(event, location)
@@ -143,24 +143,20 @@ module FreeVikings
         # the selection box.
         case event.key
         when K_p, K_TAB
-          @context.unpause
+          bp_state = bottompanel.set_browse_inventory
+          if bp_state.normal? then
+            @context.unpause
+          end
         when K_SPACE
+          bottompanel.set_items_exchange
         when K_UP
-          if active_inventory.active_index >= 2 then
-            active_inventory.active_index -= 2
-          end
+          bottompanel.up
         when K_DOWN
-          if active_inventory.active_index <= 1 then
-            active_inventory.active_index += 2
-          end
+          bottompanel.down
         when K_LEFT
-          if active_inventory.active_index % 2 == 1 then
-            active_inventory.active_index -= 1
-          end
+          bottompanel.left
         when K_RIGHT
-          if active_inventory.active_index % 2 == 0 then
-            active_inventory.active_index += 1
-          end
+          bottompanel.right
         end
       rescue Inventory::EmptySlotRequiredException
         # This exception doesn't mean anything bad for us. The player
@@ -175,8 +171,8 @@ module FreeVikings
 
     private
 
-    def active_inventory
-      @context.team.active.inventory
+    def bottompanel
+      @context.bottompanel
     end
   end # class PausedGameState
 end # module
