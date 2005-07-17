@@ -22,6 +22,16 @@ module FreeVikings
     HEIGHT = VIKING_FACE_SIZE + LIVE_SIZE
     WIDTH = 640
 
+=begin
+--- BottomPanel::STATE_NORMAL
+--- BottomPanel::STATE_BROWSING
+--- BottomPanel::STATE_EXCHANGE
+Possible values of ((<BottomPanel#browse_state>)).
+=end
+
+    STATE_NORMAL = 0
+    STATE_BROWSING = 1
+    STATE_EXCHANGE = 2
 
 =begin
 --- BottomPanel.new(team)
@@ -31,14 +41,13 @@ Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
     def initialize(team)
       @team = team
       @image = RUDL::Surface.new [WIDTH, HEIGHT]
-      @browse_inventory = false
+      @browse_state = STATE_NORMAL
       init_gfx
     end
 
 =begin
---- BottomPanel#browse_inventory=(boolean)
---- BottomPanel#browse_inventory
---- BottomPanel#browse_inventory?
+--- BottomPanel#browse_state=(boolean)
+--- BottomPanel#browse_state
 
 BottomPanel has two modes:
 (1) browsing the inventory (the selection frame in the inventory of the
@@ -47,8 +56,7 @@ BottomPanel has two modes:
 The mode can be set from outside.
 =end
 
-    attr_accessor :browse_inventory
-    alias_method :browse_inventory?, :browse_inventory
+    attr_accessor :browse_state
 
 =begin
 --- BotomPanel#paint(surface)
@@ -90,8 +98,8 @@ size.
             surface.blit(vik.inventory[k].image, item_position)
           end
           if vik.inventory.active_index == k then
-            if (not browse_inventory?) or 
-                (browse_inventory? and (not @team.active == vik or time % ACTIVE_SELECTION_BLINK_DELAY > 0.2))
+            if (browse_state == STATE_NORMAL) or 
+                (browse_state == STATE_BROWSING and (not @team.active == vik or time % ACTIVE_SELECTION_BLINK_DELAY > 0.2))
               surface.blit(@selection_box, item_position)
             end
           end

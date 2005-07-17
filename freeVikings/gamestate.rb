@@ -62,6 +62,11 @@ module FreeVikings
 
   class PlayingGameState < GameState
 
+    def initialize(context)
+      super context
+      @context.bottompanel.browse_state = BottomPanel::STATE_NORMAL
+    end
+
     def view_center
       # stred nahledu na mapu by mel byt ve stredu obrazku
       # hlavniho hrdiny
@@ -120,11 +125,26 @@ module FreeVikings
 
   class PausedGameState < GameState
 
+    def initialize(context)
+      super context
+      @context.bottompanel.browse_state = BottomPanel::STATE_BROWSING
+    end
+
     def serve_keydown(event, location)
       begin
+        # The following lines are a bit tricky.
+        # They move the selection box like the arrow keys order.
+        # To understand them you must know that the items from the inventory
+        # are displayed in four small windows on the bottompanel in this order:
+        # 0 1
+        # 2 3
+        # The selection box highlights the item with index 
+        # anInventory.active_index. This attribute is changed to move 
+        # the selection box.
         case event.key
         when K_p, K_TAB
           @context.unpause
+        when K_SPACE
         when K_UP
           if active_inventory.active_index >= 2 then
             active_inventory.active_index -= 2
@@ -144,7 +164,7 @@ module FreeVikings
         end
       rescue Inventory::EmptySlotRequiredException
         # This exception doesn't mean anything bad for us. The player
-        # just tried to move the selection in the inventory
+        # has just tried to move the selection in the inventory
         # onto a slot which doesn't have any item inside.
       end
     end

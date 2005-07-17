@@ -55,6 +55,10 @@ Removes the active item from the inventory and returns it.
       @items.delete_at @active_index
     end
 
+    def clear
+      @items.clear
+    end
+
     def empty?
       @items.empty?
     end

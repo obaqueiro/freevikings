@@ -188,6 +188,7 @@ Returns the ((<Viking>)) itself.
 
     def destroy
       @energy = 0
+      @inventory.clear
       @location.add_sprite DeadViking.new([left, top])
       @location.delete_sprite self
       self
@@ -424,8 +425,15 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
     private
     def collect_items
       @location.items_on_rect(rect).each do |i|
-        @location.delete_item i
-        @inventory.put i
+        begin
+          @inventory.put i
+          @location.delete_item i
+        rescue Inventory::NoSlotFreeException
+          # We don't have to do anything here. If @inventory is
+          # full, an exception is raised in Inventory#put.
+          # Then '@location.delete_item i' isn'texecuted and nothing
+          # is changed.
+        end
       end
     end
 

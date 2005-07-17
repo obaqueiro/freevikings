@@ -109,8 +109,7 @@ All the three examples expect you have created a RUDL::DisplaySurface
       @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT - BottomPanel::HEIGHT])
       # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
       # tridy, pokud usoudi, ze by se stav mel zmenit.
-      @state = PlayingGameState.new(self)
-
+      @state = nil
       @bottompanel = nil
 
       @give_up = nil
@@ -120,6 +119,7 @@ All the three examples expect you have created a RUDL::DisplaySurface
 
     attr_reader :app_window
     attr_reader :team
+    attr_reader :bottompanel
 
 =begin
 --- Game#give_up_game
@@ -139,7 +139,6 @@ Pauses all the (({Sprite}))s and switches into the inventory browsing mode.
     def pause
       @world.location.pause
       @state = PausedGameState.new self
-      @bottompanel.browse_inventory = true
     end
 
 =begin
@@ -151,7 +150,6 @@ After ((<Game#pause>)) switches back to the playing mode and unpauses the
     def unpause
       @world.location.unpause
       @state = PlayingGameState.new self
-      @bottompanel.browse_inventory = false
     end
 
 =begin
@@ -198,6 +196,8 @@ regularly and refreshes the screen.
 	end
 
         @bottompanel = BottomPanel.new @team
+
+        @state = PlayingGameState.new(self)
 
 	frames = 0 # pomocna promenna k vypoctu fps
 
