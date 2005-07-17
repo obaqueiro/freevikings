@@ -264,7 +264,7 @@ pos = [FirstCorridor::END_X - 4*Map::TILE_SIZE, FirstCorridor::CEILING - IceBoar
 secondcorridor_trapdoors = TwoTrapDoors.new(pos)
 secondcorridor_trapdoors.in
 
-pos = [FourthCorridor::BEGIN_X, FourthCorridor::FLOOR]
+pos = [FourthCorridor::BEGIN_X, FourthCorridor::FLOOR + 1]
 trapdoors_to_exit_corridor = TwoTrapDoors.new pos
 trapdoors_to_exit_corridor.in
 
