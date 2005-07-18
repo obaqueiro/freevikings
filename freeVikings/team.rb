@@ -48,6 +48,10 @@ After ((<Team>)) initialization the first added member is made active.
       end
     end
 
+    def active_index=(index)
+      @active = index if index < size
+    end
+
 =begin
 --- Team#next
 Sets the next living member of the ((<Team>)) active. Throws 

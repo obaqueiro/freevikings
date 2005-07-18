@@ -37,6 +37,8 @@ module FreeVikings
 	serve_keydown(event, location)
       elsif event.is_a? KeyUpEvent
 	serve_keyup(event, location)
+      elsif event.is_a? MouseButtonDownEvent
+        serve_mouseclick(event, location)
       end # if
     end
 
@@ -54,6 +56,9 @@ module FreeVikings
     end
 
     def serve_keyup(event, location)
+    end
+
+    def serve_mouseclick(event, location)
     end
 
     def paused?
@@ -124,6 +129,23 @@ module FreeVikings
         @context.team.active.d_func_off
       end
     end # private method serve_keyup
+
+    def serve_mouseclick(event, location)
+      if y_in_bottompanel(event.pos[1]) then
+        Log4r::Logger['freeVikings log'].info "Mouse click in the bottompanel area."
+        game_screen_height = Game::WIN_HEIGHT - BottomPanel::HEIGHT
+        pos_in_the_panel = [event.pos[0], event.pos[1] - game_screen_height]
+        @context.bottompanel.mouseclick(pos_in_the_panel)
+      end
+    end
+
+    def y_in_bottompanel(y)
+      if y >= FreeVikings::WIN_HEIGHT - BottomPanel::HEIGHT then
+        return true
+      else
+        return false
+      end
+    end
   end # class PlayingGameState
 
 

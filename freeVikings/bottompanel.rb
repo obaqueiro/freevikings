@@ -77,6 +77,16 @@ Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
       @state.right
     end
 
+    def mouseclick(pos)
+      x = pos[0]
+      y = pos[1]
+
+      if (y < VIKING_FACE_SIZE) and
+          (x % (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)) < VIKING_FACE_SIZE then
+        @team.active_index = x / (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)
+      end
+    end
+
 =begin
 --- BotomPanel#paint(surface)
 Paints itself onto the ((|surface|)). Doesn't worry about the ((|surface|))'s
