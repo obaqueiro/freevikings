@@ -46,6 +46,7 @@ require 'testinventory.rb'
 require 'testmonster.rb'
 require 'testsword.rb'
 require 'testtimelock.rb'
+require 'testbottompanelstate.rb'
 
 class FreeVikingsTestSuite
 
@@ -84,6 +85,7 @@ class FreeVikingsTestSuite
     suite << TestMonster.suite
     suite << TestSword.suite
     suite << TestTimeLock.suite
+    suite << TestBottomPanelState.suite
 
     return suite
   end
