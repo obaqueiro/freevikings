@@ -13,9 +13,11 @@ Apart of the other useful features it helps to say if all the vikings are
 on the EXIT point mentioned above.
 =end
 
+require 'group.rb'
+
 module FreeVikings
 
-  class Team
+  class Team < Group
 
 =begin
 --- Team.new(*members)
@@ -25,8 +27,7 @@ but in the freeVikings game only three-member ((<Team>)) is used.
 =end
 
     def initialize(*members)
-      @members = []
-      members.each {|m| @members.push m if m.is_a? Sprite}
+      @members = members
       @active = 0 # index aktivniho clena tymu
     end
 
@@ -39,6 +40,12 @@ After ((<Team>)) initialization the first added member is made active.
 
     def active
       @members[@active]
+    end
+
+    def active=(member)
+      if member?(member) and member.alive? then
+        @active = @members.index member
+      end
     end
 
 =begin

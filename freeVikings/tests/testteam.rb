@@ -63,4 +63,14 @@ class TestTeam < RUNIT::TestCase
     @viking1.destroy
     assert_equal 2, @team.alive_size
   end
+
+  def testSetActive
+    @team.active = @viking2
+    assert_equal @viking2, @team.active, "Olle has been set active, he must be active."
+  end
+
+  def testSetActiveNonMemberObject
+    @team.active = Viking.new 'Sinn Curwin'
+    assert_equal @viking1, @team.active, "A non-member has been set active, it should have had absolutely no effect."
+  end
 end

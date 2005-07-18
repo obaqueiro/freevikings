@@ -94,8 +94,39 @@ module FreeVikings
 
   class ItemsExchangeBottomPanelState < BottomPanelState
 
+    def initialize(team)
+      super(team)
+      # A temporary Team containing only the vikings which participate
+      # on the items exchange:
+      @exchange_participants = Team.new(*(@team.members_on_rect(@team.active.rect)))
+      # We need the active member of the original team (stored in variable
+      # @team) to be also an active member of the @exchange_participants Team
+      while @exchange_participants.active != @team.active do
+        @exchange_participants.next
+      end
+    end
+
     def items_exchange?
       true
+    end
+
+    def left
+      move_selected_item(:previous)
+    end
+
+    def right
+      move_selected_item(:next)
+    end
+
+    private
+
+    def move_selected_item(methodname)
+      exchanged_item = @exchange_participants.active.inventory.erase_active
+
+      @exchange_participants.send(methodname)
+      @exchange_participants.active.inventory.put exchanged_item
+
+      @team.active = @exchange_participants.active
     end
   end
 end # module FreeVikings

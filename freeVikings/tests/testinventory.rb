@@ -38,6 +38,7 @@ class TestInventory < Test::Unit::TestCase
 
   def testMovePointer
     4.times {@inventory.put Object.new}
+    @inventory.active_index = 0
     @inventory.active_index += 1
     assert_equal @inventory.second, @inventory.active, "The pointer was moved, it should now point at the second item."
   end
@@ -49,10 +50,10 @@ class TestInventory < Test::Unit::TestCase
   end
 
   def testEraseActive
-    @inventory.put(f = Object.new)
-    @inventory.put(s = Object.new)
+    @inventory.put(f = "flask")
+    @inventory.put(s = "swatch-clock")
     @inventory.erase_active
-    assert_equal s, @inventory.active, "The first item was active. It was erased, now the second one should be active."
+    assert_equal f, @inventory.active, "The second item was active. It was erased, now the first one should be active."
   end
 
   def testGetNullItem
@@ -70,5 +71,17 @@ class TestInventory < Test::Unit::TestCase
     assert_raise(FreeVikings::Inventory::EmptySlotRequiredException, "The first slot is empry (no Items have been added yet), so a try to make it active should throw an exception.") do
       @inventory.active_index = 0
     end
+  end
+
+  def testNewlyPutIsSetActive
+    @inventory.put(s = "sword")
+    @inventory.put(f = "flask")
+    assert_equal f, @inventory.active, "The item which was put in most recently must be set active."
+  end
+
+  def testEraseActiveReturnsErasedItem
+    @inventory.put "lantern"
+    item = @inventory.active
+    assert_equal item, @inventory.erase_active, "Method 'erase_active' must return the erased item."
   end
 end

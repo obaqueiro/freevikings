@@ -55,7 +55,7 @@ Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
       if @state.inventory_browsing? then
         @state = ItemsExchangeBottomPanelState.new @team
       elsif @state.items_exchange?
-        @browse_state = InventoryBrowsingBottomPanelState.new @team
+        @state = InventoryBrowsingBottomPanelState.new @team
       end
 
       return @state

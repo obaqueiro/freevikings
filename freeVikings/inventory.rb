@@ -44,6 +44,7 @@ Some basic ideas:
         " to place the item #{item} into."
       end
       @items.push item
+      @active_index = @items.size - 1
     end
 
 =begin
@@ -52,7 +53,11 @@ Removes the active item from the inventory and returns it.
 =end
 
     def erase_active
-      @items.delete_at @active_index
+      item = @items.delete_at @active_index
+      if @active_index == @items.size then
+        @active_index -= 1
+      end
+      return item
     end
 
     def clear
