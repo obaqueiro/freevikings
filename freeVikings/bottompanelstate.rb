@@ -123,8 +123,14 @@ module FreeVikings
     def move_selected_item(methodname)
       exchanged_item = @exchange_participants.active.inventory.erase_active
 
-      @exchange_participants.send(methodname)
-      @exchange_participants.active.inventory.put exchanged_item
+      begin
+        @exchange_participants.send(methodname)
+        @exchange_participants.active.inventory.put exchanged_item
+      rescue Inventory::NoSlotFreeException
+        # The destination inventory is full.
+        # We must switch to another viking and give the item to him.
+        retry
+      end
 
       @team.active = @exchange_participants.active
     end
