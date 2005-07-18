@@ -41,6 +41,16 @@ module FreeVikings
     end
 
     def serve_keydown(event, location)
+      case event.key
+      when K_q, K_ESCAPE
+        end_game
+      when K_F3
+	@context.app_window.toggle_fullscreen
+      when K_F4
+        FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
+      when K_F2
+	@context.give_up_game
+      end
     end
 
     def serve_keyup(event, location)
@@ -76,6 +86,8 @@ module FreeVikings
     private
 
     def serve_keydown(keyevent, location)
+      super(keyevent, location)
+
       case keyevent.key
       when K_LEFT
 	@context.team.active.move_left
@@ -99,14 +111,6 @@ module FreeVikings
 	@context.team.previous
       when K_PAGEUP
 	@context.team.next
-      when K_q, K_ESCAPE
-        end_game
-      when K_F3
-	@context.app_window.toggle_fullscreen
-      when K_F4
-        FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
-      when K_F2
-	@context.give_up_game
       end # case
     end # private method serve_keydown
 
@@ -131,6 +135,9 @@ module FreeVikings
     end
 
     def serve_keydown(event, location)
+
+      super(event, location)
+
       begin
         # The following lines are a bit tricky.
         # They move the selection box like the arrow keys order.
