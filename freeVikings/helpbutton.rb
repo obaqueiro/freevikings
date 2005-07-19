@@ -42,7 +42,7 @@ module FreeVikings
 
       DISAPPEAR_AFTER = 7
 
-      @@text_renderer = TextRenderer.new(FreeVikings::FONTS['big'])
+      @@text_renderer = TextRenderer.new(RUDL::TrueTypeFont.new('fonts/adlibn.ttf', 16))
 
       def initialize(position, text)
         @text = text

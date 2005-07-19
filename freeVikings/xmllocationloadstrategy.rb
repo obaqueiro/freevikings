@@ -62,7 +62,12 @@ module FreeVikings
 
       # Pri nahravani skriptu muze nastat velke mnozstvi vyjimecnych situaci:
       begin
-        s = MonsterScript.new(scriptfile) {|script| eval "script::LOCATION = location"}
+        s = MonsterScript.new(scriptfile) {|script| 
+          script.extend FreeVikings
+          eval "script::LOCATION = location"
+        }
+      rescue Script::MissingFile => mfex
+        @log.error "Could not load the script: #{mfex.message}"
       rescue SyntaxError
         @log.error "Syntax error in the script #{scriptfile}. "
         return
@@ -73,10 +78,10 @@ module FreeVikings
       rescue MonsterScript::NoMonstersDefinedException
         @log.error "Script loaded successfully, but didn't define any new " \
         "monsters."
+      else
+        s::MONSTERS.each {|m| location.add_sprite m}
+        @log.info "Script #{scriptfile} successfully loaded."
       end
-
-      s::MONSTERS.each {|m| location.add_sprite m}
-      @log.info "Script #{scriptfile} successfully loaded."
     end
 
     def load_exit(location)
