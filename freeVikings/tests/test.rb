@@ -47,11 +47,12 @@ require 'testmonster.rb'
 require 'testsword.rb'
 require 'testtimelock.rb'
 require 'testbottompanelstate.rb'
+require 'testbottompanel.rb'
 
 class FreeVikingsTestSuite
 
   def self.suite
-    suite = Test::Unit::TestSuite.new
+    suite = Test::Unit::TestSuite.new("freeVikings test suite")
 
     if $extensions_loaded then
       suite << FreeVikingsExtensoinsTestSuite.suite
@@ -86,10 +87,13 @@ class FreeVikingsTestSuite
     suite << TestSword.suite
     suite << TestTimeLock.suite
     suite << TestBottomPanelState.suite
+    suite << TestBottomPanel.suite
 
     return suite
   end
 end
+
+# This file is executed like a standalone ruby program:
 
 verbosity = Test::Unit::UI::VERBOSE
 

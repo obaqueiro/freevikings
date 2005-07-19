@@ -48,8 +48,8 @@ module FreeVikings
         width = WIDTH
         height = @@text_renderer.height text, width
 
-        @rect.w = @width
-        @rect.h = @height
+        @rect.w = width
+        @rect.h = height
 
         @surface = RUDL::Surface.new [width + 2*BORDER_WIDTH,
                                       height + 2*BORDER_WIDTH]

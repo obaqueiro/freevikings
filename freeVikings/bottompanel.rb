@@ -17,9 +17,9 @@ module FreeVikings
     ACTIVE_SELECTION_BLINK_DELAY = 1
 
     VIKING_FACE_SIZE = 60
-    INVENTORY_VIEW_SIZE = 60
     LIVE_SIZE = 20
     ITEM_SIZE = 30
+    INVENTORY_VIEW_SIZE = 2 * ITEM_SIZE
 
     HEIGHT = VIKING_FACE_SIZE + LIVE_SIZE
     WIDTH = 640
@@ -81,9 +81,19 @@ Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
       x = pos[0]
       y = pos[1]
 
-      if (y < VIKING_FACE_SIZE) and
-          (x % (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)) < VIKING_FACE_SIZE then
-        @team.active_index = x / (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)
+      if i = spot_inside_portrait(*pos) then
+        @team.active = @team[i]
+      elsif a = spot_inside_item(*pos) then
+        viking = @team[a[0]]
+
+        begin
+          viking.inventory.active_index = a[1]
+        rescue Inventory::EmptySlotRequiredException
+          # The exception is just informative. We know it can appear
+          # here and nothing dangerous can occur when we pretend
+          # we can't see it.
+        end
+
       end
     end
 
@@ -161,6 +171,44 @@ Returns a RUDL::Surface with a updated contents of self.
       @selection_box = RUDL::Surface.load_new(GFX_DIR+'/selection.tga')
       @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.tga')
     end # init_display
+
+    # If the point defined by coordinates x,y is inside some
+    # viking's portrait, returns the viking's index in the team.
+    # Otherwise nil is returned.
+
+    def spot_inside_portrait(x, y)
+      if (y < VIKING_FACE_SIZE) and
+          (x % (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)) < VIKING_FACE_SIZE then
+        viking_index = x / (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)
+        return viking_index if viking_index < @team.size
+      end
+      return nil
+    end
+
+    # If the point defined by coordinates x,y is inside some
+    # item's image, an Array [viking_index, item_index] is returned.
+    # Otherwise nil is returned.
+
+    def spot_inside_item(x, y)
+      if (y < INVENTORY_VIEW_SIZE) and
+          (x % (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)) > VIKING_FACE_SIZE then
+        x_in_view = x % INVENTORY_VIEW_SIZE
+        y_in_view = y % INVENTORY_VIEW_SIZE
+
+        viking_index = x / (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)
+        item_index = if x_in_view >= ITEM_SIZE and y_in_view >= ITEM_SIZE then
+                       3
+                     elsif y_in_view >= ITEM_SIZE then
+                       2
+                     elsif x_in_view >= ITEM_SIZE then
+                       1
+                     elsif x_in_view <= ITEM_SIZE and y_in_view <= ITEM_SIZE then
+                       0
+                     end
+        return [viking_index, item_index] if viking_index < @team.size
+      end
+      return nil
+    end
 
   end # class BottomPanel
 end # module FreeVikings
