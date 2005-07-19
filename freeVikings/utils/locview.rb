@@ -136,7 +136,7 @@ class Browser
           s.hurt
         }
         @loc.active_objects_on_rect(Rectangle.new(pos[0], pos[1], 1, 1)).each {|o| 
-          o.hurt
+          o.activate
         }
       end
     end
