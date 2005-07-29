@@ -31,6 +31,19 @@ Static objects can also be solid or soft, but they aren't placed regularly
 in a grid and can have any size. You can add them anytime you want and
 delete them later. The static objects are stored in a public attribute
 ((|static_objects|)) which is of type (({Group})).
+
+What sort of objects do we register as ((<Static objects>))?
+* those which play a role of an atypical sized or placed piece of map
+  and do not need any update (they can be just taken out of the map
+  by some call from outside)
+* those which do not do anything (they are in the map just for the better
+  look and feel)
+* those which have some methods but do not need to be updated regularly
+  or to react on events (a nice example of this group of ((<Static objects>))
+  is (({Lock})). Most of the time it does nothing. When some viking
+  tries to use a (({Key})), the (({Key})) looks if it collides with any
+  (({Lock})) and if so, (({Lock})) is asked if it can be unlocked with
+  the (({Key}))).
 =end
 
 module FreeVikings
