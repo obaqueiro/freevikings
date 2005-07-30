@@ -61,6 +61,10 @@ Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
       return @state
     end
 
+    def delete_active_item
+      @state.delete_active_item
+    end
+
     def up
       @state.up
     end

@@ -55,7 +55,7 @@ Removes the active item from the inventory and returns it.
     def erase_active
       item = @items.delete_at @active_index
       if @active_index == @items.size then
-        @active_index -= 1
+        @active_index -= 1 unless @active_index == 0
       end
       return item
     end

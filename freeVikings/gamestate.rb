@@ -186,6 +186,8 @@ module FreeVikings
           bottompanel.left
         when K_RIGHT
           bottompanel.right
+        when K_DELETE
+          bottompanel.delete_active_item
         end
       rescue Inventory::EmptySlotRequiredException
         # This exception doesn't mean anything bad for us. The player

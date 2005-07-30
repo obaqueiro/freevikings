@@ -29,6 +29,8 @@ between two strikes in seconds. (It's because on the quicker computers
       @@bash_delay = 3
 
       def bash_heroes
+        @bash_delay = @@bash_delay unless defined? @bash_delay
+
         return if @location.ticker.now < (@last_bash or (@last_bash = @location.ticker.now)) + (@bash_delay or @@bash_delay)
         @location.sprites_on_rect(@rect).each {|s|
           if s.kind_of? Hero

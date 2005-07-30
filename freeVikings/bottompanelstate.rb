@@ -26,6 +26,9 @@ module FreeVikings
     def right
     end
 
+    def delete_active_item
+    end
+
     def normal?
       false
     end
@@ -84,6 +87,10 @@ module FreeVikings
       if active_inventory.active_index % 2 == 0 then
         active_inventory.active_index += 1
       end
+    end
+
+    def delete_active_item
+      @team.active.inventory.erase_active
     end
 
     def inventory_browsing?
