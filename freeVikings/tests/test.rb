@@ -49,6 +49,7 @@ require 'testtimelock.rb'
 require 'testbottompanelstate.rb'
 require 'testbottompanel.rb'
 require 'testlock.rb'
+require 'testkey.rb'
 
 class FreeVikingsTestSuite
 
@@ -90,12 +91,11 @@ class FreeVikingsTestSuite
     suite << TestBottomPanelState.suite
     suite << TestBottomPanel.suite
     suite << TestLock.suite
+    suite << TestKey.suite
 
     return suite
   end
 end
-
-# This file is executed like a standalone ruby program:
 
 verbosity = Test::Unit::UI::VERBOSE
 

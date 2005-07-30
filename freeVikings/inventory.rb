@@ -3,8 +3,6 @@
 
 require 'item.rb'
 
-module FreeVikings
-
 =begin
 = Inventory
 Inventory is a box with four slots. Viking can collect items and put them
@@ -22,11 +20,13 @@ Some basic ideas:
 * The "active item" can also be erased from the inventory to make slot free for
   something more important. (In the "Lost Vikings" game this was done by
   moving the item onto an icon of a rubbish bin).
-  The erased item doesn't return into the environment, id disappears 
+  The erased item doesn't return into the environment, it disappears 
   definitively.
 * When the viking passes over an item and there is a free slot in his 
   inventory, the item is collected automatically.
 =end
+
+module FreeVikings
 
   class Inventory
 
@@ -112,16 +112,26 @@ Removes the active item from the inventory and returns it.
       @items.each_index {|i| yield i}
     end
 
-    def [](index)
-      at index
-    end
+=begin
+--- Inventory#at(index)
+Returns ((|index|))th item from the ((<Inventory>)) or a (({NullItem})) 
+instance if 
+=end
 
     def at(index)
+      if index >= SLOTS then
+        raise IndexOutOfBoundsException, "Asked for an item in slot #{index}, but the highest slot index is #{SLOTS - 1}"
+      end
+
       if @items[index] then
         return @items[index]
       else
         return NullItem.instance
       end
+    end
+
+    def [](index)
+      at index
     end
 
 =begin

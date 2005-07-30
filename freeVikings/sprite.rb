@@ -14,7 +14,7 @@ module FreeVikings
     include Pausable
 
 =begin
-=FreeVikings::Sprite class
+= Sprite
 Class Sprite represents an object which needs to periodicaly update it's
 internal state. It's sense of life is to be displayed, so it also has some
 attributes containing it's position in the location and it's bitmap
@@ -23,12 +23,15 @@ representation.
 
 =begin
 --- Sprite.new (initial_position = [])
-Every sprite has to have some position. It should be set up when it's created,
-but if you don't specify it, it's set to a default value.
+Every ((<Sprite>)) has to have some position. It should be set up when 
+the ((<Sprite>)) is created,
+but if you don't specify it, it's set to a default value, which is
+[0,0] with both width and height 0..
 =end
 
     def initialize(initial_position=[])
       super(initial_position)
+      @location = NullLocation.new
       @energy = 1
     end
 

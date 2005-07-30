@@ -10,19 +10,119 @@ colour variants of the (({Key}))s and ((<Lock>))s and to unlock
 a ((<Lock>)) you need a (({Key})) of the same colour.
 =end
 
+require 'entity.rb'
+require 'imagebank.rb'
+require 'staticobject.rb'
+
 module FreeVikings
 
-  class Lock
+  class Lock < Entity
 
-    def initialize
-      @locked = true
+    include StaticObject
+
+=begin
+--- Lock::Colour
+Module, which contains symbolic constants for Locks & Keys colours.
+This module is included in classes ((<Lock>)) and (({Key})), so you
+don't have to write
+
+(({Lock::Colour::BLUE}))
+
+but
+
+(({Lock::BLUE}))
+
+Listing of the constants:
+(({RED})), (({GREEN})), (({BLUE}))
+=end
+
+    module Colour
+      RED = 1
+      GREEN = 2
+      BLUE = 3
     end
+
+    include Colour
+
+# Hash where Colour constants are keys and corresponding Image objects
+# values.
+
+    @@images = {RED => Image.load('lock_red.tga'),
+                GREEN => Image.load('lock_green.tga'),
+                BLUE => Image.load('lock_blue.tga')}
+
+=begin
+--- Lock.new(position, unlock_action=Proc.new {}, colour=RED)
+Arguments:
+* ((|position|)) is the same as at any other (({Entity})).
+* ((|unlock_action|)) is an object which responds to (({call})) method or
+  (({nil})). It is called when the ((<Lock>)) is successfully unlocked.
+* ((|colour|)) should be one of the ((<Lock::Colour>)) constants.
+  Otherwise unexpectable things can happen.
+=end
+
+    def initialize(position, unlock_action=Proc.new {}, colour=RED)
+      super(position)
+      @locked = true
+      @colour = colour
+      @unlock_action = unlock_action
+      @image = @@images[@colour]
+    end
+
+=begin
+--- Lock#colour
+Returns the ((<Lock>))'s colour (one of the constants from ((<Lock::Colour>))).
+=end
+
+    attr_reader :colour
+
+=begin
+--- Lock#unlock_action=(proc)
+Sets the Proc (or any other object which responds to (({call}))) which is
+called when the ((<Lock>)) is unlocked successfully.
+=end
+
+    attr_writer :unlock_action
+
+=begin
+--- Lock#locked?
+Answers the question "is the ((<Lock>)) locked?" by ((|true|)) or ((|false|)).
+=end
 
     def locked?
       @locked
     end
 
+=begin
+--- Lock#unlock(key)
+Argument ((|key|)) must be of type (({Key})), otherwise 
+(({AttemptToUnlockByANonKeyToolException})) is thrown.
+If the (({Key})) and the ((<Lock>)) are of the same type, the ((<Lock>))
+is unlocked.
+Returns ((|true|)) if the unlock operation is successfull,
+((|false|)) otherwise.
+=end
+
     def unlock(key)
+      unless key.kind_of?(Key)
+        raise AttemptToUnlockByANonKeyToolException, "#{key.class} is not a Key type."
+      end
+
+      if key.colour == @colour then
+        @locked = false
+        @unlock_action.call if @unlock_action
+      end
+
+      return ! @locked
     end
+
+=begin
+--- Lock::AttemptToUnlockByANonKeyToolException
+((<Lock#unlock>)) throws this exception if the given argument isn't of any 
+Key type.
+=end
+
+    class AttemptToUnlockByANonKeyToolException < RuntimeError
+    end # class AttemptToUnlockByANonKeyTool
   end # class Lock
 end # module FreeVikings

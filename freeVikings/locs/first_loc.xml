@@ -6,6 +6,10 @@
     <author>Jakub Pavlík - severus@post.cz</author>
   </info>
 
+  <scripts>
+    <monsters path="locs/first_script.rb" />
+  </scripts>
+
   <map>
     <blocktypes>
       <blocktype code="0" path="" />

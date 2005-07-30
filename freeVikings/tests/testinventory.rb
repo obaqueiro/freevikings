@@ -84,4 +84,14 @@ class TestInventory < Test::Unit::TestCase
     item = @inventory.active
     assert_equal item, @inventory.erase_active, "Method 'erase_active' must return the erased item."
   end
+
+  def testAtRaisesExceptionIfIndexOutOfBounds
+    assert_raise(FreeVikings::Inventory::IndexOutOfBoundsException, "The index is out of bounds, an exception must be thrown.") do
+      @inventory.at 999
+    end
+  end
+
+  def testAtReturnsNullItemIfSlotEmpty
+    assert_kind_of FreeVikings::NullItem, @inventory.at(1), "The slot index is valid, but the slot is free now. A NullItem instance must be returned."
+  end
 end

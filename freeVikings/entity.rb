@@ -1,15 +1,23 @@
 # entity.rb
 # igneus 19.6.2005
 
-module FreeVikings
-
 =begin
 = Entity
 Entity is a superclass for all the classes which appear in the freeVikings'
 world. It's most famous subclass is ((<Sprite>)).
 Everything that has it's image and it's place on the world is an Entity.
 =end
+
+module FreeVikings
+
   class Entity
+
+=begin
+--- Entity.new(initial_position=[])
+Argument ((|initial_position|)) should be a (({Rectangle})) or an (({Array.})).
+If the object defines a public method (({init_images})), this method is called.
+It can be used to load the images for the ((<Entity>)).
+=end
 
     def initialize(initial_position=[])
       unless initial_position.empty?
@@ -21,11 +29,16 @@ Everything that has it's image and it's place on the world is an Entity.
 	@rect = Rectangle.new(0,0,0,0)
       end
 
-      @location = NullLocation.new
       @image = Image.load('nobody.tga')
 
       init_images if self.respond_to? :init_images
     end
+
+=begin
+--- Entity#image
+Returns the (({RUDL::Surface})) object with an image which represents
+the ((<Entity>)) in the game.
+=end
 
     def image
       @image.image
