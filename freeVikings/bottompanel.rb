@@ -8,11 +8,23 @@ during the game. It displays vikings' faces, energy and contents of their
 inventories.
 =end
 
+require 'observer'
+
 require 'bottompanelstate.rb'
+require 'inventoryview.rb'
 
 module FreeVikings
 
   class BottomPanel
+
+=begin
+Class ((<BottomPanel>)) includes mixin (({Observable})) (a part of Ruby's
+standard library). It notifies all observers whenever it's internal
+state changes. A (({BottomPanelState})) instance is always sent to them.
+=end
+
+    include Observable
+
 
     ACTIVE_SELECTION_BLINK_DELAY = 1
 
@@ -32,8 +44,13 @@ Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
     def initialize(team)
       @team = team
       @image = RUDL::Surface.new [WIDTH, HEIGHT]
-      @state = NormalBottomPanelState.new @team
+
       init_gfx
+
+      @inventory_views = {}
+      @team.each {|v| @inventory_views[v] = InventoryView.new(v, self)}
+
+      change_state NormalBottomPanelState.new(@team)
     end
 
 =begin
@@ -43,9 +60,9 @@ Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
 
     def set_browse_inventory
       if @state.normal? then
-        @state = InventoryBrowsingBottomPanelState.new @team
+        change_state InventoryBrowsingBottomPanelState.new(@team)
       elsif @state.inventory_browsing?
-        @state = NormalBottomPanelState.new @team
+        change_state NormalBottomPanelState.new(@team)
       end
 
       return @state
@@ -53,9 +70,9 @@ Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
 
     def set_items_exchange
       if @state.inventory_browsing? then
-        @state = ItemsExchangeBottomPanelState.new @team
+        change_state ItemsExchangeBottomPanelState.new(@team)
       elsif @state.items_exchange?
-        @state = InventoryBrowsingBottomPanelState.new @team
+        change_state InventoryBrowsingBottomPanelState.new(@team)
       end
 
       return @state
@@ -110,9 +127,9 @@ size.
     def paint(surface)
       # vybarveni pozadi pro podobenky vikingu:
       surface.fill([60,60,60])
+
       i = 0
 
-      time = Time.now.to_f
       @team.each { |vik|
         # paint face:
         face_position = [i * (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE), 0]
@@ -125,33 +142,19 @@ size.
                          vik.portrait.unactive
                        end
         surface.blit(portrait_img, face_position)
+
         # paint the lives:
         lives_y = VIKING_FACE_SIZE
         vik.energy.times {|j| 
           live_position = [face_position[0] + j * LIVE_SIZE, lives_y]
           surface.blit(@energy_punkt, live_position)
         }
+
         # paint inventory contents:
-        item_positions = [[0,0],        [ITEM_SIZE,0],
-                          [0,ITEM_SIZE],[ITEM_SIZE, ITEM_SIZE]]
-        0.upto(3) do |k|
-          item_position = [item_positions[k][0] + face_position[0] + VIKING_FACE_SIZE, item_positions[k][1]]
-          surface.blit(@item_bg, item_position)
-          unless vik.inventory[k].null?
-            if (@state.normal?) or
-                (@state.inventory_browsing?) or
-                (@state.items_exchange? and (not @team.active == vik or k != vik.inventory.active_index or time % ACTIVE_SELECTION_BLINK_DELAY > 0.2)) then
-              surface.blit(vik.inventory[k].image, item_position)
-            end
-          end
-          if vik.inventory.active_index == k then
-            if (@state.normal?) or
-                (@state.items_exchange?) or
-                (@state.inventory_browsing? and (not @team.active == vik or time % ACTIVE_SELECTION_BLINK_DELAY > 0.2)) then
-              surface.blit(@selection_box, item_position)
-            end
-          end
-        end
+        inventory_view_pos = [(i * (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE)) + INVENTORY_VIEW_SIZE, 0]
+        @inventory_views[vik].paint(surface, 
+                                    inventory_view_pos, 
+                                    (@team.active == vik))
 
 	i += 1
       }
@@ -171,8 +174,6 @@ Returns a RUDL::Surface with a updated contents of self.
 
     def init_gfx
       @face_bg = RUDL::Surface.load_new(GFX_DIR+'/face_bg.tga')
-      @item_bg = RUDL::Surface.load_new(GFX_DIR+'/item_bg.tga')
-      @selection_box = RUDL::Surface.load_new(GFX_DIR+'/selection.tga')
       @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.tga')
     end # init_display
 
@@ -212,6 +213,15 @@ Returns a RUDL::Surface with a updated contents of self.
         return [viking_index, item_index] if viking_index < @team.size
       end
       return nil
+    end
+
+    # Changes the state of the BottomPanel to new_state and notifies all 
+    # observers about the change
+
+    def change_state(new_state)
+      @state = new_state
+      changed
+      notify_observers(@state)
     end
 
   end # class BottomPanel
