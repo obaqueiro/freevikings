@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>Ice Land of Arctis</title>
+    <author>Jakub Pavlik /severus@post.cz/</author>
+  </info>
+
+  <suite>
+    <level>ArcticTutorial</level>
+    <level>SwitchPlace</level>
+  </suite>
+</levelsuite>

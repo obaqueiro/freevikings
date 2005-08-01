@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+
+<location>
+  
+  <!-- Metainformace: -->
+  
+  <info>
+    <title>Arctic Tutorial</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <!-- Skripty k nahrani: -->
+  
+  <scripts>
+    <monsters path="locs/arctictut_script.rb" />
+  </scripts>
+  
+  <!-- Definice rozmisteni bloku v mape -->
+  
+  <map>
+    <blocktypes>
+<blocktype code="0" path="ice_map/snow_base.tga" solid="solid" />
+<blocktype code="A" path="ice_map/snow_atypictile.tga" solid="solid" />
+<blocktype code="H" path="ice_map/snow_base_dark.tga" />
+<blocktype code="C" path="ice_map/snow_base_ceiling.tga" solid="solid" />
+    </blocktypes>
+
+<blocks>
+0000000000000000000000000000000000000000000000000000
+0000000000000000000CCCCCCCCCCCCCCCC00000000000000000
+0000000000000000000HHHHHHHHHHHHHHHH00000000000000000
+0000000000000000000HHHHHHHHHHHHHHHH00000000000000000
+0000000000000000000HHHHHHHHHHHHHHHH00000000000000000
+0000000000000000000HHHHHHHHHHHHHHHH00000000000000000
+0CCCCCCCCCCCCCCCCCCHHHHHHHHHHHHHHHHCCCC0000000000000
+0HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH0000000000000
+0HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH0000000000000
+0HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH0000000000000
+000000000000000000000HHHHH00HHHHH0000000000000000000
+000000000000000000000HHHHH00HHHHH0000000000000000000
+000000000000000000000HHHHH00HHHHH0000000000000000000
+0000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000
+</blocks>
+    
+    <!-- Startovni a koncove misto mapy: -->
+    <start horiz="80" vertic="300" />
+    <exit horiz="1820" vertic="760" />
+  </map>
+    
+</location>

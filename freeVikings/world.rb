@@ -34,10 +34,6 @@ module FreeVikings
       load_level
     end
 
-    def initialised?
-      @location.nil?
-    end
-
     private
     def load_level
       strategy = XMLLocationLoadStrategy.new(FreeVikings::DATA_DIR + '/' + @locs[@level])

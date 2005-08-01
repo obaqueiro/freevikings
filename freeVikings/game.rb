@@ -9,6 +9,7 @@ require 'viking.rb'
 require 'hero.rb'
 require 'team.rb'
 require 'world.rb'
+require 'structuredworld.rb'
 require 'location.rb'
 require 'gamestate.rb'
 require 'bottompanel.rb'
@@ -96,12 +97,13 @@ All the three examples expect you have created a RUDL::DisplaySurface
       elsif not FreeVikings::OPTIONS['locations'].empty?
         @world = World.new(*(FreeVikings::OPTIONS['locations']))
       else
-        @world = World.new('pyramida_loc.xml',
-                           # 'first_loc.xml',
-                           # 'hopsy_loc.xml',
-                           'yellowhall.xml',
-			   'ice_loc.xml'
-                           )
+        # @world = World.new('pyramida_loc.xml',
+        #                   # 'first_loc.xml',
+        #                   # 'hopsy_loc.xml',
+        #                   'yellowhall.xml',
+	#		   'ice_loc.xml'
+        #                   )
+        @world = StructuredWorld.new('locs/DefaultCampaign')
       end
 
       # Surfaces, ktere se pouzivaji k sestaveni zobrazeni nahledu hraci plochy
