@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>Nuclear Labs</title>
+    <author>Jakub Pavlik /severus@post.cz</author>
+  </info>
+
+  <suite>
+    <level>YellowHall</level>
+  </suite>
+</levelsuite>

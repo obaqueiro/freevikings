@@ -53,8 +53,10 @@ Returns an (({Array})) of (({LevelSuite})) objects.
 --- LevelSuite#next_level
 Returns next (({Level})) from the ((<LevelSuite>)) or ((|nil|)) if any more
 (({Level}))s are available.
+
+(Implementation detail:
 The (({Level})) objects aren't stored in the ((<LevelSuite>)) instance,
-but are obtained by call to (({LevelSuite#next_level})).
+but are obtained by call to (({LevelSuite#next_level})).)
 =end
 
     def next_level

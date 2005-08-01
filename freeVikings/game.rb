@@ -97,12 +97,6 @@ All the three examples expect you have created a RUDL::DisplaySurface
       elsif not FreeVikings::OPTIONS['locations'].empty?
         @world = World.new(*(FreeVikings::OPTIONS['locations']))
       else
-        # @world = World.new('pyramida_loc.xml',
-        #                   # 'first_loc.xml',
-        #                   # 'hopsy_loc.xml',
-        #                   'yellowhall.xml',
-	#		   'ice_loc.xml'
-        #                   )
         @world = StructuredWorld.new('locs/DefaultCampaign')
       end
 

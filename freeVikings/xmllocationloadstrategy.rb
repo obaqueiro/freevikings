@@ -11,27 +11,31 @@ module FreeVikings
 
   class XMLLocationLoadStrategy < LocationLoadStrategy
 
-    # Mapfile muze byt String nebo IO. Je to zdroj nebo jmeno zdroje, 
-    # ze ktereho bude mapa nactena.
-    # Pokud druhy argument neni nastaven na nil, pred predanim zdroje XML do
-    # REXML zkontroluje, zda zdroj je platnym jmenem textoveho souboru a 
-    # pripadne vyhodi vyjimku.
-
     MIN_TILES_X = 640 / Map::TILE_SIZE
     MIN_TILES_Y = 480 / Map::TILE_SIZE
 
-    def initialize(mapfile, data_source_control=true)
+=begin
+--- XMLLocationLoadStrategy.new(locsource, data_source_control=true)
+Argument ((|locsource|)) is usually a path to a (({Location})) definition
+file.
+If the second argument, ((|data_source_control|)), is set to ((|nil|)),
+((|locsource|)) isn't controlled and then it can be any object accepted
+by (({REXML::Document.new})) (it means mainly (({IO})) or (({String}))
+containing the XML source).
+=end
+
+    def initialize(locsource, data_source_control=true)
       super()
 
-      @source = mapfile
+      @source = locsource
 
       if data_source_control != nil then
-        unless File.file? mapfile
-          message = "Not such a file - #{mapfile}"
+        unless File.file? locsource
+          message = "Not such a file - #{locsource}"
           @log.error message
           raise InvalidDataSourceException, message
         end
-        @source = File.open mapfile
+        @source = File.open locsource
       end
 
       @doc = REXML::Document.new(@source)

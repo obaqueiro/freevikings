@@ -19,6 +19,10 @@ Argument ((|campaign_dir|)) is a name of the root directory
 of the (({LevelSuite})) hierarchy. It's also called 'a campaign directory',
 because it contains a complete set of levels, which is also called 
 'a campaign'.
+
+(If you wanted, you wouldn't have to give a real 'campaign directory' 
+as argument, it is possible to give a directory of any nested (({LevelSuite})),
+but it isn't very usual.)
 =end
 
     def initialize(campaign_dir)
