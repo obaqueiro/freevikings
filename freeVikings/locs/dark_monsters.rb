@@ -2,20 +2,9 @@
 # igneus 14.3.2005
 # Skript priser pro lokaci dark_loc.xml
 
-require 'imagebank'
+require 'monsters/apex.rb'
 
-class Apex < FreeVikings::Sprite
-
-  def initialize(position)
-    super(Rectangle.new(position[0], position[1], 40, 40))
-    @image = FreeVikings::Image.load 'apex.tga'
-  end
-
-  def update
-    colliding_sprites = @location.sprites_on_rect(rect)
-    colliding_sprites.each {|s| s.hurt if s.kind_of? Hero}
-  end
-end
+include FreeVikings
 
 TS = 40 # tile side length
 

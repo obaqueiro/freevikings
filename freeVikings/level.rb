@@ -23,7 +23,7 @@ module FreeVikings
 =begin
 --- Level.new(dirname)
 Argument ((|dirname|)) is a name of the directory where all the data for
-the ((<Level>)) are. There should be one XML file in the directory -
+the ((<Level>)) are. There should be at least one XML file in the directory -
 the file with the (({Location})) definition. Optionally there can be some
 scripts (with .rb extension).
 =end
@@ -60,8 +60,16 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
 
     def definition_file_name
       d = Dir.open @dirname
-      basename = d.find {|filename| filename =~ /\.xml/}
-      return @dirname + '/' + basename
+      xml_files = d.find_all {|filename| filename =~ /\.xml/}
+
+      # Find the file which contains element 'location'
+      # (it must be the location definition file):
+      loc_def_basename = xml_files.find do |fname|
+        file = File.open(@dirname + '/' + fname)
+        file.find {|line| line =~ /<location/}
+      end
+
+      return @dirname + '/' + loc_def_basename
     end
   end # class Level
 end # module FreeVikings
