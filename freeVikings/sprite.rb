@@ -29,9 +29,9 @@ but if you don't specify it, it's set to a default value, which is
 [0,0] with both width and height 0..
 =end
 
-    def initialize(initial_position=[])
-      super(initial_position)
-      @location = NullLocation.new
+    def initialize(initial_position=[], theme=NullGfxTheme.instance)
+      super(initial_position, theme)
+      @location = NullLocation.instance
       @energy = 1
     end
 

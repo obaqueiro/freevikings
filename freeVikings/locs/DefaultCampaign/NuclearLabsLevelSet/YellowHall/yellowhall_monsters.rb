@@ -18,13 +18,6 @@ shooter.instance_eval do
   @image = Image.load 'yellow_map/yellow_spitter.tga'
 end
 
-# Images which are used in this location for switches instead of
-# the default look
-switch_images = {
-  'true' => Image.load('yellow_map/switch_on.tga'),
-  'false' => Image.load('yellow_map/switch_off.tga')
-}
-
 # A Proc called when the state of switch_1 is changed
 switch_1_action = Proc.new do |switch_state| 
   if switch_state then
@@ -36,7 +29,7 @@ switch_1_action = Proc.new do |switch_state|
 end
 
 # A switcher which controlls the PlasmaShooter
-switch_1 = FreeVikings::Switch.new([520,410], true, switch_1_action, switch_images)
+switch_1 = FreeVikings::Switch.new([520,410], LOCATION.theme, true, switch_1_action)
 
 # A bridge
 Y_VALUES = [260, 480]
@@ -48,7 +41,7 @@ switch_2_action = Proc.new do |switch_state|
 end
 
 # A switch which controlls the Bridge's activity.
-switch_2 = FreeVikings::Switch.new([120, 280], true, switch_2_action, switch_images)
+switch_2 = FreeVikings::Switch.new([120, 280], LOCATION.theme, true, switch_2_action)
 
 
 

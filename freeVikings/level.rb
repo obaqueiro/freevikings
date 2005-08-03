@@ -21,16 +21,17 @@ module FreeVikings
   class Level < LevelSuite
 
 =begin
---- Level.new(dirname)
+--- Level.new(dirname, member_of=nil)
 Argument ((|dirname|)) is a name of the directory where all the data for
 the ((<Level>)) are. There should be at least one XML file in the directory -
 the file with the (({Location})) definition. Optionally there can be some
 scripts (with .rb extension).
+The second argument is for internal use only and points to a 'parent'
+(({LevelSuite})).
 =end
 
-    def initialize(dirname)
-      @dirname = dirname
-      @members = []
+    def initialize(dirname, member_of=nil)
+      super(dirname, member_of)
       @active_member = self
     end
 
@@ -70,6 +71,12 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
       end
 
       return @dirname + '/' + loc_def_basename
+    end
+
+    # We must override method, which is in the superclass called from
+    # the constructor
+
+    def load_from_xml
     end
   end # class Level
 end # module FreeVikings

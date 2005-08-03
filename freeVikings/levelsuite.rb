@@ -23,14 +23,30 @@ Standard name of the XML file which contains the campaign's definition.
     DEFINITION_FILE_NAME = 'levelsuite.xml'
 
 =begin
---- LevelSuite.new(dir)
-Argument ((|dir|)) is of type (({Dir})). It is a name of the directory where
-the file (('campaign.xml')) for the loaded campaign is.
+--- LevelSuite::THEME_FILE
+Standard name of the XML file which defines the graphics theme.
 =end
 
-    def initialize(dirname)
+    THEME_FILE = 'theme.xml'
+
+=begin
+--- LevelSuite.new(dir, member_of=nil)
+Argument ((|dir|)) is of type (({Dir})). It is a name of the directory where
+the file (('campaign.xml')) for the loaded campaign is.
+If the (({LevelSuite})) is nested in some other (({LevelSuite})), it's
+given a second argument ((|member_of|)), which is a link to a 'parent'
+(({LevelSuite})).
+=end
+
+    def initialize(dirname, member_of=nil)
+      @log = Log4r::Logger['world log']
+
       @dirname = dirname
       @members = []
+      @member_of = member_of
+
+      @log.debug "#{object_id}: New LevelSuite created from data in directory '#{@dirname}' as a nested suite in #{@member_of ? @member_of.object_id : @member_of.to_s}"
+
       load_from_xml
     end
 
@@ -79,13 +95,34 @@ but are obtained by call to (({LevelSuite#next_level})).)
       end
     end
 
+=begin
+--- LevelSuite#gfx_theme
+Returns a (({GfxTheme})) for the set of levels. (If htere isn't such
+(({GfxTheme})), a (({NullGfxTheme})) is returned, but (({NullGfxTheme}))
+behaves in the same way as normal (({GfxTheme})), so you don't need to
+worry about it.)
+=end
+
+    def gfx_theme
+      theme = (load_theme or NullGfxTheme.instance)
+      unless theme.kind_of? GfxTheme
+        raise TypeError, "Theme of bad type #{theme.class}"
+      end
+
+      return theme
+    end
+
     private
 
     # Loads data from the definition file
 
     def load_from_xml
+puts @dirname
       definition_file = @dirname + '/' + DEFINITION_FILE_NAME
+      @log.info "#{object_id}: Loading suite definition file #{definition_file}:"
       doc = REXML::Document.new(File.open(definition_file))
+
+      @title = doc.root.elements['info'].elements['title'].text
 
       # load level suites:
       doc.root.elements['suite'].each_element('levelsuite') do |levelsuite_element|
@@ -96,6 +133,8 @@ but are obtained by call to (({LevelSuite#next_level})).)
       doc.root.elements['suite'].each_element('level') do |level_element|
         init_level level_element.text
       end
+
+      @log.info "#{object_id}: Loaded LevelSuite #{@title}"
     end
 
     # Creates a LevelSuite object for a directory specified
@@ -113,7 +152,22 @@ but are obtained by call to (({LevelSuite#next_level})).)
 
     def init_level(dir)
       path = @dirname + '/' + dir
-      @members.push Level.new(path)
+      @members.push Level.new(path, self)
+    end
+
+    def load_theme
+      theme_def_file = @dirname + '/' + THEME_FILE
+      if File.exist? theme_def_file
+        return GfxTheme.new(theme_def_file, @member_of ? @member_of.gfx_theme : nil)
+      else
+        @log.warn "#{object_id}: Theme file #{theme_def_file} wasn't found. Levelsuite '#{@title}' has no own theme. (But maybe it inherits some...)"
+
+        if @member_of
+          return @member_of.gfx_theme
+        else
+          return NullGfxTheme.instance
+        end
+      end
     end
 
   end # class LevelSuite

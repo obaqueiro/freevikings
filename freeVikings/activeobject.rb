@@ -14,8 +14,8 @@ module FreeVikings
 
   class ActiveObject < Entity
 
-    def initialize(initial_position=[])
-      super(initial_position)
+    def initialize(initial_position=[], theme=NullGfxTheme.instance)
+      super(initial_position, theme)
     end
 
     def activate

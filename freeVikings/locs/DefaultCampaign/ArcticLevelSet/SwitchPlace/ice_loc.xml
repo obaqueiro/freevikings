@@ -11,7 +11,7 @@
   <!-- Skripty k nahrani: -->
   
   <scripts>
-    <monsters path="locs/ice_monsters.rb" />
+    <monsters path="locs/DefaultCampaign/ArcticLevelSet/SwitchPlace/ice_monsters.rb" />
   </scripts>
   
   <!-- Definice rozmisteni bloku v mape -->

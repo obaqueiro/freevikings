@@ -9,25 +9,12 @@
 # Obrazek postavy : 80x100 px
 # Dlazdice : 40x40 px
 
+require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
+
 require 'getoptlong'
 require 'log4r'
 
 require 'init.rb'
-
-# All the game's globals and classes are defined inside this module.
-module FreeVikings
-  GFX_DIR = 'gfx' # directory with graphics
-  OPTIONS = {} # hash with long options as keys
-
-  # main application window sizes
-  WIN_WIDTH = 640
-  WIN_HEIGHT = 480
-
-  CODE_DIRS = ['monsters', 'ext'] # directories with additional source files
-  DATA_DIR = 'locs' # directory with location data
-
-  FONTS = {} # a hash of fonts
-end
 
 include FreeVikings
 
@@ -44,7 +31,8 @@ options = GetoptLong.new(
                          ["--extensions", "-x", GetoptLong::NO_ARGUMENT],
                          ["--fps",     "-F", GetoptLong::NO_ARGUMENT],
                          ["--fullscreen", "-f", GetoptLong::NO_ARGUMENT],
-                         ["--help",    "-h", GetoptLong::NO_ARGUMENT]
+                         ["--help",    "-h", GetoptLong::NO_ARGUMENT],
+                         ["--levelsuite", "-l", GetoptLong::REQUIRED_ARGUMENT]
 )
 
 begin
@@ -60,6 +48,8 @@ begin
       FreeVikings::OPTIONS['fullscreen'] = true
     when "--help"
       print_help_and_exit
+    when "--levelsuite"
+      FreeVikings::OPTIONS['levelset'] = argument
     end
   end # options.each block
 rescue GetoptLong::InvalidOption => ioex
@@ -67,15 +57,6 @@ rescue GetoptLong::InvalidOption => ioex
   puts ioex.message
   puts
   print_help_and_exit
-end
-
-# Commandline arguments which weren't processed as options remained
-# in the ARGV array. We consider them filenames of XML documents
-# describing FreeVikings location.
-unless ARGV.empty?
-  FreeVikings::OPTIONS['locations'] = ARGV
-else
-  FreeVikings::OPTIONS['locations'] = []
 end
 
 # This must be out of the block scope in which all the other

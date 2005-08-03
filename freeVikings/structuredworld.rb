@@ -38,11 +38,17 @@ but it isn't very usual.)
         return nil
       end
 
-      return @location = Location.new(@level.loader)
+      return create_location
     end
 
     def rewind_location
-      return @location = Location.new(@level.loader)
+      return create_location
+    end
+
+    private
+
+    def create_location
+      @location = Location.new(@level.loader, @level.gfx_theme)
     end
   end # class StructuredWorld
 end # module FreeVikings

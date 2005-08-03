@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+
+<gfx_theme>
+  <info>
+    <name>Nuclear Theme</name>
+
+    <directory>themes/NuclearTheme</directory>
+  </info>
+
+  <data>
+    <image name="switch_on" image="switch_on.tga" />
+    <image name="switch_off" image="switch_off.tga" />
+  </data>
+</gfx_theme>

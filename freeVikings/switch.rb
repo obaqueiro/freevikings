@@ -15,20 +15,18 @@ module FreeVikings
     WIDTH = 30
     HEIGHT = 30
 
-    def initialize(position, on=false, action=Proc.new {}, images=nil)
-      super position
+    def initialize(position, theme, on=false, action=Proc.new {})
+      super(position, theme)
       @state = on
+      @action = action
       @rect = Rectangle.new(position[0], position[1], WIDTH, HEIGHT)
 
-      unless images
-        images = {
-          'true' => Image.load('switch_green.tga'),
-          'false' => Image.load('switch_red.tga')
-        }
-      end
+      images = {
+        'true' => get_theme_image('switch_on'),
+        'false' => get_theme_image('switch_off')
+      }
 
       @image = ImageBank.new(self, images)
-      @action = action
     end
 
     attr_reader :state

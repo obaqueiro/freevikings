@@ -10,10 +10,6 @@ require 'location.rb'
 require 'mockclasses.rb'
 require 'sprite.rb'
 
-module FreeVikings
-  GFX_DIR = "../gfx"
-end
-
 class TestSpriteManager < TestGroup
 
   include FreeVikings

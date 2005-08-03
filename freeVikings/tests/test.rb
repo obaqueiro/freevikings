@@ -7,6 +7,13 @@
 
 require 'test/unit/testsuite'
 
+require 'fvdef.rb' # base constants of the FreeVikings module
+# Not all the constants are independent on the current working
+# directory. So we must redefine those dependent ones:
+module FreeVikings
+  GFX_DIR = '../gfx'
+end
+
 # Some people don't compile the extensions, but they should be able to
 # run tests, so here is a simple way not to load the extensions if
 # they don't exist.
@@ -50,6 +57,7 @@ require 'testbottompanelstate.rb'
 require 'testbottompanel.rb'
 require 'testlock.rb'
 require 'testkey.rb'
+require 'testgfxtheme.rb'
 
 class FreeVikingsTestSuite
 
@@ -92,6 +100,7 @@ class FreeVikingsTestSuite
     suite << TestBottomPanel.suite
     suite << TestLock.suite
     suite << TestKey.suite
+    suite << TestGfxTheme.suite
 
     return suite
   end

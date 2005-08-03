@@ -4,10 +4,13 @@
 # Nulovy objekt pro Location
 
 require 'location.rb'
+require 'singleton'
 
 module FreeVikings
 
   class NullLocation < Location
+
+    include Singleton
 
     def initialize(loader=nil)
       @ticker = Ticker.new

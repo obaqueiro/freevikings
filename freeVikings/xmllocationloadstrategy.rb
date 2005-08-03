@@ -77,7 +77,7 @@ containing the XML source).
         return
       rescue NameError => ne
         @log.error "NameError in the script #{scriptfile}." \
-        "(#{ne.message})"
+        "(#{ne.message}\n#{ne.backtrace.join("\n")})"
         return
       rescue MonsterScript::NoMonstersDefinedException
         @log.error "Script loaded successfully, but didn't define any new " \

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<gfx_theme>
+  <info>
+    <name>Ice Theme</name>
+
+    <directory>gfx/themes/IceTheme</directory>
+  </info>
+
+  <data>
+    <image name="apex" file="ice_apex.tga" />
+  </data>
+</gfx_theme>

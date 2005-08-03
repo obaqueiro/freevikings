@@ -13,13 +13,16 @@ module FreeVikings
   class Entity
 
 =begin
---- Entity.new(initial_position=[])
+--- Entity.new(initial_position=[], theme=NullGfxTheme.instance)
 Argument ((|initial_position|)) should be a (({Rectangle})) or an (({Array.})).
+The second (voluntary) parameter, ((|theme|)) should be a (({GfxTheme})).
+It provides the possibility of using different images for the same
+((<Entity>)) in different levels.
 If the object defines a public method (({init_images})), this method is called.
 It can be used to load the images for the ((<Entity>)).
 =end
 
-    def initialize(initial_position=[])
+    def initialize(initial_position=[], theme=NullGfxTheme.instance)
       unless initial_position.empty?
 	@rect = Rectangle.new(initial_position[0], 
                               initial_position[1], 
@@ -30,6 +33,8 @@ It can be used to load the images for the ((<Entity>)).
       end
 
       @image = Image.load('nobody.tga')
+
+      @theme = theme
 
       init_images if self.respond_to? :init_images
     end
@@ -59,6 +64,18 @@ Only Null Objects return ((|true|)) from this predicate method.
 
     def null?
       false
+    end
+
+=begin
+--- Entity#load_theme_image(name)
+In the (({GfxTheme})) images are named by symbolic names.
+This method tries to get an image from the (({GfxTheme})) which was given
+as argument to the constructor.
+If the image isn't found, (({GfxTheme::UnknownNameException})) is thrown.
+=end
+
+    def get_theme_image(name)
+      @theme[name]
     end
   end # class Entity
 end # module FreeVikings

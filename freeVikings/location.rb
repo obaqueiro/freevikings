@@ -14,6 +14,7 @@ require 'spritemanager.rb'
 require 'activeobjectmanager.rb'
 require 'itemmanager.rb'
 require 'ticker.rb'
+require 'gfxtheme.rb'
 
 module FreeVikings
 
@@ -23,17 +24,20 @@ module FreeVikings
 
 == Constructor
 
---- Location.new(loader)
+--- Location.new(loader, theme)
 A new (({Location})) object is initialized using data given by the 
-((|loader|)). The object given as parameter is expected to be
+((|loader|)). The object given in parameter ((|loader|)) is expected to be
 a (({LocationLoadStrategy})) instance or to provide the same public interface.
+Argument ((|theme|)) is a (({GfxTheme})) instance.
 =end
 
-    def initialize(loader)
+    def initialize(loader, theme=NullGfxTheme.instance)
       @exitter = nil # objekt Exit - cesta do dalsi lokace
       @start = [0,0] # misto, kde zacinaji vikingove svou misi
 
       @ticker = Ticker.new
+
+      @theme = theme
 
       @map = Map.new(loader)
       @spritemanager = SpriteManager.new
@@ -102,6 +106,13 @@ Returns an (({Array})) of size 2 which contains the coordinates
 =end
 
     attr_accessor :start
+
+=begin
+--- Location#theme
+Returns a (({GfxTheme})) instance with images specific for this (({Location})).
+=end
+
+    attr_reader :theme
 
 =begin
 == Actions
@@ -183,8 +194,8 @@ effect sets ((|sprite|))'s attribute 'location' to a (({NullLocation})) object.
 
     def delete_sprite(sprite)
       @spritemanager.delete sprite
-      sprite.location = NullLocation.new # nullocation.rb is required at 
-                                         # the end of file
+      sprite.location = NullLocation.instance # nullocation.rb is required at 
+                                              # the end of file
     end
 
 =begin

@@ -16,7 +16,7 @@ module FreeVikings
 
   class HelpButton < ActiveObject
 
-    def initialize(initial_position, help_text, location=NullLocation.new)
+    def initialize(initial_position, help_text, location=NullLocation.instance)
       super(initial_position)
       @helpbox = HelpBox.new @rect, help_text
       @location = location
