@@ -7,9 +7,9 @@ require 'hero.rb'
 module FreeVikings
   class Apex < Sprite
 
-    def initialize(position)
-      super(Rectangle.new(position[0], position[1], 40, 40))
-      @image = FreeVikings::Image.load 'apex.tga'
+    def initialize(position, theme=NullGfxTheme.instance)
+      super(Rectangle.new(position[0], position[1], 40, 40), theme)
+      @image = get_theme_image 'apex'
     end
 
     def update

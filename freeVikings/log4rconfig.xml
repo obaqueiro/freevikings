@@ -18,7 +18,7 @@
 
   <!-- Log for World mechanism (World and it's subclasses, LevelSuite, 
        Level) -->
-  <logger name="world log" level="WARN">
+  <logger name="world log" level="INFO">
     <outputter>stderr</outputter>
   </logger>
 
@@ -39,7 +39,7 @@
 
   <!-- Log for images & themes related classes (from imagebank.rb, 
        gfxtheme.rb) -->
-  <logger name="images log" level="OFF">
+  <logger name="images log" level="WARN">
     <outputter>stderr</outputter>
   </logger>
 
