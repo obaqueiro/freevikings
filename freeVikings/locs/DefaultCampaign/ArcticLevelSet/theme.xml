@@ -4,10 +4,10 @@
   <info>
     <name>Ice Theme</name>
 
-    <directory>gfx/themes/IceTheme</directory>
+    <directory>themes/IceTheme</directory>
   </info>
 
   <data>
-    <image name="apex" file="ice_apex.tga" />
+    <image name="apex" image="ice_apex.tga" />
   </data>
 </gfx_theme>

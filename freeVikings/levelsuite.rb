@@ -160,7 +160,7 @@ puts @dirname
       if File.exist? theme_def_file
         return GfxTheme.new(theme_def_file, @member_of ? @member_of.gfx_theme : nil)
       else
-        @log.warn "#{object_id}: Theme file #{theme_def_file} wasn't found. Levelsuite '#{@title}' has no own theme. (But maybe it inherits some...)"
+        @log.info "#{object_id}: Theme file #{theme_def_file} wasn't found. Levelsuite '#{@title}' has no own theme. (But maybe it inherits some...)"
 
         if @member_of
           return @member_of.gfx_theme

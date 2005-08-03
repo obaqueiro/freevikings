@@ -24,6 +24,12 @@ Default directory for theme graphics.
     DEFAULT_GFX_DIR = FreeVikings::GFX_DIR
 
 =begin
+--- GfxTheme::DEFAULT_THEME_NAME
+=end
+
+    DEFAULT_THEME_NAME = 'Nameless theme'
+
+=begin
 --- GfxTheme.new(theme_file)
 Argument ((|theme_file|)) can be a (({String})), then it is used as a file 
 name, or anything other, then it's used as a XML data source object with
@@ -59,6 +65,14 @@ Returns the directory where the (({GfxTheme}))'s graphic files are stored.
 =end
 
     attr_reader :gfx_directory
+
+=begin
+--- GfxTheme#name
+Returns a (({String})) - a name of the theme. It's usually human readable and
+corresponds with the name of some campaign or levelset.
+=end
+
+    attr_reader :name
 
 =begin
 --- GfxTheme#[](name)
@@ -98,6 +112,8 @@ Returns ((|false|)) for ((<GfxTheme>)), ((|true|)) for ((<NullGfxTheme>)).
 
     private
 
+    # loads the data from XML file; is called from the constructor
+
     def load_theme_file(file)
       @log.debug "Loading new graphics theme from file #{file}:"
 
@@ -105,21 +121,34 @@ Returns ((|false|)) for ((<GfxTheme>)), ((|true|)) for ((<NullGfxTheme>)).
 
       @gfx_directory = read_gfx_directory(doc)
 
-      @name = doc.root.elements['info'].elements['name'].text
+      @name = read_theme_name(doc)
       
       @log.debug "Loading theme images:"
       doc.root.elements['data'].each_element('image') do |image_element|
-        name = image_element.attributes['name']
+        img_name = image_element.attributes['name']
         image_file = image_element.attributes['image']
+
+        unless img_name
+          @log.error "Found element 'gfx_theme/data/image' without compulsory attribute 'name' in theme source #{source_name}. Image cannot be loaded."
+          continue
+        end
+        unless image_file
+          @log.error "Found element 'gfx_theme/data/image' without compulsory attribute 'image' in theme source #{source_name}. (Name is #{img_name}.) Image cannot be loaded."
+          continue
+        end
+
         full_file_name = GFX_DIR + '/' + @gfx_directory + '/' + image_file
-        @log.debug " - #{name}: #{full_file_name}"
-        @images[name] = Image.new(full_file_name)
+
+        @log.debug " - #{img_name}: #{full_file_name}"
+
+        @images[img_name] = Image.new(full_file_name)
       end
       @log.info "Loaded graphics theme #{@name}"
     end
 
     # reads safely and returns text of element gfx_theme/info/directory
     # from REXML::Document doc
+    # If the element isn't specified, a default value is returned.
 
     def read_gfx_directory(doc)
       begin
@@ -127,9 +156,29 @@ Returns ((|false|)) for ((<GfxTheme>)), ((|true|)) for ((<NullGfxTheme>)).
       rescue NoMethodError
         # element 'directory' missing (...elements['directory'] returns nil
         # and nil doesn't respond to 'text'):
-        @log.error "Missing element gfx_theme/info/directory in the theme file #{@source.kind_of?(File) ? @source.name : @source}. Setting default value: #{DEFAULT_GFX_DIR}"
+        @log.error "Missing element gfx_theme/info/directory in the theme file #{source_name}. Setting default value: #{DEFAULT_GFX_DIR}"
         return DEFAULT_GFX_DIR # set default
       end
+    end
+
+    # works in the similar way as read_gfx_directory, but reads contents
+    # of the element gfx_theme/info/name.
+    # If the element isn't specified, a default value is returned.
+
+    def read_theme_name(doc)
+      begin
+        return doc.root.elements['info'].elements['name'].text
+      rescue NoMethodError
+        @log.error "Missing element gfx_theme/info/name in the theme file #{source_name}. Setting default value: #{DEFAULT_THEME_NAME}"
+        return DEFAULT_THEME_NAME
+      end
+    end
+
+    # If @source is a file, it's name is returned, otherwise the method
+    # returns @source.to_s
+
+    def source_name
+      @source.kind_of?(File) ? @source.name : @source.to_s
     end
 
     public
