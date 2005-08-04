@@ -28,4 +28,9 @@ class TestEntity < Test::Unit::TestCase
     assert_equal 5, e.rect.h
   end
 
+  def testGetThemeImageThrowsErrorIfNullTheme
+    assert_raise(Entity::NullThemeException) do
+      @entity.get_theme_image('blue_grass')
+    end
+  end
 end

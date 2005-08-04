@@ -12,6 +12,8 @@ module FreeVikings
 
   class Entity
 
+    WIDTH = HEIGHT = 0
+
 =begin
 --- Entity.new(initial_position=[], theme=NullGfxTheme.instance)
 Argument ((|initial_position|)) should be a (({Rectangle})) or an (({Array.})).
@@ -26,8 +28,8 @@ It can be used to load the images for the ((<Entity>)).
       unless initial_position.empty?
 	@rect = Rectangle.new(initial_position[0], 
                               initial_position[1], 
-                              (initial_position[2] ? initial_position[2] : 0),
-                              (initial_position[3] ? initial_position[3] : 0))
+                              (initial_position[2] ? initial_position[2] : self.class::WIDTH),
+                              (initial_position[3] ? initial_position[3] : self.class::HEIGHT))
       else
 	@rect = Rectangle.new(0,0,0,0)
       end
@@ -75,7 +77,23 @@ If the image isn't found, (({GfxTheme::UnknownNameException})) is thrown.
 =end
 
     def get_theme_image(name)
+      if @theme.null? then
+        raise NullThemeException, "The #{self.class.to_s}'s instance variable '@theme' contains a Null Object (instance of #{@theme.class}). No images can be loaded. (Maybe you should inform this Entity about the current theme.)"
+      end
+
       @theme[name]
     end
+
+=begin
+--- Entity::NullThemeException
+A class of exceptions which are thrown by method ((<Entity#get_theme_image>))
+if instance variable ((|@theme|)) is a (({NullGfxTheme})) instance.
+(This exception is here to help the implementors of monsters and new levels. 
+It's an oft error that the levelmaker forgets to give the monster a current 
+theme and the poor monster then isn't able to load it's images.)
+=end
+
+    class NullThemeException < RuntimeError 
+    end # class NullThemeException
   end # class Entity
 end # module FreeVikings

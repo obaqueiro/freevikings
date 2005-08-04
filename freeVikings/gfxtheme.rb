@@ -87,7 +87,7 @@ Operator of indexing. Returns (({Image})) with name ((|name|)) or throws
         else
           # Image with name name cannot be found anywhere.
           # Raise an exception:
-          raise UnknownNameException, "Nothing known about image with name #{name}. (Known names: #{known_names.join(', ')})"
+          raise UnknownNameException, "Nothing known about image with name #{name} in theme #{self.name}. (Known names: #{known_names.join(', ')})"
         end
       end
 
@@ -143,7 +143,7 @@ Returns ((|false|)) for ((<GfxTheme>)), ((|true|)) for ((<NullGfxTheme>)).
 
         @images[img_name] = Image.new(full_file_name)
       end
-      @log.info "Loaded graphics theme #{@name}"
+      @log.info "Loaded graphics theme #{self.name}"
     end
 
     # reads safely and returns text of element gfx_theme/info/directory
@@ -208,6 +208,7 @@ constructor is hidden and this method returns the only instance.
     def initialize
       @parent = nil
       @images = {}      
+      @name = "NullTheme"
     end
 
     def null?
