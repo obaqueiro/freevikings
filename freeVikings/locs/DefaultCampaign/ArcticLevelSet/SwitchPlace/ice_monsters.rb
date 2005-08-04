@@ -1,3 +1,31 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ice_monsters.rb
 # igneus 27.6.2005
 
@@ -83,15 +111,6 @@ module IceLand
     end
   end # class IceBoard
   
-  SWITCH_GFX = {'true' => Image.load('ice_map/ice_switch_on.tga'),
-                'false' => Image.load('ice_map/ice_switch_off.tga')}
-
-  class IceSwitch < FreeVikings::Switch
-    def initialize(position, initial_state)
-      super(position, initial_state, nil, IceLand::SWITCH_GFX)
-    end
-  end # class IceSwitch
-
   # A SwitchGroup is a Group of Switches.
   # It's members have all the same update Proc which updates the state of
   # the Group.
@@ -218,7 +237,7 @@ appleswitch_proc = Proc.new do |switch_state|
     secondcorridor_trapdoors.in
   end
 end
-switch = Switch.new([FirstCorridor::APPLEBAY_X + (2 * Map::TILE_SIZE) - Switch::WIDTH/2, 80], false, appleswitch_proc, IceLand::SWITCH_GFX)
+switch = Switch.new([FirstCorridor::APPLEBAY_X + (2 * Map::TILE_SIZE) - Switch::WIDTH/2, 80], LOCATION.theme, false, appleswitch_proc)
 LOCATION.add_active_object switch
 
 # The group of three switches over the first corridor. Erik can reach every 
@@ -231,9 +250,9 @@ end
 switchgroup = SwitchGroup.new(
                               [false, true, true],
                               swtchgrp_update_proc,
-                              IceSwitch.new([IceLand::FirstCorridor::BAYS_X[0] + 40 + 5, FirstCorridor::BAY_SWITCHGROUP_Y], false),
-                              IceSwitch.new([IceLand::FirstCorridor::BAYS_X[1] + 40 + 5, FirstCorridor::BAY_SWITCHGROUP_Y], false),
-                              IceSwitch.new([IceLand::FirstCorridor::BAYS_X[2] + 40 + 5, FirstCorridor::BAY_SWITCHGROUP_Y], false)
+                              Switch.new([IceLand::FirstCorridor::BAYS_X[0] + 40 + 5, FirstCorridor::BAY_SWITCHGROUP_Y], LOCATION.theme, false),
+                              Switch.new([IceLand::FirstCorridor::BAYS_X[1] + 40 + 5, FirstCorridor::BAY_SWITCHGROUP_Y], LOCATION.theme, false),
+                              Switch.new([IceLand::FirstCorridor::BAYS_X[2] + 40 + 5, FirstCorridor::BAY_SWITCHGROUP_Y], LOCATION.theme, false)
                               )
 switchgroup.each {|m| LOCATION.add_active_object m }
 
@@ -246,7 +265,7 @@ pr = Proc.new {|state|
     downshaft_trapdoors.out
   end
 }
-downshaft_trapdoor_opening_switch = Switch.new([ThirdCorridor::BEGIN_X+4*Map::TILE_SIZE, ThirdCorridor::FLOOR-2*Map::TILE_SIZE], true, pr, IceLand::SWITCH_GFX)
+downshaft_trapdoor_opening_switch = Switch.new([ThirdCorridor::BEGIN_X+4*Map::TILE_SIZE, ThirdCorridor::FLOOR-2*Map::TILE_SIZE], LOCATION.theme, true, pr)
 LOCATION.add_active_object(downshaft_trapdoor_opening_switch)
 
 # The switch in the fourth corridor.
@@ -255,7 +274,7 @@ LOCATION.add_active_object(downshaft_trapdoor_opening_switch)
 pr = Proc.new {
   trapdoors_to_exit_corridor.out  
 }
-last_eriks_switch = Switch.new([FourthCorridor::END_X+Map::TILE_SIZE, FourthCorridor::CEILING+Map::TILE_SIZE+5], false, pr, IceLand::SWITCH_GFX)
+last_eriks_switch = Switch.new([FourthCorridor::END_X+Map::TILE_SIZE, FourthCorridor::CEILING+Map::TILE_SIZE+5], LOCATION.theme, false, pr)
 LOCATION.add_active_object last_eriks_switch
 
 # === MONSTERS:

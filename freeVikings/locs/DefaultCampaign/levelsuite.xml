@@ -8,7 +8,7 @@
 
   <suite>
     <levelsuite>ArcticLevelSet</levelsuite>
-    <levelsuite>NuclearLabsLevelSet</levelsuite>
     <levelsuite>EgyptLevelSet</levelsuite>
+    <levelsuite>NuclearLabsLevelSet</levelsuite>
   </suite>
 </levelsuite>
