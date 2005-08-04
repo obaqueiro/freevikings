@@ -74,11 +74,11 @@ containing the XML source).
         @log.error "Could not load the script: #{mfex.message}"
       rescue SyntaxError
         @log.error "Syntax error in the script #{scriptfile}. "
-        return
       rescue NameError => ne
-        @log.error "NameError in the script #{scriptfile}." \
-        "(#{ne.message}\n#{ne.backtrace.join("\n")})"
-        return
+        @log.error "NameError in the script #{scriptfile}:" \
+        "#{ne.message}\n#{ne.backtrace.join("\n")}"
+      rescue LoadError => le
+        @log.error "LoadError in script #{scriptfile}: #{le.message}"
       rescue MonsterScript::NoMonstersDefinedException
         @log.error "Script loaded successfully, but didn't define any new " \
         "monsters."
