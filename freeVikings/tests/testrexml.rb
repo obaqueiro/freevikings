@@ -7,7 +7,11 @@
 require 'rubyunit'
 require 'rexml/document'
 
-$xmltext = <<-EOS
+class TestExploreREXML < RUNIT::TestCase
+
+  PYRAMIS_LOC_XML_FILE = '../locs/DefaultCampaign/EgyptLevelSet/SlugHouse/pyramida_loc.xml'
+
+@@xmltext = <<-EOS
 <main>
 <anything>
 <goodBye />
@@ -15,14 +19,12 @@ $xmltext = <<-EOS
 </main>
 EOS
 
-$invalidxmltext = <<-EOS
+@@invalidxmltext = <<-EOS
 <main> <first> <second> </first> </second> </main>
 EOS
 
-class TestExploreREXML < RUNIT::TestCase
-
   def setup
-    @doc = REXML::Document.new($xmltext)
+    @doc = REXML::Document.new(@@xmltext)
   end
 
   def testInvalidDocument
@@ -31,17 +33,17 @@ class TestExploreREXML < RUNIT::TestCase
     # nastane NameError.
     # Nove REXML vyhazuje vlastni vyjimku.
     assert_exception (REXML::ParseException) {
-      d = REXML::Document.new $invalidxmltext
+      d = REXML::Document.new @@invalidxmltext
     }
   end
 
   def testValidStringDocumentRootIsNotNil
-    d = REXML::Document.new $xmltext
+    d = REXML::Document.new @@xmltext
     assert_not_nil d.root, 'Document initialised by the valid XML String has to have non-nil root attribute'
   end
 
   def testValidFileDocumentRootIsNotNil
-    fr = File.open('../locs/pyramida_loc.xml')
+    fr = File.open(PYRAMIS_LOC_XML_FILE)
     d = REXML::Document.new(fr)
     assert_not_nil d.root, 'Document initialised by the valid XML file name has to have non-nil root attribute'
   end
