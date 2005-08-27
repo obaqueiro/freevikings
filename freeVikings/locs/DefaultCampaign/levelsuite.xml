@@ -4,6 +4,13 @@
   <info>
     <title>Default Campaign</title>
     <author>Jakub Pavlik /severus@post.cz/</author>
+    <description>
+      The set of levels provided with the official freeVikings distribution.
+      The levels go well together with the "FreeVikings Legend".
+      You can explore several different worlds with special creatures and
+      other interesting things. A lot of logical problems are prepared for you 
+      to be solved.
+    </description>
   </info>
 
   <suite>
