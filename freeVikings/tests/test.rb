@@ -58,6 +58,7 @@ require 'testbottompanel.rb'
 require 'testlock.rb'
 require 'testkey.rb'
 require 'testgfxtheme.rb'
+require 'teststructuredworld.rb'
 
 class FreeVikingsTestSuite
 
@@ -101,6 +102,7 @@ class FreeVikingsTestSuite
     suite << TestLock.suite
     suite << TestKey.suite
     suite << TestGfxTheme.suite
+    suite << TestStructuredWorld.suite
 
     return suite
   end
