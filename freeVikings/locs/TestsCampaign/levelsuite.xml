@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>Tests Campaign</title>
+    <author>Jakub Pavlik /severus@post.cz/</author>
+    <description>
+      This campaign contains mainly small simple levels.
+      Every of them shows some new feature.
+      None of the levels is guaranteed to be completable - the only aim is
+      to help development. You should try this campaign only if you are
+      a [code developer|maps author] or you want to explore the developers'
+      world.
+    </description>
+  </info>
+
+  <suite>
+    <levelsuite>AncientLevelSet</levelsuite>
+  </suite>
+</levelsuite>

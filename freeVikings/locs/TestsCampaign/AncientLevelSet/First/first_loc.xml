@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<location>
+
+  <info>
+    <title>First adventure</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <scripts>
+    <monsters path="locs/first_script.rb" />
+  </scripts>
+
+  <map>
+    <blocktypes>
+      <blocktype code="0" path="" />
+      <blocktype code="1" path="dlaz_kov1.png" solid="solid" />
+      <blocktype code="2" path="dlaz_kov2.png" solid="solid" />
+    </blocktypes>
+
+    <blocks>
+1100001211111111111111111111111
+1100000001210000000000000000000
+1100000000011000000000000000001
+1000000000021000000000000000000
+1100000000000000000000000000011
+1211120000000000011000000000211
+1111112000000000011100000000211
+1111111200000000000000000000000
+1111111200000000000000000000000
+1111111200000000000000000000000
+1111111222211111111111111111122
+1211111111111111111121121111111
+1111111111111111111112211111111
+</blocks>
+
+    <exit horiz="1120" vertic="320" />
+    <start horiz="121" vertic="20" />
+    
+  </map>
+
+</location>

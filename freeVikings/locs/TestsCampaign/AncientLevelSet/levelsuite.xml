@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>Ancient Levels</title>
+    <author>Jakub Pavlik /severus@post.cz/</author>
+    <description>
+      Levelset "Ancient Levels" contains two oldest freeVikings levels
+      called First (first appeared in release 0.1, where you only were able
+      to move Baleog around) and Hopsy (the second oldest and undoubtedly
+      the ugliest level ever built).
+    </description>
+  </info>
+
+  <suite>
+    <level>First</level>
+    <level>Hopsy</level>
+  </suite>
+</levelsuite>
