@@ -75,4 +75,5 @@ $:.concat FreeVikings::CODE_DIRS
 
 require "alternatives.rb"
 
+# This opens the game window, loads data and starts the game:
 FreeVikings::Init.new
