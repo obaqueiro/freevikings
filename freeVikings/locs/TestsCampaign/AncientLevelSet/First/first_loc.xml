@@ -4,10 +4,16 @@
   <info>
     <title>First adventure</title>
     <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      This is the oldest location ever built, it's packed with freeVikings
+      since version 0.1.
+      It's a bit extended now, so it needs some cooperation of Olaf and Erik
+      to reach EXIT.
+    </description>
   </info>
 
   <scripts>
-    <monsters path="locs/first_script.rb" />
+    <monsters path="locs/TestsCampaign/AncientLevelSet/First/first_script.rb" />
   </scripts>
 
   <map>
