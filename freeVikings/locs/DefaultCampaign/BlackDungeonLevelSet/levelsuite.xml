@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>Black Dungeon</title>
+    <author>Jakub Pavlik /severus@post.cz/</author>
+  </info>
+
+  <suite>
+    <level>DeepShaft</level>
+    <level>DungeonGliding</level>
+  </suite>
+</levelsuite>
