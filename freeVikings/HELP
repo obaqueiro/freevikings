@@ -1,22 +1,46 @@
 freevikings.rb
 
-ruby freevikings.rb [-fFhpx] [--fullscreen] [--fps] [--help] [--profile] 
+ruby freevikings.rb [-fFhpxls] [--fullscreen] [--fps] [--help] [--profile] 
 			[--extensions] [list-of-locations]
+			[--levelsuite levelsuite] [--startpassword password]
 
 Description:
 
-A DOS game 'Lost Vikings' clonned using the Ruby 
-programming language.
+An old DOS game 'Lost Vikings' clonned using the Ruby 
+programming language and released under terms of GNU/GPL..
 Guide the three viking friends, Eric, Baleog and Olaf,
 through chambers full of enemies. Find and kill Tomator,
 the galagtic devil collecting interesting forms of life.
 
-Game controls:
+Keyboard controls:
 
-move the viking left and right - cursor keys
-switch between the vikings     - PgUp or Ctrl
-release the arrow (Baleog only)- d
-jump (Eric only)               - space
+<- and -> - move the active viking around
+Ctrl, PgUp, PgDn - switch between the vikings
+S         - use a found mechanism (try to press S whenever you find a button,
+            help button, switch, ...)
+SPACE     - Erik jumps, Baleog cuts with his sword, Olaf carries shield over
+            his head
+D         - Baleog shoots an arrow
+E         - Tries to use an active item from the active viking's inventory
+TAB, P    - Pauses the game and enables inventory manipulation
+
+Inventory manipulation:
+
+TAB, P    - Switch into and from the inventory manipulation mode.
+            While you are working in this mode, the game is paused.
+DELETE    - Delete the selected item
+<- and -> - Move the selection box, selectsome other item from the
+            inventory
+SPACE     - Enable/disable items exchange.
+            Press SPACE, use arrow keys to give the selected item to
+            another viking who stands on the same place as the item's
+            current owner and then press SPACE once more to return
+            to the normal inventory manipulation mode.
+
+Mouse controls:
+
+Click onto any viking's icon to switch to him.
+Click onto the item in the inventory to select it.
 
 Options:
 
@@ -24,15 +48,8 @@ Options:
 --fullscreen    -f      Starts the game in the fullscreen mode
 --extensions	-x	Uses compiled C++ extensions instead of some of the
 			critical classes. You must have built these extensions 
-			to use this option successfully.
+			before you use this option.
 --fps		-F	Prints frames per second on the game screen
 --profile 	-p	Profiling (only for development)
-
-At the end of the argument list you can append a list of filenames (relative 
-to the directory locs!) of location files. You can mix up your own world 
-in this way.
-
-E.g.: freevikings.rb first_loc.xml hopsy_loc.xml
-
-This example starts a special game built of levels from locs/first_loc.xml and
-locs/hopsy_loc.xml.
+--levelsuite    -l	Requires an argument - a directory with a levelsuite
+--startpassword -s	Requires an argument - a level password (code)
