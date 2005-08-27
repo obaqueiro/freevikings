@@ -16,15 +16,49 @@ module FreeVikings
 
   class HelpButton < ActiveObject
 
+    @@shown_helpbox = nil # last shown helpbox
+
+=begin
+--- HelpButton.show_new_helpbox(new_helpbox, location)
+Takes the last displayed ((<HelpButton::HelpBox>)) out and displays 
+the new one.
+=end
+
+    def HelpButton.show_new_helpbox(new_helpbox, location)
+      if @@shown_helpbox and @@shown_helpbox.in? then
+        @@shown_helpbox.disappear
+      end
+
+      @@shown_helpbox = new_helpbox
+      location.add_sprite new_helpbox unless new_helpbox.in?
+    end
+
+=begin
+--- HelpButton.new(initial_position, help_text, location=NullLocation.instance)
+Creates a new ((<HelpButton>)) which, when pressed, shows text ((|help_text|)).
+Argument ((|location|)) must be a valid (({Location})) where the help text will
+be shown.
+=end
+
     def initialize(initial_position, help_text, location=NullLocation.instance)
       super(initial_position)
       @helpbox = HelpBox.new @rect, help_text
       @location = location
     end
 
+=begin
+--- HelpButton#activate
+Shows the help text.
+=end
+
     def activate
-      @location.add_sprite @helpbox unless @helpbox.in?
+      HelpButton.show_new_helpbox @helpbox, @location
     end
+
+=begin
+--- HelpButton#deactivate
+Does nothing.
+=end
 
     def deactivate
     end
@@ -33,6 +67,14 @@ module FreeVikings
       @image = Image.load('help.tga')
     end
 
+=begin
+= HelpButton::HelpBox
+This class is fully stand-alone, but it is defined inside ((<HelpButton>)),
+because it's only used from inside of it.
+HelpBox is a simple (({Sprite})) which shows a help text and disappears
+after ((<HelpBox::DISAPPEAR_AFTER>)) seconds.
+=end
+
     class HelpBox < Sprite
 
       BACKGROUND_COLOUR = [241,96,96]
@@ -40,9 +82,19 @@ module FreeVikings
       WIDTH = 260
       BORDER_WIDTH = 8
 
+=begin
+--- HelpBox::DISAPPEAR_AFTER
+Number of seconds. For such a long time the text is shown, then it disappears.
+=end
+
       DISAPPEAR_AFTER = 7
 
       @@text_renderer = TextRenderer.new(RUDL::TrueTypeFont.new('fonts/adlibn.ttf', 16))
+
+=begin
+--- HelpBox.new(position, text)
+Both arguments should be clear, ((|text|)) is a simple (({String})).
+=end
 
       def initialize(position, text)
         @text = text
@@ -60,8 +112,7 @@ module FreeVikings
         end
 
         if @disappear_lock.free? then
-          @disappear_lock = nil
-          @location.delete_sprite self
+          disappear
         end
       end
 
@@ -69,8 +120,25 @@ module FreeVikings
         @surface
       end
 
+=begin
+--- HelpBox.in?
+Says if the ((<HelpBox>)) is inside some (({Location})) or not.
+=end
+
       def in?
         @location.class == Location
+      end
+
+=begin
+--- HelpBox.disappear
+Disappears from the (({Location})) instantly.
+=end
+
+      def disappear
+        if self.in?
+          @disappear_lock = nil
+          @location.delete_sprite self
+        end
       end
 
       def init_images

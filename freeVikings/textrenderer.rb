@@ -110,7 +110,7 @@ if __FILE__ == $0 then
   include RUDL
 
   $win = DisplaySurface.new [640, 480]
-  $font = RUDL::TrueTypeFont.new('adlibn.ttf', 16)
+  $font = RUDL::TrueTypeFont.new('fonts/adlibn.ttf', 16)
 
   renderer = TextRenderer.new $font
 
