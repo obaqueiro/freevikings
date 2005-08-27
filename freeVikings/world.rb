@@ -3,6 +3,11 @@
 
 =begin
 = World
+Class ((<World>)) is ((*DEPRECATED*)) and isn't used in the official version
+of freeVikings game any more. It has been replaced by a new class
+(({StructuredWorld})) which has nearly the same interface, but is able
+to work out the (({LevelSuite})) stuff.
+
 ((<World>)) instances are objects which provide three services:
 * return the current (({Location})) (((<World#location>)))
 * reload and return the current (({Location})) (((<World#rewind_location>)))

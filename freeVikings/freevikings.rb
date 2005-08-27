@@ -32,7 +32,8 @@ options = GetoptLong.new(
                          ["--fps",     "-F", GetoptLong::NO_ARGUMENT],
                          ["--fullscreen", "-f", GetoptLong::NO_ARGUMENT],
                          ["--help",    "-h", GetoptLong::NO_ARGUMENT],
-                         ["--levelsuite", "-l", GetoptLong::REQUIRED_ARGUMENT]
+                         ["--levelsuite", "-l", GetoptLong::REQUIRED_ARGUMENT],
+                         ["--startpassword", "-s", GetoptLong::REQUIRED_ARGUMENT]
 )
 
 begin
@@ -50,6 +51,8 @@ begin
       print_help_and_exit
     when "--levelsuite"
       FreeVikings::OPTIONS['levelset'] = argument
+    when "--startpassword"
+      FreeVikings::OPTIONS["startpassword"] = argument
     end
   end # options.each block
 rescue GetoptLong::InvalidOption => ioex

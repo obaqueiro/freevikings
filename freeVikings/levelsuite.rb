@@ -3,7 +3,7 @@
 
 =begin
 = LevelSuite
-((<LevelSuite>)) is a set of (({LevelSuite}))s.
+((<LevelSuite>)) is a set of ((<LevelSuite>))s.
 =end
 
 require 'rexml/document'
@@ -96,6 +96,28 @@ but are obtained by call to (({LevelSuite#next_level})).)
     end
 
 =begin
+--- LevelSuite#level_with_password(password)
+Returns a (({Level})) with password ((|password|)) or throws 
+((<LevelSuite::UnknownPasswordException>)) if none
+exists. For more information about passwords read documentation for class
+(({StructuredWorld})).
+=end
+
+    def level_with_password(password)
+      @log.debug "Asked for a level with password #{password}."
+      @members.each do |member_levelsuite|
+        level = member_levelsuite.level_with_password(password)
+        if level
+          @log.info "Found level with password #{password}."
+          return level
+        end
+      end
+     
+      @log.error "Level with password #{password} wasn't found."
+      raise UnknownPasswordException, "Password #{password} doesn't exist."
+    end
+
+=begin
 --- LevelSuite#gfx_theme
 Returns a (({GfxTheme})) for the set of levels. (If htere isn't such
 (({GfxTheme})), a (({NullGfxTheme})) is returned, but (({NullGfxTheme}))
@@ -169,6 +191,17 @@ puts @dirname
         end
       end
     end
+
+    public
+
+=begin
+--- LevelSuite::UnknownPasswordException
+Exception of this type is thrown when a password given 
+to ((<LevelSuite#level_with_password>)) doesn't exist.
+=end
+
+    class UnknownPasswordException < RuntimeError
+    end # class UnknownPasswordException
 
   end # class LevelSuite
 end # module FreeVikings

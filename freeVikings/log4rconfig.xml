@@ -18,7 +18,7 @@
 
   <!-- Log for World mechanism (World and it's subclasses, LevelSuite, 
        Level) -->
-  <logger name="world log" level="INFO">
+  <logger name="world log" level="DEBUG">
     <outputter>stderr</outputter>
   </logger>
 

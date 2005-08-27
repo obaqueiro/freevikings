@@ -32,7 +32,10 @@ The second argument is for internal use only and points to a 'parent'
 
     def initialize(dirname, member_of=nil)
       super(dirname, member_of)
+      @title = "Level " + File.basename(dirname)
       @active_member = self
+      @password = load_password
+      @log.debug "Initialized a new level: directory: \"#{@dirname}\"; password: \"#{@password}\";"
     end
 
 =begin
@@ -49,6 +52,15 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
       if @active_member then
         @active_member = nil
         return self
+      else
+        return nil
+      end
+    end
+
+    def level_with_password(password)
+      if @password == password then
+        @log.debug "This is the level needed - it's password is #{@password}."
+        return self 
       else
         return nil
       end
@@ -77,6 +89,17 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
     # the constructor
 
     def load_from_xml
+    end
+
+    # Tries to load the level password from file PASSWORD
+
+    def load_password
+      password = ''
+      File.open(@dirname + '/' + 'PASSWORD') do |fr|
+        password = fr.gets.chomp
+      end
+      password = '' unless password.valid_location_password?
+      return password
     end
   end # class Level
 end # module FreeVikings

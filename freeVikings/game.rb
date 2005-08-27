@@ -95,7 +95,11 @@ All the three examples expect you have created a RUDL::DisplaySurface
       elsif not locations.empty?
         @world = World.new(*locations)
       elsif FreeVikings::OPTIONS['levelset']
-        @world = StructuredWorld.new(FreeVikings::OPTIONS['levelset'])
+        if FreeVikings::OPTIONS['startpassword']
+          @world = StructuredWorld.new(FreeVikings::OPTIONS['levelset'], FreeVikings::OPTIONS['startpassword'])
+        else
+          @world = StructuredWorld.new(FreeVikings::OPTIONS['levelset'])
+        end
       else
         @world = StructuredWorld.new('locs/DefaultCampaign')
       end

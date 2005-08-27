@@ -14,7 +14,7 @@ module FreeVikings
   class StructuredWorld < World
 
 =begin
---- StructuredWorld(campaign_dir)
+--- StructuredWorld(campaign_dir, password=nil)
 Argument ((|campaign_dir|)) is a name of the root directory 
 of the (({LevelSuite})) hierarchy. It's also called 'a campaign directory',
 because it contains a complete set of levels, which is also called 
@@ -23,11 +23,24 @@ because it contains a complete set of levels, which is also called
 (If you wanted, you wouldn't have to give a real 'campaign directory' 
 as argument, it is possible to give a directory of any nested (({LevelSuite})),
 but it isn't very usual.)
+
+The second argument, ((|password|)), is voluntary and must be a 4-character
+String. If it is given location with password ((|password|)) is selected as 
+a starting location.
 =end
 
-    def initialize(campaign_dir)
+    def initialize(campaign_dir, password=nil)
       @levelsuite = LevelSuite.new(campaign_dir)
-      next_location
+
+      if password then
+        unless password.valid_location_password?
+          raise ArgumentError, "Password \"#{password}\" of type #{password.class} isn't a valid location password. A valid password must be #{String::LOCATION_PASSWORD_LENGTH} characters long and may contain alphanumeric characters only."
+        end
+        @level = @levelsuite.level_with_password(password)
+        create_location
+      else
+        next_location
+      end
     end
 
     def next_location
@@ -52,3 +65,22 @@ but it isn't very usual.)
     end
   end # class StructuredWorld
 end # module FreeVikings
+
+=begin
+= String
+For needs of ((<StructuredWorld>)) class ((<String>)) is extended.
+=end
+
+class String
+  LOCATION_PASSWORD_LENGTH = 4
+
+=begin
+--- String#valid_location_password?
+Says if a ((<String>)) is a valid location password.
+=end
+  def valid_location_password?
+    # valid location password must be 4 characters long and may
+    # only contain word characters and digits
+    size == LOCATION_PASSWORD_LENGTH and /^[\d\w]+$/ =~ self
+  end
+end
