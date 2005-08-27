@@ -39,6 +39,12 @@ The second argument is for internal use only and points to a 'parent'
     end
 
 =begin
+--- Level#password
+=end
+
+    attr_reader :password
+
+=begin
 --- Level#loader
 Returns a (({LocationLoadStrategy})) instance which is able to load 
 the data from the ((|@dirname|)) directory into the (({Location})) object.
@@ -58,12 +64,7 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
     end
 
     def level_with_password(password)
-      if @password == password then
-        @log.debug "This is the level needed - it's password is #{@password}."
-        return self 
-      else
-        return nil
-      end
+      raise "Senseless method call!!!"
     end
 
     private

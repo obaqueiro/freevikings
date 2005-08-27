@@ -97,20 +97,17 @@ but are obtained by call to (({LevelSuite#next_level})).)
 
 =begin
 --- LevelSuite#level_with_password(password)
-Returns a (({Level})) with password ((|password|)) or throws 
-((<LevelSuite::UnknownPasswordException>)) if none
+Returns a (({Level})) with password ((|password|)) and sets it active 
+or throws ((<LevelSuite::UnknownPasswordException>)) if no such level
 exists. For more information about passwords read documentation for class
 (({StructuredWorld})).
 =end
 
     def level_with_password(password)
       @log.debug "Asked for a level with password #{password}."
-      @members.each do |member_levelsuite|
-        level = member_levelsuite.level_with_password(password)
-        if level
-          @log.info "Found level with password #{password}."
-          return level
-        end
+
+      while (level = next_level) do
+        return level if level.password == password
       end
      
       @log.error "Level with password #{password} wasn't found."

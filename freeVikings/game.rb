@@ -90,18 +90,24 @@ All the three examples expect you have created a RUDL::DisplaySurface
 
       @log = Log4r::Logger['init log']
 
+      # set defaults:
+      levelset = 'locs/DefaultCampaign'
+      startpassword = nil
+
+      # some defaults can be redefined by the player's options:
+      if FreeVikings::OPTIONS['levelset']
+        levelset = FreeVikings::OPTIONS['levelset']
+      end
+      if FreeVikings::OPTIONS['startpassword']
+        startpassword = FreeVikings::OPTIONS['startpassword']
+      end
+
       if locations.is_a? World then
         @world = locations
       elsif not locations.empty?
         @world = World.new(*locations)
-      elsif FreeVikings::OPTIONS['levelset']
-        if FreeVikings::OPTIONS['startpassword']
-          @world = StructuredWorld.new(FreeVikings::OPTIONS['levelset'], FreeVikings::OPTIONS['startpassword'])
-        else
-          @world = StructuredWorld.new(FreeVikings::OPTIONS['levelset'])
-        end
       else
-        @world = StructuredWorld.new('locs/DefaultCampaign')
+        @world = StructuredWorld.new(levelset, startpassword)
       end
 
       # Surfaces, ktere se pouzivaji k sestaveni zobrazeni nahledu hraci plochy
