@@ -12,7 +12,7 @@
   </outputter>
 
   <!-- Log for initialization and top-level output (see init.rb, game.rb) -->
-  <logger name="init log" level="ERROR">
+  <logger name="init log" level="INFO">
     <outputter>stderr</outputter>
   </logger>
 

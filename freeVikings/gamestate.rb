@@ -9,6 +9,9 @@ require 'RUDL'
 
 module FreeVikings
 
+=begin
+= GameState
+=end
 
   class GameState
 
@@ -77,7 +80,7 @@ Changes the location view according to the state.
 
     def end_game
       Log4r::Logger['init log'].info "Ending the game."
-      exit
+      context.exit_game
     end # private method end_game
 
   end # class GameState
@@ -268,5 +271,45 @@ Arguments:
       message = "Password: #{level.password}"
       @level_info_message = FreeVikings::FONTS['default'].create_text_box(120, message)
     end
+  end # class LocationInfoGameState
+
+=begin
+= AllLocationsFinishedGameState
+A (({Game})) state used when the player successfully explores the last
+(({Location})).
+=end
+
+  class AllLocationsFinishedGameState < GameState
+
+    def initialize(context)
+      super(context)
+      init_message
+    end
+
+    def change_view(surface)
+      surface.blit(@message,
+                   [surface.w/2 - @message.w/2, 50])
+    end
+
+    def serve_keydown(event, location)
+      @context.exit_game
+    end
+
+    private
+
+    def init_message
+      text = "Erik, Baleog and Olaf have forgotten Tomator. " \
+      "They were just walking, clobbering monsters and " \
+      "exploring foreign sides. " \
+      "Suddenly something like a thunder sounded and they " \
+      "all fainted. Where did they wake up?\n" \
+      "Don't forget to download the next version of freeVikings!" \
+      "\n|\nhttp://freevikings.wz.cz\n|\n" \
+      "All comments, bug reports, ideas etc. are appreciated." \
+      "\n|\nseverus@post.cz"
+
+      @message = FreeVikings::FONTS['default'].create_text_box(FreeVikings::WIN_WIDTH-100, text)
+    end
   end
+
 end # module

@@ -141,6 +141,15 @@ the give up key (F6 by default). Causes location reloading.
     end
 
 =begin
+--- Game#exit_game
+Exits the game.
+=end
+
+    def exit_game
+      exit
+    end
+
+=begin
 --- Game#pause
 Pauses all the (({Sprite}))s and switches into the inventory browsing mode.
 =end
@@ -187,24 +196,28 @@ regularly and refreshes the screen.
 	  @log.info "Some vikings died. Try once more."
           level = @world.level
 	  @give_up = nil
-	elsif @team.alive_size == @team.size
+	elsif @team.alive_size == @team.size then
 	  # All of the vikings have reached the EXIT
 	  @log.info "Level completed."
-	  unless level = @world.next_level then
+	  unless level = @world.next_level
+            p location
 	    @log.info "Congratulations! You explored all the world!"
-	    exit
+            @state = AllLocationsFinishedGameState.new self
 	  end
 	else
 	  # Situation which shouldn't ever occur
 	  raise FatalError, '*** Really strange situation. Nor the game loop is in it\'s first loop, nor the level completed, no vikings dead. Send a bug report, please.'
 	end
 
-        location = @world.rewind_location
-        @team = init_vikings_team(location)
+        unless is_game_finished?
+          location = @world.rewind_location 
+          @team = init_vikings_team(location)
+          @state = LocationInfoGameState.new(self, level)
+        else
+          location = @world.location
+        end
 
         @bottompanel = BottomPanel.new @team
-
-        @state = LocationInfoGameState.new(self, level)
 
 	frames = 0 # auxiliary variable for fps computing
 
@@ -285,8 +298,17 @@ The vikings are put into the (({Location})) and fun starts.
 
     private
     def is_exit?
-      @world.location.exitter.team_exited?(@team)
+      if is_game_finished? then
+        return false
+      else
+        return @world.location.exitter.team_exited?(@team)
+      end
     end # is_exit?
+
+    private
+    def is_game_finished?
+      @state.kind_of? AllLocationsFinishedGameState
+    end
 
     private
     def paint_loading_screen(screen)

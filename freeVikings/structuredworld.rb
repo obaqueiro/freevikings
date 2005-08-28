@@ -58,7 +58,6 @@ by call to ((<StructuredWorld#rewind_location>)).
       @level = @levelsuite.next_level
 
       if @level == nil then
-        @location = nil
         return nil
       end
 
