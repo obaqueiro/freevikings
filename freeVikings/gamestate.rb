@@ -238,7 +238,7 @@ This state is used on the beginning of every location.
 Location password and author is displayed until the player presses a key.
 =end
 
-  class LocationInfoGameState
+  class LocationInfoGameState < GameState
 
 =begin
 --- LocationInfoGameState.new(context, level)
@@ -249,23 +249,23 @@ Arguments:
 =end
 
     def initialize(context, level)
-      super context
+      super(context)
       init_message(level)
     end
 
     def change_view(surface)
       surface.blit(@level_info_message,
-                   [surface.w/2 - @level_info_message/2, 140])
+                   [surface.w/2 - @level_info_message.w/2, 140])
     end
 
-    def serve_keydown(event)
-      @context.run_location
+    def serve_keydown(event, location)
+      @context.run_location location
     end
 
     private
 
     def init_message(level)
-      message = "Password:\n#{level.password}"
+      message = "Password: #{level.password}"
       @level_info_message = FreeVikings::FONTS['default'].create_text_box(120, message)
     end
   end

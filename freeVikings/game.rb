@@ -204,7 +204,7 @@ regularly and refreshes the screen.
 
         @bottompanel = BottomPanel.new @team
 
-        @state = PlayingGameState.new(self)
+        @state = LocationInfoGameState.new(self, level)
 
 	frames = 0 # auxiliary variable for fps computing
 
@@ -253,12 +253,17 @@ regularly and refreshes the screen.
     end # public method game_loop
 
 =begin
---- Game#print_level_info
-Prepares the location, vikings team, bottompanel.
-Prints the level info and waits some time or until the player presses a key.
+--- Game#run_location(location)
+This method is called from (({LocationInfoGameState})) to start playing.
+The vikings are put into the (({Location})) and fun starts.
 =end
 
-    def print_level_info
+    def run_location(location)
+      @team.each {|viking| 
+        location.add_sprite viking
+      }
+
+      @state = PlayingGameState.new self
     end
 
     # Method init_vikings_team must be called when a location is loaded
@@ -274,7 +279,6 @@ Prints the level info and waits some time or until the player presses a key.
       # vsechny vikingy oznacime jako hrdiny:
       team.each { |v|
         v.extend Hero
-        location.add_sprite v 
       }
       team
     end # init_vikings_team
