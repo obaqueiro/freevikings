@@ -209,6 +209,9 @@ regularly and refreshes the screen.
 	  raise FatalError, '*** Really strange situation. Nor the game loop is in it\'s first loop, nor the level completed, no vikings dead. Send a bug report, please.'
 	end
 
+        # This paragraph of code is important for a good work of
+        # the text displayed at the end of the game. Be careful when
+        # modifying it, there's some black magic!
         unless is_game_finished?
           location = @world.rewind_location 
           @team = init_vikings_team(location)
