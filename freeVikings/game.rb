@@ -182,14 +182,14 @@ regularly and refreshes the screen.
           @team = init_vikings_team(location)
           # location = @world.location
 	elsif (@team.alive_size < @team.size) or (@give_up == true) then
-	  # Nekteri hrdinove mrtvi.
+	  # Some of the heroes are dead.
 	  @log.info "Some vikings died. Try once more."
 	  @world.rewind_location
           location = @world.location
           @team = init_vikings_team(location)
 	  @give_up = nil
 	elsif @team.alive_size == @team.size
-	  # Vsichni dosahli EXITu
+	  # All of the vikings have reached the EXIT
 	  @log.info "Level completed."
 	  unless location = @world.next_location then
 	    @log.info "Congratulations! You explored all the world!"
@@ -197,7 +197,7 @@ regularly and refreshes the screen.
 	  end
           @team = init_vikings_team(location)
 	else
-	  # Situace, ktera by nemela nastat
+	  # Situation which shouldn't ever occur
 	  raise FatalError, '*** Really strange situation. Nor the game loop is in it\'s first loop, nor the level completed, no vikings dead. Send a bug report, please.'
 	end
 
@@ -205,18 +205,16 @@ regularly and refreshes the screen.
 
         @state = PlayingGameState.new(self)
 
-	frames = 0 # pomocna promenna k vypoctu fps
+	frames = 0 # auxiliary variable for fps computing
 
         if FreeVikings::OPTIONS['profile'] then
           Profiler__::start_profile
         end
 
-        # Tady zacina udalostni cyklus bezici behem hry.
-	# Cyklujeme, dokud se vsichni prezivsi nedostali do exitu
-	# nebo to hrac nevzdal
+        # In this cycle one level is played until it is given up or finished.
 	while (not is_exit?) and (not @give_up) do
 
-	  # Zpracujeme udalosti:
+	  # Serve events:
 	  RUDL::EventQueue.get.each do |event|
 	    @state.serve_event(event, location)
 	  end
