@@ -21,7 +21,7 @@ module FreeVikings
 
     WIDTH = 80
     HEIGHT = 24
-    VELOCITY = 13
+    VELOCITY = 40
 
     def initialize(left, *ys)
       @y = ys
@@ -36,9 +36,12 @@ module FreeVikings
     def update
       if @rect.top != @y.first then
         delta = @velocity * @location.ticker.delta
-        delta = 1 if delta < (VELOCITY + 5)
-        delta *= -1 if @y.first - @y.last < 0
-        @rect.top += delta
+        # If the bridge is near it's destination, it jumps
+        if (@rect.top + delta - @y.first).abs <= 10 then
+          @rect.top = @y.first
+        else
+          @rect.top += delta
+        end
       end
     end
   end # class FallingBridge
