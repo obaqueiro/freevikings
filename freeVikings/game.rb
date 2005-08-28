@@ -226,6 +226,7 @@ regularly and refreshes the screen.
 	  location.paint(@map_view, @team.active.center)
 	  @app_window.blit(@map_view, [0,0])
 
+          @state.change_view(@app_window)
 
 	  @app_window.blit(@bottompanel.image, [0, WIN_HEIGHT - BottomPanel::HEIGHT])
 
@@ -249,6 +250,15 @@ regularly and refreshes the screen.
 
       end # loop
     end # public method game_loop
+
+=begin
+--- Game#print_level_info
+Prepares the location, vikings team, bottompanel.
+Prints the level info and waits some time or until the player presses a key.
+=end
+
+    def print_level_info
+    end
 
     # Method init_vikings_team must be called when a location is loaded
     # (or reloaded).

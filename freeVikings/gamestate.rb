@@ -26,6 +26,14 @@ module FreeVikings
     def view_center
     end
 
+=begin
+GameState#change_view(surface)
+Changes the location view according to the state.
+=end
+
+    def change_view(surface)
+    end
+
     # Obslouzi udalost tak, jak je to v danem stavu potreba.
 
     def serve_event(event, location)
@@ -154,6 +162,11 @@ module FreeVikings
 
     def initialize(context)
       super context
+      init_mask_surface
+    end
+
+    def change_view(surface)
+      surface.blit @mask_surface, [0,0]
     end
 
     def serve_keydown(event, location)
@@ -204,6 +217,16 @@ module FreeVikings
 
     def bottompanel
       @context.bottompanel
+    end
+
+    # Initializes the grey surface which is used to change the game screen
+    # when the game is paused
+
+    def init_mask_surface
+      @mask_surface = RUDL::Surface.new [FreeVikings::WIN_WIDTH, 
+                                         FreeVikings::WIN_HEIGHT]
+      @mask_surface.fill [10, 10, 10]
+      @mask_surface.set_alpha 140
     end
   end # class PausedGameState
 end # module
