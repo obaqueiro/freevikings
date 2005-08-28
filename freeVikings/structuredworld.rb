@@ -43,7 +43,18 @@ a starting location.
       end
     end
 
-    def next_location
+    attr_reader :level
+
+=begin
+--- StructuredWorld#next_level
+Does the same as next_location, but returns (({Level})), not (({Location})).
+Dont't call ((<StructuredWorld#next_location>)) after 
+((<StructuredWorld#next_level>)), you would skip one location!
+After ((<StructuredWorld#next_level>)) you can get the current (({Location}))
+by call to ((<StructuredWorld#rewind_location>)).
+=end
+
+    def next_level
       @level = @levelsuite.next_level
 
       if @level == nil then
@@ -51,6 +62,11 @@ a starting location.
         return nil
       end
 
+      return @level
+    end
+
+    def next_location
+      next_level
       return create_location
     end
 

@@ -9,6 +9,7 @@
 
 require 'RUDL'
 
+require 'textrenderer.rb'
 require 'game.rb'
 
 module FreeVikings
@@ -49,7 +50,8 @@ module FreeVikings
 
     def load_font
       @log.info "Loading default font."
-      @font = FreeVikings::FONTS['big'] = RUDL::TrueTypeFont.new('fonts/adlibn.ttf', 16)
+      adlibn_ttf = RUDL::TrueTypeFont.new('fonts/adlibn.ttf', 16)
+      @font = FreeVikings::FONTS['default'] = TextRenderer.new(adlibn_ttf)
     end
 
     def open_window
@@ -61,10 +63,16 @@ module FreeVikings
 
     def display_logo
       @window.blit(@logo, [(@window.w/2) - (@logo.w/2), (@window.h/3) - (@logo.h/2)])
-      @window.blit(@font.render('freeVikings Copyright (c) 2005 Jakub Pavlik', true, [255,255,255]), [50,250])
-      @window.blit(@font.render('freeVikings come to you as free software under GNU/GPL;', true, [255,255,255]), [50,270])
-      @window.blit(@font.render("They are provided with aim of usability,", true, [255,255,255]), [50,290])
-      @window.blit(@font.render("but with ABSOLUTELY NO WARRANTY.", true, [255,255,255]), [50,310])
+
+      license_message = \
+      "freeVikings Copyright (c) 2005 Jakub Pavlik\n" \
+      "freeVikings come to you as free software under GNU/GPL; " \
+      "They are provided with aim of usability, " \
+      "but with\nABSOLUTELY NO WARRANTY."
+
+      license_text_box = @font.create_text_box(WIN_WIDTH - 100, 
+                                                     license_message)
+      @window.blit(license_text_box, [50,310])
 
       @window.flip
     end

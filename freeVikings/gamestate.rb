@@ -225,8 +225,48 @@ Changes the location view according to the state.
     def init_mask_surface
       @mask_surface = RUDL::Surface.new [FreeVikings::WIN_WIDTH, 
                                          FreeVikings::WIN_HEIGHT]
-      @mask_surface.fill [10, 10, 10]
+      grey = [10, 10, 10]
+      @mask_surface.fill grey
       @mask_surface.set_alpha 140
     end
   end # class PausedGameState
+
+
+=begin
+= LocationInfoGameState
+This state is used on the beginning of every location.
+Location password and author is displayed until the player presses a key.
+=end
+
+  class LocationInfoGameState
+
+=begin
+--- LocationInfoGameState.new(context, level)
+Arguments:
+* ((|context|)) - a (({Game})) object
+* ((|level|)) - a (({Level})) object with the information about 
+  the (({Location})) prepared to play
+=end
+
+    def initialize(context, level)
+      super context
+      init_message(level)
+    end
+
+    def change_view(surface)
+      surface.blit(@level_info_message,
+                   [surface.w/2 - @level_info_message/2, 140])
+    end
+
+    def serve_keydown(event)
+      @context.run_location
+    end
+
+    private
+
+    def init_message(level)
+      message = "Password:\n#{level.password}"
+      @level_info_message = FreeVikings::FONTS['default'].create_text_box(120, message)
+    end
+  end
 end # module

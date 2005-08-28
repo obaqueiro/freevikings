@@ -113,6 +113,9 @@ All the three examples expect you have created a RUDL::DisplaySurface
       # Surfaces, ktere se pouzivaji k sestaveni zobrazeni nahledu hraci plochy
       # a stavoveho radku s podobiznami vikingu
       @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT - BottomPanel::HEIGHT])
+
+      @loading_message = FreeVikings::FONTS['default'].create_text_box(120, 'LOADING')
+
       # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
       # tridy, pokud usoudi, ze by se stav mel zmenit.
       @state = nil
@@ -177,29 +180,27 @@ regularly and refreshes the screen.
         paint_loading_screen(@app_window)
 
 	if @team.nil? then
-          location = nil
-          location = @world.location 
-          @team = init_vikings_team(location)
-          # location = @world.location
+          level = location = nil
+          level = @world.level
 	elsif (@team.alive_size < @team.size) or (@give_up == true) then
 	  # Some of the heroes are dead.
 	  @log.info "Some vikings died. Try once more."
-	  @world.rewind_location
-          location = @world.location
-          @team = init_vikings_team(location)
+          level = @world.level
 	  @give_up = nil
 	elsif @team.alive_size == @team.size
 	  # All of the vikings have reached the EXIT
 	  @log.info "Level completed."
-	  unless location = @world.next_location then
+	  unless level = @world.next_level then
 	    @log.info "Congratulations! You explored all the world!"
 	    exit
 	  end
-          @team = init_vikings_team(location)
 	else
 	  # Situation which shouldn't ever occur
 	  raise FatalError, '*** Really strange situation. Nor the game loop is in it\'s first loop, nor the level completed, no vikings dead. Send a bug report, please.'
 	end
+
+        location = @world.rewind_location
+        @team = init_vikings_team(location)
 
         @bottompanel = BottomPanel.new @team
 
@@ -286,7 +287,7 @@ Prints the level info and waits some time or until the player presses a key.
     private
     def paint_loading_screen(screen)
       screen.fill 0x0000000
-      screen.blit(FreeVikings::FONTS['big'].render('LOADING', true, [255,255,255]), [280,180])
+      screen.blit(@loading_message, [280,180])
       screen.flip
     end
   end # class Game

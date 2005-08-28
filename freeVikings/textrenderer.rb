@@ -19,6 +19,8 @@ class TextRenderer
 
   DEBUG = false
 
+  DEFAULT_TEXT_COLOUR = [255,255,255]
+
 =begin
 --- TextRenderer.new(font)
 Creates a new ((<TextRenderer>)) for a (({RUDL::TrueTypeFont})) ((|font|)).
@@ -39,7 +41,7 @@ Arguments:
   three numbers)
 =end
 
-  def render(surface, width, text, colour=[255,255,255])
+  def render(surface, width, text, colour=DEFAULT_TEXT_COLOUR)
     lines = make_lines(text, width)
 
     lines.each_index do |l|
@@ -47,6 +49,18 @@ Arguments:
       line_surface = @font.render(line, false, colour)
       surface.blit line_surface, [0, l * (@font.linesize)]
     end
+  end
+
+=begin
+--- TextRenderer.create_text_box(width, text, colour=[255,255,255])
+Returns a new (({RUDL::Surface})) with rendered text.
+=end
+
+  def create_text_box(width, text, colour=DEFAULT_TEXT_COLOUR)
+    height = height(text, width)
+    surface = Surface.new [width, height]
+    render(surface, width, text, colour)
+    return surface
   end
 
 =begin
@@ -70,7 +84,7 @@ to fit in ((|text|)) which must be String.
   # accepts a String, returns an Array of Strings
 
   def make_lines(text, line_width)
-    words = text.split(/\s/)
+    words = text.split(/ /)
     debug { print "words: "; p words }
 
     lines = []
@@ -87,6 +101,13 @@ to fit in ((|text|)) which must be String.
       end
 
       lines.push line
+
+      # make a new line where \n
+      while (i = lines.last.index("\n")) do
+        new_line = lines.last.slice!(i..lines.last.size)
+        new_line.slice!(0...1) # remove the EOL which is the first character
+        lines.push(new_line)
+      end # while (i = lines.last.index("\n"))
     end # while (words.size > 0)
 
     debug { 
@@ -115,7 +136,7 @@ if __FILE__ == $0 then
   renderer = TextRenderer.new $font
 
   # make a text in a border
-  text = "Play freeVikings and guide the three viking friends through some really dangerous places."
+  text = "Play\nfreeVikings\nand guide the three viking friends through some really dangerous places."
   w = 200
   h = renderer.height(text, w)
   surf = Surface.new [w,h]
