@@ -10,6 +10,8 @@
 require 'RUDL'
 
 require 'gameui/gameui.rb'
+require 'topmenu.rb'
+
 require 'game.rb'
 
 module FreeVikings
@@ -17,6 +19,7 @@ module FreeVikings
   class Init
 
     include GameUI
+    include GameUI::Menus
 
     def initialize
       @log = MockLogger.new
@@ -34,10 +37,44 @@ module FreeVikings
 
       @log.info "Log4r logging mechanisms initialized."
 
-      start_game
+      catch(:game_exit) do
+        start_menu
+      end
+      @log.info "Game exitted."
     end
 
     private
+
+    # Starts the menu.
+    # Does never return, because the menu is ran in an endless loop
+    # until it is terminated by unwinding the stack (which is caused by
+    # 'throw :game_exit' from inside TopMenu).
+
+    def start_menu
+      @log.info "Starting game menu."
+
+      menu = TopMenu.new(@window)
+
+      ActionButton.new(menu, "Start Game", Proc.new {start_game})
+
+      graphics = Menu.new(menu, "Graphics", nil, menu.text_renderer)
+      ChooseButton.new(graphics, "Display fps", ["yes", "no"])
+      ChooseButton.new(graphics, "Mode", ["window", "fullscreen"])
+      QuitButton.new(graphics)
+
+      QuitButton.new(menu, QuitButton::QUIT)
+
+      # The endless 'menu loop'.
+      # Is ended from inside TopMenu by unwinding the stack.
+      # When does this happen? When you choose 'Yes' in the 'Quit - yes or no'
+      # dialog.
+      loop do
+        catch(:return_to_menu) do
+          clear_screen
+          menu.run
+        end
+      end
+    end
 
     def start_game
       @log.info "Starting the game."
@@ -81,6 +118,10 @@ module FreeVikings
 
     def configure_log4r
       require 'log4rsetupload'
+    end
+
+    def clear_screen
+      @window.fill [0,0,0]
     end
   end # class Init
 

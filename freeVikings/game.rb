@@ -146,7 +146,7 @@ Exits the game.
 =end
 
     def exit_game
-      exit
+      throw :return_to_menu
     end
 
 =begin
