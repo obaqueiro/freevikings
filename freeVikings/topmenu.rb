@@ -13,16 +13,28 @@ module FreeVikings
 
 =begin
 == TopMenu
+A top-level (({Menu})) class.
+Actually it isn't really top-level, it builds an indirect parent (({Menu})),
+but this indirect parent is only used to ask the player if he really wants
+to quit the menu - and the game.
+
+How do I make the 'indirect parent'? Look at ((<MenuHidingButton>)).
 =end
 
   class TopMenu < GameUI::Menus::Menu
 
     include GameUI::Menus
 
+=begin
+--- TopMenu.new(surface)
+See, you can't use ((<TopMenu>)) as any other (({Menu}))'s child.
+Or, it isn't so much simple.
+=end
+
     def initialize(surface)
       text_renderer = FreeVikings::FONTS['default']
 
-      # Dialog 'Exit game - yes/no?'      
+      # Dialog 'Exit game - yes/no?'. The indirect parent.
       exit_dialog = create_exit_dialog(surface, text_renderer)
       ActionButton.new(exit_dialog, "Yes", Proc.new {throw :game_exit})
       hider = MenuHidingButton.new(exit_dialog, "No")
@@ -38,6 +50,14 @@ module FreeVikings
     end
 
   end # class TopMenu
+
+=begin
+== MenuHidingButton
+A ((<MenuHidingButton>)) looks like a normal (({MenuItem})), but hides
+a (({Menu})) or any other useful object in itself.
+It makes it possible to 'rename' (({Menu})) - I use it to 'rename'
+menu "Menu" to "No" in the "Exit game?" menu.
+=end
 
   class MenuHidingButton < GameUI::Menus::MenuItem
 
@@ -65,4 +85,47 @@ module FreeVikings
     end
   end
 
+=begin
+== FVConfiguratorButton
+A (({ChooseButton})) button which is synchronized with some option 
+in (({FreeVikings::OPTIONS})).
+=end
+
+  class FVConfiguratorButton < GameUI::Menus::ChooseButton
+
+=begin
+--- FVConfiguratorButton.new(parent, text, option_name, choices_hash)
+Arguments:
+* ((|option_name|)) - a key into (({FreeVikings::OPTIONS})) - e.g. 
+  'display_fps'
+* ((|choices_hash|)) - keys are displayed (({String}))s, values are values
+  for (({FreeVikings::OPTIONS})) - e.g. (({ {'yes' => true, 'no' => false} }))
+=end
+
+    def initialize(parent, text, option_name, choices_hash)
+      super(parent, text, choices_hash.keys)
+      @option_name = option_name
+      @choices_hash = choices_hash
+      find_choice
+    end
+
+    private
+
+    def changed(old_choice, new_choice)
+      FreeVikings::OPTIONS[@option_name] = @choices_hash[self.value]
+    end
+
+    # Tries to find and set the choice which has been already 
+    # chosen - e.g. by a commandline option
+
+    def find_choice
+      @choices.each_index do |i|
+        key = @choices[i]
+        if @choices_hash[key] == FreeVikings::OPTIONS[@option_name] then
+          @choice = i
+          return
+        end
+      end
+    end
+  end
 end # module FreeVikings

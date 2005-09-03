@@ -40,6 +40,7 @@ module FreeVikings
       catch(:game_exit) do
         start_menu
       end
+      # The stack's been unwinded. The user has exited freeVikings.
       @log.info "Game exitted."
     end
 
@@ -58,8 +59,7 @@ module FreeVikings
       ActionButton.new(menu, "Start Game", Proc.new {start_game})
 
       graphics = Menu.new(menu, "Graphics", nil, menu.text_renderer)
-      ChooseButton.new(graphics, "Display fps", ["yes", "no"])
-      ChooseButton.new(graphics, "Mode", ["window", "fullscreen"])
+      FVConfiguratorButton.new(graphics, "Display fps", "display_fps", {"yes" => true, "no" => false})
       QuitButton.new(graphics)
 
       QuitButton.new(menu, QuitButton::QUIT)
@@ -69,6 +69,10 @@ module FreeVikings
       # When does this happen? When you choose 'Yes' in the 'Quit - yes or no'
       # dialog.
       loop do
+        # Here unwinding the stack is used by Game#exit_game to say
+        # 'hey, menu, I've finished my work, speak with the user for a while'.
+        # Don't forget the same technique, unwinding the stack, (but with
+        # another symbol) is used to exit the menu and the entire program.
         catch(:return_to_menu) do
           clear_screen
           menu.run
