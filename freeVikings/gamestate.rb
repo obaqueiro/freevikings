@@ -80,7 +80,7 @@ Changes the location view according to the state.
 
     def end_game
       Log4r::Logger['init log'].info "Ending the game."
-      context.exit_game
+      @context.exit_game
     end # private method end_game
 
   end # class GameState
