@@ -9,7 +9,7 @@ used in any level before.
 =end
 
 require 'activeobject.rb'
-require 'textrenderer.rb'
+require 'gameui/textrenderer/textrenderer.rb'
 require 'timelock.rb'
 
 module FreeVikings

@@ -31,6 +31,8 @@ The second argument is for internal use only and points to a 'parent'
 =end
 
     def initialize(dirname, member_of=nil)
+      @log = Log4r::Logger['world log']
+
       super(dirname, member_of)
       @title = "Level " + File.basename(dirname)
       @active_member = self
@@ -96,9 +98,15 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
 
     def load_password
       password = ''
-      File.open(@dirname + '/' + 'PASSWORD') do |fr|
-        password = fr.gets.chomp
+
+      begin
+        File.open(@dirname + '/' + 'PASSWORD') do |fr|
+          password = fr.gets.chomp
+        end
+      rescue Errno::ENOENT => ex
+        @log.error "Failed to read a level password: " + ex.message
       end
+
       password = '' unless password.valid_location_password?
       return password
     end

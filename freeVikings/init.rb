@@ -9,12 +9,14 @@
 
 require 'RUDL'
 
-require 'textrenderer.rb'
+require 'gameui/gameui.rb'
 require 'game.rb'
 
 module FreeVikings
 
   class Init
+
+    include GameUI
 
     def initialize
       @log = MockLogger.new
