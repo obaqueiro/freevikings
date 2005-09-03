@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>Monster Tests</title>
+    <author>Jakub Pavlik /severus@post.cz/</author>
+    <description>
+      Testing locations for development of new monster classes.
+    </description>
+  </info>
+
+  <suite>
+    <level>Prototype</level>
+  </suite>
+</levelsuite>
