@@ -146,13 +146,13 @@ containing the XML source).
       @max_width = @max_height = 0
       # prochazime radky bloku:
       lines.each_index { |line_num|
-	@max_height = line_num if line_num > @max_height
+	@max_height = line_num if line_num >= @max_height
 	@blocks.push(Array.new)
 	# prochazime bloky:
 	line = lines[line_num]
-	block_codes = line.split(/\s*/)
+	block_codes = line.split(//)
 	block_codes.each_index { |block_index|
-	  @max_width = block_index if block_index > @max_width
+	  @max_width = block_index + 1 if block_index >= @max_width
 	  block_code = block_codes[block_index]
 	  unless @blocktypes[block_code].nil?
 	    @blocks[line_num][block_index] = @blocktypes[block_code]
@@ -162,8 +162,8 @@ containing the XML source).
 	  end
 	}
       }
-      raise LocationNotLargeEnoughException, "Location is not #{MIN_TILES_X} broad, it isn't valid and cannot be loaded." if @max_width < MIN_TILES_X
-      raise LocationNotLargeEnoughException, "Location is not #{MIN_TILES_Y} high, it isn't valid and cannot be loaded." if @max_height < MIN_TILES_Y
+      raise LocationNotLargeEnoughException, "Location is less then #{MIN_TILES_X} tiles broad, it isn't valid and cannot be loaded." if @max_width < MIN_TILES_X
+      raise LocationNotLargeEnoughException, "Location is less then #{MIN_TILES_Y} tiles high, it isn't valid and cannot be loaded." if @max_height < MIN_TILES_Y
     end
 
     # Vrati jmeno nacitaneho zdroje
