@@ -23,6 +23,9 @@ SPACE     - Erik jumps, Baleog cuts with his sword, Olaf carries shield over
 D         - Baleog shoots an arrow
 E         - Tries to use an active item from the active viking's inventory
 TAB, P    - Pauses the game and enables inventory manipulation
+F2        - Give up the level and start once more
+F3        - window/fullscreen mode
+F4        - Switch on/off the fps display
 
 Inventory manipulation:
 
