@@ -58,7 +58,7 @@ module FreeVikings
 
       ActionButton.new(menu, "Start Game", Proc.new {start_game})
 
-      graphics = Menu.new(menu, "Graphics", nil, menu.text_renderer)
+      graphics = Menu.new(menu, "Graphics", nil, nil)
       FVConfiguratorButton.new(graphics, "Display fps", "display_fps", {"yes" => true, "no" => false})
       QuitButton.new(graphics)
 

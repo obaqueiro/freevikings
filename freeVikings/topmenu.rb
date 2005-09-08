@@ -23,6 +23,8 @@ How do I make the 'indirect parent'? Look at ((<MenuHidingButton>)).
 
   class TopMenu < GameUI::Menus::Menu
 
+    MENU_WIDTH = 300
+
     include GameUI::Menus
 
 =begin
@@ -33,19 +35,22 @@ Or, it isn't so much simple.
 
     def initialize(surface)
       text_renderer = FreeVikings::FONTS['default']
+      @x = surface.w/2 - MENU_WIDTH/2
+      @y = 110
+      @width = 200
 
       # Dialog 'Exit game - yes/no?'. The indirect parent.
       exit_dialog = create_exit_dialog(surface, text_renderer)
       ActionButton.new(exit_dialog, "Yes", Proc.new {throw :game_exit})
       hider = MenuHidingButton.new(exit_dialog, "No")
 
-      super(hider, "Menu", surface, text_renderer)
+      super(hider, "Menu", nil, nil)
     end
 
     private
 
     def create_exit_dialog(surface, text_renderer)
-      mn = Menu.new(nil, "Quit freeVikings?", surface, text_renderer)
+      mn = Menu.new(nil, "Quit freeVikings?", surface, text_renderer, @x, @y, @width)
       return mn
     end
 
@@ -59,11 +64,17 @@ It makes it possible to 'rename' (({Menu})) - I use it to 'rename'
 menu "Menu" to "No" in the "Exit game?" menu.
 =end
 
-  class MenuHidingButton < GameUI::Menus::MenuItem
+  class MenuHidingButton < GameUI::Menus::Menu
 
     def initialize(parent, text)
-      super(parent)
+      unless parent
+        raise "#{self.class.to_s} must have a real Menu parent."
+      end
+
+      @parent = parent
+      @parent.add self
       @child = nil
+
       @image = create_image(text)
     end
 
@@ -82,6 +93,26 @@ menu "Menu" to "No" in the "Exit game?" menu.
 
     def quit
       @child.quit
+    end
+
+    def x
+      @parent.x
+    end
+
+    def y
+      @parent.y
+    end
+
+    def width
+      @parent.width
+    end
+
+    def surface
+      @parent.surface
+    end
+
+    def text_renderer
+      @parent.text_renderer
     end
   end
 
