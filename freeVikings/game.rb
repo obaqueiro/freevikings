@@ -100,6 +100,8 @@ All the three examples expect you have created a RUDL::DisplaySurface
       end
       if FreeVikings::OPTIONS['startpassword']
         startpassword = FreeVikings::OPTIONS['startpassword']
+      else
+        startpassword = ''
       end
 
       if locations.is_a? World then

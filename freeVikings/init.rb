@@ -11,6 +11,7 @@ require 'RUDL'
 
 require 'gameui/gameui.rb'
 require 'topmenu.rb'
+require 'passwordedit.rb'
 
 require 'game.rb'
 
@@ -56,11 +57,14 @@ module FreeVikings
 
       menu = TopMenu.new(@window)
 
-      ActionButton.new(menu, "Start Game", Proc.new {start_game})
+      start_menu = Menu.new(menu, "Start Game", nil, nil)
+      ActionButton.new(start_menu, "New Game", Proc.new {start_game})
+      PasswordEdit.new(start_menu, "Password", Proc.new {start_game})
+      QuitButton.new(start_menu)
 
-      graphics = Menu.new(menu, "Graphics", nil, nil)
-      FVConfiguratorButton.new(graphics, "Display fps", "display_fps", {"yes" => true, "no" => false})
-      QuitButton.new(graphics)
+      graphics_menu = Menu.new(menu, "Graphics", nil, nil)
+      FVConfiguratorButton.new(graphics_menu, "Display fps", "display_fps", {"yes" => true, "no" => false})
+      QuitButton.new(graphics_menu)
 
       QuitButton.new(menu, QuitButton::QUIT)
 
@@ -83,7 +87,6 @@ module FreeVikings
     def start_game
       @log.info "Starting the game."
       Game.new(@window).game_loop
-      # Game#game_loop never returns, because exit is called inside.
     end
 
     def load_logo

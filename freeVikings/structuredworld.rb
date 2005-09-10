@@ -29,18 +29,10 @@ String. If it is given location with password ((|password|)) is selected as
 a starting location.
 =end
 
-    def initialize(campaign_dir, password=nil)
+    def initialize(campaign_dir, password='')
       @levelsuite = LevelSuite.new(campaign_dir)
 
-      if password then
-        unless password.valid_location_password?
-          raise ArgumentError, "Password \"#{password}\" of type #{password.class} isn't a valid location password. A valid password must be #{String::LOCATION_PASSWORD_LENGTH} characters long and may contain alphanumeric characters only."
-        end
-        @level = @levelsuite.level_with_password(password)
-        create_location
-      else
-        next_location
-      end
+      next_location(password)
     end
 
     attr_reader :level
@@ -64,9 +56,23 @@ by call to ((<StructuredWorld#rewind_location>)).
       return @level
     end
 
-    def next_location
-      next_level
-      return create_location
+=begin
+--- StructuredWorld#next_location(password='')
+If you use the voluntary argument, a (({Location})) with the specified
+password is run instead of the next one.
+=end
+
+    def next_location(password='')
+      if password != '' then
+        unless password.valid_location_password?
+          raise ArgumentError, "Password \"#{password}\" of type #{password.class} isn't a valid location password. A valid password must be #{String::LOCATION_PASSWORD_LENGTH} characters long and may contain alphanumeric characters only."
+        end
+        @level = @levelsuite.level_with_password(password)
+        create_location
+      else
+        next_level
+        return create_location
+      end
     end
 
     def rewind_location
