@@ -59,7 +59,7 @@ module FreeVikings
 
       start_menu = Menu.new(menu, "Start Game", nil, nil)
       ActionButton.new(start_menu, "New Game", Proc.new {start_game})
-      PasswordEdit.new(start_menu, "Password", Proc.new {start_game})
+      PasswordEdit.new(start_menu, "Password", FreeVikings::OPTIONS['startpassword'], Proc.new {start_game})
       QuitButton.new(start_menu)
 
       graphics_menu = Menu.new(menu, "Graphics", nil, nil)

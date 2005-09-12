@@ -22,8 +22,8 @@ module FreeVikings
 enough).
 =end
 
-    def initialize(parent, label, ready_proc)
-      super(parent, label, PASSWORD_LENGTH)
+    def initialize(parent, label, value, ready_proc)
+      super(parent, label, value, PASSWORD_LENGTH)
       @ready_proc = ready_proc
     end
 
@@ -31,7 +31,7 @@ enough).
 
     def read_events
       if @edit_place.value.size >= PASSWORD_LENGTH then
-        FreeVikings::OPTIONS['startpassword'] = @edit_place.value.dup
+        FreeVikings::OPTIONS['startpassword'] = String.new(@edit_place.value)
         PASSWORD_LENGTH.times {@edit_place.backspace}
 
         begin
