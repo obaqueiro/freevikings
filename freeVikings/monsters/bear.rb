@@ -34,13 +34,19 @@ module FreeVikings
     end
 
     def init_images
+      left = Image.load('bear_left.tga')
       anim_left = AnimationSuite.new(0.3, 
-                                     [Image.load('bear_left.tga'),
-                                     Image.load('bear_left_walk.tga')]
+                                     [left,
+                                     Image.load('bear_left_walk.tga'),
+                                      left,
+                                      Image.load('bear_left_walk2.tga')]
                                      )
+      right = Image.load('bear_right.tga')
       anim_right = AnimationSuite.new(0.75, 
-                                     [Image.load('bear_right.tga'),
-                                     Image.load('bear_right_walk.tga')]
+                                     [right,
+                                     Image.load('bear_right_walk.tga'),
+                                      right,
+                                      Image.load('bear_right_walk2.tga')]
                                      )
 
       imgs = {
@@ -55,7 +61,7 @@ module FreeVikings
 
   # WalkingBear.
   # The Bear which walks around his initial position.
-  class WalkingBear < FreeVikings::Bear
+  class WalkingBear < Bear
 
     VELOCITY = 50
 
