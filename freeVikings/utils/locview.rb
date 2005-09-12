@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/ruby -w
 
 # locview.rb
 # Location browser designed as a development tool (it's also a powerfull
