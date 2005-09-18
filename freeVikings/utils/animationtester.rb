@@ -7,14 +7,14 @@
 # them as animation.
 
 # Unless 'freeVikings/util' is the working directory,
-# it must be added into the features path.
+# 'freeVikings' must be added into the features path.
 if `pwd` != File.dirname(__FILE__) then
-  $: << File.dirname(__FILE__)
+  $: << File.dirname(File.dirname(__FILE__))
 end
 
 require 'RUDL'
 
-require '../imagebank.rb'
+require 'imagebank.rb'
 
 class AnimationTester
 
