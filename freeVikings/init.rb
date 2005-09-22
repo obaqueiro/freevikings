@@ -58,8 +58,14 @@ module FreeVikings
       menu = TopMenu.new(@window)
 
       start_menu = Menu.new(menu, "Start Game", nil, nil)
-      ActionButton.new(start_menu, "New Game", Proc.new {start_game})
-      PasswordEdit.new(start_menu, "Password", FreeVikings::OPTIONS['startpassword'], Proc.new {start_game})
+      ActionButton.new(start_menu, "New Game", Proc.new {
+                         @log.info "Starting new game."
+                         Game.new(@window).game_loop
+                       })
+      PasswordEdit.new(start_menu, "Password", FreeVikings::OPTIONS['startpassword'], Proc.new {
+                         @log.info "Starting the game with password '#{FreeVikings::OPTIONS['startpassword']}'."
+                         Game.new(@window, FreeVikings::OPTIONS['startpassword']).game_loop
+                       })
       QuitButton.new(start_menu)
 
       graphics_menu = Menu.new(menu, "Graphics", nil, nil)
@@ -82,11 +88,6 @@ module FreeVikings
           menu.run
         end
       end
-    end
-
-    def start_game
-      @log.info "Starting the game."
-      Game.new(@window).game_loop
     end
 
     def load_logo

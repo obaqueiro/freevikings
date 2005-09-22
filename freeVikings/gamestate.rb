@@ -160,7 +160,6 @@ Changes the location view according to the state.
   end # class PlayingGameState
 
 
-
   class PausedGameState < GameState
 
     def initialize(context)
@@ -311,5 +310,4 @@ A (({Game})) state used when the player successfully explores the last
       @message = FreeVikings::FONTS['default'].create_text_box(FreeVikings::WIN_WIDTH-100, text)
     end
   end
-
 end # module

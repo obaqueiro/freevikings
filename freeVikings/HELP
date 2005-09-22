@@ -1,8 +1,8 @@
 freevikings.rb
 
 ruby freevikings.rb [-fFhpxls] [--fullscreen] [--fps] [--help] [--profile] 
-			[--extensions] [list-of-locations]
-			[--levelsuite levelsuite] [--startpassword password]
+			[--extensions] [--levelsuite levelsuite] 
+			[--startpassword password]
 
 Description:
 

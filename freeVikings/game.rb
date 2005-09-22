@@ -49,7 +49,7 @@ I have a good mood for it, I will make ((|@state|)) go away.
 =begin
 == Public instance methods
 
---- Game.new(window, locations=[])
+--- Game.new(window, password='')
 Argument ((|window|)) should be a RUDL::Surface (or RUDL::DisplaySurface).
 It is used as a main game screen.
 About the second argument, ((|locations|)), will I write later.
@@ -59,58 +59,21 @@ receive any user events.
 It means you theoretically could create two Game objects, both working with
 the same window, and use them subsequently (or, if you were a devil, both
 at once in a multithreaded application). But I wouldn't do that...
-
-The main work of ((<Game::new>)) is to prepare the world (represented by an
-instance of class World) for the vikings. The second argument, ((|locations|)),
-says how to build that world.
-* If ((|locations|)) is a World instance, it is used without any changes.
-* If it's method empty? returns true, it is used as an Array of filenames
-  relative to the 'locs' directory. (The 'locs' directory in freeVikings
-  distribution contains locations in a form of XML.files.) All the listed 
-  locations are loaded.
-* If ((|locations|)) is empty, a global freeVikings configuration is searched
-  for locations to load. If there aren't any, a default locations set is 
-  loaded.
-
-Examples:
-* (({Game.new(win)}))
-* (({Game.new(win, ["first_loc.xml", "pyramida_loc.xml"])}))
-* (({Game.new(win, World.new("first_loc.xml", "pyramida_loc.xml"))}))
-
-The first example initializes the game and loads the default level set.
-The second and third one are equal, they both make a game with a world 
-containing two specified locations, but the third one gives you more
-freedom to make the world as you want it to be. (E.g. you don't have to use 
-the standard World class.)
-All the three examples expect you have created a RUDL::DisplaySurface 
-((|win |)) before.
 =end
-    def initialize(window, locations=[])
+    def initialize(window, startpassword='')
       @app_window = window
 
       @log = Log4r::Logger['init log']
 
       # set defaults:
       levelset = 'locs/DefaultCampaign'
-      startpassword = nil
 
       # some defaults can be redefined by the player's options:
       if FreeVikings::OPTIONS['levelset']
         levelset = FreeVikings::OPTIONS['levelset']
       end
-      if FreeVikings::OPTIONS['startpassword']
-        startpassword = FreeVikings::OPTIONS['startpassword']
-      else
-        startpassword = ''
-      end
 
-      if locations.is_a? World then
-        @world = locations
-      elsif not locations.empty?
-        @world = World.new(*locations)
-      else
-        @world = StructuredWorld.new(levelset, startpassword)
-      end
+      @world = StructuredWorld.new(levelset, startpassword)
 
       # Surfaces, ktere se pouzivaji k sestaveni zobrazeni nahledu hraci plochy
       # a stavoveho radku s podobiznami vikingu
