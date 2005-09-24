@@ -4,7 +4,7 @@ ruby freevikings.rb [-fFhpxls] [--fullscreen] [--fps] [--help] [--profile]
 			[--extensions] [--levelsuite levelsuite] 
 			[--startpassword password]
 
-Description:
+DESCRIPTION:
 
 An old DOS game 'Lost Vikings' clonned using the Ruby 
 programming language and released under terms of GNU/GPL..
@@ -12,7 +12,7 @@ Guide the three viking friends, Eric, Baleog and Olaf,
 through chambers full of enemies. Find and kill Tomator,
 the galagtic devil collecting interesting forms of life.
 
-Keyboard controls:
+KEYBOARD CONTROLS:
 
 <- and -> - move the active viking around
 Ctrl, PgUp, PgDn - switch between the vikings
@@ -27,7 +27,7 @@ F2        - Give up the level and start once more
 F3        - window/fullscreen mode
 F4        - Switch on/off the fps display
 
-Inventory manipulation:
+INVENTORY MANIPULATION:
 
 TAB, P    - Switch into and from the inventory manipulation mode.
             While you are working in this mode, the game is paused.
@@ -40,12 +40,16 @@ SPACE     - Enable/disable items exchange.
             current owner and then press SPACE once more to return
             to the normal inventory manipulation mode.
 
-Mouse controls:
+MOUSE CONTROLS:
 
 Click onto any viking's icon to switch to him.
 Click onto the item in the inventory to select it.
 
-Options:
+OPTIONS:
+
+ruby freevikings.rb [-fFhpxls] [--fullscreen] [--fps] [--help] [--profile] 
+			[--extensions] [--levelsuite levelsuite] 
+			[--startpassword password]
 
 --help		-h	Prints out this help and halts.
 --fullscreen    -f      Starts the game in the fullscreen mode

@@ -66,7 +66,7 @@ containing the XML source).
 
       # Pri nahravani skriptu muze nastat velke mnozstvi vyjimecnych situaci:
       begin
-        s = MonsterScript.new(scriptfile) {|script| 
+        s = MonsterScript.new(scriptfile, File.dirname(@source.path)) {|script| 
           script.extend FreeVikings
           eval "script::LOCATION = location"
         }
