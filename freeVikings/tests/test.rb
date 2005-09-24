@@ -59,6 +59,7 @@ require 'testlock.rb'
 require 'testkey.rb'
 require 'testgfxtheme.rb'
 require 'teststructuredworld.rb'
+require 'testtalk.rb'
 
 class FreeVikingsTestSuite
 
@@ -103,6 +104,7 @@ class FreeVikingsTestSuite
     suite << TestKey.suite
     suite << TestGfxTheme.suite
     suite << TestStructuredWorld.suite
+    suite << TestTalk.suite
 
     return suite
   end
