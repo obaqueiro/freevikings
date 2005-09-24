@@ -16,5 +16,6 @@
 
   <suite>
     <levelsuite>AncientLevelSet</levelsuite>
+    <levelsuite>MonsterTestsLevelSet</levelsuite>
   </suite>
 </levelsuite>
