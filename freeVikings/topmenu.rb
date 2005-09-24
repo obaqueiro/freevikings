@@ -114,6 +114,11 @@ menu "Menu" to "No" in the "Exit game?" menu.
     def text_renderer
       @parent.text_renderer
     end
+
+    def prepare
+      # This must be empty. 'prepare' inherited from Menu is not good
+      # for MenuHidingButton ...
+    end
   end
 
 =begin
@@ -125,7 +130,7 @@ in (({FreeVikings::OPTIONS})).
   class FVConfiguratorButton < GameUI::Menus::ChooseButton
 
 =begin
---- FVConfiguratorButton.new(parent, text, option_name, choices_hash)
+--- FVConfiguratorButton.new(parent, text, option_name, choices_hash, change_proc=nil)
 Arguments:
 * ((|option_name|)) - a key into (({FreeVikings::OPTIONS})) - e.g. 
   'display_fps'
@@ -133,10 +138,13 @@ Arguments:
   for (({FreeVikings::OPTIONS})) - e.g. (({ {'yes' => true, 'no' => false} }))
 =end
 
-    def initialize(parent, text, option_name, choices_hash)
+    def initialize(parent, text, option_name, choices_hash, change_proc=nil)
       super(parent, text, choices_hash.keys)
       @option_name = option_name
       @choices_hash = choices_hash
+    end
+
+    def prepare
       find_choice
     end
 
@@ -157,6 +165,20 @@ Arguments:
           return
         end
       end
+    end
+  end
+
+  class DisplayModeChooseButton < FVConfiguratorButton
+
+    def initialize(parent, window)
+      super(parent, "Mode", "fullscreen",
+            {"fullscreen" => true, "window" => false})
+      @window = window
+    end
+
+    def changed(old_choice, new_choice)
+      super(old_choice, new_choice)
+      @window.toggle_fullscreen
     end
   end
 end # module FreeVikings

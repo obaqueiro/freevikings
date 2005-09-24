@@ -59,6 +59,7 @@ Changes the location view according to the state.
         end_game
       when K_F3
 	@context.app_window.toggle_fullscreen
+        FreeVikings::OPTIONS['fullscreen'] = @context.app_window.fullscreen?
       when K_F4
         FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
       when K_F2

@@ -7,7 +7,7 @@
 # are being loaded. Init opens the application window, prints something
 # and then starts all the long-lasting stuff.
 
-require 'RUDL'
+require 'rudlmore.rb'
 
 require 'gameui/gameui.rb'
 require 'topmenu.rb'
@@ -69,6 +69,8 @@ module FreeVikings
       QuitButton.new(start_menu)
 
       graphics_menu = Menu.new(menu, "Graphics", nil, nil)
+
+      DisplayModeChooseButton.new(graphics_menu, @window)
       FVConfiguratorButton.new(graphics_menu, "Display fps", "display_fps", {"yes" => true, "no" => false})
       QuitButton.new(graphics_menu)
 
