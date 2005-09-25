@@ -1,0 +1,16 @@
+--- %YAML:1.0
+# Experimental talk anyone can have with the OrangeHead
+# speaker 0 is the OrangeHead, speaker 1 the second one.
+speakers: 2
+talk: - speaker: 0
+        say: Hi, you there, what's your name?
+      - speaker: 1
+        say: My name isn't your job.
+      - speaker: 0
+        say: You aren't very polite, are you.
+      - speaker: 1
+        say: Actually I've always been very impolite.
+      - speaker: 0
+        say: Than I've got nothing to tell you.
+      - speaker: 1
+        say: So good bye, it was really nice to meet you.
