@@ -10,6 +10,8 @@ module FreeVikings
 
     JUMP_HEIGHT = 1.3 * Viking::HEIGHT
 
+    FAVOURITE_COLOUR = [180,0,0]
+
     def initialize(name, start_position)
       super(name, start_position)
       init_images

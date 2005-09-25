@@ -10,6 +10,8 @@ module FreeVikings
 
   class Shielder < Viking
 
+    FAVOURITE_COLOUR = [190, 190, 0]
+
     def initialize(name, start_position)
       super(name, start_position)
       init_images

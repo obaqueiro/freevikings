@@ -14,6 +14,7 @@ require 'inventory.rb'
 require 'map.rb' # kvuli const. TILE_SIZE
 require 'sophisticatedspritemixins.rb'
 require 'timelock.rb'
+require 'talkable.rb'
 
 =begin
 = Viking
@@ -24,6 +25,7 @@ module FreeVikings
   class Viking < Sprite
 
     include SophisticatedSpriteMixins::Walking
+    include Talkable
 
 =begin
 --- Viking::BASE_VELOCITY
