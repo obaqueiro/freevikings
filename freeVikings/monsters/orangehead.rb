@@ -9,15 +9,19 @@ require 'sprite.rb'
 require 'imagebank.rb'
 require 'monster.rb'
 require 'hero.rb'
+require 'timelock.rb'
+require 'talkable.rb'
 
 module FreeVikings
 
   class OrangeHead < Sprite
 
     include Monster
+    include Talkable
 
     WIDTH = 60
     HEIGHT = 70
+    SENTENCE_LASTING = 4
 
     # talk is a FreeVikings::Talk or nil.
 
@@ -26,6 +30,7 @@ module FreeVikings
       @energy = 8
       @state = 'standing'
       @talk = talk
+      @delay = TimeLock.new
     end
 
     attr_reader :state
@@ -34,12 +39,19 @@ module FreeVikings
       super
 
       if @talk then
-        viking = @location.sprites_on_rect(@rect).find do |sprite|
-          sprite.kind_of? Hero
+        unless @talk.running?
+          viking = @location.sprites_on_rect(@rect).find do |sprite|
+            sprite.kind_of? Hero
+          end
+
+          if viking
+            @talk.start(self, viking)
+          end
         end
 
-        if viking
-          @talk.start(self, viking)
+        if @talk.running? and @delay.free? then
+          @talk.next
+          @delay = TimeLock.new SENTENCE_LASTING
         end
       end
     end
