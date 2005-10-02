@@ -32,7 +32,9 @@ class AnimationTester
 
   def run
     loop do
-      if RUDL::EventQueue.get.find {|event| event.kind_of? RUDL::KeyDownEvent}
+      if RUDL::EventQueue.get.find {|event| 
+          event.kind_of? RUDL::KeyDownEvent or event.kind_of? RUDL::QuitEvent
+        }
         break
       end
 
