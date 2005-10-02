@@ -18,12 +18,7 @@
   <!-- Definice rozmisteni bloku v mape -->
   
   <map>
-    <blocktypes>
-<blocktype code="0" path="ice_map/snow_base.tga" solid="solid" />
-<blocktype code="A" path="ice_map/snow_atypictile.tga" solid="solid" />
-<blocktype code="H" path="ice_map/snow_base_dark.tga" />
-<blocktype code="C" path="ice_map/snow_base_ceiling.tga" solid="solid" />
-    </blocktypes>
+    <blocktypes src="../blocktypes.xml" />
 
 <blocks>
 00000000000000000000000000000000000000000000000000000000
