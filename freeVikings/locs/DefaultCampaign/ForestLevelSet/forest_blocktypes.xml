@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+
+<blocktypes>
+  <blocktype code="0" path="themes/ForestTheme/tile_forest_ground_base.tga" solid="solid" />
+  <blocktype code="1" path="themes/ForestTheme/tile_forest_ground_atyp1.tga" solid="solid" />
+  <blocktype code="a" path="themes/ForestTheme/tile_forest_air.tga" />
+  <blocktype code="A" path="themes/ForestTheme/tile_forest_air.tga" solid="solid" />
+  <blocktype code="G" path="themes/ForestTheme/tile_forest_ground_top.tga" solid="solid" />
+</blocktypes>
