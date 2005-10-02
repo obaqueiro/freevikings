@@ -13,7 +13,6 @@
 #                   ve stavovem radku.
 
 require 'RUDL'
-require 'log4r'
 
 module FreeVikings
 

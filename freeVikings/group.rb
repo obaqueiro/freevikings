@@ -31,6 +31,10 @@ module FreeVikings
     def each
       @members.each {|m| yield m}
     end
+
+    def members
+      @members.dup
+    end
   end # class Group
 
   module PaintableGroup

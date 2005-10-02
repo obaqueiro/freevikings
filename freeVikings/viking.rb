@@ -1,8 +1,6 @@
 # viking.rb
 # igneus 20.1.2004
 
-require 'log4r'
-
 require 'sprite.rb'
 require 'deadviking.rb'
 

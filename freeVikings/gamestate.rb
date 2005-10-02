@@ -91,7 +91,7 @@ Changes the location view according to the state.
 
     def initialize(context)
       super context
-      @context.bottompanel
+      # @context.bottompanel
     end
 
     def view_center

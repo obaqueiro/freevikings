@@ -36,6 +36,7 @@ containing the XML source).
           raise InvalidDataSourceException, message
         end
         @source = File.open locsource
+        @dir = File.dirname locsource
       end
 
       @doc = REXML::Document.new(@source)
@@ -119,7 +120,18 @@ containing the XML source).
 
     def load_tiletypes
       begin
-	@doc.root.elements['map'].elements["blocktypes"].each_element { |blocktype_element|
+        blocktypes = @doc.root.elements['map'].elements["blocktypes"]
+        real_blocktypes = blocktypes
+
+        if blocktypes.has_attributes? and 
+            src = blocktypes.attributes['src'] then
+          if File.exist?(@dir+'/'+src) then
+            src = @dir+'/'+src
+          end
+          real_blocktypes = REXML::Document.new(File.open(src)).root
+        end
+
+	real_blocktypes.each_element { |blocktype_element|
 	  code = blocktype_element.attributes["code"]
 	  path = blocktype_element.attributes["path"]
 	  @log.debug "Loading new Tile with code '#{code}' and path '#{path}'"

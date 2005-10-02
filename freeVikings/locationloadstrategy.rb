@@ -5,7 +5,6 @@
 
 require 'tile.rb'
 require 'exit.rb'
-require 'log4r'
 require 'rexml/document'
 require 'script'
 
