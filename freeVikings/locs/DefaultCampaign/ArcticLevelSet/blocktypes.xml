@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+
+<blocktypes>
+  <blocktype code="0" path="ice_map/snow_base.tga" solid="solid" />
+  <blocktype code="A" path="ice_map/snow_atypictile.tga" solid="solid" />
+  <blocktype code="H" path="ice_map/snow_base_dark.tga" />
+  <blocktype code="C" path="ice_map/snow_base_ceiling.tga" solid="solid" />
+</blocktypes>
