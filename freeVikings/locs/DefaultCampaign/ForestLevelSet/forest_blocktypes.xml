@@ -1,9 +1,23 @@
 <?xml version="1.0" ?>
 
 <blocktypes>
+
+  <!-- base tiles -->
   <blocktype code="0" path="themes/ForestTheme/tile_forest_ground_base.tga" solid="solid" />
+  <blocktype code="G" path="themes/ForestTheme/tile_forest_ground_top.tga" solid="solid" />
   <blocktype code="1" path="themes/ForestTheme/tile_forest_ground_atyp1.tga" solid="solid" />
+
+  <!-- flower tiles -->
+  <blocktype code="*" path="themes/ForestTheme/tile_forest_ground_atyp2.tga" />
+  <blocktype code=":" path="themes/ForestTheme/tile_forest_ground_atyp3.tga" />
+
+  <!-- air tiles -->
   <blocktype code="a" path="themes/ForestTheme/tile_forest_air.tga" />
   <blocktype code="A" path="themes/ForestTheme/tile_forest_air.tga" solid="solid" />
-  <blocktype code="G" path="themes/ForestTheme/tile_forest_ground_top.tga" solid="solid" />
+
+  <!-- brown tiles (mainly for holes, caves and underground corridors) -->
+  <blocktype code="b" path="themes/ForestTheme/tile_forest_brown_base.tga" />
+  <blocktype code="R" path="themes/ForestTheme/tile_forest_brown_to_ground.tga" />
+  <blocktype code="L" path="themes/ForestTheme/tile_forest_ground_to_brown.tga" />
+  <blocktype code="c" path="themes/ForestTheme/tile_forest_brown_atyp1.tga" />
 </blocktypes>
