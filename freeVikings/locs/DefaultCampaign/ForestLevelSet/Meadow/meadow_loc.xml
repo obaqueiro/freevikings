@@ -15,6 +15,7 @@
   <!-- Skripty k nahrani: -->
   
   <scripts>
+    <monsters path="meadow_script.rb" />
   </scripts>
   
   <!-- Definice rozmisteni bloku v mape -->
@@ -45,9 +46,9 @@
 0Lbbbbcbbcbcbbbbbbbbbbbbb0LbR000aaaaaaaaaaaaaaa0000000000
 0LbbbbbbcbbbbR0LbbbbbbbbbbbbR000aaaaaaaaaaaaaaa0000000000
 0GGGGGGGGGGGGG0LbbbbbbbbbbbbbR00aaaaaaaaaaaaaaa0000000000
-0000000000000000Lbbbbbbbbbbbbbbbaaaaaaaaaaaaaaa0000000000
-00000000000000000Lbbbbbbbbbbbbbbaaaaaaaaaaaaaaa0000000000
-000000000000000000Lbbbbbbbbbbbbbaaaaaaaaaaaaaaa0000000000
+0000000000000000Ubbbbbbbbbbbbbbbaaaaaaaaaaaaaaa0000000000
+00000000000000000Ubbbbbbbbbbbbbbaaaaaaaaaaaaaaa0000000000
+000000000000000000Ubbbbbbbbbbbbbaaaaaaaaaaaaaaa0000000000
 000000000000000000GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0000
 000000000000000000000000000000000000000000000000000000000
 000000000000000000000000000000000000000000000000000000000
