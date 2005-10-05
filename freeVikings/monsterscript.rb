@@ -14,14 +14,10 @@ module FreeVikings
 
   class MonsterScript < Script
 
-    def initialize(script_name, dir='')
+    def initialize(script_name)
       module_eval "MONSTERS = []"
 
-      if File.exist?(dir + '/' + script_name)
-        super dir+'/'+script_name
-      else
-        super script_name
-      end
+      super script_name
 
       if self::MONSTERS.empty? and not defined?(self::LOCATION) then
         raise NoMonstersDefinedException, "No monsters have been defined in the script."

@@ -172,8 +172,8 @@ his face's images used on the BottomPanel.
 
 =begin
 = Image
-((<Image>)) is a wrapper class for Image data (at the moment the internal datatype
-is RUDL::Surface, but it can change).
+((<Image>)) is a wrapper class for Image data (at the moment the internal 
+datatype is RUDL::Surface, but it can change one day).
 =end
 
   class Image
@@ -227,5 +227,4 @@ Loads image placed relatively to the directory specified in the constant
     end
 
   end # class Image
-
-end
+end # module FreeVikings

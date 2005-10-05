@@ -57,7 +57,7 @@ containing the XML source).
 
       begin
 	script_element = @doc.root.elements['scripts'].elements['monsters']
-	scriptfile = script_element.attributes['path']
+	scriptfile = get_local_file(script_element.attributes['path'])
       rescue => ex
 	@log.info "Cannot get the monster-script's filename from the datafile. Maybe no scripts are connected with this location. Message from the caught bottom-level exception: #{ex.message}"
 	return
@@ -67,7 +67,7 @@ containing the XML source).
 
       # Pri nahravani skriptu muze nastat velke mnozstvi vyjimecnych situaci:
       begin
-        s = MonsterScript.new(scriptfile, File.dirname(@source.path)) {|script| 
+        s = MonsterScript.new(scriptfile.path) {|script| 
           script.extend FreeVikings
           eval "script::LOCATION = location"
         }
@@ -124,11 +124,8 @@ containing the XML source).
         real_blocktypes = blocktypes
 
         if blocktypes.has_attributes? and 
-            src = blocktypes.attributes['src'] then
-          if File.exist?(@dir+'/'+src) then
-            src = @dir+'/'+src
-          end
-          real_blocktypes = REXML::Document.new(File.open(src)).root
+            src = get_local_file(blocktypes.attributes['src']) then
+          real_blocktypes = REXML::Document.new(src).root
         end
 
 	real_blocktypes.each_element { |blocktype_element|
@@ -197,6 +194,17 @@ containing the XML source).
         @log.error "Incomplete location data found in datafile #{source_name}." + "(" + ex.message + ")"
         raise
       end
+    end
+
+    # Tries to find the file with name fname in the location data directory
+    # and then in the global freeVikings directory.
+    # Returns a File instance. Can raise a core 'file not found' exception.
+
+    def get_local_file(fname)
+      if File.exist?(@dir+'/'+fname) then
+        fname = @dir+'/'+fname
+      end
+      return File.open(fname)
     end
 
   end # class XMLLocationLoadStrategy
