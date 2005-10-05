@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<gfx_theme>
+  <info>
+    <name>Forest Theme</name>
+    <directory>themes/ForestTheme</directory>
+  </info>
+
+  <data>
+    <image name="apex" image="apex_forest.tga" />
+  </data>
+</gfx_theme>

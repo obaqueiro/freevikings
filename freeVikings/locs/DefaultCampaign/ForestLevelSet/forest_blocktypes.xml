@@ -6,6 +6,7 @@
   <blocktype code="0" path="themes/ForestTheme/tile_forest_ground_base.tga" solid="solid" />
   <blocktype code="G" path="themes/ForestTheme/tile_forest_ground_top.tga" solid="solid" />
   <blocktype code="1" path="themes/ForestTheme/tile_forest_ground_atyp1.tga" solid="solid" />
+  <blocktype code="U" path="themes/ForestTheme/tile_forest_ground_rightcorner.tga" solid="solid" />
 
   <!-- flower tiles -->
   <blocktype code="*" path="themes/ForestTheme/tile_forest_ground_atyp2.tga" />
