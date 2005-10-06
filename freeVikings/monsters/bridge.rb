@@ -5,6 +5,7 @@
 
 require 'platform'
 require 'sprite.rb'
+require 'transportable.rb'
 
 module FreeVikings
 
