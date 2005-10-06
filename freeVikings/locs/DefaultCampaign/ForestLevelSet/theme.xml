@@ -8,5 +8,8 @@
 
   <data>
     <image name="apex" image="apex_forest.tga" />
+    <image name="bridge" image="bridge_forest.tga" />
+    <image name="switch_on" image="switch_forest_on.tga" />
+    <image name="switch_off" image="switch_forest_off.tga" />
   </data>
 </gfx_theme>
