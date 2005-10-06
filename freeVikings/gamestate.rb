@@ -115,9 +115,9 @@ Changes the location view according to the state.
 	@context.team.active.space_func_on
       when K_d
 	@context.team.active.d_func_on
-      when K_s
+      when K_s, K_UP
         location.active_objects_on_rect(@context.team.active.rect).each { |o| o.activate }
-      when K_f
+      when K_f, K_DOWN
         location.active_objects_on_rect(@context.team.active.rect).each { |o| o.deactivate }
       when K_e, K_u
         @context.team.active.use_item

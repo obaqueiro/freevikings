@@ -28,8 +28,8 @@ It can be used to load the images for the ((<Entity>)).
       unless initial_position.empty?
 	@rect = Rectangle.new(initial_position[0], 
                               initial_position[1], 
-                              (initial_position[2] ? initial_position[2] : self.class::WIDTH),
-                              (initial_position[3] ? initial_position[3] : self.class::HEIGHT))
+                              (initial_position[2] or self.class::WIDTH),
+                              (initial_position[3] or self.class::HEIGHT))
       else
 	@rect = Rectangle.new(0,0,0,0)
       end

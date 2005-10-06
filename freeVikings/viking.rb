@@ -13,6 +13,7 @@ require 'map.rb' # kvuli const. TILE_SIZE
 require 'sophisticatedspritemixins.rb'
 require 'timelock.rb'
 require 'talkable.rb'
+require 'transportable.rb'
 
 =begin
 = Viking
@@ -24,6 +25,7 @@ module FreeVikings
 
     include SophisticatedSpriteMixins::Walking
     include Talkable
+    include Transportable
 
 =begin
 --- Viking::BASE_VELOCITY
@@ -70,7 +72,7 @@ Creates a new viking. Parameter ((|name|)) is a (({String})),
       @state = VikingState.new
       @log.debug("Viking #{@name} initialised.")
       @rect = Rectangle.new start_position[0], start_position[1], WIDTH, HEIGHT
-      @energy = MAX_ENERGY # zivotni sila
+      @energy = MAX_ENERGY
 
       @portrait = nil
 
@@ -78,6 +80,8 @@ Creates a new viking. Parameter ((|name|)) is a (({String})),
 
       @start_fall = -1
       @knockout_duration = TimeLock.new
+
+      @transported_by = nil # an eventual transporter transporting the viking
     end
 
 =begin
@@ -231,6 +235,19 @@ If it is successfull, the used (({Item})) is ejected and ((|true|)) returned,
         return true
       end
       return false
+    end
+
+    def transport_move(delta_x, delta_y, transporter)
+      unless transporter == @transported_by
+        @log.warn "Unknown transporter #{transporter} is trying to move #{@name}"
+        return
+      end
+
+      new_rect = Rectangle.new(@rect.left + delta_x, @rect.top + delta_y,
+                               @rect.w, @rect.h)
+      if @location.area_free?(new_rect) then
+        @rect = new_rect
+      end
     end
 
 =begin

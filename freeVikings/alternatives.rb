@@ -16,6 +16,10 @@ if FreeVikings::OPTIONS["extensions"] then
     def to_a
       [left, top, width, height]
     end
+
+    def dup
+      return self.class.new(self)
+    end
   end
 
 else
