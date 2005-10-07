@@ -2,10 +2,16 @@
 # igneus 16.6.2005
 
 =begin
-= ActiveObject
-ActiveObject is an object which doesn't need to be updated regularly like
-sprites. It's only updated when a key is pressed over it or if it's stroken
-by some gun.
+= NAME
+ActiveObject
+
+= DESCRIPTION
+(({ActiveObject})) is a game object which doesn't need to be updated 
+regularly like (({Sprite})). It's only updated when a key is pressed over it 
+or if it's stroken by some gun.
+
+= Superclass
+Entity
 =end
 
 require 'entity.rb'
@@ -18,11 +24,30 @@ module FreeVikings
       super(initial_position, theme)
     end
 
+=begin
+= Instance methods
+
+--- ActiveObject#activate
+Called when the player presses the activation key (S or UP) with the viking 
+standing at the (({ActiveObject})).
+=end
+
     def activate
     end
 
+=begin
+--- ActiveObject#deactivate
+Called when the player presses the deactivation key (F or DOWN) 
+with the viking standing at the (({ActiveObject})).
+=end
+
     def deactivate
     end
+
+=begin
+--- ActiveObject#hurt
+Called when the (({ActiveObject})) is stroken by some gun (a sword, an arrow).
+=end
 
     def hurt
     end

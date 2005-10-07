@@ -2,19 +2,44 @@
 # igneus 19.6.2005
 
 =begin
-= Entity
+= NAME
+Entity
+
+= DESCRIPTION
 Entity is a superclass for all the classes which appear in the freeVikings'
-world. It's most famous subclass is ((<Sprite>)).
-Everything that has it's image and it's place on the world is an Entity.
+world:
+* (({Sprite}))
+* (({Item}))
+* (({ActiveObject}))
+Everything that has it's image and it's place on the game world is an Entity.
+
+= Superclass
+Object
 =end
 
 module FreeVikings
 
+=begin
+= Included modules
+Entity
+=end
+
   class Entity
+
+=begin
+= Constants
+--- Entity::WIDTH
+--- Entity::HEIGHT
+Default width and height of the ((<Entity>)) (in pixels).
+Subclasses can redefine it but it's mainly for the internal use and isn't
+compulsory.
+=end
 
     WIDTH = HEIGHT = 0
 
 =begin
+= Class methods
+
 --- Entity.new(initial_position=[], theme=NullGfxTheme.instance)
 Argument ((|initial_position|)) should be a (({Rectangle})) or an (({Array.})).
 The second (voluntary) parameter, ((|theme|)) should be a (({GfxTheme})).
@@ -42,6 +67,8 @@ It can be used to load the images for the ((<Entity>)).
     end
 
 =begin
+= Instance methods
+
 --- Entity#image
 Returns the (({RUDL::Surface})) object with an image which represents
 the ((<Entity>)) in the game.
@@ -55,13 +82,18 @@ the ((<Entity>)) in the game.
 
 =begin
 --- Entity#null?
-Maybe you don't know anything about the Desigh Patterns. Then you should know
+Says if the ((<Entity>)) is a Null Object.
+
+((*Note: Null Object*))
+Maybe you don't know anything about the Design Patterns. Then you should know
 about one of them, it's known as 'Null Object'. How does it work?
-Some methods normally return a regular object or ((|nil|)). Then you must
-control what you have (((|nil|)) usually doesn't have the methods you need).
-Instead of ((|nil|)) you can often return an object which has no contents,
-but provides all the methods. This is a Null Object.
-Only Null Objects return ((|true|)) from this predicate method.
+On some places either a regular object or ((|nil|)) is expected.
+If a regular object is given, something is done with it, otherwise
+nothing happens.
+But it is very uncomfortable to test everywhere if you are working with
+a regular object or with ((|nil|)). You can reach the same goal by using
+a Null Object. It's an object which contains no data and it's methods do 
+nothing, but they behave like they would if the object was normal.
 =end
 
     def null?
@@ -69,7 +101,7 @@ Only Null Objects return ((|true|)) from this predicate method.
     end
 
 =begin
---- Entity#load_theme_image(name)
+--- Entity#get_theme_image(name)
 In the (({GfxTheme})) images are named by symbolic names.
 This method tries to get an image from the (({GfxTheme})) which was given
 as argument to the constructor.
@@ -85,6 +117,8 @@ If the image isn't found, (({GfxTheme::UnknownNameException})) is thrown.
     end
 
 =begin
+= Public internal classes
+
 --- Entity::NullThemeException
 A class of exceptions which are thrown by method ((<Entity#get_theme_image>))
 if instance variable ((|@theme|)) is a (({NullGfxTheme})) instance.

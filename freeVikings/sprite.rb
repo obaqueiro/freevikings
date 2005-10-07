@@ -1,7 +1,19 @@
 # sprite.rb
 # igneus 19.1.2004
 
-# Tridy sprajtu pro hru FreeVikings
+=begin
+= NAME
+Sprite
+
+= DESCRIPTION
+Class Sprite represents an object which needs to periodicaly update it's
+internal state. It's sense of life is to be displayed, so it also has some
+attributes containing it's position in the location and it's bitmap
+representation.
+
+= Superclass
+Entity
+=end
 
 require 'entity.rb'
 require 'pausable.rb'
@@ -11,17 +23,26 @@ module FreeVikings
 
   class Sprite < Entity
 
+=begin
+= Included mixins
+Pausable
+=end
+
     include Pausable
 
 =begin
-= Sprite
-Class Sprite represents an object which needs to periodicaly update it's
-internal state. It's sense of life is to be displayed, so it also has some
-attributes containing it's position in the location and it's bitmap
-representation.
+
+= Constants
+
+--- Sprite::BASE_VELOCITY
+Contains sprite's normal velocity in pixels per second.
 =end
 
+    BASE_VELOCITY = 60
+
 =begin
+= Class methods
+
 --- Sprite.new (initial_position = [])
 Every ((<Sprite>)) has to have some position. It should be set up when 
 the ((<Sprite>)) is created,
@@ -36,13 +57,8 @@ but if you don't specify it, it's set to a default value, which is
     end
 
 =begin
---- Sprite::BASE_VELOCITY
-Contains sprite's normal velocity in pixels per second.
-=end
+= Instance methods
 
-    BASE_VELOCITY = 60
-
-=begin
 --- Sprite#moving
 Returns true if the sprite is moving, nil otherwise.
 =end
@@ -51,7 +67,7 @@ Returns true if the sprite is moving, nil otherwise.
 
 =begin
 --- Sprite#location
---- Sprite#location=
+--- Sprite#location = loc
 Some sprites need to ask their environment for some information (e.g. whether
 their position is valid, whether they collide with any other sprites etc.).
 So when the sprite is placed in the location, the location gives it a reference

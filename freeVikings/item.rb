@@ -1,16 +1,22 @@
 # item.rb
 # igneus 21.6.2005
 
+=begin
+= NAME
+Item
+
+= DESCRIPTION
+Item is an ((<Entity>)) which can be collected and used (applied)
+by the (({Viking})).
+
+= Superclass
+Entity
+=end
+
 require 'entity.rb'
 require 'singleton'
 
 module FreeVikings
-
-=begin
-= Item
-Item is an ((<Entity>)) which can be collected.
-It supports one operation - application (see ((<Item#apply>))).
-=end
 
   class Item < Entity
 
@@ -18,6 +24,8 @@ It supports one operation - application (see ((<Item#apply>))).
     HEIGHT = 30
 
 =begin
+= Instance methods
+
 --- Item#apply(user)
 Applies the item onto the ((|user|)). ((|user|)) is expected to be 
 a ((<Sprite>)). Results of an application can be very different - a change
@@ -25,6 +33,15 @@ of weather, some other ((<Entity>))'s death, ...
 It returns ((|true|)) if the application is successfull (then the ((<Item>)) 
 must be erased from the viking's ((<Inventory>)), ((|false|)) is returned 
 otherwise.) 
+
+Example:
+An apple which heals the viking who uses it.
+
+class HealingApple < FreeVikings::Item
+  def apply(user)
+    user.heal
+  end
+end
 =end
 
     def apply(user)
@@ -33,20 +50,22 @@ otherwise.)
   end # class Item
 
 =begin
-= NullItem
-((<NullItem>)) is a subclass of ((<Item>)). It represents "no ((<Item>))"
-and is used e.g. in an (({Inventory}))
+= NAME
+NullItem
+
+= DESCRIPTION
+A Null Object class.
+It has only one instance which you can get by call
+(({NullItem.instance})).
+The standard constructor ((({new}))) is private.
+
+= Superclass
+Item
 =end
 
   class NullItem < Item
 
     include Singleton
-
-=begin
---- NullItem.instance
-Returns a ((<NullItem>)) instance. Yes, you are right. ((<NullItem>)) class
-implements a Singleton design pattern. (By Ruby's stdlib mechanism.)
-=end
 
     def initialize
       super([0,0,0,0])
