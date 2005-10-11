@@ -19,6 +19,7 @@ module FreeVikings
     def initialize(position, theme=NullGfxTheme.instance)
       super(Rectangle.new(position[0], position[1], WIDTH, HEIGHT), theme)
       @image = get_theme_image 'apex'
+      @last_bash = nil
     end
 
     def update

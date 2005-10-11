@@ -1,42 +1,59 @@
 # plasmashooter.rb
 # igneus 27.2.2005
 
-# Automaticky vystrelovac plazmovych strel
+=begin
+= NAME
+PlasmaShooter
 
+= DESCRIPTION
+A (({Shooter})) which periodically shoots a (({RedShot})).
+It can be switched on/off (usually by a (({Switch})) connected with it in
+a location script).
+
+= Superclass
+Shooter
+=end
+
+require 'monsters/shooter.rb'
 require 'monsters/redshot.rb'
 
 module FreeVikings
 
-  class PlasmaShooter < Sprite
+  class PlasmaShooter < Shooter
+
+=begin
+= Constants
+
+--- Shooter::DELAY
+Delay between two shots (in seconds)
+=end
 
     DELAY = 4.5
-    SHOT_VELOCITY = 85
 
-    def initialize(startpos, direction='left')
-      super(startpos)
-      @image = Image.load('spitter_1.tga')
-      @firing = true
-      @last_update = 0
-    end
+    SHOT_CLASS = RedShot
+    SHOT_VELOCITY = -85
 
-    def destroy
-      @energy = 0
-    end
+=begin
+= Instance methods
 
-    def hurt
-      shoot
-    end
+--- PlasmaShooter#on
+Switches the (({PlasmaShooter})) on.
+=end
 
     def on
       @firing = true
     end
 
+=begin
+--- PlasmaShooter#off
+Switches the (({PlasmaShooter})) off.
+=end
+
     def off
       @firing = false
     end
 
-    def firing?
-      @firing
+    def hurt
     end
 
     def update
@@ -46,12 +63,8 @@ module FreeVikings
       end
     end
 
-    private
-
-    def shoot
-      if @firing then
-        @location.add_sprite RedShot.new([left, top+10], -SHOT_VELOCITY)
-      end
+    def init_images
+      @image = Image.load('spitter_1.tga')
     end
   end # class PlasmaShooter
 end # module FreeVikings
