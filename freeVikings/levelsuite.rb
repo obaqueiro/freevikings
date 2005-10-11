@@ -44,6 +44,7 @@ given a second argument ((|member_of|)), which is a link to a 'parent'
       @dirname = dirname
       @members = []
       @member_of = member_of
+      @theme = load_theme
 
       @log.debug "#{object_id}: New LevelSuite created from data in directory '#{@dirname}' as a nested suite in #{@member_of ? @member_of.object_id : @member_of.to_s}"
 
@@ -123,12 +124,11 @@ worry about it.)
 =end
 
     def gfx_theme
-      theme = (load_theme or NullGfxTheme.instance)
-      unless theme.kind_of? GfxTheme
-        raise TypeError, "Theme of bad type #{theme.class}"
+      if @theme then
+        return @theme
+      else
+        return @theme = (load_theme or NullGfxTheme.instance)
       end
-
-      return theme
     end
 
     private
@@ -177,13 +177,15 @@ puts @dirname
     def load_theme
       theme_def_file = @dirname + '/' + THEME_FILE
       if File.exist? theme_def_file
-        return GfxTheme.new(theme_def_file, @member_of ? @member_of.gfx_theme : nil)
+        theme =  GfxTheme.new(theme_def_file, @member_of ? @member_of.gfx_theme : nil)
+        @log.info "#{object_id}: Loaded theme '#{theme.name}' (#{theme_def_file})."
+        return theme
       else
-        @log.info "#{object_id}: Theme file #{theme_def_file} wasn't found. Levelsuite '#{@title}' has no own theme. (But maybe it inherits some...)"
-
-        if @member_of
+        if @member_of and not @member_of.gfx_theme.kind_of? NullGfxTheme
+          @log.info "#{object_id}: Using inherited theme '#{@member_of.gfx_theme}'."
           return @member_of.gfx_theme
         else
+          @log.info "#{object_id}: Theme file #{theme_def_file} wasn't found. Levelsuite '#{@title}' has no own theme and doesn't inherit any."
           return NullGfxTheme.instance
         end
       end

@@ -44,7 +44,7 @@ module FreeVikings
       stroken.concat @location.active_objects_on_rect(self.rect)
       while not stroken.empty? do
 	s = stroken.pop
-	if s.is_a? @hunted_type
+	if s.kind_of? @hunted_type
 	  s.hurt
           destroy
           return

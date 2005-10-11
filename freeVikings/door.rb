@@ -2,10 +2,16 @@
 # igneus 31.7.2005
 
 =begin
-= Door
+= NAME
+Door
+
+= DESCRIPTION
 ((<Door>)) is a two-state static object. When it is closed (default state),
 it's solid. When it is open, it's soft.
 It's usually connected with a (({Switch})) or a (({Lock})).
+
+= Superclass
+Entity
 =end
 
 require 'entity.rb'
@@ -18,6 +24,8 @@ module FreeVikings
     HEIGHT = 120
 
 =begin
+= Class methods
+
 --- Door.new(position, closed=true)
 You must specify the position (it's common for all the types derived
 from (({Entity}))) and optionally if the ((<Door>)) is closed, default is true.
@@ -29,6 +37,8 @@ from (({Entity}))) and optionally if the ((<Door>)) is closed, default is true.
     end
 
 =begin
+= Instance methods
+
 --- Door#solid
 --- Door#solid?
 These methods (aliases of each other) answer the question "is the ((<Door>))
@@ -69,10 +79,7 @@ the needs of (({ImageBank})).
       @closed ? 'closed' : 'open'
     end
 
-=begin
---- Door#init_images
-Initializes the images. It's called from the constructor of (({Entity})).
-=end
+    # Initializes the images. It's called from the constructor of Entity.
 
     def init_images
       @image = ImageBank.new self

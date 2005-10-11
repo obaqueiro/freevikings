@@ -2,12 +2,18 @@
 # igneus 30.7.2005
 
 =begin
-= Lock
+= NAME
+Lock
+
+= DESCRIPTION
 ((<Lock>)) is a Static object which waits until someone unlocks it.
 Then some action is usually performed.
 To unlock the ((<Lock>)) one needs a (({Key})). There are several
 colour variants of the (({Key}))s and ((<Lock>))s and to unlock
 a ((<Lock>)) you need a (({Key})) of the same colour.
+
+= Superclass
+Entity
 =end
 
 require 'entity.rb'
@@ -18,10 +24,17 @@ module FreeVikings
 
   class Lock < Entity
 
+=begin
+= Included mixins
+StaticObject
+=end
+
     include StaticObject
 
 =begin
---- Lock::Colour
+= Constants
+
+== Lock::Colour
 Module, which contains symbolic constants for Locks & Keys colours.
 This module is included in classes ((<Lock>)) and (({Key})), so you
 don't have to write
@@ -52,6 +65,8 @@ Listing of the constants:
                 BLUE => Image.load('lock_blue.tga')}
 
 =begin
+= Class methods
+
 --- Lock.new(position, unlock_action=Proc.new {}, colour=RED)
 Arguments:
 * ((|position|)) is the same as at any other (({Entity})).
@@ -70,6 +85,8 @@ Arguments:
     end
 
 =begin
+= Instance methods
+
 --- Lock#colour
 Returns the ((<Lock>))'s colour (one of the constants from ((<Lock::Colour>))).
 =end
@@ -117,6 +134,8 @@ Returns ((|true|)) if the unlock operation is successfull,
     end
 
 =begin
+= Public internal classes
+
 --- Lock::AttemptToUnlockByANonKeyToolException
 ((<Lock#unlock>)) throws this exception if the given argument isn't of any 
 Key type.
