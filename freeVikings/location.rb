@@ -283,6 +283,8 @@ is free of solid map blocks, ((|false|)) otherwise.
       @map.area_free? rect
     end
 
+    alias_method :is_area_free?, :area_free?
+
     private
 
     # vraci pole ctyr prvku definujicich obdelnik centrovany predanymi 

@@ -48,6 +48,14 @@ module FreeVikings
       @vertical_state.moving?
     end
 
+    def right?
+      @horizontal_state.direction == 'right'
+    end
+
+    def left?
+      @horizontal_state.direction == 'left'
+    end
+
     def direction
       @horizontal_state.direction
     end

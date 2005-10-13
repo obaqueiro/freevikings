@@ -4,40 +4,68 @@
 =begin
 = SophisticatedSpriteMixins
 For those who don't know what is a "sophisticated sprite":
-Sophisticated Sprite is a Sprite, which is a bit more complicated than 
-e.g. a Shot and needs a special State object to store and work with 
+Sophisticated Sprite is a (({Sprite})), which is a bit more complicated than 
+e.g. a (({Shot})) and needs a special State object to store and work with 
 the movement state data.
 
 The mixins described below should ease the work with programming new
 Sophisticated Sprites.
 
 They are all encapsulated in a namespace module 
-((<SophisticatedSpriteMixins>)).
+(({SophisticatedSpriteMixins})).
+
+You can use them only for (({Sprite}))s which have a private instance
+variable ((|@state|)) with a protocol (public interface) compatible with
+that of (({SophisticatedSpriteState})).
 =end
 
 module FreeVikings
 
   module SophisticatedSpriteMixins
 
+=begin
+== Walking
+=end
+
     module Walking
+
+=begin
+--- Walking#move_left
+=end
 
       def move_left
         @state.move_left
       end
 
+=begin
+--- Walking#move_right
+=end
+
       def move_right
         @state.move_right
       end
 
+=begin
+--- Walking#stop
+=end
+
       def stop
         @state.stop
       end
+
+=begin
+--- Walking#standing?
+=end
 
       def standing?
         @state.standing?
       end
 
       private
+
+=begin
+--- Walking#next_left (private, but useful for implementation of new monsters)
+=end
 
       def next_left
         next_left = @rect.left + (velocity_horiz * @location.ticker.delta)

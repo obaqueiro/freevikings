@@ -1,30 +1,50 @@
 # imagebank.rb
 # igneus 20.1.2004
 
-# Tridy:
-#  Image          - Obal obrazku.
-#  ImageBank      - Objekt s vazbou na sprajt. Vraci obrazek podle toho,
-#                   jaky ma sprajt stav.
-#  AnimationSuite - Vraci obrazek podle toho, kolik ubehlo casu. (animace)
-#  Portrait       - Vymyka se obecnemu rozhrani. Metoda image sice jako jinde
-#                   vraci Surface, ale neni dulezita. Dulezitejsi jsou
-#                   metody active, unactive a kaput. Objekt Portrait
-#                   je schranka na portrety postavy, ktere se pouzivaji
-#                   ve stavovem radku.
-
 require 'RUDL'
 
 module FreeVikings
 
 =begin
-= ImageBank
+= NAME
+ImageBank
+
+= DESCRIPTION
 ((<ImageBank>)) is an associative container which binds a Sprite, it's states
 and images for these states.
+
+= Superclass
+Object
 =end
 
   class ImageBank
 
-    def initialize(sprite=nil, hash=nil)
+=begin
+--- ImageBank.new(sprite, hash=nil)
+* ((|sprite|)) is the state machine of the (({ImageBank})). It is usually
+  the (({Sprite})) which uses it, but it isn't needed to be strictly so.
+  It must respond to (({state})).
+* ((|hash|)) is an optional argument. It can contain hash with (({String}))
+  keys and (({Image})) compatible values. It is used as a set of
+  state=>image pairs if supplied.
+
+Example:
+Let's have a (({Sprite})) ((|bar|)). We want to make an (({ImageBank}))
+for it.
+
+i = Image.load 'foo.png'
+
+- one way of doing things
+
+  bank = ImageBank.new(bar)
+  bank.add_pair 'foo_state', i
+
+- another way which is as good as the first one
+
+  bank = ImageBank.new(bar, {'foo_state' => i})
+=end
+
+    def initialize(sprite, hash=nil)
       @log = Log4r::Logger['images log']
 
       @log.info "Creating a new ImageBank for sprite #{sprite} #{ hash ? "Pre-prepared images hash was provided." : "." }"
@@ -70,7 +90,7 @@ Returns the Image for owner's recent state.
     end
 
 =begin
-== ImageWithBadSizesException
+-- ImageBank::ImageWithBadSizesException (exception class)
 This exception is thrown when an image which has different sizes than
 the owner is added into an ((<ImageBank>)). It's important that the exception
 is thrown just ((*after*)) the image is added, so if you expect it, you
@@ -80,7 +100,7 @@ can catch the exception and carry on whistling...
     end
 
 =begin
-== NoImageAssignedException
+-- ImageBank::NoImageAssignedException (exception class)
 Exceptions of this type are thrown by ((<ImageBank#image>)) if there
 is no image for the owner's state in the ((<ImageBank>)).
 =end
@@ -95,9 +115,15 @@ is no image for the owner's state in the ((<ImageBank>)).
 
 
 =begin
-= AnimationSuite
+= NAME
+AnimationSuite
+
+= DESCRIPTION
 ((<AnimationSuite>)) is a simple class which allows you to use animated
 images (e.g. inside an ((<ImageBank>))).
+
+= Superclass
+Object
 =end
 
   class AnimationSuite
@@ -138,42 +164,68 @@ images (e.g. inside an ((<ImageBank>))).
 
 
 =begin
-= Portrait
+= NAME
+Portrait
+
+= DESCRIPTION
 A ((<Portrait>)) keeps three images. They are called active, unactive and 
 kaput. Every of the three vikings has his own ((<Portrait>)) object with 
 his face's images used on the BottomPanel.
+
+= Superclass
+Object
 =end
 
   class Portrait
 
-    def initialize(active_path, unactive_path, kaput_path)
+=begin
+--- Portrait.new(active_path, unactive_path)
+Accepts two file paths, loads the images and creates a new (({Portrait})).
+=end
+
+    def initialize(active_path, unactive_path, kaput_path=nil)
       @active = Image.load(active_path)
       @unactive = Image.load(unactive_path)
-      @kaput = Image.load(kaput_path)
     end
 
-    def image
-      @active.image
-    end
+=begin
+--- Portrait#active
+Returns the active (usually colourful) variant of the portrait.
+=end
 
     def active
       @active.image
     end
 
+=begin
+--- Portrait#image
+Alias for ((<Portrait#active>)) present only for compatibility
+with ((<Image>)) here.
+=end
+
+    alias_method :image, :active
+
+=begin
+--- Portrait#unactive
+Returns the unactive (usually black and white) variant of the portrait.
+=end
+
     def unactive
       @unactive.image
-    end
-
-    def kaput
-      @kaput.image
     end
   end # class Portrait
 
 
 =begin
-= Image
+= NAME
+Image
+
+= DESCRIPTION
 ((<Image>)) is a wrapper class for Image data (at the moment the internal 
 datatype is RUDL::Surface, but it can change one day).
+
+= Superclass
+Object
 =end
 
   class Image
