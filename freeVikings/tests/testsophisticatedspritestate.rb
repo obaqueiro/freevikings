@@ -21,6 +21,7 @@ class TestSophisticatedSpriteState < Test::Unit::TestCase
   def testRightDirectionAfterMoveRight
     @state.move_right
     assert_equal "right", @state.direction, "The direction must be right after move_right call."
+    assert @state.right?
   end
 
   def testMoveBackChangesDirection
