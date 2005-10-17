@@ -9,6 +9,8 @@ Methods are provided to access the members and their most important methods
 are delegated.
 =end
 
+require 'forwardable'
+
 require 'map.rb'
 require 'spritemanager.rb'
 require 'activeobjectmanager.rb'
@@ -19,6 +21,8 @@ require 'gfxtheme.rb'
 module FreeVikings
 
   class Location
+
+    extend Forwardable # for simple delegations
 
 =begin
 
@@ -205,59 +209,45 @@ a (({Rectangle})) ((|rect|)). Type of ((|rect|)) must be (({Rectangle})) or
 any other which responds to 'collides?'.
 =end
 
-    def sprites_on_rect(rect)
-      @spritemanager.sprites_on_rect rect
-    end
+    def_delegator :@spritemanager, :members_on_rect, :sprites_on_rect
 
 =begin
 --- Location#add_active_object(object)
 Adds an (({ActiveObject})) into the ((<Location>)).
 =end
 
-    def add_active_object(object)
-      @activeobjectmanager.add object
-    end
+    def_delegator :@activeobjectmanager, :add, :add_active_object
 
 =begin
 --- Location#delete_active_object(object)
 Deletes an (({ActiveObject})) from the ((<Location>)).
 =end
 
-    def delete_active_object(object)
-      @activeobjectmanager.delete object
-    end
+    def_delegator :@activeobjectmanager, :delete, :delete_active_object
 
 =begin
 --- Location#active_objects_on_rect(rect)
 =end
 
-    def active_objects_on_rect(rect)
-      @activeobjectmanager.members_on_rect(rect)
-    end
+    def_delegator :@activeobjectmanager, :members_on_rect, :active_objects_on_rect
 
 =begin
 --- Location#add_item(item)
 =end
 
-    def add_item(item)
-      @itemmanager.add item
-    end
+    def_delegator :@itemmanager, :add, :add_item
 
 =begin
 --- Location#delete_item(item)
 =end
 
-    def delete_item(item)
-      @itemmanager.delete item
-    end
+    def_delegator :@itemmanager, :delete, :delete_item
 
 =begin
 --- Location#items_on_rect(rect)
 =end
 
-    def items_on_rect(rect)
-      @itemmanager.members_on_rect(rect)
-    end
+    def_delegator :@itemmanager, :members_on_rect, :items_on_rect
 
 =begin
 == Predicates

@@ -179,13 +179,14 @@ Object
   class Portrait
 
 =begin
---- Portrait.new(active_path, unactive_path)
+--- Portrait.new(active_path, unactive_path, kaput_path)
 Accepts two file paths, loads the images and creates a new (({Portrait})).
 =end
 
-    def initialize(active_path, unactive_path, kaput_path=nil)
+    def initialize(active_path, unactive_path, kaput_path)
       @active = Image.load(active_path)
       @unactive = Image.load(unactive_path)
+      @kaput = Image.load(kaput_path)
     end
 
 =begin
@@ -212,6 +213,10 @@ Returns the unactive (usually black and white) variant of the portrait.
 
     def unactive
       @unactive.image
+    end
+
+    def kaput
+      @kaput.image
     end
   end # class Portrait
 

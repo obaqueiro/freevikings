@@ -1,4 +1,4 @@
-#!/usr/bin/ruby -w
+#!/usr/bin/ruby
 
 # freevikings.rb
 # igneus 18.1.2004
@@ -28,6 +28,7 @@ end
 
 options = GetoptLong.new(
                          ["--profile", "-p", GetoptLong::NO_ARGUMENT],
+                         ["--ruby-warnings", "-w", GetoptLong::NO_ARGUMENT],
                          ["--extensions", "-x", GetoptLong::NO_ARGUMENT],
                          ["--fps",     "-F", GetoptLong::NO_ARGUMENT],
                          ["--fullscreen", "-f", GetoptLong::NO_ARGUMENT],
@@ -41,6 +42,8 @@ begin
     case option
     when "--profile"
       FreeVikings::OPTIONS['profile'] = true
+    when "--ruby-warnings"
+      $VERBOSE = true
     when "--extensions"
       FreeVikings::OPTIONS['extensions'] = true       
     when "--fps"

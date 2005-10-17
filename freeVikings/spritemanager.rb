@@ -12,10 +12,19 @@ module FreeVikings
     include PaintableGroup
 
 =begin
-= SpriteManager
-SpriteManager object is a ((<Group>)) of all the sprites that should be
-regularly redisplayed. It has all the methods inherited from ((<Group>)),
+= NAME
+SpriteManager
+
+= DESCRIPTION
+(({SpriteManager})) instance is a ((<Group>)) of all the entities which 
+should be regularly redisplayed. It has all the methods inherited 
+from ((<Group>)),
 to learn more about them, see the superclasse's documentation.
+
+= Superclass
+Group
+
+= Instance methods
 
 --- SpriteManager.new
 --- SpriteManager#add(object)
@@ -32,6 +41,8 @@ height. The coordinates are relative to the map loaded.
 --- SpriteManager#update
 It is mainly used in the game loop, where it's called before redisplaying
 all the sprites.
+
+--- SpriteManager#members_on_rect(rect)
 =end
 
     def update
@@ -59,15 +70,5 @@ all the sprites.
     def unpause
       @members.each {|m| m.unpause}
     end
-
-=begin
---- SpriteManager#sprites_on_rect(rect)
-It finds and in an Array returns all the sprites which can be found in the
-rectangle defined by the array rect given as parameter.
-If no sprite is found, it returns an empty array.
-=end
-
-    alias_method :sprites_on_rect, :members_on_rect
-
   end # class SpriteManager
 end #module FreeVikings

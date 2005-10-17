@@ -1,7 +1,14 @@
 # shot.rb
 # igneus 26.2.2005
 
-# Trida Shot (strela) je supertridou pro vsechny primocare hubici sprajty.
+=begin
+= NAME
+Shot
+
+= DESCRIPTION
+(({Shot})) is anything that flies left or right until it crashes into a wall
+or some (({Sprite})) of type((|@hunted_type|)) ((({Sprite})) by default).
+=end
 
 require 'sprite.rb'
 
@@ -10,16 +17,13 @@ module FreeVikings
   class Shot < Sprite
 
     def initialize(start_pos, velocity)
-      super(start_pos)
-      if velocity.is_a? Numeric
-        @velocity = velocity
-      else
-        @velocity = velocity
-      end
+      @velocity = velocity
       @hunted_type = Sprite
+      @energy = 1
+      super(start_pos)
     end
 
-    attr_reader :hunted_type
+    attr_accessor :hunted_type
 
     def destroy
       @velocity = 0
