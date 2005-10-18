@@ -1,19 +1,15 @@
 # snail.rb
 # igneus 13.10.2005
 
-# !!! FIXME:
-# !!! THIS STRONGLY NEEDS TO BE SOLVED!
-# !!! DOESN'T DO WHAT IT SHOULD!
-# !!! I WANT THE SNAIL TO GO SOME WAY, STOP, SHOOT, WAIT UNTIL THE SHOT
-# !!! IS DESTROYED AND THAN GO AGAIN. BUT IT DOESN'T DO THIS!
-
 =begin
 = NAME
 Snail
 
 = DESCRIPTION
 A vociferously green snail with a violet shell.
-He spits poisonous spittles.
+Goes up and down and spits poisonous spittles.
+Stops on the Shield, turns back on the wall or on the edge of a gorge which
+is wide enough to let him fall down.
 
 = Superclass
 Sprite
@@ -27,6 +23,7 @@ require 'monster.rb'
 require 'monstermixins.rb'
 require 'shooting.rb'
 require 'hero.rb'
+require 'timelock.rb'
 
 module FreeVikings
 
@@ -42,7 +39,6 @@ MonsterMixins::ShieldSensitive
     include SophisticatedSpriteMixins::Walking
     include Monster
     include MonsterMixins::ShieldSensitive
-    include Shooting
 
     WIDTH = 90
     HEIGHT = 70
@@ -51,7 +47,15 @@ MonsterMixins::ShieldSensitive
 
     SHOT_VELOCITY = 65
 
-    GO_BETWEEN_SHOOTING = 150
+    GO_BETWEEN_SHOOTING = 120
+
+=begin
+--- Snail.new(position)
+You can see class (({Snail})) is a very comfortable to use.
+The only argument needed during the initialization is the position to place
+the new (({Snail})). 
+So use a lot of snails anywhere :o) !
+=end
 
     def initialize(position)
       super(position)
@@ -64,16 +68,18 @@ MonsterMixins::ShieldSensitive
     attr_reader :state
 
     def update
-      serve_shield_collision {stop}
+      if @state.moving?
+        update_movement_state
 
-      unless location.area_free?(Rectangle.new(next_left, @rect.top,
-                                                  @rect.w, @rect.h))
-        turn
+        way_change = velocity_horiz * @location.ticker.delta
+        @rect.left += way_change
+
+        update_shoot(way_change)
+      else
+        if @spittle then
+          update_spittle_waiting
+        end
       end
-
-      way_change = velocity_horiz * @location.ticker.delta
-      @rect.left += way_change
-      update_way way_change
     end
 
     def init_images
@@ -88,40 +94,70 @@ MonsterMixins::ShieldSensitive
 
     private
 
-    def update_way(way_change)
-      @way_length += way_change.abs
+    # Turns the snail if it's next position isn't free.
+    # Stops if some Shield occurs in front of the snail.
+    def update_movement_state
+      # stop if there is a Shield
+      serve_shield_collision {stop}
 
-      if @way_length >= GO_BETWEEN_SHOOTING
-        @way_length = 0
-        stop_and_shoot
+      # turn back if there is a wall or something solid
+      unless location.area_free?(Rectangle.new(next_left, @rect.top,
+                                               @rect.w, @rect.h))
+        turn
+      end
+
+      # turn back if the solid ground ends in front of the snail:
+      fallspace_left = @state.right? ? @rect.right : @rect.left - WIDTH
+      fallspace = @rect.dup
+      fallspace.left = fallspace_left
+      fallspace.top += 10
+      if @location.area_free? fallspace
+        turn
       end
     end
 
-    def stop_and_shoot
-      @state.stop
-      @last_spittle = shoot
+    # course_delta is change of @rect.left .
+    # This method stops the snail and shoots a spittle if the snail
+    # has moved GO_BETWEEN_SHOOTING px.
+    def update_shoot(course_delta)
+      @way_length += course_delta.abs
+      if @way_length >= GO_BETWEEN_SHOOTING then
+        @state.stop
+        @spittle = shoot
+        @way_length = 0
+      end
+    end
+
+    # looks if the spitted spittle has reached it's destination
+    # or if it is far enough to continue going.
+    def update_spittle_waiting
+      if (not @spittle.alive?) or 
+          ((@rect.left - @spittle.rect.left).abs >= GO_BETWEEN_SHOOTING)
+        go_on
+      end
+    end
+
+    # Carries on going the same direction
+    def go_on
+      if @state.right?
+        @state.move_right
+      else
+        @state.move_left
+      end
     end
 
     # Turns back and starts moving.
     def turn
-      puts 'turning back'
       @state.move_back
     end
 
-    def go_on
-      if @state.right? then
-        move_right
-      else
-        move_left
-      end
-    end
-
+    # shoots a PoisonousSpittle and returns it
     def shoot
-      pos = velocity_horiz > 0 ? [@rect.left + WIDTH, @rect.top+10] : 
-            [@rect.left - PoisonousSpittle::WIDTH, @rect.top + 10]
-      veloc = velocity_horiz > 0 ? SHOT_VELOCITY : 
-              -SHOT_VELOCITY
-      spittle = PoisonousSpittle.new(pos, veloc)
+      y = @rect.top+55
+      x = @state.right? ? @rect.left + WIDTH :
+          @rect.left - PoisonousSpittle::WIDTH
+      veloc = @state.right? ? SHOT_VELOCITY : -SHOT_VELOCITY
+      spittle = PoisonousSpittle.new([x,y], veloc)
       @location.add_sprite(spittle)
       return spittle
     end
@@ -130,7 +166,7 @@ MonsterMixins::ShieldSensitive
       BASE_VELOCITY * @state.velocity_horiz
     end
 
-
+    # Class of the spittles spitted
     class PoisonousSpittle < Shot
 
       def initialize(position, velocity)
