@@ -2,7 +2,10 @@
 # igneus 22.7.2005
 
 =begin
-= TimeLock
+= NAME
+TimeLock
+
+= DESCRIPTION
 ((<TimeLock>)) objects are used for a very frequent task. An instance is
 initialized by a number of seconds for which it must be locked.
 After this time it unlocks itself.
@@ -13,7 +16,7 @@ module FreeVikings
   class TimeLock
 
 =begin
---- TimeLock.new(seconds_to_expiry, timer)
+--- TimeLock.new(seconds_to_expiry=0, timer=Time)
 The first argument is a number of seconds to the expiry time.
 The second one is an object which provides 'now' method to get the time
 information. Default is the standard Ruby built-in (({Time})) class,

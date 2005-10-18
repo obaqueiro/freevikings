@@ -6,9 +6,15 @@ require 'item.rb'
 module FreeVikings
 
 =begin
-= Apple
-Apple is a very simple ((<Item>)). It contains vitamin C, so it can heal the
+= NAME
+Apple
+
+= DESCRIPTION
+Apple is a very simple (({Item})). It contains vitamin C, so it can heal the
 hurted viking (it adds him one energy point if he isn't totally healthy).
+
+= Superclass
+Item
 =end
 
   class Apple < Item
