@@ -3,7 +3,7 @@
 
 # First test of monster class Snail.
 
-require 'monsters/snail.rb'
+load 'monsters/snail.rb'
 
 TS = 40
 
