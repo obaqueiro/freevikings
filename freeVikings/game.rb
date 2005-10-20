@@ -1,8 +1,6 @@
 # game.rb
 # igneus 28.1.2005
 
-# The Game class. (Documentation is in the code comments.)
-
 require 'RUDL'
 
 require 'viking.rb'
@@ -65,6 +63,8 @@ at once in a multithreaded application). But I wouldn't do that...
 
       @log = Log4r::Logger['init log']
 
+      @loading_message = FreeVikings::FONTS['default'].create_text_box(120, 'LOADING')
+
       # set defaults:
       levelset = 'locs/DefaultCampaign'
 
@@ -79,8 +79,6 @@ at once in a multithreaded application). But I wouldn't do that...
       # a stavoveho radku s podobiznami vikingu
       @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT - BottomPanel::HEIGHT])
 
-      @loading_message = FreeVikings::FONTS['default'].create_text_box(120, 'LOADING')
-
       # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
       # tridy, pokud usoudi, ze by se stav mel zmenit.
       @state = nil
@@ -91,8 +89,27 @@ at once in a multithreaded application). But I wouldn't do that...
 
     public
 
+=begin
+--- Game#app_window
+(({RUDL::DisplaySurface})) on which the game world is displayed.
+It's that one which was given as an argument to the constructor.
+=end
+
     attr_reader :app_window
+
+=begin
+--- Game#team
+Returns (({Team})) of vikings.
+=end
+
     attr_reader :team
+
+=begin
+--- Game#bottompanel
+(({BottomPanel})) which displays the vikings' portraits, life statistics
+and inventories.
+=end
+
     attr_reader :bottompanel
 
 =begin
@@ -151,8 +168,6 @@ regularly and refreshes the screen.
 =end
     def game_loop
       loop do
-        paint_loading_screen(@app_window)
-
 	if @team.nil? then
           level = location = nil
           level = @world.level

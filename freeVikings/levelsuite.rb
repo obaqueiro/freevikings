@@ -41,14 +41,16 @@ given a second argument ((|member_of|)), which is a link to a 'parent'
     def initialize(dirname, member_of=nil)
       @log = Log4r::Logger['world log']
 
+      @log.debug "#{object_id}: Loading a new level suite from directory #{dirname}."
+
       @dirname = dirname
       @members = []
       @member_of = member_of
       @theme = load_theme
 
-      @log.debug "#{object_id}: New LevelSuite created from data in directory '#{@dirname}' as a nested suite in #{@member_of ? @member_of.object_id : @member_of.to_s}"
-
       load_from_xml
+
+      @log.debug "#{object_id}: New LevelSuite created from data in directory '#{@dirname}' as a nested suite in #{@member_of ? @member_of.object_id : @member_of.to_s}"
     end
 
 =begin
@@ -139,7 +141,13 @@ worry about it.)
 puts @dirname
       definition_file = @dirname + '/' + DEFINITION_FILE_NAME
       @log.info "#{object_id}: Loading suite definition file #{definition_file}:"
-      doc = REXML::Document.new(File.open(definition_file))
+
+      begin
+        doc = REXML::Document.new(File.open(definition_file))
+      rescue Errno::ENOENT
+        @log.error "#{object_id}: Cannot load level suite definition file #{definition_file} - file not found."
+        raise
+      end
 
       @title = doc.root.elements['info'].elements['title'].text
 

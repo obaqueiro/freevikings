@@ -43,10 +43,24 @@ compulsory.
 --- Entity.new(initial_position=[], theme=NullGfxTheme.instance)
 Argument ((|initial_position|)) should be a (({Rectangle})) or an (({Array.})).
 The second (voluntary) parameter, ((|theme|)) should be a (({GfxTheme})).
+If it is an (({Array})) and (({WIDTH})) and (({HEIGHT})) constants
+are defined you can omit the third and fourth item of the (({Array}))
+(width and height).
+
 It provides the possibility of using different images for the same
 ((<Entity>)) in different levels.
 If the object defines a public method (({init_images})), this method is called.
 It can be used to load the images for the ((<Entity>)).
+
+class SomeMonster < Entity
+  WIDTH = 30
+  HEIGHT = 80
+end
+
+SomeMonster.new([120, 120])
+SomeMonster.new([120, 120, 30, 80])
+SomeMonster.new(Rectangle.new(120, 120, 30, 80))
+SomeMonster.new(Rectangle.new(120, 120, 30, 80), some_gfx_theme)
 =end
 
     def initialize(initial_position=[], theme=NullGfxTheme.instance)
