@@ -106,7 +106,7 @@ module FreeVikings
     def open_window
       @log.info "Initializing the game window."
       @window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
-      @window.set_caption('freeVikings')
+      @window.set_caption('freeVikings ' + FreeVikings::VERSION)
       @window.toggle_fullscreen if FreeVikings::OPTIONS['fullscreen']
     end
 
@@ -114,8 +114,9 @@ module FreeVikings
       @window.blit(@logo, [(@window.w/2) - (@logo.w/2), (@window.h/3) - (@logo.h/2)])
 
       license_message = \
-      "freeVikings Copyright (c) 2005 Jakub Pavlik\n" \
-      "freeVikings come to you as free software under GNU/GPL; " \
+      "freeVikings v#{FreeVikings::VERSION}\n"  \
+      "Copyright (c) 2005 Jakub Pavlik\n" \
+      "freeVikings come to you as free software under GNU/GPL. " \
       "They are provided with aim of usability, " \
       "but with\nABSOLUTELY NO WARRANTY."
 

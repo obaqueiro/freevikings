@@ -20,5 +20,14 @@ module FreeVikings
   CODE_DIRS = ['monsters', 'ext'] # directories with additional source files
   DATA_DIR = 'locs' # directory with location data
 
+  # get the version number
+  if File.exist?('RELEASE')
+    File.open('RELEASE') do |fr|
+      FreeVikings::VERSION = fr.gets.chomp
+    end
+  else
+    FreeVikings::VERSION = 'DEV'
+  end
+
   FONTS = {} # a hash of fonts
 end
