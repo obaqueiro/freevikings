@@ -1,19 +1,33 @@
 # exit.rb
 # igneus 24.2.2005
 
-require 'sprite.rb'
+require 'entity.rb'
+require 'staticobject.rb'
 
 =begin
-= Exit
-((<Exit>)) is a special (({Sprite})) which denotes the EXIT point 
-of the (({Location})). The goal of all the freeVikings game is to get the three
+= NAME
+Exit
+
+= DESCRIPTION
+((<Exit>)) is a special (({Entity})) which denotes the EXIT point 
+of the (({Location})). The goal of the freeVikings game is to get the three
 vikings out of several terrible places. They can escape the level only if they
 all stand on the EXIT point.
+
+= Superclass
+Entity
 =end
 
 module FreeVikings
 
-  class Exit < Sprite
+  class Exit < Entity
+
+=begin
+= Included mixins
+StaticObject
+=end
+
+    include StaticObject
 
     def initialize(position)
       super position
@@ -21,9 +35,17 @@ module FreeVikings
     end
 
 =begin
+--- Exit#location=(loc)
+--- Exit#location
+=end
+
+    attr_accessor :location
+
+=begin
 --- Exit#team_exited?(team)
 Returns true if all the living members of the (({Team })) ((|team|)) stand
 on the EXIT.
+(It is called from inside of the (({Game})) instance.)
 =end
 
     def team_exited?(team)

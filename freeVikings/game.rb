@@ -65,6 +65,8 @@ at once in a multithreaded application). But I wouldn't do that...
 
       @loading_message = FreeVikings::FONTS['default'].create_text_box(120, 'LOADING')
 
+      paint_loading_screen @app_window
+
       # set defaults:
       levelset = 'locs/DefaultCampaign'
 
@@ -168,6 +170,8 @@ regularly and refreshes the screen.
 =end
     def game_loop
       loop do
+        paint_loading_screen @app_window
+
 	if @team.nil? then
           level = location = nil
           level = @world.level

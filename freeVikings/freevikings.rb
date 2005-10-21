@@ -14,7 +14,7 @@ require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
 require 'getoptlong'
 require 'log4r'
 
-require 'init.rb'
+require 'initfv.rb'
 
 include FreeVikings
 

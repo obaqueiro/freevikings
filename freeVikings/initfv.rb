@@ -1,4 +1,4 @@
-# init.rb
+# initfv.rb
 # igneus 14.6.2005
 
 # Graphical initialization.

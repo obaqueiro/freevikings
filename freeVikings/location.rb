@@ -100,7 +100,8 @@ The level is completed when all the three vikings stand on the exitter.
 
     def exitter=(exitter)
       @exitter = exitter
-      add_sprite exitter
+      @map.static_objects.add exitter
+      @exitter.location = self
     end
 
 =begin
