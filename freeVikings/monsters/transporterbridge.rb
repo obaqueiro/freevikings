@@ -1,8 +1,18 @@
 # transporterbridge.rb
 # igneus 6.10.2005
 
-# TransporterBridge is a Bridge which can transport the Transportable
-# game objects like a lift.
+=begin
+= NAME
+TransporterBridge
+
+= DESCRIPTION
+(({TransporterBridge})) is a platform which can move up and down.
+It is usually used as a lift. Any (({Sprite})) which includes 
+(({Transportable})) can be given a lift by this lift.
+
+= Superclass
+Bridge
+=end
 
 require 'monsters/bridge.rb'
 require 'gfxtheme.rb'
@@ -12,10 +22,23 @@ module FreeVikings
 
   class TransporterBridge < Bridge
 
+=begin
+--- TransporterBridge::VELOCITY
+abs of vertical velocity.
+=end
+
     VELOCITY = 40
 
     WIDTH = 80
     HEIGHT = 24 # a bit more to enable collisions on slower computers
+
+=begin
+--- TransporterBridge.new(left, ys, theme=NullGfxTheme.instance)
+:((|left|)) = x coordinate
+:((|ys|)) = (({Array})) of y coordinates between which the TransporterBridge
+ will move. Note (({sort})) is applied onto this (({Array})) at first.
+:((|theme|)) = (({GfxTheme})) instance
+=end
 
     def initialize(left, ys, theme=NullGfxTheme.instance)
       super([left, ys[0]])
@@ -31,7 +54,19 @@ module FreeVikings
       @dest = 0         # subscript of the next destination y
     end
 
+=begin
+--- TransporterBridge#dest=(dest)
+Only for those who know the source code of the class well. Don't use this if 
+you have another way to solve your problem! This is stinking!
+=end
+
     attr_writer :dest
+
+=begin
+--- TransporterBridge#move_up
+(({TransporterBridge})) starts moving up if it isn't on the top of it's
+route. Returns ((|true|)) or ((|false|)).
+=end
 
     def move_up
       if @dest > 0 then
@@ -41,6 +76,12 @@ module FreeVikings
       return false
     end
 
+=begin
+--- TransporterBridge#move_down
+(({TransporterBridge})) starts moving down if it isn't on the low end of it's
+route. Returns ((|true|)) or ((|false|)).
+=end
+
     def move_down
       if @dest < (@y.size - 1) then
         @dest += 1
@@ -48,6 +89,15 @@ module FreeVikings
       end
       return false
     end
+
+=begin
+--- TransporterBridge#next
+Starts moving to the next destination place. Calling this iterates through
+the places from the bottom up and then jumps to the low end and starts
+once more.
+
+It is useful mainly for two-y lifts.
+=end
 
     def next
       @dest = (@dest + 1) % @y.size
@@ -78,13 +128,22 @@ module FreeVikings
       end
     end
 
-    def activate
-      move_up
-    end
+=begin
+== Active Object methods
+(({TransporterBridge})) is also an Active object.
+So the player can command it very intuitively by pressing up and down key.
 
-    def deactivate
-      move_down
-    end
+--- TransporterBridge#activate
+Alias to ((<TransporterBridge#move_up>)).
+=end
+
+    alias_method :activate, :move_up
+=begin
+--- TransporterBridge#deactivate
+Alias to ((<TransporterBridge#move_down>)).
+=end
+
+    alias_method :deactivate, :move_down
 
     private
 
