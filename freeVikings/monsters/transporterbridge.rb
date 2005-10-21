@@ -10,16 +10,21 @@ require 'transportable.rb'
 
 module FreeVikings
 
-  class TransporterBridge < FallingBridge
+  class TransporterBridge < Bridge
+
+    VELOCITY = 40
+
+    WIDTH = 80
+    HEIGHT = 24 # a bit more to enable collisions on slower computers
 
     def initialize(left, ys, theme=NullGfxTheme.instance)
-      super(left, *ys)
+      super([left, ys[0]])
       @theme = theme
 
       @image = get_theme_image 'bridge'
       @rect.w = @image.image.w
 
-      @y.sort!          # Array of destinations created by Bridge.new
+      @y = ys.sort      # Array of destinations created by Bridge.new
 
       @transported = [] # Array of the transported sprites
 
@@ -29,11 +34,23 @@ module FreeVikings
     attr_writer :dest
 
     def move_up
-      @dest -= 1 if @dest > 0
+      if @dest > 0 then
+        @dest -= 1 
+        return true
+      end
+      return false
     end
 
     def move_down
-      @dest += 1 if @dest < (@y.size - 1)
+      if @dest < (@y.size - 1) then
+        @dest += 1
+        return true
+      end
+      return false
+    end
+
+    def next
+      @dest = (@dest + 1) % @y.size
     end
 
     def update
