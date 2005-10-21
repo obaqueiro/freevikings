@@ -4,7 +4,7 @@
 
 require 'monsters/plasmashooter.rb'
 require 'monsters/robot.rb'
-require 'monsters/bridge.rb'
+require 'monsters/transporterbridge.rb'
 require 'switch.rb'
 require 'apple.rb'
 require 'imagebank.rb'
@@ -33,7 +33,7 @@ switch_1 = FreeVikings::Switch.new([520,410], LOCATION.theme, true, switch_1_act
 
 # A bridge
 Y_VALUES = [260, 480]
-bridge = FreeVikings::FallingBridge.new 600, *Y_VALUES
+bridge = FreeVikings::TransporterBridge.new(600, Y_VALUES, LOCATION.theme)
 
 # An action for switch_2
 switch_2_action = Proc.new do |switch_state|
