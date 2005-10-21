@@ -10,5 +10,6 @@
   <data>
     <image name="switch_on" image="switch_on.tga" />
     <image name="switch_off" image="switch_off.tga" />
+    <image name="bridge" image="small_bridge.tga" />
   </data>
 </gfx_theme>
