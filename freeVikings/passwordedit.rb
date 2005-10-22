@@ -14,6 +14,8 @@ module FreeVikings
 
   class PasswordEdit < GameUI::Menus::TextEdit
 
+    include GameUI::Menus
+
     PASSWORD_LENGTH = 4
 
 =begin
@@ -23,13 +25,12 @@ enough).
 =end
 
     def initialize(parent, label, value, ready_proc)
-      super(parent, label, value, PASSWORD_LENGTH)
+      super(parent, label, value, PASSWORD_LENGTH, 
+            TextEdit::USE_OK_BUTTON|TextEdit::USE_BACK_BUTTON)
       @ready_proc = ready_proc
     end
 
-    private
-
-    def read_events
+    def submit
       if @edit_place.value.size >= PASSWORD_LENGTH then
         FreeVikings::OPTIONS['startpassword'] = String.new(@edit_place.value)
         PASSWORD_LENGTH.times {@edit_place.backspace}
@@ -39,11 +40,20 @@ enough).
         rescue LevelSuite::UnknownPasswordException
         end
       end
-
-      super
-      @edit_place.value.upcase!
-      @edit_place.refresh_image
     end
 
+    private
+
+    def read_events
+      super
+      begin
+        @edit_place.value.upcase!
+      rescue TypeError
+        # TypeError occurs here when the upcased strong is frozen
+        # (when the password was given from the command line).
+        @edit_place.value = @edit_place.value.upcase
+      end
+      @edit_place.refresh_image
+    end
   end # class PasswordEdit
 end # module FreeVikings
