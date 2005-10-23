@@ -72,7 +72,11 @@ paint and draw graphics.
 
         stroken.each do |s|
           if s.kind_of? Monster then
-            s.hurt
+            begin
+              s.hurt(self)
+            rescue ArgumentError
+              s.hurt
+            end
             @monsters_damaged = true
           end
         end

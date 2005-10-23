@@ -70,6 +70,16 @@ module FreeVikings
       def next_left
         next_left = @rect.left + (velocity_horiz * @location.ticker.delta)
       end
+
+=begin
+--- Walking#velocity_horiz
+Computes the x-axis velocity. Uses constant (({BASE_VELOCITY})) which
+must be defined in the (({Walking}))-including class.
+=end
+
+      def velocity_horiz
+        self.class::BASE_VELOCITY * @state.velocity_horiz
+      end
     end # module Walking
   end # module SophisticatedSpriteMixins
 end # module FreeVikings

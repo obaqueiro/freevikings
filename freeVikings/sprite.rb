@@ -18,6 +18,7 @@ Entity
 require 'entity.rb'
 require 'pausable.rb'
 require 'imagebank.rb'
+require 'hurtdrop.rb'
 
 module FreeVikings
 
@@ -130,14 +131,25 @@ This method is called when the sprite is killed.
     end
 
 =begin
---- Sprite#hurt
+--- Sprite#hurt(hurt_cause=nil)
 Hurt is called when the sprite is damaged, but it isn't sure that it
 cannot carry on living.
+
+Voluntary argument ((|hurt_cause|)) is an object which caused the hurt
+(usually a monster or a weapon).
 =end
 
-    def hurt
+    def hurt(hurt_cause=nil)
       @energy -= 1
-      destroy if @energy <= 0
+
+      if @energy <= 0
+        destroy
+      else
+        if hurt_cause then
+          @location.add_sprite HurtDrop.new([hurt_cause.rect[0], 
+                                             hurt_cause.rect[1]])
+        end
+      end
     end
 
 =begin

@@ -49,7 +49,11 @@ module FreeVikings
       while not stroken.empty? do
 	s = stroken.pop
 	if s.kind_of? @hunted_type
-	  s.hurt
+          begin
+            s.hurt(self)
+          rescue ArgumentError
+            s.hurt
+          end
           destroy
           return
 	end
