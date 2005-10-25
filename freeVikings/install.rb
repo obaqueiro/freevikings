@@ -41,6 +41,21 @@ class Installer
       File.install(@src_dir+'/'+fd, @dest_dir, mode, @verbose)
     end
   end
+
+  def Installer.recursive_install(src_dir, dest_dir)
+    inst = Installer.new(src_dir, dest_dir)
+    Dir.new(src_dir).each do |file|
+      next if file == '.' or file == '..'
+
+      if File.directory? file then
+        subdir_name = dest_dir + '/' + file
+        File.mkpath subdir_name
+        Installer.recursive_install(src_dir+'/'+file, subdir_name)
+      else
+        inst.install file
+      end
+    end
+  end
 end
 
 # Parse options:
@@ -79,6 +94,7 @@ if FvInstaller::CONFIG['mode'] == 'install'
     fw.puts 'cd ' + data_dir
     fw.puts 'ruby freevikings.rb'
   end
+  `chmod 555 freevikings`
 
   puts "Installing freeVikings in prefix #{prefix}:"
 
@@ -86,7 +102,8 @@ if FvInstaller::CONFIG['mode'] == 'install'
   Installer.new(Dir.pwd, bin_dir, true).install executable_name, 0555
 
   puts "Installing data in #{data_dir}"
-  File.mkpath data_dir, true
+  File.mkpath(data_dir)
+  Installer.recursive_install(Dir.pwd, data_dir)
 
 elsif FvInstaller::CONFIG['mode'] == 'uninstall'
 
