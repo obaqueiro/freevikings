@@ -5,6 +5,7 @@
 
 require 'monsters/transporterbridge.rb'
 require 'monsters/penguin.rb'
+require 'monsters/apex.rb'
 require 'door.rb'
 require 'lock.rb'
 
@@ -20,15 +21,23 @@ exit_lock = Lock.new([32*TS+5, 9*TS-60], Proc.new {})
 LOCATION.map.static_objects.add exit_lock
 
 # -- TOP CORRIDOR --
-# The vikings start here. The corridor is full of pinguins.
+# The vikings start here, in the corridor full of pinguins.
 
-# lifts:
-left_lift = TransporterBridge.new TS, [4*TS, 9*TS], LOCATION.theme
+# - lifts:
+# The left lift is a bit dangerous because it can get you onto the apexes
+# and then you die pierced.
+left_lift = TransporterBridge.new TS, [4*TS, 9*TS, 11*TS], LOCATION.theme
 LOCATION.add_sprite left_lift
 exit_lift = TransporterBridge.new 31*TS, [4*TS, 9*TS], LOCATION.theme
 LOCATION.add_sprite exit_lift
 
-# pinguins:
+# - pinguins:
 6.step(30,3) do |i|
   LOCATION.add_sprite Penguin.new([i*TS, 4*TS-Penguin::HEIGHT])
 end
+
+# -- THE WEST SIDE -- :o)
+
+# apexes under the left lift:
+apexes = ApexRow.new [1*TS, 11*TS], 3, LOCATION.theme
+LOCATION.add_sprite apexes
