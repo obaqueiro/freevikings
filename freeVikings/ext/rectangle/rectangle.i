@@ -1,4 +1,4 @@
-%module "FreeVikings::Extensions::Rectangle"
+%module "FreeVikings::Extensions"
 
 /*
   rectangle.i

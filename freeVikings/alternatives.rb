@@ -9,10 +9,10 @@
 
 if FreeVikings::OPTIONS["extensions"] then
 
-  require "ext/Rectangle"
-  FreeVikings::Rectangle = FreeVikings::Extensions::Rectangle::Rectangle
+  require "ext/Extensions"
+
   # add a missing method:
-  class FreeVikings::Rectangle
+  class FreeVikings::Extensions::Rectangle
     def to_a
       [left, top, width, height]
     end
@@ -21,6 +21,8 @@ if FreeVikings::OPTIONS["extensions"] then
       return self.class.new(self)
     end
   end
+
+  FreeVikings::Rectangle = FreeVikings::Extensions::Rectangle
 
 else
 
