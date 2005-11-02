@@ -27,3 +27,4 @@ rectangle_wrap.o: rectangle/rectangle_wrap.cxx
 
 rectangle/rectangle_wrap.cxx: rectangle/rectangle.i rectangle/rectangle.cpp rectangle/rectangle.hpp
 	swig -noruntime -c++ -ruby rectangle/rectangle.i
+
