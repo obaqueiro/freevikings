@@ -9,6 +9,10 @@ require 'monsters/apex.rb'
 require 'door.rb'
 require 'lock.rb'
 
+# if FUNLESS is true, switches off any non-important
+# processor time eating monsters (e.g. dozens of penguins).
+FUNLESS = false
+
 TS = LOCATION.map.class::TILE_SIZE
 
 # -- EXIT AREA --
@@ -32,12 +36,14 @@ exit_lift = TransporterBridge.new 31*TS, [4*TS, 9*TS], LOCATION.theme
 LOCATION.add_sprite exit_lift
 
 # - pinguins:
-6.step(30,3) do |i|
-  LOCATION.add_sprite Penguin.new([i*TS, 4*TS-Penguin::HEIGHT])
+unless FUNLESS
+  6.step(30,3) do |i|
+    LOCATION.add_sprite Penguin.new([i*TS, 4*TS-Penguin::HEIGHT])
+  end
 end
 
 # -- THE WEST SIDE -- :o)
 
 # apexes under the left lift:
-apexes = ApexRow.new [1*TS, 11*TS], 3, LOCATION.theme
-LOCATION.add_sprite apexes
+#apexes = ApexRow.new [1*TS, 11*TS], 3, LOCATION.theme
+#LOCATION.add_sprite apexes
