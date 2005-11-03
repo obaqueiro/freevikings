@@ -13,19 +13,21 @@
 
 #include <vector>
 #include "rectangle.hpp"
+#include "ruby.h"
 
 class Map
 {
-private:
-  typedef std::vector<std::vector<VALUE>> TilesGrid;
+public:
+  // typedef std::vector<std::vector<VALUE>> TilesGrid;
 
-  bool _initialized = false;
-  TilesGrid _blocks;
+private:
+  bool _initialized;
+  std::vector<std::vector<VALUE> > _blocks;
 
 public:
 
   /* Methods of the old good FreeVikings::Map class */
-  Rectangle rect();
+  Rectangle * rect();
   bool is_area_free(Rectangle area);
 
   /* Methods which support the map loading process.
