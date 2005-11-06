@@ -12,8 +12,11 @@
 */
 
 #include <vector>
-#include "rectangle.hpp"
 #include "ruby.h"
+
+#ifndef RECTANGLE_INCLUDED
+#include "rectangle.hpp"
+#endif
 
 class Map
 {
@@ -22,19 +25,27 @@ public:
 
 private:
   bool _initialized;
+
+  int _columns;
+
   std::vector<std::vector<VALUE> > _blocks;
 
 public:
+
+  Map();
 
   /* Methods of the old good FreeVikings::Map class */
   Rectangle * rect();
   bool is_area_free(Rectangle area);
 
+  /* Methods inspecting the map. They are used in the tests. */
+  int tiles_columns();
+  int tiles_rows();
+
   /* Methods which support the map loading process.
      They are declared public because SWIG doesn't make interface
      for private and protected methods, but they should only be used
      from inside of Map. */
-  void start_loading();
   void add_tile(VALUE tile);
   void new_tiles_line();
   void end_loading();

@@ -1,10 +1,9 @@
-%module "FreeVikings::Extensions"
-
 /*
 map.i
 igneus 3.11.2005
 
 SWIG Interface file for C++ class Map and Ruby.
+!!!! This interface file isn't standalone! It belongs to extensions.i !!!!
 */
 
 %{
