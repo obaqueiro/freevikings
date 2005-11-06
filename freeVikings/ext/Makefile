@@ -6,34 +6,39 @@ CPP=g++
 RUBY_HEADERS:=$(shell ruby -e "require 'rbconfig'; puts Config::CONFIG['archdir']")
 SWIG_LIB=`swig -swiglib`
 
-# Targets
-RECTANGLE_O=rectangle.o rectangle_wrap.o
-MAP_O=map.o map_wrap.o
-
 # The main target. On Windows it would be (maybe?) called Extensions.dll
 EXT=Extensions.so
 
+ALL_OBJECT_FILES=rectangle.o map.o exceptions.o extensions_wrap.o
+ALL_HEADER_FILES=rectangle/rectangle.hpp map/map.hpp exceptions/exceptions.hpp
+ALL_SWIG_FILES=extensions.i rectangle/rectangle.i map/map.i exceptions/exceptions.i
+
+SUBDIR_INCLUDES=-I./rectangle -I./map -I./exceptions
+
 all: $(EXT)
 
-$(EXT): $(RECTANGLE_O) $(MAP_O)
-	$(CPP) -shared -fPIC $(RECTANGLE_O) $(MAP_O) -o $(EXT) -lruby -lswigrb
+$(EXT): $(ALL_OBJECT_FILES)
+	$(CPP) -shared -fPIC $(ALL_OBJECT_FILES) -o $(EXT) -lruby -lswigrb
+
+extensions_wrap.o: extensions_wrap.cxx
+	$(CPP) -c extensions_wrap.cxx -I$(RUBY_HEADERS) $(SUBDIR_INCLUDES)
+
+extensions_wrap.cxx: $(ALL_SWIG_FILES) $(ALL_HEADER_FILES)
+	swig -c++ -ruby extensions.i
 
 # --- Rectangle
 rectangle.o: rectangle/rectangle.cpp rectangle/rectangle.hpp
 	$(CPP) -c rectangle/rectangle.cpp
 
-rectangle_wrap.o: rectangle/rectangle_wrap.cxx
-	$(CPP) -c rectangle/rectangle_wrap.cxx -I$(RUBY_HEADERS)
-
-rectangle/rectangle_wrap.cxx: rectangle/rectangle.i rectangle/rectangle.cpp rectangle/rectangle.hpp
-	swig -c -c++ -ruby rectangle/rectangle.i
-
 # --- Map
-map.o: map/map.cpp map/map.hpp
-	$(CPP) -c map/map.cpp -I./rectangle -I$(RUBY_HEADERS)
+map.o: map/map.cpp map/map.hpp exceptions/exceptions.hpp
+	$(CPP) -c map/map.cpp -I$(RUBY_HEADERS) $(SUBDIR_INCLUDES)
 
-map_wrap.o: map/map_wrap.cxx
-	$(CPP) -c map/map_wrap.cxx -I./rectangle -I$(RUBY_HEADERS)
+# --- Exceptions
+exceptions.o: exceptions/exceptions.hpp exceptions/exceptions.cpp
+	$(CPP) -c exceptions/exceptions.cpp -I$(RUBY_HEADERS)
 
-map/map_wrap.cxx: map/map.i map/map.cpp map/map.hpp
-	swig -c -c++ -ruby map/map.i
+clean:
+	rm *.so
+	rm *.o
+	rm extensions_wrap.cxx
