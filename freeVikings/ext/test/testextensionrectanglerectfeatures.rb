@@ -9,7 +9,7 @@ require 'tests/testrect.rb'
 class TestExtensionRectangleRectFeatures < TestRect
 
   def setup
-    @R = FreeVikings::Extensions::Rectangle::Rectangle
+    @R = FreeVikings::Extensions::Rectangle
     @r1 = @R.new 60,60,60,60
   end
 end

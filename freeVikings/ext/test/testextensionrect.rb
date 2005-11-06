@@ -5,18 +5,16 @@
 
 require 'test/unit'
 
-require 'ext/Rectangle'
-
 class TestExtensionRectangle < Test::Unit::TestCase
 
-  include FreeVikings::Extensions::Rectangle
+  include FreeVikings::Extensions
 
   def setup
     @r = Rectangle.new 20, 12, 30, 15
   end
 
   def testClassExists
-    assert_kind_of(Class, FreeVikings::Extensions::Rectangle::Rectangle, "There should be a class FreeVikings::Extensions::Rectangle.")
+    assert_kind_of(Class, FreeVikings::Extensions::Rectangle, "There should be a class FreeVikings::Extensions::Rectangle.")
   end
 
   def testDefaultConstructor

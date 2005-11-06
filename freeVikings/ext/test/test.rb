@@ -6,8 +6,12 @@
 
 require 'test/unit'
 
+# bundle share library with all the C++ written classes:
+require 'ext/Extensions'
+
 require 'ext/test/testextensionrect.rb'
 require 'ext/test/testextensionrectanglerectfeatures.rb'
+require 'ext/test/testextmap.rb'
 
 class FreeVikingsExtensoinsTestSuite
   
@@ -16,6 +20,7 @@ class FreeVikingsExtensoinsTestSuite
 
     suite << TestExtensionRectangle.suite
     suite << TestExtensionRectangleRectFeatures.suite
+    suite << TestExtensionMap.suite
 
     suite
   end
