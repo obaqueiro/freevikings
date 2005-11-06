@@ -5,6 +5,8 @@
   FreeVikings::Extensions::Rectangle class declaration.
 */
 
+#define RECTANGLE_INCLUDED 1
+
 class Rectangle
 {
 public:

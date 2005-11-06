@@ -1,11 +1,8 @@
-%module "FreeVikings::Extensions"
-
 /*
-  rectangle.i
-  igneus 7.6.2005
+rectangle.i
+igneus 7.6.2005
 
-  Soubor rozhrani pro zpracovani generatorem SWIG.
-  Slouzi pro zpristupneni tridy Rectangle zapsane v C++ pro Ruby.
+!!!! This interface file isn't standalone! It belongs to extensions.i !!!!
 */
 
 %{
@@ -14,13 +11,13 @@
 
 
 
-/* Aliasy (musi byt kdoviproc zavedeny pred deklaraci tridy): */
+/* Aliases (I don't know why, but they must be defined before the class
+definition): */
 %alias Rectangle::at "[]";
 %alias Rectangle::width "w";
 %alias Rectangle::height "h";
 
-/* Funkce pojmenovane jak je zvykem v C++ prejmenujeme dle rubyistickych 
-   zvyklosti: */
+/* Rename accessors according to the Rubish conventions: */
 %rename("collides?") Rectangle::collides;
 %rename("left=") Rectangle::set_left;
 %rename("top=") Rectangle::set_top;
@@ -29,7 +26,7 @@
 %rename("empty?") Rectangle::empty;
 %rename("eql?") Rectangle::eql;
 
-/* Mapa typovych konversi pro metodu Rectangle#collides? */
+/* Typemaps */
 %typemap(out) bool Rectangle::collides 
 	"$result = ($1 != false) ? Qtrue : Qfalse;";
 
@@ -40,6 +37,6 @@
 	"$result = ($1 != false) ? Qtrue : Qfalse;";
 
 
-/* Nahrajeme deklaraci tridy: */
+/* Load the class definition: */
 %include "rectangle.hpp";
 
