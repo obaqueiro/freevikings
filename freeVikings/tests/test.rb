@@ -20,8 +20,8 @@ end
 begin
   require '../ext/test/test.rb'
   $extensions_loaded = true
-rescue LoadError
-  puts '+++ COULD NOT LOAD THE COMPILED EXTENSIONS.'
+rescue LoadError => le
+  puts "+++ COULD NOT LOAD TESTS OF THE COMPILED EXTENSIONS. (#{le.message})"
   $extensions_loaded = false
 end
 
