@@ -32,6 +32,8 @@ private:
 
 public:
 
+  static const int TILE_SIZE = 40;
+
   Map();
 
   /* Methods of the old good FreeVikings::Map class */
@@ -39,8 +41,9 @@ public:
   bool is_area_free(Rectangle area);
 
   /* Methods inspecting the map. They are used in the tests. */
-  int tiles_columns();
-  int tiles_rows();
+  int tiles_columns(); // number of colums
+  int tiles_rows();    // number of rows
+  VALUE get_at(int column, int row); // returns the specified tile or nil
 
   /* Methods which support the map loading process.
      They are declared public because SWIG doesn't make interface

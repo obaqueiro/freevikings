@@ -12,6 +12,9 @@
 #include "map.hpp"
 // some #includes are in map.hpp - look there before #including here!
 
+/* local methods: */
+static bool is_tile_solid(VALUE tile);
+
 
 Map::Map()
 {
@@ -29,7 +32,30 @@ Rectangle * Map::rect()
 
 bool Map::is_area_free(Rectangle area)
 {
-  return false;
+  // Get indexes of the tiles on the edges of area:
+  int leftmost_tile_index = area.left() / Map::TILE_SIZE;
+  int rightmost_tile_index = area.right() / Map::TILE_SIZE;
+
+  int top_row_index = area.top() / Map::TILE_SIZE;
+  int bottom_row_index = area.bottom() / Map::TILE_SIZE;
+
+  // check the values
+  if ((leftmost_tile_index < 0) || (rightmost_tile_index >= _columns) ||
+      (top_row_index < 0) || (bottom_row_index >= _blocks.size())) {
+    rb_raise(rb_eArgError, "Area out of map.");
+  }
+
+  // iterate over the tiles from area until one which is solid
+  // is found or end reached.
+  for (int r = top_row_index; r <= bottom_row_index; r++) {
+    for (int c = leftmost_tile_index; c <= rightmost_tile_index; c++) {
+      if (is_tile_solid(_blocks[r][c])) {
+	return false;
+      }
+    }
+  }
+
+  return true;
 }
 
 /*
@@ -46,6 +72,13 @@ int Map::tiles_rows()
   return _blocks.size();
 }
 
+VALUE Map::get_at(int column, int row)
+{
+  if ((_blocks.size() <= row) || (_columns <= column))
+    return Qnil;
+
+  return _blocks[row][column];
+}
 
 /*
  * Loading methods.
@@ -83,4 +116,26 @@ void Map::new_tiles_line()
  
 void Map::end_loading()
 {
+}
+
+/*
+ * Helpful non-Map-member static methods.
+ */
+
+// Checks if tile is solid.
+// Does the important Ruby type checks.
+static bool is_tile_solid(VALUE tile)
+{
+  ID method_solid = rb_intern("solid?"); // Ruby symbol of method solid?
+
+  if (! rb_respond_to(tile, method_solid)) {
+    rb_raise(rb_eTypeError, "Found tile which does not respond to 'solid?'.");
+  }
+
+  VALUE solid_value = rb_funcall(tile, method_solid, 0);
+
+  if (TYPE(solid_value) == T_TRUE)
+    return true;
+  else
+    return false;
 }
