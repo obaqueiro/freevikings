@@ -62,4 +62,55 @@ class TestExtensionMap < Test::Unit::TestCase
       @map << Tile.new
     end
   end
+
+  def testHasAddedTile
+    @map.new_tiles_line
+    @map.add_tile(inserted = Tile.new)
+    assert_equal(inserted, @map.get_at(0,0), "The inserted tile should be returned.")
+  end
+
+  def testTileOutOfMapIsNil
+    @map.new_tiles_line
+    @map.add_tile(inserted = Tile.new)
+    assert_equal(nil, @map.get_at(100,200), "Tile 100,200 doesn't exist, nil is expected.")
+  end
+
+  # prepares a bigger map (used for testing Map#area_free?)
+  def setupAreaFreeTests
+    x = @solid_tile = Tile.new('', true)
+    o = @soft_tile = Tile.new('', false)
+
+    [[x, x, x, x],
+     [x, o, o, x],
+     [x, o, o, x],
+     [x, x, x, x]].each do |row|
+      @map.new_tiles_line
+      row.each do |tile|
+        @map.add_tile tile
+      end
+    end
+  end
+
+  def testCentralAreaFree
+    setupAreaFreeTests
+
+    assert_equal(true, 
+                 @map.area_free?(Rectangle.new(50,50,10,10)),
+                 "Area is free.")
+  end
+
+  def testNonFreeArea
+    setupAreaFreeTests
+
+    assert_equal(false,
+                 @map.area_free?(Rectangle.new(5,5,40,40)),
+                 "Area isn't free, it collides with three solid tiles.")
+  end
+
+  def testRect
+    setupAreaFreeTests
+
+    assert_equal(4*40, @map.rect.w, "Map width is 160.")
+    assert_equal(4*40, @map.rect.h, "Map height is 160.")
+  end
 end
