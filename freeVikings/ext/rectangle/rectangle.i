@@ -13,6 +13,8 @@ igneus 7.6.2005
 
 /* Aliases (I don't know why, but they must be defined before the class
 definition): */
+%alias Rectangle::left "x";
+%alias Rectangle::top "y";
 %alias Rectangle::at "[]";
 %alias Rectangle::width "w";
 %alias Rectangle::height "h";
@@ -27,15 +29,8 @@ definition): */
 %rename("eql?") Rectangle::eql;
 
 /* Typemaps */
-%typemap(out) bool Rectangle::collides 
+%typemap(out) bool
 	"$result = ($1 != false) ? Qtrue : Qfalse;";
-
-%typemap(out) bool Rectangle::empty
-	"$result = ($1 != false) ? Qtrue : Qfalse;";
-
-%typemap(out) bool Rectangle::eql 
-	"$result = ($1 != false) ? Qtrue : Qfalse;";
-
 
 /* Load the class definition: */
 %include "rectangle.hpp";
