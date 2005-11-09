@@ -101,6 +101,20 @@ class TestExtensionMap < Test::Unit::TestCase
                  "Area isn't free, it collides with three solid tiles.")
   end
 
+  def testFreeOnTheEdgeOfFreeArea1
+    setupAreaFreeTests
+
+    assert_equal(true, @map.area_free?(Rectangle.new(40,40,5,5)),
+                 "Area is free, but it is on the topleft edge of tiles.")
+  end
+
+  def testFreeOnTheEdgeOfFreeArea2
+    setupAreaFreeTests
+
+    assert_equal(true, @map.area_free?(Rectangle.new(60,80,40,40)),
+                 "Area is free, but it is on the bottom edge of tiles.")
+  end
+
   def testRect
     setupAreaFreeTests
 

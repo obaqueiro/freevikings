@@ -19,6 +19,7 @@ static bool is_tile_solid(VALUE tile);
 Map::Map()
 {
   _columns = 0;
+  _initialized = false;
 }
 
 /* 
@@ -35,12 +36,19 @@ Rectangle * Map::rect()
 
 bool Map::is_area_free(Rectangle area)
 {
+  /* Cast double->int is used in this method.
+     It shouldn't make any problems, but if any occured and there was no
+     reason, this can be possible one. */
+
   // Get indexes of the tiles on the edges of area:
   int leftmost_tile_index = area.left() / Map::TILE_SIZE;
   int rightmost_tile_index = area.right() / Map::TILE_SIZE;
 
   int top_row_index = area.top() / Map::TILE_SIZE;
   int bottom_row_index = area.bottom() / Map::TILE_SIZE;
+
+  if (((int) area.bottom() % Map::TILE_SIZE) == 0)
+    bottom_row_index -= 1;
 
   // check the values
   if ((leftmost_tile_index < 0) || (rightmost_tile_index >= _columns) ||
@@ -132,6 +140,11 @@ void Map::new_tiles_line()
 void Map::end_loading()
 {
   _initialized = true;
+}
+
+bool Map::loading_completed()
+{
+  return _initialized;
 }
 
 /*

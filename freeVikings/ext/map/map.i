@@ -15,6 +15,7 @@ SWIG Interface file for C++ class Map and Ruby.
 %alias Map::add_tile "<<";
 %alias Map::tiles_columns "columns";
 %alias Map::tiles_rows "rows";
+%alias Map::loading_completed "loading_completed?";
 
 /* Typemaps: */
 %typemap(out) bool {

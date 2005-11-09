@@ -53,4 +53,5 @@ public:
   void add_tile(VALUE tile);
   void new_tiles_line();
   void end_loading();
+  bool loading_completed(); // says if end_loading has been called yet
 };
