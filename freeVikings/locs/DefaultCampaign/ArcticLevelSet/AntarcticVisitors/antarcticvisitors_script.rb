@@ -19,10 +19,10 @@ TS = LOCATION.map.class::TILE_SIZE
 # EXIT is closed behind the locked door.
 
 exit_door = Door.new [31*TS-Door::WIDTH, 9*TS-Door::HEIGHT]
-LOCATION.map.static_objects.add exit_door
+LOCATION.static_objects.add exit_door
 
 exit_lock = Lock.new([32*TS+5, 9*TS-60], Proc.new {})
-LOCATION.map.static_objects.add exit_lock
+LOCATION.static_objects.add exit_lock
 
 # -- TOP CORRIDOR --
 # The vikings start here, in the corridor full of pinguins.
