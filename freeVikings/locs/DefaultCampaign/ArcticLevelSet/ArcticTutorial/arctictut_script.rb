@@ -5,7 +5,6 @@
 
 require 'helpbutton.rb'
 require 'switch.rb'
-require 'map.rb'
 require 'monsters/apex.rb'
 require 'monsters/bridge.rb'
 require 'monsters/bear.rb'
@@ -14,7 +13,7 @@ include FreeVikings
 
 #=== MAP POSITIONS RELATED CONSTANTS:
 
-FLOOR = Map::TILE_SIZE * 10 # normal floor of the corridor
+FLOOR = LOCATION.map.class::TILE_SIZE * 10 # normal floor of the corridor
 OPTIMAL_HLP_Y = FLOOR - Map::TILE_SIZE * 2 # optimal y of a help button in the corridor (there's only one corridor inthe map)
 
 #=== CLASSES:
