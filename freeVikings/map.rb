@@ -116,8 +116,7 @@ and (({surface.h})) high with a center in ((|center_coordinate|)).
 of (({Fixnum}))s.
 =end
 
-    def paint(surface, center_coordinate)
-      paint_rect = rect_on_center(center_coordinate, surface.w, surface.h)
+    def paint(surface, paint_rect)
       surface.blit(background, [0,0], (paint_rect.to_a))
     end
 
@@ -187,24 +186,6 @@ is free of solid map blocks, ((|false|)) otherwise.
         }
       }
     end
-
-    # Returns a Rectangle width wide and height high with a center 
-    # in center_coord
-
-    def rect_on_center(center_coordinate, width, height)
-      left = center_coordinate[0] - (width / 2)
-      top = center_coordinate[1] - (height / 2)
-      
-      # Pozadovany stred nekde u zacatku mapy:
-      left = 0 if center_coordinate[0] < (width / 2)
-      top = 0 if center_coordinate[1] < (height / 2)
-      # Pozadovany stred nekde u konce mapy:
-      left = (background().w - width) if center_coordinate[0] > (background().w - (width / 2))
-      top = (background().h - height) if center_coordinate[1] > (background().h - (height / 2))
-      
-      Rectangle.new(left, top, left + width, top + height)
-    end
-
   end # class Map
 
 end # modulu FreeVikings

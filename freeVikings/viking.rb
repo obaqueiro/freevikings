@@ -9,7 +9,6 @@ require 'imagebank.rb'
 require 'nullocation.rb'
 require 'collisiontest.rb'
 require 'inventory.rb'
-require 'map.rb' # kvuli const. TILE_SIZE
 require 'sophisticatedspritemixins.rb'
 require 'timelock.rb'
 require 'talkable.rb'

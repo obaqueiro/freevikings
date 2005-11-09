@@ -5,7 +5,6 @@
 
 require 'locationloadstrategy.rb'
 require 'monsterscript.rb'
-require 'map.rb'
 
 module FreeVikings
 
@@ -156,6 +155,7 @@ containing the XML source).
       # prochazime radky bloku:
       lines.each_index { |line_num|
 	@max_height = line_num if line_num >= @max_height
+
 	@blocks.push(Array.new)
 	# prochazime bloky:
 	line = lines[line_num]

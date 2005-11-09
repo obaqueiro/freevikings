@@ -14,8 +14,6 @@ require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
 require 'getoptlong'
 require 'log4r'
 
-require 'initfv.rb'
-
 include FreeVikings
 
 def print_help_and_exit
@@ -82,4 +80,5 @@ $:.concat FreeVikings::CODE_DIRS
 require "alternatives.rb"
 
 # This opens the game window, loads data and starts the game:
+require 'initfv.rb'
 FreeVikings::Init.new

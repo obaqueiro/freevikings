@@ -11,7 +11,7 @@ are delegated.
 
 require 'forwardable'
 
-require 'map.rb'
+#require 'map.rb'
 require 'spritemanager.rb'
 require 'activeobjectmanager.rb'
 require 'itemmanager.rb'
@@ -182,9 +182,10 @@ coordinate.
 =end
 
     def paint(surface, center)
-      displayed_rect = centered_view_rect(background.w, background.h, surface.w, surface.h, center)
+      mr = @map.rect
+      displayed_rect = centered_view_rect(mr.w, mr.h, surface.w, surface.h, center)
 
-      @map.paint(surface, center)
+      @map.paint(surface, displayed_rect)
       @static_objects.paint(surface, displayed_rect)
       @activeobjectmanager.paint(surface, displayed_rect)
       @itemmanager.paint(surface, displayed_rect)
@@ -328,7 +329,9 @@ is free of solid map blocks, ((|false|)) otherwise.
       end
       bottom_right_left = top_left_left + view_width
       bottom_right_top = top_left_top + view_height
-      Rectangle.new(top_left_left, top_left_top, bottom_right_left, bottom_right_top)
+
+      return Rectangle.new(top_left_left, top_left_top, 
+                           bottom_right_left, bottom_right_top)
     end
 
   end # class Location
