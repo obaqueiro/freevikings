@@ -69,12 +69,6 @@ class TestExtensionMap < Test::Unit::TestCase
     assert_equal(inserted, @map.get_at(0,0), "The inserted tile should be returned.")
   end
 
-  def testTileOutOfMapIsNil
-    @map.new_tiles_line
-    @map.add_tile(inserted = Tile.new)
-    assert_equal(nil, @map.get_at(100,200), "Tile 100,200 doesn't exist, nil is expected.")
-  end
-
   # prepares a bigger map (used for testing Map#area_free?)
   def setupAreaFreeTests
     x = @solid_tile = Tile.new('', true)
@@ -132,5 +126,28 @@ class TestExtensionMap < Test::Unit::TestCase
     assert_raise(RuntimeError, "Can't add a new line if the last one isn't long enough.") do
       @map.new_tiles_line
     end
+  end
+
+  def testGetTile
+    @map.new_tiles_line
+    @map.add_tile(tile = Tile.new)
+    assert_equal tile, @map.get_at(0,0), "Tile which was inserted is expected to be returned."
+  end
+
+  def testGetAtRaiseExceptionIfTileOutOfMap
+    #map is empty now
+    assert_raise(RuntimeError) do
+      p @map.get_at(0,0)
+    end
+  end
+
+  def testColumns
+    setupAreaFreeTests
+    assert_equal 4, @map.columns, "Map has 4 columns."
+  end
+
+  def testRows
+    setupAreaFreeTests
+    assert_equal 4, @map.rows, "Map has 4 rows."
   end
 end

@@ -40,7 +40,8 @@ public:
   Rectangle * rect();
   bool is_area_free(Rectangle area);
 
-  /* Methods inspecting the map. They are used in the tests. */
+  /* Methods inspecting the map. They are used in the tests and in class
+     internal mainly. */
   int tiles_columns(); // number of colums
   int tiles_rows();    // number of rows
   VALUE get_at(int column, int row); // returns the specified tile or nil

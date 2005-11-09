@@ -77,8 +77,9 @@ int Map::tiles_rows()
 
 VALUE Map::get_at(int column, int row)
 {
-  if ((_blocks.size() <= row) || (_columns <= column))
-    return Qnil;
+  if ((column < 0) || (row < 0) || 
+      (_blocks.size() <= row) || (_columns <= column))
+    rb_raise(rb_eRuntimeError, "Requested tile is out of map.");
 
   return _blocks[row][column];
 }

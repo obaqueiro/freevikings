@@ -13,6 +13,8 @@ SWIG Interface file for C++ class Map and Ruby.
 /* Aliases: */
 %alias Map::is_area_free "area_free?";
 %alias Map::add_tile "<<";
+%alias Map::tiles_columns "columns";
+%alias Map::tiles_rows "rows";
 
 /* Typemaps: */
 %typemap(out) bool {
