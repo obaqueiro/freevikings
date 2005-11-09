@@ -70,8 +70,6 @@ Initializes a new ((<Map>)) with data from ((|map_load_strategy|)).
       loading_strategy = map_load_strategy
       @background = nil
 
-      (@static_objects = Group.new).extend(PaintableGroup)
-
       @log.info('Loading map.')
 
       loading_strategy.load_map(@blocks, @blocktypes)
@@ -122,7 +120,6 @@ of (({Fixnum}))s.
     def paint(surface, center_coordinate)
       paint_rect = rect_on_center(center_coordinate, surface.w, surface.h)
       surface.blit(background, [0,0], (paint_rect.to_a))
-      @static_objects.paint(surface, paint_rect)
     end
 
 =begin
@@ -137,7 +134,6 @@ is free of solid map blocks, ((|false|)) otherwise.
       rescue RuntimeError
 	return false
       end
-      colliding_blocks.concat @static_objects.members_on_rect(rect)
       colliding_blocks.each do |block|
 	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.
 	return false if block.solid == true

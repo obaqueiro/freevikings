@@ -31,7 +31,7 @@ module FreeVikings
     attr_reader :colour
 
     def apply(user)
-      locks = user.location.map.static_objects.
+      locks = user.location.static_objects.
               members_on_rect(user.rect).find_all {|o| o.kind_of? Lock}
       
       locks.each do |lock|

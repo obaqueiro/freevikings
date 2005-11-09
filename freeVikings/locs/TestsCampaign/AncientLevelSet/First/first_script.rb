@@ -17,7 +17,7 @@ require 'door.rb'
 
 include FreeVikings
 
-static_objects = LOCATION.map.static_objects
+static_objects = LOCATION.static_objects
 
 # Add the door:
 door = Door.new(Rectangle.new(680,280,40,120))

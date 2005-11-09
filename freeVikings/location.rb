@@ -47,6 +47,17 @@ Argument ((|theme|)) is a (({GfxTheme})) instance.
       @spritemanager = SpriteManager.new
       @activeobjectmanager = ActiveObjectManager.new
       @itemmanager = ItemManager.new
+
+      @static_objects = Group.new
+      @static_objects.extend PaintableGroup
+
+      # a singleton method of @static_objects:
+      def @static_objects.area_free?(rect)
+        @members.find {|m| 
+          m.solid and 
+            m.rect.collides? rect} == nil
+      end
+
       loader.load_exit(self)
       loader.load_scripts(self)
       loader.load_start(self)
@@ -72,8 +83,7 @@ inside the ((<Location>)).
 
 =begin
 --- Location#map
-Returns a (({Map})) object which takes care of the static objects 
-(mainly blocks) in the game.
+Returns a (({Map})) object which takes care of the tiles in the game.
 =end
 
     attr_reader :map
@@ -88,6 +98,14 @@ objects. (To learn more about active objects study documentation for classes
     attr_reader :activeobjectmanager
 
 =begin
+--- Location#static_objects
+Returns a (({Group})) of static objects (objects which aren't tiles but behave
+as a part of map - they can be solid and aren't updated regularly.).
+=end
+
+    attr_reader :static_objects
+
+=begin
 --- Location#exitter
 --- Location#exitter=(exitter)
 Methods to access ((<Location>))'s exitter. (({Exitter})) is 
@@ -100,7 +118,7 @@ The level is completed when all the three vikings stand on the exitter.
 
     def exitter=(exitter)
       @exitter = exitter
-      @map.static_objects.add exitter
+      @static_objects.add exitter
       @exitter.location = self
     end
 
@@ -164,8 +182,10 @@ coordinate.
 =end
 
     def paint(surface, center)
-      @map.paint(surface, center)
       displayed_rect = centered_view_rect(background.w, background.h, surface.w, surface.h, center)
+
+      @map.paint(surface, center)
+      @static_objects.paint(surface, displayed_rect)
       @activeobjectmanager.paint(surface, displayed_rect)
       @itemmanager.paint(surface, displayed_rect)
       @spritemanager.paint(surface, displayed_rect)
@@ -271,7 +291,7 @@ is free of solid map blocks, ((|false|)) otherwise.
 =end
 
     def area_free?(rect)
-      @map.area_free? rect
+      @map.area_free?(rect) and @static_objects.area_free?(rect)
     end
 
     alias_method :is_area_free?, :area_free?
