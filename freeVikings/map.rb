@@ -65,14 +65,13 @@ Initializes a new ((<Map>)) with data from ((|map_load_strategy|)).
     def initialize(map_load_strategy)
       @log = Log4r::Logger['map log']
 
-      @blocktypes = Hash.new
       @blocks = Array.new
       loading_strategy = map_load_strategy
       @background = nil
 
       @log.info('Loading map.')
 
-      loading_strategy.load_map(@blocks, @blocktypes)
+      loading_strategy.load_map(@blocks)
 
       @log.info('Map initialised.')
 

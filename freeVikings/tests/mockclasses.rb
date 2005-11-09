@@ -14,15 +14,14 @@ module FreeVikings
     # It doesn't parse any XML files => the tests are quicker.
     class TestingMapLoadStrategy < LocationLoadStrategy
 
-      def load_map(blocks_matrix, blocktype_hash)
+      def load_map(blocks_matrix)
 	@blocks = blocks_matrix
-	@blocktypes = blocktype_hash
 
 	# nacteni typu bloku
-	x = @blocktypes['x'] = Tile.new
-	@blocktypes['x'].solid = true
-	o = @blocktypes['o'] = Tile.new
-	@blocktypes['o'].solid = false
+	x =  Tile.new
+	x.solid = true
+	o = Tile.new
+	o.solid = false
 	# nacteni umisteni bloku
 	blcks = [
 	  [x, x, o, o, o, o, o, x],

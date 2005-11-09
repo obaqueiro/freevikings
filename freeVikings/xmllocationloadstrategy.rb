@@ -27,6 +27,7 @@ containing the XML source).
     def initialize(locsource, data_source_control=true)
       super()
 
+      @blocktypes = {}
       @source = locsource
 
       if data_source_control != nil then
@@ -44,9 +45,8 @@ containing the XML source).
       content_check
     end
 
-    def load_map(blocks_matrix, blocktype_hash)
+    def load_map(blocks_matrix)
       @blocks = blocks_matrix
-      @blocktypes = blocktype_hash
 
       load_tiletypes
       load_tiles

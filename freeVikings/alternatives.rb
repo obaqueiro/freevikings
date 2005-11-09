@@ -25,6 +25,15 @@ if FreeVikings::OPTIONS["extensions"] then
   end
   FreeVikings::Rectangle = FreeVikings::Extensions::Rectangle
 
+  class FreeVikings::Extensions::Map
+    alias_method :old_init, :initialize
+    def initialize
+      old_init()
+
+    end
+  end
+  #FreeVikings::Map = FreeVikings::Extensions::Map
+
 else
 
   require "rect.rb"

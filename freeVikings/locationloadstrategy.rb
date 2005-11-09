@@ -26,7 +26,7 @@ module FreeVikings
     # Do hashe Blocktype_hash ulozi objekt Tile 
     # pro kazdy typ dlazdice, ktery se v souboru mapy vyskytne.
     # Nacte do pole bloku bloky a do pole typu jejich typy (objekty Tile)
-    def load_map(blocks_matrix, blocktype_hash)
+    def load_map(blocks_matrix)
     end
 
     # Nahraje vsechny skripty (jejich pomoci se do lokace pridavaji prisery,
