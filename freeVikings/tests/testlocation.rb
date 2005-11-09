@@ -85,7 +85,7 @@ class TestLocation < Test::Unit::TestCase
 
   def testSolidStaticObjectMakesPositionInvalid
     assert_equal true, @loc.area_free?(rect), "Now the position is valid, area is free."
-    @loc.map.static_objects.add self
+    @loc.static_objects.add self
     assert_equal false, @loc.area_free?(rect), "Position isn't valid, it's a solid static object there."
   end
 
