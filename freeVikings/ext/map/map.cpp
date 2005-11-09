@@ -27,7 +27,10 @@ Map::Map()
 
 Rectangle * Map::rect()
 {
-  return new Rectangle();
+  return new Rectangle(0, 
+		       0,
+		       _columns * Map::TILE_SIZE,
+		       _blocks.size() * Map::TILE_SIZE);
 }
 
 bool Map::is_area_free(Rectangle area)
@@ -110,12 +113,24 @@ void Map::add_tile(VALUE tile)
 
 void Map::new_tiles_line()
 {
+  if (_initialized) {
+    rb_raise(rb_eRuntimeError, "Initialization has been completed yet. No new lines can be added to the map.");
+  }
+
+  // vector::back() is defined for a non-empty vector only
+  if (_blocks.size() > 0) {
+    if (_blocks.back().size() != _columns) {
+      rb_raise(rb_eRuntimeError, "Last line isn't as long as the other ones. New line can't be appended");
+    }
+  }
+
   std::vector<VALUE> *line = new std::vector<VALUE>();
   _blocks.push_back(*line);
 }
  
 void Map::end_loading()
 {
+  _initialized = true;
 }
 
 /*

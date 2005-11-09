@@ -113,4 +113,24 @@ class TestExtensionMap < Test::Unit::TestCase
     assert_equal(4*40, @map.rect.w, "Map width is 160.")
     assert_equal(4*40, @map.rect.h, "Map height is 160.")
   end
+
+  def testAddTilesLineFailsAfterInitializationFinished
+    setupAreaFreeTests
+    @map.end_loading
+
+    assert_raise(RuntimeError, "Initialization has been finished, no new lines can be added.") do
+      @map.new_tiles_line
+    end
+  end
+
+  def testCannotStartNewLineIfLastLineIsNotLongEnough
+    setupAreaFreeTests
+    @map.new_tiles_line
+    # Normal rows have four tiles. This one will be shorter:
+    3.times {@map.add_tile Tile.new}
+
+    assert_raise(RuntimeError, "Can't add a new line if the last one isn't long enough.") do
+      @map.new_tiles_line
+    end
+  end
 end
