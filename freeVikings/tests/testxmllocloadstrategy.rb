@@ -7,6 +7,7 @@
 
 require 'test/unit'
 
+require 'map.rb'
 require 'xmllocationloadstrategy.rb'
 
 
