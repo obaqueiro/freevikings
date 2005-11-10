@@ -30,15 +30,19 @@ between two strikes in seconds. (It's because on the quicker computers
 
       def bash_heroes
         @bash_delay = @@bash_delay unless defined? @bash_delay
+        @last_bash = 0 unless @last_bash
 
-        return if @location.ticker.now < (@last_bash or (@last_bash = @location.ticker.now)) + (@bash_delay or @@bash_delay)
-        @location.sprites_on_rect(@rect).each {|s|
-          if s.kind_of? Hero
+        return unless ready_to_attack?
+
+        @location.heroes_on_rect(@rect).each {|s|
             s.hurt
-            s.hurt if @angry # nastvany robot ublizuje dvakrat za kolo
+            s.hurt if @angry # attacks twice per round if angry
             @last_bash = @location.ticker.now
-          end
         }
+      end
+
+      def ready_to_attack?
+        @location.ticker.now >= (@last_bash + @bash_delay)
       end
     end # module HeroBashing
 

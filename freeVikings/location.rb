@@ -234,6 +234,17 @@ any other which responds to 'collides?'.
     def_delegator :@spritemanager, :members_on_rect, :sprites_on_rect
 
 =begin
+--- Location#heroes_on_rect(rect)
+--- Location#monsters_on_rect(rect)
+A bit quicker alternatives for ((<Location#sprites_on_rect>)) which
+return an (({Array})) of ((|rect|)) colliding (({Hero}))es or
+(({Monster}))s respectively.
+=end
+
+    def_delegator :@spritemanager, :heroes_on_rect
+    def_delegator :@spritemanager, :monsters_on_rect
+
+=begin
 --- Location#add_active_object(object)
 Adds an (({ActiveObject})) into the ((<Location>)).
 =end

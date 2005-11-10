@@ -4,12 +4,18 @@
 # Spravce sprajtu.
 
 require 'group.rb'
+require 'selectivegroup.rb'
+require 'hero.rb'
+require 'monster.rb'
+require 'forwardable'
 
 module FreeVikings
 
   class SpriteManager < Group
 
     include PaintableGroup
+
+    extend Forwardable
 
 =begin
 = NAME
@@ -44,6 +50,46 @@ all the sprites.
 
 --- SpriteManager#members_on_rect(rect)
 =end
+
+    def initialize
+      super()
+
+      @heroes = SelectiveGroup.new(Proc.new {|object|
+                                     object.kind_of? Hero
+                                   })
+      @monsters = SelectiveGroup.new(Proc.new {|object|
+                                       object.kind_of? Monster
+                                     })
+
+      @nested_groups = [@heroes, @monsters]
+    end
+
+=begin
+--- SpriteManager#heroes_on_rect(rect)
+--- SpriteManagerrect(rect)
+Return an (({Array})) of ((|rect|)) colliding (({Hero}))es or
+(({Monster}))s respectively.
+Possibly quicker than ((<SpriteManager#members_on_rect>)).
+=end
+
+    def_delegator :@heroes, :members_on_rect, :heroes_on_rect
+    def_delegator :@monsters, :members_on_rect, :monsters_on_rect
+
+    def add(object)
+      super(object)
+
+      @nested_groups.each do |g|
+        g.add(object) if g.acceptable?(object)
+      end
+    end
+
+    def delete(member)
+      super(member)
+
+      @nested_groups.each do |g|
+        g.delete(member) if g.acceptable?(member)
+      end
+    end
 
     def update
       @members.each { |sprite|
