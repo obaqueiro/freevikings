@@ -60,6 +60,7 @@ require 'testkey.rb'
 require 'testgfxtheme.rb'
 require 'teststructuredworld.rb'
 require 'testtalk.rb'
+require 'testselectivegroup.rb'
 
 class FreeVikingsTestSuite
 
@@ -105,6 +106,7 @@ class FreeVikingsTestSuite
     suite << TestGfxTheme.suite
     suite << TestStructuredWorld.suite
     suite << TestTalk.suite
+    suite << TestSelectiveGroup.suite
 
     return suite
   end

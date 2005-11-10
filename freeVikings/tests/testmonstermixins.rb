@@ -15,6 +15,7 @@ require 'mockclasses.rb'
 class TestMonsterMixins < Test::Unit::TestCase
   include FreeVikings::Monster
   include FreeVikings::MonsterMixins::ShieldSensitive
+  include FreeVikings::MonsterMixins::HeroBashing
 
   include FreeVikings
   include FreeVikings::Mock
@@ -42,5 +43,9 @@ class TestMonsterMixins < Test::Unit::TestCase
 
   def testStoppedByShield
     assert self.stopped_by_shield?, "Monster collides with the shield, so it is stopped."
+  end
+
+  def testPreparedToAttackInitially
+    assert self.ready_to_attack?, "Initially every monster is prepared to attack."
   end
 end
