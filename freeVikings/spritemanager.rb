@@ -87,7 +87,7 @@ Possibly quicker than ((<SpriteManager#members_on_rect>)).
       super(member)
 
       @nested_groups.each do |g|
-        g.delete(member) if g.acceptable?(member)
+        g.delete(member)
       end
     end
 
