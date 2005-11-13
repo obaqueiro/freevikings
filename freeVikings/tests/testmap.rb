@@ -12,42 +12,43 @@ require 'mockclasses.rb'
 
 class TestMap < Test::Unit::TestCase
 
-  include FreeVikings
+  # This class mustn't include the FreeVikings module,
+  # because it is subclassed by a class testing Extensions::Map
+  # and in that class unwanted name clashes would occur.
 
-  def rect
-    Rectangle.new 90, 90, 60, 60
-  end
-
-  def solid?
-    true
-  end
+  RECT = FreeVikings::Rectangle
 
   def setup
-    @map = Map.new(Mock::TestingMapLoadStrategy.new)
-    Map.module_eval do
-      public :blocks_on_rect
-    end
-  end
-
-  def testGetSolidBlock
-    assert @map.blocks_on_rect([0,0,50,50])[0].solid, "The first block in tho top left corner is solid. I made it solid."
-  end
-
-  def testGetAllCollidingBlocks
-    ts = Map::TILE_SIZE
-    assert_equal 4, @map.blocks_on_rect([ts-2, 2*ts-2, ts, ts]).size, "Defined square collides with four tiles."
-  end
-
-  def testGetBlockOutOfLocation
-    assert_raise(RuntimeError, "Block is out of map, it should not be returned.") {
-      @map.blocks_on_rect([Map::TILE_SIZE*15, Map::TILE_SIZE * 15, 60, 60])
-    }
+    @map = FreeVikings::Map.new(FreeVikings::Mock::TestingMapLoadStrategy.new)
   end
 
   def testRect
-    r = Rectangle.new(0, 0, Map::TILE_SIZE * 8, Map::TILE_SIZE * 8)
+    r = self.class::RECT.new(0, 0, FreeVikings::Map::TILE_SIZE * 8, FreeVikings::Map::TILE_SIZE * 8)
     assert(r.eql?(@map.rect), "The two rectangles (#{r.to_s} and #{@map.rect.to_s}) should contain the same numbers => eql? is expected to be true.")
   end
+
+  def testNonFreeArea
+    assert_equal(false,
+                 @map.area_free?(self.class::RECT.new(5,5,40,40)),
+                 "Area isn't free, it collides with solid tiles.")
+  end
+
+  def testCentralAreaFree
+    assert_equal(true, 
+                 @map.area_free?(self.class::RECT.new(50,50,10,10)),
+                 "Area is free.")
+  end
+
+  def testFreeOnTheEdgeOfFreeArea1
+    assert_equal(true, @map.area_free?(RECT.new(40,40,5,5)),
+                 "Area is free, but it is on the topleft edge of tiles.")
+  end
+
+  def testFreeOnTheEdgeOfFreeArea2
+    assert_equal(true, @map.area_free?(RECT.new(60,240,40,40)),
+                 "Area is free, but it is on the top edge of tiles.")
+  end
+
 end # class TestMap
 
 class FreeVikings::Rectangle

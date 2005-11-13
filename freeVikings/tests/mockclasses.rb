@@ -24,13 +24,13 @@ module FreeVikings
 	o.solid = false
 	# nacteni umisteni bloku
 	blcks = [
-	  [x, x, o, o, o, o, o, x],
-	  [x, x, o, o, o, o, o, x],
-	  [x, x, o, o, o, o, o, x],
-	  [x, x, o, o, o, o, o, x],
-	  [x, x, o, o, o, o, o, x],
-	  [x, x, o, o, o, o, o, x],
-	  [x, x, o, o, o, o, o, x],
+	  [x, x, x, x, x, x, x, x],
+	  [x, o, o, o, o, o, x, x],
+	  [x, o, o, o, o, o, x, x],
+	  [x, o, o, o, o, o, x, x],
+	  [x, o, o, o, o, o, x, x],
+	  [x, o, o, o, o, o, x, x],
+	  [x, o, o, o, o, o, x, x],
 	  [x, x, x, x, x, x, x, x]
 	]
 	@max_width = blcks[0].size
