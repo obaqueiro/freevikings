@@ -12,10 +12,7 @@ require 'group.rb'
 
 A ((<Map>)) object is a data structure to store static game objects,
 objects of the game world which don't change in any circumstances.
-At this time a ((<Map>)) contains two types of objects - ((*tiles*)) and 
-((*static objects*)).
-
-== Tiles
+At this time a ((<Map>)) contains one type of objects - ((*tiles*)).
 
 Tiles are all singleton instances of class (({Tile})). Squares with sizes
 ((<Map::TILE_SIZE>)). They are piled into a grid. The grid is built once
@@ -24,25 +21,7 @@ game.
 Some of them are solid and make walls and floors, the others
 are soft and they are there just for good look.
 
-== Static objects
-
-Static objects can also be solid or soft, but they aren't placed regularly 
-in a grid and can have any size. You can add them anytime you want and
-delete them later. The static objects are stored in a public attribute
-((|static_objects|)) which is of type (({Group})).
-
-What sort of objects do we register as ((<Static objects>))?
-* those which play a role of an atypical sized or placed piece of map
-  and do not need any update (they can be just taken out of the map
-  by some call from outside)
-* those which do not do anything (they are in the map just for the better
-  look and feel)
-* those which have some methods but do not need to be updated regularly
-  or to react on events (a nice example of this group of ((<Static objects>))
-  is (({Lock})). Most of the time it does nothing. When some viking
-  tries to use a (({Key})), the (({Key})) looks if it collides with any
-  (({Lock})) and if so, (({Lock})) is asked if it can be unlocked with
-  the (({Key}))).
+Some more static objects are stored in (({Location})). (See Static objects.)
 =end
 
 module FreeVikings
@@ -127,44 +106,24 @@ is free of solid map blocks, ((|false|)) otherwise.
 =end
 
     def area_free?(rect)
-      begin
-	colliding_blocks = blocks_on_rect(rect)
-      rescue RuntimeError
-	return false
+      leftmost_i = (rect.left / Map::TILE_SIZE).floor
+      rightmost_i = (rect.right / Map::TILE_SIZE).floor
+
+      top_line = (rect.top / Map::TILE_SIZE).ceil
+      bottom_line = (rect.bottom / Map::TILE_SIZE).ceil
+
+      top_line.upto(bottom_line) do |line_i|
+        leftmost_i.upto(rightmost_i) do |tile_i|
+          if @blocks[line_i][tile_i].solid? then
+            return false
+          end
+        end
       end
-      colliding_blocks.each do |block|
-	# je blok pevny (solid)? Pevne bloky nejsou pruchozi.
-	return false if block.solid == true
-      end
-      # az dosud nebyl nalezen pevny blok, posice je volna
-      return true
+      
+      return true # solid tile hasn't been found yet, area is free
     end
 
     private
-
-    # Returns all the tiles from the area specified by rect
-
-    def blocks_on_rect(rect)
-      @log.debug "blocks_on_rect: Asked for blocks colliding with a rectangle defined by [#{rect[0]}, #{rect[1]}, #{rect[2]}, #{rect[3]}](px)"
-      colliding_blocks = []
-      # spocitat nejlevejsi a nejpravejsi index do kazdeho radku:
-      leftmost_i = (rect[0] / Map::TILE_SIZE).to_f.floor
-      rightmost_i = ((rect[0] + rect[2]) / Map::TILE_SIZE).to_f.floor
-      # spocitat prvni a posledni radek:
-      top_line = (rect[1] / Map::TILE_SIZE).to_f.ceil
-      bottom_line = ((rect[1] + rect[3]) / Map::TILE_SIZE).to_f.ceil
-      # z kazdeho radku vybrat patricny vyrez:
-      @log.debug "blocks_on_rect: I'm going to extract blocks from a rect [#{leftmost_i}, #{top_line}, #{rightmost_i}, #{bottom_line}](tiles)"
-      unless @blocks[top_line .. bottom_line].is_a? Array
-	@log.error "blocks_on_rect: Invalid lines #{top_line} .. #{bottom_line}."
-	raise RuntimeError, "Invalid lines #{top_line} .. #{bottom_line}."
-      end
-      @blocks[top_line .. bottom_line].each {|line|
-	blocks = line[leftmost_i .. rightmost_i]
-	colliding_blocks.concat(blocks) if blocks.is_a? Array
-      }
-      return colliding_blocks
-    end
 
     # Creates a new RUDL::Surface @background and paints images of all the
     # tiles onto it.
