@@ -7,8 +7,9 @@
 require 'test/unit'
 
 require 'tile.rb'
+require 'testmap.rb'
 
-class TestExtensionMap < Test::Unit::TestCase
+class TestExtensionMap < TestMap
 
   include FreeVikings
 
@@ -17,6 +18,8 @@ class TestExtensionMap < Test::Unit::TestCase
   rescue NameError => e
     puts e.message
   end
+
+  RECT = FreeVikings::Extensions::Rectangle # used in the superclass
 
   def setup
     @map = MAP.new
@@ -85,29 +88,6 @@ class TestExtensionMap < Test::Unit::TestCase
     end
   end
 
-  def testCentralAreaFree
-    setupAreaFreeTests
-
-    assert_equal(true, 
-                 @map.area_free?(Rectangle.new(50,50,10,10)),
-                 "Area is free.")
-  end
-
-  def testNonFreeArea
-    setupAreaFreeTests
-
-    assert_equal(false,
-                 @map.area_free?(Rectangle.new(5,5,40,40)),
-                 "Area isn't free, it collides with three solid tiles.")
-  end
-
-  def testFreeOnTheEdgeOfFreeArea1
-    setupAreaFreeTests
-
-    assert_equal(true, @map.area_free?(Rectangle.new(40,40,5,5)),
-                 "Area is free, but it is on the topleft edge of tiles.")
-  end
-
   def testFreeOnTheEdgeOfFreeArea2
     setupAreaFreeTests
 
@@ -164,4 +144,23 @@ class TestExtensionMap < Test::Unit::TestCase
     setupAreaFreeTests
     assert_equal 4, @map.rows, "Map has 4 rows."
   end
+
+  # INHERITED:
+
+  def testCentralAreaFree
+    setupAreaFreeTests
+    super
+  end
+
+  def testNonFreeArea
+    setupAreaFreeTests
+    super
+  end
+
+  def testFreeOnTheEdgeOfFreeArea1
+    setupAreaFreeTests
+    super
+  end
+
+  # END INHERITED.
 end
