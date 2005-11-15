@@ -110,7 +110,7 @@ LOCATION.add_sprite flying_plat
 
 # the door to EXIT
 exit_door = Door.new([49*TS, BLUEROOM_FLOOR-3*TS], true)
-LOCATION.map.static_objects.add exit_door
+LOCATION.static_objects.add exit_door
 
 # the snail which waits at the EXIT to say the vikings goodbye
 exit_snail = Snail.new([53*TS, BLUEROOM_FLOOR - Snail::HEIGHT])
@@ -122,7 +122,7 @@ exit_lock = Lock.new([47.5*TS, BLUEROOM_FLOOR-2*TS],
                        exit_door.open 
                      },
                      Lock::BLUE)
-LOCATION.map.static_objects.add exit_lock
+LOCATION.static_objects.add exit_lock
 
 # a key to the lock
 exit_key = Key.new([45*TS, HIGH_PLATFORMS_FLOOR-2*TS], Key::BLUE)
