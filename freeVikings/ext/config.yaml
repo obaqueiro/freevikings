@@ -1,0 +1,10 @@
+--- %YAML:1.0
+# ext/config.yaml
+# igneus 15.11.2005
+# Configuration file used to enable/disable loading 
+# particular extension classes.
+
+- class: Rectangle
+  enabled: true
+- class: Map
+  enabled: false
