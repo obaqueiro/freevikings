@@ -7,9 +7,36 @@
 # compiler). So here it is where we decide whether to use Ruby or C++
 # implementation.
 
-if FreeVikings::OPTIONS["extensions"] then
+require 'yaml'
 
+class Class
+  def base_name
+    if name =~ /::/ then
+      return name[(name.rindex(':')+1)..name.size]
+    else
+      return name
+    end
+  end
+end
+
+class ExtConfigLoader
+  def initialize(configfile)
+    @cfg = YAML::load configfile
+  end
+
+  def enabled?(klass)
+    if (@cfg.find {|c| c['class'] == klass.base_name})['enabled'] then
+      return true
+    else
+      return false
+    end
+  end
+end
+
+if FreeVikings::OPTIONS["extensions"] then
   require "ext/Extensions"
+
+  config = ExtConfigLoader.new(File.open('ext/config.yaml'))
 
   # add some missing methods to c++ written classes:
 
@@ -22,7 +49,12 @@ if FreeVikings::OPTIONS["extensions"] then
       return self.class.new(self)
     end
   end
-  FreeVikings::Rectangle = FreeVikings::Extensions::Rectangle
+
+  if config.enabled?(FreeVikings::Extensions::Rectangle)
+    FreeVikings::Rectangle = FreeVikings::Extensions::Rectangle
+  else
+    require 'rect.rb'
+  end
 
   class FreeVikings::Extensions::Map
     alias_method :old_init, :initialize
@@ -83,7 +115,12 @@ if FreeVikings::OPTIONS["extensions"] then
       end
     end
   end
-  FreeVikings::Map = FreeVikings::Extensions::Map
+
+  if config.enabled?(FreeVikings::Extensions::Map) then
+    FreeVikings::Map = FreeVikings::Extensions::Map
+  else
+    require 'map.rb'
+  end
 
 else
 

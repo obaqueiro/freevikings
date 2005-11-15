@@ -409,18 +409,13 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
     end
 
     private
-    # Zjisti, jestli viking stoji na zemi (na pevne dlazdici)
+    # Says if the viking is standing on a solid ground (tile or static object)
     def on_ground?
-      # stoji viking na stite?
-      # return true if on_shield?
-      # je pod vikingem volne misto?
       lowerpos = Rectangle.new(@rect.left, 
                                @rect.top + @location.ticker.delta * BASE_VELOCITY, 
                                @rect.w, 
                                @rect.h)
-      return nil if @location.area_free?(lowerpos)
-      # viking stoji na pevne zemi:
-      return true
+      return @location.area_free?(lowerpos) ? false : true
     end
 
     private
@@ -459,4 +454,4 @@ end # module
 require 'warior.rb'
 require 'sprinter.rb'
 require 'shielder.rb'
- 
+
