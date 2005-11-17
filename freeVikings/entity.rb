@@ -95,6 +95,19 @@ the ((<Entity>)) in the game.
     attr_reader :rect
 
 =begin
+--- Entity#register_in(location)
+Adds itself into a (({Location})) ((|location|)).
+Does all the registration stuff transparently (some objects register themselves
+as sprites, some as static objects, some need to play multiple roles (e.g.
+sprite & static object, sprite & active object, ...), but we don't need
+to bother, the object knows what it needs).
+=end
+
+    def register_in(location)
+      raise "Not implemented. Implemented in subclasses only."
+    end
+
+=begin
 --- Entity#null?
 Says if the ((<Entity>)) is a Null Object.
 

@@ -2,8 +2,14 @@
 # igneus 31.7.2005
 
 =begin
-= Key
+= NAME
+Key
+
+= DESCRIPTION
 ((<Key>)) is an (({Item})) used to unlock the (({Lock})).
+
+= Superclass
+Item
 =end
 
 require 'item.rb'

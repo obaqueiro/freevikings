@@ -94,7 +94,7 @@ module FreeVikings
 
     def load_logo
       @log.info "Loading the freeVikings logo."
-      @logo = RUDL::Surface.load_new GFX_DIR+'/fvlogo.tga'
+      @logo = RUDL::Surface.load_new GFX_DIR+'/fvlogo_new.tga'
     end
 
     def load_font
