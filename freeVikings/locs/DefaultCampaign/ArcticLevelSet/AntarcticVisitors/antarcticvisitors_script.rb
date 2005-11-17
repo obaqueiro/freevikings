@@ -8,6 +8,7 @@ require 'monsters/penguin.rb'
 require 'monsters/apex.rb'
 require 'door.rb'
 require 'lock.rb'
+require 'key.rb'
 
 # if FUNLESS is true, switches off any non-important
 # processor time eating monsters (e.g. dozens of penguins).
@@ -30,7 +31,7 @@ LOCATION.static_objects.add exit_lock
 # - lifts:
 # The left lift is a bit dangerous because it can get you onto the apexes
 # and then you die pierced.
-left_lift = TransporterBridge.new TS, [4*TS, 9*TS, 11*TS], LOCATION.theme
+left_lift = TransporterBridge.new TS, [4*TS, 9*TS, 50*TS], LOCATION.theme
 LOCATION.add_sprite left_lift
 exit_lift = TransporterBridge.new 31*TS, [4*TS, 9*TS], LOCATION.theme
 LOCATION.add_sprite exit_lift
@@ -43,7 +44,23 @@ unless FUNLESS
 end
 
 # -- THE WEST SIDE -- :o)
+# You can find here some pretty sharp apexes and also the red key you
+# need if you want to get to another level. This area is Olaf's job mainly,
+# but the other vikings are also needed, of course.
 
 # apexes under the left lift:
-#apexes = ApexRow.new [1*TS, 11*TS], 3, LOCATION.theme
-#LOCATION.add_sprite apexes
+liftspace_apexes = ApexRow.new [1*TS, 11*TS], 3, LOCATION.theme
+LOCATION.add_sprite liftspace_apexes
+
+# apexes in Olaf's way:
+needles_for_Olaf = ApexRow.new [11*TS, 15*TS], 3, LOCATION.theme
+LOCATION.add_sprite needles_for_Olaf
+another_needles = ApexRow.new [14*TS, 20*TS], 3, LOCATION.theme
+LOCATION.add_sprite another_needles
+
+# door behind which the red key is hidden
+red_key_door = Door.new [20*TS, 13*TS]
+LOCATION.static_objects.add red_key_door
+# the red key (needed to reach EXIT)
+red_key = Key.new [22*TS, 14*TS], Key::RED
+LOCATION.add_item red_key
