@@ -180,6 +180,14 @@ Update is periodically called to let the sprite update it's internal state.
     def update
     end
 
-  end # class
+=begin
+--- Sprite#register_in(location)
+Reimplemented to work the way as described in documentation of class 
+(({Entity}))
+=end
 
+    def register_in(location)
+      location.add_sprite self
+    end
+  end # class Sprite
 end # module

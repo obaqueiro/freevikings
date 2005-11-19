@@ -30,5 +30,9 @@ Tells if the object is solid or not.
     def image
       @image.image
     end
+
+    def register_in(location)
+      location.add_static_object self
+    end
   end # module StaticObject
 end # module FreeVikings

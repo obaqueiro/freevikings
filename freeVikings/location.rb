@@ -48,11 +48,11 @@ Argument ((|theme|)) is a (({GfxTheme})) instance.
       @activeobjectmanager = ActiveObjectManager.new
       @itemmanager = ItemManager.new
 
-      @static_objects = Group.new
-      @static_objects.extend PaintableGroup
+      @staticobjects = Group.new
+      @staticobjects.extend PaintableGroup
 
-      # a singleton method of @static_objects:
-      def @static_objects.area_free?(rect)
+      # a singleton method of @staticobjects:
+      def @staticobjects.area_free?(rect)
         @members.find {|m| 
           m.solid and 
             m.rect.collides? rect} == nil
@@ -68,7 +68,7 @@ Argument ((|theme|)) is a (({GfxTheme})) instance.
 
 As mentioned above, ((<Location>)) is a thick data bundle.
 You can access a lot of it's members directly through the accessor methods
-documented above, a few are accessible through the delegated methods 
+documented below, a few are accessible through the delegated methods 
 (which are listed in the ((<Actions>)) section) only.
 =end
 
@@ -89,6 +89,12 @@ Returns a (({Map})) object which takes care of the tiles in the game.
     attr_reader :map
 
 =begin
+--- Location#spritemanager
+=end
+
+    attr_reader :spritemanager
+
+=begin
 --- Location#activeobjectmanager
 Returns an (({ActiveObjectManager})) which manages the ((<Location>))'s active 
 objects. (To learn more about active objects study documentation for classes
@@ -98,12 +104,13 @@ objects. (To learn more about active objects study documentation for classes
     attr_reader :activeobjectmanager
 
 =begin
---- Location#static_objects
+--- Location#staticobjects
 Returns a (({Group})) of static objects (objects which aren't tiles but behave
 as a part of map - they can be solid and aren't updated regularly.).
 =end
 
-    attr_reader :static_objects
+    attr_reader :staticobjects
+    alias_method :static_objects, :staticobjects
 
 =begin
 --- Location#exitter
@@ -118,7 +125,7 @@ The level is completed when all the three vikings stand on the exitter.
 
     def exitter=(exitter)
       @exitter = exitter
-      @static_objects.add exitter
+      @staticobjects.add exitter
       @exitter.location = self
     end
 
@@ -138,10 +145,17 @@ Returns a (({GfxTheme})) instance with images specific for this (({Location})).
     attr_reader :theme
 
 =begin
-== Actions
+--- Location#background
+Returns a (({RUDL::Surface})) with (({Map})) blocks painted.
 =end
 
+    def background
+      @map.background
+    end
+
 =begin
+== Actions
+
 --- Location#update
 Updates everything which needs to be updated regularly. This method is called
 once per game loop iteration, before refreshing the display.
@@ -186,25 +200,38 @@ coordinate.
       displayed_rect = centered_view_rect(mr.w, mr.h, surface.w, surface.h, center)
 
       @map.paint(surface, displayed_rect)
-      @static_objects.paint(surface, displayed_rect)
+      @staticobjects.paint(surface, displayed_rect)
       @activeobjectmanager.paint(surface, displayed_rect)
       @itemmanager.paint(surface, displayed_rect)
       @spritemanager.paint(surface, displayed_rect)
     end
 
 =begin
---- Location#background
-Returns a (({RUDL::Surface})) with (({Map})) blocks painted.
+== In-Game objects addition, removal and collisions
+
+--- Location#<<(object)
+The same as
+
+object.register_in(location)
+
+This is more intuitive and so more readable.
 =end
 
-    def background
-      @map.background
+    def <<(object)
+      object.register_in self
     end
 
 =begin
+=== Sprites
 --- Location#add_sprite(sprite)
-Adds the (({Sprite})) ((|sprite|)) into the ((<Location>)). As a side effect
-((|sprite|))'s attribute 'location' is set to the ((<Location>)) itself.
+--- Location#delete_sprite(sprite)
+--- Location#sprites_on_rect(rect)
+
+((<Location#add_sprite>)) and ((<Location#delete_sprite>)) have an important 
+side effect. They set the argument's attribute 'location'. 
+(((<Location#add_sprite>)) sets it to the location itself, 
+((<Location#delete_sprite>)) to the (({NullLocation})) instance (which
+is a null object)).
 =end
 
     def add_sprite(sprite)
@@ -212,24 +239,10 @@ Adds the (({Sprite})) ((|sprite|)) into the ((<Location>)). As a side effect
       @spritemanager.add sprite
     end
 
-=begin
---- Location#delete_sprite(sprite)
-Deletes the (({Sprite})) ((|sprite|)) from the ((<Location>)). As a side 
-effect sets ((|sprite|))'s attribute 'location' to a (({NullLocation})) object.
-=end
-
     def delete_sprite(sprite)
       @spritemanager.delete sprite
-      sprite.location = NullLocation.instance # nullocation.rb is required at 
-                                              # the end of file
+      sprite.location = NullLocation.instance
     end
-
-=begin
---- Location#sprites_on_rect(rect)
-Returns an (({Array})) of all the (({Sprite}))s colliding with 
-a (({Rectangle})) ((|rect|)). Type of ((|rect|)) must be (({Rectangle})) or 
-any other which responds to 'collides?'.
-=end
 
     def_delegator :@spritemanager, :members_on_rect, :sprites_on_rect
 
@@ -237,7 +250,7 @@ any other which responds to 'collides?'.
 --- Location#heroes_on_rect(rect)
 --- Location#monsters_on_rect(rect)
 A bit quicker alternatives for ((<Location#sprites_on_rect>)) which
-return an (({Array})) of ((|rect|)) colliding (({Hero}))es or
+return only an (({Array})) of ((|rect|)) colliding (({Hero}))es or
 (({Monster}))s respectively.
 =end
 
@@ -245,48 +258,41 @@ return an (({Array})) of ((|rect|)) colliding (({Hero}))es or
     def_delegator :@spritemanager, :monsters_on_rect
 
 =begin
+=== Active Objects
 --- Location#add_active_object(object)
-Adds an (({ActiveObject})) into the ((<Location>)).
-=end
-
-    def_delegator :@activeobjectmanager, :add, :add_active_object
-
-=begin
 --- Location#delete_active_object(object)
-Deletes an (({ActiveObject})) from the ((<Location>)).
-=end
-
-    def_delegator :@activeobjectmanager, :delete, :delete_active_object
-
-=begin
 --- Location#active_objects_on_rect(rect)
 =end
 
+    def_delegator :@activeobjectmanager, :add, :add_active_object
+    def_delegator :@activeobjectmanager, :delete, :delete_active_object
     def_delegator :@activeobjectmanager, :members_on_rect, :active_objects_on_rect
 
 =begin
+=== Items
 --- Location#add_item(item)
-=end
-
-    def_delegator :@itemmanager, :add, :add_item
-
-=begin
 --- Location#delete_item(item)
-=end
-
-    def_delegator :@itemmanager, :delete, :delete_item
-
-=begin
 --- Location#items_on_rect(rect)
 =end
 
+    def_delegator :@itemmanager, :add, :add_item
+    def_delegator :@itemmanager, :delete, :delete_item
     def_delegator :@itemmanager, :members_on_rect, :items_on_rect
 
 =begin
-== Predicates
+=== Static Objects
+--- Location#add_static_object(static_object)
+--- Location#delete_static_object(static_object)
+--- Location#static_objects_on_rect(rect)
 =end
 
+    def_delegator :@staticobjects, :add, :add_static_object
+    def_delegator :@staticobjects, :delete, :delete_static_object
+    def_delegator :@staticobjects, :members_on_rect, :static_objects_on_rect
+
 =begin
+== Predicates
+
 --- Location#rect_inside?(rect)
 Returns ((|true|)) if (({Rectangle})) ((|rect|)) or it's part is inside 
 the ((<Location>)) or ((|false|)) if it isn't.
@@ -303,7 +309,7 @@ is free of solid map blocks, ((|false|)) otherwise.
 =end
 
     def area_free?(rect)
-      @map.area_free?(rect) and @static_objects.area_free?(rect)
+      @map.area_free?(rect) and @staticobjects.area_free?(rect)
     end
 
     alias_method :is_area_free?, :area_free?

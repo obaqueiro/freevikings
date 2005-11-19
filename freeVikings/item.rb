@@ -47,6 +47,10 @@ end
     def apply(user)
       true
     end
+
+    def register_in(location)
+      location.add_item self
+    end
   end # class Item
 
 =begin

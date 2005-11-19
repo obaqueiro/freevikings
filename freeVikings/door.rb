@@ -15,10 +15,18 @@ Entity
 =end
 
 require 'entity.rb'
+require 'staticobject.rb'
 
 module FreeVikings
 
   class Door < Entity
+
+=begin
+= Included Mixins
+StaticObject
+=end
+
+    include StaticObject
 
     WIDTH = 40
     HEIGHT = 120
