@@ -12,7 +12,7 @@ require 'key.rb'
 
 # if FUNLESS is true, switches off any non-important
 # processor time eating monsters (e.g. dozens of penguins).
-FUNLESS = false
+FUNLESS = true
 
 TS = LOCATION.map.class::TILE_SIZE
 
@@ -20,10 +20,10 @@ TS = LOCATION.map.class::TILE_SIZE
 # EXIT is closed behind the locked door.
 
 exit_door = Door.new [31*TS-Door::WIDTH, 9*TS-Door::HEIGHT]
-LOCATION.static_objects.add exit_door
+LOCATION << exit_door
 
 exit_lock = Lock.new([32*TS+5, 9*TS-60], Proc.new {})
-LOCATION.static_objects.add exit_lock
+LOCATION << exit_lock
 
 # -- TOP CORRIDOR --
 # The vikings start here, in the corridor full of pinguins.
@@ -32,14 +32,14 @@ LOCATION.static_objects.add exit_lock
 # The left lift is a bit dangerous because it can get you onto the apexes
 # and then you die pierced.
 left_lift = TransporterBridge.new TS, [4*TS, 9*TS, 50*TS], LOCATION.theme
-LOCATION.add_sprite left_lift
-exit_lift = TransporterBridge.new 31*TS, [4*TS, 9*TS], LOCATION.theme
-LOCATION.add_sprite exit_lift
+LOCATION << left_lift
+exit_lift = TransporterBridge.new 31*TS, [4*TS, 9*TS, 16*TS], LOCATION.theme
+LOCATION << exit_lift
 
 # - pinguins:
 unless FUNLESS
   6.step(30,3) do |i|
-    LOCATION.add_sprite Penguin.new([i*TS, 4*TS-Penguin::HEIGHT])
+    LOCATION << Penguin.new([i*TS, 4*TS-Penguin::HEIGHT])
   end
 end
 
@@ -50,17 +50,17 @@ end
 
 # apexes under the left lift:
 liftspace_apexes = ApexRow.new [1*TS, 11*TS], 3, LOCATION.theme
-LOCATION.add_sprite liftspace_apexes
+LOCATION << liftspace_apexes
 
 # apexes in Olaf's way:
 needles_for_Olaf = ApexRow.new [11*TS, 15*TS], 3, LOCATION.theme
-LOCATION.add_sprite needles_for_Olaf
+LOCATION << needles_for_Olaf
 another_needles = ApexRow.new [14*TS, 20*TS], 3, LOCATION.theme
-LOCATION.add_sprite another_needles
+LOCATION << another_needles
 
 # door behind which the red key is hidden
 red_key_door = Door.new [20*TS, 13*TS]
-LOCATION.static_objects.add red_key_door
+LOCATION << red_key_door
 # the red key (needed to reach EXIT)
 red_key = Key.new [22*TS, 14*TS], Key::RED
-LOCATION.add_item red_key
+LOCATION << red_key
