@@ -81,6 +81,9 @@ module FreeVikings
         @sprites_on_rect.dup
       end
 
+      def add_item(item)
+      end
+
       def active_objects_on_rect(rect)
         []
       end

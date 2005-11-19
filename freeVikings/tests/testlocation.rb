@@ -89,4 +89,8 @@ class TestLocation < Test::Unit::TestCase
     assert_equal false, @loc.area_free?(rect), "Position isn't valid, it's a solid static object there."
   end
 
+  def testPush
+    @loc << @sprite
+    assert @loc.spritemanager.include?(@sprite), "Sprite pushed into the location by Location#<< should be found inside."
+  end
 end

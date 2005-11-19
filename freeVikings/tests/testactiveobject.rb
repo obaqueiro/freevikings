@@ -9,6 +9,7 @@
 # ActiveObject).
 
 require 'testentity.rb'
+require 'mockclasses.rb'
 
 require 'activeobject.rb'
 

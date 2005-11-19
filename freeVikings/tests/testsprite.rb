@@ -5,6 +5,7 @@
 # ale ted chci tridu vycistit, tak budou testici potreba.
 
 require 'testentity.rb'
+require 'mockclasses.rb'
 
 require 'sprite.rb'
 
@@ -19,5 +20,17 @@ class TestSprite < TestEntity
   def testKilledIsNotAlive
     @sprite.destroy
     assert_equal false, @sprite.alive?
+  end
+
+  def testRegisterIn
+    loc = Mock::MockLocation.new
+    @sprite.register_in loc
+    assert loc.sprites.include?(@sprite), "Sprite should have registered itself in the location."
+  end
+
+  def testRegisterIn
+    @loc = Mock::MockLocation.new
+    @sprite.register_in @loc
+    assert @loc.sprites.include?(@sprite), "Sprite should have registered itself in the location."
   end
 end
