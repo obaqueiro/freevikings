@@ -120,7 +120,7 @@ VikingState. See VikingState documentation for more details.
     def space_off
       if @active_ability == SPACE_ABILITY
         @active_ability = nil
-        @owner.descend
+        @owner.fall
       end
     end
   end # class SprinterAbility

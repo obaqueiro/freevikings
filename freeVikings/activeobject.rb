@@ -53,7 +53,7 @@ Called when the (({ActiveObject})) is stroken by some gun (a sword, an arrow).
     end
 
     def register_in(location)
-      @location.add_active_object self
+      location.add_active_object self
     end
   end # class ActiveObject
 end # module FreeVikings

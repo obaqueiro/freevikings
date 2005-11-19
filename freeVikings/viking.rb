@@ -276,7 +276,8 @@ Updates ((<Viking>))'s internal state.
 
 =begin
 --- Viking#fall
-This method causes the ((<Viking>)) to fall. For this purpose you can also use
+This method causes the ((<Viking>)) to fall. For this purpose you could also 
+use
 
 (({aViking.state.fall}))
 
@@ -290,27 +291,26 @@ detection.
       @state.fall
     end
 
-=begin
---- Viking#descend
-This method causes the ((<Viking>)) to descend. 
-If the fall has been too long, the ((<Viking>)) is hurt (you are also usually 
-hurt when you fall from the third floor) unless the fall is slown down
-(e.g. by the (({Shield}))).
-Don't use
-
-(({aViking.state.descend}))
-
-because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
-=end
-
-    def descend
+    def descend_onto_ground
       if on_ground? and not (@rect.bottom % Map::TILE_SIZE == 0) then
-        @rect.top += Map::TILE_SIZE - (@rect.bottom % Map::TILE_SIZE)
+          @rect.top += Map::TILE_SIZE - (@rect.bottom % Map::TILE_SIZE)
       end
+    end
+
+    def descend_onto_static_object
+      while @location.area_free?(@rect) do
+        @rect.top += 1
+      end
+      @rect.top -= 1
+    end
+
+    # Looks if the viking hasn't fallen too deep.
+    # If so, he is hurt.
+    private
+    def check_fall_injury
       @fall_height = @rect.top - @start_fall
       fall_velocity = velocity_vertic
       @state.descend
-      # 
       if (@fall_height >= 3 * HEIGHT and fall_velocity >= BASE_VELOCITY) then
         @log.debug "descend: #{@name} has felt from a big height (#{@fall_height}) and is hurt."
         hurt_and_knockout
@@ -356,7 +356,18 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
     def try_to_descend
       if @state.falling? and on_some_surface? then
         @log.debug "try_to_descend: #{@name} descended onto some solid surface."
-        descend
+        lowerpos = Rectangle.new(@rect.left, 
+                                 @rect.top + @location.ticker.delta * BASE_VELOCITY, 
+                                 @rect.w, 
+                                 @rect.h)
+
+        if @location.static_objects.area_free? lowerpos
+          descend_onto_ground
+        else
+          descend_onto_static_object
+        end
+
+        check_fall_injury
       end
     end
 
@@ -415,7 +426,7 @@ because it avoids an important mechanism as mentioned at ((<Viking#fall>)).
                                @rect.top + @location.ticker.delta * BASE_VELOCITY, 
                                @rect.w, 
                                @rect.h)
-      return @location.area_free?(lowerpos) ? false : true
+      return ! @location.area_free?(lowerpos)
     end
 
     private

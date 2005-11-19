@@ -6,7 +6,7 @@ require 'sprite.rb'
 module FreeVikings
 
 =begin
-= Platform
+= mixin Platform
 Platform is a very useful object. It's an object you can stand on.
 A typical example of Platform is a Shield.
 Someone could get confused here. FreeVikings are a platform game.
