@@ -14,7 +14,7 @@ include FreeVikings
 #=== MAP POSITIONS RELATED CONSTANTS:
 
 FLOOR = LOCATION.map.class::TILE_SIZE * 10 # normal floor of the corridor
-OPTIMAL_HLP_Y = FLOOR - Map::TILE_SIZE * 2 # optimal y of a help button in the corridor (there's only one corridor inthe map)
+OPTIMAL_HLP_Y = FLOOR - Map::TILE_SIZE * 2 # optimal y of a help button in the corridor (there's only one corridor in the map)
 
 #=== CLASSES:
 
@@ -34,7 +34,7 @@ class WideBridge < Bridge
   end
 end
 
-#=== HELPERS: (In this location we have a lot of them. It's aa tutorial 
+#=== HELPERS: (In this location we have a lot of them. It's a tutorial 
 #              location.)
 
 help_data = []
@@ -50,30 +50,31 @@ help_data << [Rectangle.new(30*Map::TILE_SIZE+5, OPTIMAL_HLP_Y, 30, 30),
 
 help_data.each do |h|
   help = FreeVikings::HelpButton.new(h[0], h[1], LOCATION)
-  LOCATION.add_active_object help
+  LOCATION << help
 end
 
 #=== MONSTERS:
 
-# Apexes in the large gap which the vikings must get over with a help
-# of a bridge:
+# Adds an apex on the specified position
 def create_apex(x,y)
-  a = Apex.new Rectangle.new(x, y, Map::TILE_SIZE, Map::TILE_SIZE), LOCATION.theme
-  LOCATION.add_sprite a
+  LOCATION << Apex.new(Rectangle.new(x, y, Map::TILE_SIZE, Map::TILE_SIZE), 
+                       LOCATION.theme)
 end
 
+# Apexes in the large gap which the vikings must get over with a help
+# of a bridge:
 apex_positions = []
 y = 13*Map::TILE_SIZE
-(21*Map::TILE_SIZE).step(32*Map::TILE_SIZE, Map::TILE_SIZE) {|x| create_apex(x,y)}
+(21*Map::TILE_SIZE).step(32*Map::TILE_SIZE, Map::TILE_SIZE) do |x| 
+  create_apex(x,y)
+end
 
 # Apexes in small holes near the EXIT:
-
 start_x = 1840
 y = 440
 3.times do |i|
   x = start_x + (i * (2 * Map::TILE_SIZE))
-  a = Apex.new(Rectangle.new(x, y, Map::TILE_SIZE, Map::TILE_SIZE), LOCATION.theme)
-  LOCATION.add_sprite a
+  create_apex x, y
 end
 
 # A bear which tries to guard the EXIT (of course he has no chance)
@@ -86,7 +87,7 @@ center_bear_x = start_walk + half_trace - (Bear::WIDTH / 2)
 bear_y = FLOOR - Bear::HEIGHT
 
 bear = WalkingBear.new(Rectangle.new(center_bear_x, bear_y, Bear::WIDTH, Bear::HEIGHT), walk_length)
-LOCATION.add_sprite bear
+LOCATION << bear
 
 # A nice cooperation of a Bridge and a Switch. There's only one bridge and 
 # two terrible gaps filled in with apexes. The Switch moves the Bridge over 
@@ -94,11 +95,11 @@ LOCATION.add_sprite bear
 
 x1 = Map::TILE_SIZE*21
 x2 = x1 + (7 * Map::TILE_SIZE)
-y = Map::TILE_SIZE*10
+y = Map::TILE_SIZE*10+1
 bridge_positions = [[x1, y], [x2, y]]
 
 bridge = WideBridge.new(bridge_positions[1], LOCATION.theme)
-LOCATION.add_sprite bridge
+LOCATION << bridge
 
 switch_proc = Proc.new do |state|
   if state then
@@ -109,4 +110,4 @@ switch_proc = Proc.new do |state|
 end # switch_proc
 
 switch = Switch.new([(26*Map::TILE_SIZE)+25, OPTIMAL_HLP_Y-120], LOCATION.theme, false, switch_proc)
-LOCATION.add_active_object switch
+LOCATION << switch

@@ -31,9 +31,9 @@ LOCATION << exit_lock
 # - lifts:
 # The left lift is a bit dangerous because it can get you onto the apexes
 # and then you die pierced.
-left_lift = TransporterBridge.new TS, [4*TS, 9*TS, 50*TS], LOCATION.theme
+left_lift = TransporterBridge.new TS, [4*TS+1, 9*TS+1, 50*TS+1], LOCATION.theme
 LOCATION << left_lift
-exit_lift = TransporterBridge.new 31*TS, [4*TS, 9*TS, 16*TS], LOCATION.theme
+exit_lift = TransporterBridge.new 31*TS, [4*TS+1, 9*TS+1, 16*TS+1], LOCATION.theme
 LOCATION << exit_lift
 
 # - pinguins:

@@ -49,9 +49,9 @@ LOCATION.add_sprite snail
 # The left 'lift' bridge:
 left_bridge = TransporterBridge.new(TS*1, 
                                     [HIGH_PLATFORMS_FLOOR, 
-                                     LEFT_CORRIDOR_FLOOR], 
+                                     LEFT_CORRIDOR_FLOOR+1], 
                                     LOCATION.theme)
-LOCATION.add_sprite left_bridge
+LOCATION << left_bridge
 
 # an apple:
 LOCATION.add_item Apple.new([2*TS+5, HIGH_PLATFORMS_FLOOR - 2*TS])
@@ -75,7 +75,7 @@ right_bridge = TransporterBridge.new(TS*26,
                                        BLUEROOM_FLOOR
                                      ],
                                      LOCATION.theme)
-LOCATION.add_sprite right_bridge
+LOCATION << right_bridge
 
 # the arrowshooters which wait next to the right lift
 # and shoot the passengers unless they are switched off:

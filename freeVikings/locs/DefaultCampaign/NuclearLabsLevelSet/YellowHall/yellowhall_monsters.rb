@@ -32,7 +32,7 @@ end
 switch_1 = FreeVikings::Switch.new([520,410], LOCATION.theme, true, switch_1_action)
 
 # A bridge
-Y_VALUES = [260, 480]
+Y_VALUES = [260, 481]
 bridge = FreeVikings::TransporterBridge.new(600, Y_VALUES, LOCATION.theme)
 
 # An action for switch_2
@@ -48,7 +48,7 @@ switch_2 = FreeVikings::Switch.new([120, 280], LOCATION.theme, true, switch_2_ac
 LOCATION.add_sprite shooter
 LOCATION.add_active_object switch_1
 LOCATION.add_sprite FreeVikings::Robot.new([800, 400], 120)
-LOCATION.add_sprite bridge
+LOCATION << bridge
 
 LOCATION.add_active_object switch_2
 
