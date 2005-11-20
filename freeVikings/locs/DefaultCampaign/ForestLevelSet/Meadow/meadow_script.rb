@@ -49,7 +49,7 @@ LOCATION.add_sprite snail
 # The left 'lift' bridge:
 left_bridge = TransporterBridge.new(TS*1, 
                                     [HIGH_PLATFORMS_FLOOR, 
-                                     LEFT_CORRIDOR_FLOOR+1], 
+                                     LEFT_CORRIDOR_FLOOR], 
                                     LOCATION.theme)
 LOCATION << left_bridge
 
