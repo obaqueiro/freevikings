@@ -47,6 +47,9 @@ public:
   /* Comparison: */
   bool eql(Rectangle &rect);
 
+  /* Methods which return modified copy of self */
+  Rectangle expand(Numeric expand_x, Numeric expand_y = 0);
+
 private:
   Numeric _left, _top, _width, _height;
 };

@@ -61,4 +61,10 @@ class TestRect < Test::Unit::TestCase
     s = @R.new r
     assert_equal r.left, s.left, "s was initialized by values from r, so their 'left' values should be the same."
   end
+
+  def testExpandX
+    r = @R.new 5, 5, 5, 5
+    s = r.expand(1)
+    assert_equal @R.new(4, 5, 7, 5), s, "'Expand 1px in x axis' means 'left-=1, right+=1'"
+  end
 end

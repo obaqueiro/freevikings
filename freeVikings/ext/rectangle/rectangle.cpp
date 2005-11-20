@@ -134,3 +134,12 @@ bool Rectangle::eql(Rectangle &rect)
   else
     return false;
 }
+
+Rectangle Rectangle::expand(Rectangle::Numeric expand_x, 
+			    Rectangle::Numeric expand_y)
+{
+  return Rectangle(this->left() - expand_x,
+		   this->top() - expand_y,
+		   this->width() + (2 * expand_x),
+		   this->height() + (2 * expand_y));
+}
