@@ -131,8 +131,9 @@ containing the XML source).
 	  code = blocktype_element.attributes["code"]
 	  path = blocktype_element.attributes["path"]
 	  @log.debug "Loading new Tile with code '#{code}' and path '#{path}'"
-	  new_blocktype = Tile.new path
-	  new_blocktype.solid = false unless blocktype_element.attributes["solid"] == "solid"
+
+          make_tile_solid = (blocktype_element.attributes["solid"] == "solid")
+	  new_blocktype = Tile.new(path, make_tile_solid)
 	  @blocktypes[code] = new_blocktype
 	}
       rescue => ex

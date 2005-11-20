@@ -12,16 +12,13 @@ module FreeVikings
   module StaticObject
 
 =begin
---- StaticObject#solid
 --- StaticObject#solid?
-Tells if the object is solid or not.
+Tells if the object is solid or not. (((|false|)) by default.)
 =end
 
-    def solid
+    def solid?
       false
     end
-
-    alias_method :solid?, :solid
 
 =begin
 --- StaticObject#image

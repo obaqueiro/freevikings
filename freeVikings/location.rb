@@ -54,7 +54,7 @@ Argument ((|theme|)) is a (({GfxTheme})) instance.
       # a singleton method of @staticobjects:
       def @staticobjects.area_free?(rect)
         @members.find {|m| 
-          m.solid and 
+          m.solid? and 
             m.rect.collides? rect} == nil
       end
 

@@ -13,7 +13,7 @@ module FreeVikings
 
     include StaticObject
 
-    def solid
+    def solid?
       true
     end
 

@@ -20,7 +20,7 @@ class TestLocation < Test::Unit::TestCase
     Rectangle.new 90, 90, WIDTH, HEIGHT
   end
 
-  def solid
+  def solid?
     true
   end
 

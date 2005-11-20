@@ -31,14 +31,12 @@ the ((<Tile>)) is solid.
 
 =begin
 --- Tile#solid?
---- Tile#solid
-Synonyms.
-
---- Tile#solid=(is_solid)
+Says if tile is solid (vikings can't go through it).
 =end
 
-    attr_accessor :solid
-    alias_method :solid?, :solid
+    def solid?
+      @solid
+    end
 
 =begin
 --- Tile#image

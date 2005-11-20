@@ -80,8 +80,8 @@ class TestViking < TestSprite
               (FreeVikings::Viking::BASE_VELOCITY)
 
     @viking.update
-    @viking.instance_eval { descend }
+    @viking.instance_eval { check_fall_injury }
 
-    assert_equal 2, @viking.energy, "The long fall must hurt the viking."
+    assert_equal 2, @viking.energy, "The long fall must hurt the viking. !!! This test uses Viking implamentation internals. !!!"
   end
 end

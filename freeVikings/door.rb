@@ -47,14 +47,14 @@ from (({Entity}))) and optionally if the ((<Door>)) is closed, default is true.
 =begin
 = Instance methods
 
---- Door#solid
 --- Door#solid?
 These methods (aliases of each other) answer the question "is the ((<Door>))
 solid?" by ((|true|)) or ((|false|)).
+(({Door})) is solid only if it is closed.
 =end
 
-    def solid
-      @closed ? true : false
+    def solid?
+      @closed
     end
 
 =begin
