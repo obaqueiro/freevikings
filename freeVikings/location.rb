@@ -53,9 +53,16 @@ Argument ((|theme|)) is a (({GfxTheme})) instance.
 
       # a singleton method of @staticobjects:
       def @staticobjects.area_free?(rect)
-        @members.find {|m| 
-          m.solid? and 
-            m.rect.collides? rect} == nil
+        @members.find {|m|
+          # Here the static objects are thought to be a px smaller than theit 
+          # rects are. 
+          # It's to enable the vikings to step onto a static object
+          # where 
+          # static_object.rect.top == ground
+          # (It would normally collide with the viking and viking wouldn't
+          # be able to step onto it which is illogical.)
+          m.solid? and m.rect.expand(-1,-1).collides?(rect)
+        } == nil
       end
 
       loader.load_exit(self)

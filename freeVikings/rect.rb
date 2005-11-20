@@ -65,6 +65,11 @@ module FreeVikings
       left + w
     end
 
+    def expand(expand_x=0, expand_y=0)
+      Rectangle.new(left - expand_x, top - expand_y,
+                    w + 2 * expand_x, h + 2 * expand_y)
+    end
+
     def to_a
       Array.new self[0..3]
     end
