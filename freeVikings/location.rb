@@ -61,7 +61,8 @@ Argument ((|theme|)) is a (({GfxTheme})) instance.
           # static_object.rect.top == ground
           # (It would normally collide with the viking and viking wouldn't
           # be able to step onto it which is illogical.)
-          m.solid? and m.rect.expand(-1,-1).collides?(rect)
+          m.solid? and 
+            m.rect.expand(-1,-1).collides?(rect)
         } == nil
       end
 
