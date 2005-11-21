@@ -18,6 +18,8 @@ module FreeVikings
       @ability = ShielderAbility.new self
       @state.ability = @ability
       @shield = Shield.new self
+
+      Viking.shield = @shield # reference to the shield for all vikings
     end
 
     def location=(location)
@@ -27,6 +29,11 @@ module FreeVikings
     end
 
     alias_method :_update, :update
+
+    def destroy
+      Viking.shield = nil # remove the shield reference (shield disappeared)
+      super
+    end
 
     def update
       _update

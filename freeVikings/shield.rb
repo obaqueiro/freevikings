@@ -8,13 +8,9 @@ can be used as a solid platform for vikings who can jump onto it (I know only
 one such viking - his name is Erik).
 =end
 
-require 'platform.rb'
-
 module FreeVikings
 
   class Shield < Sprite
-
-    include Platform
 
     WIDTH = 15
     HEIGHT = 80

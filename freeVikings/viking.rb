@@ -26,6 +26,23 @@ module FreeVikings
     include Talkable
     include Transportable
 
+    # As Olaf is initialized he gives a reference to his shield
+    # here so the vikings can check collision with a shield quickly without
+    # searching for it every update.
+    @@shield = nil
+
+    protected
+
+    def Viking.shield
+      @@shield
+    end
+
+    def Viking.shield=(s)
+      @@shield = s
+    end
+
+    public
+
 =begin
 --- Viking::BASE_VELOCITY
 Viking's default velocity in pixels per second.
@@ -431,8 +448,15 @@ detection.
 
     private
     def on_shield?
-      shield = @location.sprites_on_rect(rect).find {|s| s.is_a? Shield}
-      if shield and CollisionTest.bottom_collision?(rect, shield.rect) then
+      #shield = @location.sprites_on_rect(rect).find {|s| s.is_a? Shield}
+      #if shield and CollisionTest.bottom_collision?(rect, shield.rect) then
+      #  return true
+      #else
+      #  return false
+      #end
+      if Viking.shield and 
+          Viking.shield.rect.collides?(@rect) and
+          CollisionTest.bottom_collision?(@rect, Viking.shield.rect) then
         return true
       else
         return false
