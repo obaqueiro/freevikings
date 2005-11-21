@@ -6,13 +6,11 @@
 FlyingPlatform
 =end
 
-require 'platform.rb'
+require 'monsters/bridge.rb'
 
 module FreeVikings
 
-  class FlyingPlatform < Sprite
-
-    include Platform
+  class FlyingPlatform < Bridge
 
     VELOCITY = 50
 

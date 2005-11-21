@@ -32,7 +32,7 @@ include Meadow
 y = (BLUEROOM_FLOOR / TS) - 4
 x = 16
 while y <= ((BLUEROOM_FLOOR / TS) - 1) and x <= 19 do
-  LOCATION.add_sprite(Apex.new([x*TS, y*TS], LOCATION.theme))
+  LOCATION << Apex.new([x*TS, y*TS], LOCATION.theme)
 
   x += 1
   y += 1
@@ -40,11 +40,11 @@ end
 
 # some more apexes under the stairs:
 apexes = ApexRow.new([19*TS,BLUEROOM_FLOOR - TS], 4, LOCATION.theme)
-LOCATION.add_sprite(apexes)
+LOCATION << apexes
 
 # Snail in the left corridor:
 snail = Snail.new([60, LEFT_CORRIDOR_FLOOR - Snail::HEIGHT])
-LOCATION.add_sprite snail
+LOCATION << snail
 
 # The left 'lift' bridge:
 left_bridge = TransporterBridge.new(TS*1, 
@@ -54,7 +54,7 @@ left_bridge = TransporterBridge.new(TS*1,
 LOCATION << left_bridge
 
 # an apple:
-LOCATION.add_item Apple.new([2*TS+5, HIGH_PLATFORMS_FLOOR - 2*TS])
+LOCATION << Apple.new([2*TS+5, HIGH_PLATFORMS_FLOOR - 2*TS])
 
 # and it's switch:
 blueroom_switch = Switch.new([40*TS, BLUEROOM_FLOOR - 2 * TS], 
@@ -65,7 +65,7 @@ blueroom_switch = Switch.new([40*TS, BLUEROOM_FLOOR - 2 * TS],
                                  left_bridge.move_down
                                end
                              })
-LOCATION.activeobjectmanager.add blueroom_switch
+LOCATION << blueroom_switch
 
 # the right 'lift' bridge:
 right_bridge = TransporterBridge.new(TS*26, 
@@ -80,9 +80,9 @@ LOCATION << right_bridge
 # the arrowshooters which wait next to the right lift
 # and shoot the passengers unless they are switched off:
 shooter_1 = ArrowShooter.new([29 * TS, GROUND + 2 * TS])
-LOCATION.add_sprite shooter_1
+LOCATION << shooter_1
 shooter_2 = ArrowShooter.new([29 * TS, GROUND + 4 * TS])
-LOCATION.add_sprite shooter_2
+LOCATION << shooter_2
 
 # a switch which can switch both the dangerous shooters off:
 shooters_switch = Switch.new([30 * TS, HIGH_PLATFORMS_FLOOR - 2 * TS],
@@ -94,11 +94,11 @@ shooters_switch = Switch.new([30 * TS, HIGH_PLATFORMS_FLOOR - 2 * TS],
                                  shooter_2.off
                                end
                              end)
-LOCATION.activeobjectmanager.add shooters_switch
+LOCATION << shooters_switch
 
 # apexes near the right shaft:
 right_apexes = ApexRow.new([29*TS, GROUND-TS], 10, LOCATION.theme)
-LOCATION.add_sprite right_apexes
+LOCATION << right_apexes
 
 # flying platform
 flying_plat = FlyingPlatform.new([
@@ -106,15 +106,15 @@ flying_plat = FlyingPlatform.new([
                                    [21*TS, HIGH_PLATFORMS_FLOOR],
                                  ], 
                                  LOCATION.theme)
-LOCATION.add_sprite flying_plat
+LOCATION << flying_plat
 
 # the door to EXIT
 exit_door = Door.new([49*TS, BLUEROOM_FLOOR-3*TS], true)
-LOCATION.static_objects.add exit_door
+LOCATION << exit_door
 
 # the snail which waits at the EXIT to say the vikings goodbye
 exit_snail = Snail.new([53*TS, BLUEROOM_FLOOR - Snail::HEIGHT])
-LOCATION.add_sprite exit_snail
+LOCATION << exit_snail
 
 # lock which opens the door
 exit_lock = Lock.new([47.5*TS, BLUEROOM_FLOOR-2*TS],
@@ -122,11 +122,11 @@ exit_lock = Lock.new([47.5*TS, BLUEROOM_FLOOR-2*TS],
                        exit_door.open 
                      },
                      Lock::BLUE)
-LOCATION.static_objects.add exit_lock
+LOCATION << exit_lock
 
 # a key to the lock
 exit_key = Key.new([45*TS, HIGH_PLATFORMS_FLOOR-2*TS], Key::BLUE)
-LOCATION.add_item exit_key
+LOCATION << exit_key
 
 # flying platform which gives you a lift to the key (and into some dangerous
 # places too)
@@ -137,9 +137,9 @@ fly_to_key = FlyingPlatform.new([
                                   [51*TS, HIGH_PLATFORMS_FLOOR]
                                 ],
                                 LOCATION.theme)
-LOCATION.add_sprite fly_to_key
+LOCATION << fly_to_key
 
 # arrowshooters who will clobber those who didn't left the flying platform
 # at the right time:
 shooter_3 = ArrowShooter.new([55 * TS, HIGH_PLATFORMS_FLOOR - 2*TS])
-LOCATION.add_sprite shooter_3
+LOCATION << shooter_3
