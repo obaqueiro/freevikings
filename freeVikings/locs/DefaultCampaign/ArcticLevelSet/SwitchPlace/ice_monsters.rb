@@ -71,15 +71,22 @@ module IceLand
   class IceBoard
     WIDTH = 80
     HEIGHT = 22
+
     def initialize(position)
       @rect = FreeVikings::Rectangle.new position[0], position[1], WIDTH, HEIGHT
       @image = FreeVikings::Image.load('ice_map/iceboard.tga')
       @solid = true
     end
+
     attr_reader :rect
     attr_reader :solid
+
     def image
       @image.image
+    end
+
+    def solid?
+      @solid
     end
   end # class IceBoard
   
