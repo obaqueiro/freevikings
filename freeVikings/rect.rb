@@ -1,7 +1,17 @@
 # rect.rb
 # igneus 22.2.2005
 
-# Trida obalujici operace nad obdelnikovymi vyrezy.
+=begin
+= NAME
+Rectangle
+
+= DESCRIPTION
+(({Rectangle})) instance has information about a rectangular area
+of the game world.
+
+(({Rectangle})) has an equivalent class written in C++ (for efficiency).
+(({FreeVikings::Extensions::Rectangle}))
+=end
 
 module FreeVikings
 
@@ -64,6 +74,16 @@ module FreeVikings
     def right
       left + w
     end
+
+=begin
+--- Rectangle#expand(expand_x=0, expand_y=0)
+Returns an expanded copy of itself.
+The expansion is done so that the rectangle's center stays on place and
+it's edges move.
+
+r = Rectangle.new(2,2,2,2) # => [2, 2, 2, 2]
+r.expand(1,1)              # => [1, 1, 4, 4]
+=end
 
     def expand(expand_x=0, expand_y=0)
       Rectangle.new(left - expand_x, top - expand_y,
