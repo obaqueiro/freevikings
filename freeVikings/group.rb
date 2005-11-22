@@ -89,16 +89,9 @@ Returns a copy of an (({Array})) with the members.
     def members
       @members.dup
     end
-  end # class Group
 
 =begin
-= NAME:
-PaintableGroup
-
-= DESCRIPTION:
-Include this module into your (({Group})) to add method (({paint})).
-
---- PaintableGroup#paint(surface, rect_of_location)
+--- Group#paint(surface, rect_of_location)
 ((|surface|)) must be (({RUDL::Surface})), ((|rect_of_location|)) should
 be a (({Rectangle})).
 Paints onto ((|surface|)) all the (({Group}))'s members.
@@ -109,7 +102,6 @@ thought as the view's top-left corner.
 You don't understand it, do you?
 =end
 
-  module PaintableGroup
     def paint(surface, rect_of_location)
       locr = rect_of_location
       @members.each { |member|
@@ -120,5 +112,5 @@ You don't understand it, do you?
         end
       }
     end
-  end # module Paintable Group
+  end # class Group
 end # module FreeVikings

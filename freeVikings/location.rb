@@ -13,8 +13,6 @@ require 'forwardable'
 
 #require 'map.rb'
 require 'spritemanager.rb'
-require 'activeobjectmanager.rb'
-require 'itemmanager.rb'
 require 'ticker.rb'
 require 'gfxtheme.rb'
 
@@ -45,11 +43,10 @@ Argument ((|theme|)) is a (({GfxTheme})) instance.
 
       @map = Map.new(loader)
       @spritemanager = SpriteManager.new
-      @activeobjectmanager = ActiveObjectManager.new
-      @itemmanager = ItemManager.new
+      @activeobjectmanager = Group.new
+      @itemmanager = Group.new
 
       @staticobjects = Group.new
-      @staticobjects.extend PaintableGroup
 
       # a singleton method of @staticobjects:
       def @staticobjects.area_free?(rect)

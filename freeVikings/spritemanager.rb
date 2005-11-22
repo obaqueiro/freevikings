@@ -13,8 +13,6 @@ module FreeVikings
 
   class SpriteManager < Group
 
-    include PaintableGroup
-
     extend Forwardable
 
 =begin
