@@ -13,7 +13,7 @@ require 'switch.rb'
 
 # if FUNLESS is true, switches off any non-important
 # processor time eating monsters (e.g. dozens of penguins).
-FUNLESS = true
+FUNLESS = false
 
 TS = LOCATION.map.class::TILE_SIZE
 
@@ -41,7 +41,7 @@ LOCATION << exit_lift
 
 # - pinguins:
 unless FUNLESS
-  6.step(30,3) do |i|
+  15.step(30,3) do |i|
     LOCATION << Penguin.new([i*TS, 4*TS-Penguin::HEIGHT])
   end
 end
