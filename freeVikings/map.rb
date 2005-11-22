@@ -114,7 +114,13 @@ is free of solid map blocks, ((|false|)) otherwise.
 
       top_line.upto(bottom_line) do |line_i|
         leftmost_i.upto(rightmost_i) do |tile_i|
-          if @blocks[line_i][tile_i].solid? then
+          begin
+            if @blocks[line_i][tile_i].solid? then
+              return false
+            end
+          rescue NoMethodError
+            # Occurs when solid? called on nil (no tile at [line_i][tile_i])
+            @log.error "No tile found at [#{line_i}][#{tile_i}]"
             return false
           end
         end
