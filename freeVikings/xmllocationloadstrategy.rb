@@ -133,7 +133,14 @@ containing the XML source).
 	  @log.debug "Loading new Tile with code '#{code}' and path '#{path}'"
 
           make_tile_solid = (blocktype_element.attributes["solid"] == "solid")
-	  new_blocktype = Tile.new(path, make_tile_solid)
+
+          begin
+            new_blocktype = Tile.new(path, make_tile_solid)
+          rescue Image::ImageFileNotFoundException => ifnfe
+            @log.error ifnfe.message
+            new_blocktype = Tile.new('', make_tile_solid)
+          end
+
 	  @blocktypes[code] = new_blocktype
 	}
       rescue => ex
