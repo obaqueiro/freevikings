@@ -30,4 +30,21 @@ module FreeVikings
   end
 
   FONTS = {} # a hash of fonts
+
+  # Module FreeVikings has a special querying feature.
+  # You can get any value from the hash OPTIONS (which is used
+  # to store configuration during the runtime) by calling
+  # FreeVikings#key or FreeVikings#key? where key is a key
+  # into the hash.
+  # NoMethodError can occur unless the key is defined.
+  def FreeVikings.method_missing(name, *args)
+    key = (name.to_s =~ /.*\?/ ? 
+           name.to_s.chop : name.to_s)
+
+    unless defined?(FreeVikings::OPTIONS[key])
+      raise NoMethodError, "Key #{key} undefined in FreeVikings::OPTIONS."
+    end
+
+    return FreeVikings::OPTIONS[key]
+  end # FreeVikings.method_missing
 end
