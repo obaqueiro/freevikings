@@ -75,6 +75,15 @@ Method common for all the (({Image}))-like objects. Returns the current image
     def image
       return @images[(Time.now.to_i / @delay) % @images.size].image
     end
+
+
+    def w
+      image.w
+    end
+
+    def h
+      image.h
+    end
   end # class Animation
 end # module FreeVikings
 
