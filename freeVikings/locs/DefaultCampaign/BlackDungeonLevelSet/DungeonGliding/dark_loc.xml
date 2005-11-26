@@ -11,12 +11,7 @@
   </scripts>
   
   <map>
-    <blocktypes>
-      <blocktype code="b" path="themes/DarkTheme/dark_bg.tga" />
-      <blocktype code="a" path="themes/DarkTheme/dark_tile1.tga" solid="solid" />
-      <blocktype code="c" path="themes/DarkTheme/dark_tile2.tga" solid="solid" />
-      <blocktype code="o" path="themes/DarkTheme/dark_bg_dotted.tga" />
-    </blocktypes>
+    <blocktypes src="../blocktypes.xml"/>
     
 <blocks>
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
