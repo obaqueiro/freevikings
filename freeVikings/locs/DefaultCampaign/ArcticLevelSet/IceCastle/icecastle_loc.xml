@@ -19,16 +19,16 @@
   
   <map>
     <blocktypes>
-<blocktype code="0" path="ice_map/ice_base.tga" solid="solid" />
-<blocktype code="H" path="ice_map/ice_bg_dark.tga" />
-<blocktype code="I" path="ice_map/ice_atypictile1.tga" solid="solid" />
-<blocktype code="Y" path="ice_map/ice_atypictile2.tga" solid="solid" />
-<blocktype code="A" path="ice_map/snow_atypictile.tga" solid="solid" />
-<blocktype code="C" path="ice_map/snow_base_ceiling.tga" solid="solid" />
-<blocktype code="1" path="ice_map/tetrax_ice_nw.tga" solid="solid" />
-<blocktype code="2" path="ice_map/tetrax_ice_ne.tga" solid="solid" />
-<blocktype code="3" path="ice_map/tetrax_ice_sw.tga" solid="solid" />
-<blocktype code="4" path="ice_map/tetrax_ice_se.tga" solid="solid" />
+<blocktype code="0" path="themes/IceTheme/ice_base.tga" solid="solid" />
+<blocktype code="H" path="themes/IceTheme/ice_bg_dark.tga" />
+<blocktype code="I" path="themes/IceTheme/ice_atypictile1.tga" solid="solid" />
+<blocktype code="Y" path="themes/IceTheme/ice_atypictile2.tga" solid="solid" />
+<blocktype code="A" path="themes/IceTheme/snow_atypictile.tga" solid="solid" />
+<blocktype code="C" path="themes/IceTheme/snow_base_ceiling.tga" solid="solid" />
+<blocktype code="1" path="themes/IceTheme/tetrax_ice_nw.tga" solid="solid" />
+<blocktype code="2" path="themes/IceTheme/tetrax_ice_ne.tga" solid="solid" />
+<blocktype code="3" path="themes/IceTheme/tetrax_ice_sw.tga" solid="solid" />
+<blocktype code="4" path="themes/IceTheme/tetrax_ice_se.tga" solid="solid" />
     </blocktypes>
 
 <blocks>

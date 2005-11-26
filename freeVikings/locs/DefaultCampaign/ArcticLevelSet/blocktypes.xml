@@ -2,20 +2,20 @@
 
 <blocktypes>
   <!-- Base snow tile (0 means NOTHING SPECIAL) -->
-  <blocktype code="0" path="ice_map/snow_base.tga" solid="solid" />
+  <blocktype code="0" path="themes/IceTheme/snow_base.tga" solid="solid" />
 
   <!-- Base snow tile - but soft. It is useful for simple secret corridors,
        tunnels etc. (S means SECRET) -->
-  <blocktype code="S" path="ice_map/snow_base.tga" />
+  <blocktype code="S" path="themes/IceTheme/snow_base.tga" />
 
   <!-- Snow tile with a bit different structure to make the location less
        boring. (A means ATYPIC) -->
-  <blocktype code="A" path="ice_map/snow_atypictile.tga" solid="solid" />
+  <blocktype code="A" path="themes/IceTheme/snow_atypictile.tga" solid="solid" />
 
   <!-- Dark blue snow. Soft. Used for common corridors etc. -->
-  <blocktype code="H" path="ice_map/snow_base_dark.tga" />
+  <blocktype code="H" path="themes/IceTheme/snow_base_dark.tga" />
 
   <!-- Bicolour tile: base snow on the top, dark snow on the bottom. 
        Usually used as a ceiling tile. (C means CEILING) -->
-  <blocktype code="C" path="ice_map/snow_base_ceiling.tga" solid="solid" />
+  <blocktype code="C" path="themes/IceTheme/snow_base_ceiling.tga" solid="solid" />
 </blocktypes>

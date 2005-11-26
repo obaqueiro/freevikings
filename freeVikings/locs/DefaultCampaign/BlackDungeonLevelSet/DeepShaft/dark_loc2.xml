@@ -11,10 +11,10 @@
   
   <map>
     <blocktypes>
-      <blocktype code="b" path="dark_map/dark_bg.tga" />
-      <blocktype code="a" path="dark_map/dark_tile1.tga" solid="solid" />
-      <blocktype code="c" path="dark_map/dark_tile2.tga" solid="solid" />
-      <blocktype code="o" path="dark_map/dark_bg_dotted.tga" />
+      <blocktype code="b" path="themes/DarkTheme/dark_bg.tga" />
+      <blocktype code="a" path="themes/DarkTheme/dark_tile1.tga" solid="solid" />
+      <blocktype code="c" path="themes/DarkTheme/dark_tile2.tga" solid="solid" />
+      <blocktype code="o" path="themes/DarkTheme/dark_bg_dotted.tga" />
     </blocktypes>
     
 <blocks>
