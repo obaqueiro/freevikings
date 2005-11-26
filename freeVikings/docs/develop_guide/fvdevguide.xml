@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "docbookx.dtd">
+
+<book>
+  <bookinfo>
+    <title>FreeVikings Developer's Guide</title>
+
+    <author>
+      <firstname>Jakub</firstname> 
+      <surname>Pavlik</surname>
+      <email>severus@post.cz</email>
+    </author>
+  </bookinfo>
+
+  <!-- ====================================================================
+       Chapter: INTRODUCTION.
+       Who is this book for, what is it's aim, ... 
+       ==================================================================== -->
+
+  <chapter>
+    <title>Introduction</title>
+
+    <para>
+      In January 2005 I wrote the first version of freeVikings, and, very
+      proud of my first game (it was funless, boring, often crashing),
+      published it on the Internet. A lot has changed since January 2005.
+      I'm not so proud of my first game. And, I think, it's never more funless.
+    </para>
+    <para>
+      FreeVikings now have several fancy features you expect a good game 
+      to have. It's usually stable, 
+      good-looking<footnote><para>This is a joke.
+      Actually, freeVikings are still awful. I'm not able to do anything
+      with this.</para></footnote> and extendable.
+    </para>
+    <para>
+      When the developers make their application scriptable, they don't usually
+      do it for themselves but for the users. Or they say they are doing it
+      for users (everybody knows that the software developers only do things 
+      for fun). FreeVikings are scriptable. It means...
+      Yes, you're right. Actually it means I was playing with Ruby.
+      But forget it, will you? It means I want to give you the possibility
+      of extending freeVikings with your own levels. You can catch
+      Erik, Baleog and Olaf into your own traps. It seems good, doesn't it?
+    </para>
+    <para>
+      So if you like freeVikings, have just a small amount of time for playing
+      around a bit, ... Go on reading and make the best freeVikings level
+      ever seen.
+    </para>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: FIRST MAP
+       How to create your own map, how to make it running (tell freeVikings
+       where to find it) 
+       ==================================================================== -->
+
+  <chapter>
+    <title>First map</title>
+
+    <para>
+      This chapter will guide you through the first steps of the freeVikings
+      level developer. You will start with clean hands and end with a ready
+      to use map.
+    </para>
+    <para>
+      What will you need? Well, it's onto you. Actually you don't need nearly
+      anything. Just a well-running freeVikings installation and a plain
+      text editor. But I would recommend you some better stuff. You should
+      try to use a bit more sophisticated text editor such as Emacs,
+      vim or SciTE. Why? Because of the syntax highlighting and checking.
+      It's very helpful. Scripting mainly consists of XML and Ruby source
+      editing. (Don't be afraid, it's simple.)
+    </para>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: FREEVIKINGS BASICS
+       Basic concepts of the game world.
+       What is the Location, StaticObjects, ActiveObjects, Sprites, Items,
+       what are they good for.
+       ==================================================================== -->
+
+  <!-- ====================================================================
+       Chapter: SCRIPTING
+       Writing location scripts with all the fancy stuff.
+       ==================================================================== -->
+
+  <!-- ====================================================================
+       Chapter: HOW TO CONTRIBUTE
+       How to give your masterpiece to the free world.
+       ==================================================================== -->
+</book>
