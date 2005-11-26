@@ -1,7 +1,7 @@
 # apex.rb
 # igneus 2.8.2005
 
-require 'imagebank.rb'
+require 'model.rb'
 require 'monstermixins.rb'
 require 'hero.rb'
 

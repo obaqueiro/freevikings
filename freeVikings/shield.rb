@@ -88,7 +88,7 @@ It's a man (or woman, monster, ...) who carries the shield.
       # rozmery jsou tedy prevracene. Po jeho nahrani bude vyhozena vyjimka,
       # kterou ale zachytime a vsechno pujde v pohode dal.
       begin
-        @image = ImageBank.new self
+        @image = Model.new self
         @image.add_pair 'left', Image.load('shield_left.png')
         @image.add_pair 'right', Image.load('shield_right.png')
         @image.add_pair 'top', Image.load('shield_top.png')        

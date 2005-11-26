@@ -5,6 +5,7 @@
 
 require 'locationloadstrategy.rb'
 require 'ticker.rb'
+require 'tile.rb'
 
 module FreeVikings
 
@@ -18,7 +19,7 @@ module FreeVikings
 	@blocks = blocks_matrix
 
 	# nacteni typu bloku
-	x =  Tile.new '', true
+	x = Tile.new '', true
 	o = Tile.new '', false
 	# nacteni umisteni bloku
 	blcks = [

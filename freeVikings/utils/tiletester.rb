@@ -13,7 +13,7 @@ if `pwd` != File.dirname(__FILE__) then
   $: << File.dirname(File.dirname(__FILE__))
 end
 
-require 'imagebank.rb'
+require 'model.rb'
 require 'RUDL'
 require 'optparse'
 

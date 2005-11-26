@@ -16,7 +16,7 @@ Shooter
 
 require 'monsters/shooter.rb'
 require 'hero.rb'
-require 'imagebank.rb'
+require 'model.rb'
 require 'timelock.rb'
 
 module FreeVikings
@@ -57,7 +57,7 @@ Switches the (({ArrowShooter})) off.
 =begin
 --- ArrowShooter#state
 It's an alias of superclasse's (({firing?})).
-It's defined to support (({ImageBank})).
+It's defined to support (({Model})).
 =end
 
     alias_method :state, :firing?
@@ -71,7 +71,7 @@ It's defined to support (({ImageBank})).
     end
 
     def init_images
-      @image = ImageBank.new(self)
+      @image = Model.new(self)
       @image.add_pair 'true', Image.load('arrowshooter_on.tga')
       @image.add_pair 'false', Image.load('arrowshooter_off.tga')
     end

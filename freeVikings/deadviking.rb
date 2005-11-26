@@ -18,7 +18,7 @@ module FreeVikings
     def initialize(position)
       super(position)
       @rect = Rectangle.new(position[0], position[1], WIDTH, HEIGHT)
-      @image = ImageBank.new(self)
+      @image = Model.new(self)
       im1 = Image.load('dead.png')
       im2 = Image.load('dead2.png')
       im3 = Image.load('dead3.png')

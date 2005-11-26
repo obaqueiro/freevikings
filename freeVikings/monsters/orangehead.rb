@@ -6,7 +6,7 @@
 # He is intelligent and fights only when he's attacked.
 
 require 'sprite.rb'
-require 'imagebank.rb'
+require 'model.rb'
 require 'monster.rb'
 require 'hero.rb'
 require 'timelock.rb'
@@ -57,7 +57,7 @@ module FreeVikings
     end
 
     def init_images
-      @image = ImageBank.new(self)
+      @image = Model.new(self)
 
       i_normal = Image.load 'heady.tga'
       i_lower = Image.load 'heady_lower.tga'

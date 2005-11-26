@@ -16,7 +16,7 @@ Sprite
 =end
 
 require 'sprite.rb'
-require 'imagebank.rb'
+require 'model.rb'
 require 'sophisticatedspritestate.rb'
 require 'sophisticatedspritemixins.rb'
 require 'monster.rb'
@@ -86,7 +86,7 @@ So use a lot of snails anywhere :o) !
       i_left = Image.load 'snail_left.tga'
       i_right = Image.load 'snail_right.tga'
 
-      @image = ImageBank.new(self, {'onground_standing_left' => i_left,
+      @image = Model.new(self, {'onground_standing_left' => i_left,
                                     'onground_moving_left' => i_left,
                                     'onground_standing_right' => i_right,
                                     'onground_moving_right' => i_right})

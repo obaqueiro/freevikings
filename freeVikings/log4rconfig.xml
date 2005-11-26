@@ -37,7 +37,7 @@
     <outputter>stderr</outputter>
   </logger>
 
-  <!-- Log for images & themes related classes (from imagebank.rb, 
+  <!-- Log for images & themes related classes (from model.rb, 
        gfxtheme.rb) -->
   <logger name="images log" level="WARN">
     <outputter>stderr</outputter>

@@ -42,12 +42,10 @@ require 'testsophisticatedspritestate.rb'
 require 'testvikingstate.rb'
 require 'testvikingstatetostring.rb'
 require 'testcollisiontest.rb'
-require 'testimagebank.rb'
+require 'testmodel.rb'
 require 'testactiveobject.rb'
 require 'testgroup.rb'
 require 'testspritemanager.rb'
-require 'testactiveobjectmanager.rb'
-require 'testitemmanager.rb'
 require 'testmonsterscript.rb'
 require 'testinventory.rb'
 require 'testmonster.rb'
@@ -88,12 +86,10 @@ class FreeVikingsTestSuite
     suite << TestVikingState.suite
     suite << TestVikingStateToString.suite
     suite << TestCollisionTest.suite
-    suite << TestImageBank.suite
+    suite << TestModel.suite
     suite << TestActiveObject.suite
     suite << TestGroup.suite
     suite << TestSpriteManager.suite
-    suite << TestActiveObjectManager.suite
-    suite << TestItemManager.suite
     suite << TestMonsterScript.suite
     suite << TestInventory.suite
     suite << TestMonster.suite

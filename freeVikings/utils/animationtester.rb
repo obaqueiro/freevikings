@@ -14,7 +14,7 @@ end
 
 require 'RUDL'
 
-require 'imagebank.rb'
+require 'model.rb'
 
 class AnimationTester
 

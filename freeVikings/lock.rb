@@ -17,7 +17,7 @@ Entity
 =end
 
 require 'entity.rb'
-require 'imagebank.rb'
+require 'model.rb'
 require 'staticobject.rb'
 
 module FreeVikings

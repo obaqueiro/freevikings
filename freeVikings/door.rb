@@ -80,7 +80,7 @@ Closes the ((<Door>)).
 =begin
 --- Door#state
 Returns (('"open"')) or (('"closed"')). This method is here mainly for 
-the needs of (({ImageBank})).
+the needs of (({Model})).
 =end
 
     def state
@@ -90,12 +90,12 @@ the needs of (({ImageBank})).
     # Initializes the images. It's called from the constructor of Entity.
 
     def init_images
-      @image = ImageBank.new self
+      @image = Model.new self
       begin
         @image.add_pair "closed", Image.load('door_closed.tga')
         @image.add_pair "open", Image.load('door_open.tga')
-      rescue ImageBank::ImageWithBadSizesException
-        # There's no problem. ImageBank is angry, because the image
+      rescue Model::ImageWithBadSizesException
+        # There's no problem. Model is angry, because the image
         # for the 'open' state is wider, but in this state the Door is soft,
         # so the alarm is idle.
       end

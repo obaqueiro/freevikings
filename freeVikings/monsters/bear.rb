@@ -55,7 +55,7 @@ module FreeVikings
         'onground_moving_left' => anim_left,
         'onground_moving_right' => anim_right
       }
-      @image = ImageBank.new(self, imgs)
+      @image = Model.new(self, imgs)
     end
   end # class Bear
 

@@ -7,7 +7,7 @@ Instances of ((<Tile>)) are map tiles. To learn more read documentation
 for class (({Map})).
 =end
 
-require 'imagebank'
+require 'model.rb'
 
 module FreeVikings
 

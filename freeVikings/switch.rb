@@ -26,7 +26,7 @@ module FreeVikings
         'false' => get_theme_image('switch_off')
       }
 
-      @image = ImageBank.new(self, images)
+      @image = Model.new(self, images)
     end
 
     attr_reader :state

@@ -67,7 +67,7 @@ module FreeVikings
       i_right = Image.load('olaf_right.png')
       i_standing = Image.load('olaf_standing.png')
 
-      @image = ImageBank.new(self)
+      @image = Model.new(self)
 
       @image.add_pair('onground_standing_left', i_left)
       @image.add_pair('onground_standing_right', i_right)
