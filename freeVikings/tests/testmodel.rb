@@ -1,4 +1,4 @@
-# testmodel.rb
+# testimages.rb
 # igneus 11.6.2005
 
 # Tests for class Model (some days before it was called ImageBank)
