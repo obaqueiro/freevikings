@@ -58,11 +58,11 @@ module FreeVikings
     end
 
     def init_images
-      i_right = AnimationSuite.new(1, [
+      i_right = Animation.new(1, [
                                      Image.load('robot_right.tga'),
                                      Image.load('robot_right_handdown.tga')
                                    ])
-      i_left = AnimationSuite.new(1, [
+      i_left = Animation.new(1, [
                                     Image.load('robot_left.tga'),
                                     Image.load('robot_left_handdown.tga')
                                   ])

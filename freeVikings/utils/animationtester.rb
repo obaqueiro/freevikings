@@ -14,7 +14,7 @@ end
 
 require 'RUDL'
 
-require 'model.rb'
+require 'images.rb'
 
 class AnimationTester
 
@@ -23,7 +23,7 @@ class AnimationTester
   def initialize(surface, delay, *filenames)
     @surface = surface
 
-    @anim = AnimationSuite.new(delay)
+    @anim = Animation.new(delay)
     filenames.each {|f| @anim.add(Image.new(f)) }
 
     img = @anim.image

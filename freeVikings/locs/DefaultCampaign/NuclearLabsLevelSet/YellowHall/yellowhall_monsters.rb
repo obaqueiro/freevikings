@@ -7,7 +7,7 @@ require 'monsters/robot.rb'
 require 'monsters/transporterbridge.rb'
 require 'switch.rb'
 require 'apple.rb'
-require 'model.rb'
+require 'images.rb'
 
 include FreeVikings
 

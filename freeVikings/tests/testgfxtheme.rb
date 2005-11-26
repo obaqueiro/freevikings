@@ -8,7 +8,7 @@
 require 'test/unit'
 
 require 'gfxtheme.rb'
-require 'model.rb'
+require 'images.rb'
 
 require 'stringio'
 

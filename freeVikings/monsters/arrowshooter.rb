@@ -16,7 +16,7 @@ Shooter
 
 require 'monsters/shooter.rb'
 require 'hero.rb'
-require 'model.rb'
+require 'images.rb'
 require 'timelock.rb'
 
 module FreeVikings

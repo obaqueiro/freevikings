@@ -43,8 +43,8 @@ module FreeVikings
       r_imgs = []
       1.upto(3) {|i| r_imgs.push Image.load("penguin_right_#{i}.tga")}
 
-      i_left = AnimationSuite.new(0.3, l_imgs)
-      i_right = AnimationSuite.new(0.3, r_imgs)
+      i_left = Animation.new(0.3, l_imgs)
+      i_right = Animation.new(0.3, r_imgs)
 
       @image = Model.new(self, {'left' => i_left, 'right' => i_right})
     end

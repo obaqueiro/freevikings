@@ -6,7 +6,7 @@
 # He is intelligent and fights only when he's attacked.
 
 require 'sprite.rb'
-require 'model.rb'
+require 'images.rb'
 require 'monster.rb'
 require 'hero.rb'
 require 'timelock.rb'
@@ -62,7 +62,7 @@ module FreeVikings
       i_normal = Image.load 'heady.tga'
       i_lower = Image.load 'heady_lower.tga'
 
-      standing_anim = AnimationSuite.new(0.4, [i_normal, i_lower])
+      standing_anim = Animation.new(0.4, [i_normal, i_lower])
 
       @image.add_pair('standing', standing_anim)
     end

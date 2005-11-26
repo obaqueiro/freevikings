@@ -17,7 +17,7 @@ Entity
 
 require 'entity.rb'
 require 'pausable.rb'
-require 'model.rb'
+require 'images.rb'
 
 module FreeVikings
 

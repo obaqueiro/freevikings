@@ -35,14 +35,14 @@ module FreeVikings
 
     def init_images
       left = Image.load('bear_left.tga')
-      anim_left = AnimationSuite.new(0.3, 
+      anim_left = Animation.new(0.3, 
                                      [left,
                                      Image.load('bear_left_walk.tga'),
                                       left,
                                       Image.load('bear_left_walk2.tga')]
                                      )
       right = Image.load('bear_right.tga')
-      anim_right = AnimationSuite.new(0.75, 
+      anim_right = Animation.new(0.75, 
                                      [right,
                                      Image.load('bear_right_walk.tga'),
                                       right,

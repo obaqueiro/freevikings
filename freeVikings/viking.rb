@@ -5,7 +5,7 @@ require 'sprite.rb'
 require 'deadviking.rb'
 
 require 'vikingstate.rb'
-require 'model.rb'
+require 'images.rb'
 require 'nullocation.rb'
 require 'collisiontest.rb'
 require 'inventory.rb'

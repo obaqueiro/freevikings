@@ -16,7 +16,7 @@ Sprite
 =end
 
 require 'sprite.rb'
-require 'model.rb'
+require 'images.rb'
 require 'sophisticatedspritestate.rb'
 require 'sophisticatedspritemixins.rb'
 require 'monster.rb'
