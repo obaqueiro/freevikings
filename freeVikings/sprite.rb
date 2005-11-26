@@ -18,7 +18,6 @@ Entity
 require 'entity.rb'
 require 'pausable.rb'
 require 'imagebank.rb'
-require 'hurtdrop.rb'
 
 module FreeVikings
 
@@ -144,11 +143,6 @@ Voluntary argument ((|hurt_cause|)) is an object which caused the hurt
 
       if @energy <= 0
         destroy
-      else
-        if hurt_cause then
-          @location.add_sprite HurtDrop.new([hurt_cause.rect[0], 
-                                             hurt_cause.rect[1]])
-        end
       end
     end
 
