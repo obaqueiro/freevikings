@@ -82,6 +82,8 @@ containing the XML source).
       rescue MonsterScript::NoMonstersDefinedException
         @log.error "Script loaded successfully, but didn't define any new " \
         "monsters."
+      rescue Image::ImageFileNotFoundException => infe
+        @log.error infe.message + "\nScript wasn't loaded successfully."
       else
         s::MONSTERS.each {|m| location.add_sprite m}
         @log.info "Script #{scriptfile} successfully loaded."

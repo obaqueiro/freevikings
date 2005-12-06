@@ -7,9 +7,10 @@
 # are being loaded. Init opens the application window, prints something
 # and then starts all the long-lasting stuff.
 
+require 'gameui'
+
 require 'rudlmore.rb'
 
-require 'gameui/gameui.rb'
 require 'topmenu.rb'
 require 'passwordedit.rb'
 
