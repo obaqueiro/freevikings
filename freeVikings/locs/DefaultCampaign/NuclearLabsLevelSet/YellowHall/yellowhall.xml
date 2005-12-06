@@ -17,18 +17,7 @@
   <!-- Definice rozmisteni bloku v mape -->
   
   <map>
-    <blocktypes>
-<blocktype code="A" path="yellow_map/tile_nothing.tga" />
-<blocktype code="R" path="yellow_map/tile_base_rightdown.tga" solid="solid" />
-<blocktype code="r" path="yellow_map/tile_base_rightup.tga" solid="solid" />
-<blocktype code="L" path="yellow_map/tile_base_leftdown.tga" solid="solid" />
-<blocktype code="l" path="yellow_map/tile_base_leftup.tga" solid="solid" />
-<blocktype code="-" path="yellow_map/tile_base.tga" solid="solid" />
-<blocktype code="J" path="yellow_map/tile_base_right.tga" solid="solid" />
-<blocktype code=":" path="yellow_map/tile_base_leftend.tga" solid="solid" />
-<blocktype code=";" path="yellow_map/tile_base_rightend.tga" solid="solid" />
-    </blocktypes>
-
+    <blocktypes src="../blocktypes.xml"/>
 <blocks>
 JAAAAAAAAAAAAAAAAAAAAAAAAAAAJ
 JAAAAAAAAAAAAAAAAAAAAAAAAAAAJ

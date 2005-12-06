@@ -15,7 +15,7 @@ include FreeVikings
 shooter = FreeVikings::PlasmaShooter.new [730, 430]
 
 shooter.instance_eval do
-  @image = Image.load 'yellow_map/yellow_spitter.tga'
+  @image = Image.load 'themes/NuclearTheme/yellow_spitter.tga'
 end
 
 # A Proc called when the state of switch_1 is changed

@@ -12,6 +12,8 @@
        boring. (A means ATYPIC) -->
   <blocktype code="A" path="themes/IceTheme/snow_atypictile.tga" solid="solid" />
 
+  <blocktype code="B" path="themes/IceTheme/snow_atypictile2.tga" solid="solid" />
+
   <!-- Dark blue snow. Soft. Used for common corridors etc. -->
   <blocktype code="H" path="themes/IceTheme/snow_base_dark.tga" />
 

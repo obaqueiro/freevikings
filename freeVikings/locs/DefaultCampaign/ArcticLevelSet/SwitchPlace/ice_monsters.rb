@@ -4,7 +4,7 @@
 # Monsters script for location Ice Land
 
 require 'switch'
-require 'imagebank'
+require 'modelmap'
 require 'group'
 require 'sprite'
 require 'monster'
@@ -74,7 +74,7 @@ module IceLand
 
     def initialize(position)
       @rect = FreeVikings::Rectangle.new position[0], position[1], WIDTH, HEIGHT
-      @image = FreeVikings::Image.load('ice_map/iceboard.tga')
+      @image = FreeVikings::Image.load('themes/IceTheme/iceboard.tga')
       @solid = true
     end
 
