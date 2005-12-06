@@ -65,15 +65,43 @@
       level developer. You will start with clean hands and end with a ready
       to use map.
     </para>
-    <para>
-      What will you need? Well, it's onto you. Actually you don't need nearly
-      anything. Just a well-running freeVikings installation and a plain
-      text editor. But I would recommend you some better stuff. You should
-      try to use a bit more sophisticated text editor such as Emacs,
-      vim or SciTE. Why? Because of the syntax highlighting and checking.
-      It's very helpful. Scripting mainly consists of XML and Ruby source
-      editing. (Don't be afraid, it's simple.)
-    </para>
+
+    <section>
+      <title>Requirements</title>
+      <para>
+	What will you need? Well, it's onto you. Actually you don't need nearly
+	anything. Just a well-running freeVikings installation and a plain
+	text editor. But I would recommend you some better stuff. You should
+	try to use a bit more sophisticated text editor such as Emacs,
+	vim or SciTE. Why? Because of the syntax highlighting and checking.
+	It's very helpful. Scripting mainly consists of XML and Ruby source
+	editing. (Don't be afraid, it's simple.)
+      </para>
+    </section>
+
+    <section>
+      <title>Writing XML</title>
+      <para>
+	Let's start writing. Make yourself a directory you will store your
+	freeVikings map in. Open a file with suffic .xml, e.g. 
+	<filename>proto.xml</filename>.
+      </para>
+      <para>
+	Every XML file must start with a XML declaration.
+      </para>
+      <programlisting>
+&lt;?xml version="1.0" ?&gt;
+      </programlisting>
+      <para>
+	Then the document type definition usually goes, but freeVikings
+	maps have no DTD yet, so we'll omit it.
+      </para>
+      <para>
+	I hope you know HTML. XML looks very similar. Just tags...
+	FreeVikings map is a XML file with special tags.
+      </para>
+      
+    </section>
   </chapter>
 
   <!-- ====================================================================
@@ -86,6 +114,11 @@
   <!-- ====================================================================
        Chapter: SCRIPTING
        Writing location scripts with all the fancy stuff.
+       ==================================================================== -->
+
+  <!-- ====================================================================
+       Chapter: COOL STUFF
+       About themes, passwords, level suites.
        ==================================================================== -->
 
   <!-- ====================================================================
