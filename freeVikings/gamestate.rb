@@ -240,7 +240,10 @@ the vikings' inventories.
                                          FreeVikings::WIN_HEIGHT]
       grey = [10, 10, 10]
       @mask_surface.fill grey
-      @mask_surface.set_alpha 140
+      @mask_surface.set_colorkey grey
+      box = FreeVikings::FONTS['default'].create_text_box(120, "PAUSED...")
+      @mask_surface.blit box, [@mask_surface.w/2 - box.w/2,
+                               @mask_surface.h/2 - box.h/2 - 60]
     end
   end # class PausedGameState
 
