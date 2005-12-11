@@ -103,8 +103,6 @@ Changes the location view according to the state.
     private
 
     def serve_keydown(keyevent, location)
-      super(keyevent, location)
-
       case keyevent.key
       when K_LEFT
 	@context.team.active.move_left
@@ -122,13 +120,15 @@ Changes the location view according to the state.
       when K_e, K_u
         @context.team.active.use_item
       when K_p, K_TAB
-        @context.bottompanel.set_browse_inventory
+        @context.bottompanel.browse_inventory!
         @context.pause
       when K_RCTRL, K_PAGEDOWN
 	@context.team.previous
       when K_PAGEUP
 	@context.team.next
-      end # case
+      else
+        super(keyevent, location)
+      end
     end # private method serve_keydown
 
     def serve_keyup(keyevent, location)
@@ -160,6 +160,11 @@ Changes the location view according to the state.
     end
   end # class PlayingGameState
 
+=begin
+= PausedGameState
+This state is used when the game is paused. It allows the user to play with
+the vikings' inventories.
+=end
 
   class PausedGameState < GameState
 
@@ -173,42 +178,47 @@ Changes the location view according to the state.
     end
 
     def serve_keydown(event, location)
-
-      super(event, location)
-
-      begin
-        # The following lines are a bit tricky.
-        # They move the selection box like the arrow keys order.
-        # To understand them you must know that the items from the inventory
-        # are displayed in four small windows on the bottompanel in this order:
-        # 0 1
-        # 2 3
-        # The selection box highlights the item with index 
-        # anInventory.active_index. This attribute is changed to move 
-        # the selection box.
-        case event.key
-        when K_p, K_TAB
-          bp_state = bottompanel.set_browse_inventory
-          if bp_state.normal? then
-            @context.unpause
-          end
-        when K_SPACE
-          bottompanel.set_items_exchange
-        when K_UP
-          bottompanel.up
-        when K_DOWN
-          bottompanel.down
-        when K_LEFT
-          bottompanel.left
-        when K_RIGHT
-          bottompanel.right
-        when K_DELETE
-          bottompanel.delete_active_item
+      # !!! Don't add call to super here; it was here, now it is in the
+      # !!! 'else' branch of case. And it's right so.
+      case event.key
+      when K_p, K_TAB
+        if bottompanel.inventory_browsing? then
+          bottompanel.go_normal!
+          @context.unpause
         end
-      rescue Inventory::EmptySlotRequiredException
-        # This exception doesn't mean anything bad for us. The player
-        # has just tried to move the selection in the inventory
-        # onto a slot which doesn't have any item inside.
+      when K_ESCAPE
+        if bottompanel.inventory_browsing? or
+            bottompanel.items_exchange? then
+          bottompanel.go_normal!
+          @context.unpause
+        end
+      when K_SPACE
+        if bottompanel.items_exchange?
+          bottompanel.browse_inventory!
+        elsif bottompanel.inventory_browsing?
+          bottompanel.exchange_items!
+        end
+      when K_UP, K_DOWN, K_LEFT, K_RIGHT, K_DELETE
+        begin
+          case event.key
+          when K_UP
+            bottompanel.up
+          when K_DOWN
+            bottompanel.down
+          when K_LEFT
+            bottompanel.left
+          when K_RIGHT
+            bottompanel.right
+          when K_DELETE
+            bottompanel.delete_active_item
+          end
+        rescue Inventory::EmptySlotRequiredException
+          # Nothing bad for us. The player has just tried to move 
+          # the selection in the inventory onto a slot which doesn't have 
+          # any item inside. Ignore it.
+        end
+      else
+        super(event, location)
       end
     end
 

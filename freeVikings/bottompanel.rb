@@ -9,6 +9,7 @@ inventories.
 =end
 
 require 'observer'
+require 'forwardable.rb'
 
 require 'bottompanelstate.rb'
 require 'inventoryview.rb'
@@ -53,50 +54,76 @@ Argument ((|team|)) is a Team of heroes who will be displayed on the panel.
       change_state NormalBottomPanelState.new(@team)
     end
 
-=begin
---- BottomPanel#set_browse_inventory
+    extend Forwardable
 
+=begin
+--- BottomPanel#browse_inventory!
+The (({BottomPanel})) turns to inventory browsing mode in which
+it is posible to move the selection box around the inventory of the active
+team-member.
 =end
 
-    def set_browse_inventory
-      if @state.normal? then
-        change_state InventoryBrowsingBottomPanelState.new(@team)
-      elsif @state.inventory_browsing?
-        change_state NormalBottomPanelState.new(@team)
-      end
-
-      return @state
+    def browse_inventory!
+      change_state InventoryBrowsingBottomPanelState.new(@team)
     end
 
-    def set_items_exchange
-      if @state.inventory_browsing? then
-        change_state ItemsExchangeBottomPanelState.new(@team)
-      elsif @state.items_exchange?
-        change_state InventoryBrowsingBottomPanelState.new(@team)
-      end
+=begin
+--- BottomPanel#inventory_browsing?
+=end
+    def_delegator :@state, :inventory_browsing?
 
-      return @state
+=begin
+--- BottomPanel#exchange_items!
+The (({BottomPanel})) turns to item-exchange mode in which it is possible
+to exchange items between team-members who are close enough to each other.
+=end
+    def exchange_items!
+      change_state ItemsExchangeBottomPanelState.new(@team)
     end
 
-    def delete_active_item
-      @state.delete_active_item
+=begin
+--- BottomPanel#items_exchange?
+=end
+    def_delegator :@state, :items_exchange?
+
+=begin
+--- BottomPanel#go_normal!
+The (({BottomPanel})) turns off inventory browsing/item-exchange mode
+and goes the default way.
+=end
+    def go_normal!
+      change_state NormalBottomPanelState.new(@team)
     end
 
-    def up
-      @state.up
-    end
+=begin
+--- BottomPanel#normal?
+=end
+    def_delegator :@state, :normal?
 
-    def down
-      @state.down
-    end
+=begin
+--- BottomPanel#delete_active_item
+--- BottomPanel#up
+--- BottomPanel#down
+--- BottomPanel#left
+--- BottomPanel#right
+These methods' behavior strongly depends on the (({BottomPanel}))'s state.
+=end
 
-    def left
-      @state.left
-    end
+    def_delegator :@state, :delete_active_item
+    def_delegator :@state, :up
+    def_delegator :@state, :down
+    def_delegator :@state, :left
+    def_delegator :@state, :right
 
-    def right
-      @state.right
-    end
+=begin
+--- BottomPanel#mouseclick(pos)
+((|pos|)) is a two-element array (standard [x,y] coordinates as used in RUDL
+etc.). Remember that [0,0] is the top-left corner of the panel, not of the game
+screen!
+
+If the position is inside some panel icon (viking face/item), the viking/item
+is made active.
+=end
 
     def mouseclick(pos)
       x = pos[0]
