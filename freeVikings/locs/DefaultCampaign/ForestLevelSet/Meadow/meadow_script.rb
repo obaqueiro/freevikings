@@ -102,8 +102,8 @@ LOCATION << right_apexes
 
 # flying platform
 flying_plat = FlyingPlatform.new([
-                                   [7*TS, HIGH_PLATFORMS_FLOOR],
-                                   [21*TS, HIGH_PLATFORMS_FLOOR],
+                                   [8*TS, HIGH_PLATFORMS_FLOOR],
+                                   [20*TS, HIGH_PLATFORMS_FLOOR],
                                  ], 
                                  LOCATION.theme)
 LOCATION << flying_plat
@@ -131,7 +131,7 @@ LOCATION << exit_key
 # flying platform which gives you a lift to the key (and into some dangerous
 # places too)
 fly_to_key = FlyingPlatform.new([
-                                  [31*TS, HIGH_PLATFORMS_FLOOR],
+                                  [32*TS, HIGH_PLATFORMS_FLOOR],
                                   [51*TS, HIGH_PLATFORMS_FLOOR],
                                   [51*TS, HIGH_PLATFORMS_FLOOR + 5*TS],
                                   [51*TS, HIGH_PLATFORMS_FLOOR]
