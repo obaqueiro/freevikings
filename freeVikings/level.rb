@@ -14,7 +14,7 @@ which play their roles in the game.
 =end
 
 require 'levelsuite.rb'
-require 'xmllocationloadstrategy.rb'
+require 'locationloaderfactory.rb'
 
 module FreeVikings
 
@@ -53,7 +53,7 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
 =end
 
     def loader
-      XMLLocationLoadStrategy.new(definition_file_name)
+      LocationLoaderFactory.loader_for(@dirname)
     end
 
     def next_level
@@ -70,23 +70,6 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
     end
 
     private
-
-    # Returns the name of the file with the definition of the Level
-    # (also known as Location datafile).
-
-    def definition_file_name
-      d = Dir.open @dirname
-      xml_files = d.find_all {|filename| filename =~ /\.xml/}
-
-      # Find the file which contains element 'location'
-      # (it must be the location definition file):
-      loc_def_basename = xml_files.find do |fname|
-        file = File.open(@dirname + '/' + fname)
-        file.find {|line| line =~ /<location/}
-      end
-
-      return @dirname + '/' + loc_def_basename
-    end
 
     # We must override method, which is in the superclass called from
     # the constructor

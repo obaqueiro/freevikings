@@ -14,15 +14,15 @@ module FreeVikings
   class Tile
 
 =begin
---- Tile.new(filename='', is_solid=true)
-Makes a new ((<Tile>)) with an image from file with name ((|filename|)).
+--- Tile.new(image=nil, is_solid=true)
+Makes a new ((<Tile>)).
 Argument ((|is_solid|)) should be a boolean value and specifies if
 the ((<Tile>)) is solid.
 =end
 
-    def initialize(filename='', is_solid=true)
-      if filename and filename.size != 0 then
-        @image = Image.load(filename)
+    def initialize(image=nil, is_solid=true)
+      if image then
+        @image = image
       else
         @image = Image.new
       end

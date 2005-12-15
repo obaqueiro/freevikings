@@ -5,6 +5,7 @@
 
 require 'locationloadstrategy.rb'
 require 'monsterscript.rb'
+require 'rexml/document'
 
 module FreeVikings
 
@@ -27,16 +28,12 @@ containing the XML source).
       super()
 
       @blocktypes = {}
-      @source = locsource
 
-      if data_source_control != nil then
-        unless File.file? locsource
-          message = "Not such a file - #{locsource}"
-          @log.error message
-          raise InvalidDataSourceException, message
-        end
-        @source = File.open locsource
-        @dir = File.dirname locsource
+      @source = locsource
+      if @source.respond_to? :path then
+        @dir = File.dirname @source.path
+      else
+        @dir = "."
       end
 
       @doc = REXML::Document.new(@source)
@@ -124,8 +121,8 @@ containing the XML source).
         blocktypes = @doc.root.elements['map'].elements["blocktypes"]
         real_blocktypes = blocktypes
 
-        if blocktypes.has_attributes? and 
-            src = get_local_file(blocktypes.attributes['src']) then
+        if blocktypes.has_attributes? and blocktypes.attributes['src'] then
+          src = get_local_file(blocktypes.attributes['src'])
           real_blocktypes = REXML::Document.new(src).root
         end
 
@@ -137,10 +134,10 @@ containing the XML source).
           make_tile_solid = (blocktype_element.attributes["solid"] == "solid")
 
           begin
-            new_blocktype = Tile.new(path, make_tile_solid)
+            new_blocktype = Tile.new(Image.load(path), make_tile_solid)
           rescue Image::ImageFileNotFoundException => ifnfe
             @log.error ifnfe.message
-            new_blocktype = Tile.new('', make_tile_solid)
+            new_blocktype = Tile.new(nil, make_tile_solid)
           end
 
 	  @blocktypes[code] = new_blocktype

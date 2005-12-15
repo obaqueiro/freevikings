@@ -45,6 +45,21 @@ Loads image placed relatively to the directory specified in the constant
       Image.new(GFX_DIR+'/'+filename)
     end
 
+=begin
+--- Image.wrap(surface)
+Doesn't load image from file and creates it by wrapping an existing
+(({RUDL::Surface})) instead.
+=end
+
+    def Image.wrap(surface)
+      i = Image.new
+      i.instance_eval {
+        @name = "Wrapped RUDL::Surface"
+        @image = surface
+      }
+      return i
+    end
+
     attr_reader :name
 
     def image
