@@ -59,6 +59,7 @@ require 'testgfxtheme.rb'
 require 'teststructuredworld.rb'
 require 'testtalk.rb'
 require 'testselectivegroup.rb'
+require 'testtiledlocationloadstrategy.rb'
 
 class FreeVikingsTestSuite
 
@@ -103,6 +104,7 @@ class FreeVikingsTestSuite
     suite << TestStructuredWorld.suite
     suite << TestTalk.suite
     suite << TestSelectiveGroup.suite
+    suite << TestTiledLocationLoadStrategy.suite
 
     return suite
   end
