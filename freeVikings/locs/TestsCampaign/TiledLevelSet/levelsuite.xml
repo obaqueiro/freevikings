@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>TilED Experimental Levels</title>
+    <author>Jakub Pavlik /severus@post.cz/</author>
+    <description>
+      Experimental maps created with the TilED map editor.
+    </description>
+  </info>
+
+  <suite>
+    <level>Simple</level>
+  </suite>
+</levelsuite>
