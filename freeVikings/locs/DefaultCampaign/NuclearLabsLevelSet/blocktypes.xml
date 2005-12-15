@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<blocktypes>
+  <blocktype code="A" path="themes/NuclearTheme/tile_nothing.tga" />
+  <blocktype code="R" path="themes/NuclearTheme/tile_base_rightdown.tga" solid="solid" />
+  <blocktype code="r" path="themes/NuclearTheme/tile_base_rightup.tga" solid="solid" />
+  <blocktype code="L" path="themes/NuclearTheme/tile_base_leftdown.tga" solid="solid" />
+  <blocktype code="l" path="themes/NuclearTheme/tile_base_leftup.tga" solid="solid" />
+  <blocktype code="-" path="themes/NuclearTheme/tile_base.tga" solid="solid" />
+  <blocktype code="J" path="themes/NuclearTheme/tile_base_right.tga" solid="solid" />
+  <blocktype code=":" path="themes/NuclearTheme/tile_base_leftend.tga" solid="solid" />
+  <blocktype code=";" path="themes/NuclearTheme/tile_base_rightend.tga" solid="solid" />
+</blocktypes>
