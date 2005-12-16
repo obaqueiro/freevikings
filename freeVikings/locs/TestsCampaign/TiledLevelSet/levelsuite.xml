@@ -11,5 +11,6 @@
 
   <suite>
     <level>Simple</level>
+    <level>MultiLayer</level>
   </suite>
 </levelsuite>
