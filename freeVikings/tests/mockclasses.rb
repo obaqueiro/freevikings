@@ -19,8 +19,8 @@ module FreeVikings
 	@blocks = blocks_matrix
 
 	# nacteni typu bloku
-	x = Tile.new '', true
-	o = Tile.new '', false
+	x = Tile.new nil, true
+	o = Tile.new nil, false
 	# nacteni umisteni bloku
 	blcks = [
 	  [x, x, x, x, x, x, x, x],

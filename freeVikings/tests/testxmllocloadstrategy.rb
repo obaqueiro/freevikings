@@ -25,20 +25,7 @@ EOS
 
   def testInvalidSyntax
     assert_raises(REXML::ParseException) {
-      s = XMLLocationLoadStrategy.new(@@invalid_syntax, nil)
+      s = XMLLocationLoadStrategy.new(@@invalid_syntax)
     }
   end
-
-  def testFailsToParseStringWhenSourceControlOn
-    assert_raises(InvalidDataSourceException) {
-      s = XMLLocationLoadStrategy.new(@@valid_syntax, true)
-    }
-  end
-
-  def testExceptionOnNotExistingFileLoading
-    assert_raises(InvalidDataSourceException) {
-      XMLLocationLoadStrategy.new('XXXXXXxxxxxxxXXXXXXXXXX.lblabla')
-    }
-  end
-
 end
