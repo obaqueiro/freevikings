@@ -74,8 +74,8 @@ class TestExtensionMap < TestMap
 
   # prepares a bigger map (used for testing Map#area_free?)
   def setupAreaFreeTests
-    x = @solid_tile = Tile.new('', true)
-    o = @soft_tile = Tile.new('', false)
+    x = @solid_tile = Tile.new(nil, true)
+    o = @soft_tile = Tile.new(nil, false)
 
     [[x, x, x, x],
      [x, o, o, x],
