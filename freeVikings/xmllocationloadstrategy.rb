@@ -15,21 +15,16 @@ module FreeVikings
     MIN_TILES_Y = 480 / Map::TILE_SIZE
 
 =begin
---- XMLLocationLoadStrategy.new(locsource, data_source_control=true)
-Argument ((|locsource|)) is usually a path to a (({Location})) definition
-file.
-If the second argument, ((|data_source_control|)), is set to ((|nil|)),
-((|locsource|)) isn't controlled and then it can be any object accepted
-by (({REXML::Document.new})) (it means mainly (({IO})) or (({String}))
-containing the XML source).
+--- XMLLocationLoadStrategy.new(source, data_source_control=true)
+Argument ((|source|)) should be a (({File})) with location data.
 =end
 
-    def initialize(locsource, data_source_control=true)
+    def initialize(source)
       super()
 
       @blocktypes = {}
 
-      @source = locsource
+      @source = source
       if @source.respond_to? :path then
         @dir = File.dirname @source.path
       else

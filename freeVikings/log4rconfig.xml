@@ -28,7 +28,7 @@
   </logger>
 
   <!-- Log for Map classe's debugging output -->
-  <logger name="map log" level="FATAL">
+  <logger name="map log" level="WARN">
     <outputter>stderr</outputter>
   </logger>
 

@@ -146,7 +146,7 @@ is free of solid map blocks, ((|false|)) otherwise.
           if block_type.is_a? Tile
             @background.blit(block_type.image, [col_i * TILE_SIZE, (row_i - 1) * TILE_SIZE])
           else
-            @log.error("Found blocktype object of strange type #{block_type.type.to_s} at index [" + row_i.to_s + '][' + col_i.to_s + '] (expected Tile)')
+            @log.error("Found blocktype object of strange type #{block_type.class.to_s} at index [" + row_i.to_s + '][' + col_i.to_s + '] (expected Tile)')
           end
         }
       }

@@ -190,10 +190,10 @@ puts @dirname
         return theme
       else
         if @member_of and not @member_of.gfx_theme.kind_of? NullGfxTheme
-          @log.info "#{object_id}: Using inherited theme '#{@member_of.gfx_theme}'."
+          @log.debug "#{object_id}: Using inherited theme '#{@member_of.gfx_theme}'."
           return @member_of.gfx_theme
         else
-          @log.info "#{object_id}: Theme file #{theme_def_file} wasn't found. Levelsuite '#{@title}' has no own theme and doesn't inherit any."
+          @log.debug "#{object_id}: Theme file #{theme_def_file} wasn't found. Levelsuite '#{@title}' has no own theme and doesn't inherit any."
           return NullGfxTheme.instance
         end
       end
