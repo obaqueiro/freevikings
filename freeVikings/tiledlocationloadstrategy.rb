@@ -38,6 +38,7 @@ module FreeVikings
 
     def load_map(blocks_matrix)
       load_map_sizes
+      load_properties
       load_tilesets
       load_tiles blocks_matrix
     end
@@ -46,29 +47,13 @@ module FreeVikings
     end
 
     def load_start(location)
-      start = []
-      @doc.root.elements['layer'].each_element('property') do |p|
-        case p.attributes['name']
-        when "start_x"
-          start[0] = p.attributes['value'].to_i
-        when "start_y"
-          start[1] = p.attributes['value'].to_i
-        end
-      end
-      location.start = start
+      location.start = [@properties['start_x'].to_i, 
+                        @properties['start_y'].to_i]
     end
 
     def load_exit(location)
-      place = []
-      @doc.root.elements['layer'].each_element('property') do |p|
-        case p.attributes['name']
-        when "exit_x"
-          place[0] = p.attributes['value'].to_i
-        when "exit_y"
-          place[1] = p.attributes['value'].to_i
-        end
-      end
-      location.exitter = Exit.new place
+      location.exitter = Exit.new [@properties['exit_x'].to_i, 
+                                   @properties['exit_y'].to_i]
     end
 
     private
@@ -87,7 +72,7 @@ module FreeVikings
           s = RUDL::Surface.new [@tile_size, @tile_size]
           s.blit(all_tiles, [0, 0], [x, y, @tile_size, @tile_size])
           i = Image.wrap s
-          @tiletypes.push Tile.new(i)
+          @tiletypes.push Tile.new(i, false)
         end
       end
     end
@@ -95,18 +80,21 @@ module FreeVikings
     def load_tiles(blocks)
       @log.info "Loading tiles."
 
-      layer_data = @doc.root.elements['layer'].elements['data']
 
-      if layer_data.attributes['encoding'] then
-        unless layer_data.attributes['encoding'] == 'base64'
-          raise "Unsupported encoding #{layer_data.attributes['encoding']}. Play a bit with TilED setup to avoid layer data encoding."
+      @doc.root.each_element('layer') do |layer|
+        layer_data = layer.elements['data']
+        if layer_data.attributes['encoding'] then
+          unless layer_data.attributes['encoding'] == 'base64'
+            raise "Unsupported encoding #{layer_data.attributes['encoding']}."\
+            " Play a bit with TilED setup to avoid layer data encoding."
+          end
+
+          Base64LayerDataLoader.new(blocks, @tiletypes, 
+                                    layer, @properties).load
+        else
+          ExpandedLayerDataLoader.new(blocks, @tiletypes,
+                                      layer, @properties).load
         end
-        text = @doc.root.elements['layer'].elements['data'].text
-        Base64LayerDataLoader.new(blocks, @tiletypes, 
-                                  @max_width, @max_height).load(text)
-      else
-        ExpandedLayerDataLoader.new(blocks, @tiletypes, 
-                                    @max_width, @max_height).load(layer_data)
       end
     end
 
@@ -126,6 +114,21 @@ module FreeVikings
       @max_height = @doc.root.attributes['height'].to_i
     end
 
+    def load_properties
+      @properties = {}
+
+      @doc.root.each_element('property') do |p|
+        property_name = p.attributes['name']
+        property_value = p.attributes['value']
+        @properties[property_name] = property_value
+      end
+
+      # Properties are also used as data packets given to the DataLoaders.
+      # Let's add some more essential map characteristics:
+      @properties['map_width'] = @max_width
+      @properties['map_height'] = @max_height
+    end
+
 =begin
 --- TiledLocationLoadStrategy::LayerDataLoader
 Small strategy classes. They are needed to be able to load differently
@@ -143,13 +146,27 @@ But nobody actually needs to kow about (({LayerDataLoader})) unless he wants
 to hack a bit around TilED data loading.
 =end
     class LayerDataLoader
-      def initialize(blocks_matrix, blocktypes, map_width, map_height)
+      def initialize(blocks_matrix, blocktypes, layer, map_properties)
         @blocks = blocks_matrix
         @blocktypes = blocktypes
+        @layer = layer
+
         @current_row = nil
-        @max_width = map_width
-        @max_height = map_height
+
+        @map_properties = map_properties
+
+        @max_width = map_properties['map_width'].to_i
+        @max_height = map_properties['map_height'].to_i
         @tile_index = -1 # index of the last inserted tile
+
+        # flag which says if matrix @blocks contains any tiles from past
+        # (it would mean we are loading second, third, or ... layer)
+        @blocks_prefilled = blocks_matrix.empty? ? false : true
+
+        if @map_properties['solid_layer'] == @layer.attributes['name'] then
+          puts "Solid layer #{@map_properties['solid_layer']}"
+          @blocktypes = [@blocktypes[0]].concat(@blocktypes[1..@blocktypes.size-1].collect {|tile| tile.to_solid })
+        end
       end
 
       private
@@ -161,18 +178,27 @@ to hack a bit around TilED data loading.
 
       def put_tile(tile_code)
         @tile_index += 1
-        if (@tile_index % @max_width) == 0 then
-          @current_row = []
-          @blocks.push(@current_row)
-        end
 
-        @current_row.push @blocktypes[tile_code]
+        if @blocks_prefilled then
+          row = @tile_index / @max_width
+          col = @tile_index % @max_width
+          tile = @blocktypes[tile_code]
+          unless tile.empty?
+              @blocks[row][col] = tile
+          end
+        else
+          if (@tile_index % @max_width) == 0 then
+            @current_row = []
+            @blocks.push(@current_row)
+          end
+          @current_row.push @blocktypes[tile_code]
+        end
       end
     end # class LayerDataLoader
 
     class Base64LayerDataLoader < LayerDataLoader
-      def load(encoded_text)
-        text = encoded_text
+      def load
+        text = @layer.elements['data'].text
 
         # Tile codes are encoded by Base64. The following line decodes them
         # and transforms a String of single-character codes into an Array
@@ -198,8 +224,9 @@ to hack a bit around TilED data loading.
     end # class Base64LayerDataLoader
 
     class ExpandedLayerDataLoader < LayerDataLoader
-      def load(data_element)
-        data_element.each_element('tile') {|t|
+      def load
+        data = @layer.elements['data']
+        data.each_element('tile') {|t|
           tile_number = t.attributes['gid'].to_i
           put_tile tile_number
         }

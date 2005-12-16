@@ -213,12 +213,10 @@ Argument ((|source|)) should be a (({File})) with location data.
 
 
 
-  # Vyjimka vyhazovana pri pokusu o cteni neplatneho zdroje (typicky 
-  # neexistujici soubor)
-  class InvalidDataSourceException < RuntimeError
-  end
-
-  # Vyjimka vyhazovana pokud datovy soubor neobsahuje vsechny povinne casti.
+=begin
+--- XMLLocationLoadStrategy::CompulsoryElementMissingException
+Exception raised if some compulsory element misses in the data file.
+=end
   class CompulsoryElementMissingException < RuntimeError
 
     def initialize(missing_element, file)
@@ -230,8 +228,11 @@ Argument ((|source|)) should be a (({File})) with location data.
     end
   end
 
-  # Vyjimka vyhazovana, pokud je mapa lokace prilis mala (na vysku nebo 
-  # na sirku nema ani jednu obrazovku)
+=begin
+--- XMLLocationLoadStrategy::LocationNotLargeEnoughException
+Exception raised if the loaded map is not big enough 
+to fill a 640x480 px screen.
+=end
   class LocationNotLargeEnoughException < RuntimeError
   end
 end # module FreeVikings
