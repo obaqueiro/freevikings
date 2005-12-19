@@ -38,9 +38,11 @@
       When the developers make their application scriptable, they don't usually
       do it for themselves but for the users. Or they say they are doing it
       for users (everybody knows that the software developers only do things 
-      for fun). FreeVikings are scriptable. It means...
+      for fun). FreeVikings are scriptable. 
+      It means...<footnote><para>
       Yes, you're right. Actually it means I was playing with Ruby.
-      But forget it, will you? It means I want to give you the possibility
+      But forget it, will you?</para></footnote>
+      It means I want to give you the possibility
       of extending freeVikings with your own levels. You can catch
       Erik, Baleog and Olaf into your own traps. It seems good, doesn't it?
     </para>
@@ -69,38 +71,62 @@
     <section>
       <title>Requirements</title>
       <para>
-	What will you need? Well, it's onto you. Actually you don't need nearly
-	anything. Just a well-running freeVikings installation and a plain
-	text editor. But I would recommend you some better stuff. You should
-	try to use a bit more sophisticated text editor such as Emacs,
-	vim or SciTE. Why? Because of the syntax highlighting and checking.
-	It's very helpful. Scripting mainly consists of XML and Ruby source
-	editing. (Don't be afraid, it's simple.)
+	What do you need? At least you need a computer 
+	with a running<footnote><para>At first I wrote "well running".
+	Then I looked at the text I had just written. FreeVikings do never run
+	well... And I retyped the sentence quickly.</para></footnote>
+	freeVikings installation and some plain text editor.
+	If I could recommend you some, I would tell you to choose 
+	<application>GNU Emacs</application> (because I like this great beast),
+	but any editor with XML syntax highlighting is good enough for our 
+	purpose and you can, if you are some kind of fanatic, use
+	<application>ed</application> od <application>NotePad</application>.
       </para>
-    </section>
-
-    <section>
-      <title>Writing XML</title>
+      <sidebar>
+	<title>Text-editing fanatism</title>
+	<para>
+	  Just a word on text-editing fanatism. I think you know some 
+	  of the strange W!ndows users who say "NotePad forever!" and
+	  "Anyone who doesn't write web pages in NotePad isn't a programmer".
+	  What do they find so good on an editor which tries to save every
+	  file with suffix .txt unless you click two times more than you want?
+	</para>
+	<para>
+	  On they other hand I have heard about some old Un!x hackers who
+	  hesitate to use any other text editor than ancient
+	  <application>ed</application>. I don't understand them either but 
+	  I think they feel some kind of nostalgy using the pure line-editing
+	  stuff.
+	</para>
+      </sidebar>
       <para>
-	Let's start writing. Make yourself a directory you will store your
-	freeVikings map in. Open a file with suffic .xml, e.g. 
-	<filename>proto.xml</filename>.
+	Another good thig to install on your computer is 
+	<application>Tiled</application>, a Java-written tile map editor.
+	It allows you to develop maps quickly (and gives you more time for
+	a much more interesting activity - scripting :o) ).
+      </para>
+      <graphic fileref="tiled.png"/>
+      <para>
+	<application>Tiled</application> produces simple but full-featured
+	human-readable map files in XML format. Maybe you know (but I don't 
+	think so) freeVikings have a native map format which is also subset
+	of XML language (I like XML very much since I've first learned 
+	about it). Support for <application>Tiled</application> maps was added
+	experimentally in release 0.5 because I think possibility of creating
+	maps in visual way will encourage people to create and share
+	new levels.
       </para>
       <para>
-	Every XML file must start with a XML declaration.
+	Just one more application. Some graphic editor for creating all kinds
+	of graphics. I personally use <application>GIMP</application>.
+	It has a lot of interesting features, is scriptable (do you know 
+	Scheme? Don't you? It's fun!) and free (it means poor people
+	don't have to download it from warez servers and you can download and
+	read the whole source code if you want).
+	You will need some graphic editor to make your own tilesets
+	(those distributed with freeVikings aren't still any good) and maybe
+	your own creatures to make the new levels more interesting.
       </para>
-      <programlisting>
-&lt;?xml version="1.0" ?&gt;
-      </programlisting>
-      <para>
-	Then the document type definition usually goes, but freeVikings
-	maps have no DTD yet, so we'll omit it.
-      </para>
-      <para>
-	I hope you know HTML. XML looks very similar. Just tags...
-	FreeVikings map is a XML file with special tags.
-      </para>
-      
     </section>
   </chapter>
 
