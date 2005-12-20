@@ -9,7 +9,7 @@ require 'rexml/document'
 
 class TestExploreREXML < RUNIT::TestCase
 
-  PYRAMIS_LOC_XML_FILE = '../locs/DefaultCampaign/EgyptLevelSet/SlugHouse/pyramida_loc.xml'
+  SAMPLE_LOC_XML_FILE = '../locs/TestsCampaign/AncientLevelSet/First/first_loc.xml'
 
 @@xmltext = <<-EOS
 <main>
@@ -43,7 +43,7 @@ EOS
   end
 
   def testValidFileDocumentRootIsNotNil
-    fr = File.open(PYRAMIS_LOC_XML_FILE)
+    fr = File.open(SAMPLE_LOC_XML_FILE)
     d = REXML::Document.new(fr)
     assert_not_nil d.root, 'Document initialised by the valid XML file name has to have non-nil root attribute'
   end

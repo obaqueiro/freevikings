@@ -15,6 +15,10 @@ module FreeVikings
     # It doesn't parse any XML files => the tests are quicker.
     class TestingMapLoadStrategy < LocationLoadStrategy
 
+      def initialize
+        super(nil)
+      end
+
       def load_map(blocks_matrix)
 	@blocks = blocks_matrix
 
