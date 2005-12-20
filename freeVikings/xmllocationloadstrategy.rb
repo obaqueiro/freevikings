@@ -20,16 +20,9 @@ Argument ((|source|)) should be a (({File})) with location data.
 =end
 
     def initialize(source)
-      super()
+      super(source)
 
       @blocktypes = {}
-
-      @source = source
-      if @source.respond_to? :path then
-        @dir = File.dirname @source.path
-      else
-        @dir = "."
-      end
 
       @doc = REXML::Document.new(@source)
 

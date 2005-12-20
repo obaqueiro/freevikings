@@ -24,15 +24,9 @@ module FreeVikings
   class TiledLocationLoadStrategy < LocationLoadStrategy
 
     def initialize(source)
-      super()
+      super(source)
 
-      if source.respond_to? :path then
-        @dir = File.dirname(source.path)
-      else
-        @dir = "."
-      end
-
-      @doc = REXML::Document.new(source)
+      @doc = REXML::Document.new(@source)
       @tiletypes = []
     end
 

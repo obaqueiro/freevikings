@@ -31,7 +31,15 @@ module FreeVikings
     attr_reader :max_width
     attr_reader :max_height
 
-    def initialize
+    def initialize(source)
+      @source = source
+
+      if @source.respond_to? :path then
+        @dir = File.dirname @source.path
+      else
+        @dir = "."
+      end
+
       @log = Log4r::Logger['location loading log']
     end
 

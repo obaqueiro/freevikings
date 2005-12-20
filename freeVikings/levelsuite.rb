@@ -83,6 +83,12 @@ but are obtained by call to (({LevelSuite#next_level})).)
         @active_member = @members.shift
       end
 
+      # This case occurs when an empty levelset directory
+      # with a content-less levelsuite.xml file exists.
+      if @active_member.nil? then
+        return nil
+      end
+
       if (level = @active_member.next_level).nil? then
         # The active levelset has no more levels.
         # Set another levelset active and try to get a level once more:
