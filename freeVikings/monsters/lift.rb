@@ -1,12 +1,12 @@
-# transporterbridge.rb
+# lift.rb
 # igneus 6.10.2005
 
 =begin
 = NAME
-TransporterBridge
+Lift
 
 = DESCRIPTION
-(({TransporterBridge})) is a platform which can move up and down.
+(({Lift})) is a platform which can move up and down.
 It is usually used as a lift. Any (({Sprite})) which includes 
 (({Transportable})) can be given a lift by this lift.
 
@@ -20,10 +20,10 @@ require 'transportable.rb'
 
 module FreeVikings
 
-  class TransporterBridge < Bridge
+  class Lift < Bridge
 
 =begin
---- TransporterBridge::VELOCITY
+--- Lift::VELOCITY
 abs of vertical velocity.
 =end
 
@@ -33,9 +33,9 @@ abs of vertical velocity.
     HEIGHT = 24 # a bit more to enable collisions on slower computers
 
 =begin
---- TransporterBridge.new(left, ys, theme=NullGfxTheme.instance)
+--- Lift.new(left, ys, theme=NullGfxTheme.instance)
 :((|left|)) = x coordinate
-:((|ys|)) = (({Array})) of y coordinates between which the TransporterBridge
+:((|ys|)) = (({Array})) of y coordinates between which the Lift
  will move. Note (({sort})) is applied onto this (({Array})) at first.
 :((|theme|)) = (({GfxTheme})) instance
 =end
@@ -55,7 +55,7 @@ abs of vertical velocity.
     end
 
 =begin
---- TransporterBridge#dest=(dest)
+--- Lift#dest=(dest)
 Only for those who know the source code of the class well. Don't use this if 
 you have another way to solve your problem! This is stinking!
 =end
@@ -63,8 +63,8 @@ you have another way to solve your problem! This is stinking!
     attr_writer :dest
 
 =begin
---- TransporterBridge#move_up
-(({TransporterBridge})) starts moving up if it isn't on the top of it's
+--- Lift#move_up
+(({Lift})) starts moving up if it isn't on the top of it's
 route. Returns ((|true|)) or ((|false|)).
 =end
 
@@ -77,8 +77,8 @@ route. Returns ((|true|)) or ((|false|)).
     end
 
 =begin
---- TransporterBridge#move_down
-(({TransporterBridge})) starts moving down if it isn't on the low end of it's
+--- Lift#move_down
+(({Lift})) starts moving down if it isn't on the low end of it's
 route. Returns ((|true|)) or ((|false|)).
 =end
 
@@ -91,7 +91,7 @@ route. Returns ((|true|)) or ((|false|)).
     end
 
 =begin
---- TransporterBridge#next
+--- Lift#next
 Starts moving to the next destination place. Calling this iterates through
 the places from the bottom up and then jumps to the low end and starts
 once more.
@@ -130,17 +130,17 @@ It is useful mainly for two-y lifts.
 
 =begin
 == Active Object methods
-(({TransporterBridge})) is also an Active object.
+(({Lift})) is also an Active object.
 So the player can command it very intuitively by pressing up and down key.
 
---- TransporterBridge#activate
-Alias to ((<TransporterBridge#move_up>)).
+--- Lift#activate
+Alias to ((<Lift#move_up>)).
 =end
 
     alias_method :activate, :move_up
 =begin
---- TransporterBridge#deactivate
-Alias to ((<TransporterBridge#move_down>)).
+--- Lift#deactivate
+Alias to ((<Lift#move_down>)).
 =end
 
     alias_method :deactivate, :move_down
@@ -183,7 +183,7 @@ Alias to ((<TransporterBridge#move_down>)).
         end
       }
     end
-  end # class TransporterBridge
+  end # class Lift
 end # module FreeVikings
 
 # A little extension of the built-in class

@@ -11,7 +11,7 @@ require 'key.rb'
 require 'apple.rb'
 
 require 'monsters/apex.rb'
-require 'monsters/transporterbridge.rb'
+require 'monsters/lift.rb'
 require 'monsters/flyingplatform.rb'
 require 'monsters/arrowshooter.rb'
 require 'monsters/snail.rb'
@@ -47,7 +47,7 @@ snail = Snail.new([60, LEFT_CORRIDOR_FLOOR - Snail::HEIGHT])
 LOCATION << snail
 
 # The left 'lift' bridge:
-left_bridge = TransporterBridge.new(TS*1, 
+left_bridge = Lift.new(TS*1, 
                                     [HIGH_PLATFORMS_FLOOR, 
                                      LEFT_CORRIDOR_FLOOR], 
                                     LOCATION.theme)
@@ -68,7 +68,7 @@ blueroom_switch = Switch.new([40*TS, BLUEROOM_FLOOR - 2 * TS],
 LOCATION << blueroom_switch
 
 # the right 'lift' bridge:
-right_bridge = TransporterBridge.new(TS*26, 
+right_bridge = Lift.new(TS*26, 
                                      [
                                        HIGH_PLATFORMS_FLOOR, 
                                        GROUND, 
