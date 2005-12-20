@@ -14,9 +14,11 @@ for f in $1/*; do
 	sed_expr=s/$2/$3/g
 	sed -i -e $sed_expr $f
     elif [ -d $f ]; then
-	# fork out a new instance of this program to go through
+        # fork out a new instance of this program to go through
 	# a subdirectory:
-	echo "Entering subdirectory $f"
-	. $0 $f $2 $3
+	if perl -e "if (\"$f\" =~ /CVS/) { exit 1; } else { exit 0 }"; then
+	    echo "Entering subdirectory $f"
+	    . $0 $f $2 $3
+	fi
     fi
 done
