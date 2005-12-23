@@ -3,8 +3,6 @@
 
 # Trida reprezentujici zesnuleho vikinga.
 
-require 'sprite'
-
 module FreeVikings
 
   class DeadViking < Sprite

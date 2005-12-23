@@ -14,7 +14,6 @@ require 'forwardable'
 #require 'map.rb'
 require 'spritemanager.rb'
 require 'ticker.rb'
-require 'gfxtheme.rb'
 
 module FreeVikings
 

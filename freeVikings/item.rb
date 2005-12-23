@@ -13,7 +13,6 @@ by the (({Viking})).
 Entity
 =end
 
-require 'entity.rb'
 require 'singleton'
 
 module FreeVikings

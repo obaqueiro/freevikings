@@ -14,7 +14,6 @@ It's usually connected with a (({Switch})) or a (({Lock})).
 Entity
 =end
 
-require 'entity.rb'
 require 'staticobject.rb'
 
 module FreeVikings

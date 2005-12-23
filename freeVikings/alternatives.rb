@@ -123,6 +123,3 @@ if FreeVikings::OPTIONS["extensions"] then
   end
 
 end
-
-p Rectangle
-p Map

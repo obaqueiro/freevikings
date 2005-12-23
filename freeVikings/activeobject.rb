@@ -14,8 +14,6 @@ or if it's stroken by some gun.
 Entity
 =end
 
-require 'entity.rb'
-
 module FreeVikings
 
   class ActiveObject < Entity

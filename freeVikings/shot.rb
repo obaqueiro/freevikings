@@ -10,8 +10,6 @@ Shot
 or some (({Sprite})) of type((|@hunted_type|)) ((({Sprite})) by default).
 =end
 
-require 'sprite.rb'
-
 module FreeVikings
 
   class Shot < Sprite
