@@ -1,7 +1,6 @@
 # penguin.rb
 # igneus 22.10.2005
 
-require 'sprite.rb'
 require 'transportable.rb'
 require 'monster.rb'
 require 'sophisticatedspritestate.rb'

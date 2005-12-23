@@ -5,7 +5,6 @@
 # prilezitostne napada kolemjdouci.
 
 require 'monster.rb'
-require 'sprite.rb'
 require 'monstermixins.rb'
 require 'sophisticatedspritestate.rb'
 require 'sophisticatedspritemixins.rb'

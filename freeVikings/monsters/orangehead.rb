@@ -5,7 +5,6 @@
 # He isn't very dangerous and doesn't kill everyone he meets.
 # He is intelligent and fights only when he's attacked.
 
-require 'sprite.rb'
 require 'images.rb'
 require 'monster.rb'
 require 'hero.rb'

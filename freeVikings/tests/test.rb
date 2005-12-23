@@ -32,7 +32,6 @@ require 'schwerengine/schwerengine.rb'; include SchwerEngine
 require 'testlocation.rb'
 require 'testxmllocloadstrategy.rb'
 require 'testmap.rb'
-require 'testentity.rb'
 require 'testsprite.rb'
 require 'testitem.rb'
 require 'testarrow.rb'
@@ -58,7 +57,6 @@ require 'testbottompanelstate.rb'
 require 'testbottompanel.rb'
 require 'testlock.rb'
 require 'testkey.rb'
-require 'testgfxtheme.rb'
 require 'teststructuredworld.rb'
 require 'testtalk.rb'
 require 'testselectivegroup.rb'
@@ -76,7 +74,6 @@ class FreeVikingsTestSuite
     suite << TestLocation.suite
     suite << TestXMLLocationLoadStrategy.suite
     suite << TestMap.suite
-    suite << TestEntity.suite
     suite << TestSprite.suite
     suite << TestItem.suite
     suite << TestArrow.suite
@@ -102,7 +99,6 @@ class FreeVikingsTestSuite
     suite << TestBottomPanel.suite
     suite << TestLock.suite
     suite << TestKey.suite
-    suite << TestGfxTheme.suite
     suite << TestStructuredWorld.suite
     suite << TestTalk.suite
     suite << TestSelectiveGroup.suite

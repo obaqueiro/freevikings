@@ -15,7 +15,6 @@ is wide enough to let him fall down.
 Sprite
 =end
 
-require 'sprite.rb'
 require 'images.rb'
 require 'sophisticatedspritestate.rb'
 require 'sophisticatedspritemixins.rb'

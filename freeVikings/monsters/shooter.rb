@@ -1,7 +1,6 @@
 # shooter.rb
 # igneus 10.10.2005
 
-require 'sprite.rb'
 require 'shooting.rb'
 
 =begin

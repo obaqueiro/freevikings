@@ -7,8 +7,6 @@
 
 # RIP == REQUIESCAT IN PACE == I wish he would rest in peace
 
-require 'sprite.rb'
-
 module FreeVikings
 
   class Tombstone < Sprite
