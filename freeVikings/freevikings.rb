@@ -5,9 +5,8 @@
 
 # Pokus o reimplementaci hry Lost Vikings.
 
-# Normy:
-# Obrazek postavy : 80x100 px
-# Dlazdice : 40x40 px
+require 'schwerengine/schwerengine.rb'
+include SchwerEngine
 
 require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
 

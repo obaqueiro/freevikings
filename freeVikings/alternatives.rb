@@ -9,6 +9,8 @@
 
 require 'yaml'
 
+require 'map.rb'
+
 class Class
   def base_name
     if name =~ /::/ then
@@ -52,8 +54,6 @@ if FreeVikings::OPTIONS["extensions"] then
 
   if config.enabled?(FreeVikings::Extensions::Rectangle)
     FreeVikings::Rectangle = FreeVikings::Extensions::Rectangle
-  else
-    require 'rect.rb'
   end
 
   class FreeVikings::Extensions::Map
@@ -122,9 +122,7 @@ if FreeVikings::OPTIONS["extensions"] then
     require 'map.rb'
   end
 
-else
-
-  require "rect.rb"
-  require "map.rb"
-
 end
+
+p Rectangle
+p Map
