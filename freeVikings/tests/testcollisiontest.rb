@@ -8,7 +8,6 @@
 require 'test/unit'
 
 require 'collisiontest.rb'
-require 'rect'
 
 class TestCollisionTest < Test::Unit::TestCase
 

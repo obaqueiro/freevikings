@@ -16,7 +16,7 @@ class TestMap < Test::Unit::TestCase
   # because it is subclassed by a class testing Extensions::Map
   # and in that class unwanted name clashes would occur.
 
-  RECT = FreeVikings::Rectangle
+  RECT = Rectangle
 
   def setup
     @map = FreeVikings::Map.new(FreeVikings::Mock::TestingMapLoadStrategy.new)
@@ -50,9 +50,3 @@ class TestMap < Test::Unit::TestCase
   end
 
 end # class TestMap
-
-class FreeVikings::Rectangle
-  def to_s
-    "[#{left}, #{top}, #{w}, #{h}]"
-  end
-end

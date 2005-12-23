@@ -39,7 +39,7 @@ end
 
 help_data = []
 
-help_data << [FreeVikings::Rectangle.new(180,OPTIMAL_HLP_Y,30,30), 
+help_data << [Rectangle.new(180,OPTIMAL_HLP_Y,30,30), 
               "Now, guys, all of you must reach the EXIT to get to another level. And you, player, press Ctrl or PgUp to switch between the vikings."]
 help_data << [Rectangle.new(20*Map::TILE_SIZE, OPTIMAL_HLP_Y, 30, 30),
               "The guy in the red clothes is called Erik. He can jump. Try to press SPACE."]
@@ -49,7 +49,7 @@ help_data << [Rectangle.new(30*Map::TILE_SIZE+5, OPTIMAL_HLP_Y, 30, 30),
               "Can you see the bear? Now you should know that Baleog (the green viking) has a sword. Switch to Baleog and press SPACE."]
 
 help_data.each do |h|
-  help = FreeVikings::HelpButton.new(h[0], h[1], LOCATION)
+  help = HelpButton.new(h[0], h[1], LOCATION)
   LOCATION << help
 end
 

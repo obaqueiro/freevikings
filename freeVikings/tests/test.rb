@@ -3,7 +3,7 @@
 # test.rb
 # igneus 13.2.2005
 
-# Automaticke testy pro freeVikings.
+# Unit tests for freeVikings.
 
 require 'test/unit/testsuite'
 
@@ -25,6 +25,10 @@ rescue LoadError => le
   $extensions_loaded = false
 end
 
+# Bundle where a lot of freeVikings code has been moved.
+# It is needed for most fV classes to work.
+require 'schwerengine/schwerengine.rb'; include SchwerEngine
+
 require 'testlocation.rb'
 require 'testxmllocloadstrategy.rb'
 require 'testmap.rb'
@@ -36,7 +40,6 @@ require 'testshield.rb'
 require 'testviking.rb'
 require 'testwarior.rb'
 require 'testteam.rb'
-require 'testrect.rb'
 require 'testrexml.rb'
 require 'testsophisticatedspritestate.rb'
 require 'testvikingstate.rb'
@@ -81,7 +84,6 @@ class FreeVikingsTestSuite
     suite << TestViking.suite
     suite << TestWarior.suite
     suite << TestTeam.suite
-    suite << TestRect.suite
     suite << TestExploreREXML.suite
     suite << TestSophisticatedSpriteState.suite
     suite << TestVikingState.suite
