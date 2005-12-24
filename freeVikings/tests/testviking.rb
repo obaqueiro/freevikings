@@ -1,15 +1,13 @@
 # testviking.rb
 # igneus 21.2.2005
 
-require 'testsprite.rb'
-
 require 'viking.rb'
 
 require 'mockclasses'
 
-class TestViking < TestSprite
+class TestViking
 
-  include Mock
+  include FreeVikings::Mock
 
   def setup
     @entity = @sprite = Viking.new('Wulftan', STARTPOS) # a viking for TestSprite tests

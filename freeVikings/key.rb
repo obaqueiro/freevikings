@@ -12,7 +12,6 @@ Key
 Item
 =end
 
-require 'item.rb'
 require 'lock.rb'
 
 module FreeVikings

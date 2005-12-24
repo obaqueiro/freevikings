@@ -3,7 +3,6 @@
 
 # Prepinac
 
-require 'activeobject.rb'
 require 'monster.rb'
 
 module FreeVikings

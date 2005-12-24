@@ -8,7 +8,6 @@ the insidious fight. It is an Item magical abilities. When it is used,
 all the Monsters in the area die.
 =end
 
-require 'item.rb'
 require 'monster.rb'
 
 module FreeVikings

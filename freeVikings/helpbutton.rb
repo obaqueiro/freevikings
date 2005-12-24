@@ -8,7 +8,6 @@ the player short useful information about the new vehicle which hasn't been
 used in any level before.
 =end
 
-require 'activeobject.rb'
 require 'gameui/textrenderer/textrenderer.rb'
 require 'timelock.rb'
 require 'textbox.rb'

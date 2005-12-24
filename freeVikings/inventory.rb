@@ -1,10 +1,11 @@
 # inventory.rb
 # igneus 21.6.2005
 
-require 'item.rb'
-
 =begin
-= Inventory
+= NAME
+Inventory
+
+= DESCRIPTION
 Inventory is a box with four slots. Viking can collect items and put them
 into his inventory.
 Some basic ideas:
@@ -24,6 +25,9 @@ Some basic ideas:
   definitively.
 * When the viking passes over an item and there is a free slot in his 
   inventory, the item is collected automatically.
+
+= Superclass
+Object
 =end
 
 module FreeVikings

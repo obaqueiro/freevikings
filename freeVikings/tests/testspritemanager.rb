@@ -8,7 +8,6 @@ require 'testgroup.rb'
 require 'spritemanager.rb'
 require 'location.rb'
 require 'mockclasses.rb'
-require 'sprite.rb'
 
 class TestSpriteManager < TestGroup
 
