@@ -4,11 +4,12 @@
 # Mixin oznacujici tridu jako tridu nepratel.
 
 require 'monsters/tombstone.rb'
-require 'shield.rb'
 
 module FreeVikings
   
   module Monster
+
+    include SchwerEngine::Monster
 
     def destroy
       @energy = 0

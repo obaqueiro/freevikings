@@ -41,8 +41,6 @@ require 'testsophisticatedspritestate.rb'
 require 'testvikingstate.rb'
 require 'testvikingstatetostring.rb'
 require 'testcollisiontest.rb'
-require 'testgroup.rb'
-require 'testspritemanager.rb'
 require 'testmonsterscript.rb'
 require 'testinventory.rb'
 require 'testmonster.rb'
@@ -53,7 +51,6 @@ require 'testlock.rb'
 require 'testkey.rb'
 require 'teststructuredworld.rb'
 require 'testtalk.rb'
-require 'testselectivegroup.rb'
 require 'testtiledlocationloadstrategy.rb'
 
 class FreeVikingsTestSuite
@@ -75,8 +72,6 @@ class FreeVikingsTestSuite
     suite << TestVikingState.suite
     suite << TestVikingStateToString.suite
     suite << TestCollisionTest.suite
-    suite << TestGroup.suite
-    suite << TestSpriteManager.suite
     suite << TestMonsterScript.suite
     suite << TestInventory.suite
     suite << TestMonster.suite
@@ -87,7 +82,6 @@ class FreeVikingsTestSuite
     suite << TestKey.suite
     suite << TestStructuredWorld.suite
     suite << TestTalk.suite
-    suite << TestSelectiveGroup.suite
     suite << TestTiledLocationLoadStrategy.suite
 
     return suite

@@ -13,8 +13,6 @@ Apart of the other useful features it helps to say if all the vikings are
 on the EXIT point mentioned above.
 =end
 
-require 'group.rb'
-
 module FreeVikings
 
   class Team < Group

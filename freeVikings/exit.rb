@@ -1,8 +1,6 @@
 # exit.rb
 # igneus 24.2.2005
 
-require 'staticobject.rb'
-
 =begin
 = NAME
 Exit

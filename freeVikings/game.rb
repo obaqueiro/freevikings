@@ -4,7 +4,6 @@
 require 'RUDL'
 
 require 'viking.rb'
-require 'hero.rb'
 require 'team.rb'
 require 'world.rb'
 require 'structuredworld.rb'

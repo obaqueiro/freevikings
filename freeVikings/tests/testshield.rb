@@ -1,7 +1,7 @@
 # testshield.rb
 # igneus 12.6.2005
 
-# Sada testovych pripadu pro Shield.
+# Unit tests for class Shield.
 
 require 'test/unit'
 
@@ -11,7 +11,6 @@ require 'shield.rb'
 require 'monsters/redshot.rb'
 require 'monsters/robot.rb'
 require 'arrow.rb'
-require 'hero.rb'
 
 class TestShield < Test::Unit::TestCase
 

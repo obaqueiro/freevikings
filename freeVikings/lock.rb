@@ -16,8 +16,6 @@ a ((<Lock>)) you need a (({Key})) of the same colour.
 Entity
 =end
 
-require 'staticobject.rb'
-
 module FreeVikings
 
   class Lock < Entity

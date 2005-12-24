@@ -7,8 +7,6 @@ Mixin modules from namespace ((<MonsterMixins>)) contain methods which
 can be useful for programming different types of monsters.
 =end
 
-require 'hero.rb'
-
 module FreeVikings
 
   module MonsterMixins

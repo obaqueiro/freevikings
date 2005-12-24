@@ -1,10 +1,9 @@
 # redshot.rb
 # igneus 27.2.2006
 
-# Cervena strela do automatickych ohnometu
+# Red shot for automatic firespitters.
 
 require 'shot.rb'
-require 'hero.rb'
 
 module FreeVikings
 
