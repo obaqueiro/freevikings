@@ -28,11 +28,11 @@ end
 # Bundle where a lot of freeVikings code has been moved.
 # It is needed for most fV classes to work.
 require 'schwerengine/schwerengine.rb' 
+SchwerEngine.config = FreeVikings
 include SchwerEngine
 
 require 'testlocation.rb'
 require 'testxmllocloadstrategy.rb'
-require 'testmap.rb'
 require 'testshield.rb'
 require 'testviking.rb'
 require 'testwarior.rb'
@@ -42,7 +42,6 @@ require 'testsophisticatedspritestate.rb'
 require 'testvikingstate.rb'
 require 'testvikingstatetostring.rb'
 require 'testcollisiontest.rb'
-require 'testmodel.rb'
 require 'testgroup.rb'
 require 'testspritemanager.rb'
 require 'testmonsterscript.rb'
@@ -70,7 +69,6 @@ class FreeVikingsTestSuite
 
     suite << TestLocation.suite
     suite << TestXMLLocationLoadStrategy.suite
-    suite << TestMap.suite
     suite << TestShield.suite
     suite << TestViking.suite
     suite << TestWarior.suite
@@ -80,7 +78,6 @@ class FreeVikingsTestSuite
     suite << TestVikingState.suite
     suite << TestVikingStateToString.suite
     suite << TestCollisionTest.suite
-    suite << TestModel.suite
     suite << TestGroup.suite
     suite << TestSpriteManager.suite
     suite << TestMonsterScript.suite

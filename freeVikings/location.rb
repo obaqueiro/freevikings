@@ -11,9 +11,9 @@ are delegated.
 
 require 'forwardable'
 
-#require 'map.rb'
 require 'spritemanager.rb'
 require 'ticker.rb'
+require 'exit.rb'
 
 module FreeVikings
 

@@ -9,8 +9,6 @@
 
 require 'yaml'
 
-require 'map.rb'
-
 class Class
   def base_name
     if name =~ /::/ then
@@ -118,8 +116,6 @@ if FreeVikings::OPTIONS["extensions"] then
 
   if config.enabled?(FreeVikings::Extensions::Map) then
     FreeVikings::Map = FreeVikings::Extensions::Map
-  else
-    require 'map.rb'
   end
 
 end

@@ -5,10 +5,11 @@
 
 # Pokus o reimplementaci hry Lost Vikings.
 
+require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
+
 require 'schwerengine/schwerengine.rb'
 include SchwerEngine
-
-require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
+SchwerEngine.config = FreeVikings
 
 require 'getoptlong'
 require 'log4r'

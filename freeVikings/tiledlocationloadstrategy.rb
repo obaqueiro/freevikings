@@ -16,9 +16,6 @@ LocationLoadStrategy
 require 'rexml/document'
 require 'RUDL'
 
-require 'locationloadstrategy.rb'
-require 'map.rb'
-
 module FreeVikings
 
   class TiledLocationLoadStrategy < LocationLoadStrategy

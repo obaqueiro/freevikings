@@ -3,7 +3,6 @@
 
 # Strategie nahravani map z xml datovych souboru.
 
-require 'locationloadstrategy.rb'
 require 'monsterscript.rb'
 require 'rexml/document'
 
