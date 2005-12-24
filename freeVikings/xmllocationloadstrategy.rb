@@ -5,12 +5,13 @@
 
 require 'rexml/document'
 
+require 'maploadstrategy.rb'
 require 'monsterscript.rb'
 require 'exit.rb'
 
 module FreeVikings
 
-  class XMLLocationLoadStrategy < LocationLoadStrategy
+  class XMLLocationLoadStrategy < MapLoadStrategy
 
     MIN_TILES_X = 640 / Map::TILE_SIZE
     MIN_TILES_Y = 480 / Map::TILE_SIZE
@@ -30,75 +31,11 @@ Argument ((|source|)) should be a (({File})) with location data.
       content_check
     end
 
-    def load_map(blocks_matrix)
+    def load(blocks_matrix)
       @blocks = blocks_matrix
 
       load_tiletypes
       load_tiles
-    end
-
-    def load_scripts(location)
-      @log.debug "Starting loading monsters from scripts."
-
-      begin
-	script_element = @doc.root.elements['scripts'].elements['monsters']
-	scriptfile = get_local_file(script_element.attributes['path'])
-      rescue => ex
-	@log.info "Cannot get the monster-script's filename from the datafile. Maybe no scripts are connected with this location. Message from the caught bottom-level exception: #{ex.message}"
-	return
-      end
-
-      @log.info "Loading monsters from script #{scriptfile}"
-
-      # Pri nahravani skriptu muze nastat velke mnozstvi vyjimecnych situaci:
-      begin
-        s = MonsterScript.new(scriptfile.path) {|script| 
-          script.extend FreeVikings
-          eval "script::LOCATION = location"
-        }
-      rescue Script::MissingFile => mfex
-        @log.error "Could not load the script: #{mfex.message}"
-      rescue SyntaxError
-        @log.error "Syntax error in the script #{scriptfile}. "
-      rescue NameError => ne
-        @log.error "NameError in the script #{scriptfile}:" \
-        "#{ne.message}\n#{ne.backtrace.join("\n")}"
-      rescue LoadError => le
-        @log.error "LoadError in script #{scriptfile}: #{le.message}"
-      rescue MonsterScript::NoMonstersDefinedException
-        @log.error "Script loaded successfully, but didn't define any new " \
-        "monsters."
-      rescue Image::ImageFileNotFoundException => infe
-        @log.error infe.message + "\nScript wasn't loaded successfully."
-      else
-        s::MONSTERS.each {|m| location.add_sprite m}
-        @log.info "Script #{scriptfile} successfully loaded."
-      end
-    end
-
-    def load_exit(location)
-      begin
-	exit_element = @doc.root.elements['map'].elements['exit']
-	x = exit_element.attributes['horiz'].to_i
-	y = exit_element.attributes['vertic'].to_i
-      rescue
-	@log.error "Cannot find XML element 'map/exit'" \
-        " in datafile #{source_name}."
-	x = y = 300
-      end
-      location.exitter = Exit.new([x,y])
-    end
-
-    def load_start(location)
-      begin
-	strt_element = @doc.root.elements['map'].elements['start']
-	x = strt_element.attributes['horiz'].to_i
-	y = strt_element.attributes['vertic'].to_i
-      rescue
-	@log.error "Cannot find XML element 'map/start' in datasource #{source_name}."
-	x = y = 100
-      end
-      location.start = [x,y]
     end
 
     private
@@ -107,7 +44,7 @@ Argument ((|source|)) should be a (({File})) with location data.
 
     def load_tiletypes
       begin
-        blocktypes = @doc.root.elements['map'].elements["blocktypes"]
+        blocktypes = @doc.root.elements["blocktypes"]
         real_blocktypes = blocktypes
 
         if blocktypes.has_attributes? and blocktypes.attributes['src'] then
@@ -142,10 +79,13 @@ Argument ((|source|)) should be a (({File})) with location data.
     def load_tiles
       # nacteni umisteni bloku
       begin
-	lines = @doc.root.elements["map"].elements["blocks"].text.split(/\n/)
+        text = @doc.root.elements["blocks"].text
       rescue => ex
 	@log.fatal "Cannot find 'map/blocks' XML element in datafile #{source_name}. (" + ex.message + ")"
 	raise
+      else
+        text.strip!
+	lines = text.split(/\n/)
       end
       @max_width = @max_height = 0
       # prochazime radky bloku:
@@ -161,7 +101,7 @@ Argument ((|source|)) should be a (({File})) with location data.
 	  block_code = block_codes[block_index]
 	  unless @blocktypes[block_code].nil?
 	    @blocks[line_num][block_index] = @blocktypes[block_code]
-	    @log.debug("Setting reference to blocktype for block at index [" + line_num.to_s + "][" + block_index.to_s + "]")
+	    # @log.debug("Setting reference to blocktype for block at index [" + line_num.to_s + "][" + block_index.to_s + "]")
 	  else
 	    @log.error("Blocktype couldn't be found in blocktypes' hash for blockcode #{block_code} (using mapsource #{source_name})")
 	  end
@@ -185,7 +125,7 @@ Argument ((|source|)) should be a (({File})) with location data.
     def content_check
       begin
         raise CompulsoryElementMissingException.new('location', source_name) if @doc.root.nil? 
-        raise CompulsoryElementMissingException.new('blocks', source_name) if @doc.root.elements['map'].elements['blocks'].nil?
+        raise CompulsoryElementMissingException.new('blocks', source_name) if @doc.root.elements['blocks'].nil?
       rescue => ex
         @log.error "Incomplete location data found in datafile #{source_name}." + "(" + ex.message + ")"
         raise

@@ -2,8 +2,10 @@
 # igneus 15.12.2005
 
 require 'test/unit'
-require 'tiledlocationloadstrategy.rb'
 require 'stringio'
+
+require 'maploadstrategy.rb'
+require 'tiledlocationloadstrategy.rb'
 
 class TestTiledLocationLoadStrategy < Test::Unit::TestCase
 

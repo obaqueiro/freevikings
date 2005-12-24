@@ -31,7 +31,6 @@ require 'schwerengine/schwerengine.rb'
 SchwerEngine.config = FreeVikings
 include SchwerEngine
 
-require 'testxmllocloadstrategy.rb'
 require 'testshield.rb'
 require 'testviking.rb'
 require 'testwarior.rb'
@@ -52,6 +51,7 @@ require 'testkey.rb'
 require 'teststructuredworld.rb'
 require 'testtalk.rb'
 require 'testtiledlocationloadstrategy.rb'
+require 'testlocationloader.rb'
 
 class FreeVikingsTestSuite
 
@@ -62,7 +62,6 @@ class FreeVikingsTestSuite
       suite << FreeVikingsExtensoinsTestSuite.suite
     end
 
-    suite << TestXMLLocationLoadStrategy.suite
     suite << TestShield.suite
     suite << TestViking.suite
     suite << TestWarior.suite
@@ -82,7 +81,8 @@ class FreeVikingsTestSuite
     suite << TestKey.suite
     suite << TestStructuredWorld.suite
     suite << TestTalk.suite
-    suite << TestTiledLocationLoadStrategy.suite
+    # suite << TestTiledLocationLoadStrategy.suite
+    suite << TestLocationLoader.suite
 
     return suite
   end

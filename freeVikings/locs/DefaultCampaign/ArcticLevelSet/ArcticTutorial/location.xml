@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Arctic Tutorial</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>ATUT</password>
+    <map src="arctictut_loc.xml"/>
+    <script src="arctictut_script.rb"/>
+    <start horiz="80" vertic="300"/>
+    <exit horiz="2080" vertic="320"/>
+  </body>
+</location>

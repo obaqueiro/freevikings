@@ -8,6 +8,7 @@
 require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
 
 require 'schwerengine/schwerengine.rb'
+SchwerEngine.init(SchwerEngine::DISABLE_LOG4R_SETUP)
 include SchwerEngine
 SchwerEngine.config = FreeVikings
 

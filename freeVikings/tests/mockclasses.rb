@@ -3,13 +3,15 @@
 
 # Collection of mock classes which are useful for unit testing.
 
+require 'maploadstrategy.rb'
+
 module FreeVikings
 
   module Mock
 
     # A location loading Strategy (for Location tests).
     # It doesn't parse any XML files => the tests are quicker.
-    class TestingMapLoadStrategy < LocationLoadStrategy
+    class TestingMapLoadStrategy < MapLoadStrategy
 
       def initialize
         super(nil)

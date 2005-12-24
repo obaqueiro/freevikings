@@ -13,12 +13,14 @@ needed to load the level data. (({Location})) is a huge heap of objects
 which play their roles in the game.
 =end
 
+require 'locationloader.rb'
 require 'levelsuite.rb'
-require 'locationloaderfactory.rb'
 
 module FreeVikings
 
   class Level < LevelSuite
+
+    LOCATION_DEFINITION_FILE = 'location.xml'
 
 =begin
 --- Level.new(dirname, member_of=nil)
@@ -53,7 +55,9 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
 =end
 
     def loader
-      LocationLoaderFactory.loader_for(@dirname)
+      file = @dirname+'/'+LOCATION_DEFINITION_FILE
+      @log.debug "Returned loader encapsulating file '#{file}'."
+      return LocationLoader.new(File.new(file))
     end
 
     def next_level

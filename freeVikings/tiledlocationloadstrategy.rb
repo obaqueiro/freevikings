@@ -18,7 +18,7 @@ require 'RUDL'
 
 module FreeVikings
 
-  class TiledLocationLoadStrategy < LocationLoadStrategy
+  class TiledLocationLoadStrategy < MapLoadStrategy
 
     def initialize(source)
       super(source)

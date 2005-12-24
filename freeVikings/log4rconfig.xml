@@ -18,12 +18,12 @@
 
   <!-- Log for World mechanism (World and it's subclasses, LevelSuite, 
        Level) -->
-  <logger name="world log" level="INFO">
+  <logger name="world log" level="DEBUG">
     <outputter>stderr</outputter>
   </logger>
 
   <!-- Log for Location Loading Strategies output -->
-  <logger name="location loading log" level="ERROR">
+  <logger name="location loading log" level="DEBUG">
     <outputter>stderr</outputter>
   </logger>
 
