@@ -3,8 +3,10 @@
 
 # Strategie nahravani map z xml datovych souboru.
 
-require 'monsterscript.rb'
 require 'rexml/document'
+
+require 'monsterscript.rb'
+require 'exit.rb'
 
 module FreeVikings
 

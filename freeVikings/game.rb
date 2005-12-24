@@ -8,7 +8,6 @@ require 'hero.rb'
 require 'team.rb'
 require 'world.rb'
 require 'structuredworld.rb'
-require 'location.rb'
 require 'gamestate.rb'
 require 'bottompanel.rb'
 

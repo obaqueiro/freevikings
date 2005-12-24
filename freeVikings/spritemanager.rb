@@ -6,7 +6,6 @@
 require 'group.rb'
 require 'selectivegroup.rb'
 require 'hero.rb'
-require 'monster.rb'
 require 'forwardable'
 
 module FreeVikings

@@ -31,7 +31,6 @@ require 'schwerengine/schwerengine.rb'
 SchwerEngine.config = FreeVikings
 include SchwerEngine
 
-require 'testlocation.rb'
 require 'testxmllocloadstrategy.rb'
 require 'testshield.rb'
 require 'testviking.rb'
@@ -48,7 +47,6 @@ require 'testmonsterscript.rb'
 require 'testinventory.rb'
 require 'testmonster.rb'
 require 'testsword.rb'
-require 'testtimelock.rb'
 require 'testbottompanelstate.rb'
 require 'testbottompanel.rb'
 require 'testlock.rb'
@@ -67,7 +65,6 @@ class FreeVikingsTestSuite
       suite << FreeVikingsExtensoinsTestSuite.suite
     end
 
-    suite << TestLocation.suite
     suite << TestXMLLocationLoadStrategy.suite
     suite << TestShield.suite
     suite << TestViking.suite
@@ -84,7 +81,6 @@ class FreeVikingsTestSuite
     suite << TestInventory.suite
     suite << TestMonster.suite
     suite << TestSword.suite
-    suite << TestTimeLock.suite
     suite << TestBottomPanelState.suite
     suite << TestBottomPanel.suite
     suite << TestLock.suite

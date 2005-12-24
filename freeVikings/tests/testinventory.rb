@@ -57,7 +57,7 @@ class TestInventory < Test::Unit::TestCase
   end
 
   def testGetNullItem
-    assert_kind_of FreeVikings::NullItem, @inventory.fourth, "The inventory is empry, so it should return a NullItem object."
+    assert_kind_of NullItem, @inventory.fourth, "The inventory is empry, so it should return a NullItem object."
   end
 
   def testPutIntoAFullInventoryRaisesException
@@ -92,6 +92,6 @@ class TestInventory < Test::Unit::TestCase
   end
 
   def testAtReturnsNullItemIfSlotEmpty
-    assert_kind_of FreeVikings::NullItem, @inventory.at(1), "The slot index is valid, but the slot is free now. A NullItem instance must be returned."
+    assert_kind_of NullItem, @inventory.at(1), "Slot index is valid, but the slot is free now. A NullItem instance must be returned."
   end
 end

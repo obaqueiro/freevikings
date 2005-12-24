@@ -4,11 +4,9 @@
 require 'deadviking.rb'
 
 require 'vikingstate.rb'
-require 'nullocation.rb'
 require 'collisiontest.rb'
 require 'inventory.rb'
 require 'sophisticatedspritemixins.rb'
-require 'timelock.rb'
 require 'talkable.rb'
 require 'transportable.rb'
 

@@ -3,10 +3,6 @@
 
 # Collection of mock classes which are useful for unit testing.
 
-require 'locationloadstrategy.rb'
-require 'ticker.rb'
-require 'tile.rb'
-
 module FreeVikings
 
   module Mock

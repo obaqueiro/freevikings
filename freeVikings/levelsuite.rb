@@ -144,7 +144,6 @@ worry about it.)
     # Loads data from the definition file
 
     def load_from_xml
-puts @dirname
       definition_file = @dirname + '/' + DEFINITION_FILE_NAME
       @log.info "#{object_id}: Loading suite definition file #{definition_file}:"
 

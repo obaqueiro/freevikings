@@ -8,6 +8,8 @@ require 'mockclasses'
 class TestViking < Test::Unit::TestCase
 
   include FreeVikings::Mock
+  
+  STARTPOS = [0,0]
 
   def setup
     @entity = @sprite = Viking.new('Wulftan', STARTPOS) # a viking for TestSprite tests

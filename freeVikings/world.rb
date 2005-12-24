@@ -14,9 +14,6 @@ to work out the (({LevelSuite})) stuff.
 * load and return the next (({Location})) (((<World#next_location>)))
 =end
 
-require 'location.rb'
-require 'xmllocationloadstrategy.rb'
-
 module FreeVikings
 
   class World

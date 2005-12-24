@@ -9,7 +9,6 @@ used in any level before.
 =end
 
 require 'gameui/textrenderer/textrenderer.rb'
-require 'timelock.rb'
 require 'textbox.rb'
 
 module FreeVikings
