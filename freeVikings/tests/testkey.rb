@@ -3,11 +3,9 @@
 
 # Test cases for class Key
 
-require 'testitem.rb'
-
 require 'key.rb'
 
-class TestKey < TestItem
+class TestKey < Test::Unit::TestCase
 
   include FreeVikings
 

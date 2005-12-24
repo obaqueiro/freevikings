@@ -5,7 +5,7 @@ require 'viking.rb'
 
 require 'mockclasses'
 
-class TestViking
+class TestViking < Test::Unit::TestCase
 
   include FreeVikings::Mock
 
