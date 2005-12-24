@@ -16,7 +16,6 @@ a ((<Lock>)) you need a (({Key})) of the same colour.
 Entity
 =end
 
-require 'images.rb'
 require 'staticobject.rb'
 
 module FreeVikings

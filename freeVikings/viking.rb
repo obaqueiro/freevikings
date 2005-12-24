@@ -4,7 +4,6 @@
 require 'deadviking.rb'
 
 require 'vikingstate.rb'
-require 'images.rb'
 require 'nullocation.rb'
 require 'collisiontest.rb'
 require 'inventory.rb'
