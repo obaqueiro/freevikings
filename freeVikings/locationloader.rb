@@ -12,6 +12,7 @@ and provides data to the (({Location})) object.
 
 require 'rexml/document'
 
+require 'locationscript.rb'
 require 'maploaderfactory.rb'
 
 module FreeVikings
@@ -33,7 +34,7 @@ It should contain a valid location definition.
       @source = source
 
       if @source.respond_to? :path then
-        @dir = File.dirname(@source.path)
+            @dir = File.dirname(@source.path)
       else
         @dir = ''
       end
@@ -69,38 +70,38 @@ for the location being loaded.
 =end
 
     def load_script(location)
-      script = @dir+'/'+@script
-      @log.debug "Starting loading monsters from script '#{script}'."
-
-      scriptfile = File.open script
+      scriptfile = @dir+'/'+@script
+      @log.debug "Starting loading monsters from script '#{scriptfile}'."
 
       @log.info "Loading monsters from script #{scriptfile}"
 
       # Pri nahravani skriptu muze nastat velke mnozstvi vyjimecnych situaci:
       begin
-        s = MonsterScript.new(scriptfile.path) {|script| 
+        s = LocationScript.new(scriptfile) {|script| 
           script.extend FreeVikings
+          script.extend SchwerEngine
+
+          script.module_eval {
+            alias_method :_require, :require
+          }
+
           eval "script::LOCATION = location"
         }
       rescue Script::MissingFile => mfex
-        @log.error "Could not load the script: #{mfex.message}"
+        @log.error "Could not load the scriptfile: #{mfex.message}"
       rescue SyntaxError
-        @log.error "Syntax error in the script #{scriptfile}. "
+        @log.error "Syntax error in the scriptfile #{scriptfile}. "
       rescue NameError => ne
-        @log.error "NameError in the script #{scriptfile}:" \
+        @log.error "NameError in the scriptfile #{scriptfile}:" \
         "#{ne.message}\n#{ne.backtrace.join("\n")}"
       rescue LoadError => le
-        @log.error "LoadError in script #{scriptfile}: #{le.message}"
+        @log.error "LoadError in scriptfile #{scriptfile}: #{le.message}"
       rescue TypeError => te
-        @log.error "TypeError in script #{scriptfile}: #{te.message}"
-      rescue MonsterScript::NoMonstersDefinedException
-        @log.error "Script loaded successfully, but didn't define any new " \
-        "monsters."
+        @log.error "TypeError in scriptfile #{scriptfile}: #{te.message}"
       rescue Image::ImageFileNotFoundException => infe
-        @log.error infe.message + "\nScript wasn't loaded successfully."
+        @log.error infe.message + "\nScriptfile wasn't loaded successfully."
       else
-        s::MONSTERS.each {|m| location.add_sprite m}
-        @log.info "Script #{scriptfile} successfully loaded."
+        @log.info "Scriptfile #{scriptfile} successfully loaded."
       end
     end
 

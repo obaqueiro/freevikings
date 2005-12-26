@@ -1,9 +1,7 @@
 # apex.rb
 # igneus 2.8.2005
 
-require 'images.rb'
 require 'monstermixins.rb'
-require 'hero.rb'
 
 module FreeVikings
 

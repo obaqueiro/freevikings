@@ -6,7 +6,6 @@
 require 'rexml/document'
 
 require 'maploadstrategy.rb'
-require 'monsterscript.rb'
 require 'exit.rb'
 
 module FreeVikings
@@ -84,7 +83,6 @@ Argument ((|source|)) should be a (({File})) with location data.
 	@log.fatal "Cannot find 'map/blocks' XML element in datafile #{source_name}. (" + ex.message + ")"
 	raise
       else
-        text.strip!
 	lines = text.split(/\n/)
       end
       @max_width = @max_height = 0
@@ -107,8 +105,17 @@ Argument ((|source|)) should be a (({File})) with location data.
 	  end
 	}
       }
-      raise LocationNotLargeEnoughException, "Location is less then #{MIN_TILES_X} tiles broad, it isn't valid and cannot be loaded." if @max_width < MIN_TILES_X
-      raise LocationNotLargeEnoughException, "Location is less then #{MIN_TILES_Y} tiles high, it isn't valid and cannot be loaded." if @max_height < MIN_TILES_Y
+
+      if @max_width < MIN_TILES_X then
+        raise LocationNotLargeEnoughException, 
+              "Location is less then #{MIN_TILES_X} tiles broad, it isn't "\
+        "valid and cannot be loaded."
+      end
+
+      if @max_height < MIN_TILES_Y then
+        raise LocationNotLargeEnoughException, "Location is less then "\
+        "#{MIN_TILES_Y} tiles high, it isn't valid and cannot be loaded."
+      end
     end
 
     # Vrati jmeno nacitaneho zdroje

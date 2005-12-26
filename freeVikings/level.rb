@@ -57,6 +57,11 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
     def loader
       file = @dirname+'/'+LOCATION_DEFINITION_FILE
       @log.debug "Returned loader encapsulating file '#{file}'."
+
+      unless File.exist? file
+        raise "Location definition file '#{file}' doesn't exist."
+      end
+
       return LocationLoader.new(File.new(file))
     end
 
@@ -86,14 +91,15 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
     def load_password
       password = ''
 
-      begin
-        File.open(@dirname + '/' + 'PASSWORD') do |fr|
-          password = fr.gets.chomp
+      file = @dirname + '/' + LOCATION_DEFINITION_FILE
+      File.open(file) do |fr|
+        while l = fr.gets do
+          if l =~ /<password>(.+)<\/password>/ then
+            password = $1.strip
+          end
         end
-      rescue Errno::ENOENT => ex
-        @log.error "Failed to read a level password: " + ex.message
       end
-
+    
       password = '' unless password.valid_location_password?
       return password
     end

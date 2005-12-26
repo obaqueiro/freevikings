@@ -3,8 +3,6 @@
 
 # A bridge for the vikings.
 
-require 'staticobject.rb'
-
 module FreeVikings
 
   class Bridge < Sprite
