@@ -1,22 +1,7 @@
 <?xml version="1.0" ?>
 
-<location>
-  
-  <info>
-    <title>Antarctic Visitors</title>
-    <author>Jakub Pavlík - severus@post.cz</author>
-    <description>
-      Location full of small penguin visitors who came to Arctis
-      only to make the vikings' lives harder.
-    </description>
-  </info>
-
-  <scripts>
-    <monsters path="antarcticvisitors_script.rb" />
-  </scripts>
-  
-  <map>
-    <blocktypes src="../blocktypes.xml" />
+<map>
+  <blocktypes src="../blocktypes.xml" />
 
 <blocks>
 00CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC00
@@ -49,10 +34,5 @@ HHHHHHHHH00HHHHHHHHHHHHH0000000SSS0
 00000000000000000000000000000000000
 00000000000000000000000000000000000
 </blocks>
-    
-    <!-- Startovni a koncove misto mapy: -->
-    <start horiz="1000" vertic="60" />
-    <exit horiz="1100" vertic="280" />
-  </map>
-    
-</location>
+
+</map>

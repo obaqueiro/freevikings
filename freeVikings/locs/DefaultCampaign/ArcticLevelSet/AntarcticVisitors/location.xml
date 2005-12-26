@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Antarctic Visitors</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Location full of small penguin visitors who came to Arctis
+      only to make the vikings' lives harder.
+    </description>
+  </info>
+
+  <body>
+    <password>TUXY</password>
+    <map src="antarcticvisitors_loc.xml"/>
+    <script src="antarcticvisitors_script.rb"/>
+    <start horiz="1000" vertic="60" />
+    <exit horiz="1100" vertic="280" />
+  </body>
+</location>

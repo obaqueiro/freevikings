@@ -9,7 +9,9 @@
   <suite>
     <level>ArcticTutorial</level>
     <level>SwitchPlace</level>
-    <level>IceCastle</level>
+    <!-- 
+	 <level>IceCastle</level> 
+    -->
     <level>AntarcticVisitors</level>
   </suite>
 </levelsuite>
