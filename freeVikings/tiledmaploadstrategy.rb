@@ -3,7 +3,7 @@
 
 =begin
 = NAME
-TiledLocationLoadStrategy
+TiledMapLoadStrategy
 
 = DESCRIPTION
 (({LocationLoadStrategy})) which is able to load freeVikings maps 
@@ -18,7 +18,7 @@ require 'RUDL'
 
 module FreeVikings
 
-  class TiledLocationLoadStrategy < MapLoadStrategy
+  class TiledMapLoadStrategy < MapLoadStrategy
 
     def initialize(source)
       super(source)
@@ -108,7 +108,7 @@ module FreeVikings
     end
 
 =begin
---- TiledLocationLoadStrategy::LayerDataLoader
+--- TiledMapLoadStrategy::LayerDataLoader
 Small strategy classes. They are needed to be able to load differently
 mutated (encoded etc.) layer data.
 (Have I said these classes are needed to be able to load data?
@@ -212,5 +212,5 @@ to hack a bit around TilED data loading.
         }
       end
     end # class ExpandedLayerDataLoader
-  end # class TiledLocationLoadStrategy
+  end # class TiledMapLoadStrategy
 end # module FreeVikings

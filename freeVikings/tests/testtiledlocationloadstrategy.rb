@@ -7,7 +7,7 @@ require 'stringio'
 require 'maploadstrategy.rb'
 require 'tiledmaploadstrategy.rb'
 
-class TestTiledLocationLoadStrategy < Test::Unit::TestCase
+class TestTiledMapLoadStrategy < Test::Unit::TestCase
 
 VALID_DOC = <<EOD
 <?xml version="1.0"?>
@@ -29,7 +29,7 @@ EOD
   end
 
   def setup
-    @strategy = FreeVikings::TiledLocationLoadStrategy.new(VALID_DOC)
+    @strategy = FreeVikings::TiledMapLoadStrategy.new(VALID_DOC)
   end
 
   def testGetTileset

@@ -24,7 +24,7 @@ module FreeVikings
   class MapLoaderFactory
 
     STRATEGIES = {"xml" => XMLMapLoadStrategy,
-                  "tmx" => TiledLocationLoadStrategy}
+                  "tmx" => TiledMapLoadStrategy}
 
 =begin
 --- MapLoaderFactory.loader_for(file)

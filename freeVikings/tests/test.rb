@@ -82,7 +82,7 @@ class FreeVikingsTestSuite
     suite << TestKey.suite
     suite << TestStructuredWorld.suite
     suite << TestTalk.suite
-    # suite << TestTiledLocationLoadStrategy.suite
+    # suite << TestTiledMapLoadStrategy.suite
     suite << TestLocationLoader.suite
 
     return suite
