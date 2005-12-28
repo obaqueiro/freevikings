@@ -20,7 +20,7 @@ module FreeVikings
 
   class Level < LevelSuite
 
-    LOCATION_DEFINITION_FILE = 'location.xml'
+    DEFINITION_FILE_NAME = 'location.xml'
 
 =begin
 --- Level.new(dirname, member_of=nil)
@@ -55,7 +55,7 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
 =end
 
     def loader
-      file = @dirname+'/'+LOCATION_DEFINITION_FILE
+      file = @dirname+'/'+DEFINITION_FILE_NAME
       @log.debug "Returned loader encapsulating file '#{file}'."
 
       unless File.exist? file
@@ -91,7 +91,7 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
     def load_password
       password = ''
 
-      file = @dirname + '/' + LOCATION_DEFINITION_FILE
+      file = @dirname + '/' + DEFINITION_FILE_NAME
       File.open(file) do |fr|
         while l = fr.gets do
           if l =~ /<password>(.+)<\/password>/ then
@@ -100,8 +100,30 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
         end
       end
     
-      password = '' unless password.valid_location_password?
+      unless password.valid_location_password?
+        @log.warn "Invalid location password '#{password}'. Setting default (empty String)."
+        password = ''
+      end
+
       return password
+    end
+
+    # Checks if the Level data files exist.
+    # Called from LevelSuite's initialize (it's redefined here).
+
+    def check_files
+      unless File.directory? @dirname
+        msg = "Level directory '#{dirname}' doesn't exist."
+        @log.error msg
+        raise LevelSuiteLoadException, msg
+      end
+
+      deffile = @dirname+'/'+DEFINITION_FILE_NAME
+      unless File.exist?(deffile)
+        msg = "Level definition file '#{deffile}' doesn't exist."
+        @log.error msg
+        raise LevelSuiteLoadException, msg
+      end
     end
   end # class Level
 end # module FreeVikings

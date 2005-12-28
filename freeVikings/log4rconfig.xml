@@ -18,12 +18,12 @@
 
   <!-- Log for World mechanism (World and it's subclasses, LevelSuite, 
        Level) -->
-  <logger name="world log" level="DEBUG">
+  <logger name="world log" level="WARN">
     <outputter>stderr</outputter>
   </logger>
 
   <!-- Log for Location Loading Strategies output -->
-  <logger name="location loading log" level="DEBUG">
+  <logger name="location loading log" level="WARN">
     <outputter>stderr</outputter>
   </logger>
 
@@ -45,7 +45,7 @@
 
   <!-- Log for every class which doesn't need it's own (mainly for small
        classes not widely used in the game engine) -->
-  <logger name="freeVikings log" level="ERROR">
+  <logger name="freeVikings log" level="WARN">
     <outputter>stderr</outputter>
   </logger>
 

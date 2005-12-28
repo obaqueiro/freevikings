@@ -48,6 +48,8 @@ given a second argument ((|member_of|)), which is a link to a 'parent'
       @member_of = member_of
       @theme = load_theme
 
+      check_files
+
       load_from_xml
 
       @log.debug "#{object_id}: New LevelSuite created from data in directory '#{@dirname}' as a nested suite in #{@member_of ? @member_of.object_id : @member_of.to_s}"
@@ -145,7 +147,7 @@ worry about it.)
 
     def load_from_xml
       definition_file = @dirname + '/' + DEFINITION_FILE_NAME
-      @log.info "#{object_id}: Loading suite definition file #{definition_file}:"
+      @log.debug "#{object_id}: Loading suite definition file #{definition_file}:"
 
       begin
         doc = REXML::Document.new(File.open(definition_file))
@@ -175,16 +177,27 @@ worry about it.)
 
     def init_levelsuite(dir)
       path = @dirname + '/' + dir
-      @members.push LevelSuite.new(path)
+
+      begin
+        @members.push LevelSuite.new(path)
+      rescue LevelSuiteLoadException => ex
+        @log.error "Could not load LevelSuite from directory #{dir} (#{ex.class} occured)"
+      end
     end
 
     # Creates a Level object for a directory specified
     # in the definition file.
     # Argument dir is the base name of the directory.
 
+
     def init_level(dir)
       path = @dirname + '/' + dir
-      @members.push Level.new(path, self)
+
+      begin
+        @members.push Level.new(path, self)
+      rescue LevelSuiteLoadException => ex
+        @log.error "Could not load Level from directory #{dir} (#{ex.class} occured)"
+      end
     end
 
     def load_theme
@@ -204,7 +217,33 @@ worry about it.)
       end
     end
 
+    # Checks if all the LevelSuite data files exist.
+
+    def check_files
+      unless File.directory? @dirname
+        msg = "LevelSuite directory '#{dirname}' doesn't exist."
+        @log.error msg
+        raise LevelSuiteLoadException, msg
+      end
+
+      deffile = @dirname+'/'+DEFINITION_FILE_NAME
+      unless File.exist?(deffile)
+        msg = "LevelSuite definition file '#{deffile}' doesn't exist."
+        @log.error msg
+        raise LevelSuiteLoadException, msg
+      end
+    end
+
     public
+
+=begin
+--- LevelSuite::LevelSuiteLoadException
+Raised by ((<LevelSuite.new>)) if some big problem occurs during the loading
+phase.
+=end
+
+    class LevelSuiteLoadException < RuntimeError
+    end
 
 =begin
 --- LevelSuite::UnknownPasswordException
