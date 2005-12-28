@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>First adventure</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      This is the oldest location ever built, it's packed with freeVikings
+      since version 0.1.
+      It's a bit extended now, so it needs some cooperation of Olaf and Erik
+      to reach EXIT.
+    </description>
+  </info>
+
+  <body>
+    <password>FRST</password>
+    <map src="first_loc.xml"/>
+    <script src="first_script.rb"/>
+    <exit horiz="1120" vertic="320" />
+    <start horiz="121" vertic="20" />
+  </body>
+</location>

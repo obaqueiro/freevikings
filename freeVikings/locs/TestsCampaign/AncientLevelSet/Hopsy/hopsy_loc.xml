@@ -1,14 +1,12 @@
 <?xml version="1.0" ?>
 
-<location>
-
-  <map>
+<map>
     
-    <blocktypes>
-      <blocktype code="1" solid="solid" path="dlaz_hopsy1.tga" />
-      <blocktype code="2" solid="solid" path="dlaz_hopsy2.tga" />
-      <blocktype code="0" solid="false" path="dlaz_hopsy2.tga" />
-    </blocktypes>
+  <blocktypes>
+    <blocktype code="1" solid="solid" path="dlaz_hopsy1.tga" />
+    <blocktype code="2" solid="solid" path="dlaz_hopsy2.tga" />
+    <blocktype code="0" solid="false" path="dlaz_hopsy2.tga" />
+  </blocktypes>
 
 <blocks>
 11111111111111111111111111111111111111111111111111111111111111111111111111
@@ -41,9 +39,4 @@
 11111111111111111111111111111111111111111111111111111111111111111111111111
 </blocks>
   
-    <exit horiz="1040" vertic="1000" />
-    <start horiz="50" vertic="60" />
-    
-  </map>
-
-</location>
+</map>

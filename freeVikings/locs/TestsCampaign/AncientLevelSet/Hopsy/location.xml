@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Hopsy</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>HPSY</password>
+    <map src="hopsy_loc.xml"/>
+    <script src=""/>
+    <exit horiz="1040" vertic="1000" />
+    <start horiz="50" vertic="60" />
+  </body>
+</location>

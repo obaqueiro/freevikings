@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Simple Tiled Map</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>SMPL</password>
+    <map src="simple_loc.tmx"/>
+    <script src=""/>
+    <start horiz="50" vertic="50"/>
+    <exit horiz="680" vertic="400"/>
+  </body>
+</location>
