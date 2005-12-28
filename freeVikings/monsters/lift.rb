@@ -7,8 +7,8 @@ Lift
 
 = DESCRIPTION
 (({Lift})) is a platform which can move up and down.
-It is usually used as a lift. Any (({Sprite})) which includes 
-(({Transportable})) can be given a lift by this lift.
+Any (({Sprite})) which includes (({Transportable})) can be given 
+a lift by this lift.
 
 = Superclass
 Bridge
@@ -178,7 +178,6 @@ Alias to ((<Lift#move_down>)).
         if s.kind_of? Transportable and
             (not @transported.include? s) then
           @transported.push s
-          # puts 'Halle'
           s.start_transport self
         end
       }
