@@ -1,4 +1,4 @@
-# tiledlocationloadstrategy.rb
+# tiledmaploadstrategy.rb
 # igneus 14.12.2005
 
 =begin
@@ -27,24 +27,11 @@ module FreeVikings
       @tiletypes = []
     end
 
-    def load_map(blocks_matrix)
+    def load(blocks_matrix)
       load_map_sizes
       load_properties
       load_tilesets
       load_tiles blocks_matrix
-    end
-
-    def load_scripts(location)
-    end
-
-    def load_start(location)
-      location.start = [@properties['start_x'].to_i, 
-                        @properties['start_y'].to_i]
-    end
-
-    def load_exit(location)
-      location.exitter = Exit.new [@properties['exit_x'].to_i, 
-                                   @properties['exit_y'].to_i]
     end
 
     private
@@ -138,6 +125,8 @@ to hack a bit around TilED data loading.
 =end
     class LayerDataLoader
       def initialize(blocks_matrix, blocktypes, layer, map_properties)
+        @log = Log4r::Logger['location loading log']
+
         @blocks = blocks_matrix
         @blocktypes = blocktypes
         @layer = layer
@@ -155,7 +144,7 @@ to hack a bit around TilED data loading.
         @blocks_prefilled = blocks_matrix.empty? ? false : true
 
         if @map_properties['solid_layer'] == @layer.attributes['name'] then
-          puts "Solid layer #{@map_properties['solid_layer']}"
+          @log.debug "Solid layer #{@map_properties['solid_layer']}"
           @blocktypes = [@blocktypes[0]].concat(@blocktypes[1..@blocktypes.size-1].collect {|tile| tile.to_solid })
         end
       end

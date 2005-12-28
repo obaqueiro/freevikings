@@ -71,7 +71,11 @@ for the location being loaded.
 
     def load_script(location)
       scriptfile = @dir+'/'+@script
-      @log.debug "Starting loading monsters from script '#{scriptfile}'."
+
+      if @script == "" then
+        @log.warn "No location script found."
+        return
+      end
 
       @log.info "Loading monsters from script #{scriptfile}"
 
