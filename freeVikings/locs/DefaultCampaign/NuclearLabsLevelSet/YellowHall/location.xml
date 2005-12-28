@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Yellow Hall</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>YHLA</password>
+    <map src="yellowhall.xml"/>
+    <script src="yellowhall_monsters.rb"/>
+    <start horiz="240" vertic="380"/>
+    <exit horiz="1080" vertic="400"/>
+  </body>
+</location>

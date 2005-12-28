@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Peaceful meadow</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>MEDW</password>
+    <map src="meadow_loc.xml"/>
+    <script src="meadow_script.rb"/>
+    <start horiz="250" vertic="500"/>
+    <exit horiz="2080" vertic="1040"/>
+  </body>
+</location>

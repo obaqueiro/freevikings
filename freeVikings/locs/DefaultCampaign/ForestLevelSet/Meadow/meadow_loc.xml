@@ -1,27 +1,7 @@
 <?xml version="1.0" ?>
 
-<location>
-  
-  <!-- Metainformace: -->
-  
-  <info>
-    <title>Peaceful meadow</title>
-    <author>Jakub Pavlík - severus@post.cz</author>
-    <description>
-      A simple relaxational level...
-    </description>
-  </info>
-
-  <!-- Skripty k nahrani: -->
-  
-  <scripts>
-    <monsters path="meadow_script.rb" />
-  </scripts>
-  
-  <!-- Definice rozmisteni bloku v mape -->
-  
-  <map>
-    <blocktypes src="../forest_blocktypes.xml" />
+<map>
+  <blocktypes src="../forest_blocktypes.xml" />
 
 <blocks>
 000000AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -59,9 +39,4 @@
 000000000000000000000000000000000000000000000000000000000
 </blocks>
     
-    <!-- Startovni a koncove misto mapy: -->
-    <start horiz="250" vertic="500" />
-    <exit horiz="2080" vertic="1040" />
-  </map>
-    
-</location>
+</map>
