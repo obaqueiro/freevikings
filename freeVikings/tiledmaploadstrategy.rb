@@ -105,6 +105,13 @@ module FreeVikings
       # Let's add some more essential map characteristics:
       @properties['map_width'] = @max_width
       @properties['map_height'] = @max_height
+
+      # This property is very important and if it isn't provided, we must
+      # provide it ourselves. Let's presume that the highest layer is the solid
+      # one:
+      unless @properties['solid_layer']
+        @properties['solid_layer'] = @doc.root.get_elements('layer').last.attributes['name']
+      end
     end
 
 =begin
