@@ -107,7 +107,7 @@ if FreeVikings::OPTIONS["extensions"] then
           # first line of tiles (or any other, actually) to be empty.
           # The C++ Map is very strict, so the first empty line must be
           # omitted. Than this hack is needed. I know, it needs some clean-up.
-          # I'll have to clean XMLLocationLoadStrategy.
+          # I'll have to clean XMLMapLoadStrategy.
           # Later, later...
         end
       end

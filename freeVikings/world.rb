@@ -71,7 +71,7 @@ instance and so it must be loaded again.
 
     # Loads the current Location from the definition file
     def load_level
-      strategy = XMLLocationLoadStrategy.new(FreeVikings::DATA_DIR + '/' + @locs[@level])
+      strategy = XMLMapLoadStrategy.new(FreeVikings::DATA_DIR + '/' + @locs[@level])
       @location = Location.new(strategy)      
     end
   end # class World

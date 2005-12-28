@@ -29,6 +29,7 @@ end
 # It is needed for most fV classes to work.
 require 'schwerengine/schwerengine.rb' 
 SchwerEngine.config = FreeVikings
+SchwerEngine.init
 include SchwerEngine
 
 require 'testshield.rb'

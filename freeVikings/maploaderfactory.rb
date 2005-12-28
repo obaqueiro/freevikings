@@ -15,15 +15,15 @@ any given location data.
 Object
 =end
 
-require 'xmllocationloadstrategy.rb'
-require 'tiledlocationloadstrategy.rb'
+require 'xmlmaploadstrategy.rb'
+require 'tiledmaploadstrategy.rb'
 require 'log4r'
 
 module FreeVikings
 
   class MapLoaderFactory
 
-    STRATEGIES = {"xml" => XMLLocationLoadStrategy,
+    STRATEGIES = {"xml" => XMLMapLoadStrategy,
                   "tmx" => TiledLocationLoadStrategy}
 
 =begin

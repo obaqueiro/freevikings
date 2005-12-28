@@ -4,6 +4,7 @@
 # Unit tests for class Shield.
 
 require 'test/unit'
+require 'schwerengine/schwerengine.rb'
 
 require 'mockclasses.rb'
 
@@ -14,7 +15,6 @@ require 'arrow.rb'
 
 class TestShield < Test::Unit::TestCase
 
-  include FreeVikings
   include FreeVikings::Mock
 
   LEFT = 0; TOP = 0; WIDTH = 0; HEIGHT = 0;

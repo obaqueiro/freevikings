@@ -24,7 +24,7 @@ require 'sprite'; require 'monster'
 
 require 'alternatives'
 
-class NonScriptLocationLoadStrategy < FreeVikings::XMLLocationLoadStrategy
+class NonScriptLocationLoadStrategy < FreeVikings::XMLMapLoadStrategy
   def load_monsters(location)
   end
 end
@@ -48,7 +48,7 @@ class Browser
 	
   def view(location_path)
     @path = location_path
-    @loc = Location.new(XMLLocationLoadStrategy.new(location_path))
+    @loc = Location.new(XMLMapLoadStrategy.new(location_path))
     self.win_caption = TITLE + ': ' + File.basename(location_path)
     @view_center = [VIEW_SIZE['h']/2, VIEW_SIZE['v']/2] # stred zobrazovane oblasti mapy
     @center_move = [0,0] # rychlost pohybu h i v smeru

@@ -5,7 +5,7 @@ require 'test/unit'
 require 'stringio'
 
 require 'maploadstrategy.rb'
-require 'tiledlocationloadstrategy.rb'
+require 'tiledmaploadstrategy.rb'
 
 class TestTiledLocationLoadStrategy < Test::Unit::TestCase
 

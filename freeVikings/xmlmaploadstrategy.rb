@@ -10,13 +10,13 @@ require 'exit.rb'
 
 module FreeVikings
 
-  class XMLLocationLoadStrategy < MapLoadStrategy
+  class XMLMapLoadStrategy < MapLoadStrategy
 
     MIN_TILES_X = 640 / Map::TILE_SIZE
     MIN_TILES_Y = 480 / Map::TILE_SIZE
 
 =begin
---- XMLLocationLoadStrategy.new(source, data_source_control=true)
+--- XMLMapLoadStrategy.new(source, data_source_control=true)
 Argument ((|source|)) should be a (({File})) with location data.
 =end
 
@@ -150,12 +150,12 @@ Argument ((|source|)) should be a (({File})) with location data.
       return File.open(fname)
     end
 
-  end # class XMLLocationLoadStrategy
+  end # class XMLMapLoadStrategy
 
 
 
 =begin
---- XMLLocationLoadStrategy::CompulsoryElementMissingException
+--- XMLMapLoadStrategy::CompulsoryElementMissingException
 Exception raised if some compulsory element misses in the data file.
 =end
   class CompulsoryElementMissingException < RuntimeError
@@ -170,7 +170,7 @@ Exception raised if some compulsory element misses in the data file.
   end
 
 =begin
---- XMLLocationLoadStrategy::LocationNotLargeEnoughException
+--- XMLMapLoadStrategy::LocationNotLargeEnoughException
 Exception raised if the loaded map is not big enough 
 to fill a 640x480 px screen.
 =end

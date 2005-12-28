@@ -10,7 +10,7 @@ one such viking - his name is Erik).
 
 module FreeVikings
 
-  class Shield < Sprite
+  class Shield < SchwerEngine::Sprite
 
     WIDTH = 15
     HEIGHT = 80

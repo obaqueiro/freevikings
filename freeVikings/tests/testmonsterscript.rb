@@ -7,7 +7,7 @@
 require 'test/unit'
 require 'tempfile'
 
-require 'monsterscript.rb'
+require 'locationscript.rb'
 
 class TestMonsterScript < Test::Unit::TestCase
 
@@ -24,7 +24,7 @@ class TestMonsterScript < Test::Unit::TestCase
     @tmpscript.flush
 
     assert_raise(SyntaxError, "There is a syntax error in the script.") do
-      FreeVikings::MonsterScript.new @tmpscript.path
+      FreeVikings::LocationScript.new @tmpscript.path
     end
   end
 
@@ -33,16 +33,7 @@ class TestMonsterScript < Test::Unit::TestCase
     @tmpscript.flush
 
     assert_raise(NameError, "An uninitialized constant is used in the script.") do
-      FreeVikings::MonsterScript.new @tmpscript.path
-    end
-  end
-
-  def testScriptWithoutMonsters
-    @tmpscript.puts SCRIPT_WITHOUT_MONSTERS
-    @tmpscript.flush
-
-    assert_raise(FreeVikings::MonsterScript::NoMonstersDefinedException, "The script is a valid Ruby code, but doesn't define any new monsters.") do
-      FreeVikings::MonsterScript.new @tmpscript.path
+      FreeVikings::LocationScript.new @tmpscript.path
     end
   end
 
