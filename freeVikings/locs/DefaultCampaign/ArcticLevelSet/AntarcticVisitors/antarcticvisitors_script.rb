@@ -11,6 +11,8 @@ require 'lock.rb'
 require 'key.rb'
 require 'switch.rb'
 
+include FreeVikings
+
 # if FUNLESS is true, switches off any non-important
 # processor time eating monsters (e.g. dozens of penguins).
 FUNLESS = false
@@ -33,8 +35,8 @@ LOCATION << exit_lock
 # The left lift is a bit dangerous because it can get you onto the apexes
 # and then you die pierced.
 left_lift = Lift.new TS, 
-                                  [4*TS, 9*TS, 15*TS, 22*TS], 
-                                  LOCATION.theme
+                     [4*TS, 9*TS, 15*TS, 22*TS], 
+                     LOCATION.theme
 LOCATION << left_lift
 exit_lift = Lift.new 31*TS, [4*TS, 9*TS, 16*TS], LOCATION.theme
 LOCATION << exit_lift

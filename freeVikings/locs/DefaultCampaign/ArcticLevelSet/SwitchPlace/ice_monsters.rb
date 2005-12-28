@@ -4,14 +4,9 @@
 # Monsters script for location Ice Land
 
 require 'switch'
-require 'modelmap'
-require 'group'
-require 'sprite'
-require 'monster'
 require 'apple'
 require 'killtoy'
 require 'monsters/bear'
-require 'map'
 
 # === CONSTANTS:
 
@@ -28,7 +23,7 @@ module IceLand
     end
   end
 
-  CORRIDOR_HEIGHT = 3 * FreeVikings::Map::TILE_SIZE
+  CORRIDOR_HEIGHT = 3 * Map::TILE_SIZE
 
   module FirstCorridor
     CEILING = 280
@@ -41,12 +36,12 @@ module IceLand
   end # module FirstCorridor
 
   module SecondCorridor
-    FLOOR = 6*FreeVikings::Map::TILE_SIZE
+    FLOOR = 6*Map::TILE_SIZE
   end # module SecondCorridor
 
   module ThirdCorridor
-    FLOOR = 11 * FreeVikings::Map::TILE_SIZE
-    BEGIN_X = 42 * FreeVikings::Map::TILE_SIZE
+    FLOOR = 11 * Map::TILE_SIZE
+    BEGIN_X = 42 * Map::TILE_SIZE
   end
 
   module FourthCorridor
@@ -61,7 +56,7 @@ module IceLand
   end # module FourthCorridor
 
   module CorridorToExit
-    FLOOR = 21*FreeVikings::Map::TILE_SIZE
+    FLOOR = 21*Map::TILE_SIZE
     BEGIN_X = 320
     END_X = 1920
   end # module CorridorToExit
@@ -73,8 +68,8 @@ module IceLand
     HEIGHT = 22
 
     def initialize(position)
-      @rect = FreeVikings::Rectangle.new position[0], position[1], WIDTH, HEIGHT
-      @image = FreeVikings::Image.load('themes/IceTheme/iceboard.tga')
+      @rect = Rectangle.new position[0], position[1], WIDTH, HEIGHT
+      @image = Image.load('themes/IceTheme/iceboard.tga')
       @solid = true
     end
 
@@ -97,7 +92,7 @@ module IceLand
   # means 'open'. All the other combinations mean 'closed'.
   # This combination is given as an argument to the constructor, it should
   # be in form of an Array of true and false values.
-  class SwitchGroup < FreeVikings::Group
+  class SwitchGroup < Group
 
     def initialize(combination, update_proc, *members)
       super()
