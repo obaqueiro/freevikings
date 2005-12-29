@@ -42,17 +42,24 @@ enough).
       end
     end
 
+    def prepare
+      super
+
+      # pre-insert the last used password if any
+      if password = FreeVikings::OPTIONS['startpassword'] then
+        @edit_place.value = password
+      end
+    end
+
     private
 
     def read_events
       super
-      begin
-        @edit_place.value.upcase!
-      rescue TypeError
-        # TypeError occurs here when the upcased strong is frozen
-        # (when the password was given from the command line).
-        @edit_place.value = @edit_place.value.upcase
-      end
+
+      # @edit_place.value.upcase! isn't possible here because
+      # if the password is given from the command line it is frozen.
+      @edit_place.value = @edit_place.value.upcase
+
       @edit_place.refresh_image
     end
   end # class PasswordEdit
