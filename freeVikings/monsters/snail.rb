@@ -15,14 +15,10 @@ is wide enough to let him fall down.
 Sprite
 =end
 
-require 'images.rb'
 require 'sophisticatedspritestate.rb'
 require 'sophisticatedspritemixins.rb'
-require 'monster.rb'
 require 'monstermixins.rb'
 require 'shooting.rb'
-require 'hero.rb'
-require 'timelock.rb'
 
 module FreeVikings
 

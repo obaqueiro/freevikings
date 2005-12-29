@@ -15,7 +15,6 @@ Bridge
 =end
 
 require 'monsters/bridge.rb'
-require 'gfxtheme.rb'
 require 'transportable.rb'
 
 module FreeVikings
