@@ -47,12 +47,37 @@ given a second argument ((|member_of|)), which is a link to a 'parent'
       @members = []
       @member_of = member_of
       @theme = load_theme
+      @title = ""
 
-      check_files
-
-      load_from_xml
+      # Not to be used in subclasses:
+      if self.class == LevelSuite then
+        if LevelSuite.is_levelsuite_directory?(dirname) then
+          load_from_xml
+        elsif Level.is_level_directory?(dirname) then
+          @members << Level.new(dirname, self)
+        else
+          msg = "Directory '#{dirname}' doesn't contain any LevelSuite or Level definition."
+          @log.error msg
+          raise LevelSuiteLoadException, msg
+        end
+      end
 
       @log.debug "#{object_id}: New LevelSuite created from data in directory '#{@dirname}' as a nested suite in #{@member_of ? @member_of.object_id : @member_of.to_s}"
+    end
+
+=begin
+--- LevelSuite.is_levelsuite_directory?(dirname)
+Says if specified directory contains the LevelSuite definition file.
+=end
+
+    def LevelSuite.is_levelsuite_directory?(dirname)
+      deffile = dirname+'/'+DEFINITION_FILE_NAME
+
+      if File.exist?(deffile) then
+        return true
+      else
+        return false
+      end
     end
 
 =begin
@@ -214,23 +239,6 @@ worry about it.)
           @log.debug "#{object_id}: Theme file #{theme_def_file} wasn't found. Levelsuite '#{@title}' has no own theme and doesn't inherit any."
           return NullGfxTheme.instance
         end
-      end
-    end
-
-    # Checks if all the LevelSuite data files exist.
-
-    def check_files
-      unless File.directory? @dirname
-        msg = "LevelSuite directory '#{dirname}' doesn't exist."
-        @log.error msg
-        raise LevelSuiteLoadException, msg
-      end
-
-      deffile = @dirname+'/'+DEFINITION_FILE_NAME
-      unless File.exist?(deffile)
-        msg = "LevelSuite definition file '#{deffile}' doesn't exist."
-        @log.error msg
-        raise LevelSuiteLoadException, msg
       end
     end
 

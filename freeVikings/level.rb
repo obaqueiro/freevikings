@@ -43,6 +43,20 @@ The second argument is for internal use only and points to a 'parent'
     end
 
 =begin
+--- Level.is_level_directory?(dirname)
+Says if specified directory contains the Level definition file.
+=end
+
+    def Level.is_level_directory?(dirname)
+      deffile = dirname+'/'+DEFINITION_FILE_NAME
+      if File.exist?(deffile)
+        return true
+      else
+        return false
+      end
+    end
+
+=begin
 --- Level#password
 =end
 
@@ -112,24 +126,6 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
       end
 
       return password
-    end
-
-    # Checks if the Level data files exist.
-    # Called from LevelSuite's initialize (it's redefined here).
-
-    def check_files
-      unless File.directory? @dirname
-        msg = "Level directory '#{dirname}' doesn't exist."
-        @log.error msg
-        raise LevelSuiteLoadException, msg
-      end
-
-      deffile = @dirname+'/'+DEFINITION_FILE_NAME
-      unless File.exist?(deffile)
-        msg = "Level definition file '#{deffile}' doesn't exist."
-        @log.error msg
-        raise LevelSuiteLoadException, msg
-      end
     end
   end # class Level
 end # module FreeVikings

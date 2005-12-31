@@ -18,7 +18,7 @@ module FreeVikings
   WIN_HEIGHT = 480
 
   CODE_DIRS = ['monsters', 'ext'] # directories with additional source files
-  DATA_DIR = 'locs' # directory with location data
+  DEFAULT_LEVELSET_DIR = 'locs/DefaultCampaign'
 
   LOCATION_PASSWORD_LENGTH = 4
 

@@ -66,7 +66,7 @@ at once in a multithreaded application). But I wouldn't do that...
       paint_loading_screen @app_window
 
       # set defaults:
-      levelset = 'locs/DefaultCampaign'
+      levelset = FreeVikings::DEFAULT_LEVELSET_DIR
 
       # some defaults can be redefined by the player's options:
       if FreeVikings::OPTIONS['levelset']
@@ -79,6 +79,10 @@ at once in a multithreaded application). But I wouldn't do that...
         @log.error pe.message
         @log.error "Password start failed, restarting without password"
         startpassword = ''
+        retry
+      rescue LevelSuite::LevelSuiteLoadException => lle
+        @log.error "Could not load LevelSuite from directory '#{levelset}'. Setting default directory (#{FreeVikings::DEFAULT_LEVELSET_DIR})."
+        levelset = DEFAULT_LEVELSET_DIR
         retry
       end
 
