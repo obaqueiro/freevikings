@@ -14,11 +14,12 @@ end
 
 require 'RUDL'
 
-require 'images.rb'
+require 'schwerengine/schwerengine.rb'
+SchwerEngine.init
 
 class AnimationTester
 
-  include FreeVikings
+  include SchwerEngine
 
   def initialize(surface, delay, *filenames)
     @surface = surface
