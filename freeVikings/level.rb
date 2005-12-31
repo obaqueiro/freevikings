@@ -94,13 +94,19 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
       file = @dirname + '/' + DEFINITION_FILE_NAME
       File.open(file) do |fr|
         while l = fr.gets do
+          # Meaning of the following three lines isn't obvious unless
+          # you know how regular expressions work in Perl (and Ruby).
+          # Characters matching parenthesized sections of the regexp are
+          # assigned into global variables $1, $2, etc.
+          # So if l matches the regexp, text between '<password>' and
+          # '</password>' is assigned into $1.
           if l =~ /<password>(.+)<\/password>/ then
             password = $1.strip
           end
         end
       end
     
-      unless password.valid_location_password?
+      unless FreeVikings.valid_location_password?(password)
         @log.warn "Invalid location password '#{password}'. Setting default (empty String)."
         password = ''
       end

@@ -20,6 +20,8 @@ module FreeVikings
   CODE_DIRS = ['monsters', 'ext'] # directories with additional source files
   DATA_DIR = 'locs' # directory with location data
 
+  LOCATION_PASSWORD_LENGTH = 4
+
   # get the version number
   if File.exist?('RELEASE')
     File.open('RELEASE') do |fr|
@@ -47,4 +49,17 @@ module FreeVikings
 
     return FreeVikings::OPTIONS[key]
   end # FreeVikings.method_missing
+
+=begin
+--- FreeVikings.valid_location_password?(password)
+Says if a ((|password|)) is a valid location password.
+=end
+
+  def FreeVikings.valid_location_password?(password)
+    # valid location password must be 4 characters long and may
+    # only contain word characters and digits
+    password.size == FreeVikings::LOCATION_PASSWORD_LENGTH and 
+      password =~ /^[\d\w]+$/
+  end
+
 end

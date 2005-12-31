@@ -64,8 +64,8 @@ password is run instead of the next one.
 
     def next_location(password='')
       if password != '' then
-        unless password.valid_location_password?
-          raise ArgumentError, "Password \"#{password}\" of type #{password.class} isn't a valid location password. A valid password must be #{String::LOCATION_PASSWORD_LENGTH} characters long and may contain alphanumeric characters only."
+        unless FreeVikings.valid_location_password?(password)
+          raise PasswordError, "Password \"#{password}\" of type #{password.class} isn't a valid location password. A valid password must be #{String::LOCATION_PASSWORD_LENGTH} characters long and may contain alphanumeric characters only."
         end
         @level = @levelsuite.level_with_password(password)
         create_location
@@ -84,24 +84,15 @@ password is run instead of the next one.
     def create_location
       @location = Location.new(@level.loader, @level.gfx_theme)
     end
+
+    public
+
+=begin
+--- StructuredWorld::PasswordError
+Exception raised if invalid password is given.
+=end
+
+    class PasswordError < ArgumentError
+    end
   end # class StructuredWorld
 end # module FreeVikings
-
-=begin
-= String
-For needs of ((<StructuredWorld>)) class ((<String>)) is extended.
-=end
-
-class String
-  LOCATION_PASSWORD_LENGTH = 4
-
-=begin
---- String#valid_location_password?
-Says if a ((<String>)) is a valid location password.
-=end
-  def valid_location_password?
-    # valid location password must be 4 characters long and may
-    # only contain word characters and digits
-    size == LOCATION_PASSWORD_LENGTH and /^[\d\w]+$/ =~ self
-  end
-end

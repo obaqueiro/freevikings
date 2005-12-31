@@ -54,6 +54,10 @@ begin
     when "--levelsuite"
       FreeVikings::OPTIONS['levelset'] = argument
     when "--startpassword"
+      unless FreeVikings.valid_location_password?(argument)
+        raise "'#{argument}' is not a valid location password."
+      end
+      
       FreeVikings::OPTIONS["startpassword"] = argument
     end
   end # options.each block

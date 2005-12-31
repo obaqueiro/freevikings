@@ -73,7 +73,14 @@ at once in a multithreaded application). But I wouldn't do that...
         levelset = FreeVikings::OPTIONS['levelset']
       end
 
-      @world = StructuredWorld.new(levelset, startpassword)
+      begin
+        @world = StructuredWorld.new(levelset, startpassword)
+      rescue StructuredWorld::PasswordError => pe
+        @log.error pe.message
+        @log.error "Password start failed, restarting without password"
+        startpassword = ''
+        retry
+      end
 
       # Surfaces, ktere se pouzivaji k sestaveni zobrazeni nahledu hraci plochy
       # a stavoveho radku s podobiznami vikingu
