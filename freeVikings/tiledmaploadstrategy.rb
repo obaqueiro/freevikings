@@ -10,7 +10,7 @@ TiledMapLoadStrategy
 in native format of TilED editor (they usually have suffix .tmx).
 
 = Superclass
-LocationLoadStrategy
+MapLoadStrategy
 =end
 
 require 'rexml/document'
@@ -63,8 +63,7 @@ module FreeVikings
         layer_data = layer.elements['data']
         if layer_data.attributes['encoding'] then
           unless layer_data.attributes['encoding'] == 'base64'
-            raise "Unsupported encoding #{layer_data.attributes['encoding']}."\
-            " Play a bit with TilED setup to avoid layer data encoding."
+            raise "Unsupported encoding '#{layer_data.attributes['encoding']}'.Play a bit with TilED setup to avoid layer data encoding."
           end
 
           Base64LayerDataLoader.new(blocks, @tiletypes, 
@@ -171,7 +170,10 @@ to hack a bit around TilED data loading.
           col = @tile_index % @max_width
           tile = @blocktypes[tile_code]
           unless tile.empty?
-              @blocks[row][col] = tile
+            if @blocks[row][col].solid? then
+              tile = tile.to_solid
+            end
+            @blocks[row][col] = tile
           end
         else
           if (@tile_index % @max_width) == 0 then

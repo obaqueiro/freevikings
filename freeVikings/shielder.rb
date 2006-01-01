@@ -69,18 +69,28 @@ module FreeVikings
       i_left1 = Image.load('vikings/olaf/olaf_walk2_left.tga')
       i_right1 = Image.load('vikings/olaf/olaf_walk2_right.tga')
 
-      i_left = Animation.new(1,
+      i_right_breath = Image.load('vikings/olaf/olaf_breath_right.tga')
+      i_left_breath = Image.load('vikings/olaf/olaf_breath_left.tga')
+
+      i_left = Animation.new(0.4,
                              [i_left1,
                               Image.load('vikings/olaf/olaf_walk1_left.tga')])
 
-      i_right = Animation.new(1,
+      i_right = Animation.new(0.4,
                               [i_right1,
                                Image.load('vikings/olaf/olaf_walk1_right.tga')])
 
+      i_stand_left = Animation.new(1,
+                                   [i_left1, i_left_breath])
+
+      i_stand_right = Animation.new(1,
+                                   [i_right1, i_right_breath])
+
+
       @image = Model.new(self)
 
-      @image.add_pair('onground_standing_left', i_left1)
-      @image.add_pair('onground_standing_right', i_right1)
+      @image.add_pair('onground_standing_left', i_stand_left)
+      @image.add_pair('onground_standing_right', i_stand_right)
       @image.add_pair('onground_moving_left', i_left)
       @image.add_pair('onground_moving_right', i_right)
 
