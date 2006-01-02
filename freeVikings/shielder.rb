@@ -48,6 +48,10 @@ module FreeVikings
 
     def space_func_on
       @ability.space_on
+
+      if shield_use != 'top' then
+        @start_fall = @rect.top
+      end
     end
 
     alias_method :_velocity_vertic, :velocity_vertic
@@ -62,6 +66,7 @@ module FreeVikings
     end
 
     private
+
     def init_images
       # i_left = Image.load('olaf_left.png')
       # i_right = Image.load('olaf_right.png')
@@ -94,13 +99,15 @@ module FreeVikings
       @image.add_pair('onground_moving_left', i_left)
       @image.add_pair('onground_moving_right', i_right)
 
-      @image.add_pair('onground_knocked-out_left', Image.load('olaf_ko_left.png'))
-      @image.add_pair('onground_knocked-out_right', Image.load('olaf_ko_right.png'))
+      @image.add_pair('onground_knocked-out_left', 
+                      Image.load('olaf_ko_left.png'))
+      @image.add_pair('onground_knocked-out_right', 
+                      Image.load('olaf_ko_right.png'))
 
-      @image.add_pair('falling_standing_right', i_right)
-      @image.add_pair('falling_standing_left', i_left)
-      @image.add_pair('falling_moving_right', i_right)
-      @image.add_pair('falling_moving_left', i_left)
+      @image.add_pair('falling_standing_right', i_right1)
+      @image.add_pair('falling_standing_left', i_left1)
+      @image.add_pair('falling_moving_right', i_right1)
+      @image.add_pair('falling_moving_left', i_left1)
 
       @portrait = Portrait.new 'olaf_face.tga', 'olaf_face_unactive.gif', 'dead_face.png'
     end
