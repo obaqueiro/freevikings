@@ -91,6 +91,10 @@ module FreeVikings
       i_stand_right = Animation.new(1,
                                    [i_right1, i_right_breath])
 
+      i_ko = Animation.new(1,
+                           [Image.load('vikings/olaf/olaf_ko1.tga'),
+                            Image.load('vikings/olaf/olaf_ko2.tga')])
+
 
       @image = Model.new(self)
 
@@ -99,10 +103,8 @@ module FreeVikings
       @image.add_pair('onground_moving_left', i_left)
       @image.add_pair('onground_moving_right', i_right)
 
-      @image.add_pair('onground_knocked-out_left', 
-                      Image.load('olaf_ko_left.png'))
-      @image.add_pair('onground_knocked-out_right', 
-                      Image.load('olaf_ko_right.png'))
+      @image.add_pair('onground_knocked-out_left', i_ko)
+      @image.add_pair('onground_knocked-out_right', i_ko)
 
       @image.add_pair('falling_standing_right', i_right1)
       @image.add_pair('falling_standing_left', i_left1)
