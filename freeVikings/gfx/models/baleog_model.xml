@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+
+<!--
+baleog_model.xml
+igneus 3.1.2005
+
+Model description for Baleog.
+-->
+
+<model>
+  <load_pre>
+    <image sym="left">baleog_left.png</image>
+    <image sym="right">baleog_right.png</image>
+
+    <image sym="shoot_left">baleog_shooting_left.png</image>
+    <image sym="shoot_right">baleog_shooting_right.png</image>
+  </load_pre>
+
+  <states>
+    <state name="onground_standing_left" sym="left"/>
+    <state name="onground_standing_right" sym="right"/>
+
+    <state name="onground_moving_left" sym="left"/>
+    <state name="onground_moving_right" sym="right"/>
+
+    <state name="onground_knocked-out_left" image="baleog_ko_left.png"/>
+    <state name="onground_knocked-out_right" image="baleog_ko_right.png"/>
+
+    <state name="falling_standing_right" sym="right"/>
+    <state name="falling_standing_left" sym="left"/>
+    <state name="falling_moving_right" sym="right"/>
+    <state name="falling_moving_left" sym="left"/>
+
+    <state name="onground_bow-stretching_left" sym="shoot_left"/>
+    <state name="onground_bow-stretching_right" sym="shoot_right"/>
+
+    <state name="onground_sword-fighting_left" sym="left"/>
+    <state name="onground_sword-fighting_right" sym="right"/>
+
+    <!-- Well, Baleog isn't able to shoot and cut with sword when he's
+	 falling. But everything went bad when I was testing freeVikings
+	 on 19th July 2005 and this paragraph solved the problem,
+	 so it's here until the problem is solved better.
+
+	 (On 3rd January 2006 this comment moved from warior.rb to this file
+	 together with the Baleog's Model setup.
+	 I'm too lazy to try to solve this problem...) -->
+    <state name="falling_bow-stretching_left" sym="shoot_left"/>
+    <state name="falling_bow-stretching_right" sym="shoot_right"/>
+    <state name="falling_sword-fighting_left" sym="left"/>
+    <state name="falling_sword-fighting_right" sym="right"/>
+  </states>
+</model>
