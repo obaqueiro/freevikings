@@ -23,9 +23,20 @@
     <trunc>true</trunc>
   </outputter>
 
+  <!-- Logfile outputter;
+       Errors and Fatal errors from 'init log' (mostly messages of uncought
+       exceptions) go there. -->
+  <outputter name="crashout">
+    <level>ERROR</level>
+    <type>FileOutputter</type>
+    <filename>log/crash.log</filename>
+    <trunc>true</trunc>
+  </outputter>
+
   <!-- Log for initialization and top-level output (see init.rb, game.rb) -->
   <logger name="init log" level="INFO">
     <outputter>initout</outputter>
+    <outputter>crashout</outputter>
     <outputter>loo</outputter>
   </logger>
 

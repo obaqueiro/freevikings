@@ -39,11 +39,24 @@ module FreeVikings
 
       @log.info "Log4r logging mechanisms initialized."
 
-      catch(:game_exit) do
-        start_menu
+
+
+
+      begin
+
+
+        catch(:game_exit) do
+          start_menu
+        end
+        # The stack's been unwinded. The user has exited freeVikings.
+        @log.info "Game exitted."
+
+
+      rescue => e
+        @log.info "Uncaught exception detected. Please, send the crash log file 'log/crash.log' together with a detailed description what you were doing when the game crashed to <severus@post.cz>. Your bug report will help me a lot."
+        @log.fatal "Uncaught exception (#{e.class}): " + e.message
+        raise
       end
-      # The stack's been unwinded. The user has exited freeVikings.
-      @log.info "Game exitted."
     end
 
     private
