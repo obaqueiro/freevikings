@@ -55,7 +55,7 @@ It's a man (or woman, monster, ...) who carries the shield.
                      when 'top'
                        @shielder.rect.left 
                      when 'left'
-                       @shielder.rect.left - 20 - 2
+                       @shielder.rect.left - WIDTH - 2
                      when 'right'
                        @shielder.rect.right + 2
                      end # case state

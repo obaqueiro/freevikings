@@ -28,15 +28,13 @@ module FreeVikings
       @shield.update
     end
 
-    alias_method :_update, :update
-
     def destroy
       Viking.shield = nil # remove the shield reference (shield disappeared)
       super
     end
 
     def update
-      _update
+      super
       @shield.unofficial_update
     end
 
