@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+
+<!--
+olaf_model.xml
+igneus 3.1.2005
+
+Model description for Olaf (the yellow guy with shield).
+-->
+
+<model>
+  <load_pre>
+    <!-- Simple standing images -->
+    <image sym="left1">vikings/olaf/olaf_walk2_left.tga</image>
+    <image sym="right1">vikings/olaf/olaf_walk2_right.tga</image>
+
+    <!-- Images used for the breathing-animation -->
+    <image sym="right_breath">vikings/olaf/olaf_breath_right.tga</image>
+    <image sym="left_breath">vikings/olaf/olaf_breath_left.tga</image>
+
+    <!-- Walking left -->
+    <animation sym="move_left">
+      <image sym="left1"/>
+      <image>vikings/olaf/olaf_walk1_left.tga</image>
+    </animation>
+
+    <!-- Walking right -->
+    <animation sym="move_right">
+      <image sym="right1"/>
+      <image>vikings/olaf/olaf_walk1_right.tga</image>
+    </animation>
+
+    <!-- Standing looking right -->
+    <animation sym="stand_right">
+      <image sym="right1"/>
+      <image sym="right_breath"/>
+    </animation> 
+
+    <!-- Standing looking left -->
+    <animation sym="stand_left">
+      <image sym="left1"/>
+      <image sym="left_breath"/>      
+    </animation>
+
+    <!-- Knocked out -->
+    <animation sym="ko">
+      <image>vikings/olaf/olaf_ko1.tga</image>
+      <image>vikings/olaf/olaf_ko2.tga</image>
+    </animation>
+  </load_pre>
+
+  <states>
+    <state name="onground_standing_left" sym="stand_left"/>
+    <state name="onground_standing_right" sym="stand_right"/>
+
+    <state name="onground_moving_left" sym="move_left"/>
+    <state name="onground_moving_right" sym="move_right"/>
+
+    <state name="onground_knocked-out_left" sym="ko"/>
+    <state name="onground_knocked-out_right" sym="ko"/>
+
+    <state name="falling_standing_right" sym="right1"/>
+    <state name="falling_standing_left" sym="left1"/>
+    <state name="falling_moving_right" sym="right1"/>
+    <state name="falling_moving_left" sym="left1"/>
+  </states>
+</model>
