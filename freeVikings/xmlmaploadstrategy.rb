@@ -5,7 +5,6 @@
 
 require 'rexml/document'
 
-require 'maploadstrategy.rb'
 require 'exit.rb'
 
 module FreeVikings
