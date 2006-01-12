@@ -9,16 +9,26 @@ Model description for Baleog.
 
 <model>
   <load_pre>
-    <image sym="left">baleog_left.png</image>
-    <image sym="right">baleog_right.png</image>
+    <image sym="left">vikings/baleog/baleog_stand_left.tga</image>
+    <image sym="right">vikings/baleog/baleog_stand_right.tga</image>
+
+    <animation sym="stand_left">
+      <image>vikings/baleog/baleog_stand_left.tga</image>
+      <image>vikings/baleog/baleog_breath_left.tga</image>
+    </animation>
+
+    <animation sym="stand_right">
+      <image>vikings/baleog/baleog_stand_right.tga</image>
+      <image>vikings/baleog/baleog_breath_right.tga</image>
+    </animation>
 
     <image sym="shoot_left">baleog_shooting_left.png</image>
     <image sym="shoot_right">baleog_shooting_right.png</image>
   </load_pre>
 
   <states>
-    <state name="onground_standing_left" sym="left"/>
-    <state name="onground_standing_right" sym="right"/>
+    <state name="onground_standing_left" sym="stand_left"/>
+    <state name="onground_standing_right" sym="stand_right"/>
 
     <state name="onground_moving_left" sym="left"/>
     <state name="onground_moving_right" sym="right"/>

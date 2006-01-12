@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<!--
+green_dwarf_model.xml
+igneus 7.11.2005
+The small pretty green guy with red cap and long grey beard.
+-->
+
+<model>
+  <load_pre>
+    <image sym="sleep">green_dwarf_sleep.tga</image>
+    <image sym="base">green_dwarf_1.tga</image>
+    <image sym="mouthopen">green_dwarf_2.tga</image>
+
+    <animation sym="speaking">
+      <image sym="base"/>
+      <image sym="mouthopen"/>
+    </animation>
+
+    <animation sym="waiting">
+      <image sym="base"/>
+      <image sym="sleep"/>
+    </animation>
+  </load_pre>
+
+  <states>
+    <state name="sleeping" sym="sleep"/>
+    <state name="waiting" sym="waiting"/>
+    <state name="speaking" sym="speaking"/>
+  </states>
+</model>
