@@ -1,4 +1,4 @@
-#!/usr/bin/ruby -w
+#!/usr/bin/ruby
 
 # animationtester.rb
 # igneus 12.9.2005
