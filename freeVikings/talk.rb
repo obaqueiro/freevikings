@@ -93,26 +93,21 @@ called yet or if the ((<Talk>))'s finished.
       @next_sentence_index += 1
 
       if talk_completed? then
-        reinitialize_internals
         return nil
       else
         return @next_sentence_index
       end
     end
 
-    private
-
     def talk_completed?
       @next_sentence_index >= @talk.size
     end
 
     # Reinitializes the Talk, so it can be started again.
-    def reinitialize_internals
+    def restart
       @next_sentence_index = 0
       @speakers = nil
     end
-
-    public
 
 =begin
 == Exception classes

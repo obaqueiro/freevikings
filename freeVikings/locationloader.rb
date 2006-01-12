@@ -91,21 +91,21 @@ for the location being loaded.
 
           eval "script::LOCATION = location"
         }
-      rescue Script::MissingFile => mfex
-        @log.error "Could not load the scriptfile: #{mfex.message}"
-      rescue SyntaxError
-        @log.error "Syntax error in the scriptfile #{scriptfile}. "
-      rescue NameError => ne
-        @log.error "NameError in the scriptfile #{scriptfile}:" \
-        "#{ne.message}\n#{ne.backtrace.join("\n")}"
-      rescue LoadError => le
-        @log.error "LoadError in scriptfile #{scriptfile}: #{le.message}"
-      rescue TypeError => te
-        @log.error "TypeError in scriptfile #{scriptfile}: #{te.message}"
-      rescue Image::ImageFileNotFoundException => infe
-        @log.error infe.message + "\nScriptfile wasn't loaded successfully."
+      rescue => ex
+        # Construct an error message.
+        # Backtrace is cut so that it ends on the scriptfile (doesn't continue
+        # through the stack of core-methods-calls)
+        msg = "#{ex.class} in script '#{scriptfile}': #{ex.message}"
+        scriptfile_regex = Regexp.new scriptfile
+        begin
+          n = ex.backtrace.shift
+          msg += "\t" + n + "\n"
+        end while not (n =~ scriptfile_regex)
+        msg.chop! # chop the last '\n' which is superfluous
+
+        @log.error msg
       else
-        @log.info "Scriptfile #{scriptfile} successfully loaded."
+        @log.info "Script '#{scriptfile}' successfully loaded."
       end
     end
 
