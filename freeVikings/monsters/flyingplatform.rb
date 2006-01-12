@@ -54,6 +54,8 @@ It's used as a list of coordinates the (({FlyingPlatform})) flies through.
          @destinations[@dest][1] == @rect.top)
     end
 
+    private
+
     def update_position
       if @rect.top == @destinations[@dest][1] and
           @rect.left == @destinations[@dest][0] then
