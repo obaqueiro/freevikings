@@ -87,7 +87,7 @@ the needs of (({Model})).
     # Initializes the images. It's called from the constructor of Entity.
 
     def init_images
-      @image = Model.new self
+      @image = Model.new
       begin
         @image.add_pair "closed", Image.load('door_closed.tga')
         @image.add_pair "open", Image.load('door_open.tga')

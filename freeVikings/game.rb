@@ -65,13 +65,7 @@ at once in a multithreaded application). But I wouldn't do that...
 
       paint_loading_screen @app_window
 
-      # set defaults:
-      levelset = FreeVikings::DEFAULT_LEVELSET_DIR
-
-      # some defaults can be redefined by the player's options:
-      if FreeVikings::OPTIONS['levelset']
-        levelset = FreeVikings::OPTIONS['levelset']
-      end
+      levelset = FreeVikings::OPTIONS['levelset']
 
       begin
         @world = StructuredWorld.new(levelset, startpassword)

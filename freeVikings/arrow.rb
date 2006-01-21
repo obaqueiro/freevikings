@@ -33,7 +33,7 @@ module FreeVikings
     def initialize(start_pos, velocity)
       super([start_pos[0], start_pos[1], WIDTH, HEIGHT], velocity)
 
-      @image = Model.new(self)
+      @image = Model.new()
       @image.add_pair('left', Image.load('arrow_left.tga'))
       @image.add_pair('right', Image.load('arrow_right.tga'))
       @hunted_type = Monster

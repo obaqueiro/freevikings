@@ -13,7 +13,6 @@ module FreeVikings
   GFX_DIR = 'gfx' # directory with graphics
   OPTIONS = {} # hash with long options as keys
 
-  # main application window sizes
   WIN_WIDTH = 640
   WIN_HEIGHT = 480
 
@@ -21,6 +20,10 @@ module FreeVikings
   DEFAULT_LEVELSET_DIR = 'locs/DefaultCampaign'
 
   LOCATION_PASSWORD_LENGTH = 4
+
+  # Options defaults:
+  OPTIONS['freevikings_home'] = '.'
+  OPTIONS['levelset'] = DEFAULT_LEVELSET_DIR
 
   # get the version number
   if File.exist?('RELEASE')

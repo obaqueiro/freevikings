@@ -88,7 +88,7 @@ paint and draw graphics.
     def init_images
       left = Image.load('sword_left.png')
       right = Image.load('sword_right.png')
-      @image = Model.new self
+      @image = Model.new
       @image.add_pair 'left', left
       @image.add_pair 'right', right
     end

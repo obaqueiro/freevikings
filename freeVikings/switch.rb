@@ -1,7 +1,14 @@
 # switch.rb
 # igneus 9.6.2005
 
-# Prepinac
+=begin
+= NAME
+Switch
+= DESCRIPTION
+The switch you can switch by up/down arrow with a vikingstanding next to it.
+= Superclass
+ActiveObject
+=end
 
 require 'monster.rb'
 
@@ -25,7 +32,7 @@ module FreeVikings
         'false' => get_theme_image('switch_off')
       }
 
-      @image = Model.new(self, images)
+      @image = Model.new(images)
     end
 
     attr_reader :state

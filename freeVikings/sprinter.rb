@@ -54,7 +54,7 @@ module FreeVikings
       i_left = Image.load('erik_left.png')
       i_right = Image.load('erik_right.png')
 
-      @image = Model.new(self)
+      @image = Model.new
 
       @image.add_pair('onground_standing_left', i_left)
       @image.add_pair('onground_standing_right', i_right)

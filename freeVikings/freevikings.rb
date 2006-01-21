@@ -3,7 +3,8 @@
 # freevikings.rb
 # igneus 18.1.2004
 
-# Pokus o reimplementaci hry Lost Vikings.
+# FreeVikings project is trying to clone the brilliant
+# Lost Vikings game.
 
 require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
 
