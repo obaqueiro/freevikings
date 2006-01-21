@@ -3,8 +3,6 @@
 
 # Collection of mock classes which are useful for unit testing.
 
-require 'maploadstrategy.rb'
-
 module FreeVikings
 
   module Mock
