@@ -81,10 +81,10 @@ So use a lot of snails anywhere :o) !
       i_left = Image.load 'snail_left.tga'
       i_right = Image.load 'snail_right.tga'
 
-      @image = Model.new(self, {'onground_standing_left' => i_left,
-                                    'onground_moving_left' => i_left,
-                                    'onground_standing_right' => i_right,
-                                    'onground_moving_right' => i_right})
+      @image = Model.new({'onground_standing_left' => i_left,
+                          'onground_moving_left' => i_left,
+                          'onground_standing_right' => i_right,
+                          'onground_moving_right' => i_right})
     end
 
     private

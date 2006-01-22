@@ -45,7 +45,7 @@ module FreeVikings
       i_left = Animation.new(0.3, l_imgs)
       i_right = Animation.new(0.3, r_imgs)
 
-      @image = Model.new(self, {'left' => i_left, 'right' => i_right})
+      @image = Model.new({'left' => i_left, 'right' => i_right})
     end
 
     private

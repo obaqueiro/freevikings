@@ -68,7 +68,7 @@ It's defined to support (({Model})).
     end
 
     def init_images
-      @image = Model.new(self)
+      @image = Model.new
       @image.add_pair 'true', Image.load('arrowshooter_on.tga')
       @image.add_pair 'false', Image.load('arrowshooter_off.tga')
     end

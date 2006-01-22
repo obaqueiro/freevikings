@@ -13,7 +13,7 @@ module FreeVikings
       super(startpos, velocity)
       @rect.w = 15; @rect.h = 10
       @hunted_type = Hero
-      @image = Model.new self
+      @image = Model.new
       @image.add_pair 'left', Image.load('redshoot_left.tga')
       @image.add_pair 'right', Image.load('redshoot_right.tga')
     end

@@ -74,7 +74,7 @@ module FreeVikings
         'onground_moving_right' => i_right,
         'onground_angry_right' => Image.load('robot_right_angry.tga')
       }
-      @image = Model.new(self, images)
+      @image = Model.new(images)
     end
 
     private
