@@ -58,10 +58,6 @@ module FreeVikings
       not @state
     end
 
-    def image
-      @image.image
-    end
-
     private
 
     def switch

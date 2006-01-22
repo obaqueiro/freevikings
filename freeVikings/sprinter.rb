@@ -51,31 +51,7 @@ module FreeVikings
 
     private
     def init_images
-      i_left = Image.load('erik_left.png')
-      i_right = Image.load('erik_right.png')
-
-      @image = Model.new
-
-      @image.add_pair('onground_standing_left', i_left)
-      @image.add_pair('onground_standing_right', i_right)
-      @image.add_pair('onground_moving_left', i_left)
-      @image.add_pair('onground_moving_right', i_right)
-
-      @image.add_pair('onground_knocked-out_left', Image.load('erik_ko_left.png'))
-      @image.add_pair('onground_knocked-out_right', Image.load('erik_ko_right.png'))
-
-      @image.add_pair('falling_standing_right', i_right)
-      @image.add_pair('falling_standing_left', i_left)
-      @image.add_pair('falling_moving_right', i_right)
-      @image.add_pair('falling_moving_left', i_left)
-      @image.add_pair('falling_jumping_left', i_left)
-      @image.add_pair('falling_jumping_right', i_right)
-
-      @image.add_pair('rising_jumping_left', i_left)
-      @image.add_pair('rising_jumping_right', i_right)
-
-      @image.add_pair('onground_jumping_left', i_left)
-      @image.add_pair('onground_jumping_right', i_right)
+      @image = Model.load_new(File.open('gfx/models/erik_model.xml'))
 
       @portrait = Portrait.new 'erik_face.tga', 'erik_face_unactive.gif', 'dead_face.png'
     end
