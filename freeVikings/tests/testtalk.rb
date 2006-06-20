@@ -11,6 +11,10 @@ class TestTalk < Test::Unit::TestCase
 
   include FreeVikings
 
+  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+  # Constants which include the testing YAML data are at the end of the file. #
+  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+
   def setup
     @talk = Talk.new(TALK)
 
@@ -53,14 +57,25 @@ class TestTalk < Test::Unit::TestCase
     end
   end
 
-  def testStartOnceMoreAfterTheTalkIsFinished
+  def testExceptionAfterTheTalkIsFinished
     @talk.start(@sp1, @sp2)
-    while @talk.running? do
+    while not @talk.talk_completed? do
       @talk.next
     end
 
-    assert_nothing_raised("The talk was started, ran until it finished and now it should be startable again.") do
-      @talk.start(@sp1, @sp2)
+    assert_raise(Talk::EndOfSpeechException,
+                 "The talk was started, ran until it finished and now "\
+                 "it should raise an exception because there is nothing "\
+                 "more to be said.") do
+      @talk.next
+    end
+  end
+
+  def testTooHighSpeakerNumber
+    assert_raise(Talk::SpeakerIDException,
+                 "Two speakers are declared, speaker no.2 would be the third "\
+                 "one. An exception must be raised.") do
+      Talk.new OVERSPEAKER_TALK
     end
   end
 
@@ -87,4 +102,14 @@ talk: - speaker: 0
       - speaker: 0
         say: My cat died in the morning.
 EOT
+
+OVERSPEAKER_TALK = <<EOT
+--- %YAML:1.0
+# Test talk of the two speakers.
+speakers: 2
+talk: - speaker: 2
+        say: Good morning.
+EOT
+
+
 end

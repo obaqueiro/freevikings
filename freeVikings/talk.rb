@@ -23,6 +23,7 @@ module FreeVikings
       @doc = YAML.load yaml_source
       @num_speakers = @doc['speakers']
       @talk = @doc['talk']
+      check_data_validity
 
       @next_sentence_index = nil
       @speakers = nil
@@ -54,6 +55,12 @@ If the ((<Talk>))'s already started and hasn't finished yet,
         raise BadNumberOfSpeakersException, "This Talk is for #{@num_speakers} so it cannot be started with #{speakers.size}."
       end
 
+      speakers.each do |s|
+        if s == nil then
+          raise ArgumentError, "Nil speaker given (on index #{speakers.index(s)})"
+        end
+      end
+
       @speakers = speakers
 
       @next_sentence_index = 0
@@ -61,6 +68,7 @@ If the ((<Talk>))'s already started and hasn't finished yet,
 
 =begin
 --- Talk#running?
+Says if the talk has been started.
 =end
 
     def running?
@@ -85,6 +93,11 @@ called yet or if the ((<Talk>))'s finished.
       end
 
       node = @talk[@next_sentence_index]
+
+      if node == nil then
+        raise EndOfSpeechException, "The talk has been finished. There is nothing more to be said."
+      end
+
       speaker_index = node['speaker']
       sentence = node['say']
 
@@ -99,6 +112,12 @@ called yet or if the ((<Talk>))'s finished.
       end
     end
 
+=begin
+--- Talk#talk_completed?
+Says if the talk has been completed. (You can use this to avoid
+calling to ((<Talk#next>)) on the completed talk which would raise 
+an exception.)
+=end
     def talk_completed?
       @next_sentence_index >= @talk.size
     end
@@ -108,6 +127,20 @@ called yet or if the ((<Talk>))'s finished.
       @next_sentence_index = 0
       @speakers = nil
     end
+
+    private
+
+    # Checks if the object data (loaded from YAML document) are valid
+    def check_data_validity
+      @talk.each do |node|
+        if node['speaker'] >= @num_speakers or
+            node['speaker'] < 0 then
+          raise SpeakerIDException, "Invalid speaker ID #{node['speaker']}; must be 0 <= id < #{@num_speakers}"
+        end
+      end
+    end
+
+    public
 
 =begin
 == Exception classes
@@ -136,6 +169,20 @@ hasn't been finished yet.
 =end
 
     class TalkRunningException < RuntimeError
+    end
+
+=begin
+--- Talk::SpeakerIDException
+Raised by ((<Talk.new>)) if an invalid speaker ID is used in the YAML file.
+=end
+    class SpeakerIDException < RuntimeError
+    end
+
+=begin
+--- Talk::EndOfSpeechException
+Raised by ((<Talk#next>)) if there is nothing more to be said.
+=end
+    class EndOfSpeechException < RuntimeError
     end
   end # class Talk
 end # module FreeVikings
