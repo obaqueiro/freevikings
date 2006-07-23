@@ -8,5 +8,6 @@
 
   <data>
     <image name="bridge" image="bridge_techno.tga" />
+    <image name="animated apex" image="animapex_techno.tga" />
   </data>
 </gfx_theme>
