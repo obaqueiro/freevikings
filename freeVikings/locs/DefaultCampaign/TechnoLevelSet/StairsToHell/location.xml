@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Stairs To Hell</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>STLL</password>
+    <map src="stairs_loc.tmx"/>
+    <script src="stairs_script.rb"/>
+    <start horiz="2400" vertic="540"/>
+    <exit horiz="2080" vertic="1040"/>
+  </body>
+</location>

@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<gfx_theme>
+  <info>
+    <name>Techno Theme</name>
+    <directory>themes/TechnoTheme</directory>
+  </info>
+
+  <data>
+    <image name="bridge" image="bridge_techno.tga" />
+  </data>
+</gfx_theme>
