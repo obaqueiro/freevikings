@@ -3,6 +3,7 @@
 
 require 'monsters/lift'
 require 'helpbutton'
+require 'monsters/animatedapex'
 
 bridge_y = []
 680.step(1200,80) {|i| bridge_y.push i}
@@ -20,3 +21,8 @@ LOCATION << HelpButton.new([1520, 80],
                            "Try to make stairs down to the gate "\
                            "using the lifts. All the vikings will be able "\
                            "to go down the stairs.", LOCATION)
+
+6.times {|i|
+  LOCATION << AnimatedApex.new([(40 + 3*i + 1) *40,34*40], LOCATION.theme)
+  LOCATION << AnimatedApex.new([(40 + 3*i + 2) *40,34*40], LOCATION.theme)
+}
