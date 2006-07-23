@@ -100,6 +100,9 @@ for the location being loaded.
         begin
           n = ex.backtrace.shift
           msg += "\t" + n + "\n"
+        rescue TypeError
+          # scriptfile not found in backtrace. It's a pity, but...
+          break
         end while not (n =~ scriptfile_regex)
         msg.chop! # chop the last '\n' which is superfluous
 
