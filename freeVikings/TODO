@@ -1,0 +1,15 @@
+           ===========================================
+           ========== FreeVikings TODO file ==========
+           ===========================================
+
+(-) Theme definition (theme.xml) in gfx/themes/XXXTheme, 
+    not in locs/DefaultCampaign/XXXLevelSet => more LevelSets can share 
+    the same graphic theme
+
+(-) Finish graphics of the vikings
+
+(-) Enable different skins for the vikings
+
+(-) User's configuration file
+
+(-) Installation
