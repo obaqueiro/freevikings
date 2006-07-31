@@ -5,7 +5,7 @@ require 'switch.rb'
 require 'monsters/arrowshooter.rb'
 
 shooter = ArrowShooter.new [8*40, 9*40]
-LOCATION.add_sprite shooter
+LOCATION << shooter
 
 switch = Switch.new([2*40, 5*40],
                     LOCATION.theme,
@@ -17,4 +17,4 @@ switch = Switch.new([2*40, 5*40],
                         shooter.off
                       end
                     end)
-LOCATION.activeobjectmanager.add switch
+LOCATION << switch

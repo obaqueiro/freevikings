@@ -8,5 +8,5 @@ FLOOR = 440
 
 talk_source = File.open(File.dirname(__FILE__) + '/small_talk.yaml')
 
-MONSTERS << OrangeHead.new([200, FLOOR - OrangeHead::HEIGHT],
+LOCATION << OrangeHead.new([200, FLOOR - OrangeHead::HEIGHT],
                            Talk.new(talk_source))

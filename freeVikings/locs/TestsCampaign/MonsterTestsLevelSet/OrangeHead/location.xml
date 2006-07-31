@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>OrangeHead monster test</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Location for OrangeHead monster testing.
+      OrangeHead is the first monster which should be able to talk
+      with the vikings.
+    </description>
+  </info>
+
+  <body>
+    <password>OGHE</password>
+    <map src="orangehead_test_loc.xml"/>
+    <script src="orangehead_test_script.rb"/>
+    <exit horiz="500" vertic="360" />
+    <start horiz="50" vertic="140" />    
+  </body>
+</location>
