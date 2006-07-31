@@ -35,16 +35,27 @@ module FreeVikings
 
     private
 
-    def update_rect
-      i = @location.ticker.now % 3
-      c = i / 3
+    ANIMATION_PERIOD = 5
 
-      @rect.h = HEIGHT * c
+    def update_rect
+      ap = animation_period
+      i = @location.ticker.now % ap
+      c = i / ap
+
+      if c <= 0.5 then
+        @rect.h = HEIGHT * c * 2
+      else
+        @rect.h = 
+      end
       @rect.top = @first_top + (HEIGHT - @rect.h)
     end
 
     def update_image
       @surface = @base_surface.zoom(1, @rect.h/HEIGHT, 0)
+    end
+
+    def animation_period
+      ANIMATION_PERIOD
     end
   end # class AnimatedApex
 end # module FreeVikings

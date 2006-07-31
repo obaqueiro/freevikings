@@ -40,6 +40,7 @@ module FreeVikings
           end
 
           if viking
+            @talk.restart
             @talk.start(self, viking)
           end
         end
@@ -52,7 +53,7 @@ module FreeVikings
     end
 
     def init_images
-      @image = Model.new(self)
+      @image = Model.new
 
       i_normal = Image.load 'heady.tga'
       i_lower = Image.load 'heady_lower.tga'
