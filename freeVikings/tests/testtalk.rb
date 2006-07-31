@@ -71,6 +71,30 @@ class TestTalk < Test::Unit::TestCase
     end
   end
 
+  def testRunning
+    @talk.start(@sp1, @sp2)
+    assert @talk.running?, "Talk is running now."
+  end
+
+  def testNotRunningAfterTalkFinished
+    @talk.start(@sp1, @sp2)
+    while not @talk.talk_completed? do
+      @talk.next
+    end
+    assert((not @talk.running?), "Talk has been just finished, it isn't running.")
+  end
+
+  def testCanRestartWhenNotRunning
+    @talk.start(@sp1, @sp2)
+    while @talk.running? do
+      @talk.next
+    end
+    @talk.restart
+    assert_nothing_raised("The talk isn't running, so we should be able to start it once more.") do
+      @talk.start(@sp2, @sp1)
+    end    
+  end
+
   def testTooHighSpeakerNumber
     assert_raise(Talk::SpeakerIDException,
                  "Two speakers are declared, speaker no.2 would be the third "\
