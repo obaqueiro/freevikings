@@ -25,9 +25,17 @@ module FreeVikings
       @talk = @doc['talk']
       check_data_validity
 
+      set_initial_state
+    end
+
+    private
+
+    def set_initial_state
       @next_sentence_index = nil
       @speakers = nil
     end
+
+    public
 
 =begin
 --- Talk#num_speakers
@@ -72,7 +80,7 @@ Says if the talk has been started.
 =end
 
     def running?
-      return ! @speakers.nil?
+      ((! @speakers.nil?) and (! talk_completed?))
     end
 
 =begin
@@ -117,15 +125,19 @@ called yet or if the ((<Talk>))'s finished.
 Says if the talk has been completed. (You can use this to avoid
 calling to ((<Talk#next>)) on the completed talk which would raise 
 an exception.)
+If the talk hasn't been started yet, returns true.
 =end
     def talk_completed?
-      @next_sentence_index >= @talk.size
+      if @next_sentence_index then
+        return @next_sentence_index >= @talk.size
+      else
+        return true
+      end
     end
 
     # Reinitializes the Talk, so it can be started again.
     def restart
-      @next_sentence_index = 0
-      @speakers = nil
+      set_initial_state
     end
 
     private

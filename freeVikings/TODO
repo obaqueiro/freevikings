@@ -2,6 +2,11 @@
            ========== FreeVikings TODO file ==========
            ===========================================
 
+======== To be done: ==========================================================
+
+(-) Convert all the Monster test locations to the new location standard
+    (with no PASSWORD file and with location.xml)
+
 (-) Theme definition (theme.xml) in gfx/themes/XXXTheme, 
     not in locs/DefaultCampaign/XXXLevelSet => more LevelSets can share 
     the same graphic theme
@@ -13,3 +18,5 @@
 (-) User's configuration file
 
 (-) Installation
+
+======== Already finished: ====================================================

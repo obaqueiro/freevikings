@@ -82,6 +82,10 @@ password is run instead of the next one.
     private
 
     def create_location
+      if @level.nil? then
+        raise "No more level found. Currently loaded LevelSuite from directory '#{@levelsuite.dirname}'."
+      end
+
       @location = Location.new(@level.loader, @level.gfx_theme)
     end
 
