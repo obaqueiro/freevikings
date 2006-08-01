@@ -11,6 +11,6 @@
     <map src="stairs_loc.tmx"/>
     <script src="stairs_script.rb"/>
     <start horiz="2400" vertic="540"/>
-    <exit horiz="2080" vertic="1040"/>
+    <exit horiz="70" vertic="70"/>
   </body>
 </location>
