@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<!--
+guard_robot_model.xml
+igneus 1.8.2006
+
+The unfriendly violet robot
+-->
+
+<model>
+  <load_pre>
+    <image sym="st">guard_robot_standing.tga</image>
+    <image sym="l">guard_robot_fighting_left.tga</image>
+    <image sym="r">guard_robot_fighting_right.tga</image>
+  </load_pre>
+
+  <states>
+    <state name="standing" sym="st" />
+    <state name="warning_left" sym="l" />
+    <state name="fighting_left" sym="l" />
+    <state name="warning_right" sym="r" />
+    <state name="fighting_right" sym="r" />
+  </states>
+</model>
