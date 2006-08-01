@@ -1,25 +1,11 @@
 <?xml version="1.0"?>
-<location>
+<map>
+  <blocktypes>
+    <blocktype code="0" path="themes/TestsTheme/test_free_tile.tga" />
+    <blocktype code="1" path="themes/TestsTheme/test_base_tile.tga" solid="solid" />
+  </blocktypes>
 
-  <info>
-    <title>Prototype</title>
-    <author>Jakub Pavlík - severus@post.cz</author>
-    <description>
-      Prototype testing location.
-    </description>
-  </info>
-
-  <scripts>
-    <monsters path='penguin_script.rb' />
-  </scripts>
-
-  <map>
-    <blocktypes>
-      <blocktype code="0" path="themes/TestsTheme/test_free_tile.tga" />
-      <blocktype code="1" path="themes/TestsTheme/test_base_tile.tga" solid="solid" />
-    </blocktypes>
-
-    <blocks>
+  <blocks>
 1111111111111111
 1000000000000001
 1000000000000001
@@ -34,8 +20,5 @@
 1111111111111111
 </blocks>
 
-    <exit horiz="500" vertic="360" />
-    <start horiz="50" vertic="140" />    
-  </map>
-
-</location>
+  
+</map>

@@ -45,7 +45,7 @@ module FreeVikings
       if c <= 0.5 then
         @rect.h = HEIGHT * c * 2
       else
-        @rect.h = 
+        @rect.h = HEIGHT - (HEIGHT * (c - 0.5) * 2)
       end
       @rect.top = @first_top + (HEIGHT - @rect.h)
     end

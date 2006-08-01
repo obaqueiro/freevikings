@@ -6,4 +6,4 @@
 load 'monsters/penguin.rb'
 
 penguin = Penguin.new [300, 11*40-Penguin::HEIGHT]
-LOCATION.add_sprite penguin
+LOCATION << penguin

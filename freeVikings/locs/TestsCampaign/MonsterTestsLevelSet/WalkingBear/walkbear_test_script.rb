@@ -5,4 +5,4 @@ require 'monsters/bear.rb'
 
 FLOOR = 440
 
-MONSTERS << FreeVikings::WalkingBear.new([200, FLOOR - WalkingBear::HEIGHT], 150)
+LOCATION << WalkingBear.new([200, FLOOR - WalkingBear::HEIGHT], 150)
