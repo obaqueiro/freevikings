@@ -10,7 +10,10 @@
   </info>
 
   <suite>
-    <level>Prototype</level>
+    <!-- <level>Prototype</level> 
+	 Only a template, 
+	 really boring for playing, because totally empty -->
+    <level>GuardRobot</level>
     <level>WalkingBear</level>
     <level>OrangeHead</level>
     <level>ArrowShooter</level>
