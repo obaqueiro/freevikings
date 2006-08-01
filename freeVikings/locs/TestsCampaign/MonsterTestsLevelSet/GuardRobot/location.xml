@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Guard robot monster test</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>GRBT</password>
+    <map src="../Prototype/prototype_loc.xml"/> <!-- REUSE :-) -->
+    <script src="guardrobot_script.rb"/>
+    <exit horiz="500" vertic="360" />
+    <start horiz="50" vertic="140" />
+  </body>
+</location>
