@@ -51,6 +51,18 @@
       around a bit, ... Go on reading and make the best freeVikings level
       ever seen.
     </para>
+    <para>
+      This development guide is being written in the time of creation of
+      freeVikings v. 0.7. Some of the interfaces described below can be changed
+      in the future. Please, inform me, if you find out that the examples 
+      from this guide don't work or some interfaces don't behave as it is 
+      described here.
+    </para>
+    <para>
+      Everything in this guide is explained in the environment of unix-like
+      operating system such as Linux. I would like to apologize to all the
+      poor non-unix-systems-users.
+    </para>
   </chapter>
 
   <!-- ====================================================================
@@ -80,55 +92,90 @@
 	<application>GNU Emacs</application> (because I like this great beast),
 	but any editor with XML syntax highlighting is good enough for our 
 	purpose and you can, if you are some kind of fanatic, use
-	<application>ed</application> od <application>NotePad</application>.
+	<application>ed</application> od <application>NotePad</application>
+	of course.
       </para>
-      <sidebar>
-	<title>Text-editing fanatism</title>
-	<para>
-	  Just a word on text-editing fanatism. I think you know some 
-	  of the strange W!ndows users who say "NotePad forever!" and
-	  "Anyone who doesn't write web pages in NotePad isn't a programmer".
-	  What do they find so good on an editor which tries to save every
-	  file with suffix .txt unless you click two times more than you want?
-	</para>
-	<para>
-	  On they other hand I have heard about some old Un!x hackers who
-	  hesitate to use any other text editor than ancient
-	  <application>ed</application>. I don't understand them either but 
-	  I think they feel some kind of nostalgy using the pure line-editing
-	  stuff.
-	</para>
-      </sidebar>
       <para>
 	Another good thig to install on your computer is 
-	<application>Tiled</application>, a Java-written tile map editor.
-	It allows you to develop maps quickly (and gives you more time for
-	a much more interesting activity - scripting :o) ).
+	<application>Tiled</application> 
+	(<ulink url="http://tiled.rpgdx.net"/>), 
+	a Java-written tile map editor.
+	In fact you don't have to use it, it is also possible to make
+	maps using the plain text editor, but I won't describe it here,
+	because this kind of hand-made maps is ancient and deprecated.
       </para>
-      <graphic fileref="tiled.png"/>
+      <graphic fileref="images/tiled.png"/>
       <para>
 	<application>Tiled</application> produces simple but full-featured
-	human-readable map files in XML format. Maybe you know (but I don't 
-	think so) freeVikings have a native map format which is also subset
-	of XML language (I like XML very much since I've first learned 
-	about it). Support for <application>Tiled</application> maps was added
-	experimentally in release 0.5 because I think possibility of creating
-	maps in visual way will encourage people to create and share
-	new levels.
+	human-readable map<footnote><para>Well, not always human 
+	readable...</para></footnote> 
+	files in XML format.
       </para>
       <para>
 	Just one more application. Some graphic editor for creating all kinds
-	of graphics. I personally use <application>GIMP</application>.
-	It has a lot of interesting features, is scriptable (do you know 
-	Scheme? Don't you? It's fun!) and free (it means poor people
-	don't have to download it from warez servers and you can download and
-	read the whole source code if you want).
+	of graphics. I personally use <application>GIMP</application> 
+	(<ulink url="http://www.gimp.org"/>).
+	It has a lot of interesting features, is scriptable and free. 
 	You will need some graphic editor to make your own tilesets
 	(those distributed with freeVikings aren't still any good) and maybe
 	your own creatures to make the new levels more interesting.
       </para>
     </section>
-  </chapter>
+
+    <section>
+      <title>Setting up Tiled</title>
+      <para>
+	First run Tiled. Go to the directory, where you have unpacked and
+	installed it. On my machine it's 
+	<filename>~/dist/tiled-0.5.0/dist/</filename>. 
+	So I type on the terminal:
+	<screen>
+	  <computeroutput>[igneus@vidhost ~]$</computeroutput> <userinput>cd ~/dist/tiled-0.5.0/dist/</userinput>
+	  <computeroutput>[igneus@vidhost dist]$</computeroutput> <userinput>java -jar tiled.jar</userinput>
+	</screen>
+      </para>
+      <para>
+	The second command runs the Java application from archive 
+	<filename>tiled.jar</filename>
+	(in your installation it can have a different name!).
+	After a moment you should see something like this:
+      </para>
+      <graphic fileref="images/tiled_start.png" />
+      <para>
+	Of course some problems can (and probably will) occur. I, for example,
+	had to delete the pre-compiled binaries (which are by default packed 
+	in the distribution) and recompile the application, because it had been
+	linkde with newer libraries than I had on my machine.
+      </para>
+      <para>
+	When <application>Tiled</application> is running, open the menu
+	Edit and select item named Preferences. It has three tabs,
+	only the one called Saving is important for us. Set it to the state 
+	you can see on the image below, then click on Apply and OK.
+      </para>
+      <graphic fileref="images/tiled_preferences.png"/>
+      <para>
+	This setup is the only one which works well with freeVikings.
+	The other ones won't probably work well.
+      </para>
+    </section>
+
+    <section>
+      <title>New map</title>
+      <para>
+	Now we will try to design a new map using 
+	<application>Tiled</application>.
+      </para>
+    </section>
+
+    <section>
+      <title>Location data</title>
+    </section>
+
+    <section>
+      <title>Try it!</title>
+    </section> -->
+  </chapter> 
 
   <!-- ====================================================================
        Chapter: FREEVIKINGS BASICS
