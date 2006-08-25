@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>DevGuide: CH1: First map: example 1</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>FRMP</password>
+    <map src="firstmap_loc.tmx"/>
+    <start horiz="50" vertic="50"/>
+    <exit horiz="1110" vertic="70"/>
+  </body>
+</location>
