@@ -163,11 +163,102 @@
     <section>
       <title>New map</title>
       <para>
-	Now we will try to design a new map using 
-	<application>Tiled</application>.
+	Now we will try to design a new map using
+	<application>Tiled</application>. First you must have some tiles.
+	Soon you will use your own fancy tiles or the awful ones which come
+	packed with freeVikings, but now we will use the tiles I have prepared
+	for this tutorial. Make a new directory somewhere. Then copy the image
+	file with tiles to that directory. They are in the directory 
+	with examples for this chapter:
+	<filename>freeVikings/docs/develop_guide/examples/CH1_FirstMap/simple_tiles.png</filename>
+      </para>
+      <para>
+	Go to <application>Tiled</application> and create a new map 
+	(menu File, item New, or 
+	<keycombo><keysym>Ctrl</keysym><keysym>N</keysym></keycombo>).
+	A dialog will pop up, change the default values to those you can 
+	see on the image below. Currently freeVikings can work only with tiles
+	of size 40x40 pixels (maybe one day I'll make it more flexible) and 
+	maps should have at least 16x12 tiles, because a smaller map doesn't
+	fill the game window (and it's so small, that there will be no fun 
+	for the vikings I think).
+	<graphic fileref="images/tiled_newmap.png"/>
+      </para>
+      <para>
+	It's the time to load the tiles. From menu Tileset choose item 
+	New tileset. If you want you can change the Tileset name, but it is 
+	of no importance. What is important is to tick the checkbox
+	labelled "Reference tileset image" and then click on the Browse button
+	and find the image with tiles.
+      </para>
+      <para>
+	In the bottom-left corner of <application>Tiled</application> window
+	there is a really inconspicuous button (see the screenshot below).
+	Press it.
+      </para>
+      <graphic fileref="images/tiled_tilebutton.png"/>
+      <para>
+	The window which pops up is a "palette" of loaded tiles. 
+	If you have done everything how I told you to it should look like this:
+	<graphic fileref="images/tiled_tilespalette.png"/>
+	Click on one of the tiles, it automatically occurs on the button
+	which causes the palette to pop up.
+      </para>
+      <para>
+	Everything is ready, we can make our first map. Choose one of the two 
+	tiles (they are awful, I know, I have never had a sense of art),
+	choose the pencil tool from the toolbar on the left and start to design
+	the map. It could be useful for you to know that 
+	<application>Tiled</application> gives you a possibility of zooming
+	(zoom buttons are also in the toolbar). You should always try 
+	the menu View, where you can switch on/off highlighting of cursor
+	(not very useful), displaying the grid and coordinate numbers 
+	(sometimes useful).
+      </para>
+      <para>
+	So I have designed the map and saved it in the directory where I have
+	the tileset image.
+	<graphic fileref="images/tiled_firstmap1.png"/>
+	My (very simple) idea is that 
+	the vikings will start in the top left corner and they'll go always 
+	down, in every story some tough monster will be waiting to eat them.
+	After they bash the last monster, they will get into the lift
+	which will take them to the EXIT in the top right corner of the map.
+	Now we have the map, in the future chapters we'll add monsters etc.
+      </para>
+      <para>
+	What should have, but haven't told you:
+	<itemizedlist>
+	  <listitem><para>vikings are of size 80x100 px</para></listitem>
+	  <listitem><para>so every corridor must be at least three 
+	  tiles high</para></listitem>
+	  <listitem><para>and every shaft at least three tiles 
+	  wide</para></listitem>
+	</itemizedlist>
+	or the vikings won't be able to pass through...
       </para>
     </section>
 
+    <section>
+      <title>Metadata</title>
+      <para>
+	The map is nearly ready to use. We have to add just some additional
+	information for the freeVikings game engine. First we add information
+	about the solid layer.
+      </para>
+      <para>
+	<application>Tiled</application> gives you a possibility to have 
+	a multi-layer map and freeVikings support them. Usually you have
+	one layer, which is called "solid layer". It's the layer of solid tiles
+	which the vikings can't go through. Then you can have one or more
+	layers, which are there just to make the map nicer. But of course 
+	the game engine doesn't know which layer you want to be the solid one.
+      </para>
+
+      <!-- !!! F I N I S H !!! -->
+    </section>
+
+    <!--
     <section>
       <title>Location data</title>
     </section>
