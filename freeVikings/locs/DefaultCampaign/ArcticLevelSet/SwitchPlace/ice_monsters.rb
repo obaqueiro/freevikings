@@ -183,7 +183,7 @@ pos = [FirstCorridor::APPLEBAY_X, FirstCorridor::CEILING-IceBoard::HEIGHT]
 applebay_trapdoors = TwoTrapDoors.new(pos)
 applebay_trapdoors.in
 
-pos = [FirstCorridor::APPLEBAY_X, FirstCorridor::FLOOR + 1]
+pos = [FirstCorridor::APPLEBAY_X, FirstCorridor::FLOOR]
 downshaft_trapdoors = TwoTrapDoors.new(pos)
 downshaft_trapdoors.in
 
@@ -191,7 +191,7 @@ pos = [FirstCorridor::END_X - 4*Map::TILE_SIZE, FirstCorridor::CEILING - IceBoar
 secondcorridor_trapdoors = TwoTrapDoors.new(pos)
 secondcorridor_trapdoors.in
 
-pos = [FourthCorridor::BEGIN_X, FourthCorridor::FLOOR + 1]
+pos = [FourthCorridor::BEGIN_X, FourthCorridor::FLOOR]
 trapdoors_to_exit_corridor = TwoTrapDoors.new pos
 trapdoors_to_exit_corridor.in
 

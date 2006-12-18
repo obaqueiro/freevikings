@@ -99,7 +99,7 @@ LOCATION << bear
 
 x1 = Map::TILE_SIZE*21
 x2 = x1 + (7 * Map::TILE_SIZE)
-y = Map::TILE_SIZE*10+1
+y = Map::TILE_SIZE*10
 bridge_positions = [[x1, y], [x2, y]]
 
 bridge = WideBridge.new(bridge_positions[1], LOCATION.theme)
