@@ -15,6 +15,7 @@ SchwerEngine.config = FreeVikings
 
 require 'getoptlong'
 require 'log4r'
+require 'log4rsetupload'
 
 include FreeVikings
 
@@ -45,7 +46,8 @@ begin
     when "--ruby-warnings"
       $VERBOSE = true
     when "--extensions"
-      FreeVikings::OPTIONS['extensions'] = true       
+      FreeVikings::OPTIONS['extensions'] = true
+      Log4r::Logger['init log'].error "Compiled extensions are never more supported. The program may not work well and crash soon."
     when "--fps"
       FreeVikings::OPTIONS['display_fps'] = true
     when "--fullscreen"
@@ -63,8 +65,7 @@ begin
     end
   end # options.each block
 rescue GetoptLong::InvalidOption => ioex
-  print "ERROR: "
-  puts ioex.message
+  Log4r::Logger['init log'].fatal "Option error: "+ioex.message
   puts
   print_help_and_exit
 end

@@ -2,6 +2,15 @@
 		= freeVikings compiled extensions =
 	---------------------------------------------------
 
+==============================================================================
+= 12/24/2006                                                                 =
+=                                                                            =
+= The C++ extensions are not supported in the future versions                =
+= of freeVikings; if anybody wanted to, he can take care of them,            =
+= but I myself will not. They are never more up to date and won't probably   =
+= work well with the rest of the game.                                       =
+==============================================================================
+
 06/23/2005
 
 Maybe you are one of those who can't afford a strong machine which

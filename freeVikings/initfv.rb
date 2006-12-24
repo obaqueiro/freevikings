@@ -24,34 +24,19 @@ module FreeVikings
     include GameUI::Menus
 
     def initialize
-      @log = MockLogger.new
+      @log = Log4r::Logger['init log']
 
       load_logo
       load_font
       open_window
       display_logo
 
-      configure_log4r
-
-      exlog = @log
-      @log = Log4r::Logger['init log']
-      exlog.each {|l| @log.info l}
-
-      @log.info "Log4r logging mechanisms initialized."
-
-
-
-
       begin
-
-
         catch(:game_exit) do
           start_menu
         end
         # The stack's been unwinded. The user has exited freeVikings.
         @log.info "Game exitted."
-
-
       rescue => e
         @log.info "Uncaught exception detected. Please, send the crash log file 'log/crash.log' together with a detailed description what you were doing when the game crashed to <severus@post.cz>. Your bug report will help me a lot."
         @log.fatal "Uncaught exception (#{e.class}): " + e.message
@@ -141,16 +126,8 @@ module FreeVikings
       @window.flip
     end
 
-    def configure_log4r
-      require 'log4rsetupload'
-    end
-
     def clear_screen
       @window.fill [0,0,0]
     end
   end # class Init
-
-  class MockLogger < Array
-    alias_method :info, :push
-  end
 end # module FreeVikings

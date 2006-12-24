@@ -53,7 +53,8 @@ ruby freevikings.rb [-fFhpxls] [--fullscreen] [--fps] [--help] [--profile]
 
 --help		-h	Prints out this help and halts.
 --fullscreen    -f      Starts the game in the fullscreen mode
---extensions	-x	Uses compiled C++ extensions instead of some of the
+--extensions	-x	DEPRECATED!
+                        Uses compiled C++ extensions instead of some of the
 			critical classes. You must have built these extensions 
 			before you use this option.
 --fps		-F	Prints frames per second on the game screen
