@@ -70,6 +70,11 @@ for the location being loaded.
 =end
 
     def load_script(location)
+      unless @script
+        @log.warn "No script to load."
+        return
+      end
+
       scriptfile = @dir+'/'+@script
 
       if @script == "" then
@@ -153,8 +158,23 @@ on the beginning of game.
     # Gets private info from @doc
 
     def get_private_info
-      @map_file = @doc.root.elements['body'].elements['map'].attributes['src']
-      @script = @doc.root.elements['body'].elements['script'].attributes['src']
+      # map file name:
+      begin
+        @map_file = @doc.root.elements['body'].elements['map'].\
+        attributes['src']
+      rescue
+        @log.fatal "Location does not have a map file. Crashing."
+        raise
+      end
+
+      # script file name:
+      begin
+        @script = @doc.root.elements['body'].elements['script'].\
+        attributes['src']
+      rescue
+        @log.warn "Location does not have any script file."
+        @script = nil
+      end
     end
   end # class LocationLoader
 end # module FreeVikings
