@@ -43,12 +43,12 @@ module FreeVikings
 
       @tiletypes = [Tile.new(nil, false)] # tile 0 is 'null tile'
 
-      all_tiles = RUDL::Surface.load_new @dir+"/"+f
+      tileset_image = RUDL::Surface.load_new @dir+"/"+f
 
-      0.step(all_tiles.h - @tile_size, @tile_size) do |y|
-        0.step(all_tiles.w - @tile_size, @tile_size) do |x|
+      0.step(tileset_image.h - @tile_size, @tile_size) do |y|
+        0.step(tileset_image.w - @tile_size, @tile_size) do |x|
           s = RUDL::Surface.new [@tile_size, @tile_size]
-          s.blit(all_tiles, [0, 0], [x, y, @tile_size, @tile_size])
+          s.blit(tileset_image, [0, 0], [x, y, @tile_size, @tile_size])
           i = Image.wrap s
           @tiletypes.push Tile.new(i, false)
         end
@@ -82,7 +82,7 @@ module FreeVikings
     def load_map_sizes
       if @doc.root.attributes['tilewidth'].to_i != Map::TILE_SIZE or
           @doc.root.attributes['tileheight'].to_i != Map::TILE_SIZE then
-        raise "Tile size must be #{Map::TILE_SIZE}px!"
+        raise "Tile size must be #{Map::TILE_SIZE}x#{Map::TILE_SIZE}px!"
       end
       
       @tile_size = @doc.root.attributes['tilewidth'].to_i
@@ -126,7 +126,7 @@ long if-clauses and duplication).
 * (({ExpandedLayerDataLoader})) for loading unencoded data 
   (a huge heap of XML tags (({<tile gid="blah">})))
 
-But nobody actually needs to kow about (({LayerDataLoader})) unless he wants
+But nobody actually needs to know about (({LayerDataLoader})) unless he wants
 to hack a bit around TilED data loading.
 =end
     class LayerDataLoader
@@ -151,6 +151,7 @@ to hack a bit around TilED data loading.
 
         if @map_properties['solid_layer'] == @layer.attributes['name'] then
           @log.debug "Solid layer #{@map_properties['solid_layer']}"
+          # create solid tiles and add them into @blocktypes:
           @blocktypes = [@blocktypes[0]].concat(@blocktypes[1..@blocktypes.size-1].collect {|tile| tile.to_solid })
         end
       end

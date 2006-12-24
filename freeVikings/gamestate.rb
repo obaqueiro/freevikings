@@ -64,6 +64,10 @@ Changes the location view according to the state.
         FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
       when K_F2
 	@context.give_up_game
+      when K_F12
+        # Starts irb in the console => fV developer can play with the internals
+        require 'irb'
+        IRB.start(__FILE__)
       end
     end
 
