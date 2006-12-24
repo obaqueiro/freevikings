@@ -54,7 +54,7 @@
     <para>
       This development guide is being written in the time of creation of
       freeVikings v. 0.7. Some of the interfaces described below can be changed
-      in the future. Please, inform me, if you find out that the examples 
+      in the future. Please, inform me if you find out that the examples 
       from this guide don't work or some interfaces don't behave as it is 
       described here.
     </para>
@@ -96,7 +96,7 @@
 	of course.
       </para>
       <para>
-	Another good thig to install on your computer is 
+	Another good thing to install on your computer is 
 	<application>Tiled</application> 
 	(<ulink url="http://tiled.rpgdx.net"/>), 
 	a Java-written tile map editor.
@@ -145,7 +145,7 @@
 	Of course some problems can (and probably will) occur. I, for example,
 	had to delete the pre-compiled binaries (which are by default packed 
 	in the distribution) and recompile the application, because it had been
-	linkde with newer libraries than I had on my machine.
+	linked with newer libraries than I had on my machine.
       </para>
       <para>
 	When <application>Tiled</application> is running, open the menu
@@ -177,7 +177,7 @@
 	(menu File, item New, or 
 	<keycombo><keysym>Ctrl</keysym><keysym>N</keysym></keycombo>).
 	A dialog will pop up, change the default values to those you can 
-	see on the image below. Currently freeVikings can work only with tiles
+	see on the image below. Currently freeVikings can only work with tiles
 	of size 40x40 pixels (maybe one day I'll make it more flexible) and 
 	maps should have at least 16x12 tiles, because a smaller map doesn't
 	fill the game window (and it's so small, that there will be no fun 
@@ -190,6 +190,7 @@
 	of no importance. What is important is to tick the checkbox
 	labelled "Reference tileset image" and then click on the Browse button
 	and find the image with tiles.
+	<graphic fileref="images/tiled_newtileset.png"/>
       </para>
       <para>
 	In the bottom-left corner of <application>Tiled</application> window
@@ -199,7 +200,8 @@
       <graphic fileref="images/tiled_tilebutton.png"/>
       <para>
 	The window which pops up is a "palette" of loaded tiles. 
-	If you have done everything how I told you to it should look like this:
+	If you have done everything how I told you to, it should look like 
+	this:
 	<graphic fileref="images/tiled_tilespalette.png"/>
 	Click on one of the tiles, it automatically occurs on the button
 	which causes the palette to pop up.
@@ -207,8 +209,12 @@
       <para>
 	Everything is ready, we can make our first map. Choose one of the two 
 	tiles (they are awful, I know, I have never had a sense of art),
-	choose the pencil tool from the toolbar on the left and start to design
-	the map. It could be useful for you to know that 
+	<emphasis>choose the pencil tool</emphasis> from the toolbar on the 
+	left and start to design
+	the map.
+      </para>
+      <para>
+	It could be useful for you to know that 
 	<application>Tiled</application> gives you a possibility of zooming
 	(zoom buttons are also in the toolbar). You should always try 
 	the menu View, where you can switch on/off highlighting of cursor
@@ -220,14 +226,14 @@
 	the tileset image.
 	<graphic fileref="images/tiled_firstmap1.png"/>
 	My (very simple) idea is that 
-	the vikings will start in the top left corner and they'll go always 
+	the vikings will start in the top left corner and they'll always go
 	down, in every story some tough monster will be waiting to eat them.
 	After they bash the last monster, they will get into the lift
 	which will take them to the EXIT in the top right corner of the map.
 	Now we have the map, in the future chapters we'll add monsters etc.
       </para>
       <para>
-	What should have, but haven't told you:
+	What I should have, but haven't told you:
 	<itemizedlist>
 	  <listitem><para>vikings are of size 80x100 px</para></listitem>
 	  <listitem><para>so every corridor must be at least three 
@@ -254,15 +260,76 @@
 	layers, which are there just to make the map nicer. But of course 
 	the game engine doesn't know which layer you want to be the solid one.
       </para>
+      <para>
+	From menu Map choose the item Properties. A small window will pop up,
+	where you can edit a list of key-value pairs.
+	<graphic fileref="images/tiled_mapproperties.png"/>
+	Add a new pair with key "solid_layer" and value, which is the name of 
+	the layer you want to be solid (names of layers are in the layers panel
+	on the right side of the <application>Tiled</application> window).
+      </para>
+      <tip>
+	<title>One more property</title>
+	<para>
+	  <application>Tiled</application> sometimes "forgets" the last 
+	  property from the list, so it can be useful to add one more
+	  property (e.g. key "axb7", value "7785") which would be forgotten
+	  if <application>Tiled</application> had a bad day.
+	  (I haven't still found out when and why this error in 
+	  <application>Tiled</application> occurs.
+	</para>
+      </tip>
+      <para>
+	Now you can save the map, it is ready to use.
+      </para>
+    </section>
 
-      <!-- !!! F I N I S H !!! -->
+    <section>
+      <title>Location data</title>
+      <para>
+	Before being able to run freeVikings with our new map, we must
+	create a text file which describes it. It's a XML file with special
+	tags, so I recommend you to use some XML-friendly editor 
+	(I usually use <application>Emacs</application>, less often
+	<application>Scintilla</application> or 
+	<application>FreeRide</application>; both of them come with Ruby
+	One-Click-Installer).
+	I assume you know at least the basics of XML (or HTML),
+	but even if you don't it shouldn't be a problem for you to get the
+	idea quickly and make the description files like an old XML guru.
+      </para>
+      <para>
+	The file has a following structure (If you don't know much about XML, 
+	you can copy it and use it as a skeleton of similar files 
+	in future):
+      </para>
+      <programlisting>
+&lt;?xml version="1.0" ?&gt;
+
+&lt;location&gt;
+  &lt;info&gt;
+    &lt;title&gt;DevGuide: CH1: First map: example 1&lt;/title&gt;
+    &lt;author&gt;Jakub Pavlik&lt;/author&gt;
+  &lt;/info&gt;
+
+  &lt;body&gt;
+    &lt;password&gt;FRMP&lt;/password&gt;
+    &lt;map src="<emphasis>firstmap_loc.tmx</emphasis>"/&gt;
+    &lt;start horiz="<emphasis>50</emphasis>" vertic="<emphasis>50</emphasis>"/&gt;
+    &lt;exit horiz="<emphasis>1110</emphasis>" vertic="<emphasis>70</emphasis>"/&gt;
+  &lt;/body&gt;
+&lt;/location&gt;
+      </programlisting>
+      <para>
+	The map description is divided into two blocks, info and body
+	(inspired by HTML...). While the info block could be left out
+	if you didn't want the map to have a name and to be signed 
+	as a product of yours, the second block, body, is the essential one.
+	FreeVikings wouldn't be able to load the map without it.
+      </para>
     </section>
 
     <!--
-    <section>
-      <title>Location data</title>
-    </section>
-
     <section>
       <title>Try it!</title>
     </section> -->
