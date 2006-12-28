@@ -288,7 +288,10 @@
       <title>Location data</title>
       <para>
 	Before being able to run freeVikings with our new map, we must
-	create a text file which describes it. It's a XML file with special
+	create a text file which describes it. From historic reasons
+	this file is called "location file" and it's name is always
+	<filename>location.xml</filename>.
+	It's a XML file with special
 	tags, so I recommend you to use some XML-friendly editor 
 	(I usually use <application>Emacs</application>, less often
 	<application>Scintilla</application> or 
@@ -315,7 +318,7 @@
   &lt;body&gt;
     &lt;password&gt;FRMP&lt;/password&gt;
     &lt;map src="<emphasis>firstmap_loc.tmx</emphasis>"/&gt;
-    &lt;start horiz="<emphasis>50</emphasis>" vertic="<emphasis>50</emphasis>"/&gt;
+    &lt;start horiz="<emphasis>50</emphasis>" vertic="<emphasis>60</emphasis>"/&gt;
     &lt;exit horiz="<emphasis>1110</emphasis>" vertic="<emphasis>70</emphasis>"/&gt;
   &lt;/body&gt;
 &lt;/location&gt;
@@ -325,14 +328,74 @@
 	(inspired by HTML...). While the info block could be left out
 	if you didn't want the map to have a name and to be signed 
 	as a product of yours, the second block, body, is the essential one.
-	FreeVikings wouldn't be able to load the map without it.
+	FreeVikings wouldn't be able to load the map without it. All tags
+	in the body section are compulsory.
       </para>
+      <section>
+	<title>Password</title>
+	<programlisting>
+	  &lt;password&gt;FRMP&lt;/password&gt;
+	</programlisting>
+	<para>
+	  Block tag password must contain a "word" made of four alphanumeric
+	  characters (e.g. FRMP, ZF23, ...). A small, maybe important, note:
+	  FreeVikings don't recognize upcase and downcase letters.
+	  It defines password of the level. 
+	</para>
+	<para>
+	  You should try to grep
+	  through all levels packed in the freeVikings distribution to be sure
+	  that you won't use a password which is already in use. Having grep
+	  on your computer, it is quick, simple and useful:
+	</para>
+	<screen>
+	  <prompt>[igneus@vidhost freeVikings]$</prompt> <userinput> grep FRMP ./locs/DefaultCampaign/*/*/location.xml</userinput>
+	</screen>
+      </section>
+      <section>
+	<title>Map</title>
+	<programlisting>
+	  &lt;map src="<emphasis>firstmap_loc.tmx</emphasis>"/&gt;	  
+	</programlisting>
+	<para>
+	  This tag says where to search for the map data. Name of the map file
+	  is value of attribute src (I hope that all HTML-web-people are 
+	  at home).
+	</para>
+      </section>
+      <section>
+	<title>Start and Exit</title>
+	<programlisting>
+    &lt;start horiz="<emphasis>50</emphasis>" vertic="<emphasis>60</emphasis>"/&gt;
+    &lt;exit horiz="<emphasis>1110</emphasis>" vertic="<emphasis>70</emphasis>"/&gt;	  
+	</programlisting>
+	<para>
+	  Both tags have the same structure. Values of attributes horiz and 
+	  vertic<footnote><para>horiz means x and vertic y;
+	  in the past I wasn't able to remember which axis is x and 
+	  which is y...</para></footnote> 
+	  define two very important places on the map.
+	</para>
+	<graphic fileref="images/viking_position.png"/>
+	<para>
+	  Start is the initial position of top-left corners of the vikings.
+	  How to get it? Remember that tiles are 40x40 px, vikings 80x100 px.
+	  I hope it isn't hard to understand the idea of the image above.
+	</para>
+	<para>
+	  Exit works in a similar way, but it isn't position of vikings, but 
+	  position of the EXIT point that all of them have to reach to
+	  pass to the next level.
+	</para>
+      </section>
     </section>
 
-    <!--
     <section>
       <title>Try it!</title>
-    </section> -->
+      <para>
+	We are now prepared to 
+      </para>
+    </section>
   </chapter> 
 
   <!-- ====================================================================
