@@ -9,7 +9,7 @@
   <body>
     <password>FRMP</password>
     <map src="firstmap_loc.tmx"/>
-    <start horiz="50" vertic="50"/>
+    <start horiz="50" vertic="60"/>
     <exit horiz="1110" vertic="70"/>
   </body>
 </location>
