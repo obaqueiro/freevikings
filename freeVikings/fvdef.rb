@@ -24,6 +24,7 @@ module FreeVikings
   # Options defaults:
   OPTIONS['freevikings_home'] = '.'
   OPTIONS['levelset'] = DEFAULT_LEVELSET_DIR
+  OPTIONS['velocity_unit'] = 1
 
   # get the version number
   if File.exist?('RELEASE')

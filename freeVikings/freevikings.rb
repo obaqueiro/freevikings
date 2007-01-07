@@ -35,6 +35,7 @@ options = GetoptLong.new(
                          ["--fullscreen", "-f", GetoptLong::NO_ARGUMENT],
                          ["--help",    "-h", GetoptLong::NO_ARGUMENT],
                          ["--levelsuite", "-l", GetoptLong::REQUIRED_ARGUMENT],
+                         ["--v-unit",  "-u", GetoptLong::REQUIRED_ARGUMENT],
                          ["--startpassword", "-s", GetoptLong::REQUIRED_ARGUMENT]
 )
 
@@ -56,6 +57,12 @@ begin
       print_help_and_exit
     when "--levelsuite"
       FreeVikings::OPTIONS['levelset'] = argument
+    when "--v-unit"
+      if argument.to_i > 0 then
+        FreeVikings::OPTIONS['velocity_unit'] = argument.to_i
+      else
+        raise ArgumentError, "Argument of option --v-unit (-u) must be a real number higher than zero (given '#{argument}')"
+      end
     when "--startpassword"
       unless FreeVikings.valid_location_password?(argument)
         raise "'#{argument}' is not a valid location password."

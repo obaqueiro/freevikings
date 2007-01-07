@@ -408,31 +408,6 @@ detection.
     end
 
     private
-    def next_left
-      next_left = @rect.left + (velocity_horiz * @location.ticker.delta)
-    end
-
-    private
-    def next_top
-      next_top = @rect.top + (velocity_vertic * @location.ticker.delta)
-    end
-
-    private
-    def next_position
-      Rectangle.new next_left, next_top, @rect.w, @rect.h
-    end
-
-    private
-    def velocity_horiz
-      @state.velocity_horiz * BASE_VELOCITY
-    end
-
-    private
-    def velocity_vertic
-      @state.velocity_vertic * BASE_VELOCITY
-    end
-
-    private
     # Says if the viking is standing on a solid ground (tile or static object)
     def on_ground?
       lowerpos = Rectangle.new(@rect.left, 
