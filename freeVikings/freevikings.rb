@@ -36,6 +36,7 @@ options = GetoptLong.new(
                          ["--help",    "-h", GetoptLong::NO_ARGUMENT],
                          ["--levelsuite", "-l", GetoptLong::REQUIRED_ARGUMENT],
                          ["--v-unit",  "-u", GetoptLong::REQUIRED_ARGUMENT],
+                         ["--delay",   "-d", GetoptLong::REQUIRED_ARGUMENT],
                          ["--startpassword", "-s", GetoptLong::REQUIRED_ARGUMENT]
 )
 
@@ -63,6 +64,8 @@ begin
       else
         raise ArgumentError, "Argument of option --v-unit (-u) must be a real number higher than zero (given '#{argument}')"
       end
+    when "--delay"
+      FreeVikings::OPTIONS['delay'] = argument.to_i / 1000
     when "--startpassword"
       unless FreeVikings.valid_location_password?(argument)
         raise "'#{argument}' is not a valid location password."

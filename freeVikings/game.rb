@@ -243,6 +243,10 @@ regularly and refreshes the screen.
             end
 	  end
 
+          if FreeVikings::OPTIONS['delay'] != 0 then
+            sleep(FreeVikings::OPTIONS['delay'])
+          end
+
 	  @app_window.flip
 	  frames += 1
 	  

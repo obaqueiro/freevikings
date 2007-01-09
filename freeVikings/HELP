@@ -59,5 +59,12 @@ ruby freevikings.rb [-fFhpxls] [--fullscreen] [--fps] [--help] [--profile]
 			before you use this option.
 --fps		-F	Prints frames per second on the game screen
 --profile 	-p	Profiling (only for development)
---levelsuite    -l	Requires an argument - a directory with a levelsuite
+--levelsuite 	-l	Requires an argument - a directory with a levelsuite
+--v-unit	-u	Requires an argument - real number higher than 0
+			influencing speed of movement of vikings and monsters
+			(higher than 1 increases the speed)
+--delay		-d	Requires an argument - number of milliseconds
+			to sleep in every iteration of the main loop
+			(try something like 20 if you have a strong machine)
+
 --startpassword -s	Requires an argument - a level password (code)
