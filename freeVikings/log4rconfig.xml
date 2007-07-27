@@ -42,7 +42,7 @@
 
   <!-- Log for World mechanism (World and it's subclasses, LevelSuite, 
        Level) -->
-  <logger name="world log" level="WARN">
+  <logger name="world log" level="ERROR">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
   </logger>

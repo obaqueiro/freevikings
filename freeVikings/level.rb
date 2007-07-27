@@ -89,7 +89,17 @@ the data from the ((|@dirname|)) directory into the (({Location})) object.
     end
 
     def level_with_password(password)
-      raise "Senseless method call!!!"
+      raise "Senseless method call!!! Method only used in superclass!!!"
+    end
+
+    def gfx_theme
+      if @member_of then
+        return @member_of.gfx_theme
+      else
+        msg = "Level isn't a member of any LevelSuite -> it can't access any GfxTheme - caller provided with NullGfxTheme"
+        @log.warn msg
+        return NullGfxTheme.instance
+      end
     end
 
     private

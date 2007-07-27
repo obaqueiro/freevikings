@@ -48,6 +48,7 @@ given a second argument ((|member_of|)), which is a 'parent' (({LevelSuite})).
 
       # values are usually changed in method load_from_xml
       @title = ""
+      @theme = nil
       @theme_name = ""
 
       # Not to be used in subclasses:
@@ -62,10 +63,6 @@ given a second argument ((|member_of|)), which is a 'parent' (({LevelSuite})).
           raise LevelSuiteLoadException, msg
         end
       end
-
-      # theme can't be loaded before load_from_xml is called, because
-      # we need to have the theme name
-      @theme = load_theme
 
       @log.debug "#{object_id}: New LevelSuite created from data in directory '#{@dirname}' as a nested suite in #{@member_of ? @member_of.object_id : @member_of.to_s}"
     end
@@ -164,16 +161,19 @@ worry about it.)
 =end
 
     def gfx_theme
-      if @theme then
-        return @theme
-      else
-        return @theme = (load_theme or NullGfxTheme.instance)
+      if @theme == nil then
+        msg = "#{object_id}: Asked for theme before theme was loaded."
+        @log.error msg
+        raise msg
       end
+
+      return @theme
     end
 
     private
 
-    # Loads data from the definition file
+    # Loads data from the definition file -
+    # these iclude also the nested LevelSuites or Levels
 
     def load_from_xml
       definition_file = @dirname + '/' + DEFINITION_FILE_NAME
@@ -191,8 +191,11 @@ worry about it.)
       begin
         @theme_name = doc.root.elements['theme'].text
       rescue NoMethodError
-        @log.debug "LevelSuite #{@title} hasn't graphic theme."
+        @log.debug "#{object_id}: LevelSuite #{@title} hasn't it's own graphic theme. (No 'theme' element found in definition file '#{definition_file}'.)"
       end
+
+      # load theme:
+      @theme = load_theme
 
       # load level suites:
       doc.root.elements['suite'].each_element('levelsuite') do |levelsuite_element|
@@ -215,9 +218,9 @@ worry about it.)
       path = @dirname + '/' + dir
 
       begin
-        @members.push LevelSuite.new(path)
+        @members.push LevelSuite.new(path, self)
       rescue LevelSuiteLoadException => ex
-        @log.error "Could not load LevelSuite from directory #{dir} (#{ex.class} occured)"
+        @log.error "#{object_id}: Could not load LevelSuite from directory #{dir} (#{ex.class} occured)"
       end
     end
 
@@ -225,33 +228,35 @@ worry about it.)
     # in the definition file.
     # Argument dir is the base name of the directory.
 
-
     def init_level(dir)
       path = @dirname + '/' + dir
 
       begin
         @members.push Level.new(path, self)
       rescue LevelSuiteLoadException => ex
-        @log.error "Could not load Level from directory #{dir} (#{ex.class} occured)"
+        @log.error "#{object_id}: Could not load Level from directory #{dir} (#{ex.class} occured)"
       end
     end
 
+    # loads GfxTheme; called from within load_from_xml before loading
+    # nested levels
+
     def load_theme
       if @theme_name == "" then
-        return (@member_of ? @member_of.gfx_theme : NullGfxTheme.instance)        
+        return (@member_of ? @member_of.gfx_theme : NullGfxTheme.instance)     
       end
 
       theme_def_file = FreeVikings.theme_dir+'/'+@theme_name+'/'+THEME_FILE
       if File.exist? theme_def_file
         theme =  GfxTheme.new(theme_def_file, @member_of ? @member_of.gfx_theme : nil)
-        @log.info "#{object_id}: Loaded theme '#{theme.name}' (#{theme_def_file})."
+        @log.info "#{object_id}: Loaded theme '#{theme.name}' (file: #{theme_def_file}; ancestors: #{theme.ancestors.join(',')})."
         return theme
       else
-        if @member_of and not @member_of.gfx_theme.kind_of? NullGfxTheme
-          @log.debug "#{object_id}: Using inherited theme '#{@member_of.gfx_theme}'."
+        if @member_of
+          @log.debug "#{object_id}: Theme file #{theme_def_file} wasn't found. Using inherited theme '#{@member_of.gfx_theme}'."
           return @member_of.gfx_theme
         else
-          @log.debug "#{object_id}: Theme file #{theme_def_file} wasn't found. Levelsuite '#{@title}' has no own theme and doesn't inherit any."
+          @log.debug "#{object_id}: Theme file #{theme_def_file} wasn't found. Levelsuite '#{@title}' has no own theme and doesn't inherit any. Using NullGfxTheme as theme."
           return NullGfxTheme.instance
         end
       end
