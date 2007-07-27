@@ -12,7 +12,7 @@
     <image name="bridge_wide" image="ice_bridge_wide.tga" />
     <image name="bridge" image="ice_bridge.tga" />
 
-    <image name="switch_on" image="ice_switch_on.tga" />
-    <image name="switch_off" image="ice_switch_off.tga" />
+    <!-- <image name="switch_on" image="ice_switch_on.tga" />
+    <image name="switch_off" image="ice_switch_off.tga" /> -->
   </data>
 </gfx_theme>

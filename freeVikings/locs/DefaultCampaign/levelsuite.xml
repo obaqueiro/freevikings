@@ -13,6 +13,8 @@
     </description>
   </info>
 
+  <theme>DefaultTheme</theme>
+
   <suite>
     <levelsuite>ArcticLevelSet</levelsuite>
     <levelsuite>ForestLevelSet</levelsuite>
