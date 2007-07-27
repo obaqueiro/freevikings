@@ -5,7 +5,7 @@
 = NAME
 Switch
 = DESCRIPTION
-The switch you can switch by up/down arrow with a vikingstanding next to it.
+The switch you can switch by up/down arrow with a viking standing next to it.
 = Superclass
 ActiveObject
 =end

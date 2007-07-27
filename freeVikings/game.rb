@@ -80,13 +80,13 @@ at once in a multithreaded application). But I wouldn't do that...
         retry
       end
 
-      # Surfaces, ktere se pouzivaji k sestaveni zobrazeni nahledu hraci plochy
-      # a stavoveho radku s podobiznami vikingu
+      # Surface used to build the "picture" of a part of map and game objects
+      # which is then displayed on the screen
       @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT - BottomPanel::HEIGHT])
 
-      # Stav hry. Muze se kdykoli samovolne vymenit za instanci jine
-      # tridy, pokud usoudi, ze by se stav mel zmenit.
+      # State of the game (GameState instance).
       @state = nil
+
       @bottompanel = nil
 
       @give_up = nil
@@ -168,19 +168,22 @@ In the first one every iteration means one played location.
 A new iteration starts whenever a player finishes or gives up a location
 or if all the vikings are dead or if the remainder of them finishes the
 location.
-The second loop updates all the sprites (heroes and their enemies)
+The nested loop updates all the sprites (heroes and their enemies)
 regularly and refreshes the screen.
 =end
     def game_loop
-      loop do
+      loop do 
         paint_loading_screen @app_window
 
 	if @team.nil? then
           level = location = nil
           level = @world.level
 	elsif (@team.alive_size < @team.size) or (@give_up == true) then
-	  # Some of the heroes are dead.
-	  @log.info "Some vikings died. Try once more."
+          if @give_up == true then
+            @log.info "Game given up. Try once more."
+          else
+            @log.info "Some vikings died. Try once more."
+          end
           level = @world.level
 	  @give_up = nil
 	elsif @team.alive_size == @team.size then
@@ -215,7 +218,7 @@ regularly and refreshes the screen.
           Profiler__::start_profile
         end
 
-        # In this cycle one level is played until it is given up or finished.
+        # The "event loop": serve events, update game state
 	while (not is_exit?) and (not @give_up) do
 
 	  # Serve events:
@@ -223,8 +226,11 @@ regularly and refreshes the screen.
 	    @state.serve_event(event, location)
 	  end
 
-          @team.next unless @team.active.alive?
+          unless @team.active.alive?
+            @team.next
+          end
 
+          # nearly all the game state (position of heroes etc.) is updated here
 	  location.update unless @state.paused?
 
 	  location.paint(@map_view, @team.active.center)

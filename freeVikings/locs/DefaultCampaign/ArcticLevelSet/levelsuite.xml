@@ -6,6 +6,8 @@
     <author>Jakub Pavlik /severus@post.cz/</author>
   </info>
 
+  <theme>IceTheme</theme>
+
   <suite>
     <level>ArcticTutorial</level>
     <level>SwitchPlace</level>

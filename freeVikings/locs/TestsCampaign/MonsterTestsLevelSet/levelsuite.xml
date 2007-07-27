@@ -9,6 +9,8 @@
     </description>
   </info>
 
+  <theme>TestsTheme</theme>
+
   <suite>
     <!-- <level>Prototype</level> 
 	 Only a template, 

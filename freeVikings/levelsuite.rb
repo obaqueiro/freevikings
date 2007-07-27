@@ -31,11 +31,10 @@ Standard name of the XML file which defines the graphics theme.
 
 =begin
 --- LevelSuite.new(dir, member_of=nil)
-Argument ((|dir|)) is of type (({Dir})). It is a name of the directory where
+Argument ((|dir|)) is of type (({String})). It is a name of the directory where
 the file (('campaign.xml')) for the loaded campaign is.
 If the (({LevelSuite})) is nested in some other (({LevelSuite})), it's
-given a second argument ((|member_of|)), which is a link to a 'parent'
-(({LevelSuite})).
+given a second argument ((|member_of|)), which is a 'parent' (({LevelSuite})).
 =end
 
     def initialize(dirname, member_of=nil)
@@ -46,8 +45,10 @@ given a second argument ((|member_of|)), which is a link to a 'parent'
       @dirname = dirname
       @members = []
       @member_of = member_of
-      @theme = load_theme
+
+      # values are usually changed in method load_from_xml
       @title = ""
+      @theme_name = ""
 
       # Not to be used in subclasses:
       if self.class == LevelSuite then
@@ -61,6 +62,10 @@ given a second argument ((|member_of|)), which is a link to a 'parent'
           raise LevelSuiteLoadException, msg
         end
       end
+
+      # theme can't be loaded before load_from_xml is called, because
+      # we need to have the theme name
+      @theme = load_theme
 
       @log.debug "#{object_id}: New LevelSuite created from data in directory '#{@dirname}' as a nested suite in #{@member_of ? @member_of.object_id : @member_of.to_s}"
     end
@@ -152,7 +157,7 @@ exists. For more information about passwords read documentation for class
 
 =begin
 --- LevelSuite#gfx_theme
-Returns a (({GfxTheme})) for the set of levels. (If htere isn't such
+Returns a (({GfxTheme})) for the set of levels. (If there isn't such
 (({GfxTheme})), a (({NullGfxTheme})) is returned, but (({NullGfxTheme}))
 behaves in the same way as normal (({GfxTheme})), so you don't need to
 worry about it.)
@@ -182,6 +187,12 @@ worry about it.)
       end
 
       @title = doc.root.elements['info'].elements['title'].text
+
+      begin
+        @theme_name = doc.root.elements['theme'].text
+      rescue NoMethodError
+        @log.debug "LevelSuite #{@title} hasn't graphic theme."
+      end
 
       # load level suites:
       doc.root.elements['suite'].each_element('levelsuite') do |levelsuite_element|
@@ -226,7 +237,11 @@ worry about it.)
     end
 
     def load_theme
-      theme_def_file = @dirname + '/' + THEME_FILE
+      if @theme_name == "" then
+        return (@member_of ? @member_of.gfx_theme : NullGfxTheme.instance)        
+      end
+
+      theme_def_file = FreeVikings.theme_dir+'/'+@theme_name+'/'+THEME_FILE
       if File.exist? theme_def_file
         theme =  GfxTheme.new(theme_def_file, @member_of ? @member_of.gfx_theme : nil)
         @log.info "#{object_id}: Loaded theme '#{theme.name}' (#{theme_def_file})."
@@ -270,8 +285,8 @@ end # module FreeVikings
 require 'level.rb'
 
 
-# Pokud je tento soubor spusten jako samostatny skript, vyzkousi se funkcnost
-# prostym vypisem nactenych hodnot
+# If this file is executed as a standalone script, loaded values are printed
+# out (this was used for testing of LevelSuite class instead of unit tests)
 if __FILE__ == $0 then
   c = FreeVikings::LevelSuite.new('locs/DefaultCampaign')
 

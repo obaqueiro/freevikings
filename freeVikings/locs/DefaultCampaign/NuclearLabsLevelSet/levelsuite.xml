@@ -6,6 +6,8 @@
     <author>Jakub Pavlik /severus@post.cz</author>
   </info>
 
+  <theme>NuclearTheme</theme>
+
   <suite>
     <level>YellowHall</level>
   </suite>

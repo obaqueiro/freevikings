@@ -18,12 +18,14 @@ module FreeVikings
 
   CODE_DIRS = ['monsters', 'ext'] # directories with additional source files
   DEFAULT_LEVELSET_DIR = 'locs/DefaultCampaign'
+  DEFAULT_THEME_DIR = 'gfx/themes'
 
   LOCATION_PASSWORD_LENGTH = 4
 
   # Options defaults:
   OPTIONS['freevikings_home'] = '.'
   OPTIONS['levelset'] = DEFAULT_LEVELSET_DIR
+  OPTIONS['theme_dir'] = DEFAULT_THEME_DIR
   OPTIONS['velocity_unit'] = 1
   OPTIONS['delay'] = 0
 
