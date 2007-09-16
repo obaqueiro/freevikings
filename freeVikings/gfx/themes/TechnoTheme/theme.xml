@@ -9,7 +9,5 @@
   <data>
     <image name="bridge" image="bridge_techno.tga" />
     <image name="animated apex" image="animapex_techno.tga" />
-    <image name="switch_on" image="switch_green.tga" />
-    <image name="switch_off" image="switch_red.tga" />
   </data>
 </gfx_theme>
