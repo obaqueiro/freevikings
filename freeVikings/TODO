@@ -7,10 +7,6 @@
 (-) Convert all the Monster test locations to the new location standard
     (with no PASSWORD file and with location.xml)
 
-(-) Theme definition (theme.xml) in gfx/themes/XXXTheme, 
-    not in locs/DefaultCampaign/XXXLevelSet => more LevelSets can share 
-    the same graphic theme
-
 (-) Finish graphics of the vikings
 
 (-) Make all setup stuff accessible from the menu
@@ -20,12 +16,21 @@
 
 (-) Installation
 
-(-) Default theme
-
 (-) Skinnable vikings
 
 (-) Complex tutorial level set
 
 (-) User's manual
 
+(-) Level developer's manual
+
+(-) RDoc documentation
+
 ======== Already finished: ====================================================
+
+(+) Theme definition (theme.xml) in gfx/themes/XXXTheme, 
+    not in locs/DefaultCampaign/XXXLevelSet => more LevelSets can share 
+    the same graphic theme
+
+(+) Default theme (there is a theme called DefaultTheme; it's a theme 
+    of DefaultCampaign, so all the nested levels inherit names from it)
