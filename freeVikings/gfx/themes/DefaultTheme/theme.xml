@@ -9,7 +9,7 @@
   <data>
     <image name="apex" image="apex.tga" />
 
-    <image name="switch_on" image="switch_green.png" />
-    <image name="switch_off" image="switch_red.png" />
+    <image name="switch_on" image="switch_green_borderless.png" />
+    <image name="switch_off" image="switch_red_borderless.png" />
   </data>
 </gfx_theme>

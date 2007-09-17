@@ -26,6 +26,8 @@
 
 (-) RDoc documentation
 
+(-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
+
 ======== Already finished: ====================================================
 
 (+) Theme definition (theme.xml) in gfx/themes/XXXTheme, 

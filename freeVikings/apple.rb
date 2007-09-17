@@ -18,7 +18,7 @@ Item
   class Apple < Item
 
     def init_images
-      @image = Image.load 'apple.tga'
+      @image = Image.load 'apple.png'
     end
 
     def apply(user)
