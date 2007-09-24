@@ -9,7 +9,8 @@
 
 (-) Finish graphics of the vikings
 
-(-) Make all setup stuff accessible from the menu
+(-) Make all setup stuff accessible from the menu (e.g. define location 
+    storage places, choose a campaign to be played etc.)
 
 (-) User's (and system?) configuration file with possibility to define
     multiple location storage places
@@ -27,6 +28,13 @@
 (-) RDoc documentation
 
 (-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
+
+(-) Possibility to change game speed
+
+(-) Development mode
+
+(-) 'Close' button ('X') causes total end of the game (as usually wanted 
+    by the user) and not only return to the main menu
 
 ======== Already finished: ====================================================
 

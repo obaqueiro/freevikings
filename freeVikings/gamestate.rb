@@ -1,44 +1,37 @@
 # gamestate.rb
 # igneus 28.1.2005
 
-# Hra se muze nachazet v nekolika ruznych stavech. Bezne jsou
-# stavy GAME, MENU, PAUSE.
-# Objekty GameState vykonavaji cinnosti zavisle na stavu.
-
 require 'RUDL'
 
 module FreeVikings
 
-=begin
-= GameState
-=end
-
   class GameState
+    # Abstract superclass.
+    # GameState instances represent different states of the game.
+    # Their task is to process events (keyboard and mouse actions).
 
     include RUDL
     include RUDL::Constant
 
+    # Argument context is a Game instance - the Game just running.
     def initialize(context)
-      # Promenna @context je odkazem na objekt Game, jehoz stav objekt
-      # GameState vyjadruje a obsluhuje.
       @context = context
     end
 
-    # Vrati souradnice bodu, na ktery by se melo centrovat zobrazeni
-
+    # Returns coordinates of the point which is in the center of area
+    # shown to the player (usually center of the active viking).
     def view_center
     end
 
-=begin
-GameState#change_view(surface)
-Changes the location view according to the state.
-=end
-
+    # Argument surface is a RUDL::Surface. This method is called just
+    # after painting the map and all game objects, so that current GameState
+    # can modify the displayed image before blitting. It is used e.g. to
+    # make the screen darker when the game is paused.
     def change_view(surface)
     end
 
-    # Obslouzi udalost tak, jak je to v danem stavu potreba.
-
+    # Processes the event (RUDL::Event).
+    # Argument location is a Location instance. (Location just played.)
     def serve_event(event, location)
       if event.is_a? QuitEvent then
         end_game
@@ -53,6 +46,7 @@ Changes the location view according to the state.
       end # if
     end
 
+    # Argument location is a Location instance. (Location just played.)
     def serve_keydown(event, location)
       case event.key
       when K_q, K_ESCAPE
@@ -64,17 +58,29 @@ Changes the location view according to the state.
         FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
       when K_F2
 	@context.give_up_game
+      when K_F11
+        if FreeVikings.develmagic?
+          @context.go_develmagic
+        end
       when K_F12
-        # Starts irb in the console => fV developer can play with the internals
-        require 'irb'
-        IRB.start(__FILE__)
+        if FreeVikings.develmagic?
+          # Starts irb in the console=>fV developer can play with the internals
+          require 'irb'
+          IRB.start(__FILE__)
+        end
       end
     end
 
+    # Argument location is a Location instance. (Location just played.)
     def serve_keyup(event, location)
     end
 
+    # Argument location is a Location instance. (Location just played.)
     def serve_mouseclick(event, location)
+    end
+
+    # Argument location is a Location instance. (Location just played.)
+    def serve_mouserelease(event, location)
     end
 
     def paused?
@@ -164,13 +170,10 @@ Changes the location view according to the state.
     end
   end # class PlayingGameState
 
-=begin
-= PausedGameState
-This state is used when the game is paused. It allows the user to play with
-the vikings' inventories.
-=end
-
   class PausedGameState < GameState
+    # This state is used when the game is paused. It allows the user to play 
+    # with the vikings' inventories.
+
 
     def initialize(context)
       super context
@@ -252,13 +255,9 @@ the vikings' inventories.
   end # class PausedGameState
 
 
-=begin
-= LocationInfoGameState
-This state is used on the beginning of every location.
-Location password and author is displayed until the player presses a key.
-=end
-
   class LocationInfoGameState < GameState
+    # This state is used on the beginning of every location.
+    # Location password and author is displayed until the player presses a key.
 
 =begin
 --- LocationInfoGameState.new(context, level)
@@ -290,13 +289,9 @@ Arguments:
     end
   end # class LocationInfoGameState
 
-=begin
-= AllLocationsFinishedGameState
-A (({Game})) state used when the player successfully explores the last
-(({Location})).
-=end
-
   class AllLocationsFinishedGameState < GameState
+    # A state used when the player successfully explores the last
+    # Location
 
     def initialize(context)
       super(context)
@@ -327,5 +322,12 @@ A (({Game})) state used when the player successfully explores the last
 
       @message = FreeVikings::FONTS['default'].create_text_box(FreeVikings::WIN_WIDTH-100, text)
     end
+  end
+
+  class DevelopmentMagicGameState < GameState
+    # This state is used for level testing and development - enables viewing
+    # the map, relocating the vikings, etc.
+
+
   end
 end # module

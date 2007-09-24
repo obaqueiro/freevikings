@@ -65,7 +65,7 @@ at once in a multithreaded application). But I wouldn't do that...
 
       paint_loading_screen @app_window
 
-      levelset = FreeVikings::OPTIONS['levelset']
+      levelset = FreeVikings::OPTIONS['levelsuite']
 
       begin
         @world = StructuredWorld.new(levelset, startpassword)
@@ -75,8 +75,8 @@ at once in a multithreaded application). But I wouldn't do that...
         startpassword = ''
         retry
       rescue LevelSuite::LevelSuiteLoadException => lle
-        @log.error "Could not load LevelSuite from directory '#{levelset}'. Setting default directory (#{FreeVikings::DEFAULT_LEVELSET_DIR})."
-        levelset = DEFAULT_LEVELSET_DIR
+        @log.error "Could not load LevelSuite from directory '#{levelset}'. Setting default directory (#{FreeVikings::DEFAULT_LEVELSUITE_DIR})."
+        levelset = DEFAULT_LEVELSUITE_DIR
         retry
       end
 
@@ -146,15 +146,16 @@ Pauses all the (({Sprite}))s and switches into the inventory browsing mode.
       @state = PausedGameState.new self
     end
 
-=begin
---- Game#unpause
-After ((<Game#pause>)) switches back to the playing mode and unpauses the
-(({Sprite}))s.
-=end
-
+    # After Game#pause switches back to the playing mode and unpauses 
+    # the Sprites
     def unpause
       @world.location.unpause
       @state = PlayingGameState.new self
+    end
+
+    # Switches to the "development magic" mode (special level testing features)
+    def go_develmagic
+      @state = DevelopmentMagicGameState.new self
     end
 
 =begin

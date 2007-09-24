@@ -13,21 +13,29 @@ module FreeVikings
   GFX_DIR = 'gfx' # directory with graphics
   OPTIONS = {} # hash with long options as keys
 
+  # sizes of the game window
   WIN_WIDTH = 640
   WIN_HEIGHT = 480
 
   CODE_DIRS = ['monsters', 'ext'] # directories with additional source files
-  DEFAULT_LEVELSET_DIR = 'locs/DefaultCampaign'
+  DEFAULT_LEVELSUITE_DIR = 'locs/DefaultCampaign'
   DEFAULT_THEME_DIR = 'gfx/themes'
 
   LOCATION_PASSWORD_LENGTH = 4
 
   # Options defaults:
+
+  # Base directory searched for data directories
   OPTIONS['freevikings_home'] = '.'
-  OPTIONS['levelset'] = DEFAULT_LEVELSET_DIR
+  # Directory with data of the LevelSuite to be played
+  OPTIONS['levelsuite'] = DEFAULT_LEVELSUITE_DIR
+  # Directory with subdirectories of themes
   OPTIONS['theme_dir'] = DEFAULT_THEME_DIR
   OPTIONS['velocity_unit'] = 1
+  # Delay (in milliseconds) in every iteration of the game loop
   OPTIONS['delay'] = 0
+  # Is "developer's magic" enabled or disabled?
+  OPTIONS['develmagic'] = false
 
   # get the version number
   if File.exist?('RELEASE')
@@ -57,14 +65,10 @@ module FreeVikings
     return FreeVikings::OPTIONS[key]
   end # FreeVikings.method_missing
 
-=begin
---- FreeVikings.valid_location_password?(password)
-Says if a ((|password|)) is a valid location password.
-=end
-
+  # Says if a ((|password|)) is a valid location password.
+  # Valid location password must be 4 characters long and may
+  # only contain word characters and digits.
   def FreeVikings.valid_location_password?(password)
-    # valid location password must be 4 characters long and may
-    # only contain word characters and digits
     password.size == FreeVikings::LOCATION_PASSWORD_LENGTH and 
       password =~ /^[\d\w]+$/
   end

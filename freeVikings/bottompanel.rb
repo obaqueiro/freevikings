@@ -201,7 +201,7 @@ Returns a RUDL::Surface with a updated contents of self.
 
     def init_gfx
       @face_bg = RUDL::Surface.load_new(GFX_DIR+'/face_bg.tga')
-      @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.tga')
+      @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.png')
     end # init_display
 
     # If the point defined by coordinates x,y is inside some
