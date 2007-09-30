@@ -4,10 +4,7 @@
 
 ======== To be done: ==========================================================
 
-(-) Convert all the Monster test locations to the new location standard
-    (with no PASSWORD file and with location.xml)
-
-(-) Finish graphics of the vikings
+(-) Repair the Snail (this monster seems to be out of order)
 
 (-) Make all setup stuff accessible from the menu (e.g. define location 
     storage places, choose a campaign to be played etc.)
@@ -25,7 +22,7 @@
 
 (-) Level developer's manual
 
-(-) RDoc documentation
+(-) RDoc documentation (convert RD to RDoc)
 
 (-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
 
@@ -36,6 +33,10 @@
 (-) 'Close' button ('X') causes total end of the game (as usually wanted 
     by the user) and not only return to the main menu
 
+(-) Select and move items between inventories using the mouse.
+    Make it possible to delete items in the game (the possibility is in the
+    class Inventory, but is not accessible for the player).
+
 ======== Already finished: ====================================================
 
 (+) Theme definition (theme.xml) in gfx/themes/XXXTheme, 
@@ -44,3 +45,6 @@
 
 (+) Default theme (there is a theme called DefaultTheme; it's a theme 
     of DefaultCampaign, so all the nested levels inherit names from it)
+
+(+) Convert all the Monster test locations to the new location standard
+    (with no PASSWORD file and with location.xml)

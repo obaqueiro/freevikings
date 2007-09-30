@@ -1,36 +1,27 @@
 # inventory.rb
 # igneus 21.6.2005
 
-=begin
-= NAME
-Inventory
-
-= DESCRIPTION
-Inventory is a box with four slots. Viking can collect items and put them
-into his inventory.
-Some basic ideas:
-* At most four items can be at once in the inventory.
-* When the viking enters a new location, his inventory is emptied.
-* There is a special pointer in the inventory. This pointer points onto
-  an "active slot" - a slot with an item which is used when the player
-  pushes yhe "use key".
-* By default, the TAB key allows the player to pause game, go into 
-  the inventory and move the pointer; U is a "use key".
-* When two vikings are next to each other, they can move items between their
-  inventories.
-* The "active item" can also be erased from the inventory to make slot free for
-  something more important. (In the "Lost Vikings" game this was done by
-  moving the item onto an icon of a rubbish bin).
-  The erased item doesn't return into the environment, it disappears 
-  definitively.
-* When the viking passes over an item and there is a free slot in his 
-  inventory, the item is collected automatically.
-
-= Superclass
-Object
-=end
-
 module FreeVikings
+
+ # Inventory is a box with four slots. Viking can collect items and put them
+  # into his inventory.
+  # Some basic ideas:
+  # * At most four items can be at once in the inventory.
+  # * When the viking enters a new location, his inventory is emptied.
+  # * There is a special pointer in the inventory. This pointer points onto
+  #   an "active slot" - a slot with an item which is used when the player
+  #   pushes yhe "use key".
+  # * By default, the TAB key allows the player to pause game, go into 
+  #   the inventory and move the pointer; U is a "use key".
+  # * When two vikings are next to each other, they can move items between 
+  #   their inventories.
+  # * The "active item" can also be erased from the inventory to make slot free
+  #   for something more important. (In the "Lost Vikings" game this was done 
+  #   by moving the item onto an icon of a rubbish bin).
+  #   The erased item doesn't return into the environment, it disappears 
+  #   definitively.
+  # * When the viking passes over an item and there is a free slot in his 
+  #   inventory, the item is collected automatically.
 
   class Inventory
 
@@ -51,10 +42,7 @@ module FreeVikings
       @active_index = @items.size - 1
     end
 
-=begin
---- Inventory#erase_active
-Removes the active item from the inventory and returns it.
-=end
+    # Removes the active item from the inventory and returns it.
 
     def erase_active
       item = @items.delete_at @active_index
@@ -116,11 +104,7 @@ Removes the active item from the inventory and returns it.
       @items.each_index {|i| yield i}
     end
 
-=begin
---- Inventory#at(index)
-Returns ((|index|))th item from the ((<Inventory>)) or a (({NullItem})) 
-instance if 
-=end
+    # Returns indexth item from the Inventory or a NullItem instance if 
 
     def at(index)
       if index >= SLOTS then
@@ -138,30 +122,24 @@ instance if
       at index
     end
 
-=begin
-== Inventory::IndexOutOfBoundsException
-This exception is raised by the slot-accessing methods 
-(((<Inventory#active_index=>)), ((<Inventory#first>)), ((<Inventory#second>)),
-((<Inventory#third>)), ((<Inventory#fourth>)), ((<Inventory#at>)), 
-((<Inventory#[]>))) when a non-existing slot is required.
-=end
+    # This exception is raised by the slot-accessing methods 
+    # Inventory#active_index=, Inventory#first, Inventory#second,
+    # Inventory#third, Inventory#fourth, Inventory#at, 
+    # Inventory#[] when a non-existing slot is required.
+
     class IndexOutOfBoundsException < RuntimeError
     end
 
-=begin
-== Inventory::NoSlotFreeException
-An type of exception raised by ((<Inventory#put>)) if there is no free slot 
-in the ((<Inventory>)) to put the Item into.
-=end
+    # An type of exception raised by Inventory#put if there is no free slot 
+    # in the Inventory to put the Item into.
+
     class NoSlotFreeException < RuntimeError
     end
 
-=begin
-== Inventory::EmptySlotRequiredException
-This exception is raised when an attempt is made to access an empty slot.
-((<Inventory#active_index=>)) raises it when an empty slot is being made 
-active.
-=end
+    #This exception is raised when an attempt is made to access an empty slot.
+    # Inventory#active_index= raises it when an empty slot is being made 
+    # active.
+
     class EmptySlotRequiredException < RuntimeError
     end
   end # class Inventory
