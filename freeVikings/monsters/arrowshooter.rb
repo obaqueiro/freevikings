@@ -1,22 +1,13 @@
 # arrowshooter.rb
 # igneus 10.10.2005
 
-=begin
-= NAME
-ArrowShooter
-
-= DESCRIPTION
-A (({Shooter})) which shoots an (({Arrow})) whenever a (({Hero})) occurs
-in the watched (({Rect})).
-(The (({Arrow})) is modified to kill (({Hero}))es, of course.)
-
-= Superclass
-Shooter
-=end
-
 require 'monsters/shooter.rb'
 
 module FreeVikings
+
+  # A Shooter which shoots an Arrow whenever a Hero occurs
+  # in the watched Rect.
+  # The Arrow is modified to kill Heroes, of course.
 
   class ArrowShooter < Shooter
 
@@ -31,31 +22,20 @@ module FreeVikings
       @delayer = TimeLock.new SHOT_DELAY
     end
 
-=begin
-= Instance methods
-
---- ArrowShooter#on
-Switches the (({ArrowShooter})) on.
-=end
+    # Switches the ArrowShooter on.
 
     def on
       @firing = true
     end
 
-=begin
---- ArrowShooter#off
-Switches the (({ArrowShooter})) off.
-=end
+    # Switches the ArrowShooter off.
 
     def off
       @firing = false
     end
 
-=begin
---- ArrowShooter#state
-It's an alias of superclasse's (({firing?})).
-It's defined to support (({Model})).
-=end
+    # It's an alias of superclasse's firing?.
+    # It's defined to support Model.
 
     alias_method :state, :firing?
 
