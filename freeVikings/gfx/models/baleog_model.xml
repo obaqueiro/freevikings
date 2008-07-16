@@ -27,8 +27,8 @@ Model description for Baleog.
   </load_pre>
 
   <states>
-    <state name="onground_standing_left" sym="stand_left"/>
-    <state name="onground_standing_right" sym="stand_right"/>
+    <state name="onground_standing_left" sym="left"/>
+    <state name="onground_standing_right" sym="right"/>
 
     <state name="onground_moving_left" sym="left"/>
     <state name="onground_moving_right" sym="right"/>
