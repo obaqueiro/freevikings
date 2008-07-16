@@ -47,9 +47,9 @@ Click onto the item in the inventory to select it.
 
 OPTIONS:
 
-ruby freevikings.rb [-fFhpxls] [--fullscreen] [--fps] [--help] [--profile] 
+ruby freevikings.rb [-fFhpxlsm] [--fullscreen] [--fps] [--help] [--profile] 
 			[--extensions] [--levelsuite levelsuite] 
-			[--startpassword password]
+			[--startpassword password] [--skip-menu]
 
 --help		-h	Prints out this help and halts.
 --fullscreen    -f      Starts the game in the fullscreen mode
@@ -68,3 +68,4 @@ ruby freevikings.rb [-fFhpxls] [--fullscreen] [--fps] [--help] [--profile]
 			(try something like 20 if you have a strong machine)
 
 --startpassword -s	Requires an argument - a level password (code)
+--skip-menu     -m      Skip menu

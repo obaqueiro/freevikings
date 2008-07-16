@@ -38,6 +38,7 @@ options = GetoptLong.new(
                          ["--v-unit",  "-u", GetoptLong::REQUIRED_ARGUMENT],
                          ["--delay",   "-d", GetoptLong::REQUIRED_ARGUMENT],
                          ["--startpassword", "-s", GetoptLong::REQUIRED_ARGUMENT],
+                         ["--skip-menu", "-m", GetoptLong::NO_ARGUMENT],
                          ["--develmagic", "-D", GetoptLong::NO_ARGUMENT]
 )
 
@@ -73,6 +74,8 @@ begin
       end
       
       FreeVikings::OPTIONS["startpassword"] = argument
+    when "--skip-menu"
+      FreeVikings::OPTIONS["menu"] = false
     when "--develmagic"
       FreeVikings::OPTIONS['develmagic'] = true
     end

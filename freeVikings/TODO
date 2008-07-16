@@ -4,6 +4,11 @@
 
 ======== To be done: ==========================================================
 
+(-) Possibility to turn off showing the password at the beginning of the level
+    (which is a bit annoying e.g. during the development)
+
+(-) Music
+
 (-) Repair the Snail (this monster seems to be out of order)
 
 (-) Make all setup stuff accessible from the menu (e.g. define location 
@@ -30,21 +35,19 @@
 
 (-) Development mode
 
-(-) 'Close' button ('X') causes total end of the game (as usually wanted 
-    by the user) and not only return to the main menu
-
 (-) Select and move items between inventories using the mouse.
     Make it possible to delete items in the game (the possibility is in the
     class Inventory, but is not accessible for the player).
 
 ======== Already finished: ====================================================
 
+(+) Possibility to skip menu [16.July 2008]
+(+) 'Close' button ('X') causes total end of the game (as usually wanted 
+    by the user) and not only return to the main menu [16.July 2008]
 (+) Theme definition (theme.xml) in gfx/themes/XXXTheme, 
     not in locs/DefaultCampaign/XXXLevelSet => more LevelSets can share 
     the same graphic theme
-
 (+) Default theme (there is a theme called DefaultTheme; it's a theme 
     of DefaultCampaign, so all the nested levels inherit names from it)
-
 (+) Convert all the Monster test locations to the new location standard
     (with no PASSWORD file and with location.xml)

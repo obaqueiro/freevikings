@@ -34,7 +34,8 @@ module FreeVikings
     # Argument location is a Location instance. (Location just played.)
     def serve_event(event, location)
       if event.is_a? QuitEvent then
-        end_game
+        Log4r::Logger['init log'].info "Window closed by the user - exiting."
+        exit
       end
 
       if event.is_a? KeyDownEvent

@@ -34,6 +34,8 @@ module FreeVikings
   OPTIONS['velocity_unit'] = 1
   # Delay (in milliseconds) in every iteration of the game loop
   OPTIONS['delay'] = 0
+  # Show menu? (false = skip menu)
+  OPTIONS['menu'] = true
   # Is "developer's magic" enabled or disabled?
   OPTIONS['develmagic'] = false
 

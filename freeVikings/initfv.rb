@@ -50,43 +50,57 @@ module FreeVikings
     # Does never return, because the menu is ran in an endless loop
     # until it is terminated by unwinding the stack (which is caused by
     # 'throw :game_exit' from inside TopMenu).
-
+    #
+    # If menu is skipped by a commandline option, starts the game directly.
     def start_menu
       @log.info "Starting game menu."
 
-      menu = TopMenu.new(@window)
+      if FreeVikings::OPTIONS['menu'] == false then
+        @log.info "Skipping menu as requested; starting the game directly."
+        catch :return_to_menu do
+          if password = FreeVikings::OPTIONS['startpassword'] then
+            Game.new(@window, password).game_loop
+          else
+            Game.new(@window).game_loop
+          end
+        end
+        @log.info "Game ended; skipping menu -> exiting."
+      else
+        menu = TopMenu.new(@window)
 
-      start_menu = Menu.new(menu, "Start Game", nil, nil)
-      ActionButton.new(start_menu, "New Game", Proc.new {
-                         @log.info "Starting new game."
-                         Game.new(@window).game_loop
-                       })
-      PasswordEdit.new(start_menu, "Password", FreeVikings::OPTIONS['startpassword'], Proc.new {
-                         @log.info "Starting the game with password '#{FreeVikings::OPTIONS['startpassword']}'."
-                         Game.new(@window, FreeVikings::OPTIONS['startpassword']).game_loop
-                       })
-      QuitButton.new(start_menu)
+        start_menu = Menu.new(menu, "Start Game", nil, nil)
+        ActionButton.new(start_menu, "New Game", Proc.new {
+                           @log.info "Starting new game."
+                           Game.new(@window).game_loop
+                         })
+        PasswordEdit.new(start_menu, "Password", FreeVikings::OPTIONS['startpassword'], Proc.new {
+                           @log.info "Starting the game with password '#{FreeVikings::OPTIONS['startpassword']}'."
+                           Game.new(@window, FreeVikings::OPTIONS['startpassword']).game_loop
+                         })
+        QuitButton.new(start_menu)
+        
+        graphics_menu = Menu.new(menu, "Graphics", nil, nil)
+        
+        DisplayModeChooseButton.new(graphics_menu, @window)
+        FVConfiguratorButton.new(graphics_menu, "Display fps", "display_fps", {"yes" => true, "no" => false})
+        QuitButton.new(graphics_menu)
+        
+        QuitButton.new(menu, QuitButton::QUIT)
 
-      graphics_menu = Menu.new(menu, "Graphics", nil, nil)
-
-      DisplayModeChooseButton.new(graphics_menu, @window)
-      FVConfiguratorButton.new(graphics_menu, "Display fps", "display_fps", {"yes" => true, "no" => false})
-      QuitButton.new(graphics_menu)
-
-      QuitButton.new(menu, QuitButton::QUIT)
-
-      # The endless 'menu loop'.
-      # Is ended from inside TopMenu by unwinding the stack.
-      # When does this happen? When you choose 'Yes' in the 'Quit - yes or no'
-      # dialog.
-      loop do
-        # Here unwinding the stack is used by Game#exit_game to say
-        # 'hey, menu, I've finished my work, speak with the user for a while'.
-        # Don't forget the same technique, unwinding the stack, (but with
-        # another symbol) is used to exit the menu and the entire program.
-        catch(:return_to_menu) do
-          clear_screen
-          menu.run
+        # The endless 'menu loop'.
+        # Is ended from inside TopMenu by unwinding the stack.
+        # When does this happen? When you choose 'Yes' 
+        # in the 'Quit - yes or no' dialog.
+        loop do
+          # Here unwinding the stack is used by Game#exit_game to say
+          # 'hey, menu, I've finished my work, speak with the user 
+          # for a while'.
+          # Don't forget the same technique, unwinding the stack, (but with
+          # another symbol) is used to exit the menu and the entire program.
+          catch(:return_to_menu) do
+            clear_screen
+            menu.run
+          end
         end
       end
     end
