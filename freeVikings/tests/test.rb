@@ -53,6 +53,7 @@ require 'teststructuredworld.rb'
 require 'testtalk.rb'
 require 'testtiledlocationloadstrategy.rb'
 require 'testlocationloader.rb'
+require 'testconfiguration.rb'
 
 class FreeVikingsTestSuite
 
@@ -84,6 +85,7 @@ class FreeVikingsTestSuite
     suite << TestTalk.suite
     suite << TestTiledMapLoadStrategy.suite
     suite << TestLocationLoader.suite
+    suite << TestConfiguration.suite
 
     return suite
   end
