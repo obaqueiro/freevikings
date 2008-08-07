@@ -206,7 +206,13 @@ regularly and refreshes the screen.
         unless is_game_finished?
           location = @world.rewind_location 
           @team = init_vikings_team(location)
-          @state = LocationInfoGameState.new(self, level)
+
+          # Display (or not) password of the level
+          if FreeVikings::OPTIONS["display_password"] then
+            @state = LocationInfoGameState.new(self, level)
+          else
+            run_location location
+          end
         else
           location = @world.location
         end

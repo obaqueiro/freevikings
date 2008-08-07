@@ -69,3 +69,4 @@ ruby freevikings.rb [-fFhpxlsm] [--fullscreen] [--fps] [--help] [--profile]
 
 --startpassword -s	Requires an argument - a level password (code)
 --skip-menu     -m      Skip menu
+--skip-password -Z	Don't display password at the beginning of level

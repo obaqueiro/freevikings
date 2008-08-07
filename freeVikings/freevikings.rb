@@ -13,6 +13,8 @@ SchwerEngine.init(SchwerEngine::DISABLE_LOG4R_SETUP)
 include SchwerEngine
 SchwerEngine.config = FreeVikings
 
+require 'initfv.rb' # Init class (just btw.: in Hebrew - which doesn't use syllables in the written text - 'Init' would probably be written the same as 'Anat', which is a goddess known from the Kenaan mythology)
+
 require 'getoptlong'
 require 'log4r'
 require 'log4rsetupload'
@@ -39,6 +41,7 @@ options = GetoptLong.new(
                          ["--delay",   "-d", GetoptLong::REQUIRED_ARGUMENT],
                          ["--startpassword", "-s", GetoptLong::REQUIRED_ARGUMENT],
                          ["--skip-menu", "-m", GetoptLong::NO_ARGUMENT],
+                         ["--skip-password", "-Z", GetoptLong::NO_ARGUMENT],
                          ["--develmagic", "-D", GetoptLong::NO_ARGUMENT]
 )
 
@@ -76,6 +79,8 @@ begin
       FreeVikings::OPTIONS["startpassword"] = argument
     when "--skip-menu"
       FreeVikings::OPTIONS["menu"] = false
+    when "--skip-password"
+      FreeVikings::OPTIONS["display_password"] = false
     when "--develmagic"
       FreeVikings::OPTIONS['develmagic'] = true
     end
@@ -103,5 +108,4 @@ $:.concat FreeVikings::CODE_DIRS
 require "alternatives.rb"
 
 # This opens the game window, loads data and starts the game:
-require 'initfv.rb'
 FreeVikings::Init.new

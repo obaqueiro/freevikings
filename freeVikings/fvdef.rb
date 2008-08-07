@@ -36,6 +36,8 @@ module FreeVikings
   OPTIONS['delay'] = 0
   # Show menu? (false = skip menu)
   OPTIONS['menu'] = true
+  # Show password at the beginning of every level?
+  OPTIONS['display_password'] = true
   # Is "developer's magic" enabled or disabled?
   OPTIONS['develmagic'] = false
 
