@@ -32,6 +32,10 @@ and the old choice are given to it.
         @change_proc = change_proc
       end
 
+      def height
+        @images[0].h
+      end
+
 =begin
 --- ChooseButton#value
 Returns the selected value.

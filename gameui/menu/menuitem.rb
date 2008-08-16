@@ -1,24 +1,17 @@
 # menuitem.rb
 # igneus 3.8.2005
 
-=begin
-= GameUI::Menus::MenuItem
-((<MenuItem>)) is any object which can be put into a (({Menu})).
-(({Menu})) itself is also a (({MenuItem})) because the (({Menu}))s can 
-(and are intended to) be nested.
-=end
-
 module GameUI
   module Menus
 
+    # MenuItem is any object which can be put into a Menu.
+    # Menu itself is also a MenuItem because the Menus can 
+    # (and are intended to) be nested.
     class MenuItem
 
-=begin
---- MenuItem.new(parent)
-Creates a new ((<MenuItem>)) as a child of ((|parent|)).
-Remember ((|parent|)) should be a (({Menu})) or any other similar container.
-=end
-
+      # Creates a new ((<MenuItem>)) as a child of ((|parent|)).
+      # Remember ((|parent|)) should be a (({Menu})) or any other similar 
+      # container.
       def initialize(parent)
         @parent = parent
 
@@ -27,64 +20,42 @@ Remember ((|parent|)) should be a (({Menu})) or any other similar container.
         end
       end
 
-=begin
---- MenuItem#parent
-Returns the ((<MenuItem>))'s parent or ((|nil|)) if the ((<MenuItem>)) is 
-a top-level (({Menu})).
-=end
-
+      # Returns the MenuItem's parent or nil if the MenuItem 
+      # is a top-level Menu.
       attr_reader :parent
 
-=begin
---- MenuItem#image
-Returns a (({RUDL::Surface})) with the ((<MenuItem>))'s image.
-=end
-
+      # Returns a (({RUDL::Surface})) with the ((<MenuItem>))'s image.
       attr_reader :image
 
-=begin
---- MenuItem#paint(surface, coordinates)
-The ((<MenuItem>)) paints itself onto the surface ((|surface|)).
-=end
+      # Returns MenuItem's height (Menu uses this method while repainting
+      # itself)
+      def height
+        @image.h
+      end
 
+      # The ((<MenuItem>)) paints itself onto the surface ((|surface|)).
       def paint(surface, coordinates)
         surface.blit image, coordinates
       end
 
-=begin
---- MenuItem#less
-This method is called when a left arrow key is pressed over the ((<MenuItem>)).
-By default this method does nothing.
-=end
-
+      # This method is called when a left arrow key is pressed over the 
+      # MenuItem. By default this method does nothing.
       def less
       end
 
-=begin
---- MenuItem#more
-This method is called when a right arrow key is pressed over the 
-((<MenuItem>)). By default this method does nothing.
-=end
-
+      # This method is called when a right arrow key is pressed over the 
+      # MenuItem. By default this method does nothing.
       def more
       end
 
-=begin
---- MenuItem#enter
-This method is called when an ENTER key is pressed over the 
-((<MenuItem>)). By default this method does nothing.
-=end
-
+      # This method is called when an ENTER key is pressed over the 
+      # MenuItem. By default this method does nothing.
       def enter
       end
 
-=begin
---- MenuItem#prepare
-(({Menu})) uses this method to tell it's member objects, ((<MenuItem>))s,
-that it's going to run.
-((<MenuItem>))s can use it to reload default values etc.
-=end
-
+      # Menu uses this method to tell it's member objects, MenuItems,
+      # that it's going to run. MenuItems can use it to reload default 
+      # values etc.
       def prepare
       end
 

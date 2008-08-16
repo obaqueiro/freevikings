@@ -213,16 +213,20 @@ Says if the ((<Menu>)) has the control now.
       def update_surface
         @surface.fill BACKGROUND_COLOUR, @update_rect
 
+        # blit menu title
         @surface.blit @image, [@x, @y]
 
+        # paint menu items
+        y = @y + @image.h + TITLE_MARGIN_BOTTOM
         @menu_items.each_index do |i|
           item = @menu_items[i]
-          y = @y + @image.h + TITLE_MARGIN_BOTTOM + i*@image.h
           item.paint(@surface, [@x, y])
-          
+
           if i == @selected then
             @surface.blit(@selector, [@x, y])
           end
+
+          y = y + item.height
         end
 
         @surface.flip

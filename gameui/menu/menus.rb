@@ -15,9 +15,11 @@ require 'menu.rb'
 
 require 'items/selectablelabel.rb'
 require 'items/quitbutton.rb'
+require 'items/submitbutton.rb'
 require 'items/choosebutton.rb'
 require 'items/actionbutton.rb'
 require 'items/textedit.rb'
+require 'items/credits.rb'
 
 
 ###   Self-test:   ###
@@ -34,9 +36,7 @@ if __FILE__ == $0 then
   menu = Menu.new(nil, "Menu mahajanga", win, text_renderer)
 
   # Add some menu items:
-  SelectableLabel.new(menu, "First")
-  SelectableLabel.new(menu, "Second")
-  SelectableLabel.new(menu, "Third")
+  SelectableLabel.new(menu, "Label")
   
   submenu = Menu.new(menu, "Submenu", nil, menu.text_renderer)
   SelectableLabel.new(submenu, "Schnupfen")
@@ -47,8 +47,12 @@ if __FILE__ == $0 then
 
   QuitButton.new(submenu)
 
-  TextEdit.new(menu, "Name", 12)
+  TextEdit.new(menu, "Name", '', 12)
   ChooseButton.new(menu, "Sex", ['male', 'female', 'unknown'])
+  Credits.new(menu, [['Alex A.', 'programming'], 
+                     ['Carl C.', 'coffee support'],
+                     ['Devis D.', 'graphics, music, money']])
+
   QuitButton.new(menu)
 
   menu.run

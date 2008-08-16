@@ -1,22 +1,13 @@
 # quitbutton.rb
 # igneus 3.9.2005
 
-=begin
-=GameUI::Menus::QuitButton
-(({MenuItem})) which gives control to the upper-level (({Menu})) or exits
-the game when ENTER is pressed over it.
-=end
-
 module GameUI
   module Menus
 
+    # MenuItem which gives control to the upper-level Menu or exits
+    # the game when ENTER is pressed over it.
     class QuitButton < MenuItem
 
-=begin
---- QuitButton::BACK
---- QuitButton::QUIT
---- QuitButton::AUTO
-=end
       BACK = 1
       QUIT = 2
       AUTO = 3

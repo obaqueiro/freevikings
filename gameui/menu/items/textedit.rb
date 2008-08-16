@@ -154,21 +154,6 @@ module GameUI
           end
         end
       end # class EditPlace
-
-      class SubmitButton < MenuItem
-
-        def initialize(parent)
-          super(parent)
-          @value = 'OK'
-          @image = create_image(@value)
-        end
-
-        attr_reader :value
-
-        def enter
-          @parent.submit
-        end
-      end
     end
   end
 end
