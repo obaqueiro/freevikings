@@ -83,6 +83,8 @@ module FreeVikings
         
         DisplayModeChooseButton.new(graphics_menu, @window)
         FVConfiguratorButton.new(graphics_menu, "Display fps", "display_fps", {"yes" => true, "no" => false})
+        Credits.new(menu, [['Jakub Pavlik', 'programming, graphics, levels'],
+                           ['Ingo Fulfs', 'graphics, music']])
         QuitButton.new(graphics_menu)
         
         QuitButton.new(menu, QuitButton::QUIT)

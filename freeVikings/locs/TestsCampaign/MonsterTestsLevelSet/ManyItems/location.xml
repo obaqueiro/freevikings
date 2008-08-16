@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Small paradise</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Level with many different items - it is useful for testing of
+      inventory features.
+    </description>
+  </info>
+
+  <body>
+    <password>IMYI</password>
+    <map src="manyitems_loc.xml"/>
+    <script src="manyitems_script.rb"/>
+    <exit horiz="500" vertic="360" />
+    <start horiz="50" vertic="140" />
+  </body>
+</location>

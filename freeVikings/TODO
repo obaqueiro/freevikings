@@ -4,18 +4,28 @@
 
 ======== To be done: ==========================================================
 
-(-) User's (and system?) configuration file (with possibility to define
-    multiple location storage places)
-
 (-) Distinguish licensing clearly
-
-(-) Add something like "Authors" or "Credits" to main menu
-
-(-) Music
 
 (-) Select and move items between inventories using the mouse.
     Make it possible to delete items in the game (the possibility is in the
     class Inventory, but is not accessible for the player).
+
+    !!! I prepared testing location with many items !!!
+
+(-) Bomb
+
+(-) Smashable wall (bomb/Erik's head)
+
+(-) Erik's 'head-smash' feature
+
+(-) User's (and system?) configuration file (with possibility to define
+    multiple location storage places)
+
+(-) Music
+
+(-) Variable tile size (not only 40x40)
+
+(-) Move all items to a separate directory items/ ?
 
 (-) Repair the Snail (this monster seems to be out of order)
 
@@ -41,9 +51,13 @@
 
 (-) Development mode
 
+(-) Process commandline options before loading huge data (it is annoying
+    to wait so long before help is displayed after typing 'freevikings.rb -h')
+
 ======== Already finished: ====================================================
 
-(-) Possibility to turn off showing the password at the beginning of the level
+(+) Add something like "Authors" or "Credits" to main menu [16.August 2008]
+(+) Possibility to turn off showing the password at the beginning of the level
     (which is a bit annoying e.g. during the development) [7.August 2008]
 (+) Possibility to skip menu [16.July 2008]
 (+) 'Close' button ('X') causes total end of the game (as usually wanted 
