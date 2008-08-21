@@ -44,6 +44,8 @@ module FreeVikings
 	serve_keyup(event, location)
       elsif event.is_a? MouseButtonDownEvent
         serve_mouseclick(event, location)
+      elsif event.is_a? MouseButtonUpEvent
+        serve_mouserelease(event, location)
       end # if
     end
 
@@ -159,6 +161,15 @@ module FreeVikings
         game_screen_height = Game::WIN_HEIGHT - BottomPanel::HEIGHT
         pos_in_the_panel = [event.pos[0], event.pos[1] - game_screen_height]
         @context.bottompanel.mouseclick(pos_in_the_panel)
+      end
+    end
+
+    def serve_mouserelease(event, location)
+      if y_in_bottompanel(event.pos[1]) then
+        Log4r::Logger['freeVikings log'].info "Mouse release in the bottompanel area."
+        game_screen_height = Game::WIN_HEIGHT - BottomPanel::HEIGHT
+        pos_in_the_panel = [event.pos[0], event.pos[1] - game_screen_height]
+        @context.bottompanel.mouserelease(pos_in_the_panel)
       end
     end
 

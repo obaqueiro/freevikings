@@ -4,13 +4,9 @@
 
 ======== To be done: ==========================================================
 
-(-) Distinguish licensing clearly
+(-) Delete items using mouse: drag item and drop it over trash icon
 
-(-) Select and move items between inventories using the mouse.
-    Make it possible to delete items in the game (the possibility is in the
-    class Inventory, but is not accessible for the player).
-
-    !!! I prepared testing location with many items !!!
+(-) Visual drag&drop of items; highlighting
 
 (-) Bomb
 
@@ -18,8 +14,12 @@
 
 (-) Erik's 'head-smash' feature
 
+(-) Possibility to define starting point for each viking separately
+
 (-) User's (and system?) configuration file (with possibility to define
     multiple location storage places)
+
+(-) Possibility to change keys (movement, inventory control etc.)
 
 (-) Music
 
@@ -56,16 +56,20 @@
 
 ======== Already finished: ====================================================
 
-(+) Add something like "Authors" or "Credits" to main menu [16.August 2008]
-(+) Possibility to turn off showing the password at the beginning of the level
+(10) Distinguish licensing clearly [21.August 2008]
+(9) Select and move items between inventories using the mouse. [21.August 2008]
+(8) Inventories which can be accessed (because their owners are next to 
+    the active viking) should be somehow emphasized. [21.August 2008]
+(7) Add something like "Authors" or "Credits" to main menu [16.August 2008]
+(6) Possibility to turn off showing the password at the beginning of the level
     (which is a bit annoying e.g. during the development) [7.August 2008]
-(+) Possibility to skip menu [16.July 2008]
-(+) 'Close' button ('X') causes total end of the game (as usually wanted 
+(5) Possibility to skip menu [16.July 2008]
+(4) 'Close' button ('X') causes total end of the game (as usually wanted 
     by the user) and not only return to the main menu [16.July 2008]
-(+) Theme definition (theme.xml) in gfx/themes/XXXTheme, 
+(3) Theme definition (theme.xml) in gfx/themes/XXXTheme, 
     not in locs/DefaultCampaign/XXXLevelSet => more LevelSets can share 
     the same graphic theme
-(+) Default theme (there is a theme called DefaultTheme; it's a theme 
+(2) Default theme (there is a theme called DefaultTheme; it's a theme 
     of DefaultCampaign, so all the nested levels inherit names from it)
-(+) Convert all the Monster test locations to the new location standard
+(1) Convert all the Monster test locations to the new location standard
     (with no PASSWORD file and with location.xml)

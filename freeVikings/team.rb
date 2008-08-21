@@ -1,6 +1,8 @@
 # team.rb
 # igneus 1.2.2005
 
+require 'forwardable'
+
 =begin
 = Team
 
@@ -16,6 +18,8 @@ on the EXIT point mentioned above.
 module FreeVikings
 
   class Team < Group
+
+    extend Forwardable
 
 =begin
 --- Team.new(*members)
@@ -78,14 +82,8 @@ to make active.
       return self.active
     end
 
-=begin
---- Team#each
-Standard iterator. Yields every ((<Team>)) member into a given block.
-=end
-
-    def each
-      @members.each {|m| yield m}
-    end
+    def_delegator :@members, :each
+    def_delegator :@members, :each_with_index
 
 =begin
 --- Team#each_alive

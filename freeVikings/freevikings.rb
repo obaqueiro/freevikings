@@ -30,7 +30,7 @@ def print_help_and_exit
 end
 
 options = GetoptLong.new(
-                         ["--profile", "-p", GetoptLong::NO_ARGUMENT],
+                         ["--profile", "-P", GetoptLong::NO_ARGUMENT],
                          ["--ruby-warnings", "-w", GetoptLong::NO_ARGUMENT],
                          ["--extensions", "-x", GetoptLong::NO_ARGUMENT],
                          ["--fps",     "-F", GetoptLong::NO_ARGUMENT],

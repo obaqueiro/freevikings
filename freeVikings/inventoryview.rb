@@ -1,51 +1,36 @@
 # inventoryview.rb
 # igneus 1.8.2005
 
-=begin
-= InventoryView
-((<InventoryView>)) is one component of the (({BottomPanel})).
-It displays contents of some (({Viking}))'s (({Inventory})).
-=end
-
 require 'RUDL'
 
 module FreeVikings
 
+  # InventoryView is one component of the BottomPanel.
+  # It displays contents of some Viking's Inventory.
+
   class InventoryView
 
-=begin
---- InventoryView::ITEM_SIZE
-Size of a square to display one (({Inventory})) slot's contents.
-=end
 
+    # Size of a square to display one Inventory slot's contents.
     ITEM_SIZE = 30
 
-=begin
---- InventoryView::INVENTORY_VIEW_SIZE
-Size of a square to display all the (({Inventory})) slots' contents.
-=end
-
+    # Size of a square to display all the Inventory slots' contents.
     INVENTORY_VIEW_SIZE = 2 * ITEM_SIZE
-
-=begin
---- InventoryView::ACTIVE_SELECTION_BLINK_DELAY
-=end
 
     ACTIVE_SELECTION_BLINK_DELAY = 1
 
-=begin
---- InventoryView.new(inventory_owner, bottompanel)
-As arguments accepts the owner of the displayed (({Inventory})) (it is usually
-a (({Viking})); the (({Inventory})) is obtained by call to the owner's
-'inventory' method) and a (({BottomPanel})) which will use this
-((<InventoryView>)).
+    @@dark_filter = nil
 
-Initialization has one side effect. The new ((<InventoryView>)) subscribes
-as an (({Observer})) to the (({BottomPanel})) ((|bottompanel|)).
-It's important for a good work of the ((<InventoryView>)),
-because the (({BottomPanel})) informs it's (({Observer}))s about
-it's state.
-=end
+    # As arguments accepts the owner of the displayed Inventory (it is usually
+    # a Viking; the Inventory is obtained by call to the owner's
+    # 'inventory' method) and a BottomPanel which will use this
+    # InventoryView.
+    #
+    # Initialization has one side effect. The new InventoryView subscribes
+    # as an Observer to the BottomPanel bottompanel.
+    # It's important for a good work of the InventoryView,
+    # because the BottomPanel informs it's Observers about
+    # it's state.
 
     def initialize(inventory_owner, bottompanel)
       @inventory_owner = inventory_owner
@@ -59,34 +44,53 @@ it's state.
       bottompanel.add_observer self
     end
 
-=begin
---- InventoryView#update(bottompanel_state)
-(({BottomPanel})) calls this method to inform the ((<InventoryView>)) that
-the state has changed and type of the selection box should be changed
-immediately.
-Argument ((|bottompanel_state|)) is always a (({BottomPanelState}))
-instance.
-=end
+    # BottomPanel calls this method to inform the InventoryView that
+    # the state has changed and type of the selection box should be changed
+    # immediately.
+    # Argument bottompanel_state is always a BottomPanelState
+    # instance.
 
     def update(bottompanel_state)
       @state = bottompanel_state
     end
 
-=begin
---- InventoryView#paint(surface, position, active)
-Paints itself onto (({RUDL::Surface})) ((|surface|)).
-Argument ((|position|)) is an (({Array})) [x,y].
-((|active|)) is (({Boolean})) and says if the (({Viking})) whose
-(({Inventory})) is displayed is active.
-=end
-
-    def paint(surface, position, active)
+    # Paints itself onto RUDL::Surface surface.
+    # Arguments:
+    # position:: Array [x,y].
+    # active:: Boolean, says if the Viking whose Inventory is displayed is 
+    #          active.
+    # show_off:: Boolean - if set to <tt>true</tt>, the InventoryView
+    #            is painted as inactive. This is only used in "items
+    #            exchange mode" for inventories of vikings who cannot
+    #            exchange items because they are too distant from the active 
+    #            one
+    def paint(surface, position, active, show_off=false)
       @active = active
       repaint_image
+
+      if show_off then
+        @image.blit InventoryView.dark_filter, [0,0]
+      end
+
       surface.blit(@image, position)
     end
 
     private
+
+    # returns semi-transparent Surface which is used to darken
+    # inactive inventories during items exchange
+
+    def InventoryView.dark_filter
+      if @@dark_filter.nil? then
+        @@dark_filter = RUDL::Surface.new [INVENTORY_VIEW_SIZE, 
+                                           INVENTORY_VIEW_SIZE]
+        grey = [15, 15, 15]
+        @@dark_filter.fill grey
+        @@dark_filter.set_alpha 150
+      end
+
+      return @@dark_filter
+    end
 
     # Positions of items in @image
     ITEM_POSITIONS = [[0,0],        [ITEM_SIZE,0],

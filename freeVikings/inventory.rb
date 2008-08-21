@@ -3,14 +3,14 @@
 
 module FreeVikings
 
- # Inventory is a box with four slots. Viking can collect items and put them
+  # Inventory is a box with four slots. Viking can collect items and put them
   # into his inventory.
   # Some basic ideas:
   # * At most four items can be at once in the inventory.
   # * When the viking enters a new location, his inventory is emptied.
   # * There is a special pointer in the inventory. This pointer points onto
   #   an "active slot" - a slot with an item which is used when the player
-  #   pushes yhe "use key".
+  #   pushes the "use key".
   # * By default, the TAB key allows the player to pause game, go into 
   #   the inventory and move the pointer; U is a "use key".
   # * When two vikings are next to each other, they can move items between 
@@ -130,13 +130,13 @@ module FreeVikings
     class IndexOutOfBoundsException < RuntimeError
     end
 
-    # An type of exception raised by Inventory#put if there is no free slot 
+    # Type of exception raised by Inventory#put if there is no free slot 
     # in the Inventory to put the Item into.
 
     class NoSlotFreeException < RuntimeError
     end
 
-    #This exception is raised when an attempt is made to access an empty slot.
+    # This exception is raised when an attempt is made to access an empty slot.
     # Inventory#active_index= raises it when an empty slot is being made 
     # active.
 

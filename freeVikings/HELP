@@ -58,7 +58,7 @@ ruby freevikings.rb [-fFhpxlsm] [--fullscreen] [--fps] [--help] [--profile]
 			critical classes. You must have built these extensions 
 			before you use this option.
 --fps		-F	Prints frames per second on the game screen
---profile 	-p	Profiling (only for development)
+--profile 	-P	Profiling (only for development)
 --levelsuite 	-l	Requires an argument - a directory with a levelsuite
 --v-unit	-u	Requires an argument - real number higher than 0
 			influencing speed of movement of vikings and monsters
