@@ -4,6 +4,11 @@
 
 ======== To be done: ==========================================================
 
+(-) Modify TiledMapLoadStrategy so that it can load both map0.99a (Tiled 0.6)
+    and map0.1 (Tiled 0.7) maps.
+
+(-) New Campaign (Find ruby!)
+
 (-) Delete items using mouse: drag item and drop it over trash icon
 
 (-) Visual drag&drop of items; highlighting

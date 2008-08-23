@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>Campaign "Save Ruby"</title>
+    <author>Jakub Pavlik /severus@post.cz/</author>
+    <description>
+      It was just another boring sunday afternoon and the three friends were
+      sunbathing on the coast of the Arctic ocean, while Baleog's mobile phone
+      rang.
+      Baleog: "Hello, it's Baleog."
+      Man on the phone: "...really, the lost tool is priceless. I will buy you 
+      as much meat as you will be able to eat or take home..."
+      Olaf: "Baleog, tell him I have a van."
+      Baleog: "We will come with a van. A huge van."
+      Man: "Doesn't matter. Please, come and help me."
+    </description>
+  </info>
+
+  <theme>DefaultTheme</theme>
+
+  <suite>
+    <level>Assembler</level>
+  </suite>
+</levelsuite>

@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Assembler</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>SSBR</password>
+    <map src="assembler_loc.tmx"/>
+    <script src=""/>
+    <start horiz="100" vertic="100"/>
+    <exit horiz="400" vertic="400"/>
+  </body>
+</location>

@@ -181,7 +181,12 @@ to hack a bit around TilED data loading.
             @current_row = []
             @blocks.push(@current_row)
           end
-          @current_row.push @blocktypes[tile_code]
+          begin
+            @current_row.push @blocktypes[tile_code]
+          rescue RangeError => e
+            @log.error "Tile with code #{tile_code} caused RangeError: "+e.message+" Once I got this error when I forgot to switch off gzip compression in Tiled!"
+            raise
+          end
         end
       end
     end # class LayerDataLoader

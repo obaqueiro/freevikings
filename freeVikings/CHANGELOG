@@ -2,6 +2,7 @@
 - game.rb: RD documentation converted to RDoc
 - SchwerEngine and Log4r are loaded AFTER processing commandline options -> I will never more wait 10 seconds before I see help...
 - help is generated from the Array of options - it isn't needed to modify HELP whenever a new option is added; HELP contains just a part of what is shown when you type 'freevikings.rb -h'
+- I made something which one day may become level of a new campaign
 
 [release 0.6-pre2] -----------------------------------------------------
 
