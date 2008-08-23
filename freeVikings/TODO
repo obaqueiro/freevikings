@@ -34,6 +34,7 @@
 
 (-) Possibility to change game speed (useful on newer machines, where 
     vikings move terribly slowly)
+    It is in options (-v) and vikings move quicker then, but not the monsters!
 
 (-) Installation
 
@@ -50,26 +51,3 @@
 (-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
 
 (-) Development mode
-
-(-) Process commandline options before loading huge data (it is annoying
-    to wait so long before help is displayed after typing 'freevikings.rb -h')
-
-======== Already finished: ====================================================
-
-(10) Distinguish licensing clearly [21.August 2008]
-(9) Select and move items between inventories using the mouse. [21.August 2008]
-(8) Inventories which can be accessed (because their owners are next to 
-    the active viking) should be somehow emphasized. [21.August 2008]
-(7) Add something like "Authors" or "Credits" to main menu [16.August 2008]
-(6) Possibility to turn off showing the password at the beginning of the level
-    (which is a bit annoying e.g. during the development) [7.August 2008]
-(5) Possibility to skip menu [16.July 2008]
-(4) 'Close' button ('X') causes total end of the game (as usually wanted 
-    by the user) and not only return to the main menu [16.July 2008]
-(3) Theme definition (theme.xml) in gfx/themes/XXXTheme, 
-    not in locs/DefaultCampaign/XXXLevelSet => more LevelSets can share 
-    the same graphic theme
-(2) Default theme (there is a theme called DefaultTheme; it's a theme 
-    of DefaultCampaign, so all the nested levels inherit names from it)
-(1) Convert all the Monster test locations to the new location standard
-    (with no PASSWORD file and with location.xml)
