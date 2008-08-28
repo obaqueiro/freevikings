@@ -1,20 +1,14 @@
 # staticobject.rb
 # igneus 31.7.2005
 
-=begin
-= StaticObject
-((<StaticObject>)) is a mixin module to be mixed into static objects
-(to learn more about static objects read documentation for class (({Map}))).
-=end
-
 module SchwerEngine
+
+  # StaticObject is a mixin module to be mixed into static objects
+  # (to learn more about static objects read documentation for class Map).
 
   module StaticObject
 
-=begin
---- StaticObject#solid?
-Tells if the object is solid or not. (((|false|)) by default.)
-=end
+    # Tells if the object is solid or not. false by default.)
 
     def solid?
       false

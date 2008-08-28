@@ -1,0 +1,6 @@
+[28. August 2008]
+- Location.<< now returns the Location itself (so you can write 
+  C++-streams-like chained expressions)
+- new methods for (Rectangle.new_empty; empty? bottom=,right=, area, common)
+- Location now "gives" itself to ActiveObjects during their registering in 
+  the same way as to Sprites

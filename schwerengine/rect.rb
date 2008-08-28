@@ -22,6 +22,12 @@ module SchwerEngine
       end
     end
 
+    # Returns new empty Rectangle
+
+    def Rectangle.new_empty
+      Rectangle.new(0,0,0,0)
+    end
+
     def collides?(rect)
       if self.left <= rect.right and
 	  rect.left <= self.right and
@@ -40,6 +46,9 @@ module SchwerEngine
       self[0] = i
     end
 
+    alias_method :x, :left
+    alias_method :x=, :left=
+
     def top
       at 1
     end
@@ -47,6 +56,9 @@ module SchwerEngine
     def top=(i)
       self[1] = i
     end
+
+    alias_method :y, :top
+    alias_method :y=, :top=
 
     def w
       at 2
@@ -68,23 +80,83 @@ module SchwerEngine
       top + h
     end
 
+    def bottom=(b)
+      if b < top then
+        raise ArgumentError, "Bottom edge cannot be over top edge."
+      end
+
+      self.h = b - top
+    end
+
     def right
       left + w
     end
 
-=begin
---- Rectangle#expand(expand_x=0, expand_y=0)
-Returns an expanded copy of itself.
-The expansion is done so that the rectangle's center stays on place and
-it's edges move.
+    def right=(r)
+      if r < left then
+        raise ArgumentError, "Right edge cannot be on the left of left edge."
+      end
 
-r = Rectangle.new(2,2,2,2) # => [2, 2, 2, 2]
-r.expand(1,1)              # => [1, 1, 4, 4]
-=end
+      self.w = r - left
+    end
+
+    # Returns an expanded copy of itself.
+    # The expansion is done so that the rectangle's center stays on place and
+    # it's edges move.
+    #
+    # r = Rectangle.new(2,2,2,2) # => [2, 2, 2, 2]
+    # r.expand(1,1)              # => [1, 1, 4, 4]
 
     def expand(expand_x=0, expand_y=0)
       Rectangle.new(left - expand_x, top - expand_y,
                     w + 2 * expand_x, h + 2 * expand_y)
+    end
+
+    # Returns area of the Rectangle
+    # Rectangle.new(50,1000,2,2).area # => 4
+    # (The example is for me, because I know I'll forget meaning of the word
+    # 'area' soon)
+
+    def area
+      w*h
+    end
+
+    # Returns another Rectangle, which is a common part of self and rect.
+    # If there is no common part, returns an empty rect
+
+    def common(rect)
+      if ! collides?(rect) then
+        return Rectangle.new_empty
+      end
+
+      result = Rectangle.new_empty
+      
+      if rect.left < self.left then
+        result.left = self.left
+      else
+        result.left = rect.left
+      end
+      if rect.top < self.top then
+        result.top = self.top
+      else
+        result.top = rect.top
+      end
+      if rect.right < self.right then
+        result.right = rect.right
+      else
+        result.right = self.right
+      end
+      if rect.bottom < self.bottom
+        result.bottom = rect.bottom
+      else
+        result.bottom = self.bottom
+      end
+
+      return result
+    end
+
+    def empty?
+      w == 0 or h == 0
     end
 
     def to_a

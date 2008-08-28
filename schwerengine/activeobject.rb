@@ -1,51 +1,34 @@
 # activeobject.rb
 # igneus 16.6.2005
 
-=begin
-= NAME
-ActiveObject
-
-= DESCRIPTION
-(({ActiveObject})) is a game object which doesn't need to be updated 
-regularly like (({Sprite})). It's only updated when a key is pressed over it 
-or if it's stroken by some gun.
-
-= Superclass
-Entity
-=end
-
 module SchwerEngine
+
+  # ActiveObject is a game object which doesn't need to be updated 
+  # regularly like Sprite. It's only updated when a key is pressed over it 
+  # or if it's stroken by some gun.
 
   class ActiveObject < Entity
 
     def initialize(initial_position=[], theme=NullGfxTheme.instance)
       super(initial_position, theme)
+      @location = NullLocation.instance
     end
 
-=begin
-= Instance methods
+    attr_writer :location
 
---- ActiveObject#activate
-Called when the player presses the activation key (S or UP) with the viking 
-standing at the (({ActiveObject})).
-=end
+    # Called when the player presses the activation key (S or UP) 
+    # with the viking standing at the ActiveObject.
 
     def activate
     end
 
-=begin
---- ActiveObject#deactivate
-Called when the player presses the deactivation key (F or DOWN) 
-with the viking standing at the (({ActiveObject})).
-=end
+    # Called when the player presses the deactivation key (F or DOWN) 
+    # with the viking standing at the ActiveObject.
 
     def deactivate
     end
 
-=begin
---- ActiveObject#hurt
-Called when the (({ActiveObject})) is stroken by some gun (a sword, an arrow).
-=end
+    # Called when the ActiveObject is stroken by some gun (a sword, an arrow).
 
     def hurt
     end

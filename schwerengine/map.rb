@@ -3,40 +3,28 @@
 
 require 'rexml/document'
 
-=begin
-
-= Map
-
-A ((<Map>)) object is a data structure to store static game objects,
-objects of the game world which don't change in any circumstances.
-At this time a ((<Map>)) contains one type of objects - ((*tiles*)).
-
-Tiles are all singleton instances of class (({Tile})). Squares with sizes
-((<Map::TILE_SIZE>)). They are piled into a grid. The grid is built once
-when the level is loaded and there is no way to change it during the
-game.
-Some of them are solid and make walls and floors, the others
-are soft and they are there just for good look.
-
-Some more static objects are stored in (({Location})). (See Static objects.)
-=end
-
 module SchwerEngine
+
+  # A Map object is a data structure to store static game objects,
+  # objects of the game world which don't change in any circumstances.
+  # At this time a Map contains one type of objects - tiles.
+  #
+  # Tiles are all singleton instances of class Tile. Squares with sizes
+  # Map::TILE_SIZE. They are piled into a grid. The grid is built once
+  # when the level is loaded and there is no way to change it during the
+  # game.
+  # Some of them are solid and make walls and floors, the others
+  # are soft and they are there just for good look.
+  #
+  # Some more static objects are stored in Location. (See Static objects.)
 
   class Map
 
-=begin
---- Map::TILE_SIZE
-((<Map>))'s tiles are squares with a side length ((<Map::TILE_SIZE>)).
-=end
-
+    # Map's tiles are squares with a side length Map::TILE_SIZE.
     TILE_SIZE = 40
 
-=begin
---- Map.new(map_load_strategy)
-Initializes a new ((<Map>)) with data from ((|map_load_strategy|)).
-((|map_load_strategy|)) should be a (({LocationLoadStrategy})) instance.
-=end
+    # Initializes a new Map with data from map_load_strategy.
+    # map_load_strategy should be a MapLoadStrategy instance.
 
     def initialize(map_load_strategy)
       @log = Log4r::Logger['map log']
@@ -63,33 +51,20 @@ Initializes a new ((<Map>)) with data from ((|map_load_strategy|)).
       create_background
     end
 
-=begin
---- Map#rect
-Returns a (({Rectangle})) with ((<Map>))'s sizes. In fact only 'w' and 'h'
-attributes of the returned object are important.
-=end
+    # Returns a Rectangle with Map's sizes. In fact only 'w' and 'h'
+    # attributes of the returned object are important.
 
     attr_reader :rect
 
-=begin
---- Map#static_objects
-Returns a (({Group})) of ((<Static objects>)).
-=end
+    # Returns a Group of Static objects.
 
     attr_reader :static_objects
 
-=begin
---- Map#background
-A (({RUDL::Surface})) with all the map tiles painted. It's created only once 
-when it's first required. (remember the ((<Tiles>)) can't be changed during
-the game.)
-=end
+    # A RUDL::Surface with all the map tiles painted. It's created only once 
+    # when it's first required. (remember the Tiles can't be changed during
+    # the game.)
 
     attr_reader :background
-
-=begin
---- Map#paint(surface, paint_rect)
-=end
 
     def paint(surface, paint_rect)
       rect = paint_rect.dup
@@ -102,11 +77,8 @@ the game.)
       surface.blit(@background, [0,0], (rect.to_a))
     end
 
-=begin
---- Map#area_free?(rect)
-Returns ((|true|)) if area specified by the (({Rectangle})) ((|rect|)) 
-is free of solid map blocks, ((|false|)) otherwise.
-=end
+    # Returns true if area specified by the Rectangle rect 
+    # is free of solid map blocks, false otherwise.
 
     def area_free?(rect)
       leftmost_i = (rect.left / Map::TILE_SIZE).floor

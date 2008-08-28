@@ -67,4 +67,39 @@ class TestRect < Test::Unit::TestCase
     s = r.expand(1)
     assert_equal @R.new(4, 5, 7, 5), s, "'Expand 1px in x axis' means 'left-=1, right+=1'"
   end
+
+  def testArea
+    r = @R.new 0,0,2,2
+    assert_equal 4, r.area, "Area of a square of size 2 is 4."
+  end
+
+  def testCommonEmpty
+    r1 = @R.new 0,0,2,2
+    r2 = @R.new 10,10,10,10
+    assert r1.common(r2).empty?, "Common area of these two rectangles is empty - empty rectangle wanted!"    
+  end
+
+  def testCommon
+    r1 = @R.new 0,0,10,10
+    r2 = @R.new 0,0,5,5
+    assert_equal r2, r1.common(r2)
+  end
+
+  def testCommon2
+    r1 = @R.new 0,10,100,10
+    r2 = @R.new 10,0,10,100
+    assert_equal @R.new(10,10,10,10), r1.common(r2)
+  end
+
+  def testBottomAssign
+    r1 = @R.new 0,0,5,5
+    r1.bottom = 50
+    assert_equal 50, r1.h
+  end
+
+  def testRightAssign
+    r1 = @R.new 0,0,5,5
+    r1.right = 50
+    assert_equal 50, r1.w
+  end
 end

@@ -219,6 +219,7 @@ This is more intuitive and so more readable.
 
     def <<(object)
       object.register_in self
+      return self
     end
 
 =begin
@@ -264,8 +265,16 @@ return only an (({Array})) of ((|rect|)) colliding (({Hero}))es or
 --- Location#active_objects_on_rect(rect)
 =end
 
-    def_delegator :@activeobjectmanager, :add, :add_active_object
-    def_delegator :@activeobjectmanager, :delete, :delete_active_object
+    def add_active_object(o)
+      @activeobjectmanager.add o
+      o.location = self
+    end
+
+    def delete_active_object(o)
+      @activeobjectmanager.delete o
+      o.location = NullLocation.instance
+    end
+
     def_delegator :@activeobjectmanager, :members_on_rect, :active_objects_on_rect
 
 =begin
