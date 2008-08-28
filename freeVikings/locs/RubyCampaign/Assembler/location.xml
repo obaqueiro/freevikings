@@ -9,8 +9,8 @@
   <body>
     <password>SSBR</password>
     <map src="assembler_loc.tmx"/>
-    <script src=""/>
-    <start horiz="100" vertic="100"/>
-    <exit horiz="400" vertic="400"/>
+    <script src="assembler_script.rb"/>
+    <start horiz="360" vertic="380"/>
+    <exit horiz="4000" vertic="4000"/>
   </body>
 </location>

@@ -2,12 +2,31 @@
            ========== FreeVikings TODO file ==========
            ===========================================
 
-======== To be done: ==========================================================
+======== RubyCampaign ==================================================
 
-(-) Modify TiledMapLoadStrategy so that it can load both map0.99a (Tiled 0.6)
-    and map0.1 (Tiled 0.7) maps.
+(-) Repair Assembler levelset (the black stripes are awful!)
 
-(-) New Campaign (Find ruby!)
+(-) Finish Assembler level
+
+======== Graphics ======================================================
+
+(-) Some image for teleport (cca 80x120px)
+
+======== Code ==========================================================
+
+(-) Some teleporting animation
+    (It's possible to implement it as a Sprite, e.g. Teleport::Animation)
+
+(-) Fix wrong displaying of map's last row
+
+(-) Enable hard reloading (not only restart game, but also reload
+    map and script)
+
+(-) Development feature: list of available levels in menu
+
+(-) Vikings should rest on Olaf's shield only if it's over his head
+
+(-) Show level name, description and author at the beginning of level
 
 (-) Delete items using mouse: drag item and drop it over trash icon
 

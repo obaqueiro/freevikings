@@ -5,7 +5,8 @@
     <title>Monster Tests</title>
     <author>Jakub Pavlik /severus@post.cz/</author>
     <description>
-      Testing locations for development of new monster classes.
+      Testing locations for development of new monster (and not only monster) 
+      classes.
     </description>
   </info>
 
@@ -22,5 +23,6 @@
     <level>Snail</level>
     <level>Penguin</level>
     <level>ManyItems</level>
+    <level>Teleport</level>
   </suite>
 </levelsuite>

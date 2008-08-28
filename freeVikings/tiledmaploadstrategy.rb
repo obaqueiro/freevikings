@@ -1,23 +1,14 @@
 # tiledmaploadstrategy.rb
 # igneus 14.12.2005
 
-=begin
-= NAME
-TiledMapLoadStrategy
-
-= DESCRIPTION
-(({LocationLoadStrategy})) which is able to load freeVikings maps 
-in native format of TilED editor (they usually have suffix .tmx).
-
-= Superclass
-MapLoadStrategy
-=end
-
 require 'rexml/document'
 require 'RUDL'
 
 module FreeVikings
 
+  # LocationLoadStrategy which is able to load freeVikings maps 
+  # in native format of TilED editor (they usually have suffix .tmx).
+  
   class TiledMapLoadStrategy < MapLoadStrategy
 
     def initialize(source)
@@ -25,6 +16,9 @@ module FreeVikings
 
       @doc = REXML::Document.new(@source)
       @tiletypes = []
+
+      @map_version = @doc.root.attributes['version']
+      @log.info "Loading TilEd map version '#{@map_version}'"
     end
 
     def load(blocks_matrix)
@@ -94,7 +88,20 @@ module FreeVikings
     def load_properties
       @properties = {}
 
-      @doc.root.each_element('property') do |p|
+      # Map format version 1.0 is slightly different then 0.99a:
+      case @map_version
+      when "0.99a"
+        # properties are directly in the root element (map/*property)
+        properties = @doc.root
+      when "1.0"
+        # properties are in a block element 'properties'
+        # (map/properties/*property)
+        properties = @doc.root.elements['properties']
+      else
+        @log.warn "Unknown map version '@map_version': errors may occur!"
+      end
+
+      properties.each_element('property') do |p|
         property_name = p.attributes['name']
         property_value = p.attributes['value']
         @properties[property_name] = property_value
@@ -113,22 +120,20 @@ module FreeVikings
       end
     end
 
-=begin
---- TiledMapLoadStrategy::LayerDataLoader
-Small strategy classes. They are needed to be able to load differently
-mutated (encoded etc.) layer data.
-(Have I said these classes are needed to be able to load data?
-Well, maybe. But the actual goal is to have a clean code without
-long if-clauses and duplication).
+    # Small strategy classes. They are needed to be able to load differently
+    # mutated (encoded etc.) layer data.
+    # (Have I said these classes are needed to be able to load data?
+    # Well, maybe. But the actual goal is to have a clean code without
+    # long if-clauses and duplication).
+    #
+    # LayerDataLoader has two subclasses:
+    # * Base64LayerDataLoader for loading Base64-encoded data
+    # * ExpandedLayerDataLoader for loading unencoded data 
+    #   (a huge heap of XML tags <tile gid="blah">)
+    #
+    # But nobody actually needs to know about LayerDataLoader unless he wants
+    # to hack a bit around TilED data loading.
 
-(({LayerDataLoader})) has two subclasses:
-* (({Base64LayerDataLoader})) for loading Base64-encoded data
-* (({ExpandedLayerDataLoader})) for loading unencoded data 
-  (a huge heap of XML tags (({<tile gid="blah">})))
-
-But nobody actually needs to know about (({LayerDataLoader})) unless he wants
-to hack a bit around TilED data loading.
-=end
     class LayerDataLoader
       def initialize(blocks_matrix, blocktypes, layer, map_properties)
         @log = Log4r::Logger['location loading log']

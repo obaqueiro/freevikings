@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Teleport test</title>
+    <author>Jakub Pavlik - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>TLPT</password>
+    <map src="teleport_loc.xml"/>
+    <script src="teleport_script.rb"/>
+    <exit horiz="500" vertic="360" />
+    <start horiz="50" vertic="50" />    
+  </body>
+</location>

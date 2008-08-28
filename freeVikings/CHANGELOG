@@ -1,7 +1,17 @@
+[28. August 2008]
+- TiledMapLoadStrategy modified so that it can load both map0.99a (Tiled 0.6) 
+  and map0.1 (Tiled 0.7) maps. Documentation converted from RD to RDoc
+- Teleport created (class + tests + testing level)
+- level RubyCampaign/Assembler improved a bit (teleports in dark blue rooms,
+  door from room 1 to room 5 (light blue))
+
 [23.August 2008]
 - game.rb: RD documentation converted to RDoc
-- SchwerEngine and Log4r are loaded AFTER processing commandline options -> I will never more wait 10 seconds before I see help...
-- help is generated from the Array of options - it isn't needed to modify HELP whenever a new option is added; HELP contains just a part of what is shown when you type 'freevikings.rb -h'
+- SchwerEngine and Log4r are loaded AFTER processing commandline options -> 
+  I will never more wait 10 seconds before I see help...
+- help is generated from the Array of options - it isn't needed to modify HELP 
+  whenever a new option is added; HELP contains just a part of what is shown 
+  when you type 'freevikings.rb -h'
 - I made something which one day may become level of a new campaign
 
 [release 0.6-pre2] -----------------------------------------------------
@@ -9,13 +19,15 @@
 [21.August 2008]
 - Distinguish licensing clearly
 - Select and move items between inventories using the mouse.
-- Inventories which can be accessed (because their owners are next to the active viking) should be somehow emphasized.
+- Inventories which can be accessed (because their owners are next to the 
+  active viking) should be somehow emphasized.
 
 [16.August 2008]
 Add something like "Authors" or "Credits" to main menu
 
 [7.August 2008]
-Possibility to turn off showing the password at the beginning of the level (which is a bit annoying e.g. during the development)
+Possibility to turn off showing the password at the beginning of the level 
+(which is a bit annoying e.g. during the development)
 
 [16.July 2008]
 - Possibility to skip menu

@@ -171,7 +171,7 @@ begin
         raise "'#{argument}' is not a valid location password."
       end
       
-      FreeVikings::OPTIONS["startpassword"] = argument
+      FreeVikings::OPTIONS["startpassword"] = argument.upcase
     when "--skip-menu"
       FreeVikings::OPTIONS["menu"] = false
     when "--skip-password"
