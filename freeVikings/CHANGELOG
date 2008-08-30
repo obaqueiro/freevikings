@@ -1,3 +1,7 @@
+[30.August 2008]
+- README in the main development branch (it's a bit boring to make a new one
+  for every release...)
+
 [28. August 2008]
 - TiledMapLoadStrategy modified so that it can load both map0.99a (Tiled 0.6) 
   and map0.1 (Tiled 0.7) maps. Documentation converted from RD to RDoc

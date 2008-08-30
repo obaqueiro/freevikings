@@ -4,7 +4,7 @@
 
 ======== RubyCampaign ==================================================
 
-(-) Repair Assembler levelset (the black stripes are awful!)
+(-) Repair Assembler tileset (the black stripes are awful!)
 
 (-) Finish Assembler level
 
@@ -13,6 +13,10 @@
 (-) Some image for teleport (cca 80x120px)
 
 ======== Code ==========================================================
+
+(-) Automatic release
+
+(-) Music
 
 (-) Some teleporting animation
     (It's possible to implement it as a Sprite, e.g. Teleport::Animation)
@@ -44,8 +48,6 @@
     multiple location storage places)
 
 (-) Possibility to change keys (movement, inventory control etc.)
-
-(-) Music
 
 (-) Variable tile size (not only 40x40)
 
