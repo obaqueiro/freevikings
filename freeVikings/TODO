@@ -14,6 +14,13 @@
 
 ======== Code ==========================================================
 
+(-) Implement method StructuredWorld#levels (it's a step towards
+    task "Development feature: list of available levels in menu")
+    Empty method definition is already there!
+
+(-) Remove unused class World (world.rb) - it is inherited by StructuredWorld -
+    so be carefull!
+
 (-) Music
 
 (-) Some teleporting animation

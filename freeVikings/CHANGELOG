@@ -2,6 +2,12 @@
 - Finished auto-releasing tool (utils/make_release.rb), which automates
   nearly everything connected with making a new release
   (creating and uploading packages, updating freshmeat and RAA)
+- structuredworld.rb: documentation converted RD -> RDoc
+- levelsuite.rb: documentation converted RD -> RDoc
+
+[[[release 0.6-pre3] -----------------------------------------------------
+  (Well, it isn't much different from 0.6pre2, but I wanted to test
+  the auto-releasing tool)
 
 [30.August 2008]
 - README in the main development branch (it's a bit boring to make a new one
@@ -24,7 +30,7 @@
   when you type 'freevikings.rb -h'
 - I made something which one day may become level of a new campaign
 
-[release 0.6-pre2] -----------------------------------------------------
+[[[release 0.6-pre2] -----------------------------------------------------
 
 [21.August 2008]
 - Distinguish licensing clearly
@@ -41,10 +47,15 @@ Possibility to turn off showing the password at the beginning of the level
 
 [16.July 2008]
 - Possibility to skip menu
-- 'Close' button ('X') causes total end of the game (as usually wanted by the user) and not only return to the main menu
+- 'Close' button ('X') causes total end of the game (as usually wanted 
+  by the user) and not only return to the main menu
 
-Theme definition (theme.xml) in gfx/themes/XXXTheme, not in locs/DefaultCampaign/XXXLevelSet => more LevelSets can share the same graphic theme
+Theme definition (theme.xml) in gfx/themes/XXXTheme, not 
+in locs/DefaultCampaign/XXXLevelSet => more LevelSets can share the same 
+graphic theme
 
-Default theme (there is a theme called DefaultTheme; it's a theme of DefaultCampaign, so all the nested levels inherit names from it)
+Default theme (there is a theme called DefaultTheme; it's a theme 
+of DefaultCampaign, so all the nested levels inherit names from it)
 
-Convert all the Monster test locations to the new location standard (with no PASSWORD file and with location.xml)
+Convert all the Monster test locations to the new location standard 
+(with no PASSWORD file and with location.xml)

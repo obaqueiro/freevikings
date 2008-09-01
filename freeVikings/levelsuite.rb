@@ -1,11 +1,6 @@
 # levelsuite.rb
 # igneus 1.8.2005
 
-=begin
-= LevelSuite
-((<LevelSuite>)) is a set of ((<LevelSuite>))s.
-=end
-
 require 'rexml/document'
 
 # require 'level.rb' # this require command is at the end of the file because
@@ -13,29 +8,22 @@ require 'rexml/document'
 
 module FreeVikings
 
+  # LevelSuite is a set of LevelSuites.
+
   class LevelSuite
 
-=begin
---- LevelSuite::DEFINITION_FILE_NAME
-Standard name of the XML file which contains the campaign's definition.
-=end
+    # Standard name of the XML file which contains the campaign's definition.
 
     DEFINITION_FILE_NAME = 'levelsuite.xml'
 
-=begin
---- LevelSuite::THEME_FILE
-Standard name of the XML file which defines the graphics theme.
-=end
+    # Standard name of the XML file which defines the graphics theme.
 
     THEME_FILE = 'theme.xml'
 
-=begin
---- LevelSuite.new(dir, member_of=nil)
-Argument ((|dir|)) is of type (({String})). It is a name of the directory where
-the file (('campaign.xml')) for the loaded campaign is.
-If the (({LevelSuite})) is nested in some other (({LevelSuite})), it's
-given a second argument ((|member_of|)), which is a 'parent' (({LevelSuite})).
-=end
+    # Argument dir is of type String. It is a name of the directory where
+    # the file 'levelsuite.xml' for the loaded LevelSuite is.
+    # If the LevelSuite is nested in some other LevelSuite, it's
+    # given a second argument member_of, which is a 'parent' LevelSuite.
 
     def initialize(dirname, member_of=nil)
       @log = Log4r::Logger['world log']
@@ -67,10 +55,7 @@ given a second argument ((|member_of|)), which is a 'parent' (({LevelSuite})).
       @log.debug "#{object_id}: New LevelSuite created from data in directory '#{@dirname}' as a nested suite in #{@member_of ? @member_of.object_id : @member_of.to_s}"
     end
 
-=begin
---- LevelSuite.is_levelsuite_directory?(dirname)
-Says if specified directory contains the LevelSuite definition file.
-=end
+    # Says if specified directory contains the LevelSuite definition file.
 
     def LevelSuite.is_levelsuite_directory?(dirname)
       deffile = dirname+'/'+DEFINITION_FILE_NAME
@@ -82,30 +67,21 @@ Says if specified directory contains the LevelSuite definition file.
       end
     end
 
-=begin
---- LevelSuite#dirname
-Returns a (({String})) with the name (usually a subpath) 
-of the ((<LevelSuite>))'s directory.
-=end
+    # Returns a String with the name (usually a subpath) 
+    # of the LevelSuite's directory.
 
     attr_reader :dirname
 
-=begin
---- LevelSuite#members
-Returns an (({Array})) of (({LevelSuite})) objects.
-=end
+    # Returns an Array of LevelSuite objects.
 
     attr_reader :members
 
-=begin
---- LevelSuite#next_level
-Returns next (({Level})) from the ((<LevelSuite>)) or ((|nil|)) if any more
-(({Level}))s are available.
-
-(Implementation detail:
-The (({Level})) objects aren't stored in the ((<LevelSuite>)) instance,
-but are obtained by call to (({LevelSuite#next_level})).)
-=end
+    # Returns next Level from the LevelSuite or nil if any more
+    # Levels are available.
+    #
+    # (Implementation detail:
+    # The Level objects aren't stored in the LevelSuite instance,
+    # but are obtained by call to LevelSuite#next_level.)
 
     def next_level
       unless @active_member
@@ -133,13 +109,10 @@ but are obtained by call to (({LevelSuite#next_level})).)
       end
     end
 
-=begin
---- LevelSuite#level_with_password(password)
-Returns a (({Level})) with password ((|password|)) and sets it active 
-or throws ((<LevelSuite::UnknownPasswordException>)) if no such level
-exists. For more information about passwords read documentation for class
-(({StructuredWorld})).
-=end
+    # Returns a Level with password password and sets it active 
+    # or throws LevelSuite::UnknownPasswordException if no such level
+    # exists. For more information about passwords read documentation for class
+    # StructuredWorld.
 
     def level_with_password(password)
       @log.debug "Asked for a level with password #{password}."
@@ -152,13 +125,10 @@ exists. For more information about passwords read documentation for class
       raise UnknownPasswordException, "Password #{password} doesn't exist."
     end
 
-=begin
---- LevelSuite#gfx_theme
-Returns a (({GfxTheme})) for the set of levels. (If there isn't such
-(({GfxTheme})), a (({NullGfxTheme})) is returned, but (({NullGfxTheme}))
-behaves in the same way as normal (({GfxTheme})), so you don't need to
-worry about it.)
-=end
+    # Returns a GfxTheme for the set of levels. (If there isn't such
+    # GfxTheme, a NullGfxTheme is returned, but NullGfxTheme
+    # behaves in the same way as normal GfxTheme, so you don't need to
+    # worry about it.)
 
     def gfx_theme
       if @theme == nil then
@@ -264,20 +234,14 @@ worry about it.)
 
     public
 
-=begin
---- LevelSuite::LevelSuiteLoadException
-Raised by ((<LevelSuite.new>)) if some big problem occurs during the loading
-phase.
-=end
+    # Raised by LevelSuite.new if some big problem occurs during the loading
+    # phase.
 
     class LevelSuiteLoadException < RuntimeError
     end
 
-=begin
---- LevelSuite::UnknownPasswordException
-Exception of this type is thrown when a password given 
-to ((<LevelSuite#level_with_password>)) doesn't exist.
-=end
+    # Exception of this type is thrown when a password given 
+    # to LevelSuite#level_with_password doesn't exist.
 
     class UnknownPasswordException < RuntimeError
     end # class UnknownPasswordException

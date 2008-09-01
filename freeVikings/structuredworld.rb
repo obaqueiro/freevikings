@@ -1,11 +1,6 @@
 # structuredworld.rb
 # igneus 1.8.2005
 
-=begin
-= StructuredWorld
-((<StructuredWorld>)) is a (({World})) which works with (({LevelSuite}))s.
-=end
-
 require 'world.rb'
 require 'levelsuite.rb'
 
@@ -13,21 +8,18 @@ module FreeVikings
 
   class StructuredWorld < World
 
-=begin
---- StructuredWorld(campaign_dir, password=nil)
-Argument ((|campaign_dir|)) is a name of the root directory 
-of the (({LevelSuite})) hierarchy. It's also called 'a campaign directory',
-because it contains a complete set of levels, which is also called 
-'a campaign'.
-
-(If you wanted, you wouldn't have to give a real 'campaign directory' 
-as argument, it is possible to give a directory of any nested (({LevelSuite})),
-but it isn't very usual.)
-
-The second argument, ((|password|)), is voluntary and must be a 4-character
-String. If it is given location with password ((|password|)) is selected as 
-a starting location.
-=end
+    # Argument campaign_dir is a name of the root directory 
+    # of the LevelSuite hierarchy. It's also called 'a campaign directory',
+    # because it contains a complete set of levels, which is also called 
+    # 'a campaign'.
+    #
+    # (If you wanted, you wouldn't have to give a real 'campaign directory' 
+    # as argument, it is possible to give a directory of any nested LevelSuite,
+    # but it isn't very usual.)
+    #
+    # The second argument, password, is voluntary and must be a 4-character
+    # String. If it is given location with password password is selected as 
+    # a starting location.
 
     def initialize(campaign_dir, password='')
       @levelsuite = LevelSuite.new(campaign_dir)
@@ -37,14 +29,11 @@ a starting location.
 
     attr_reader :level
 
-=begin
---- StructuredWorld#next_level
-Does the same as next_location, but returns (({Level})), not (({Location})).
-Dont't call ((<StructuredWorld#next_location>)) after 
-((<StructuredWorld#next_level>)), you would skip one location!
-After ((<StructuredWorld#next_level>)) you can get the current (({Location}))
-by call to ((<StructuredWorld#rewind_location>)).
-=end
+    # Does the same as next_location, but returns Level, not Location.
+    # Dont't call StructuredWorld#next_location after 
+    # StructuredWorld#next_level, you would skip one location!
+    # After StructuredWorld#next_level you can get the current Location
+    # by call to StructuredWorld#rewind_location.
 
     def next_level
       @level = @levelsuite.next_level
@@ -56,11 +45,8 @@ by call to ((<StructuredWorld#rewind_location>)).
       return @level
     end
 
-=begin
---- StructuredWorld#next_location(password='')
-If you use the voluntary argument, a (({Location})) with the specified
-password is run instead of the next one.
-=end
+    # If you use the voluntary argument, a Location with the specified
+    # password is run instead of the next one.
 
     def next_location(password='')
       if password != '' then
@@ -79,6 +65,11 @@ password is run instead of the next one.
       return create_location
     end
 
+    # Returns Array of all Levels of the world
+
+    def levels
+    end
+
     private
 
     def create_location
@@ -91,10 +82,7 @@ password is run instead of the next one.
 
     public
 
-=begin
---- StructuredWorld::PasswordError
-Exception raised if invalid password is given.
-=end
+    # Exception raised if invalid password is given.
 
     class PasswordError < ArgumentError
     end
