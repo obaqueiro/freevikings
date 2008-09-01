@@ -1,3 +1,8 @@
+[1.September 2008]
+- Finished auto-releasing tool (utils/make_release.rb), which automates
+  nearly everything connected with making a new release
+  (creating and uploading packages, updating freshmeat and RAA)
+
 [30.August 2008]
 - README in the main development branch (it's a bit boring to make a new one
   for every release...)
