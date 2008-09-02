@@ -48,13 +48,13 @@
   </logger>
 
   <!-- Log for Location Loading Strategies output -->
-  <logger name="location loading log" level="WARN">
+  <logger name="location loading log" level="INFO">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
   </logger>
 
   <!-- Log for Map classe's debugging output -->
-  <logger name="map log" level="ERROR">
+  <logger name="map log" level="INFO">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
   </logger>

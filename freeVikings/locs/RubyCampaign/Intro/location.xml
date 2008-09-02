@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Intro</title>
+    <author>Jakub Pavlik - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>NTRO</password>
+    <map src="intro_loc.tmx"/>
+    <script src="intro_script.rb"/>
+    <start horiz="50" vertic="220"/>
+    <exit horiz="680" vertic="100"/>
+  </body>
+</location>

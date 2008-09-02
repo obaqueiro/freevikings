@@ -205,6 +205,8 @@ module FreeVikings
         # of Fixnums.
         # [Note: Decoding of Base64 is done by String#unpack.]
         data = text.strip.unpack('m')[0].split(//).collect {|s| s[0]}
+
+        @log.info "#{self.class}: Map data '#{data.size/4}' tiles (#{data.size/4/@max_height}x#{data.size/4/@max_width})"
         
         0.upto(@max_height) do |row|
           0.upto(@max_width) do |col|

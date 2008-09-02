@@ -20,6 +20,7 @@
   <theme>DefaultTheme</theme>
 
   <suite>
+    <level>Intro</level>
     <level>Assembler</level>
   </suite>
 </levelsuite>

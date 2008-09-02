@@ -4,6 +4,9 @@
 
 ======== RubyCampaign ==================================================
 
+(-) Intro should be on the coast of the sea and not in house.
+    Create another map.
+
 (-) Repair Assembler tileset (the black stripes are awful!)
 
 (-) Finish Assembler level
@@ -13,6 +16,12 @@
 (-) Some image for teleport (cca 80x120px)
 
 ======== Code ==========================================================
+
+(-) Fix bug "not displayed first row of tiles"
+    (See schwerengine/map.rb L75; find a similar thing in painting of
+    game objects; remove both)
+
+(-) Map's borders are solid, so it is impossible to go out of the map
 
 (-) Implement method StructuredWorld#levels (it's a step towards
     task "Development feature: list of available levels in menu")
