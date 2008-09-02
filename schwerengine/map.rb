@@ -37,10 +37,10 @@ module SchwerEngine
 
       loading_strategy.load_map(@blocks)
 
-      @log.info('Map initialised.')
-
       @max_width = @blocks[1].size
       @max_height = @blocks.size
+
+      @log.info("Map initialised. Size '#{@max_width}x#{@max_height}'")
 
       if (@max_width == 0) or (@max_height == 0) then
         raise "Invalid map size: #{@max_width}x#{@max_height}"
