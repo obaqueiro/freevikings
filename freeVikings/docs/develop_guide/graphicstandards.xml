@@ -1,0 +1,402 @@
+<?xml version="1.0" ?>
+
+<part>
+  <title>Graphic standards</title>
+  <subtitle>Rules for the eye-candy-creators</subtitle>
+
+  <partintro>
+    <para>
+      This part should help graphicians to understand some general
+      ideas without searching the source code etc.
+    </para>
+  </partintro>
+
+  <!-- ====================================================================
+       Chapter: DIRECTORY STRUCTURE.
+       Where to find and save graphic stuff
+       ==================================================================== -->
+
+  <chapter>
+    <title>Directory structure</title>
+    <para id="about_directories">
+      In the freeVikings root directory you can find a huge heap of
+      Ruby source files, some additional ones (README, RELEASE, TODO, CHANGES)
+      and a few directories.
+      <graphic fileref="images/gfx_directory_structure.png" />
+      We are now interested in two of them: fonts/ and gfx/.
+      All graphic stuff is stored somewhere in the gfx/ directory.
+      Let's quickly discover it's contents.
+    </para>
+    <para id="about_gfx">
+      Much of the graphic files are directly in the gfx/ directory.
+      Currently there are all monsters (often several pictures for one), items
+      and other game objects (door, lifts, ...).
+    </para>
+    <informaltable>
+      <tgroup cols="2">
+	<tbody>
+	  <row>
+	    <entry>icons/</entry>
+	    <entry>
+	    Icons for the user to put into his application launcher.
+	    Currently there isn't any nice one...
+	    </entry>
+	  </row>
+	  <row id="about_models">
+	    <entry>models/</entry>
+	    <entry>XML files with definition models (see <link linkend="chapter_generalconcepts" endterm="chapter_generalconcepts.title" />)</entry>
+	  </row>
+	  <row>
+	    <entry>themes/</entry>
+	    <entry>Every of it's subdirectories (e.g. DefaultTheme, IceTheme)
+	    contains one graphical theme - both definition (XML file)
+	    and images. For what exactly a theme is see
+	    <link linkend="sect_theme" endterm="sect_theme.title" /></entry>
+	  </row>
+	  <row>
+	    <entry>tilesets/</entry>
+	    <entry>Files with sets of tiles used to build maps.</entry>
+	  </row>
+	  <row>
+	    <entry>vikings/</entry>
+	    <entry>(Only) graphics of vikings. Their portraits are 
+	    in <link linkend="about_gfx">gfx/</link>
+	    and models in <link linkend="about_models">models/</link>.</entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: GRAPHIC FILES STANDARDS
+       (Formats - for sprites, for tilesets, transparency)
+       ==================================================================== -->
+
+  <chapter>
+    <title>Standards for graphic files</title>
+
+    <section>
+      <title>Formats</title>
+      <para>
+	Two formats are currently in use: PNG and TGA. I started with
+	PNG (some of the oldest graphics are in this format) and later
+	got used to TGA (because a friend told me it has a
+	better compression - I don't bother if it's true...).
+	You are free to use any of these.
+	From serious reasons you can use even other formats,
+	the only condition is that RUDL library can load them
+	(see <ulink url="http://rudl.rubyforge.org/wiki/wiki.pl?Surface_Initializers">RUDL Documentation</ulink>).
+      </para>
+      <para>
+	For tilesets (<link linkend="chapter_tilesets" endterm="chapter_tilesets.title"/>) there is just one standard format, PNG, because the supported
+	map editor, <application>Tiled</application>, accepts only PNGs.
+      </para>
+    </section>
+
+    <section>
+      <title>Transparency</title>
+      <para>
+	Both currently used formats, PNG and TGA, support transparency, so
+	I use it. (I say this here because I know that some games
+	have some standard "transparent colour", often the one
+	called "fuchsia" in HTML.)
+      </para>
+    </section>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: TILESETS
+       How to make a tileset
+       ==================================================================== -->
+
+  <chapter id="chapter_tilesets">
+    <title>Tilesets</title>
+    <para>
+      Tilesets are PNG files which contain several map tiles. All of them are
+      stored in gfx/tilesets/ and have at least a bit descriptive name.
+    </para>
+    <para>
+      Currently just one tile size is supported, 40 x 40 px.
+    </para>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: ITEMS
+       ==================================================================== -->
+
+  <chapter>
+    <title>Items</title>
+    <para>
+      Items are small objects which can be collected and later used 
+      by the vikings.
+      Their graphics are stored in gfx/. They have a standard size
+      30 x 30 px. If you have a serious reason to make a bigger item,
+      it is needed to make also a smaller version of size 30 x 30 px
+      to be shown in the viking's inventory.
+    </para>
+    <para>
+      Just an example: Apple, when used, adds it's user one life point.
+      (Only if he has less then three - thanks to some injury.)
+      <graphic fileref="../../gfx/apple.png"/>
+    </para>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: FONTS
+       How to create fonts for freeVikings
+       ==================================================================== -->
+
+  <chapter>
+    <title>Fonts</title>
+    <para>
+      Fonts are stored in a separate directory 
+      <link linkend="about_directories">fonts/</link>.
+      Currently there is just one, True Type font,
+      which I have stolen from some open-source
+      game or library (maybe from RUDL library itself).
+      If you wanted to make some cool font for freeVikings,
+      you can either create TTF or bitmap font.
+      For details on bitmap fonts see 
+      <ulink url="http://rudl.rubyforge.org/wiki/wiki.pl?BitmapFont">RUDL Documentation</ulink>.
+    </para>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: LOGOS, MENU BACKGROUNDS ETC.
+       ==================================================================== -->
+
+  <chapter>
+    <title>Big graphics</title>
+    <subtitle>Logos, menu backgrounds, reloading screens</subtitle>
+    <para>
+      If you have ever played Lost Vikings, surely you remember
+      huge game logo with vikings or the animation shown when you
+      reloaded level after some viking's death (burning burial ship
+      on the sea, vikings who stayed alive watching it;
+      lightning - and the dead is back again, perhaps "resurrected"
+      by "Thor, the vikings' god of thunder"<footnote>
+      <para>Do you remember his funny comments from Lost Vikings 1?</para>
+      </footnote>)
+    </para>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: SOME GENERAL CONCEPTS
+       animations, themes, models
+       ==================================================================== -->
+
+  <chapter id="chapter_generalconcepts">
+    <title>Some general concepts</title>
+    <subtitle>Animations, themes, models</subtitle>
+
+    <para>
+      This chapter should explain some general concepts used in
+      map or monster creation.
+    </para>
+    
+    <section id="sect_theme">
+      <title>Theme</title>
+      <para>
+	While most of the monsters and game objects look the same in every
+	level (e.g. all items - it would be really confusing if the healing
+	apple was in different levels different), some change their graphical
+	coat according to the tileset used in the map or to the legend.
+	(E.g. lifts or killing pikes)
+      </para>
+      <para>
+	If you are designing a new tileset, it is likely that you will also 
+	want to make a theme for it or at least add some items to any of the 
+	existing ones.
+      </para>
+
+      <section>
+	<title>Theme directory and file structure</title>
+	<para>
+	  In every theme directory must be a theme definition file
+	  with name theme.xml .
+	  Below you can see an example, contents of file
+	  gfx/themes/IceTheme/theme.xml .
+	</para>
+	<programlisting>
+&lt;?xml version="1.0" ?&gt;
+&lt;gfx_theme&gt;
+  &lt;info&gt;
+    &lt;name&gt;Ice Theme&lt;/name&gt;
+    &lt;directory&gt;themes/IceTheme&lt;/directory&gt;
+  &lt;/info&gt;
+
+  &lt;data&gt;
+    &lt;image name="apex" image="ice_apex.tga" /&gt;
+
+    &lt;image name="bridge_wide" image="ice_bridge_wide.tga" /&gt;
+    &lt;image name="bridge" image="ice_bridge.tga" /&gt;
+
+    &lt;image name="switch_on" image="ice_switch_on.tga" /&gt;
+    &lt;image name="switch_off" image="ice_switch_off.tga" /&gt;
+  &lt;/data&gt;
+&lt;/gfx_theme&gt;
+	</programlisting>
+	<para>
+	  Elements inside the 'info' block should be self-explaining.
+	  Both are compulsory.
+	</para>
+	<para>
+	  Section 'data' contains one or more elements 'image'.
+	  every of them assigns an image file to a string.
+	  Path to an image is relative to theme directory,
+	  so 'ice_bridge.tga' means 'gfx/themes/IceTheme/ice_bridge.tga'.
+	</para>
+	<para>
+	  You may ask: and what are the strings? (Content of attribute 'name'.)
+	  Every game object, which changes it's look according to a theme,
+	  asks the theme for it's own images giving some unique
+	  strings. E.g. Switch has two such strings: "switch_on" and
+	  "switch_off". To get the strings, see source code,
+	  another theme, or ask a question to development mailing list.
+	</para>
+      </section>
+
+      <section>
+	<title>Theme inheriting</title>
+	<para>
+	  At least in the default campaign (levels from locs/DefaultCampaign)
+	  I sometimes work with level inheritage.
+	  Most of the themed objects have their entries in theme DefaultTheme
+	  and that is a theme of DefaultCampaign.
+	  Some nested levelsets than either haven't got their own theme and
+	  use the whole of inherited one, or define their own entries
+	  just for some objects and inherit the others.
+	</para>
+	<para>
+	  Theme inheritage isn't a property of theme, but of levelset.
+	</para>
+      </section>
+
+    </section>
+
+    <section>
+      <title>Model</title>
+      <para>
+	Vikings and some more complicated monsters have their own Model.
+	Model is a set of state-image pairs defined in a XML file.
+	Model files are stored in gfx/models/.
+      </para>
+      <programlisting>
+&lt;?xml version="1.0"?&gt;
+
+&lt;model&gt;
+  &lt;load_pre&gt;
+    &lt;image sym="left"&gt;vikings/erik/erik_stand_left.tga&lt;/image&gt;
+    &lt;image sym="right"&gt;vikings/erik/erik_stand_right.tga&lt;/image&gt;
+  &lt;/load_pre&gt;
+
+  &lt;states&gt;
+    &lt;state name="onground_standing_left" sym="left"/&gt;
+
+    &lt;state name="onground_knocked-out_left" image="erik_ko_left.png"/&gt;
+    &lt;state name="onground_knocked-out_right" image="erik_ko_right.png"/&gt;
+
+    &lt;state name="falling_standing_right" sym="right"/&gt;
+    &lt;state name="falling_standing_left" sym="left"/&gt;
+  &lt;/states&gt;
+&lt;/model&gt;
+      </programlisting>
+      <para>
+	Section 'load_pre' gives names to images which are used more than once.
+	It spares both your fingers and computer's RAM when playing,
+	because it makes every image loaded just once.
+      </para>
+      <para>
+	In section 'states' images (by file name - attribute 'image' - or 
+	symbolic name given in 'load_pre' - attribute 'sym') are
+	assigned to state strings.
+	State strings are defined in the source code of viking/monster.
+      </para>
+    </section>
+
+    <section>
+      <title>Animation</title>
+      <section>
+	<title>Animation and files</title>
+	<para>
+	  When designing monster or viking, you will probably make an animation
+	  instead of single image (walking cycles etc.).
+	  Convention is to save the animation as a series of files with
+	  the same name and a number at the end, e.g.
+	  olaf_ko1.tga and olaf_ko2.tga are two parts of an animation.
+	</para>
+	<para>
+	  Don't make animated GIFs and similar stuff - the game can't load it
+	  properly.
+	</para>
+      </section>
+      <section>
+	<title>Animation and Model</title>
+	<para>
+	  It is possible to define animation in a model XML file
+	  (for many examples see gfx/models/olaf_model.xml).
+	  Animation has to be defined in 'load_pre'.
+	</para>
+	<programlisting>
+&lt;model&gt;
+  &lt;load_pre&gt;
+    &lt;image sym="left1"&gt;vikings/olaf/olaf_walk2_left.tga&lt;/image&gt;
+
+    &lt;image sym="left_breath"&gt;vikings/olaf/olaf_breath_left.tga&lt;/image&gt;
+
+    &lt;!-- Walking left --&gt;
+    &lt;animation sym="move_left"&gt;
+      &lt;image sym="left1"/&gt;
+      &lt;image&gt;vikings/olaf/olaf_walk1_left.tga&lt;/image&gt;
+    &lt;/animation&gt;
+
+    &lt;!-- Standing looking left --&gt;
+    &lt;animation sym="stand_left"&gt;
+      &lt;image sym="left1"/&gt;
+      &lt;image sym="left_breath"/&gt;      
+    &lt;/animation&gt;
+  &lt;/load_pre&gt;
+
+  &lt;states&gt;
+    &lt;state name="onground_standing_left" sym="stand_left"/&gt;
+
+    &lt;state name="onground_moving_left" sym="move_left"/&gt;
+  &lt;/states&gt;
+&lt;/model&gt;
+	</programlisting>
+	<para>
+	  As you can see, it is possible to use the symbolic
+	  names even in 'load_pre'.
+	</para>
+      </section>
+    </section>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: VIKINGS
+       ==================================================================== -->
+
+<chapter>
+  <title>Vikings</title>
+  
+  <para>
+    Designing vikings means a lot of work and so if you want to
+    do it, you should know some basic facts before you start - it wouldn't
+    be pleasant to make all the graphics and then find out that they are
+    different from the standard and can't be used.
+  </para>
+  <para>
+    Standard size is 80 x 100 px. The viking should fill his image as much 
+    as possible (it is strange when he flies 2cm over the ground or is killed
+    by a shot which seemed to fly high over his head).
+  </para>
+</chapter>
+
+  <!-- ====================================================================
+       Chapter: VADEMECUM
+       some standard sizes, formats, etc. summary
+       ==================================================================== -->
+
+
+</part>
