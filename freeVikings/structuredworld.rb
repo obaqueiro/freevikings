@@ -27,6 +27,8 @@ module FreeVikings
       next_location(password)
     end
 
+    # Returns current Level
+
     attr_reader :level
 
     # Does the same as next_location, but returns Level, not Location.
@@ -68,6 +70,7 @@ module FreeVikings
     # Returns Array of all Levels of the world
 
     def levels
+      @levelsuite.levels
     end
 
     private

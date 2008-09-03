@@ -72,9 +72,28 @@ module FreeVikings
 
     attr_reader :dirname
 
-    # Returns an Array of LevelSuite objects.
+    # Returns name of LevelSuite/Level
+
+    attr_reader :title
+
+    # Returns an Array of LevelSuite objects 
+    # (it means both LevelSuites and Levels).
 
     attr_reader :members
+
+    # Returns an Array of Levels
+
+    def levels
+      a = []
+      @members.each {|m|
+        if m.is_a? Level then
+          a << m
+        else
+          a += m.levels
+        end
+      }
+      return a
+    end
 
     # Returns next Level from the LevelSuite or nil if any more
     # Levels are available.
@@ -84,22 +103,25 @@ module FreeVikings
     # but are obtained by call to LevelSuite#next_level.)
 
     def next_level
-      unless @active_member
-        @active_member = @members.shift
+#       unless @active_member
+#         @active_member = @members.shift
+#       end
+      unless @active_member_i
+        @active_member_i = 0
       end
 
       # This case occurs when an empty levelset directory
       # with a content-less levelsuite.xml file exists.
-      if @active_member.nil? then
+      if active_member.nil? then
         return nil
       end
 
-      if (level = @active_member.next_level).nil? then
+      if (level = active_member.next_level).nil? then
         # The active levelset has no more levels.
         # Set another levelset active and try to get a level once more:
-        @active_member = @members.shift
+        @active_member_i += 1
 
-        if @active_member.nil? then
+        if active_member.nil? then
           return nil
         else
           return next_level
@@ -232,6 +254,10 @@ module FreeVikings
       end
     end
 
+    def active_member
+      @members[@active_member_i]
+    end
+
     public
 
     # Raised by LevelSuite.new if some big problem occurs during the loading
@@ -263,6 +289,9 @@ if __FILE__ == $0 then
 
   puts "\n--- Members of the default campaign levelsuite:\n"
   p c.members
+
+  puts "\n--- Levels of the default campaign levelsuite:\n"
+  p c.levels
 
   puts "\n--- Next level:\n"
   p c.next_level

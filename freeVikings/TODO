@@ -17,30 +17,26 @@
 
 ======== Code ==========================================================
 
-(-) Fix bug "not displayed first row of tiles"
-    (See schwerengine/map.rb L75; find a similar thing in painting of
-    game objects; remove both)
-
-(-) Map's borders are solid, so it is impossible to go out of the map
-
-(-) Implement method StructuredWorld#levels (it's a step towards
-    task "Development feature: list of available levels in menu")
-    Empty method definition is already there!
+(-) Jump one level up in menu also by Esc (not only hitting QuitButton)
 
 (-) Remove unused class World (world.rb) - it is inherited by StructuredWorld -
     so be carefull!
 
 (-) Music
 
-(-) Some teleporting animation
-    (It's possible to implement it as a Sprite, e.g. Teleport::Animation)
+(-) Fix bug "not displayed first row of tiles"
+    (See schwerengine/map.rb L75; find a similar thing in painting of
+    game objects; remove both)
+
+(-) Map's borders are solid, so it is impossible to go out of the map
 
 (-) Fix wrong displaying of map's last row
 
+(-) Some teleporting animation
+    (It's possible to implement it as a Sprite, e.g. Teleport::Animation)
+
 (-) Enable hard reloading (not only restart game, but also reload
     map and script)
-
-(-) Development feature: list of available levels in menu
 
 (-) Vikings should rest on Olaf's shield only if it's over his head
 
@@ -90,4 +86,4 @@
 
 (-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
 
-(-) Development mode
+(-) Items autouse (healing items mainly) as in LV2

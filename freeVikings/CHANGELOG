@@ -1,3 +1,16 @@
+[3.September 2008]
+- levelsuite.rb: new methods LevelSuite#title and LevelSuite#methods.
+  Active member isn't shifted out of Array @members, but just signed
+  (variable @active_member_i)
+- level.rb: documentation RD -> RDoc; new method Level#title;
+- initfv.rb: in the development version it is possible to choose a level
+  from a list (you don't need to remember the password)
+
+[2.September 2008]
+- Written whole new part of the development guide; guide splitted into
+  several files. Successfull XSL transformation using
+  xsltproc and XSL templates from http://docbook.sourceforge.net
+
 [1.September 2008]
 - Finished auto-releasing tool (utils/make_release.rb), which automates
   nearly everything connected with making a new release

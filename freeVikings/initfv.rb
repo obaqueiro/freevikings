@@ -66,8 +66,10 @@ module FreeVikings
         end
         @log.info "Game ended; skipping menu -> exiting."
       else
+        # Top menu
         menu = TopMenu.new(@window)
 
+        # Submenu: Start Game
         start_menu = Menu.new(menu, "Start Game", nil, nil)
         ActionButton.new(start_menu, "New Game", Proc.new {
                            @log.info "Starting new game."
@@ -77,15 +79,30 @@ module FreeVikings
                            @log.info "Starting the game with password '#{FreeVikings::OPTIONS['startpassword']}'."
                            Game.new(@window, FreeVikings::OPTIONS['startpassword']).game_loop
                          })
+        # SubSubmenu: Select Level (nifty feature for developers)
+        if FreeVikings::VERSION == 'DEV' then
+          select_level_menu = Menu.new(start_menu, "SELECT LEVEL", nil, nil)
+          StructuredWorld.new(FreeVikings::OPTIONS['levelsuite']).levels.each do |l|
+            ActionButton.new(select_level_menu, l.title, Proc.new {
+                               @log.info "Starting the game with password '#{l.password}'."
+                               Game.new(@window, l.password).game_loop
+                             })
+          end
+          QuitButton.new(select_level_menu)
+        end
+
         QuitButton.new(start_menu)
         
+        # Submenu: Graphics
         graphics_menu = Menu.new(menu, "Graphics", nil, nil)
         
         DisplayModeChooseButton.new(graphics_menu, @window)
         FVConfiguratorButton.new(graphics_menu, "Display fps", "display_fps", {"yes" => true, "no" => false})
+        QuitButton.new(graphics_menu)
+
+        # Submenu: Credits
         Credits.new(menu, [['Jakub Pavlik', 'programming, graphics, levels'],
                            ['Ingo Fulfs', 'graphics, music']])
-        QuitButton.new(graphics_menu)
         
         QuitButton.new(menu, QuitButton::QUIT)
 
