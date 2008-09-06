@@ -1,3 +1,16 @@
+[6.September 2008]
+- possibility to move through gameui menu simply having a key pressed
+  (not needed to press a key again and again)
+- mouse support in gameui menu
+- Caught some more exceptions during loading of a location
+  (locationloader.rb and tiledmaploadstrategy.rb)
+- Lock documentation ported to RDoc
+- RubyCampaign/Intro level totally changed
+- new tileset (coast of the sea)
+- Bridge and Lift classes modified (inheritance, behavior of Bridge)
+- Bridge is now themed object
+- method StaticObject#unregister_in created
+
 [4.September 2008]
 - world.rb removed (class World was replaced by subclass StructuredWorld;
   useless superclass removed now)

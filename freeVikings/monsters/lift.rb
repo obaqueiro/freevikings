@@ -1,25 +1,15 @@
 # lift.rb
 # igneus 6.10.2005
 
-=begin
-= NAME
-Lift
-
-= DESCRIPTION
-(({Lift})) is a platform which can move up and down.
-Any (({Sprite})) which includes (({Transportable})) can be given 
-a lift by this lift.
-
-= Superclass
-Bridge
-=end
-
-require 'monsters/bridge.rb'
 require 'transportable.rb'
 
 module FreeVikings
 
-  class Lift < Bridge
+  # Lift is a platform which can move up and down.
+  # Any Sprite which includes Transportable can be given 
+  # a lift by this lift.
+
+  class Lift < Sprite#< Bridge
 
 =begin
 --- Lift::VELOCITY
@@ -40,8 +30,8 @@ abs of vertical velocity.
 =end
 
     def initialize(left, ys, theme=NullGfxTheme.instance)
-      super([left, ys[0]])
-      @theme = theme
+      super([left, ys[0]], theme)
+      #@theme = theme
 
       @image = get_theme_image 'bridge'
       @rect.w = @image.image.w
@@ -60,6 +50,10 @@ you have another way to solve your problem! This is stinking!
 =end
 
     attr_writer :dest
+
+    def solid?
+      true
+    end
 
 =begin
 --- Lift#move_up
@@ -143,6 +137,11 @@ Alias to ((<Lift#move_down>)).
 =end
 
     alias_method :deactivate, :move_down
+
+    def register_in(location)
+      location.add_static_object self
+      location.add_sprite self
+    end
 
     private
 

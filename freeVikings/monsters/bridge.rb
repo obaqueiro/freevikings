@@ -5,21 +5,19 @@
 
 module FreeVikings
 
-  class Bridge < Sprite
+  class Bridge < Entity
 
     include StaticObject
+
+    WIDTH = 120
+    HEIGHT = 40
 
     def solid?
       true
     end
 
     def init_images
-      @image = Image.load 'themes/NuclearTheme/small_bridge.tga'
-    end
-
-    def register_in(location)
-      location.add_sprite self
-      location.add_static_object self
+      @image = get_theme_image 'bridge'
     end
   end # class Bridge
 end # module FreeVikings

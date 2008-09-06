@@ -106,10 +106,14 @@ module FreeVikings
         @log.warn "Unknown map version '@map_version': errors may occur!"
       end
 
-      properties.each_element('property') do |p|
-        property_name = p.attributes['name']
-        property_value = p.attributes['value']
-        @properties[property_name] = property_value
+      begin
+        properties.each_element('property') do |p|
+          property_name = p.attributes['name']
+          property_value = p.attributes['value']
+          @properties[property_name] = property_value
+        end
+      rescue NoMethodError
+        @log.warn "Map has no properties."
       end
 
       # Properties are also used as data packets given to the DataLoaders.
