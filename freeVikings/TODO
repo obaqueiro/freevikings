@@ -4,7 +4,7 @@
 
 ======== RubyCampaign ==================================================
 
-(-) Intro should be on the coast of the sea and not in house.
+(*) Intro should be on the coast of the sea and not in house.
     Create another map.
 
 (-) Repair Assembler tileset (the black stripes are awful!)
@@ -17,20 +17,23 @@
 
 ======== Code ==========================================================
 
-(-) Jump one level up in menu also by Esc (not only hitting QuitButton)
+(*) GameUI: move through menu if key is pressed (on one keydown)
 
-(-) Remove unused class World (world.rb) - it is inherited by StructuredWorld -
-    so be carefull!
+(-) GameUI: select items using a mouse (move, click)
 
-(-) Music
+(-) Repair RUDL:  Music.post_end_event shouldn't require argument
+    and event should be sent if set to true and music ends
 
 (-) Fix bug "not displayed first row of tiles"
     (See schwerengine/map.rb L75; find a similar thing in painting of
     game objects; remove both)
-
-(-) Map's borders are solid, so it is impossible to go out of the map
+    Seems that old XML maps haven't got this problem.
+    Let's "fix" it adding one empty line to Tiled maps :( - BAD IDEA.
+    Seems that at least small maps haven't got this problem.
 
 (-) Fix wrong displaying of map's last row
+
+(-) Map's borders are solid, so it is impossible to go out of the map
 
 (-) Some teleporting animation
     (It's possible to implement it as a Sprite, e.g. Teleport::Animation)
@@ -87,3 +90,5 @@
 (-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
 
 (-) Items autouse (healing items mainly) as in LV2
+
+(-) Enable Tiled maps with more tileset images

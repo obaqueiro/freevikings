@@ -7,7 +7,7 @@
 # are being loaded. Init opens the application window, prints something
 # and then starts all the long-lasting stuff.
 
-require 'gameui'
+require 'gameui/all'
 
 require 'rudlmore.rb'
 
@@ -80,7 +80,7 @@ module FreeVikings
                            Game.new(@window, FreeVikings::OPTIONS['startpassword']).game_loop
                          })
         # SubSubmenu: Select Level (nifty feature for developers)
-        if FreeVikings::VERSION == 'DEV' then
+        if FreeVikings::VERSION == 'DEV' && ARGV[0] == 'megahIte' then
           select_level_menu = Menu.new(start_menu, "SELECT LEVEL", nil, nil)
           StructuredWorld.new(FreeVikings::OPTIONS['levelsuite']).levels.each do |l|
             ActionButton.new(select_level_menu, l.title, Proc.new {

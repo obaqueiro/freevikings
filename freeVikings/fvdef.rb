@@ -11,6 +11,7 @@
 # All the game's globals and classes are defined inside this module.
 module FreeVikings
   GFX_DIR = 'gfx' # directory with graphics
+  MUSIC_DIR = 'music'
   OPTIONS = {} # hash with long options as keys
 
   # sizes of the game window

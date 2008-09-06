@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Smallest Cave</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>XXXS</password>
+    <map src="smallestcave_loc.tmx"/>
+    <start horiz="60" vertic="60"/>
+    <exit horiz="220" vertic="70"/>
+  </body>
+</location>

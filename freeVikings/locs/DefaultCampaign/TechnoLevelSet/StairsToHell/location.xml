@@ -8,6 +8,7 @@
 
   <body>
     <password>STLL</password>
+    <music>freevikings-techlvl1.xm</music>
     <map src="stairs_loc.tmx"/>
     <script src="stairs_script.rb"/>
     <start horiz="2400" vertic="540"/>

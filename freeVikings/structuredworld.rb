@@ -1,12 +1,11 @@
 # structuredworld.rb
 # igneus 1.8.2005
 
-require 'world.rb'
 require 'levelsuite.rb'
 
 module FreeVikings
 
-  class StructuredWorld < World
+  class StructuredWorld
 
     # Argument campaign_dir is a name of the root directory 
     # of the LevelSuite hierarchy. It's also called 'a campaign directory',
@@ -30,6 +29,10 @@ module FreeVikings
     # Returns current Level
 
     attr_reader :level
+
+    # Returns current Location
+
+    attr_reader :location
 
     # Does the same as next_location, but returns Level, not Location.
     # Dont't call StructuredWorld#next_location after 

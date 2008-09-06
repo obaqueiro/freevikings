@@ -8,8 +8,6 @@ If a good password is inserted, location with that password is started.
 Otherwise parent menu is entered.
 =end
 
-require 'gameui'
-
 module FreeVikings
 
   class PasswordEdit < GameUI::Menus::TextEdit

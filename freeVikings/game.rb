@@ -5,7 +5,6 @@ require 'RUDL'
 
 require 'viking.rb'
 require 'team.rb'
-require 'world.rb'
 require 'structuredworld.rb'
 require 'gamestate.rb'
 require 'bottompanel.rb'
@@ -111,6 +110,7 @@ module FreeVikings
     # Exits the game.
 
     def exit_game
+      on_level_end
       throw :return_to_menu
     end
 
@@ -147,6 +147,7 @@ module FreeVikings
 
     def game_loop
       loop do 
+        # Start loading of level
         paint_loading_screen @app_window
 
         if @team.nil? then
@@ -164,7 +165,7 @@ module FreeVikings
           # All of the vikings have reached the EXIT
           @log.info "Level completed."
           unless level = @world.next_level
-            p location
+            # p location
             @log.info "Congratulations! You explored all the world!"
             @state = AllLocationsFinishedGameState.new self
           end
@@ -185,6 +186,18 @@ module FreeVikings
             @state = LocationInfoGameState.new(self, level)
           else
             run_location location
+
+            @music = nil
+            music_file = level.music
+            if music_file then
+              begin
+                @music = Music.new(FreeVikings::MUSIC_DIR+'/'+music_file)
+                @music.play
+              rescue SDLError => e
+                @log.error e.message
+                @music = nil
+              end
+            end
           end
         else
           location = @world.location
@@ -204,6 +217,10 @@ module FreeVikings
           # Serve events:
           RUDL::EventQueue.get.each do |event|
             @state.serve_event(event, location)
+          end
+
+          if @music && (! @music.busy?) then
+            @music.play
           end
 
           unless @team.active.alive?
@@ -237,6 +254,9 @@ module FreeVikings
           frames += 1
 	  
         end # while (not is_exit?) and (not @give_up)
+
+        # do what needs to be done at the end of level.
+        on_level_end
 
         if FreeVikings::OPTIONS['profile'] then
           exit # the END block which prints out profiler output will be called
@@ -293,6 +313,17 @@ module FreeVikings
       screen.fill 0x0000000
       screen.blit(@loading_message, [280,180])
       screen.flip
+    end
+
+    # Called from the end of game loop and from Game#exit_game
+    private
+    def on_level_end
+      if @music then
+        if @music.busy? then
+          @music.fade_out 2000
+        end
+        @music.destroy
+      end
     end
   end # class Game
 end # module FreeVikings

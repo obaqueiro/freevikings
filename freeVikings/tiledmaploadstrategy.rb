@@ -67,6 +67,11 @@ module FreeVikings
                                       layer, @properties).load
         end
       end
+
+      # I don't know why, but Tiled maps have the first row of tiles invisible.
+      # This is a dirty trick to make it visible - add one row of empty tiles
+      blocks.unshift( [Tile.new(nil,nil)] * @max_width )
+      @max_height += 1
     end
 
     def get_tileset_file

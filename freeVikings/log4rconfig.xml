@@ -27,7 +27,7 @@
        Errors and Fatal errors from 'init log' (mostly messages of uncought
        exceptions) go there. -->
   <outputter name="crashout">
-    <level>ERROR</level>
+    <level>DEBUG</level>
     <type>FileOutputter</type>
     <filename>log/crash.log</filename>
     <trunc>true</trunc>
@@ -48,13 +48,13 @@
   </logger>
 
   <!-- Log for Location Loading Strategies output -->
-  <logger name="location loading log" level="INFO">
+  <logger name="location loading log" level="ERROR">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
   </logger>
 
   <!-- Log for Map classe's debugging output -->
-  <logger name="map log" level="INFO">
+  <logger name="map log" level="ERROR">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
   </logger>

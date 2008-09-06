@@ -8,6 +8,7 @@
 
   <body>
     <password>NTRO</password>
+    <music>freevikings-lvlmusic.xm</music>
     <map src="intro_loc.tmx"/>
     <script src="intro_script.rb"/>
     <start horiz="50" vertic="220"/>

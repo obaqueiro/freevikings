@@ -1,8 +1,6 @@
 # topmenu.rb
 # igneus 3.9.2005
 
-require 'gameui'
-
 =begin
 = FreeVikings game menu
 Menu for the freeVikings game is built on the base of classes from

@@ -12,5 +12,6 @@
   <suite>
     <level>Simple</level>
     <level>MultiLayer</level>
+    <level>SmallestCave</level>
   </suite>
 </levelsuite>

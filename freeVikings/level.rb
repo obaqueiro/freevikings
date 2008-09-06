@@ -50,6 +50,10 @@ module FreeVikings
 
     attr_reader :password
 
+    # Returns level's music file or nil
+
+    attr_reader :music
+
     # Returns a LocationLoadStrategy instance which is able to load 
     # the data from the @dirname directory into the Location object.
 
@@ -95,10 +99,11 @@ module FreeVikings
     def load_from_xml
       @password = ''
       @title = ''
+      @music = nil
 
       file = @dirname + '/' + DEFINITION_FILE_NAME
       File.open(file) do |fr|
-        while (l = fr.gets)  && (@password == '' || @title == '') do
+        while (l = fr.gets)  && (@password == '' || @title == '' || @music == nil) do
           # Meaning of the following three lines isn't obvious unless
           # you know how regular expressions work in Perl (and Ruby).
           # Characters matching parenthesized sections of the regexp are
@@ -111,6 +116,10 @@ module FreeVikings
 
           if l =~ /<title>(.+)<\/title>/ then
             @title = $1.strip
+          end
+
+          if l =~ /<music>(.+)<\/music>/ then
+            @music = $1.strip
           end
         end
       end

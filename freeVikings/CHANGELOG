@@ -1,3 +1,11 @@
+[4.September 2008]
+- world.rb removed (class World was replaced by subclass StructuredWorld;
+  useless superclass removed now)
+- tested replacement of Log4r by an empty mockclass, but it didn't speed up
+  the game
+- Added music support (it is possible to choose music for level in it's
+  'location.xml')
+
 [3.September 2008]
 - levelsuite.rb: new methods LevelSuite#title and LevelSuite#methods.
   Active member isn't shifted out of Array @members, but just signed

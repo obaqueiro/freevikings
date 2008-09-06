@@ -17,7 +17,6 @@ Object
 
 require 'xmlmaploadstrategy.rb'
 require 'tiledmaploadstrategy.rb'
-require 'log4r'
 
 module FreeVikings
 
