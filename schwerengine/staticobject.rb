@@ -17,5 +17,9 @@ module SchwerEngine
     def register_in(location)
       location.add_static_object self
     end
+
+    def unregister_in(location)
+      location.delete_static_object self
+    end
   end # module StaticObject
 end # module SchwerEngine

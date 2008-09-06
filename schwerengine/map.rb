@@ -87,8 +87,10 @@ module SchwerEngine
       top_line = (rect.top / Map::TILE_SIZE).ceil
       bottom_line = (rect.bottom / Map::TILE_SIZE).ceil
 
+      #print "["
       top_line.upto(bottom_line) do |line_i|
         leftmost_i.upto(rightmost_i) do |tile_i|
+          #print "[#{tile_i}, #{line_i}]"
           begin
             if @blocks[line_i][tile_i].solid? then
               return false
@@ -100,6 +102,7 @@ module SchwerEngine
           end
         end
       end
+      #puts "]"
       
       return true # solid tile hasn't been found yet, area is free
     end
