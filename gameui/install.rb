@@ -37,9 +37,6 @@ require 'ftools'
 sitelibdir = Config::CONFIG['sitelibdir']
 dest_dir = sitelibdir + '/gameui'
 
-# install gameui.rb
-File.install 'gameui.rb', sitelibdir+'/gameui.rb', nil, true
-
 # install all the other files
 DirsToInstall.each do |d|
   dest_subdir = dest_dir + '/' + d

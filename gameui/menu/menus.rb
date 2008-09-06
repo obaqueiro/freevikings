@@ -50,8 +50,10 @@ if __FILE__ == $0 then
   TextEdit.new(menu, "Name", '', 12)
   ChooseButton.new(menu, "Sex", ['male', 'female', 'unknown'])
   Credits.new(menu, [['Alex A.', 'programming'], 
-                     ['Carl C.', 'coffee support'],
-                     ['Devis D.', 'graphics, music, money']])
+                     #['Carl C.', 'coffee support'],
+                     #['Devis D.', 'graphics, music, money'],
+                     ['Elvis Exploiter E. Expert Engonyama Erruptor', 
+                      'his totally different vision of software development is extremely useful']])
 
   QuitButton.new(menu)
 
