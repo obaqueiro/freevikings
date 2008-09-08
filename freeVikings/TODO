@@ -4,6 +4,10 @@
 
 ======== RubyCampaign ==================================================
 
+(-) Intro: add a boat which will take the vikings home,
+    phone,
+    their houses, wifes and children,
+
 (-) Repair Assembler tileset (the black stripes are awful!)
 
 (-) Finish Assembler level
@@ -12,7 +16,23 @@
 
 (-) Some image for teleport (cca 80x120px)
 
+(-) Mobile phone (cca item size)
+
+(-) Vikings' house (cca 150x150px, just one type)
+
+(-) Vikings' wifes (they can be similar or not, but should not be 
+    all the same - it is enough if they have e.g. different colour
+    of dress or hair)
+
+(-) Vikings' children (they should be somehow similar to their dads/mums)
+
+Wifes and children will be static, so they don't need walk cycles etc.
+
 ======== Code ==========================================================
+
+(-) Sound off option
+
+(-) release tool: add task: mail to freevikings-users mailing list
 
 (-) Remove StaticObject#unregister_in;
     instead, add Entity#unregister (without argument, every Entity will have
