@@ -166,5 +166,12 @@ module SchwerEngine
     def to_s
       "[#{left}, #{top}, #{w}, #{h}]"
     end
+
+    # Does self contain r?
+
+    def contains?(r)
+      left <= r.left && right >= r.right &&
+        top <= r.top && bottom >= r.bottom
+    end
   end # class Rectangle
 end # module FreeVikings

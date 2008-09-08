@@ -63,6 +63,10 @@ Appends an (({Image}))-like object to the animation.
       return self
     end
 
+    def each
+      @images.each {|o| yield o}
+    end
+
     alias_method :add, :push
     alias_method :append, :push
 
@@ -80,9 +84,14 @@ Method common for all the (({Image}))-like objects. Returns the current image
 =end
 
     def image
-      return @images[(Time.now.to_i / @delay) % @images.size].image
+      return @images[current_frame].image
     end
 
+    # Returns index of the current frame
+
+    def current_frame
+      (Time.now.to_i / @delay) % @images.size
+    end
 
     def w
       image.w
