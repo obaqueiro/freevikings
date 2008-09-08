@@ -30,7 +30,15 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 ======== Code ==========================================================
 
+(-) Make Log4r optional. If it is not possible to load it, mock logger
+    will be given (singleton object which prints errors and fatal errors
+    to stdout and ignores the rest)
+
 (-) Sound off option
+
+(-) Entity#paint_rect and Entity#collision_rect (which are by default
+    aliases, but can be different; Entity#rect will be alias of
+    Entity#collision_rect)
 
 (-) release tool: add task: mail to freevikings-users mailing list
 
