@@ -1,3 +1,17 @@
+[10.September 2008]
+- GameUI::Menu : menu window being killed raises an exception, which
+  leads to termination of the game (so it is possible to leave game menu
+  not only by pressing QuitButton, but also by pressing 'X' button 
+  of the window)
+- Log4r is just optional. (mocklog4r.rb hacks it around)
+- One help in level DefaultCampaign/ArcticTutorial updated
+- Possibility to switch sound off
+- game.rb: fixed music bug (music started only if you switched password 
+  displaying off)
+- monsters/mobilephone.rb
+- RubyCampaign/Intro: temporarily out-of-order: I must finish MobilePhone
+  and write the talk-files.
+
 [8.September 2008]
 - monsters/piranha.rb: new monster
 - modified RubyCampaign/Intro map and script

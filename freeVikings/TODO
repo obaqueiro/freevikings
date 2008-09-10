@@ -16,8 +16,6 @@
 
 (-) Some image for teleport (cca 80x120px)
 
-(-) Mobile phone (cca item size)
-
 (-) Vikings' house (cca 150x150px, just one type)
 
 (-) Vikings' wifes (they can be similar or not, but should not be 
@@ -30,11 +28,7 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 ======== Code ==========================================================
 
-(-) Make Log4r optional. If it is not possible to load it, mock logger
-    will be given (singleton object which prints errors and fatal errors
-    to stdout and ignores the rest)
-
-(-) Sound off option
+(-) Developer's manual: decsribe which images should be available for vikings
 
 (-) Entity#paint_rect and Entity#collision_rect (which are by default
     aliases, but can be different; Entity#rect will be alias of
@@ -42,11 +36,19 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 (-) release tool: add task: mail to freevikings-users mailing list
 
+(-) release tool: interactive mode which asks before each task if it should
+    be done.
+    Maybe this mode should be the default one and the non-interactive one
+    could be switched on using some option.
+    Also a batch mode could be implemented - all input would have to be given
+    in a file (XML; on the beginning it would be checked if it contains
+    everything needed).
+
 (-) Remove StaticObject#unregister_in;
     instead, add Entity#unregister (without argument, every Entity will have
     reference of the Location)
 
-(-) Game object which weren't given any theme should wait till they are
+(-) Game objects which weren't given any theme should wait till they are
     registered in a location and try to get it's theme - not raise exception
 
 (-) Repair RUDL:  Music.post_end_event shouldn't require argument
@@ -112,7 +114,7 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 (-) User's manual
 
-(-) Level developer's manual
+(-) developer's manual: finish level tutorial
 
 (-) RDoc documentation (convert RD to RDoc)
 
@@ -121,3 +123,5 @@ Wifes and children will be static, so they don't need walk cycles etc.
 (-) Items autouse (healing items mainly) as in LV2
 
 (-) Enable Tiled maps with more tileset images
+
+(-) Clean up game.rb

@@ -46,7 +46,7 @@ help_data = []
 help_data << [Rectangle.new(180,OPTIMAL_HLP_Y,30,30), 
               "Now, guys, all of you must reach the EXIT to get to another level. And you, player, press Ctrl or PgUp to switch between the vikings."]
 help_data << [Rectangle.new(20*Map::TILE_SIZE, OPTIMAL_HLP_Y, 30, 30),
-              "The guy in the red clothes is called Erik. He can jump. Try to press SPACE."]
+              "The guy in the blue clothes is called Erik. He can jump. Try to press SPACE."]
 help_data << [Rectangle.new((26*Map::TILE_SIZE)+25, OPTIMAL_HLP_Y, 30, 30),
               "You can switch the switch over your head by pressing the 'S' key. Jump and try it!"]
 help_data << [Rectangle.new(30*Map::TILE_SIZE+5, OPTIMAL_HLP_Y, 30, 30),

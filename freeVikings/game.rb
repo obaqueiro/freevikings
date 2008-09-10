@@ -186,21 +186,27 @@ module FreeVikings
             @state = LocationInfoGameState.new(self, level)
           else
             run_location location
-
-            @music = nil
-            music_file = level.music
-            if music_file then
-              begin
-                @music = Music.new(FreeVikings::MUSIC_DIR+'/'+music_file)
-                @music.play
-              rescue SDLError => e
-                @log.error e.message
-                @music = nil
-              end
-            end
           end
         else
           location = @world.location
+        end
+
+        if FreeVikings::OPTIONS['sound'] then
+          @music = nil
+          music_file = level.music
+          if music_file then
+            begin
+              @music = Music.new(FreeVikings::MUSIC_DIR+'/'+music_file)
+              @music.play
+            rescue SDLError => e
+              @log.error e.message
+              @music = nil
+            end
+          else
+            @log.debug "No music for this level."
+          end
+        else
+          @log.warn "Sound is off."
         end
 
         @bottompanel = BottomPanel.new @team
@@ -219,8 +225,10 @@ module FreeVikings
             @state.serve_event(event, location)
           end
 
-          if @music && (! @music.busy?) then
-            @music.play
+          if FreeVikings::OPTIONS['music'] then
+            if @music && (! @music.busy?) then
+              @music.play
+            end
           end
 
           unless @team.active.alive?
@@ -318,11 +326,13 @@ module FreeVikings
     # Called from the end of game loop and from Game#exit_game
     private
     def on_level_end
-      if @music then
-        if @music.busy? then
-          @music.fade_out 2000
+      if FreeVikings::OPTIONS['music'] then
+        if @music then
+          if @music.busy? then
+            @music.fade_out 2000
+          end
+          @music.destroy
         end
-        @music.destroy
       end
     end
   end # class Game

@@ -39,6 +39,8 @@ module FreeVikings
   OPTIONS['menu'] = true
   # Show password at the beginning of every level?
   OPTIONS['display_password'] = true
+  # Use sound?
+  OPTIONS['sound'] = true
   # Is "developer's magic" enabled or disabled?
   OPTIONS['develmagic'] = false
 

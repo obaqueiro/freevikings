@@ -34,7 +34,7 @@
   </outputter>
 
   <!-- Log for initialization and top-level output (see init.rb, game.rb) -->
-  <logger name="init log" level="INFO">
+  <logger name="init log" level="DEBUG">
     <outputter>initout</outputter>
     <outputter>crashout</outputter>
     <outputter>loo</outputter>

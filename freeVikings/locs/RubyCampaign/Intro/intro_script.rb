@@ -6,6 +6,7 @@ require 'lock'
 require 'key'
 require 'monsters/lift'
 require 'monsters/piranha'
+require 'monsters/mobilephone'
 
 LOCATION << (door = Door.new([440,200]))
 
@@ -21,3 +22,10 @@ LOCATION << Key.new([360, 280], Key::GREEN)
 3.times {|i|
   LOCATION << Piranha.new([13*40+i*200, 8*40+20], Rectangle.new(13*40, 8*40+20, 22*40, 40)) 
 }
+
+
+phone = MobilePhone.new([380, 110], Proc.new {|viking|
+                          
+                        })
+phone.ring
+LOCATION << phone

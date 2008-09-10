@@ -118,7 +118,13 @@ module FreeVikings
           # another symbol) is used to exit the menu and the entire program.
           catch(:return_to_menu) do
             clear_screen
-            menu.run
+            begin
+              menu.run
+            rescue Menu::QuitEventAcceptedException
+              # User closed the window; let's terminate...
+              @log.info "Game terminated by user."
+              exit
+            end
           end
         end
       end

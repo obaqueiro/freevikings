@@ -130,7 +130,11 @@ OPTIONS_DEF = [
                 "Skip menu"],
                
                ["--skip-password", "-Z", GetoptLong::NO_ARGUMENT,
-                "Don't display password at the beginning of level"]
+                "Don't display password at the beginning of level"],
+
+               ["--sound", "-S", GetoptLong::REQUIRED_ARGUMENT,
+                "Switch sound on/off", 
+                "on|off"]
 
                #, ["--develmagic", "-D", GetoptLong::NO_ARGUMENT,
                # ""]
@@ -162,7 +166,7 @@ begin
       if argument.to_i > 0 then
         FreeVikings::OPTIONS['velocity_unit'] = argument.to_i
       else
-        raise ArgumentError, "Argument of option --v-unit (-u) must be a real number higher than zero (given '#{argument}')"
+        raise ArgumentError, "Argument of option '--v-unit' (-u) must be a real number higher than zero (given '#{argument}')"
       end
     when "--delay"
       FreeVikings::OPTIONS['delay'] = argument.to_f / 1000
@@ -176,6 +180,15 @@ begin
       FreeVikings::OPTIONS["menu"] = false
     when "--skip-password"
       FreeVikings::OPTIONS["display_password"] = false
+    when "--sound"
+      case argument.downcase
+      when 'off'
+        FreeVikings::OPTIONS['sound'] = false
+      when 'on' then
+        FreeVikings::OPTIONS['sound'] = true
+      else
+        raise ArgumentError, "Unknown argument '#{argument}' of option '--sound' - only possible arguments are 'on' or 'off'"
+      end
     when "--develmagic"
       FreeVikings::OPTIONS['develmagic'] = true
     end
@@ -204,9 +217,13 @@ end
 
 # All the huge requirements are done here, after options are processed,
 # because it was terrible to type 'freevikings -h' (I can't remember that 
-# option!) and wait 10 seconds until SchwerEngine and Log4r were loaded
-require 'log4r'
-require 'log4rsetupload'
+# option!) and wait 10 seconds until SchwerEngine and Log4r were loaded.
+#
+# If Log4r isn't installed on the system, load mocklog4r.rb instead.
+unless (require('log4r') && require('log4rsetupload')) 
+  STDERR.puts "INFO: Log4r isn't installed on your system."
+  require 'mocklog4r.rb'
+end
 
 require 'schwerengine/schwerengine.rb'
 SchwerEngine.init(SchwerEngine::DISABLE_LOG4R_SETUP)
