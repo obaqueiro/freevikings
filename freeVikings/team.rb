@@ -35,8 +35,8 @@ module FreeVikings
     # If a Number is given, returns team member on that index.
 
     def [](id)
-      if id.kind_of? Number then
-        return @members[index]
+      if id.kind_of? Integer then
+        return @members[id]
       end
 
       if id.kind_of? Class then
@@ -56,7 +56,7 @@ module FreeVikings
         end
       end
 
-      raise ArgumentError, "Only Number, Class and String values are accepted (not '#{id.class}')"
+      raise ArgumentError, "Only Integer, Class and String values are accepted (not '#{id.class}')"
     end
 
     # Returns the active member of the Team. (During the game it's that one

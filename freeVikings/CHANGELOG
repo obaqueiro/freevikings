@@ -5,6 +5,8 @@
   because they aren't general enough and are messy.
   I also converted their documentation.
 - team.rb: documentation converted, Team#[] modified
+- Repaired WideBridge (private class of level ArcticTutorial)
+
 
 [10.September 2008]
 - GameUI::Menu : menu window being killed raises an exception, which

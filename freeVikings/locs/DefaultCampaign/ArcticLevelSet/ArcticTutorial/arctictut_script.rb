@@ -27,14 +27,12 @@ class WideBridge < Bridge
   WIDTH = 200
   HEIGHT = 25
 
-  def initialize(position, theme)
-    super(position)
-    @theme = theme
-    @image = get_theme_image('bridge_wide')
-  end
-
   def move(x,y)
     @rect = Rectangle.new(x, y, WIDTH, HEIGHT)
+  end
+
+  def init_images
+    @image = get_theme_image('bridge_wide')
   end
 end
 

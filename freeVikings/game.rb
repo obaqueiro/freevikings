@@ -151,13 +151,17 @@ module FreeVikings
 
     def game_loop
       loop do 
-        # Start loading of level
+        # Show loading screen
         paint_loading_screen @app_window
 
+        # Decide what has happened and what should be done
         if @team.nil? then
+          # ???
+          puts "NOW! IGNEUS! SEE! (game.rb, L160)"
           level = location = nil
           level = @world.level
         elsif (@team.alive_size < @team.size) or (@give_up == true) then
+          # Game given up or some dead vikings
           if @give_up == true then
             @log.info "Game given up. Try once more."
           else
@@ -169,7 +173,6 @@ module FreeVikings
           # All of the vikings have reached the EXIT
           @log.info "Level completed."
           unless level = @world.next_level
-            # p location
             @log.info "Congratulations! You explored all the world!"
             @state = AllLocationsFinishedGameState.new self
           end

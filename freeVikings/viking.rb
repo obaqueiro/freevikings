@@ -94,6 +94,8 @@ Creates a new viking. Parameter ((|name|)) is a (({String})),
       @knockout_duration = TimeLock.new
 
       @transported_by = nil # an eventual transporter transporting the viking
+
+      @location = NullLocation.instance
     end
 
 =begin

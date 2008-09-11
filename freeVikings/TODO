@@ -28,14 +28,16 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 ======== Code ==========================================================
 
-(-) Move team from Game to Location
+(-) Check if NullLocation is really usefull and delete it if not
 
-(-) Fix levels using bridge
+(-) Fix tests
+
+(-) Move team from Game to Location
 
 (-) Team: remove recursive calls of 'next' and 'previous'
     (use cycle instead - it's more readable)
 
-(-) Developer's manual: decsribe which images should be available for vikings
+(-) Developer's manual: describe which images should be available for vikings
 
 (-) Entity#paint_rect and Entity#collision_rect (which are by default
     aliases, but can be different; Entity#rect will be alias of

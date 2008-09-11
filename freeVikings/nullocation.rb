@@ -2,12 +2,14 @@
 # igneus 7.3.2005
 
 # Null object for Location.
+# It doesn't provide full Location interface, but only what
+# sprites use.
 
 require 'singleton'
 
 module FreeVikings
 
-  class NullLocation < Location
+  class NullLocation # < Location
 
     include Singleton
 

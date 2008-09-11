@@ -51,6 +51,7 @@ class TestShield < Test::Unit::TestCase
 
   def testShieldStopsPlasmaShot
     shot = RedShot.new [0,0], 0
+    shot.location = @location
     @location.sprites_on_rect = [shot, @shield]
     @shield.unofficial_update
     assert_equal false, shot.alive?, "Shield should have killed the colliding RedShot."

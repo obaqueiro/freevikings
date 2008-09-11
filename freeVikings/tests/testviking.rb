@@ -2,6 +2,7 @@
 # igneus 21.2.2005
 
 require 'viking.rb'
+require 'nullocation.rb'
 
 require 'mockclasses'
 
