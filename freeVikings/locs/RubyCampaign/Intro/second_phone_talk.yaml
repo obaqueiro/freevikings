@@ -1,0 +1,30 @@
+--- %YAML:1.0
+# Second conversation between Erik and the desperate programmer
+# 0 - Erik ; 1 - programmer ; 2 - Olaf ; 3 - Baleog
+speakers: 3
+talk: - speaker: 0
+        say: Hello, it's Erik Eriksson.
+      - speaker: 1
+        say: Hello, it's me again.
+      - speaker: 0
+        say: WHAT DO YOU WANT? I've already told you we won't work for you.
+      - speaker: 1
+        say: Please, help me! Only you can!
+      - speaker: 1
+        say: I will give you whatever you want.
+      - speaker: 0
+        say: Guys, he says he'll give us whatever we want.
+      - speaker: 2
+        say: Fried chicken. Many of them. And a hamburger...
+      - speaker: 3
+        say: I think Olaf's right for now.
+      - speaker: 3
+        say: Winter is coming soon and we haven't got much food.
+      - speaker: 0
+        say: Hey, we want food. Meat. A lot of meat. And of highest quality.
+      - speaker: 1
+        say: No problem. I'll give you as much meat as you can eat or take home.
+      - speaker: 2
+        say: Tell him I have a van.
+      - speaker: 0
+        say: We're coming in a few days. See you.

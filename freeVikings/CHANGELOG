@@ -1,3 +1,11 @@
+[11.September 2008]
+- RubyCampaign/Intro: 
+    - conversations written
+- location.rb and nullocation.rb moved back from SchwerEngine to freeVikings,
+  because they aren't general enough and are messy.
+  I also converted their documentation.
+- team.rb: documentation converted, Team#[] modified
+
 [10.September 2008]
 - GameUI::Menu : menu window being killed raises an exception, which
   leads to termination of the game (so it is possible to leave game menu

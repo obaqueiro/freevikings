@@ -5,6 +5,10 @@ require 'RUDL'
 
 require 'viking.rb'
 require 'team.rb'
+
+require 'location.rb'
+require 'nullocation.rb'
+
 require 'structuredworld.rb'
 require 'gamestate.rb'
 require 'bottompanel.rb'

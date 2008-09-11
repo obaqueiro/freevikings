@@ -1,0 +1,22 @@
+--- %YAML:1.0
+# First conversation between Erik and the desperate programmer
+# 0 - Erik ; 1 - programmer ; 2 - Olaf ; 3 - Baleog
+speakers: 3
+talk: - speaker: 0
+        say: Hello, it's Erik Eriksson.
+      - speaker: 1
+        say: Oh, it must be an error. I was calling to Baleog Baleogsson.
+      - speaker: 3
+        say: Shut up, Erik, and give me my mobile phone.
+      - speaker: 0
+        say: No, no, Baleog's my friend. What do you need?
+      - speaker: 1
+        say: Well, I'm Giaccomo Paulas and I would like to hire you. My evil colleague has stolen my most precious programming tool and I need to get it back.
+      - speaker: 0
+        say: Guys, some pc-man says he has work for us. Doesn't sound very interesting, does it?
+      - speaker: 2
+        say: No, I won't play pacman. My sword wants blood and flash.
+      - speaker: 3
+        say: Sounds good - pc-men usually have fried-chicken-restaurant next to their office!
+      - speaker: 0
+        say: Good bye, ask someone else.

@@ -23,9 +23,16 @@ LOCATION << Key.new([360, 280], Key::GREEN)
   LOCATION << Piranha.new([13*40+i*200, 8*40+20], Rectangle.new(13*40, 8*40+20, 22*40, 40)) 
 }
 
-
+# The phone's ringing.
+# Baleog tells Erik to answer it.
+# Erik talks with the desperate programmer for the first time.
+# Phone's ringing again.
+# Baleog tells Erik again to answer it.
+# Erik taks with the programmer for the second time.
+# Someone says 'Let's go'.
 phone = MobilePhone.new([380, 110], Proc.new {|viking|
-                          
+                          LOCATION.
                         })
+
 phone.ring
 LOCATION << phone
