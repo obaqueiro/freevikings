@@ -1,7 +1,11 @@
 # schwerengine.rb
 # igneus 28.10.2005
 
-require 'log4r'
+# This is here because freeVikings load Log4r themselves and it is optional -
+# if Log4r isn't installed on the system, mock Log4r is loaded instead.
+if ! defined?(Log4r) then
+  require 'log4r'
+end
 
 module SchwerEngine
   DISABLE_LOG4R_SETUP = 0001
@@ -77,8 +81,8 @@ module SchwerEngine
       # Maps & relatives
       require 'schwerengine/tile.rb'
       require 'schwerengine/map.rb'
-      require 'schwerengine/location.rb'
-      require 'schwerengine/nullocation.rb'
+      # require 'schwerengine/location.rb'
+      # require 'schwerengine/nullocation.rb'
       require 'schwerengine/maploadstrategy.rb'
 
     end

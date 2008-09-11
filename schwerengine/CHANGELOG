@@ -1,3 +1,7 @@
+[10.September 2008]
+- schwerengine.rb: Log4r isn't loaded if it has been loaded before
+  (it's a small hack for freeVikings :) )
+
 [28. August 2008]
 - Location.<< now returns the Location itself (so you can write 
   C++-streams-like chained expressions)
