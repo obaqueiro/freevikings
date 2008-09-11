@@ -53,6 +53,9 @@ module FreeVikings
 
       loader.load_exit(self)
       loader.load_start(self)
+
+      init_vikings_team
+
       loader.load_script(self)
     end
 
@@ -63,6 +66,10 @@ module FreeVikings
     # methods
     # documented below, a few are accessible through the delegated methods 
     # (which are listed in the Actions section) only.
+
+    # Team of Vikings.
+
+    attr_reader :team
 
     # Returns a Ticker object of the Location. Ticker is a simple 
     # object which provides time information for the object 
@@ -269,6 +276,23 @@ module FreeVikings
 
       return Rectangle.new(top_left_left, top_left_top, 
                            bottom_right_left, bottom_right_top)
+    end
+
+    # Method init_vikings_team must be called when a location is loaded
+    # (or reloaded).
+    # Creates all the three vikings and sets them up
+    # to start their way on the right place
+
+    def init_vikings_team
+      baleog = Viking.createWarior("Baleog", self.start)
+      erik = Viking.createSprinter("Erik", self.start)
+      olaf = Viking.createShielder("Olaf", self.start)
+      @team = Team.new(erik, baleog, olaf)
+      
+      team.each { |v|
+        v.extend Hero # label all vikings as heroes
+        self.add_sprite v # and add them into the location
+      }
     end
 
   end # class Location

@@ -290,7 +290,7 @@ Arguments:
     end
 
     def serve_keydown(event, location)
-      @context.run_location location
+      @context.run_location
     end
 
     private

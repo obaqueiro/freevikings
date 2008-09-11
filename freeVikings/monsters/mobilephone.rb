@@ -16,6 +16,7 @@ module FreeVikings
     def initialize(pos, receive_proc)
       super(pos)
       @state = "normal" # or "ringing"
+      @receive_proc = receive_proc
     end
 
     attr_reader :state
@@ -38,8 +39,8 @@ module FreeVikings
     end
 
     def init_images
-      @image = Model.new({'normal' => Image.load_new('handy1.tga'),
-                           'ringing' => Image.load_new('handy2.tga')})
+      @image = Model.new({'normal' => Image.load('handy1.tga'),
+                           'ringing' => Image.load('handy2.tga')})
     end
 
     def register_in(location)
@@ -54,7 +55,7 @@ module FreeVikings
     def receive_call
       @state = 'normal'
       receiver = @location.sprites_on_rect(rect).find {|s| s.kind_of? Viking}
-      receive_proc.call(receiver)
+      @receive_proc.call(receiver)
     end
   end
 end

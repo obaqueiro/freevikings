@@ -16,14 +16,17 @@ module FreeVikings
 
 =begin
 --- Talk.new(yaml_source)
-((|yaml_source|)) must be a (({String})) (filename / YAML document).
+((|yaml_source|)) must be a (({File})) with or (({String})) with YAML
+document (not a filename!)
 =end
 
     def initialize(yaml_source)
       @doc = YAML.load yaml_source
+
+      check_data_validity
+
       @num_speakers = @doc['speakers']
       @talk = @doc['talk']
-      check_data_validity
 
       set_initial_state
     end
@@ -144,10 +147,19 @@ If the talk hasn't been started yet, returns true.
 
     # Checks if the object data (loaded from YAML document) are valid
     def check_data_validity
-      @talk.each do |node|
-        if node['speaker'] >= @num_speakers or
+      if ! (@doc['speakers'].kind_of? Integer) then
+        raise TalkDataInvalidException, "Number of speakers not given."
+      end
+      if ! (@doc['talk'].kind_of? Array) then
+        raise TalkDataInvalidException, "Array of talk nodes not given."
+      end
+      @doc['talk'].each_with_index do |node,i|
+        if ! (node['speaker'].kind_of? Integer) then
+          raise TalkDataInvalidException, "Invalid speaker id '#{node['speaker']}' in node '#{i}'"
+        end
+        if node['speaker'] >= @doc['speakers'] or
             node['speaker'] < 0 then
-          raise SpeakerIDException, "Invalid speaker ID #{node['speaker']}; must be 0 <= id < #{@num_speakers}"
+          raise TalkDataInvalidException, "Invalid speaker ID #{node['speaker']} in node '#{i}'; must be 0 <= id < #{@doc['speakers']}"
         end
       end
     end
@@ -157,6 +169,12 @@ If the talk hasn't been started yet, returns true.
 =begin
 == Exception classes
 
+=end
+
+      class TalkDataInvalidException < ArgumentError
+      end
+
+=begin
 --- Talk::BadNumberOfSpeakersException
 Raised by ((<Talk#start>)) if the number of speakers given isn't the same 
 as ((<Talk#num_speakers>)).
@@ -181,13 +199,6 @@ hasn't been finished yet.
 =end
 
     class TalkRunningException < RuntimeError
-    end
-
-=begin
---- Talk::SpeakerIDException
-Raised by ((<Talk.new>)) if an invalid speaker ID is used in the YAML file.
-=end
-    class SpeakerIDException < RuntimeError
     end
 
 =begin

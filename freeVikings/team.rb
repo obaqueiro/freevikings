@@ -75,28 +75,33 @@ module FreeVikings
 
     # Sets the next living member of the Team active. Throws 
     # Team::NotATeamMemberAliveException if there is no member alive 
-    # to make active.
+    # to be made active.
 
-    def next(recursive_grade = 0)
-      raise NotATeamMemberAliveException.new("No member of the team is alive.") if recursive_grade > @members.size
-      @active = (@active + 1) % @members.size
-      self.next(recursive_grade + 1) unless active.alive?
-      return self.active
+    def next
+      raise NotATeamMemberAliveException.new("No member of the team is alive.") if ! alive?
+
+      begin
+        @active = (@active + 1) % @members.size
+      end while ! active.alive?
+      return active
     end
 
     # Sets the member before the active one active. Throws 
     # Team::NotATeamMemberAliveException if there is no member alive 
-    # to make active.
+    # to be made active.
 
-    def previous(recursive_grade = 0)
-      raise NotATeamMemberAliveException.new("No member of the team is alive.") if recursive_grade > @members.size
-      if @active > 0
-	@active = (@active - 1)
-      else
-	@active = @members.size - 1
-      end
-      previous(recursive_grade + 1) unless active.alive?
-      return self.active
+    def previous
+      raise NotATeamMemberAliveException.new("No member of the team is alive.") if ! alive?
+
+      begin
+        if @active > 0
+          @active = (@active - 1)
+        else
+          @active = @members.size - 1
+        end
+      end while ! active.alive?
+
+      return active
     end
 
     def_delegator :@members, :each

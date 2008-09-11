@@ -1,7 +1,7 @@
 --- %YAML:1.0
 # First conversation between Erik and the desperate programmer
 # 0 - Erik ; 1 - programmer ; 2 - Olaf ; 3 - Baleog
-speakers: 3
+speakers: 4
 talk: - speaker: 0
         say: Hello, it's Erik Eriksson.
       - speaker: 1

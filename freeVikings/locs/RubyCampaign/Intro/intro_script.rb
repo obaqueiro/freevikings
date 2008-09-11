@@ -7,6 +7,7 @@ require 'key'
 require 'monsters/lift'
 require 'monsters/piranha'
 require 'monsters/mobilephone'
+require 'talk'
 
 LOCATION << (door = Door.new([440,200]))
 
@@ -30,8 +31,15 @@ LOCATION << Key.new([360, 280], Key::GREEN)
 # Baleog tells Erik again to answer it.
 # Erik taks with the programmer for the second time.
 # Someone says 'Let's go'.
+
+talk = Talk.new(File.open('locs/RubyCampaign/Intro/phone_talk.yaml'))
+
 phone = MobilePhone.new([380, 110], Proc.new {|viking|
-                          LOCATION.
+                          team = LOCATION.team
+                          talk.start(team['erik'], 
+                                     team['erik'],
+                                     team['olaf'],
+                                     team['baleog'])
                         })
 
 phone.ring

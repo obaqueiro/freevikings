@@ -30,7 +30,7 @@ module FreeVikings
 
     def location=(loc)
       @location = loc
-      @last_state_change = @location.ticker.now
+      @last_state_change = @location.ticker.now unless loc.kind_of? NullLocation
     end
 
     def state

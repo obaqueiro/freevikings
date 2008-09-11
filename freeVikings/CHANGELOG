@@ -4,9 +4,14 @@
 - location.rb and nullocation.rb moved back from SchwerEngine to freeVikings,
   because they aren't general enough and are messy.
   I also converted their documentation.
-- team.rb: documentation converted, Team#[] modified
+- team.rb: documentation converted, Team#[] modified,
+  recursive calls in methods 'next' and 'previous' replaced by cycles
 - Repaired WideBridge (private class of level ArcticTutorial)
-
+- game.rb, gamestate.rb, location.rb: team moved from Game to Location
+- deadviking.rb: modification because of changes in NullLocation
+- talk.rb: Data validation should work better
+- locationloader.rb: StandardError is caught from the script (instead of
+  just RuntimeError and SyntaxError)
 
 [10.September 2008]
 - GameUI::Menu : menu window being killed raises an exception, which

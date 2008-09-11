@@ -4,8 +4,8 @@
 
 ======== RubyCampaign ==================================================
 
-(-) Intro: add a boat which will take the vikings home,
-    phone,
+(-) Intro: 
+    add a boat which will take the vikings home,
     their houses, wifes and children,
 
 (-) Repair Assembler tileset (the black stripes are awful!)
@@ -28,14 +28,8 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 ======== Code ==========================================================
 
-(-) Check if NullLocation is really usefull and delete it if not
-
-(-) Fix tests
-
-(-) Move team from Game to Location
-
-(-) Team: remove recursive calls of 'next' and 'previous'
-    (use cycle instead - it's more readable)
+(-) Make some better talking engine (without need to call Talk#next
+    from the script or monster) - maybe something like new gamestate?
 
 (-) Developer's manual: describe which images should be available for vikings
 

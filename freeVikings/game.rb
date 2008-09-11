@@ -97,8 +97,9 @@ module FreeVikings
     # It's that one which was given as an argument to the constructor.
     attr_reader :app_window
 
-    # Returns Team of vikings.
-    attr_reader :team
+    def team
+      @world.location.team
+    end
 
     # BottomPanel which displays the vikings' portraits, life statistics
     # and inventories.
@@ -150,17 +151,20 @@ module FreeVikings
     # regularly and refreshes the screen.
 
     def game_loop
+      initialized = false
+
       loop do 
         # Show loading screen
         paint_loading_screen @app_window
 
         # Decide what has happened and what should be done
-        if @team.nil? then
-          # ???
-          puts "NOW! IGNEUS! SEE! (game.rb, L160)"
+        if ! initialized then
+          # First attempt to play a level.
           level = location = nil
           level = @world.level
-        elsif (@team.alive_size < @team.size) or (@give_up == true) then
+          initialized = true
+        elsif (location.team.alive_size < location.team.size) or 
+            (@give_up == true) then
           # Game given up or some dead vikings
           if @give_up == true then
             @log.info "Game given up. Try once more."
@@ -169,7 +173,7 @@ module FreeVikings
           end
           level = @world.level
           @give_up = nil
-        elsif @team.alive_size == @team.size then
+        elsif location.team.alive_size == location.team.size then
           # All of the vikings have reached the EXIT
           @log.info "Level completed."
           unless level = @world.next_level
@@ -186,7 +190,6 @@ module FreeVikings
         # modifying it, there's some black magic!
         unless is_game_finished?
           location = @world.rewind_location 
-          @team = init_vikings_team(location)
           
           # Display (or not) password of the level
           if FreeVikings::OPTIONS["display_password"] then
@@ -216,7 +219,7 @@ module FreeVikings
           @log.warn "Sound is off."
         end
 
-        @bottompanel = BottomPanel.new @team
+        @bottompanel = BottomPanel.new location.team
 
         frames = 0 # auxiliary variable for fps computing
 
@@ -238,14 +241,14 @@ module FreeVikings
             end
           end
 
-          unless @team.active.alive?
-            @team.next
+          unless location.team.active.alive?
+            location.team.next
           end
 
           # nearly all the game state (position of heroes etc.) is updated here
           location.update unless @state.paused?
           
-          location.paint(@map_view, @team.active.center)
+          location.paint(@map_view, location.team.active.center)
           @app_window.blit(@map_view, [0,0])
           
           @state.change_view(@app_window)
@@ -283,38 +286,16 @@ module FreeVikings
     # This method is called from LocationInfoGameState to start playing.
     # The vikings are put into the Location and fun starts.
 
-    def run_location(location)
-      @team.each {|viking| 
-        location.add_sprite viking
-      }
-
+    def run_location
       @state = PlayingGameState.new self
     end
-
-    # Method init_vikings_team must be called when a location is loaded
-    # (or reloaded).
-    # It recreates all the three vikings and sets them up
-    # to start their way on the right place in the new loaded location.
-
-    private
-    def init_vikings_team(location)
-      @baleog = Viking.createWarior("Baleog", location.start)
-      @erik = Viking.createSprinter("Erik", location.start)
-      @olaf = Viking.createShielder("Olaf", location.start)
-      team = Team.new(@erik, @baleog, @olaf)
-      # vsechny vikingy oznacime jako hrdiny:
-      team.each { |v|
-        v.extend Hero
-      }
-      team
-    end # init_vikings_team
 
     private
     def is_exit?
       if is_game_finished? then
         return false
       else
-        return @world.location.exitter.team_exited?(@team)
+        return @world.location.exitter.team_exited?(@world.location.team)
       end
     end # is_exit?
 
