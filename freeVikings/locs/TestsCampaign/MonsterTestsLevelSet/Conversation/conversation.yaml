@@ -1,0 +1,12 @@
+--- %YAML:1.0
+speakers: 3
+talk: - speaker: 0
+        say: How are you?
+      - speaker: 1
+        say: I'm fine. Thank you.
+      - speaker: 1
+        say: And how are you?
+      - speaker: 2
+        say: Es geht.
+      - speaker: 0
+        say: Entschuldigung, Ich verstehe nur ein büsschen Deutsch.

@@ -36,6 +36,8 @@ module FreeVikings
 
       @staticobjects = Group.new
 
+      @talk = nil # one talk at a time can be running in a Location
+
       # a singleton method of @staticobjects:
       def @staticobjects.area_free?(rect)
         @members.find {|m|
@@ -112,6 +114,36 @@ module FreeVikings
     # Returns a GfxTheme instance with images specific for this Location.
 
     attr_reader :theme
+
+    # Starts a new talk.
+    # Doesn't start it - it must have been started from elsewhere
+    # (usually from location script).
+
+    def talk=(t)
+      if @talk then
+        raise RuntimeError, "Cannot start a new talk. One talk is already running."
+      end
+
+      @talk = t
+      @talk.next
+    end
+
+    # Returns current Talk.
+
+    attr_reader :talk
+
+    # Asks for new speech of the running talk.
+
+    def talk_next
+      if ! @talk then
+        raise RuntimeError, "No talk is running."
+      end
+
+      @talk.next
+      if @talk.talk_completed? then
+        @talk = nil
+      end
+    end
 
     # Returns a RUDL::Surface with Map blocks painted.
 

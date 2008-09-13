@@ -5,6 +5,12 @@
   in location.xml (not only in levelsuite.xml)
   (I needed this to make it easier for new developers working with
   Level-making-tutorial from the developer's guide.)
+- location.rb, game.rb, gamestate.rb, 
+  locs/TestsCampaign/Monster.../Conversation:
+  New talking engine (I think it's simpler and more Lost-Vikings-Like than 
+  that used in locs/Tests../Monster../OrangeHead)
+- Fixed MobilePhone (it didn't work because it didn't have
+  WIDTH and HEIGHT constants set -> collision Rectangle was empty)
 
 [11.September 2008]
 - RubyCampaign/Intro: 

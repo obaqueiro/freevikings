@@ -28,8 +28,13 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 ======== Code ==========================================================
 
-(-) Make some better talking engine (without need to call Talk#next
-    from the script or monster) - maybe something like new gamestate?
+(-) Talk dialogue box disappears as soon as the player pushes SPACE,
+    doesn't stay alive for 4 seconds and doesn't disappear before
+    player pushes SPACE (he can make a coffee or so, than come, read
+    last dialogue box, press SPACE and continue playing).
+
+(-) Exitting is totally task of Location, not Game
+    (it makes it possible to perform on-exit dialogues etc.)
 
 (-) Entity#paint_rect and Entity#collision_rect (which are by default
     aliases, but can be different; Entity#rect will be alias of

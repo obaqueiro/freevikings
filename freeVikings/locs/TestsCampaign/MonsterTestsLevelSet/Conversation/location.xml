@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Conversation</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Level for test of new conversation concept.
+    </description>
+  </info>
+
+  <body>
+    <password>COSN</password>
+    <map src="prototype_loc.xml"/>
+    <script src="conversation_script.rb"/>
+    <exit horiz="500" vertic="360" />
+    <start horiz="200" vertic="300" />
+  </body>
+</location>

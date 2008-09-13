@@ -126,14 +126,25 @@ module FreeVikings
       @state = PausedGameState.new self
     end
 
+    # Similar to Game#pause, but switches to ConversationGameState instead of
+    # PausedGameState.
+    # Return back to PlayingGameState by call to Game#unpause.
+
+    def go_conversation
+      @world.location.pause
+      @state = ConversationGameState.new self
+    end
+
     # After Game#pause switches back to the playing mode and unpauses 
     # the Sprites
+
     def unpause
       @world.location.unpause
       @state = PlayingGameState.new self
     end
 
     # Switches to the "development magic" mode (special level testing features)
+
     def go_develmagic
       @state = DevelopmentMagicGameState.new self
     end
@@ -247,6 +258,10 @@ module FreeVikings
 
           # nearly all the game state (position of heroes etc.) is updated here
           location.update unless @state.paused?
+
+          if location.talk then
+            go_conversation
+          end
           
           location.paint(@map_view, location.team.active.center)
           @app_window.blit(@map_view, [0,0])

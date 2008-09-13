@@ -40,6 +40,7 @@ phone = MobilePhone.new([380, 110], Proc.new {|viking|
                                      team['erik'],
                                      team['olaf'],
                                      team['baleog'])
+                          LOCATION.talk = talk
                         })
 
 phone.ring

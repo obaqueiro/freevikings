@@ -266,6 +266,23 @@ module FreeVikings
     end
   end # class PausedGameState
 
+  # State used when a conversation is held.
+
+  class ConversationGameState < GameState
+    def paused?
+      true
+    end
+
+    def serve_keydown(event, location)
+      case event.key
+      when K_SPACE, K_ENTER
+        location.talk_next
+        if ! location.talk then
+          @context.unpause
+        end
+      end
+    end
+  end
 
   class LocationInfoGameState < GameState
     # This state is used on the beginning of every location.

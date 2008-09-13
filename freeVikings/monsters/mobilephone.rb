@@ -9,6 +9,8 @@ module FreeVikings
 
   class MobilePhone < Sprite
 
+    WIDTH = HEIGHT = 30
+
     # pos:: position of the mobile phone
     # receive_proc:: Proc executed if the phone is ringing and some viking
     # receives the call; it is given the viking as an argument

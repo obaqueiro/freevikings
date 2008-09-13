@@ -24,5 +24,6 @@
     <level>Penguin</level>
     <level>ManyItems</level>
     <level>Teleport</level>
+    <level>Conversation</level>
   </suite>
 </levelsuite>
