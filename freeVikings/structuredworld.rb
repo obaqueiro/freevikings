@@ -21,7 +21,8 @@ module FreeVikings
     # a starting location.
 
     def initialize(campaign_dir, password='')
-      @levelsuite = LevelSuite.new(campaign_dir)
+      # @levelsuite = LevelSuite.new(campaign_dir)
+      @levelsuite = LevelSuite.factory campaign_dir
 
       next_location(password)
     end

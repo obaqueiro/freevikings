@@ -391,6 +391,204 @@
     as possible (it is strange when he flies 2cm over the ground or is killed
     by a shot which seemed to fly high over his head).
   </para>
+  <para>
+    I've scratched a series of pictures mainly for those who haven't ever 
+    played lost vikings to show different states of the vikings. There are
+    three of them:
+    <itemizedlist>
+      <listitem>
+	<para>Erik, who runs quicker than his friends, jumps high
+	and can destroy some obstacles with his magical helmet</para>
+      </listitem>
+      <listitem>
+	<para>Baleog, archer and swordsman</para>
+      </listitem>
+      <listitem>
+	<para>Olaf, whose shield stops every enemy. Moreover, Olaf can use
+	it to glide through open space and occasionally also to help
+	Erik get higher (he jumps on Olaf's shield and from there to some
+	higher platform)</para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  <table>
+    <title>States of vikings</title>
+    <tgroup cols="1">
+      <tbody>
+	<row><entry>Common states of all vikings</entry></row>
+      </tbody>
+    </tgroup>
+    <tgroup cols="2">
+      <tbody>
+	<row>
+	  <entry><graphic fileref="images/viking_states/normal.jpg" /></entry>
+	  <entry>
+	    <para>
+	      Normal state. Includes animation of walk-cycle,
+	      image (or animation - e.g. breathing) of standing viking 
+	      and possibly
+	      some simple animation when the viking is left somewhere standing
+	      (in Lost Vikings e.g. Baleog started to show his muscles
+	      after some time of inactivity)
+	    </para>
+	  </entry>
+	</row>
+	<row>
+	  <entry><graphic fileref="images/viking_states/hurt.jpg" /></entry>
+	  <entry>
+	    <para>
+	      When the viking is hurt and loses some health point,
+	      it should be shown also on his character (e.g. face with 
+	      an expression of pain). (Not implemented yet.)
+	    </para>
+	  </entry>
+	</row>
+	<row>
+	  <entry><graphic fileref="images/viking_states/falling.jpg" /></entry>
+	  <entry>
+	    <para>
+	      Image or animation showing the viking as he is falling down.
+	    </para>
+	  </entry>
+	</row>
+	<row>
+	  <entry><graphic fileref="images/viking_states/falling_bad.jpg" /></entry>
+	  <entry>
+	    <para>
+	      Another phase of falling - it shows that the viking will be hurt 
+	      as soon as he touches the floor.
+	    </para>
+	  </entry>
+	</row>
+	<row>
+	  <entry><graphic fileref="images/viking_states/knockout.jpg" /></entry>
+	  <entry>
+	    <para>
+	      If a viking falls badly, he loses one health point and
+	      is knocked-out for a while (he's sitting on the floor, cannot
+	      do anything, stars before his eyes...)
+	    </para>
+	  </entry>
+	</row>
+	<row>
+	  <entry><graphic fileref="images/viking_states/climbing.jpg" /></entry>
+	  <entry>
+	    <para>
+	      Climbing on the ladder. Ladder mustn't be part of animation -
+	      in different levels different images for ladder can be used.
+	      (Ladders not implemented yet.)
+	    </para>
+	  </entry>
+	</row>
+	<row>
+	  <entry><graphic fileref="images/viking_states/pulling.jpg" /></entry>
+	  <entry>
+	    <para>
+	      Viking pulls some object or the player wants him to go against 
+	      wall.
+	      (Pullable objects not implemented yet.)
+	    </para>
+	  </entry>
+	</row>
+      </tbody>
+    </tgroup>
+    <tgroup cols="1">
+      <tbody>
+	<row><entry>Erik only</entry></row>
+      </tbody>
+    </tgroup>
+    <tgroup cols="2">
+      <tbody>
+	<row>
+	  <entry><graphic fileref="images/viking_states/erik_running.jpg" /></entry>
+	  <entry>
+	    <para>
+	      Instead of a regular walk-cycle, Erik should have a "run-cycle".
+	    </para>
+	  </entry>
+	</row>
+      	<row>
+	  <entry><graphic fileref="images/viking_states/erik_jumping.jpg" /></entry>
+	  <entry>
+	    <para>
+	      Jumping.
+	    </para>
+	  </entry>
+	</row>
+	<row>
+	  <entry><graphic fileref="images/viking_states/erik_bullhead" /></entry>
+	  <entry>
+	    <para>
+	      Erik can run against the wall and try to destroy it using
+	      his magical helmet (I think this is also called "bull head 
+	      feature").
+	    </para>
+	  </entry>
+	</row>
+      </tbody>
+    </tgroup>
+    <tgroup cols="1">
+      <tbody>
+	<row><entry>Baleog only</entry></row>
+      </tbody>
+    </tgroup>
+    <tgroup cols="2">
+      <tbody>
+	<row>
+	  <entry><graphic fileref="images/viking_states/baleog_sword.jpg" /></entry>
+	  <entry>
+	    <para>
+	      Attacking some monster with sword.
+	    </para>
+	  </entry>
+	</row>	
+	<row>
+	  <entry><graphic fileref="images/viking_states/baleog_archer.jpg" /></entry>
+	  <entry>
+	    <para>
+	      Releasing an arrow.
+	      Don't forget to add a separate image of released arrow.
+	      In Lost Vikings arrow which doesn't hit any monster and
+	      collides with wall breaks and disappears after a short while
+	      (this is currently not implemented in freeVikings).
+	    </para>
+	  </entry>
+	</row>
+      </tbody>
+    </tgroup>
+    <tgroup cols="1">
+      <tbody>
+	<row><entry>Olaf only</entry></row>
+      </tbody>
+    </tgroup>
+    <tgroup cols="2">
+      <tbody>
+	<row>
+	  <entry>
+	    <graphic fileref="images/viking_states/olaf_shieldnormal.jpg" />
+	    <graphic fileref="images/viking_states/olaf_shieldup.jpg" />
+	  </entry>
+	  <entry>
+	    <para>
+	      For Olaf both the standing image and walkcycle has to be done
+	      twice - once with his shield in front of him and once
+	      with shield over his head.
+	    </para>
+	  </entry>
+	</row>
+	<row>
+	  <entry><graphic fileref="images/viking_states/olaf_gliding.jpg" /></entry>
+	  <entry>
+	    <para>
+	      This way Olaf glides on his shield.
+	      But he also needs images for those falling states -
+	      he only glides if he has shield over his head.
+	    </para>
+	  </entry>
+	</row>
+      </tbody>
+    </tgroup>
+  </table>
 </chapter>
 
   <!-- ====================================================================

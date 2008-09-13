@@ -55,6 +55,22 @@ module FreeVikings
       @log.debug "#{object_id}: New LevelSuite created from data in directory '#{@dirname}' as a nested suite in #{@member_of ? @member_of.object_id : @member_of.to_s}"
     end
 
+    # Decides if directory is LevelSuite or Level directory
+    # and returns LevelSuite or Level.
+    # Use it only to create the top-level LevelSuite or Level -
+    # (see e.g. StructuredWorld#initialize)
+    # LevelSuite nesting is done elsewhere.
+
+    def LevelSuite.factory(directory)
+      if LevelSuite.is_levelsuite_directory? directory then
+        return LevelSuite.new(directory)
+      elsif Level.is_level_directory? directory then
+        return Level.new(directory)
+      else
+        raise ArgumentError, "Directory '#{directory} doesn't contain neither LevelSuite or Level."
+      end
+    end
+
     # Says if specified directory contains the LevelSuite definition file.
 
     def LevelSuite.is_levelsuite_directory?(dirname)

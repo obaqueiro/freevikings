@@ -1,3 +1,11 @@
+[13.September 2008]
+- Developer's guide: descriptive section of vikings' states (with images)
+- levelsuite.rb, level.rb, structuredworld.rb:
+  Possibility to load level without a levelsuite. Theme can be defined
+  in location.xml (not only in levelsuite.xml)
+  (I needed this to make it easier for new developers working with
+  Level-making-tutorial from the developer's guide.)
+
 [11.September 2008]
 - RubyCampaign/Intro: 
     - conversations written

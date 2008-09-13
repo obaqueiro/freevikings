@@ -8,6 +8,7 @@
 
   <body>
     <password>FRMP</password>
+    <theme>DefaultTheme</theme>
     <map src="firstmap_loc.tmx"/>
     <start horiz="50" vertic="60"/>
     <exit horiz="1110" vertic="70"/>

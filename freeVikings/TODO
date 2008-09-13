@@ -31,8 +31,6 @@ Wifes and children will be static, so they don't need walk cycles etc.
 (-) Make some better talking engine (without need to call Talk#next
     from the script or monster) - maybe something like new gamestate?
 
-(-) Developer's manual: describe which images should be available for vikings
-
 (-) Entity#paint_rect and Entity#collision_rect (which are by default
     aliases, but can be different; Entity#rect will be alias of
     Entity#collision_rect)

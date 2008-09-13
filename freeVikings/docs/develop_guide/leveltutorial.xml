@@ -54,17 +54,12 @@
 	<application>Tiled</application> 
 	(<ulink url="http://mapeditor.org"/>), 
 	a Java-written tile map editor.
-	In fact you don't have to use it, it is also possible to make
-	maps using the plain text editor, but I won't describe it here,
-	because this kind of hand-made maps is ancient and deprecated.
+	Version described in this tutorial is Tiled 0.5.0, but (with a possible
+	delay) support for future versions will be added to freeVikings,
+	because Tiled is a good tool and up to now new releases have always
+	been worth upgrading.
       </para>
       <graphic fileref="images/tiled.png"/>
-      <para>
-	<application>Tiled</application> produces simple but full-featured
-	human-readable map<footnote><para>Well, not always human 
-	readable...</para></footnote> 
-	files in XML format.
-      </para>
       <para>
 	Just one more application. Some graphic editor for creating all kinds
 	of graphics. I personally use <application>GIMP</application> 

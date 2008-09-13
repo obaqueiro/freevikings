@@ -82,6 +82,12 @@ module FreeVikings
     end
 
     def gfx_theme
+      # A few levels have their own theme:
+      if @theme then
+        return @theme
+      end
+
+      # The others use their parent LevelSuite's one:
       if @member_of then
         return @member_of.gfx_theme
       else
@@ -102,30 +108,35 @@ module FreeVikings
       @music = nil
 
       file = @dirname + '/' + DEFINITION_FILE_NAME
-      File.open(file) do |fr|
-        while (l = fr.gets)  && (@password == '' || @title == '' || @music == nil) do
-          # Meaning of the following three lines isn't obvious unless
-          # you know how regular expressions work in Perl (and Ruby).
-          # Characters matching parenthesized sections of the regexp are
-          # assigned into global variables $1, $2, etc.
-          # So if l matches the regexp, text between '<password>' and
-          # '</password>' is assigned into $1.
-          if l =~ /<password>(.+)<\/password>/ then
-            @password = $1.strip
-          end
+      fr = File.open(file)
+      doc = REXML::Document.new fr
 
-          if l =~ /<title>(.+)<\/title>/ then
-            @title = $1.strip
-          end
+      begin
+        @password = doc.root.elements['body/password'].text
+      rescue NoMethodError
+        @log.error "Level password not defined"
+        @password = ''
+      end
+      begin
+        @music = doc.root.elements['body/music'].text
+      rescue NoMethodError
+        @music = nil
+      end
+      begin
+        @title = doc.root.elements['info/title'].text
+      rescue NoMethodError
+        @log.warn "Level title not defined"
+        @title = ''
+      end
 
-          if l =~ /<music>(.+)<\/music>/ then
-            @music = $1.strip
-          end
-        end
+      begin
+        @theme_name = doc.root.elements['body/theme'].text
+        @theme = load_theme
+      rescue NoMethodError
       end
     
       unless FreeVikings.valid_location_password?(@password)
-        @log.warn "Invalid location password '#{@password}'. Setting default (empty String)."
+        @log.error "Invalid location password '#{@password}'. Setting default (empty String)."
         @password = ''
       end
     end
