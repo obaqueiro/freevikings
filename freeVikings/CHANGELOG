@@ -1,3 +1,12 @@
+[15.September 2008]
+- talk.rb, talkable.rb: documentation changed to RDoc format;
+  sentence textbox disappears after the user pushes SPACE or ENTER -
+  not sooner and not later.
+- structuredworld.rb: fixed bug "SW#next_level doesn't update @location"
+- game.rb: Because problems in finishing of level occured and I wasn't
+  able to solve them, I decided to clean Game#game_loop up. It helped.
+- gamestate.rb: AllLocationsFinishedGameState removed
+
 [13.September 2008]
 - Developer's guide: descriptive section of vikings' states (with images)
 - levelsuite.rb, level.rb, structuredworld.rb:

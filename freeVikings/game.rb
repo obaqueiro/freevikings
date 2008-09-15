@@ -112,7 +112,7 @@ module FreeVikings
       @give_up = true
     end
 
-    # Exits the game.
+    # Returns to the menu.
 
     def exit_game
       on_level_end
@@ -168,138 +168,168 @@ module FreeVikings
         # Show loading screen
         paint_loading_screen @app_window
 
-        # Decide what has happened and what should be done
         if ! initialized then
-          # First attempt to play a level.
-          level = location = nil
-          level = @world.level
+          # First level.
           initialized = true
-        elsif (location.team.alive_size < location.team.size) or 
-            (@give_up == true) then
-          # Game given up or some dead vikings
-          if @give_up == true then
-            @log.info "Game given up. Try once more."
-          else
-            @log.info "Some vikings died. Try once more."
-          end
-          level = @world.level
-          @give_up = nil
-        elsif location.team.alive_size == location.team.size then
-          # All of the vikings have reached the EXIT
-          @log.info "Level completed."
-          unless level = @world.next_level
+        else
+          # Second..Nth level
+          level = @world.next_level
+
+          unless level
             @log.info "Congratulations! You explored all the world!"
-            @state = AllLocationsFinishedGameState.new self
+            end_of_game
           end
-        else
-          # Situation which shouldn't ever occur
-          raise FatalError, '*** Really strange situation. Nor the game loop is in it\'s first loop, nor the level completed, no vikings dead. Send a bug report, please.'
         end
 
-        # This paragraph of code is important for a good work of
-        # the text displayed at the end of the game. Be careful when
-        # modifying it, there's some black magic!
-        unless is_game_finished?
-          location = @world.rewind_location 
-          
-          # Display (or not) password of the level
-          if FreeVikings::OPTIONS["display_password"] then
-            @state = LocationInfoGameState.new(self, level)
-          else
-            run_location location
-          end
-        else
-          location = @world.location
-        end
+        @give_up = false
 
-        if FreeVikings::OPTIONS['sound'] then
-          @music = nil
-          music_file = level.music
-          if music_file then
-            begin
-              @music = Music.new(FreeVikings::MUSIC_DIR+'/'+music_file)
-              @music.play
-            rescue SDLError => e
-              @log.error e.message
-              @music = nil
-            end
-          else
-            @log.debug "No music for this level."
-          end
-        else
-          @log.warn "Sound is off."
-        end
+        first_attempt = true
 
-        @bottompanel = BottomPanel.new location.team
-
-        frames = 0 # auxiliary variable for fps computing
-
-        if FreeVikings::OPTIONS['profile'] then
-          Profiler__::start_profile
-        end
-
-        # The "event loop": serve events, update game state
-        while (not is_exit?) and (not @give_up) do
-
-          # Serve events:
-          RUDL::EventQueue.get.each do |event|
-            @state.serve_event(event, location)
+        # Repeat one level until it's successfully finished
+        begin
+          if ! first_attempt then
+            paint_loading_screen @app_window
+            @world.rewind_location
           end
 
-          if FreeVikings::OPTIONS['music'] then
-            if @music && (! @music.busy?) then
-              @music.play
-            end
-          end
+          result = every_level()
 
-          unless location.team.active.alive?
-            location.team.next
-          end
-
-          # nearly all the game state (position of heroes etc.) is updated here
-          location.update unless @state.paused?
-
-          if location.talk then
-            go_conversation
-          end
-          
-          location.paint(@map_view, location.team.active.center)
-          @app_window.blit(@map_view, [0,0])
-          
-          @state.change_view(@app_window)
-
-          @app_window.blit(@bottompanel.image, [0, WIN_HEIGHT - BottomPanel::HEIGHT])
-
-          if FreeVikings.display_fps? then
-            @app_window.filled_polygon [[8,8],[60,8],[60,20],[8,20]], [0,0,0]
-            unless (s = Time.now.sec) == 0 
-              @app_window.print([10,10], "fps: #{frames / s}", 0xFFFFFFFF)
-            else
-              frames = 0
-            end
-          end
-
-          if FreeVikings::OPTIONS['delay'] != 0 then
-            sleep(FreeVikings::OPTIONS['delay'])
-          end
-
-          @app_window.flip
-          frames += 1
-	  
-        end # while (not is_exit?) and (not @give_up)
-
-        # do what needs to be done at the end of level.
-        on_level_end
-
-        if FreeVikings::OPTIONS['profile'] then
-          exit # the END block which prints out profiler output will be called
-        end
+          first_attempt = false
+        end while ! result
 
       end # loop
     end # public method game_loop
 
+    private
+
+    # This method is called from game_loop to manage playing of a level.
+    # Returns true if the level was finished successfully, false otherwise.
+
+    def every_level
+      level = @world.level
+      location = @world.location
+
+      # Display (or not) password of the level
+      if FreeVikings::OPTIONS["display_password"] then
+        @state = LocationInfoGameState.new(self, level)
+      else
+        run_location location
+      end
+      
+      if FreeVikings::OPTIONS['sound'] then
+        @music = nil
+        music_file = level.music
+        if music_file then
+          begin
+            @music = Music.new(FreeVikings::MUSIC_DIR+'/'+music_file)
+            @music.play
+          rescue SDLError => e
+            @log.error e.message
+            @music = nil
+          end
+        else
+          @log.debug "No music for this level."
+        end
+      else
+        @log.warn "Sound is off."
+      end
+
+      @bottompanel = BottomPanel.new location.team
+
+      frames = 0 # auxiliary variable for fps computing
+      @frame_rate = 0
+
+      if FreeVikings::OPTIONS['profile'] then
+        Profiler__::start_profile
+      end
+
+      # The frame loop: serve events, update game state
+      while (not is_exit?) and (not @give_up) do
+        # Following method serves events, updates sprites, ...
+        every_frame(location)
+
+        @app_window.flip
+
+        frames += 1
+        unless (s = Time.now.sec) == 0
+          @frame_rate = frames / s
+        end
+        frames = 0 if frames > 1000000
+      end
+
+      # do what needs to be done at the end of level.
+      on_level_end
+
+      if FreeVikings::OPTIONS['profile'] then
+        exit # the END block which prints out profiler output will be called
+      end
+
+      if (location.team.alive_size < location.team.size) or @give_up
+        if @give_up == true then
+          @log.info "Game given up. Try once more."
+        else
+          @log.info "Some viking(s) died. Try once more."
+
+        end
+
+        @give_up = nil
+
+        return false
+      elsif location.team.alive_size == location.team.size then
+        @log.info "Level completed."
+        return true
+      else
+        # Situation which shouldn't ever occur
+        raise FatalError, '*** Really strange situation. Nor the game loop is in it\'s first loop, nor the level completed, no vikings dead. Send a bug report, please.'
+      end
+    end
+
+    # Called from Game#every_level to update everything and repaint game 
+    # window.
+
+    def every_frame(location)
+      # Serve events:
+      RUDL::EventQueue.get.each do |event|
+        @state.serve_event(event, location)
+      end
+
+      if FreeVikings::OPTIONS['music'] then
+        if @music && (! @music.busy?) then
+          @music.play
+        end
+      end
+
+      unless location.team.active.alive?
+        location.team.next
+      end
+
+      # nearly all the game state (position of heroes etc.) is updated here
+      location.update unless @state.paused?
+
+      if location.talk then
+        go_conversation
+      end
+      
+      location.paint(@map_view, location.team.active.center)
+      @app_window.blit(@map_view, [0,0])
+      
+      @state.change_view(@app_window)
+
+      @app_window.blit(@bottompanel.image, [0, WIN_HEIGHT - BottomPanel::HEIGHT])
+
+      if FreeVikings.display_fps? then
+        @app_window.filled_polygon [[8,8],[60,8],[60,20],[8,20]], [0,0,0]
+        @app_window.print([10,10], "fps: #{@frame_rate}", 0xFFFFFFFF)
+      end
+
+      if FreeVikings::OPTIONS['delay'] != 0 then
+        sleep(FreeVikings::OPTIONS['delay'])
+      end
+    end
+
+    public
+
     # This method is called from LocationInfoGameState to start playing.
-    # The vikings are put into the Location and fun starts.
 
     def run_location
       @state = PlayingGameState.new self
@@ -307,17 +337,8 @@ module FreeVikings
 
     private
     def is_exit?
-      if is_game_finished? then
-        return false
-      else
-        return @world.location.exitter.team_exited?(@world.location.team)
-      end
+      return @world.location.exitter.team_exited?(@world.location.team)
     end # is_exit?
-
-    private
-    def is_game_finished?
-      @state.kind_of? AllLocationsFinishedGameState
-    end
 
     private
     def paint_loading_screen(screen)
@@ -335,6 +356,33 @@ module FreeVikings
             @music.fade_out 2000
           end
           @music.destroy
+        end
+      end
+    end
+
+    # End of world reached.
+    # Displays final message and waits for a key; then returns to the menu
+
+    def end_of_game
+      text = "Erik, Baleog and Olaf have forgotten Tomator. " \
+      "They were just walking, clobbering monsters and " \
+      "exploring foreign sides. " \
+      "Suddenly something like a thunder sounded and they " \
+      "all fainted. Where did they wake up?\n" \
+      "Don't forget to download the next version of freeVikings!" \
+      "\n|\nhttp://freevikings.wz.cz\n|\n" \
+      "All comments, bug reports, ideas etc. are appreciated." \
+      "\n|\nseverus@post.cz"
+
+      message = FreeVikings::FONTS['default'].create_text_box(FreeVikings::WIN_WIDTH-100, text)
+      @app_window.blit(message,
+                       [@app_window.w/2 - message.w/2, 50])
+      @app_window.flip
+      loop do
+        e = EventQueue.poll
+        if e.kind_of? KeyDownEvent then
+          exit_game
+          sleep 0.5
         end
       end
     end

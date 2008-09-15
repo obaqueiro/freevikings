@@ -48,6 +48,8 @@ module FreeVikings
         return nil
       end
 
+      create_location
+
       return @level
     end
 
