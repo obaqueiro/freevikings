@@ -213,7 +213,7 @@ module FreeVikings
       if FreeVikings::OPTIONS["display_password"] then
         @state = LocationInfoGameState.new(self, level)
       else
-        run_location location
+        run_location
       end
       
       if FreeVikings::OPTIONS['sound'] then
@@ -318,8 +318,8 @@ module FreeVikings
       @app_window.blit(@bottompanel.image, [0, WIN_HEIGHT - BottomPanel::HEIGHT])
 
       if FreeVikings.display_fps? then
-        @app_window.filled_polygon [[8,8],[60,8],[60,20],[8,20]], [0,0,0]
-        @app_window.print([10,10], "fps: #{@frame_rate}", 0xFFFFFFFF)
+        @app_window.fill([0,0,0], [8,8,60,12])
+        @app_window.print([10,10], "fps: #{@frame_rate}", [255,255,255])
       end
 
       if FreeVikings::OPTIONS['delay'] != 0 then

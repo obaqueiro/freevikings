@@ -1,3 +1,10 @@
+[16.September 2008]
+- StructuredWorld#next_location removed
+- game.rb: FPS printing modified (fill instead of filled_rectangle)
+- rudlmirror.rb: Finally I managed to write those mirroring methods!
+  They work with TGA and PNG images, other formats not tried yet...
+- RubyCampaign/Intro: phone_talk.rb: fixed bad speaker id.
+
 [15.September 2008]
 - talk.rb, talkable.rb: documentation changed to RDoc format;
   sentence textbox disappears after the user pushes SPACE or ENTER -

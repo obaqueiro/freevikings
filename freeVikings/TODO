@@ -28,11 +28,6 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 ======== Code ==========================================================
 
-(-) Remove StructuredWorld#next_location; make password-loading
-    possible through StructuredWorld#next_level!
-
-(-) Fix end of level
-
 (-) Exitting is totally task of Location, not Game
     (it makes it possible to perform on-exit dialogues etc.)
 

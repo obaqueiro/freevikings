@@ -24,7 +24,7 @@ module FreeVikings
       # @levelsuite = LevelSuite.new(campaign_dir)
       @levelsuite = LevelSuite.factory campaign_dir
 
-      next_location(password)
+      next_level(password)
     end
 
     # Returns current Level
@@ -36,37 +36,24 @@ module FreeVikings
     attr_reader :location
 
     # Does the same as next_location, but returns Level, not Location.
-    # Dont't call StructuredWorld#next_location after 
-    # StructuredWorld#next_level, you would skip one location!
     # After StructuredWorld#next_level you can get the current Location
     # by call to StructuredWorld#rewind_location.
 
-    def next_level
-      @level = @levelsuite.next_level
-
-      if @level == nil then
-        return nil
-      end
-
-      create_location
-
-      return @level
-    end
-
-    # If you use the voluntary argument, a Location with the specified
-    # password is run instead of the next one.
-
-    def next_location(password='')
+    def next_level(password='')
+      # Load level with given password:
       if password != '' then
         unless FreeVikings.valid_location_password?(password)
           raise PasswordError, "Password \"#{password}\" of type #{password.class} isn't a valid location password. A valid password must be #{String::LOCATION_PASSWORD_LENGTH} characters long and may contain alphanumeric characters only."
         end
         @level = @levelsuite.level_with_password(password)
         create_location
-      else
-        next_level
-        return create_location
+        return @level
       end
+
+      # Loading without password:
+      @level = @levelsuite.next_level
+      create_location
+      return @level
     end
 
     def rewind_location
