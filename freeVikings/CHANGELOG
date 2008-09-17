@@ -1,3 +1,9 @@
+[17.September 2008]
+- transporter.rb : mixin module (methods extracted from FlyingPlatform)
+- monsters/boat.rb: Boat. Not finished. Needs Entity#collision_rect
+  and Entity#paint_rect to be implemented first...
+- monsters/flyingplatform.rb: modified inheritance
+
 [16.September 2008]
 - StructuredWorld#next_location removed
 - game.rb: FPS printing modified (fill instead of filled_rectangle)

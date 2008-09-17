@@ -7,10 +7,17 @@ FlyingPlatform
 =end
 
 require 'monsters/bridge.rb'
+require 'transporter.rb'
 
 module FreeVikings
 
-  class FlyingPlatform < Bridge
+  class FlyingPlatform < Sprite
+
+    include Transporter
+    include StaticObject
+
+    WIDTH = 120
+    HEIGHT = 40
 
     VELOCITY = 50
 
@@ -25,10 +32,10 @@ It's used as a list of coordinates the (({FlyingPlatform})) flies through.
 =end
 
     def initialize(destinations, _theme)
-      super(destinations[0])
+      super(destinations[0], _theme)
+      init_transporter
+
       @destinations = destinations
-      @transported = []
-      @theme = _theme
       @image = get_theme_image 'bridge'
       @rect.w = @image.image.w
       @rect.h = @image.image.h
@@ -37,6 +44,7 @@ It's used as a list of coordinates the (({FlyingPlatform})) flies through.
 
     def update
       update_transported_sprites
+
       old_rect = @rect.dup
 
       update_position
@@ -54,6 +62,19 @@ It's used as a list of coordinates the (({FlyingPlatform})) flies through.
          @destinations[@dest][1] == @rect.top)
     end
 
+    def solid?
+      true
+    end
+
+    def init_images
+      @image = get_theme_image 'bridge'
+    end
+
+    def register_in(loc)
+      loc.add_sprite self
+      loc.add_static_object self
+    end
+
     private
 
     def update_position
@@ -65,6 +86,8 @@ It's used as a list of coordinates the (({FlyingPlatform})) flies through.
         else
           @dest = 0
         end
+
+        # puts @destinations[@dest]
 
       else
         
@@ -84,28 +107,6 @@ It's used as a list of coordinates the (({FlyingPlatform})) flies through.
         end
       end
     end
-
-    def update_transported_sprites
-      colliding_sprites = @location.sprites_on_rect(@rect)
-
-      @transported.delete_if {|s|
-        unless s.rect.collides? @rect
-          s.end_transport self
-          # puts 'Good bye'
-          true
-        end
-      }
-
-      colliding_sprites.each {|s|
-        if s.kind_of? Transportable and
-            (not @transported.include? s) then
-          @transported.push s
-          # puts 'Halle'
-          s.start_transport self
-        end
-      }
-    end
-
 
   end # class FlyingPlatform
 end # module FreeVikings

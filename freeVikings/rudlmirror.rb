@@ -11,10 +11,8 @@ module RUDL
     # Returns an y-mirrorred copy of self
 
     def mirror_y
-      product = Surface.new(size, flags, bitsize, masks)
+      product = Surface.new(size, self)
 
-      puts flags
-      puts product.flags
       rows.reverse.each_with_index {|r,i| 
         product.set_row(i, r)
       }
@@ -33,7 +31,7 @@ module RUDL
     # Returns a x-mirrorred copy of self
 
     def mirror_x
-      product = Surface.new(size, flags, bitsize, masks)
+      product = Surface.new(size, self)
 
       columns.reverse.each_with_index {|c,i| 
         product.set_column(i, c)

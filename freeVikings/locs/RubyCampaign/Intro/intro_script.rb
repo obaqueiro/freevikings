@@ -7,6 +7,7 @@ require 'key'
 require 'monsters/lift'
 require 'monsters/piranha'
 require 'monsters/mobilephone'
+require 'monsters/boat'
 require 'talk'
 
 LOCATION << (door = Door.new([440,200]))
@@ -45,3 +46,5 @@ phone = MobilePhone.new([380, 110], Proc.new {|viking|
 
 phone.ring
 LOCATION << phone
+
+LOCATION << Boat.new([380, 200], [380, 550])
