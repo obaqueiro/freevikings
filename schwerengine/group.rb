@@ -106,8 +106,8 @@ You don't understand it, do you?
       locr = rect_of_location
       @members.each { |member|
         if member.rect.collides? rect_of_location then
-          relative_left = member.rect.left - rect_of_location[0]
-          relative_top = member.rect.top - rect_of_location[1]
+          relative_left = member.paint_rect.left - rect_of_location[0]
+          relative_top = member.paint_rect.top - rect_of_location[1]
           surface.blit(member.image, [relative_left, relative_top])
         end
       }

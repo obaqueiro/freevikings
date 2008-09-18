@@ -63,7 +63,13 @@ module SchwerEngine
       end
     end
 
+    # These two methods should always be aliases of each other.
     attr_reader :rect
+    alias_method :collision_rect, :rect
+
+    # Rectangle of the graphics. By default it is the same 
+    # as Entity#collision_rect.
+    alias_method :paint_rect, :rect
 
     # Adds itself into a Location location.
     # Does all the registration stuff transparently (some objects register 

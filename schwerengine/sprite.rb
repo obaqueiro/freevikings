@@ -38,7 +38,7 @@ but if you don't specify it, it's set to a default value, which is
 
     def initialize(initial_position=[], theme=NullGfxTheme.instance)
       super(initial_position, theme)
-      @location = NullLocation.instance
+      @location = nil # NullLocation.instance
       @energy = 1
     end
 

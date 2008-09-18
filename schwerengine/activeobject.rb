@@ -11,7 +11,7 @@ module SchwerEngine
 
     def initialize(initial_position=[], theme=NullGfxTheme.instance)
       super(initial_position, theme)
-      @location = NullLocation.instance
+      @location = nil # NullLocation.instance
     end
 
     attr_writer :location

@@ -1,3 +1,8 @@
+[18.September 2008]
+- entity.rb, group.rb: Up to now every Entity had just one rectangle common
+  for collisions and graphics. Now these two can be defined different
+  (usually the collision rect is smaller and inside the graphics rect)
+
 [10.September 2008]
 - schwerengine.rb: Log4r isn't loaded if it has been loaded before
   (it's a small hack for freeVikings :) )
