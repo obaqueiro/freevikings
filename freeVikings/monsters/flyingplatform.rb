@@ -43,17 +43,14 @@ It's used as a list of coordinates the (({FlyingPlatform})) flies through.
     end
 
     def update
-      update_transported_sprites
-
       old_rect = @rect.dup
 
       update_position
 
       delta_y = @rect.top - old_rect.top
       delta_x = @rect.left - old_rect.left
-      @transported.each {|s|
-        s.transport_move(delta_x, delta_y, self)
-      }
+
+      update_transported_sprites(delta_x, delta_y)
     end
 
 

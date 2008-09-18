@@ -1,3 +1,10 @@
+[18.September 2008]
+- transporter.rb, monsters/flyingplatform.rb: A bit more code 
+  from FlyingPlatform in Transporter
+- monsters/boat.rb: Boat finished. First class working with different
+  paint_rect and collision_rect (rect == collision_rect) !
+- RubyCampaign/Intro: lift deleted, boat set up, exit moved
+
 [17.September 2008]
 - transporter.rb : mixin module (methods extracted from FlyingPlatform)
 - monsters/boat.rb: Boat. Not finished. Needs Entity#collision_rect

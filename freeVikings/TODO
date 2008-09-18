@@ -4,8 +4,6 @@
 
 ======== RubyCampaign ==================================================
 
-(-) Finish Boat.
-
 (-) Intro: 
     their houses, wifes and children,
 
@@ -29,9 +27,9 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 ======== Code ==========================================================
 
-(-) Entity#paint_rect and Entity#collision_rect (which are by default
-    aliases, but can be different; Entity#rect will be alias of
-    Entity#collision_rect)
+(-) Fix FPS displaying
+
+(-) Transporter#update_transported_sprites: less cycles
 
 (-) Exitting is totally task of Location, not Game
     (it makes it possible to perform on-exit dialogues etc.)

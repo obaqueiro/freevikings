@@ -14,8 +14,10 @@ module FreeVikings
 
     # Finds sprites which should be transported
     # and transports them.
+    # delta_x and delta_y are pixels to move the sprite...
+    # update_transported_sprites(-12,60) moves sprites 12px left and 60px down
 
-    def update_transported_sprites
+    def update_transported_sprites(delta_x, delta_y)
       colliding_sprites = @location.sprites_on_rect(@rect)
 
       @transported.delete_if {|s|
@@ -33,6 +35,10 @@ module FreeVikings
           # puts 'Halle'
           s.start_transport self
         end
+      }
+
+      @transported.each {|s|
+        s.transport_move(delta_x, delta_y, self)
       }
     end
 

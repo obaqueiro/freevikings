@@ -4,7 +4,7 @@
 require 'door'
 require 'lock'
 require 'key'
-require 'monsters/lift'
+# require 'monsters/lift'
 require 'monsters/piranha'
 require 'monsters/mobilephone'
 require 'monsters/boat'
@@ -12,7 +12,7 @@ require 'talk'
 
 LOCATION << (door = Door.new([440,200]))
 
-LOCATION << Lift.new(520,  [320, 160], LOCATION.theme)
+# LOCATION << Lift.new(520,  [320, 160], LOCATION.theme)
 
 LOCATION << Lock.new([460, 110], 
                      Proc.new {door.open},
@@ -47,4 +47,4 @@ phone = MobilePhone.new([380, 110], Proc.new {|viking|
 phone.ring
 LOCATION << phone
 
-LOCATION << Boat.new([380, 200], [380, 550])
+LOCATION << Boat.new([13*40, 8*40], [14*40, 35*40])
