@@ -94,6 +94,8 @@ module GameUI
 
       # Gives the control to the Menu which then starts painting itself
       # and reading the events from RUDL::EventQueue.
+      # Raises Menu::QuitEventAcceptedException (actually private method
+      # Menu#menu_loop raises it) if user kills menu window.
 
       def run
         @selected = 0
@@ -196,6 +198,8 @@ module GameUI
             end
           elsif event.kind_of? MouseButtonDownEvent then
             selected_item.enter
+          elsif event.kind_of? QuitEvent then
+            raise QuitEventAcceptedException, "QuitEvent occured."
           end
         end
       end
@@ -272,6 +276,12 @@ module GameUI
         end
 
         return nil
+      end
+
+      public
+
+      # Exception raised if a QuitEvent is read from EventQueue
+      class QuitEventAcceptedException < RuntimeError
       end
     end
   end

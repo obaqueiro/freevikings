@@ -48,7 +48,12 @@ Arguments:
 
     lines.each_index do |l|
       line = lines[l]
-      line_surface = @font.render(line, false, colour)
+      begin
+        line_surface = @font.render(line, false, colour)
+      rescue SDLError => sdle
+        STDERR.puts "SDLError while rendering line '#{line}'"
+        raise
+      end
       surface.blit line_surface, [0, l * (@font.linesize)]
     end
   end
@@ -56,11 +61,14 @@ Arguments:
 =begin
 --- TextRenderer.create_text_box(width, text, colour=[255,255,255])
 Returns a new (({RUDL::Surface})) with rendered text.
+It is transparent (colorkey #ff00ff - HTML 'fuchsia')
 =end
 
   def create_text_box(width, text, colour=DEFAULT_TEXT_COLOUR)
     height = height(text, width)
     surface = Surface.new [width, height]
+    surface.fill [255,0,255]
+    surface.set_colorkey [255,0,255]
     render(surface, width, text, colour)
     return surface
   end
@@ -83,38 +91,53 @@ to fit in ((|text|)) which must be String.
     yield if DEBUG
   end
 
-  # accepts a String, returns an Array of Strings
+  # Splits text into lines of max width line_width.
+  # Returns Array of these lines.
 
   def make_lines(text, line_width)
-    words = text.split(/ /)
+    words = text.split(/\s/)
     debug { print "words: "; p words }
 
     lines = []
 
+    line = ""
     # every iteration creates one well-long line
     while (words.size > 0) do
-      line = ""
+      #debug { puts words.size }
 
-      # every iteration adds a word to the end of the line
-      while (@font.size(line + " " + words.first)[0] <= line_width) do
-        line += " " + words.shift
-        debug { "line width: " + @font.size(line).to_s }
-        break if (w = words.first).nil?
+      # remove empty words
+      while words.first == ''
+        words.shift
       end
 
-      lines.push line
-
-      # make a new line where \n
-      while (i = lines.last.index("\n")) do
-        new_line = lines.last.slice!(i..lines.last.size)
-        new_line.slice!(0...1) # remove the EOL which is the first character
-        lines.push(new_line)
-      end # while (i = lines.last.index("\n"))
+      if @font.size(line + " " + words.first)[0] <= line_width then
+        # Word is appended to the line
+        line += " " + words.shift
+        # debug { "line width: " + @font.size(line).to_s }
+      elsif @font.size(words.first)[0] > line_width then
+        debug {
+          print "line: '#{line}' size: '#{@font.size(line)[0]}' "
+          puts "word: '#{words.first}' size: '#{@font.size(words.first)[0]}' max width: '#{line_width}'"
+        }
+        # Word is wider than the line can be; end current line and
+        # add the BIG word as a new line
+        lines.push line unless line == ''
+        line = ""
+        lines.push words.shift
+      else
+        # Line is too wide, so let's end it and start a new one
+        lines.push line unless line == ''
+        line = words.shift
+      end
     end # while (words.size > 0)
+
+    if line != '' then
+      lines.push line
+    end
 
     debug { 
       print "lines: "; p lines 
-      print "words: "; p words
+      puts
     }
 
     return lines
