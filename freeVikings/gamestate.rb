@@ -275,11 +275,34 @@ module FreeVikings
 
     def serve_keydown(event, location)
       case event.key
-      when K_SPACE, K_ENTER
+      when K_SPACE, K_RETURN
         location.talk_next
         if ! location.talk then
           @context.unpause
         end
+      end
+    end
+  end
+
+  # State used when a story is being told
+
+  class StoryGameState < GameState
+    def paused?
+      true
+    end
+
+    def serve_keydown(event, location)
+      case event.key
+      when K_SPACE, K_RETURN
+        # next frame:
+        location.story_next
+        if ! location.story then
+          @context.unpause
+        end
+      when K_ESCAPE
+        # skip story (stupid or bored player)
+        location.story = nil
+        @context.unpause
       end
     end
   end

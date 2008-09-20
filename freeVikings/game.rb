@@ -135,6 +135,14 @@ module FreeVikings
       @state = ConversationGameState.new self
     end
 
+    # Very, very similar to Game#go_conversation,
+    # but used when Story occurs (instead of Talk)
+
+    def go_story
+      @world.location.pause
+      @state = StoryGameState.new self
+    end
+
     # After Game#pause switches back to the playing mode and unpauses 
     # the Sprites
 
@@ -308,6 +316,10 @@ module FreeVikings
 
       if location.talk then
         go_conversation
+      end
+
+      if location.story then
+        go_story
       end
       
       location.paint(@map_view, location.team.active.center)

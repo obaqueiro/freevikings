@@ -36,7 +36,10 @@ module FreeVikings
 
       @staticobjects = Group.new
 
-      @talk = nil # one talk at a time can be running in a Location
+      @talk = nil # Slot for a Talk. 
+      # (one talk at a time can be running in a Location)
+
+      @story = nil # Slot for a Story
 
       # a singleton method of @staticobjects:
       def @staticobjects.area_free?(rect)
@@ -115,6 +118,14 @@ module FreeVikings
 
     attr_reader :theme
 
+    # Returns a RUDL::Surface with Map blocks painted.
+
+    def background
+      @map.background
+    end
+
+    # == Talk related methods
+
     # Starts a new talk.
     # Doesn't start it - it must have been started from elsewhere
     # (usually from location script).
@@ -145,10 +156,22 @@ module FreeVikings
       end
     end
 
-    # Returns a RUDL::Surface with Map blocks painted.
+    # == Story related methods
 
-    def background
-      @map.background
+    # location.story = s
+    # starts the new story immediately!
+
+    attr_accessor :story
+
+    def story_next
+      if ! @story then
+        raise RuntimeError, "No story is being told."
+      end
+
+      @story.next
+      if @story.story_completed? then
+        @story = nil
+      end
     end
 
     # == Actions
@@ -183,6 +206,13 @@ module FreeVikings
     # coordinate.
 
     def paint(surface, center)
+
+      # In a 'story telling mode' we only display current story frame:
+      if @story then
+        @story.paint(surface)
+        return
+      end
+
       mr = @map.rect
       displayed_rect = centered_view_rect(mr.w, mr.h, surface.w, surface.h, center)
 

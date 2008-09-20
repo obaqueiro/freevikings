@@ -2,6 +2,30 @@
            ========== FreeVikings TODO file ==========
            ===========================================
 
+======== To be finished for release 0.6 ================================
+
+(-) Intro: vikings' houses
+
+(-) Finish Intro level
+
+(-) Campaign-specific end
+
+(-) User's manual
+
+(-) Fix FPS displaying
+
+(-) release tool: add task: mail to freevikings-users mailing list
+
+(-) release tool: interactive mode which asks before each task if it should
+    be done.
+    Maybe this mode should be the default one and the non-interactive one
+    could be switched on using some option.
+    Also a batch mode could be implemented - all input would have to be given
+    in a file (XML; on the beginning it would be checked if it contains
+    everything needed).
+
+(-) release tool: add task: post file to SF (maybe it is impossible...)
+
 ======== RubyCampaign ==================================================
 
 (-) Intro: 
@@ -27,22 +51,10 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 ======== Code ==========================================================
 
-(-) Fix FPS displaying
-
 (-) Transporter#update_transported_sprites: less cycles
 
 (-) Exitting is totally task of Location, not Game
     (it makes it possible to perform on-exit dialogues etc.)
-
-(-) release tool: add task: mail to freevikings-users mailing list
-
-(-) release tool: interactive mode which asks before each task if it should
-    be done.
-    Maybe this mode should be the default one and the non-interactive one
-    could be switched on using some option.
-    Also a batch mode could be implemented - all input would have to be given
-    in a file (XML; on the beginning it would be checked if it contains
-    everything needed).
 
 (-) Remove StaticObject#unregister_in;
     instead, add Entity#unregister (without argument, every Entity will have
@@ -111,8 +123,6 @@ Wifes and children will be static, so they don't need walk cycles etc.
 (-) Skinnable vikings
 
 (-) Complex tutorial level set
-
-(-) User's manual
 
 (-) developer's manual: finish level tutorial
 

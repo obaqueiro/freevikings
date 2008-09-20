@@ -1,3 +1,10 @@
+[20.September 2008]
+- story.rb: A new way to tell the game story (I have been thinking about
+  something similar for a long time, but now I need it...)
+- RubyCampaign/Intro: Removed initial talk and mobile phone.
+  It is more secure to tell the campaign legend using a Story.
+- location.rb, game.rb, gamestate.rb: Support for Story
+
 [18.September 2008]
 - transporter.rb, monsters/flyingplatform.rb: A bit more code 
   from FlyingPlatform in Transporter
