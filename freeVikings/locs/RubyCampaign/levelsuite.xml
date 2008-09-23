@@ -21,6 +21,6 @@
 
   <suite>
     <level>Intro</level>
-    <level>Assembler</level>
+    <!-- level not yet ready: <level>Assembler</level> -->
   </suite>
 </levelsuite>

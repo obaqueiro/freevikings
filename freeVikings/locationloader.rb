@@ -96,7 +96,7 @@ for the location being loaded.
 
           eval "script::LOCATION = location"
         }
-      rescue StandardError => ex
+      rescue StandardError, ScriptError => ex
         # Construct an error message.
         # Backtrace is cut so that it ends on the scriptfile (doesn't continue
         # through the stack of core-methods-calls)

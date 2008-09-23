@@ -18,7 +18,7 @@ module FreeVikings
     WIDTH = 120 #160
     HEIGHT = 30 #60
 
-    VELOCITY = 30
+    VELOCITY = 60
 
     # ys is Array of x-positions of boats end points
 

@@ -251,6 +251,8 @@ module FreeVikings
         Profiler__::start_profile
       end
 
+      start_time = Time.now.to_f
+
       # The frame loop: serve events, update game state
       while (not is_exit?) and (not @give_up) do
         # Following method serves events, updates sprites, ...
@@ -259,10 +261,8 @@ module FreeVikings
         @app_window.flip
 
         frames += 1
-        unless (s = Time.now.sec) == 0
-          @frame_rate = frames / s
-        end
-        frames = 0 if frames > 1000000
+        s = Time.now.to_f - start_time
+        @frame_rate = (frames / s).to_i unless s == 0
       end
 
       # do what needs to be done at the end of level.

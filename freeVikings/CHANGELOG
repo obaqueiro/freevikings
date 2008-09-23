@@ -1,3 +1,12 @@
+[23.September 2008]
+- locationloader.rb: I found out that SyntaxError isn't subclass
+  of StandardError, but of ScriptError; so I extended the rescue clause...
+- monsters/cottage.rb: simple StaticObject, vikings' cottage
+- monsters/boat.rb: speed-up
+- RubyCampaign/Intro/intro_script: cottages, door, key, lock
+- RubyCampaign/levelsuite.rb: Assembler commented out
+- game.rb: FPS displaying fixed (no unreal high numbers)
+
 [20.September 2008]
 - story.rb: A new way to tell the game story (I have been thinking about
   something similar for a long time, but now I need it...)

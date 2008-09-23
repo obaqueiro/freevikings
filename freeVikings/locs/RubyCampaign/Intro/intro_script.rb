@@ -4,10 +4,11 @@
 require 'door'
 require 'lock'
 require 'key'
+# require 'monsters/mobilephone'
 # require 'monsters/lift'
 require 'monsters/piranha'
-# require 'monsters/mobilephone'
 require 'monsters/boat'
+require 'monsters/cottage'
 require 'talk'
 require 'story'
 require 'ostruct'
@@ -29,6 +30,19 @@ LOCATION << Key.new([360, 280], Key::GREEN)
 
 LOCATION << Boat.new([13*40, 8*40], [14*40, 35*40])
 
+# Cottages:
+LOCATION << Cottage.new([39*40, 3*40], 'OLAF')
+LOCATION << Cottage.new([45*40, 3*40], 'ERIK')
+LOCATION << Cottage.new([51*40, 3*40], 'BALEOG')
+
+# Door at the end and it's associated key&lock:
+finaldoor = Door.new [57*40, 5*40]
+LOCATION << finaldoor
+
+LOCATION << Key.new([47*40, 2*40], Key::RED)
+LOCATION << Lock.new([56*40, 6.5*40], Proc.new {finaldoor.open}, Lock::RED)
+
+# ======================================================================
 # Everything up to the end of file is about the initial story-telling...
 
 # A small modification to class Talk:
@@ -76,7 +90,11 @@ end
 class GiacommoProgrammer
   FAVOURITE_COLOUR = [100,100,100]
   def initialize
-    @portrait = Image.load 'handy2.tga'
+    s = RUDL::Surface.new([60,60])
+    s.fill [100,100,100]
+    handy = Image.load 'handy2.tga'
+    s.blit handy.image, [s.w/2-handy.w/2, s.h/2-handy.h/2]
+    @portrait = Image.wrap(s)
   end
 
   attr_reader :portrait
