@@ -70,7 +70,7 @@ module FreeVikings
 
     def create_location
       if @level.nil? then
-        raise "No more level found. Currently loaded LevelSuite from directory '#{@levelsuite.dirname}'."
+        raise NoMoreLevelException, "No more level found. Currently loaded LevelSuite from directory '#{@levelsuite.dirname}'."
       end
 
       @location = Location.new(@level.loader, @level.gfx_theme)
@@ -81,6 +81,11 @@ module FreeVikings
     # Exception raised if invalid password is given.
 
     class PasswordError < ArgumentError
+    end
+
+    # Raised by create_location if there is no more level.
+
+    class NoMoreLevelException < RuntimeError
     end
   end # class StructuredWorld
 end # module FreeVikings

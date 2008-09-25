@@ -180,12 +180,12 @@ module FreeVikings
           # First level.
           initialized = true
         else
-          # Second..Nth level
-          level = @world.next_level
-
-          unless level
+          
+          begin
+            level = @world.next_level
+          rescue StructuredWorld::NoMoreLevelException
             @log.info "Congratulations! You explored all the world!"
-            end_of_game
+            exit_game
           end
         end
 
@@ -254,7 +254,7 @@ module FreeVikings
       start_time = Time.now.to_f
 
       # The frame loop: serve events, update game state
-      while (not is_exit?) and (not @give_up) do
+      while (not location.exitted?) and (not @give_up) do
         # Following method serves events, updates sprites, ...
         every_frame(location)
 
@@ -348,11 +348,6 @@ module FreeVikings
     end
 
     private
-    def is_exit?
-      return @world.location.exitter.team_exited?(@world.location.team)
-    end # is_exit?
-
-    private
     def paint_loading_screen(screen)
       screen.fill 0x0000000
       screen.blit(@loading_message, [280,180])
@@ -372,31 +367,5 @@ module FreeVikings
       end
     end
 
-    # End of world reached.
-    # Displays final message and waits for a key; then returns to the menu
-
-    def end_of_game
-      text = "Erik, Baleog and Olaf have forgotten Tomator. " \
-      "They were just walking, clobbering monsters and " \
-      "exploring foreign sides. " \
-      "Suddenly something like a thunder sounded and they " \
-      "all fainted. Where did they wake up?\n" \
-      "Don't forget to download the next version of freeVikings!" \
-      "\n|\nhttp://freevikings.wz.cz\n|\n" \
-      "All comments, bug reports, ideas etc. are appreciated." \
-      "\n|\nseverus@post.cz"
-
-      message = FreeVikings::FONTS['default'].create_text_box(FreeVikings::WIN_WIDTH-100, text)
-      @app_window.blit(message,
-                       [@app_window.w/2 - message.w/2, 50])
-      @app_window.flip
-      loop do
-        e = EventQueue.poll
-        if e.kind_of? KeyDownEvent then
-          exit_game
-          sleep 0.5
-        end
-      end
-    end
   end # class Game
 end # module FreeVikings

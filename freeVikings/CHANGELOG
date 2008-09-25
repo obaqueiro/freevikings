@@ -1,3 +1,20 @@
+[25.September 2008]
+- game.rb, location.rb: Game#is_exit? -> Location#exitted?
+- DefaultCampaign/ArcticLevelSet/SwitchPlace: class IceBoard made a subclass
+  of Entity (in order to provide it with methods paint_rect and collision_rect)
+- exit.rb: docs RD->RDoc
+- location.rb: added 'event handlers' on_beginning, on_exit;
+  modified exit conditions
+- RubyCampaign/Intro: on_beginning and on_exit handlers start Stories;
+- RubyCampaign/Intro, story.rb: TalkFrame class moved to story.rb (it seems 
+  useful)
+- game.rb: fixed error "uncaught exception at the end of world";
+  end-of-world-screen removed (removed method Game#end_of_game) - every 
+  campaign should make it's own (by setting on_exit handler in the last
+  level)
+- DefaultCampaign/NucLabs/YellowHall: New end-of-world Story.
+(Uff, two items disappeared from TODO, three or four new ones are there...)
+
 [23.September 2008]
 - locationloader.rb: I found out that SyntaxError isn't subclass
   of StandardError, but of ScriptError; so I extended the rescue clause...

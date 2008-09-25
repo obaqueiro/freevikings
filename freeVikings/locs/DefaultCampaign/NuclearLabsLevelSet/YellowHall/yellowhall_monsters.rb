@@ -7,6 +7,8 @@ require 'monsters/robot.rb'
 require 'monsters/lift.rb'
 require 'switch.rb'
 require 'apple.rb'
+require 'story.rb'
+require 'talk.rb'
 
 include FreeVikings
 
@@ -52,3 +54,31 @@ LOCATION << bridge
 LOCATION.add_active_object switch_2
 
 LOCATION.add_item Apple.new([400,80])
+
+# Set up Story for the end of world:
+end_story = Story.new do |s|
+  ## This is traditional end-of-world text. I can't simply delete it, it's
+  ## really ancient, but it should be replaced be some more truthful one...
+  ##
+  #   Erik, Baleog and Olaf have forgotten Tomator.
+  #   They were just walking, clobbering monsters and
+  #   exploring foreign sides.
+  #   Suddenly something like a thunder sounded and they
+  #   all fainted. Where did they wake up?
+  #   Don't forget to download the next version of freeVikings!
+  #   |
+  #   http://freevikings.wz.cz
+  #   |
+  #   All comments, bug reports, ideas etc. are appreciated.
+  #   |
+  #   severus@post.cz
+
+  talk = Talk.new(File.open('locs/DefaultCampaign/NuclearLabsLevelSet/YellowHall/end_of_world_talk.yaml'))
+  team = LOCATION.team
+  talk.start(team['Erik'], team['Baleog'], team['Olaf'])
+  Story::TalkFrame.talk_to_frames(talk).each {|f| s << f}
+
+  s << Story::TextFrame.new("Yes, you successfully reached end of this campaign.\n\nCongratulations!")
+end
+
+LOCATION.on_exit = Proc.new { LOCATION.story = end_story }

@@ -1,0 +1,12 @@
+--- %YAML:1.0
+# Conversation at the end of world
+# 0 - Erik, 1 - Baleog, 2 - Olaf
+speakers: 3
+talk: - speaker: 2
+        say: Uh, guys, I can't see anything!
+      - speaker: 1
+        say: Neither I can.
+      - speaker: 0
+        say: Seems like...
+      - speaker: 0
+        say: ...END OF GAME!

@@ -114,5 +114,58 @@ module FreeVikings
         @surface.blit textbox, [MARGIN_SIDE, MARGIN_TOP]
       end
     end
+
+    # Frame which displays portrait of a speaker and his sentence.
+
+    class TalkFrame < Frame
+
+      TEXT_WIDTH = 300
+      LEFT = Story::Frame::WIDTH/2-TEXT_WIDTH/2 + 30
+      TOP = 100
+
+      # Accepts a (started! speakers are needed!) Talk. Returns an Array
+      # of TalkFrame instances.
+
+      def TalkFrame.talk_to_frames(talk)
+        # Well, possibly there is some better way of doing this then
+        # defining a singleton method... But I didn't want to include
+        # this method into Talk, because Talk doesn't need to know
+        # anything about Story.
+        def talk.to_storyframes
+          unless running?
+            raise "Need speakers!"
+          end
+
+          frames = []
+
+          @talk.each do |node|
+            frames << TalkFrame.new(@speakers[node['speaker']], node['say'])
+          end
+
+          return frames
+        end
+
+        return talk.to_storyframes
+      end
+
+      def initialize(speaker, sentence)
+        super()
+
+        portrait = speaker.portrait.image
+        @surface.blit portrait, [LEFT-60,TOP]
+
+        font = FreeVikings::FONTS['default']
+        h = font.height sentence, TEXT_WIDTH
+        if h < portrait.h then
+          h = portrait.h
+        end
+        box = RUDL::Surface.new [TEXT_WIDTH, h]
+        box.fill speaker.class::FAVOURITE_COLOUR
+        font.render box, TEXT_WIDTH, sentence
+
+        @surface.blit box, [LEFT, TOP]
+      end
+    end
+
   end
 end

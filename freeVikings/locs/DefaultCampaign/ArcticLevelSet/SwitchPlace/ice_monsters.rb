@@ -63,7 +63,7 @@ module IceLand
 
   # IceBoard
   # A peace of ice used as a simple trapdoor; a static object
-  class IceBoard
+  class IceBoard < Entity
     WIDTH = 80
     HEIGHT = 22
 

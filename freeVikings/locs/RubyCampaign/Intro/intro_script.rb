@@ -45,48 +45,6 @@ LOCATION << Lock.new([56*40, 6.5*40], Proc.new {finaldoor.open}, Lock::RED)
 # ======================================================================
 # Everything up to the end of file is about the initial story-telling...
 
-# A small modification to class Talk:
-class FreeVikings::Talk
-  def to_storyframes
-    unless running?
-      raise "Need speakers!"
-    end
-
-    frames = []
-
-    @talk.each do |node|
-      frames << TalkFrame.new(@speakers[node['speaker']], node['say'])
-    end
-
-    return frames
-  end
-end
-
-class TalkFrame < FreeVikings::Story::Frame
-
-  TEXT_WIDTH = 300
-  LEFT = Story::Frame::WIDTH/2-TEXT_WIDTH/2 + 30
-  TOP = 100
-
-  def initialize(speaker, sentence)
-    super()
-
-    portrait = speaker.portrait.image
-    @surface.blit portrait, [LEFT-60,TOP]
-
-    font = FreeVikings::FONTS['default']
-    h = font.height sentence, TEXT_WIDTH
-    if h < portrait.h then
-      h = portrait.h
-    end
-    box = RUDL::Surface.new [TEXT_WIDTH, h]
-    box.fill speaker.class::FAVOURITE_COLOUR
-    font.render box, TEXT_WIDTH, sentence
-
-    @surface.blit box, [LEFT, TOP]
-  end
-end
-
 class GiacommoProgrammer
   FAVOURITE_COLOUR = [100,100,100]
   def initialize
@@ -114,15 +72,20 @@ talk2.start(team['erik'], giacommo, team['olaf'], team['baleog'])
 story = Story.new do |s|
   s << Story::TextFrame.new("It was just another boring sunday afternoon and the three friends were sunbathing on the coast of the Arctic ocean, while Baleog's mobile phone rang.")
 
-  talk.to_storyframes.each {|f| 
+  Story::TalkFrame.talk_to_frames(talk).each {|f| 
     s << f
   }
 
   s << Story::TextFrame.new("But soon the phone was ringing again.")
 
-  talk2.to_storyframes.each {|f| 
+  Story::TalkFrame.talk_to_frames(talk2).each {|f| 
     s << f
   }
 end
 
-LOCATION.story = story
+endstory = Story.new do |s|
+  s << Story::TextFrame.new("Sorry, this campaign currently doesn't contain any more levels. Check http://freevikings.sf.net for the next release!")
+end
+
+LOCATION.on_beginning = Proc.new { LOCATION.story = story }
+LOCATION.on_exit = Proc.new { LOCATION.story = endstory }

@@ -41,6 +41,13 @@ module FreeVikings
 
       @story = nil # Slot for a Story
 
+      # From a script 'event handler' Procs can be assigned to these variables
+      @on_exit = nil
+      @on_beginning = nil
+
+      # Says if the game has already started
+      @started = false
+
       # a singleton method of @staticobjects:
       def @staticobjects.area_free?(rect)
         @members.find {|m|
@@ -75,6 +82,24 @@ module FreeVikings
     # Team of Vikings.
 
     attr_reader :team
+
+    # Says if the location has been exitted (it means 1. all team members 
+    # reached exit and 2. end story - if exists - has been finished)
+
+    def exitted?
+      if @exitter.team_exited?(@team) && (@story == nil) then
+        if @on_exit == nil then
+          return true
+        else
+          # If on_exit event handler is given, execute it and check
+          # exit conditions again (on_exit handler usually starts
+          # some Story...) 
+          @on_exit.call
+          @on_exit = nil
+          return exitted?
+        end
+      end
+    end
 
     # Returns a Ticker object of the Location. Ticker is a simple 
     # object which provides time information for the object 
@@ -174,13 +199,34 @@ module FreeVikings
       end
     end
 
+    # == Procs on_beginning and on_exit
+    # You can set up "event handlers" for two "events": location
+    # being started and exitted.
+    # 'on_beginning' is called on every start of the location;
+    # 'on_exit' is called if all members of the team successfully reached
+    # exit
+
+    attr_accessor :on_exit
+
+    attr_accessor :on_beginning
+
     # == Actions
 
     # Updates everything which needs to be updated regularly. This method 
     # is called
     # once per game loop iteration, before refreshing the display.
+    #
+    # When it is called at the first time, calls the 'on_beginning' Proc
 
     def update
+      if ! @started then
+        @started = true
+        if @on_beginning != nil then
+          @on_beginning.call
+          @on_beginning = nil
+        end
+      end
+
       @ticker.tick
       @spritemanager.update
     end

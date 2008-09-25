@@ -4,7 +4,9 @@
 
 ======== To be finished for release 0.6 ================================
 
-(-) Campaign-specific end
+(-) Level password should have black background
+
+(-) Respect \n in textbox creation
 
 (-) User's manual
 
@@ -21,9 +23,6 @@
 (-) release tool: add task: post file to SF (maybe it is impossible...)
 
 ======== RubyCampaign ==================================================
-
-(-) Intro: 
-    their houses, wifes and children,
 
 (-) Repair Assembler tileset (the black stripes are awful!)
 
@@ -45,10 +44,11 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 ======== Code ==========================================================
 
-(-) Transporter#update_transported_sprites: less cycles
+(-) File.open in the script should receive address relative to level directory
 
-(-) Exitting is totally task of Location, not Game
-    (it makes it possible to perform on-exit dialogues etc.)
+(-) Olaf's shield shouldn't move awfully when Olaf's too quick
+
+(-) Transporter#update_transported_sprites: less cycles
 
 (-) Remove StaticObject#unregister_in;
     instead, add Entity#unregister (without argument, every Entity will have
