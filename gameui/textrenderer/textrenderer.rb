@@ -1,17 +1,14 @@
 # textrenderer.rb
 # igneus 24.7.2005
 
-=begin
-= TextRenderer
-TextRenderer is an utility class to render images with blocks of text
-using (({RUDL::TrueTypeFont})).
-It's main goal is to simplify creation of help windows, dialog
-windows, menus etc. for my Ruby-written computer games.
-It is not defined inside the (({FreeVikings})) module, because it's general
-and I am going to use it in more games.
-=end
-
 require 'RUDL'
+
+# TextRenderer is an utility class to render images with blocks of text
+# using RUDL::TrueTypeFont.
+# It's main goal is to simplify creation of help windows, dialog
+# windows, menus etc. for my Ruby-written computer games.
+# It is not defined inside the FreeVikings module, because it's general
+# and I am going to use it in more games.
 
 class TextRenderer
 
@@ -21,10 +18,7 @@ class TextRenderer
 
   DEFAULT_TEXT_COLOUR = [255,255,255]
 
-=begin
---- TextRenderer.new(font)
-Creates a new ((<TextRenderer>)) for a (({RUDL::TrueTypeFont})) ((|font|)).
-=end
+  # Creates a new TextRenderer for a RUDL::TrueTypeFont font.
 
   def initialize(font)
     @font = font
@@ -32,16 +26,13 @@ Creates a new ((<TextRenderer>)) for a (({RUDL::TrueTypeFont})) ((|font|)).
 
   attr_reader :font
 
-=begin
---- TextRenderer#render(surface, width, text, colour=[255,255,255])
-Prints the text onto the surface.
-Arguments:
-* ((|surface|)) - the destination (({RUDL::Surface}))
-* ((|width|)) - maximal width of the printed text
-* ((|text|)) - a String to be printed
-* ((|colour|)) - a colour of the text in RUDL format (Array which contains 
-  three numbers)
-=end
+  # Prints the text onto the surface.
+  # Arguments:
+  # surface::  the destination RUDL::Surface
+  # width:: maximal width of the printed text
+  # text:: a String to be printed
+  # colour:: a colour of the text in RUDL format (Array which contains 
+  #          three numbers)
 
   def render(surface, width, text, colour=DEFAULT_TEXT_COLOUR)
     lines = make_lines(text, width)
@@ -58,26 +49,25 @@ Arguments:
     end
   end
 
-=begin
---- TextRenderer.create_text_box(width, text, colour=[255,255,255])
-Returns a new (({RUDL::Surface})) with rendered text.
-It is transparent (colorkey #ff00ff - HTML 'fuchsia')
-=end
+  # Returns a new RUDL::Surface with rendered text.
+  # Background is transparent (colorkey #ff00ff - HTML 'fuchsia') by default,
+  # but you can set background colour to overwrite this.
 
-  def create_text_box(width, text, colour=DEFAULT_TEXT_COLOUR)
+  def create_text_box(width, text, colour=DEFAULT_TEXT_COLOUR, bgcolour=nil)
     height = height(text, width)
     surface = Surface.new [width, height]
-    surface.fill [255,0,255]
-    surface.set_colorkey [255,0,255]
+    if bgcolour == nil then
+      surface.fill [255,0,255]
+      surface.set_colorkey [255,0,255]
+    else
+      surface.fill bgcolour
+    end
     render(surface, width, text, colour)
     return surface
   end
 
-=begin
---- TextRenderer#height(text, width)
-Returns a height (in pixels) of the (({RUDL::Surface})) with width ((|width|))
-to fit in ((|text|)) which must be String.
-=end
+  # Returns a height (in pixels) of the RUDL::Surface with width +width+
+  # to fit in +text+ which must be String.
 
   def height(text, width)
     lines = make_lines(text, width)
@@ -95,15 +85,25 @@ to fit in ((|text|)) which must be String.
   # Returns Array of these lines.
 
   def make_lines(text, line_width)
-    words = text.split(/\s/)
-    debug { print "words: "; p words }
+    a = text.split(/\n/)
+    words2d = a.collect {|s| s.split(/\s/)}
 
-    lines = []
+    debug { p words2d }
+
+    lines = [] # results end up here
+
+    words = [] # temporary variable
 
     line = ""
-    # every iteration creates one well-long line
-    while (words.size > 0) do
-      #debug { puts words.size }
+
+    while (words2d.size > 0 || words.size > 0) do
+      if words.empty? then
+        words = words2d.shift
+        if line != '' then
+          lines.push line
+          line = ''
+        end
+      end
 
       # remove empty words
       while words.first == ''
@@ -169,9 +169,14 @@ if __FILE__ == $0 then
   renderer.render(surf, w, text)
   $win.blit surf, [100, 100]
 
+  $win.blit(renderer.create_text_box(w*1.5, text, [0,255,100], [255,255,255]), [100,300])
+
   $win.flip
 
   loop do
-    exit if EventQueue.poll.is_a? KeyDownEvent
+    EventQueue.get.each do |e|
+      exit if e.is_a?(KeyDownEvent) || e.is_a?(QuitEvent)
+      sleep 0.5
+    end
   end
 end # main program
