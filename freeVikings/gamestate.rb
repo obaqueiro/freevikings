@@ -337,7 +337,7 @@ Arguments:
 
     def init_message(level)
       message = "Password: #{level.password}"
-      @level_info_message = FreeVikings::FONTS['default'].create_text_box(120, message)
+      @level_info_message = FreeVikings::FONTS['default'].create_text_box(120, message, [255,255,255], [0,0,0])
     end
   end # class LocationInfoGameState
 

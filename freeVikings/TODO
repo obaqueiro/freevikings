@@ -4,11 +4,15 @@
 
 ======== To be finished for release 0.6 ================================
 
-(-) Level password should have black background
+(-) User's manual (it should include step-by-step installation instructions, 
+    instructions on program invocation and troubleshooting - getting
+    error messages in Windows etc, setup and controls description
+    and possibly some hints.)
 
-(-) Respect \n in textbox creation
+(-) release tool: modify to include gameui and schwerengine in fv distro
+    archive
 
-(-) User's manual
+(-) Include 'script' library in the distribution
 
 (-) release tool: add task: mail to freevikings-users mailing list
 
@@ -43,6 +47,9 @@
 Wifes and children will be static, so they don't need walk cycles etc.
 
 ======== Code ==========================================================
+
+(-) Set up some check for new releases of libraries we are using
+    (RUDL, script, Log4r, REXML)
 
 (-) File.open in the script should receive address relative to level directory
 

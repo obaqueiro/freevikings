@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<book>
+  <bookinfo>
+    <title>freeVikings: User's Manual</title>
+
+    <author>
+      <firstname>Jakub</firstname> 
+      <surname>Pavlik</surname>
+      <email>severus@post.cz</email>
+    </author>
+  </bookinfo>
+
+  <!-- chapter: INSTALLATION -->
+
+  <chapter>
+    <title>Installation</title>
+
+    <para>
+      Game is written completely in Ruby. While Ruby is an interpreted 
+      programming language, it isn't needed (and most probably even not 
+      possible) to compile the code. You just have to install Ruby
+      interpreter and a few libraries. Both the interpreter and all needed
+      libraries are licensed by open source licenses and you can download
+      them all for free.
+    </para>
+    <section>
+      <title>Ruby - get it and install</title>
+      <para>
+	
+      </para>
+    </section>
+    <section>
+      <title>Libraries</title>
+      <para>
+	<itemizedlist>
+	  <listitem><para>RUDL 
+	  (get from SourceForge)</para></listitem>
+	  <listitem><para>Log4r 
+	  (optional since fV 0.6, get from RAA)</para></listitem>
+	  <listitem><para>REXML 
+	  (usually packed with Ruby)</para></listitem>
+	  <listitem><para>script 
+	  (included since fV 0.6; get from RAA 
+	  in order to play older versions)</para></listitem>
+	</itemizedlist>
+      </para>
+    </section>
+  </chapter>
+
+  <!-- chapter: CONTROLS -->
+</book>

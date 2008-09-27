@@ -1,3 +1,11 @@
+[27.September 2008]
+- GameUI::Textrenderer#create_text_box - new optional argument (background
+  colour);
+  private method make_lines considers line-breaks correctly again
+- gamestate.rb: password displayed at the beginning of level has black 
+  background again
+- I have written first few paragraphs of User's manual
+
 [25.September 2008]
 - game.rb, location.rb: Game#is_exit? -> Location#exitted?
 - DefaultCampaign/ArcticLevelSet/SwitchPlace: class IceBoard made a subclass
