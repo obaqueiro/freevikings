@@ -3,9 +3,15 @@
 
 # This is here because freeVikings load Log4r themselves and it is optional -
 # if Log4r isn't installed on the system, mock Log4r is loaded instead.
-if ! defined?(Log4r) then
+unless defined?(Log4r) then
   require 'log4r'
 end
+
+unless defined?(RUDL) then
+  require 'RUDL'
+end
+
+
 
 module SchwerEngine
   DISABLE_LOG4R_SETUP = 0001

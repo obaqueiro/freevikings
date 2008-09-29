@@ -1,8 +1,6 @@
 # images.rb
 # igneus 20.1.2004
 
-require 'RUDL'
-
 module SchwerEngine
 
 =begin
