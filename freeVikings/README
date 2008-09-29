@@ -9,17 +9,20 @@ I. INSTALLATION
 * Get ruby [http://www.ruby-lang.org/en/downloads/]
 
 * Get following libraries:
-   ** GameUI [http://freevikings.wz.cz/packages/0.6_pre2/gameui-fv0.6-pre2.tar.gz]
-   ** SchwerEngine [http://freevikings.wz.cz/packages/0.6_pre2/schwerengine-fv0.6-pre2.tar.gz]
    ** RUDL [http://sourceforge.net/projects/rudl/]
-   ** script [http://raa.ruby-lang.org/project/script/]
    ** REXML [included in newer ruby distributions || 
              http://www.germane-software.com/software/rexml/]
-   ** Log4r [included in newer ruby distributions || 
+   ** Log4r [optional, you don't need it unless you want to debug freeVikings
              http://raa.ruby-lang.org/project/log4r/]
 
 Install ruby, install libraries. FreeVikings don't need (and don't provide)
 installation - play from wherever you unpack the archive.
+
+* NOTE: A part of library 'script' by Joel VanderWerf is included 
+        in freeVikings distribution. (file 'lib/script.rb') It is distributed 
+        under Ruby license.
+        'script.rb' which is currently distributed with freeVikings is from
+        script 0.3 (see http://raa.ruby-lang.org/project/script/)
 
 
 II. PLAYING

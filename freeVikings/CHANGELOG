@@ -1,3 +1,12 @@
+[29.September 2008]
+- Added directory lib/ (for 'redistributed' libraries -
+  currently gameui, schwerengine and script)
+- freevikings.rb: safe RUDL loading (checks for RubyGems and bypasses them
+  if needed)
+- User's manual: Installation, Running and Controls finished
+- README: changed dependencies section (removed script, added note
+  about it being redistributed)
+
 [27.September 2008]
 - GameUI::Textrenderer#create_text_box - new optional argument (background
   colour);

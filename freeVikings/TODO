@@ -4,15 +4,10 @@
 
 ======== To be finished for release 0.6 ================================
 
-(-) User's manual (it should include step-by-step installation instructions, 
-    instructions on program invocation and troubleshooting - getting
-    error messages in Windows etc, setup and controls description
-    and possibly some hints.)
+(-) User's manual: troubleshooting and sending bug report
 
 (-) release tool: modify to include gameui and schwerengine in fv distro
-    archive
-
-(-) Include 'script' library in the distribution
+    archive (in lib/ directory)
 
 (-) release tool: add task: mail to freevikings-users mailing list
 
@@ -50,6 +45,9 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 (-) Set up some check for new releases of libraries we are using
     (RUDL, script, Log4r, REXML)
+
+(-) Menu: add a message if a bad password is given (also to the GUI,
+    not only to a console)
 
 (-) File.open in the script should receive address relative to level directory
 

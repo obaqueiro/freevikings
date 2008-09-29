@@ -218,11 +218,19 @@ end
 # All the huge requirements are done here, after options are processed,
 # because it was terrible to type 'freevikings -h' (I can't remember that 
 # option!) and wait 10 seconds until SchwerEngine and Log4r were loaded.
-#
+
 # If Log4r isn't installed on the system, load mocklog4r.rb instead.
 unless (require('log4r') && require('log4rsetupload')) 
   STDERR.puts "INFO: Log4r isn't installed on your system."
   require 'mocklog4r.rb'
+end
+
+if defined?(Gem) then
+  # RubyGems + RUDL = crash; let's bypass gems
+  puts "RubyGems found; loading RUDL with 'gem_original_require', not 'require'"
+  gem_original_require 'RUDL'
+else
+  require 'RUDL'
 end
 
 require 'schwerengine/schwerengine.rb'
