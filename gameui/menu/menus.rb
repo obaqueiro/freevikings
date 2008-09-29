@@ -8,7 +8,9 @@ It's been developed to be used in the freeVikings game, but is
 intended to be reused.
 =end
 
-require 'RUDL'
+unless defined?(RUDL)
+  require 'RUDL'
+end
 
 $:.push File.expand_path(File.dirname(__FILE__))
 require 'menu.rb'
