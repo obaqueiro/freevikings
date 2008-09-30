@@ -13,7 +13,7 @@
 
   <!-- chapter: INSTALLATION -->
 
-  <chapter>
+  <chapter id="chap_install">
     <title>Installation</title>
 
     <para>
@@ -397,6 +397,35 @@
       touch etc. If the item doesn't disappear from one and appear in another
       inventory, try again, try to move vikings, ... (or learn to use
       the 'keyboard way' and wait for next release with better mouse support).
+    </para>
+  </chapter>
+
+  <!-- CHAPTER: TROUBLESHOOTING -->
+
+  <chapter>
+    <title>Troubleshooting</title>
+
+    <para>
+      While playing with freeVikings, you can encounter several kinds 
+      of problems. It is usually useful to start program from console,
+      because code of freeVikings is full of debugging output and logging
+      engine is set up so that it should print all important messages
+      to the standard error output. You should also consider running
+      freeVikings with Log4r (as discussed in <xref linkend="chap_install"/>)
+    </para>
+    <para>
+      If you encounter an error and you can't solve it yourself, you can
+      ask me for support. Before writing an e-mail, you should
+      <orderedlist>
+	<listitem><para>try to repeat the error and write where and in
+	which circumstances it occurs</para></listitem>
+	<listitem><para>copy content of console (you can send it either as
+	text or as screenshot) - error messages printed there are really 
+	valuable for me</para></listitem>
+	<listitem><para>pack content of directory freeVikings/log
+	(e.g. as a ZIP archive or as a tarball)</para></listitem>
+      </orderedlist>
+      I'll do my best to help you.
     </para>
   </chapter>
 </book>

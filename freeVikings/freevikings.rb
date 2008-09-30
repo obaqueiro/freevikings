@@ -10,6 +10,9 @@
 require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
 require 'getoptlong'
 
+# tell ruby to load libraries also from directory lib/:
+$: << './lib'
+
 include FreeVikings
 
 # constants used for text formatting
@@ -220,8 +223,11 @@ end
 # option!) and wait 10 seconds until SchwerEngine and Log4r were loaded.
 
 # If Log4r isn't installed on the system, load mocklog4r.rb instead.
-unless (require('log4r') && require('log4rsetupload')) 
-  STDERR.puts "INFO: Log4r isn't installed on your system."
+begin
+  require('log4r') 
+  require('log4rsetupload')
+rescue LoadError
+  STDERR.puts "INFO: Log4r probably isn't installed on your system."
   require 'mocklog4r.rb'
 end
 

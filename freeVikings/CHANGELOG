@@ -1,3 +1,13 @@
+[30.September 2008]
+- freevikings.rb: fixed error in safe Log4r loading (I misanderstood
+  return values of Kernel::require - it returns false if the library
+  has already been loaded and raises LoadError if it cannot be loaded)
+- User's manual: chapter Troubleshooting
+- Development guide: some 'link's changed to 'xref's
+- utils/make_release.rb: gameui and schwerengine won't be distributed as
+  separate packages, but inside freeVikings archive; 
+  work on interactive mode started
+
 [29.September 2008]
 - Added directory lib/ (for 'redistributed' libraries -
   currently gameui, schwerengine and script)

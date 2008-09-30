@@ -4,20 +4,10 @@
 
 ======== To be finished for release 0.6 ================================
 
-(-) User's manual: troubleshooting and sending bug report
-
-(-) release tool: modify to include gameui and schwerengine in fv distro
-    archive (in lib/ directory)
-
-(-) release tool: add task: mail to freevikings-users mailing list
-
 (-) release tool: interactive mode which asks before each task if it should
-    be done.
+    be done. Use 'highline' library.
     Maybe this mode should be the default one and the non-interactive one
-    could be switched on using some option.
-    Also a batch mode could be implemented - all input would have to be given
-    in a file (XML; on the beginning it would be checked if it contains
-    everything needed).
+    could be switched on using option (-a --ask "no").
 
 (-) release tool: add task: post file to SF (maybe it is impossible...)
 
@@ -31,17 +21,9 @@
 
 (-) Some image for teleport (cca 80x120px)
 
-(-) Vikings' house (cca 150x150px, just one type)
-
-(-) Vikings' wifes (they can be similar or not, but should not be 
-    all the same - it is enough if they have e.g. different colour
-    of dress or hair)
-
-(-) Vikings' children (they should be somehow similar to their dads/mums)
-
-Wifes and children will be static, so they don't need walk cycles etc.
-
 ======== Code ==========================================================
+
+(-) Ingo's loading animation
 
 (-) Set up some check for new releases of libraries we are using
     (RUDL, script, Log4r, REXML)
@@ -64,6 +46,13 @@ Wifes and children will be static, so they don't need walk cycles etc.
 
 (-) Repair RUDL:  Music.post_end_event shouldn't require argument
     and event should be sent if set to true and music ends
+
+(-) release tool: add task: mail to freevikings-users mailing list
+
+(-) release tool: batch mode could be implemented - all input would have 
+    to be given
+    in a file (XML; on the beginning it would be checked if it contains
+    everything needed).
 
 (-) Fix bug "not displayed first row of tiles"
     (See schwerengine/map.rb L75; find a similar thing in painting of

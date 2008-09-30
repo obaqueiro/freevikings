@@ -28,18 +28,6 @@ module Tasks
            :cleanup # - delete tmp dir
           ]
 
-
-  # not a task, helpful tool.
-  # runs or puts CVS command.
-  def do_cvs(command)
-    command = "cvs "+CVS_ARGS+" "+command
-    unless $setup.pretend
-      system command
-    else
-      puts command
-    end
-  end
-
   def make_branch # - CVS: make branch
     ['../freeVikings', '../gameui', '../schwerengine'].each do |d|
       Dir.chdir d
@@ -144,6 +132,10 @@ module Tasks
      
   def archives # - create archives
     Dir.chdir $setup.tmpdir
+
+    system "move gameui freeVikings-#{$setup.dir_version}/lib"
+    system "move schwerengine freeVikings-#{$setup.dir_version}/lib"
+
     Dir['*'].each do |d|
       if mod = $setup.modules.find {|m| d =~ Regexp.new(m)} then
         print "packing module '#{mod}', directory #{d}"
@@ -294,7 +286,7 @@ module Tasks
         end
       end
       if value == '' then
-        puts "Select #{sel['name']} has no default value - which to choose?"
+        puts "Select "+sel['name']+" has no default value - which to choose?"
         others.each_with_index {|o,i| puts "#{i}: #{o}"}
         i = gets.chom.to_i
         value = others[i]
@@ -327,6 +319,19 @@ module Tasks
     puts "Removing directory "+$setup.tmpdir
     Dir.rmdir $setup.tmpdir
   end
+
+  private
+
+  # not a task, helpful tool.
+  # runs or puts CVS command.
+  def do_cvs(command)
+    command = "cvs "+CVS_ARGS+" "+command
+    unless $setup.pretend
+      system command
+    else
+      puts command
+    end
+  end
 end
 
 # MAIN ===================================================================
@@ -334,15 +339,20 @@ end
 require 'optparse'
 require 'ostruct'
 
+INTERACTIVE_MODE = 0
+QUICK_MODE = 1
+ONE_STEP_MODE = 2
+
+
 ### set default setup
 
 $setup = OpenStruct.new
 $setup.step = 1
-$setup.pretend = false
+$setup.pretend = false # useless
 $setup.working_directory = Dir.pwd
-$setup.only_step = nil
 $setup.modules = ['freeVikings', 'gameui', 'schwerengine']
 $setup.release_focus = 4 # Minor feature enhancements
+$setup.mode = INTERACTIVE_MODE
 
 ### parse commandline options
 
@@ -375,18 +385,13 @@ parser = OptionParser.new(ARGV) do |opts|
 
   opts.on('-o', '--only-step STEP', Integer,
           "Do just one step (task)") do |s|
-    $setup.only_step = s
+    $setup.step = s
+    $setup.mode = ONE_STEP_MODE
   end
 
   opts.separator ""
   opts.separator "Other options"
   opts.separator ""
-
-  opts.on('-p', '--pretend',
-          "Switches off some operations (mainly CVS transactions) and", 
-          "just prints what would be done.") do
-    $setup.pretend = true    
-  end
 
   opts.on('-h', '--help',
           "Print this help and exit") do
@@ -431,21 +436,41 @@ include Tasks
 
 ### do just one step?
 
-if $setup.only_step then
-  puts "#{$setup.only_step}. step: #{STEPS[$setup.only_step]}"
+case $setup.mode
+when INTERACTIVE_MODE
+
+  $setup.step.upto(STEPS.size-1) do |step|
+    begin
+      puts "#{step}. step: #{STEPS[step]}"
+      # call step method:
+      send(STEPS[step])
+    rescue
+      STDERR.puts "ERROR in step #{step}, #{STEPS[step]}"
+      raise
+    end  
+  end
+
+when ONE_STEP_MODE
+
+  if $setup.mode == ONE_STEP_MODE then
+    puts "#{$setup.step}. step: #{STEPS[$setup.step]}"
   send(STEPS[$setup.only_step])
   exit
+
 end
 
-### do step by step
+when QUICK_MODE
 
-$setup.step.upto(STEPS.size-1) do |step|
-  begin
-    puts "#{step}. step: #{STEPS[step]}"
-    # call step method:
-    send(STEPS[step])
-  rescue
-    STDERR.puts "ERROR in step #{step}, #{STEPS[step]}"
-    raise
-  end  
+  $setup.step.upto(STEPS.size-1) do |step|
+    begin
+      puts "#{step}. step: #{STEPS[step]}"
+      # call step method:
+      send(STEPS[step])
+    rescue
+      STDERR.puts "ERROR in step #{step}, #{STEPS[step]}"
+      raise
+    end  
+  end
+
 end
+

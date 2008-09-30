@@ -44,14 +44,14 @@
 	  </row>
 	  <row id="about_models">
 	    <entry>models/</entry>
-	    <entry>XML files with definition models (see <link linkend="chapter_generalconcepts" endterm="chapter_generalconcepts.title" />)</entry>
+	    <entry>XML files with definition models (see <xref linkend="chapter_generalconcepts"/>)</entry>
 	  </row>
 	  <row>
 	    <entry>themes/</entry>
 	    <entry>Every of it's subdirectories (e.g. DefaultTheme, IceTheme)
 	    contains one graphical theme - both definition (XML file)
 	    and images. For what exactly a theme is see
-	    <link linkend="sect_theme" endterm="sect_theme.title" /></entry>
+	    <xref linkend="sect_theme"/></entry>
 	  </row>
 	  <row>
 	    <entry>tilesets/</entry>
@@ -89,7 +89,7 @@
 	(see <ulink url="http://rudl.rubyforge.org/wiki/wiki.pl?Surface_Initializers">RUDL Documentation</ulink>).
       </para>
       <para>
-	For tilesets (<link linkend="chapter_tilesets" endterm="chapter_tilesets.title"/>) there is just one standard format, PNG, because the supported
+	For tilesets (<xref linkend="chapter_tilesets"/>) there is just one standard format, PNG, because the supported
 	map editor, <application>Tiled</application>, accepts only PNGs.
       </para>
     </section>
