@@ -5,8 +5,13 @@
 
 # Tool automating release
 # Must be executed in freeVikings CVS working directory!
+# (Don't be afraid, it won't do anything bad with it. All work is
+# being done in a temporary directory under /tmp)
 
-CVS_ARGS = "-z3 -d:ext:igneus_cz@freevikings.cvs.sourceforge.net/cvsroot/freevikings"
+require 'highline'
+
+# CVS_ARGS = "-z3 -d:ext:igneus_cz@freevikings.cvs.sourceforge.net/cvsroot/freevikings"
+CVS_ARGS = "-z3 -d:pserver:anonymous@freevikings.cvs.sourceforge.net/cvsroot/freevikings"
 
 # Most of the methods of this module are tasks of release process
 module Tasks
@@ -133,8 +138,8 @@ module Tasks
   def archives # - create archives
     Dir.chdir $setup.tmpdir
 
-    system "move gameui freeVikings-#{$setup.dir_version}/lib"
-    system "move schwerengine freeVikings-#{$setup.dir_version}/lib"
+    system "mv gameui freeVikings-#{$setup.dir_version}/lib"
+    system "mv schwerengine freeVikings-#{$setup.dir_version}/lib"
 
     Dir['*'].each do |d|
       if mod = $setup.modules.find {|m| d =~ Regexp.new(m)} then
@@ -185,6 +190,9 @@ module Tasks
     80 => 'Release not found', 81 => 'Project not found',
     90 => 'Release focus missing', 91 => 'Release focus invalid',
     100 => 'License invalid', 999 => 'Unknown error'}
+
+  SF_GROUP_ID = 198410
+  SF_PACKAGE_ID = 235081 # id of package 'freevikings'
      
   def freshmeat # - update freshmeat entry using freshmeat XML-RPC API
     require 'uri'
@@ -218,7 +226,7 @@ module Tasks
     session = XMLRPC::Client.new(uri.host, uri.request_uri, uri.port)
 
     print "Give freshmeat.net password: "
-    password = gets.chomp
+    password = STDIN.gets.chomp
 
     loginpack = session.call("login", {'username' => 'igneus', 'password' => password})
     puts loginpack
@@ -229,15 +237,18 @@ module Tasks
 
     puts "freshmeat: submit release"
 
-    puts session.call("publish_release", {
-                   'SID' => sid,
-                   'project_name' => 'freeVikings',
-                   'branch_name' => 'Default',
-                   'version' => $setup.version,
-                   'changes' => changes_text,
-                   'release_focus' => $setup.release_focus,
-                   'url_tgz' => 'http://freevikings.wz.cz/packages/'+$setup.ftp_dir_version+'/freeVikings-'+$setup.dir_version+".tar.gz"
-                 })
+    arguments = {
+      'SID' => sid,
+      'project_name' => 'freeVikings',
+      'branch_name' => 'Default',
+      'version' => $setup.version,
+      'changes' => changes_text,
+      'release_focus' => $setup.release_focus,
+      'url_tgz' => 'http://downloads.sourceforge.net/freevikings/freeVikings-'+$setup.dir_version+".tar.gz"
+      # 'url_tgz' => 'http://freevikings.wz.cz/packages/'+$setup.ftp_dir_version+'/freeVikings-'+$setup.dir_version+".tar.gz"
+    }
+    p arguments
+    puts session.call("publish_release", arguments)
 
     puts "freshmeat: logout"
 
@@ -308,7 +319,8 @@ module Tasks
 
     postdata['minoredit'] = 'off'
     postdata['version'] = $setup.version
-    postdata['download'] = 'http://freevikings.wz.cz/packages/'+$setup.ftp_dir_version+'/freeVikings-'+$setup.dir_version+".tar.gz"
+    postdata['download'] = 'http://downloads.sourceforge.net/freevikings/freeVikings-'+$setup.dir_version+".tar.gz"
+    # postdata['download'] = 'http://freevikings.wz.cz/packages/'+$setup.ftp_dir_version+'/freeVikings-'+$setup.dir_version+".tar.gz"
 
     # POST updated data to the server
     puts Net::HTTP.post_form(URI::parse('http://raa.ruby-lang.org/regist.rhtml'),
@@ -369,7 +381,7 @@ parser = OptionParser.new(ARGV) do |opts|
     $setup.tmpdir = '/tmp/fvrelease--'+$setup.ftp_dir_version+'-tmpdir'    
   end
 
-  opts.on('-f', '--release-focus', Integer,
+  opts.on('-f', '--release-focus FOCUS', Integer,
           "Set release focus for freshmeat.net; default: #{$setup.release_focus}") do |f|
     $setup.release_focus = f
   end
@@ -432,20 +444,35 @@ if Dir['../schwerengine/CVS'].empty? then
   exit 1
 end
 
+### start highline (I don't know how to better call the object...):
+
+$highline = HighLine.new
+
+### run tasks
+
 include Tasks
 
-### do just one step?
-
 case $setup.mode
+
 when INTERACTIVE_MODE
 
   $setup.step.upto(STEPS.size-1) do |step|
     begin
+      puts
       puts "#{step}. step: #{STEPS[step]}"
+      puts
+      $highline.say "Continue?\n"
+      case $highline.choose("continue", "skip", "exit")
+      when "skip"
+        next
+      when "exit"
+        exit
+      end
+      
       # call step method:
       send(STEPS[step])
     rescue
-      STDERR.puts "ERROR in step #{step}, #{STEPS[step]}"
+      STDERR.puts "ERROR in step #{step}, #{STEPS[step]}. Please, fix this error and consider running this step again."
       raise
     end  
   end

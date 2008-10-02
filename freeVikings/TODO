@@ -4,11 +4,6 @@
 
 ======== To be finished for release 0.6 ================================
 
-(-) release tool: interactive mode which asks before each task if it should
-    be done. Use 'highline' library.
-    Maybe this mode should be the default one and the non-interactive one
-    could be switched on using option (-a --ask "no").
-
 (-) release tool: add task: post file to SF (maybe it is impossible...)
 
 ======== RubyCampaign ==================================================
@@ -23,15 +18,16 @@
 
 ======== Code ==========================================================
 
-(-) Ingo's loading animation
+(-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
+    (Ingo's loading animation)
+
+(-) Visual drag&drop of items; highlighting
 
 (-) Set up some check for new releases of libraries we are using
     (RUDL, script, Log4r, REXML)
 
 (-) Menu: add a message if a bad password is given (also to the GUI,
     not only to a console)
-
-(-) File.open in the script should receive address relative to level directory
 
 (-) Olaf's shield shouldn't move awfully when Olaf's too quick
 
@@ -44,15 +40,11 @@
 (-) Game objects which weren't given any theme should wait till they are
     registered in a location and try to get it's theme - not raise exception
 
-(-) Repair RUDL:  Music.post_end_event shouldn't require argument
-    and event should be sent if set to true and music ends
+(-) Vikings should rest on Olaf's shield only if it's over his head
+
+(-) Show level name, description and author at the beginning of level
 
 (-) release tool: add task: mail to freevikings-users mailing list
-
-(-) release tool: batch mode could be implemented - all input would have 
-    to be given
-    in a file (XML; on the beginning it would be checked if it contains
-    everything needed).
 
 (-) Fix bug "not displayed first row of tiles"
     (See schwerengine/map.rb L75; find a similar thing in painting of
@@ -65,16 +57,12 @@
 
 (-) Map's borders are solid, so it is impossible to go out of the map
 
+(-) File.open in the script should receive address relative to level directory
+
 (-) Some teleporting animation
     (It's possible to implement it as a Sprite,   e.g. Teleport::Animation)
 
-(-) Vikings should rest on Olaf's shield only if it's over his head
-
-(-) Show level name, description and author at the beginning of level
-
 (-) Delete items using mouse: drag item and drop it over trash icon
-
-(-) Visual drag&drop of items; highlighting
 
 (-) Repair ArrowShooter
 
@@ -83,8 +71,6 @@
 (-) Smashable wall (bomb/Erik's head)
 
 (-) Erik's 'head-smash' feature
-
-(-) Wait for key in a talk
 
 (-) Possibility to define starting point for each viking separately
 
@@ -100,7 +86,7 @@
 (-) Repair the Snail (this monster seems to be out of order)
 
 (-) Make all setup stuff accessible from the menu (e.g. define location 
-    storage places, choose a campaign to be played etc.)
+    storage places, choose a campaign to be played, music etc.)
 
 (-) Possibility to change game speed (useful on newer machines, where 
     vikings move terribly slowly)
@@ -116,10 +102,10 @@
 
 (-) RDoc documentation (convert RD to RDoc)
 
-(-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
-
-(-) Items autouse (healing items mainly) as in LV2
+(-) Items autouse (healing items mainly) as in LV2 (only as option)
 
 (-) Enable Tiled maps with more tileset images
 
-(-) Clean up game.rb
+(-) Repair RUDL:  Music.post_end_event shouldn't require argument
+    and event should be sent if set to true and music ends
+
