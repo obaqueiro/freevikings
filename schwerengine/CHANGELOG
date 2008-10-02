@@ -1,3 +1,7 @@
+[2.October 2008]
+- map2.rb, tiledmap2loadstrategy.rb : development of new Map class 
+  for freeVikings and associated loaders started
+
 [18.September 2008]
 - entity.rb, group.rb: Up to now every Entity had just one rectangle common
   for collisions and graphics. Now these two can be defined different

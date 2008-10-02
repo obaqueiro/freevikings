@@ -27,10 +27,8 @@ module SchwerEngine::Tests
   require 'testmodel.rb'
   require 'testmodelloader.rb'
   require 'testtimelock.rb'
-  require 'testlocation.rb'
   require 'testgroup.rb'
   require 'testselectivegroup.rb'
-  require 'testspritemanager.rb'
 end
 
 class SchwerEngine::Tests::TestSuite
@@ -47,10 +45,8 @@ class SchwerEngine::Tests::TestSuite
     suite << TestModel.suite
     suite << TestModelLoader.suite
     suite << TestTimeLock.suite
-    suite << TestLocation.suite
     suite << TestGroup.suite
     suite << TestSelectiveGroup.suite
-    suite << TestSpriteManager.suite
 
     return suite
   end

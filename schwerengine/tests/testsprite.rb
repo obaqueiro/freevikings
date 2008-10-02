@@ -17,10 +17,10 @@ class TestSprite < TestEntity
     @entity = @sprite = Sprite.new(STARTPOS)
   end
 
-  def testKilledIsNotAlive
-    @sprite.destroy
-    assert_equal false, @sprite.alive?
-  end
+#   def testKilledIsNotAlive
+#     @sprite.destroy
+#     assert_equal false, @sprite.alive?
+#   end
 
   def testRegisterIn
     loc = Mock::MockLocation.new
