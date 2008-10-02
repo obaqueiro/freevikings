@@ -10,8 +10,8 @@
 
 require 'highline'
 
-# CVS_ARGS = "-z3 -d:ext:igneus_cz@freevikings.cvs.sourceforge.net/cvsroot/freevikings"
-CVS_ARGS = "-z3 -d:pserver:anonymous@freevikings.cvs.sourceforge.net/cvsroot/freevikings"
+CVS_ARGS = "-z3 -d:ext:igneus_cz@freevikings.cvs.sourceforge.net/cvsroot/freevikings"
+# CVS_ARGS = "-z3 -d:pserver:anonymous@freevikings.cvs.sourceforge.net/cvsroot/freevikings"
 
 # Most of the methods of this module are tasks of release process
 module Tasks

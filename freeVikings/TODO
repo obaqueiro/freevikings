@@ -2,10 +2,6 @@
            ========== FreeVikings TODO file ==========
            ===========================================
 
-======== To be finished for release 0.6 ================================
-
-(-) release tool: add task: post file to SF (maybe it is impossible...)
-
 ======== RubyCampaign ==================================================
 
 (-) Repair Assembler tileset (the black stripes are awful!)
@@ -17,6 +13,18 @@
 (-) Some image for teleport (cca 80x120px)
 
 ======== Code ==========================================================
+
+(-) Finish SchwerEngine::{ Map2 & TiledMap2LoadStrategy }; replace
+    Map with Map2 in freeVikings
+
+(-) Write XMLMap2LoadStrategy for loading freeVikings legacy map format
+    (which is still very useful because it is editable without Tiled)
+
+(-) Enable Tiled maps with more tileset images
+
+(-) Better tiles loading (first load tiles, then create surface for every
+    layer, finally merge background and foreground layers)
+    Support for foreground layers in maps
 
 (-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
     (Ingo's loading animation)
@@ -36,9 +44,6 @@
 (-) Remove StaticObject#unregister_in;
     instead, add Entity#unregister (without argument, every Entity will have
     reference of the Location)
-
-(-) Game objects which weren't given any theme should wait till they are
-    registered in a location and try to get it's theme - not raise exception
 
 (-) Vikings should rest on Olaf's shield only if it's over his head
 
@@ -79,6 +84,9 @@
 
 (-) Possibility to change keys (movement, inventory control etc.)
 
+(-) Game objects which weren't given any theme should wait till they are
+    registered in a location and try to get it's theme - not raise exception
+
 (-) Variable tile size (not only 40x40)
 
 (-) Move all items to a separate directory items/ ?
@@ -104,8 +112,7 @@
 
 (-) Items autouse (healing items mainly) as in LV2 (only as option)
 
-(-) Enable Tiled maps with more tileset images
-
 (-) Repair RUDL:  Music.post_end_event shouldn't require argument
     and event should be sent if set to true and music ends
 
+(-) release tool: add task: post file to SF

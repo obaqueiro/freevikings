@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>MultiMultiLayer Tiled map</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>MLYR</password>
+    <map src="multilayer2_map.tmx"/>
+    <script src=""/>
+    <start horiz="20" vertic="20"/>
+    <exit horiz="320" vertic="200"/>
+  </body>
+</location>

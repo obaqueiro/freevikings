@@ -1,3 +1,16 @@
+[2.October 2008]
+- utils/make_release.rb: It wasn't possible to access CVS via SSH
+  yesterday while I was preparing archive for release; today I removed
+  one temporary modification made yesterday because of this problem
+- locs/Tests.../Tiled../MultiLayer2 - testing location for new Map
+  features planned for SchwerEngine::Map2
+
+[[[release 0.6] [10/01/2008] ----------------------------------------
+
+[1.October 2008]
+- utils/make_release.rb: modifications because of moving package depository
+  to SourceForge
+
 [30.September 2008]
 - freevikings.rb: fixed error in safe Log4r loading (I misanderstood
   return values of Kernel::require - it returns false if the library
