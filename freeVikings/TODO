@@ -14,11 +14,12 @@
 
 ======== Code ==========================================================
 
-(-) Finish SchwerEngine::{ Map2 & TiledMap2LoadStrategy }; replace
-    Map with Map2 in freeVikings
+(-) TiledMap2LoadStrategy: implement surfaces loading
 
 (-) Write XMLMap2LoadStrategy for loading freeVikings legacy map format
     (which is still very useful because it is editable without Tiled)
+
+(-) Delete Map and realtives, Replace it with Map2 and relatives (rename them)
 
 (-) Enable Tiled maps with more tileset images
 

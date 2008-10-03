@@ -1,32 +1,24 @@
 # locationloader.rb
 # igneus 24.12.2005
 
-=begin
-= NAME
-LocationLoader
-
-= DESCRIPTION
-(({LocationLoader})) gets information about location data from XML file
-and provides data to the (({Location})) object.
-=end
-
 require 'rexml/document'
 
 require 'locationscript.rb'
 require 'maploaderfactory.rb'
+require 'exit.rb'
 
 module FreeVikings
+
+  # LocationLoader gets information about location data from XML file
+  # and provides data to the Location object.
 
   class LocationLoader
 
     DEFAULT_START_POINT = [5,5]
     DEFAULT_EXIT_POINT  = [100,100]
 
-=begin
---- LocationLoader#new(source)
-Argument ((|source|)) must be a valid argument to (({REXML::Document.new})).
-It should contain a valid location definition.
-=end
+    # Argument source must be a valid argument to REXML::Document.new.
+    # It should contain a valid location definition.
 
     def initialize(source)
       @log = Log4r::Logger['world log']
@@ -51,23 +43,15 @@ It should contain a valid location definition.
     attr_reader :start
     attr_reader :exit
 
-=begin
---- LocationLoader#load_map(blocks_matrix)
-Feeds ((|blocks_matrix|)) (expected to be an (({Array}))) by (({Array}))s
-of (({Tile})) instances.
-=end
+    # Returns instance of some subclass of MapLoadStrategy
 
-    def load_map(blocks_matrix)
+    def map_loader
       map_file = @dir+'/'+@map_file
-      @log.info "Loading map from file '#{map_file}'"
-      MapLoaderFactory.loader_for(map_file).load(blocks_matrix)
+      return MapLoaderFactory.loader_for(map_file)
     end
 
-=begin
---- LocationLoader#load_script(location)
-Adds into ((|location|)) monsters and other in-game objects if any supplied
-for the location being loaded.
-=end
+    # Adds into location monsters and other in-game objects if any supplied
+    # for the location being loaded.
 
     def load_script(location)
       unless @script
@@ -117,20 +101,14 @@ for the location being loaded.
       end
     end
 
-=begin
---- LocationLoader#load_exit(location)
-Adds (({Exit})) into ((|location|)).
-=end
+    # Adds Exit into location.
 
     def load_exit(location)
       location.exitter = Exit.new(@exit)
     end
 
-=begin
---- LocationLoader#load_start(location)
-Supplies ((|location|)) information about where to place vikings 
-on the beginning of game.
-=end
+    # Supplies location information about where to place vikings 
+    # on the beginning of game.
 
     def load_start(location)
       location.start = @start

@@ -1,3 +1,10 @@
+[3.October 2008]
+- locationloader.rb: docs RD->RDoc
+- tiledmaploadstrategy.rb and xmlmaploadstrategy.rb moved to SchwerEngine
+- maploaderfactory.rb: require of moved classes removed; docs RD->RDoc
+- location.rb, maploaderfactory.rb, locationloader.rb: Map2 used instead of 
+  Map
+
 [2.October 2008]
 - utils/make_release.rb: It wasn't possible to access CVS via SSH
   yesterday while I was preparing archive for release; today I removed

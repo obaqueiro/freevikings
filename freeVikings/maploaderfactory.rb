@@ -1,35 +1,20 @@
 # maploaderfactory.rb
 # igneus 15.12.2005
 
-=begin
-= NAME
-LocationLoaderFactory
-
-= DESCRIPTION
-Class (({MapLoaderFactory})) realizes the design pattern known as
-'Abstract Factory'. It provides a transparent mechanism of getting
-the right (({MapLoadStrategy})) subclasse's instance to load
-any given location data.
-
-= Superclass
-Object
-=end
-
-require 'xmlmaploadstrategy.rb'
-require 'tiledmaploadstrategy.rb'
-
 module FreeVikings
+
+  # Class MapLoaderFactory realizes the design pattern known as
+  # 'Abstract Factory'. It provides a transparent mechanism of getting
+  # the right MapLoadStrategy subclasse's instance to load
+  # any given location data.
 
   class MapLoaderFactory
 
-    STRATEGIES = {"xml" => XMLMapLoadStrategy,
-                  "tmx" => TiledMapLoadStrategy}
+    STRATEGIES = {#"xml" => XMLMap2LoadStrategy,
+                  "tmx" => TiledMap2LoadStrategy}
 
-=begin
---- MapLoaderFactory.loader_for(file)
-Returns the right loader to load the map data stored in file
-((|file|)) (given a file name).
-=end
+    # Returns the right loader to load the map data stored in file
+    # file (given a file name).
 
     def MapLoaderFactory.loader_for(file)
       log = Log4r::Logger['location loading log']
