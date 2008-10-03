@@ -29,9 +29,12 @@ module SchwerEngine
       loader.load_blocks(self)
       loader.load_surfaces(self)
       lock
+
+      @rect = Rectangle.new 0, 0, width, height
     end
 
-    # 2-dimensional Array of Boolean (true means solid tile). Frozen!
+    # 2-dimensional Array of Boolean (true means solid tile). 
+    # Frozen as soon as it is loaded (in Map2#new)
 
     attr_reader :blocks
 
@@ -49,22 +52,41 @@ module SchwerEngine
       raise "Tile width and height are different - use 'tile_width' and 'tile_height'!"
     end
 
+    # width of the map in px
+
+    def width
+      @tile_width * @blocks[0].size
+    end
+
+    # height of the map in px
+
+    def height
+      @tile_height * @blocks.size
+    end
+
+    attr_reader :rect
+
     # == Methods for loaders
 
     # give tile sizes
+    # These methods are blocked as soon as the map is loaded - don't call 
+    # them (they are available only for map loaders)
 
-    def tile_sizes=(width, height)
+    def tile_width=(w)
       locked_test
+      @tile_width = w
+    end
 
-      @tile_width = width
-      @tile_height = height
+    def tile_height=(h)
+      locked_test
+      @tile_height = h
     end
 
     # give RUDL::Surfaces
 
     def background=(b)
       locked_test
-      @vackground = b
+      @background = b
     end
 
     def foreground=(f)
@@ -75,16 +97,57 @@ module SchwerEngine
     # == Methods for map's client (e.g. Location in freeVikings)
 
     def paint_background(surface, paint_rect)
+      if @background == nil then
+        return
+      end
+
     end
+
+    alias_method :paint, :paint_background
 
     # If map has no foreground, nothing is done.
 
     def paint_foreground(surface, paint_rect)
+      if @foreground == nil then
+        return
+      end
+
     end
 
     # Says if given Rectangle is free of solid tiles.
 
     def area_free?(rect)
+      leftmost_i = (rect.left / @tile_width).floor
+      rightmost_i = (rect.right / @tile_width).floor
+
+      top_line = (rect.top / @tile_height).ceil
+      bottom_line = (rect.bottom / @tile_height).ceil
+
+      if leftmost_i < 0 then
+        leftmost_i = 0
+      end
+      if rightmost_i > (@blocks.first.size - 1) then
+        rightmost_i = @blocks.first.size - 1
+      end
+      if top_line < 0 then
+        top_line = 0
+      end
+      if bottom_line > (@blocks.size - 1) then
+        bottom_line = @blocks.size - 1
+      end
+
+      #print "["
+      top_line.upto(bottom_line) do |line_i|
+        leftmost_i.upto(rightmost_i) do |tile_i|
+          #print "[#{tile_i}, #{line_i}]"
+          if @blocks[line_i][tile_i] == true then
+            return false
+          end
+        end
+      end
+      #puts "]"
+      
+      return true # solid tile hasn't been found yet, area is free
     end
 
     private

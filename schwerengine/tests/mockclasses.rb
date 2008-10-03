@@ -52,6 +52,28 @@ module SchwerEngine
       end
     end # class TestingMapLoadStrategy
 
+    # Similar as class above, just for Map2
+    class TestingMap2LoadStrategy < Map2LoadStrategy
+      def initialize
+        super(nil)
+
+        o = false
+        x = true
+        @blocks = [
+                   [x, x, x, x, x, x, x, x],
+                   [x, o, o, o, o, o, x, x],
+                   [x, o, o, o, o, o, x, x],
+                   [x, o, o, o, o, o, x, x],
+                   [x, o, o, o, o, o, x, x],
+                   [x, o, o, o, o, o, x, x],
+                   [x, o, o, o, o, o, x, x],
+                   [x, x, x, x, x, x, x, x]         
+                  ]
+
+        @tile_width = @tile_height = 40
+      end
+    end
+
     # A corrupted class MockLocation.
     # A mock location has no internal mechanism, it just stores
     # the data we want her to return from method calls.

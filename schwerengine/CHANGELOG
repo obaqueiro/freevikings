@@ -1,6 +1,12 @@
+[3.October 2008]
+- tiledmaploadstrategy.rb, xmlmaploadstrategy.rb: moved from freeVikings
+- tiledmap2loadstrategy.rb, map2.rb, map2loadstrategy.rb:
+  currently usable with freeVikings (collisions work, graphics not yet)
+
 [2.October 2008]
 - map2.rb, tiledmap2loadstrategy.rb : development of new Map class 
   for freeVikings and associated loaders started
+- some tests removed
 
 [18.September 2008]
 - entity.rb, group.rb: Up to now every Entity had just one rectangle common
