@@ -262,11 +262,12 @@ module FreeVikings
       mr = @map.rect
       displayed_rect = centered_view_rect(mr.w, mr.h, surface.w, surface.h, center)
 
-      @map.paint(surface, displayed_rect)
+      @map.paint_background(surface, displayed_rect)
       @staticobjects.paint(surface, displayed_rect)
       @activeobjectmanager.paint(surface, displayed_rect)
       @itemmanager.paint(surface, displayed_rect)
       @spritemanager.paint(surface, displayed_rect)
+      @map.paint_foreground(surface, displayed_rect)
     end
 
     # == In-Game objects addition, removal and collisions

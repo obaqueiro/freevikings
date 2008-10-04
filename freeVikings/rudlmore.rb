@@ -26,5 +26,15 @@ module RUDL
     def fullscreen?
       @fullscreen
     end
+
+    def inspect
+      "<#{self.class}: #{w}x#{h}px, #{bitsize}bpp; colorkey: #{colorkey}, flags: #{flags}, masks: #{masks}, alpha: #{alpha}>"
+    end
+  end
+
+  class Surface
+    def inspect
+      "<#{self.class}: #{w}x#{h}px, #{bitsize}bpp; colorkey: #{colorkey}, flags: #{flags}, masks: #{masks}, alpha: #{alpha}>"
+    end
   end
 end # module RUDL

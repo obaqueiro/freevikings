@@ -14,18 +14,12 @@
 
 ======== Code ==========================================================
 
-(-) TiledMap2LoadStrategy: implement surfaces loading
-
 (-) Write XMLMap2LoadStrategy for loading freeVikings legacy map format
     (which is still very useful because it is editable without Tiled)
 
 (-) Delete Map and realtives, Replace it with Map2 and relatives (rename them)
 
 (-) Enable Tiled maps with more tileset images
-
-(-) Better tiles loading (first load tiles, then create surface for every
-    layer, finally merge background and foreground layers)
-    Support for foreground layers in maps
 
 (-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
     (Ingo's loading animation)

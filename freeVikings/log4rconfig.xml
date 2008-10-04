@@ -48,7 +48,7 @@
   </logger>
 
   <!-- Log for Location Loading Strategies output -->
-  <logger name="location loading log" level="ERROR">
+  <logger name="location loading log" level="DEBUG">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
   </logger>
