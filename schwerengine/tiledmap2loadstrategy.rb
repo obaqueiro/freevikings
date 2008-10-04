@@ -38,16 +38,17 @@ module SchwerEngine
 
       @tiletypes = [nil] # tile 0 is nil
 
-      tileset_image = RUDL::Surface.load_new @dir+"/"+f
+      @tileset_image = RUDL::Surface.load_new @dir+"/"+f
 
-      0.step(tileset_image.h - @tile_height, @tile_height) do |y|
-        0.step(tileset_image.w - @tile_width, @tile_width) do |x|
-          s = RUDL::Surface.new [@tile_width, @tile_height]
-          s.blit(tileset_image, [0, 0], [x, y, @tile_width, @tile_height])
-          @tiletypes.push s
+      0.step(@tileset_image.h - @tile_height, @tile_height) do |y|
+        0.step(@tileset_image.w - @tile_width, @tile_width) do |x|
+          tile_rect = [x, y, @tile_width, @tile_height]
+          @tiletypes.push tile_rect
         end
       end
     end
+
+    # creates @blocks, @background and @foreground
 
     def load_tiles
       @log.info "Loading tiles."
@@ -74,22 +75,26 @@ module SchwerEngine
         else
           ExpandedLayerDataLoader.new(layers.last, layer, map_sizes).load
         end
-      end
 
-      solid_layer = nil
+        # I don't know why, but Tiled maps have the first row of tiles invisible.
+        # This is a dirty trick to make it visible - add one row of empty tiles
+        layers.last.unshift( [0] * @max_width )
+      end
+      @max_height += 1
 
       # then find solid layer and fill @blocks:
 
-      layer_names.each_with_index {|name,i|
-        if name == @properties['solid_layer'] then
-          solid_layer = layers[i]
-          break
-        end
-      }
+      solid_layer = nil
 
-      if solid_layer == nil then
+      solid_layer_i = layer_names.index(@properties['solid_layer'])
+
+      if solid_layer_i == nil then
         @log.error "Solid layer not found. Highest layer is considered to be solid."
         solid_layer = layers.last
+        solid_layer_i = layers.size - 1 # may be useful below if map property 
+        #'last_background' not set
+      else
+        solid_layer = layers[solid_layer_i]
       end
       
       solid_layer.each do |row|
@@ -103,16 +108,58 @@ module SchwerEngine
         end
       end
 
-      # create surface for every layer:
-
       # find highest background surface; make just two: @background and 
       # @foreground (or just @background if @foreground isn't needed)
+      # !!! @foreground has colorkey transparence, transparent colour is 
+      # magenta: #ff00ff
 
+      top_bg_layer_i = layer_names.index(@properties['last_background'])
+      if top_bg_layer_i == nil then
+        @log.debug "Property 'last_background' not set; map hasn't a foreground."
+        top_bg_layer_i = layers.size - 1
+      end
 
-      # I don't know why, but Tiled maps have the first row of tiles invisible.
-      # This is a dirty trick to make it visible - add one row of empty tiles
-      @blocks.unshift( [false] * @max_width )
-      @max_height += 1
+      if top_bg_layer_i >= 0 then
+        @background = RUDL::Surface.new([@blocks.first.size * @tile_width,
+                                         @blocks.size * @tile_height])
+        @log.debug "Created background surface."
+      else
+        @log.debug "Background surface not created, no background layers."
+      end
+      if top_bg_layer_i < (layers.size - 1) then
+        @foreground = RUDL::Surface.new([@blocks.first.size * @tile_width,
+                                         @blocks.size * @tile_height])
+        @foreground.fill([255,0,255])
+        @foreground.set_colorkey([255,0,255])
+        @log.debug "Created foreground surface"
+      else
+        @log.debug "Foreground surface not created, no foreground layers."
+      end
+
+      # paint tiles
+
+      layers.each_with_index do |l,i|
+        if i <= top_bg_layer_i then
+          @log.debug "Pasting layer '#{layer_names[i]}' on background."
+          s = @background 
+        else
+          @log.debug "Pasting layer '#{layer_names[i]}' on foreground."
+          s = @foreground
+        end
+
+        l.each_with_index do |line,y|
+          line.each_with_index do |tile_id,x|
+            # Tiled reserves tile id 0 for 'no tile'; tile_id other than 0
+            # with no tile is suspicious.
+            if @tiletypes[tile_id] == nil then
+              @log.error "No tile with id '#{tile_id}'" if tile_id != 0
+              next
+            end
+            
+            s.blit @tileset_image, [x*@tile_width, y*@tile_height], @tiletypes[tile_id]
+          end
+        end
+      end
     end
 
     def get_tileset_file

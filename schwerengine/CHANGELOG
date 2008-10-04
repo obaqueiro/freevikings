@@ -1,3 +1,7 @@
+[4.October 2008]
+- map2.rb: implemented methods paint_background and paint_foreground
+- tiledmap2loadstrategy.rb: implemented surface creation.
+
 [3.October 2008]
 - tiledmaploadstrategy.rb, xmlmaploadstrategy.rb: moved from freeVikings
 - tiledmap2loadstrategy.rb, map2.rb, map2loadstrategy.rb:
