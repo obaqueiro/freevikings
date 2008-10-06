@@ -1,3 +1,12 @@
+[6.October 2008]
+- maploaderfactory.rb: XmlMap2LoadStrategy added
+- locs/ArcticLevelSet/ArcticTutorial: start and exit position fixed
+- maploaderfactory.rb, location.rb: changes due to "Map2 -> Map" name change
+- viking.rb: constant Map::TILE_SIZE never more exists
+
+[4.October 2008 - St Francis of Assisi]
+- location.rb: supports background/foreground painting
+
 [3.October 2008]
 - locationloader.rb: docs RD->RDoc
 - tiledmaploadstrategy.rb and xmlmaploadstrategy.rb moved to SchwerEngine

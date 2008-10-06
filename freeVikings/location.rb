@@ -29,7 +29,7 @@ module FreeVikings
 
       @theme = theme
 
-      @map = Map2.new(loader.map_loader)
+      @map = Map.new(loader.map_loader)
       @spritemanager = SpriteManager.new
       @activeobjectmanager = Group.new
       @itemmanager = Group.new

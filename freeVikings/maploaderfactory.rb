@@ -10,8 +10,8 @@ module FreeVikings
 
   class MapLoaderFactory
 
-    STRATEGIES = {#"xml" => XMLMap2LoadStrategy,
-                  "tmx" => TiledMap2LoadStrategy}
+    STRATEGIES = {"xml" => XmlMapLoadStrategy,
+                  "tmx" => TiledMapLoadStrategy}
 
     # Returns the right loader to load the map data stored in file
     # file (given a file name).

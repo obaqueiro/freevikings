@@ -14,15 +14,17 @@
 
 ======== Code ==========================================================
 
-(-) Write XMLMap2LoadStrategy for loading freeVikings legacy map format
-    (which is still very useful because it is editable without Tiled)
+(-) SchwerEngine::Map: remove 'dirty thing' (where is the problem? in map.rb?
+    Map seems to be tested well. Bug may be in Viking, which is one big mess)
 
-(-) Delete Map and realtives, Replace it with Map2 and relatives (rename them)
+(-) All levels with old maps: move everything 40px higher (new loader fixed
+    ancient error...)?
 
 (-) Enable Tiled maps with more tileset images
 
 (-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
-    (Ingo's loading animation)
+
+(-) Better - more realistic - physics (jumping etc.)
 
 (-) Visual drag&drop of items; highlighting
 
@@ -32,15 +34,17 @@
 (-) Menu: add a message if a bad password is given (also to the GUI,
     not only to a console)
 
-(-) Olaf's shield shouldn't move awfully when Olaf's too quick
+(-) Shield tasks:
 
-(-) Transporter#update_transported_sprites: less cycles
+    (-) Olaf's shield shouldn't move awfully when Olaf's too quick
+
+    (-) Transporter#update_transported_sprites: less cycles
+
+    (-) Vikings should rest on Olaf's shield only if it's over his head
 
 (-) Remove StaticObject#unregister_in;
     instead, add Entity#unregister (without argument, every Entity will have
     reference of the Location)
-
-(-) Vikings should rest on Olaf's shield only if it's over his head
 
 (-) Show level name, description and author at the beginning of level
 

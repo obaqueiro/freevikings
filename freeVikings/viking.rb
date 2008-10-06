@@ -307,8 +307,10 @@ detection.
     end
 
     def descend_onto_ground
-      if on_ground? and not (@rect.bottom % Map::TILE_SIZE == 0) then
-          @rect.top += Map::TILE_SIZE - (@rect.bottom % Map::TILE_SIZE)
+      tile_size = @location.map.tile_height
+
+      if on_ground? and not (@rect.bottom % tile_size == 0) then
+          @rect.top += tile_size - (@rect.bottom % tile_size)
       end
     end
 

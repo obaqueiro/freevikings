@@ -10,7 +10,7 @@
     <password>ATUT</password>
     <map src="arctictut_loc.xml"/>
     <script src="arctictut_script.rb"/>
-    <start horiz="80" vertic="300"/>
-    <exit horiz="2080" vertic="320"/>
+    <start horiz="80" vertic="260"/>
+    <exit horiz="2080" vertic="280"/>
   </body>
 </location>
