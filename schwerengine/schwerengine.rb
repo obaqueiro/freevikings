@@ -92,6 +92,7 @@ module SchwerEngine
       require 'schwerengine/tiledmaploadstrategy.rb'
       require 'schwerengine/map2.rb'
       require 'schwerengine/map2loadstrategy.rb'
+      require 'schwerengine/xmlmap2loadstrategy.rb'
       require 'schwerengine/tiledmap2loadstrategy.rb'
       # require 'schwerengine/location.rb'
       # require 'schwerengine/nullocation.rb'

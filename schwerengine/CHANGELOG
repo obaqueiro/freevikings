@@ -1,3 +1,7 @@
+[6.October 2008]
+- xmlmap2loadstrategy.rb: implemented loading 'old XML maps'
+  (most of freeVikings maps are in this format)
+
 [4.October 2008]
 - map2.rb: implemented methods paint_background and paint_foreground
 - tiledmap2loadstrategy.rb: implemented surface creation.
