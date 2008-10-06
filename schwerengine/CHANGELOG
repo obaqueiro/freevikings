@@ -3,6 +3,7 @@
   (most of freeVikings maps are in this format)
 - *map2*.rb: files renamed to *map*.rb (old Map and relatives replaced)
 - tile.rb removed (useless now)
+- *map*.rb: class names etc. modified ("2" removed: Map2 => Map etc.)
 
 [4.October 2008]
 - map2.rb: implemented methods paint_background and paint_foreground

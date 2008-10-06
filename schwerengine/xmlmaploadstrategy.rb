@@ -1,4 +1,4 @@
-# xmlmap2loadstrategy.rb
+# xmlmaploadstrategy.rb
 # igneus 6.10.2008
 
 module SchwerEngine
@@ -6,7 +6,7 @@ module SchwerEngine
   # Loads old freeVikings map format (XML, human readable,
   # one tile per image file, tile size 40 px)
 
-  class XmlMap2LoadStrategy < Map2LoadStrategy
+  class XmlMapLoadStrategy < MapLoadStrategy
 
     TILE_SIZE = 40
 

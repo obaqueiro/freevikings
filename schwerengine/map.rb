@@ -1,22 +1,14 @@
-# map2.rb
+# map.rb
 # igneus 2.10.2008
 
 module SchwerEngine
 
-  # I found out that old class Map is never more suitable for freeVikings
-  # and it wouldn't be simple to change it so that it would provide
-  # new required features:
+  # Class Map rewritten almost from scratch because of need for
   # * multiple layers, some of them may be in front of game objects
   #   (foreground layers)
   # * custom tile size
-  # So I decided to preserve the old class Map and develop a new one,
-  # which should provide the same functionality with extensions
-  # mentioned above.
-  # Map was designed to suit my old freeVikings-native XML map format;
-  # Map2 is designed mainly for Tiled maps (but of course it will have
-  # loader for legacy-maps - I love them...)
 
-  class Map2
+  class Map
     
     def initialize(loader)
       @blocks = [] # 2D Array; values are true (solid) or false (non-solid)
@@ -106,7 +98,7 @@ module SchwerEngine
       # This line "solves" one stupid problem I can't still get rid of.
       # It's dirty because it makes the first row of tiles invisible.
       # I can't find the bug which causes me to use this ####### dirty thing...
-      rect.top += Map::TILE_SIZE
+      rect.top += @tile_height
 
       surface.blit(@background, [0,0], (rect.to_a))      
     end
@@ -125,7 +117,7 @@ module SchwerEngine
       # This line "solves" one stupid problem I can't still get rid of.
       # It's dirty because it makes the first row of tiles invisible.
       # I can't find the bug which causes me to use this ####### dirty thing...
-      rect.top += Map::TILE_SIZE
+      rect.top += @tile_height
 
       surface.blit(@foreground, [0,0], (rect.to_a))
     end

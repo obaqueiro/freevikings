@@ -1,13 +1,13 @@
-# map2loadstrategy.rb
+# maploadstrategy.rb
 # igneus 3.10.2008
 
 module SchwerEngine
 
-  # Abstract superclass of loader classes for Map2.
+  # Abstract superclass of loader classes for Map.
   # In subclasses it should be enough to extend the constructor -
   # add some logic to fill instance variables used in load_* methods.
 
-  class Map2LoadStrategy
+  class MapLoadStrategy
 
     def initialize(source)
       @source = source

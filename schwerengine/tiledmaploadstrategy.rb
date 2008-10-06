@@ -1,12 +1,12 @@
-# tiledmap2loadstrategy.rb
+# tiledmaploadstrategy.rb
 # igneus 2.10.2008
 
 module SchwerEngine
 
-  # Loader class for loading Map2 (not Map!) from map file created
+  # Loader class for loading Map from map file created
   # by Tiled (http://mapeditor.org)
 
-  class TiledMap2LoadStrategy < Map2LoadStrategy
+  class TiledMapLoadStrategy < MapLoadStrategy
 
     def initialize(source)
       super(source)
