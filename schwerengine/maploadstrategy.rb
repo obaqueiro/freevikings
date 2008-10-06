@@ -1,30 +1,13 @@
-# maploadstrategy.rb
-# igneus 29.1.2005
-
-=begin
-= NAME
-MapLoadStrategy
-
-= DESCRIPTION
-(({MapLoadStrategy})) is an abstract superclass of classes which are 
-used to load map contents from different kinds of sources and source
-formats.
-
-= Superclass
-Object
-=end
+# map2loadstrategy.rb
+# igneus 3.10.2008
 
 module SchwerEngine
 
-  class MapLoadStrategy
+  # Abstract superclass of loader classes for Map2.
+  # In subclasses it should be enough to extend the constructor -
+  # add some logic to fill instance variables used in load_* methods.
 
-=begin
---- MapLoadStrategy#max_width
---- MapLoadStrategy#max_height
-=end
-
-    attr_reader :max_width
-    attr_reader :max_height
+  class Map2LoadStrategy
 
     def initialize(source)
       @source = source
@@ -36,13 +19,30 @@ module SchwerEngine
       end
 
       @log = Log4r::Logger['location loading log']
+
+      @background = nil
+      @foreground = nil
+
+      @blocks = []
+
+      @tile_width = 0
+      @tile_height = 0
     end
 
-    def load(blocks_matrix)
+    def load_setup(map)
+      map.tile_width = @tile_width
+      map.tile_height = @tile_height
     end
 
-    def load_map(blocks_matrix)
-      load(blocks_matrix)
+    def load_blocks(map)
+      @blocks.each {|l| 
+        map.blocks.push l 
+      }
     end
-  end # class MapLoadStrategy
-end # module
+
+    def load_surfaces(map)
+      map.background = @background
+      map.foreground = @foreground
+    end
+  end
+end

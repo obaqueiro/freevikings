@@ -1,72 +1,106 @@
-# map.rb
-# igneus 20.1.2004
-
-require 'rexml/document'
+# map2.rb
+# igneus 2.10.2008
 
 module SchwerEngine
 
-  # A Map object is a data structure to store static game objects,
-  # objects of the game world which don't change in any circumstances.
-  # At this time a Map contains one type of objects - tiles.
-  #
-  # Tiles are all singleton instances of class Tile. Squares with sizes
-  # Map::TILE_SIZE. They are piled into a grid. The grid is built once
-  # when the level is loaded and there is no way to change it during the
-  # game.
-  # Some of them are solid and make walls and floors, the others
-  # are soft and they are there just for good look.
-  #
-  # Some more static objects are stored in Location. (See Static objects.)
+  # I found out that old class Map is never more suitable for freeVikings
+  # and it wouldn't be simple to change it so that it would provide
+  # new required features:
+  # * multiple layers, some of them may be in front of game objects
+  #   (foreground layers)
+  # * custom tile size
+  # So I decided to preserve the old class Map and develop a new one,
+  # which should provide the same functionality with extensions
+  # mentioned above.
+  # Map was designed to suit my old freeVikings-native XML map format;
+  # Map2 is designed mainly for Tiled maps (but of course it will have
+  # loader for legacy-maps - I love them...)
 
-  class Map
+  class Map2
+    
+    def initialize(loader)
+      @blocks = [] # 2D Array; values are true (solid) or false (non-solid)
+      @tile_width = nil
+      @tile_height = nil
+      @background = nil # painted before game objects
+      @foreground = nil # painted after game objects (only if it exists)
 
-    # Map's tiles are squares with a side length Map::TILE_SIZE.
-    TILE_SIZE = 40
+      loader.load_setup(self)
+      loader.load_blocks(self)
+      loader.load_surfaces(self)
+      lock
 
-    # Initializes a new Map with data from map_load_strategy.
-    # map_load_strategy should be a MapLoadStrategy instance.
-
-    def initialize(map_load_strategy)
-      @log = Log4r::Logger['map log']
-
-      @blocks = Array.new
-      loading_strategy = map_load_strategy
-      @background = nil
-
-      @log.info('Loading map.')
-
-      loading_strategy.load_map(@blocks)
-
-      @max_width = @blocks[1].size
-      @max_height = @blocks.size
-
-      @log.info("Map initialised. Size '#{@max_width}x#{@max_height}'")
-
-      if (@max_width == 0) or (@max_height == 0) then
-        raise "Invalid map size: #{@max_width}x#{@max_height}"
-      end
-
-      @rect = Rectangle.new(0, 0, @max_width*TILE_SIZE, @max_height*TILE_SIZE)
-
-      create_background
+      @rect = Rectangle.new 0, 0, width, height
     end
 
-    # Returns a Rectangle with Map's sizes. In fact only 'w' and 'h'
-    # attributes of the returned object are important.
+    # 2-dimensional Array of Boolean (true means solid tile). 
+    # Frozen as soon as it is loaded (in Map2#new)
+
+    attr_reader :blocks
+
+    attr_reader :tile_width
+    attr_reader :tile_height
+
+    # Returns tile size if tile width and height are the same; raises 
+    # RuntimeError otherwise
+
+    def tile_size
+      if @tile_width == @tile_height then
+        return @tile_width
+      end
+
+      raise "Tile width and height are different - use 'tile_width' and 'tile_height'!"
+    end
+
+    # width of the map in px
+
+    def width
+      @tile_width * @blocks[0].size
+    end
+
+    # height of the map in px
+
+    def height
+      @tile_height * @blocks.size
+    end
 
     attr_reader :rect
 
-    # Returns a Group of Static objects.
+    # == Methods for loaders
 
-    attr_reader :static_objects
+    # give tile sizes
+    # These methods are blocked as soon as the map is loaded - don't call 
+    # them (they are available only for map loaders)
 
-    # A RUDL::Surface with all the map tiles painted. It's created only once 
-    # when it's first required. (remember the Tiles can't be changed during
-    # the game.)
+    def tile_width=(w)
+      locked_test
+      @tile_width = w
+    end
 
-    attr_reader :background
+    def tile_height=(h)
+      locked_test
+      @tile_height = h
+    end
 
-    def paint(surface, paint_rect)
+    # give RUDL::Surfaces
+
+    def background=(b)
+      locked_test
+      @background = b
+    end
+
+    def foreground=(f)
+      locked_test
+      @foreground = f
+    end
+
+    # == Methods for map's client (e.g. Location in freeVikings)
+
+    def paint_background(surface, paint_rect)
+      if @background == nil then
+        return
+      end
+
       rect = paint_rect.dup
 
       # This line "solves" one stupid problem I can't still get rid of.
@@ -74,30 +108,55 @@ module SchwerEngine
       # I can't find the bug which causes me to use this ####### dirty thing...
       rect.top += Map::TILE_SIZE
 
-      surface.blit(@background, [0,0], (rect.to_a))
+      surface.blit(@background, [0,0], (rect.to_a))      
     end
 
-    # Returns true if area specified by the Rectangle rect 
-    # is free of solid map blocks, false otherwise.
+    alias_method :paint, :paint_background
+
+    # If map has no foreground, nothing is done.
+
+    def paint_foreground(surface, paint_rect)
+      if @foreground == nil then
+        return
+      end
+
+      rect = paint_rect.dup
+
+      # This line "solves" one stupid problem I can't still get rid of.
+      # It's dirty because it makes the first row of tiles invisible.
+      # I can't find the bug which causes me to use this ####### dirty thing...
+      rect.top += Map::TILE_SIZE
+
+      surface.blit(@foreground, [0,0], (rect.to_a))
+    end
+
+    # Says if given Rectangle is free of solid tiles.
 
     def area_free?(rect)
-      leftmost_i = (rect.left / Map::TILE_SIZE).floor
-      rightmost_i = (rect.right / Map::TILE_SIZE).floor
+      leftmost_i = (rect.left / @tile_width).floor
+      rightmost_i = (rect.right / @tile_width).floor
 
-      top_line = (rect.top / Map::TILE_SIZE).ceil
-      bottom_line = (rect.bottom / Map::TILE_SIZE).ceil
+      top_line = (rect.top / @tile_height).ceil
+      bottom_line = (rect.bottom / @tile_height).ceil
+
+      if leftmost_i < 0 then
+        leftmost_i = 0
+      end
+      if rightmost_i > (@blocks.first.size - 1) then
+        rightmost_i = @blocks.first.size - 1
+      end
+      if top_line < 0 then
+        top_line = 0
+      end
+      if bottom_line > (@blocks.size - 1) then
+        bottom_line = @blocks.size - 1
+      end
 
       #print "["
       top_line.upto(bottom_line) do |line_i|
         leftmost_i.upto(rightmost_i) do |tile_i|
           #print "[#{tile_i}, #{line_i}]"
-          begin
-            if @blocks[line_i][tile_i].solid? then
-              return false
-            end
-          rescue NoMethodError
-            # Occurs when solid? called on nil (no tile at [line_i][tile_i])
-            @log.warn "No tile found at [#{line_i}][#{tile_i}]"
+          if @blocks[line_i][tile_i] == true then
             return false
           end
         end
@@ -109,28 +168,28 @@ module SchwerEngine
 
     private
 
-    # Creates a new RUDL::Surface @background and paints images of all the
-    # tiles onto it.
+    def lock
+      @locked = true
 
-    def create_background
-      @background = RUDL::Surface.new([@rect.w, @rect.h])
-	
-      @blocks.each_index { |row_i|
-        @blocks[row_i].each_index { |col_i|
-          block_type = @blocks[row_i][col_i]
-          unless block_type.is_a? Tile
-            @log.error("Found blocktype object of strange type #{block_type.class.to_s} at index [" + row_i.to_s + '][' + col_i.to_s + '] (expected Tile)')
-          end
-         
-          begin   
-            @background.blit(block_type.image, [col_i * TILE_SIZE, row_i * TILE_SIZE])
-          rescue => ex
-            @log.error "#{ex.class} Error occured when blitting tile #{block_type.inspect}."
-            raise
-          end
-        }
-      }
+      @blocks.each {|l| l.freeze}
+      @blocks.freeze
     end
-  end # class Map
 
-end # modulu SchwerEngine
+    def locked?
+      defined?(@locked) && @locked == true
+    end
+
+    def locked_test
+      if locked? then
+        raise MapLockedException
+      end
+    end
+
+    public
+
+    # Raised if method from API for loader is called when loading is finished
+
+    class MapLockedException < RuntimeError
+    end
+  end
+end

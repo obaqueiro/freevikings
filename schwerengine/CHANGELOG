@@ -1,6 +1,8 @@
 [6.October 2008]
 - xmlmap2loadstrategy.rb: implemented loading 'old XML maps'
   (most of freeVikings maps are in this format)
+- *map2*.rb: files renamed to *map*.rb (old Map and relatives replaced)
+- tile.rb removed (useless now)
 
 [4.October 2008]
 - map2.rb: implemented methods paint_background and paint_foreground

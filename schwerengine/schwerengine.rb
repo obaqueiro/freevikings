@@ -85,17 +85,10 @@ module SchwerEngine
       require 'schwerengine/spritemanager.rb'
       
       # Maps & relatives
-      require 'schwerengine/tile.rb'
       require 'schwerengine/map.rb'
       require 'schwerengine/maploadstrategy.rb'
       require 'schwerengine/xmlmaploadstrategy.rb'
       require 'schwerengine/tiledmaploadstrategy.rb'
-      require 'schwerengine/map2.rb'
-      require 'schwerengine/map2loadstrategy.rb'
-      require 'schwerengine/xmlmap2loadstrategy.rb'
-      require 'schwerengine/tiledmap2loadstrategy.rb'
-      # require 'schwerengine/location.rb'
-      # require 'schwerengine/nullocation.rb'
 
     end
   end

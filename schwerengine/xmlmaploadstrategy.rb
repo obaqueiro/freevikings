@@ -1,34 +1,31 @@
-# xmllocationloadstrategy.rb
-# igneus 29.3.2005
-
-# Strategie nahravani map z xml datovych souboru.
-
-require 'rexml/document'
+# xmlmap2loadstrategy.rb
+# igneus 6.10.2008
 
 module SchwerEngine
 
-  class XMLMapLoadStrategy < MapLoadStrategy
+  # Loads old freeVikings map format (XML, human readable,
+  # one tile per image file, tile size 40 px)
 
-    MIN_TILES_X = 640 / Map::TILE_SIZE
-    MIN_TILES_Y = 480 / Map::TILE_SIZE
+  class XmlMap2LoadStrategy < Map2LoadStrategy
 
-=begin
---- XMLMapLoadStrategy.new(source, data_source_control=true)
-Argument ((|source|)) should be a (({File})) with location data.
-=end
+    TILE_SIZE = 40
+
+    # source must be acceptable argument for REXML::Document.new.
+    # It must contain valid freeVikings ('old format') map data.
+    # May raise XmlMap2LoadStrategy::CompulsoryElementMissingException
 
     def initialize(source)
       super(source)
+
+      @tile_width = @tile_height = TILE_SIZE
 
       @blocktypes = {}
 
       @doc = REXML::Document.new(@source)
 
       content_check
-    end
 
-    def load(blocks_matrix)
-      @blocks = blocks_matrix
+      @blocks = []
 
       load_tiletypes
       load_tiles
@@ -36,7 +33,9 @@ Argument ((|source|)) should be a (({File})) with location data.
 
     private
 
-    # nahraje typy bloku
+    Tile = Struct.new(:image, :solid)
+
+    # loads tile images and their codes
 
     def load_tiletypes
       begin
@@ -70,52 +69,43 @@ Argument ((|source|)) should be a (({File})) with location data.
       end
     end
 
-    # nahraje umisteni bloku
+    # loads element <blocks> and creates @blocks and @background
 
     def load_tiles
-      # nacteni umisteni bloku
-      begin
-        text = @doc.root.elements["blocks"].text
-      rescue => ex
-	@log.fatal "Cannot find 'map/blocks' XML element in datafile #{source_name}. (" + ex.message + ")"
-	raise
-      else
-	lines = text.split(/\n/)
-      end
-      @max_width = @max_height = 0
-      # prochazime radky bloku:
-      lines.each_index { |line_num|
-	@max_height = line_num if line_num >= @max_height
+      text = @doc.root.elements["blocks"].text
+      lines = text.split(/\n/)
+      lines.delete_if {|l| l =~ /^\s*$/}
 
-	@blocks.push(Array.new)
-	# prochazime bloky:
+      @max_height = lines.size
+      @max_width = lines.first.size
+
+      @log.debug "Map size: #{@max_width}x#{@max_height} tiles"
+
+      @background = RUDL::Surface.new [@max_width*TILE_SIZE, 
+                                       @max_height*TILE_SIZE]
+
+      lines.each_with_index do |l, line_num|
+	@blocks.push []
+
 	line = lines[line_num]
 	block_codes = line.split(//)
-	block_codes.each_index { |block_index|
-	  @max_width = block_index + 1 if block_index >= @max_width
-	  block_code = block_codes[block_index]
-	  unless @blocktypes[block_code].nil?
-	    @blocks[line_num][block_index] = @blocktypes[block_code]
+	block_codes.each_with_index do |b, block_index|
+	  unless @blocktypes[b].nil?
+	    @blocks.last.push(@blocktypes[b].solid)
 	    # @log.debug("Setting reference to blocktype for block at index [" + line_num.to_s + "][" + block_index.to_s + "]")
+            if @blocktypes[b].image then
+              @background.blit(@blocktypes[b].image.image, 
+                               [block_index*TILE_SIZE, line_num*TILE_SIZE])
+            end
 	  else
 	    @log.error("Blocktype couldn't be found in blocktypes' hash for blockcode #{block_code} (using mapsource #{source_name})")
+            @blocks.last.push false
 	  end
-	}
-      }
-
-      if @max_width < MIN_TILES_X then
-        raise LocationNotLargeEnoughException, 
-              "Location is less then #{MIN_TILES_X} tiles broad, it isn't "\
-        "valid and cannot be loaded."
-      end
-
-      if @max_height < MIN_TILES_Y then
-        raise LocationNotLargeEnoughException, "Location is less then "\
-        "#{MIN_TILES_Y} tiles high, it isn't valid and cannot be loaded."
+	end
       end
     end
 
-    # Vrati jmeno nacitaneho zdroje
+    # Returns file path or another identification of @source
 
     def source_name
       return @source if @source.is_a? String
@@ -123,8 +113,7 @@ Argument ((|source|)) should be a (({File})) with location data.
       return @source.id.to_s
     end
 
-    # Zkontroluje, zda zdrojovy dokument obsahuje vsechny povinne
-    # elementy.
+    # Checks if source document contains all compulsory elements
 
     def content_check
       begin
@@ -147,30 +136,18 @@ Argument ((|source|)) should be a (({File})) with location data.
       return File.open(fname)
     end
 
-  end # class XMLMapLoadStrategy
+    public
 
+    # Exception raised if some compulsory element misses in the data file.
+    class CompulsoryElementMissingException < ArgumentError
 
+      def initialize(missing_element, file)
+        @msg = "Compulsory element " + missing_element + " missing in datafile " + file + " ."
+      end
 
-=begin
---- XMLMapLoadStrategy::CompulsoryElementMissingException
-Exception raised if some compulsory element misses in the data file.
-=end
-  class CompulsoryElementMissingException < RuntimeError
-
-    def initialize(missing_element, file)
-      @msg = "Compulsory element " + missing_element + " missing in datafile " + file + " ."
-    end
-
-    def message
-      @msg
+      def message
+        @msg
+      end
     end
   end
-
-=begin
---- XMLMapLoadStrategy::LocationNotLargeEnoughException
-Exception raised if the loaded map is not big enough 
-to fill a 640x480 px screen.
-=end
-  class LocationNotLargeEnoughException < RuntimeError
-  end
-end # module FreeVikings
+end
