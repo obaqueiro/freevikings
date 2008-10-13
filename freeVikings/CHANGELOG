@@ -1,3 +1,10 @@
+[13.October 2008]
+- tests: removed TestTiledMapLoadStrategy and associated data, 'lib/' added
+  to $:, errors in TestTalk fixed;
+  test source files aren't listed in tests/test.rb, but found at the time 
+  of execution (in the same way as in Test::Unit::AutoRunner)
+- game.rb: progressbar shown while loading (uses Threads)
+
 [6.October 2008]
 - maploaderfactory.rb: XmlMap2LoadStrategy added
 - locs/ArcticLevelSet/ArcticTutorial: start and exit position fixed

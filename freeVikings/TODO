@@ -14,6 +14,9 @@
 
 ======== Code ==========================================================
 
+(-) StructuredWorld.new: remove argument 'password'
+    (password loading only by next_level)
+
 (-) SchwerEngine::Map: remove 'dirty thing' (where is the problem? in map.rb?
     Map seems to be tested well. Bug may be in Viking, which is one big mess)
 
@@ -21,8 +24,6 @@
     ancient error...)?
 
 (-) Enable Tiled maps with more tileset images
-
-(-) Animated loading (e.g. some efects on the word "LOADING" or a progress bar)
 
 (-) Better - more realistic - physics (jumping etc.)
 
@@ -33,6 +34,9 @@
 
 (-) Menu: add a message if a bad password is given (also to the GUI,
     not only to a console)
+
+(-) Story: add information that Story can be skipped pressing Esc
+    ("press Esc to skip")
 
 (-) Shield tasks:
 

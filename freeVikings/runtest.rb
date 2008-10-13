@@ -9,5 +9,7 @@ require 'log4rsetupload.rb'
 
 $:.push File.expand_path('.')
 $:.push File.expand_path('tests')
+$:.push File.expand_path('lib')
+
 Dir.chdir 'tests'
 require 'test.rb'

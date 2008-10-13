@@ -4,6 +4,8 @@
 # igneus 13.2.2005
 
 # Unit tests for freeVikings.
+# All files '$PWD/test*.rb' are required and all subclasses 
+# of Test::Unit::TestCase ran.
 
 require 'test/unit/testsuite'
 
@@ -14,9 +16,7 @@ module FreeVikings
   GFX_DIR = '../gfx'
 end
 
-# Some people don't compile the extensions, but they should be able to
-# run tests, so here is a simple way not to load the extensions if
-# they don't exist.
+# Run tests of compiled extensions if extensions are available
 begin
   require '../ext/test/test.rb'
   $extensions_loaded = true
@@ -25,69 +25,26 @@ rescue LoadError => le
   $extensions_loaded = false
 end
 
-# Bundle where a lot of freeVikings code has been moved.
+# SchwerEngine: Bundle where a lot of freeVikings code has been moved.
 # It is needed for most fV classes to work.
 require 'schwerengine/schwerengine.rb' 
 SchwerEngine.config = FreeVikings
 SchwerEngine.init
 include SchwerEngine
 
-require 'testshield.rb'
-require 'testviking.rb'
-require 'testwarior.rb'
-require 'testteam.rb'
-require 'testrexml.rb'
-require 'testsophisticatedspritestate.rb'
-require 'testvikingstate.rb'
-require 'testvikingstatetostring.rb'
-require 'testcollisiontest.rb'
-require 'testmonsterscript.rb'
-require 'testinventory.rb'
-require 'testmonster.rb'
-require 'testsword.rb'
-require 'testbottompanelstate.rb'
-require 'testbottompanel.rb'
-require 'testlock.rb'
-require 'testkey.rb'
-require 'teststructuredworld.rb'
-require 'testtalk.rb'
-require 'testtiledlocationloadstrategy.rb'
-require 'testlocationloader.rb'
-require 'testconfiguration.rb'
-require 'testteleport.rb'
+# require all test source files
+test_files = Dir['test*.rb']
+test_files.each {|t| require t}
 
-class FreeVikingsTestSuite
-
+class FreeVikingsTestSuite < Test::Unit::TestSuite
   def self.suite
     suite = Test::Unit::TestSuite.new("freeVikings test suite")
-
-    if $extensions_loaded then
-      suite << FreeVikingsExtensoinsTestSuite.suite
+    
+    ObjectSpace.each_object(Class) do |klass|
+      if klass < Test::Unit::TestCase then
+        suite << klass.suite    
+      end
     end
-
-    suite << TestShield.suite
-    suite << TestViking.suite
-    suite << TestWarior.suite
-    suite << TestTeam.suite
-    suite << TestExploreREXML.suite
-    suite << TestSophisticatedSpriteState.suite
-    suite << TestVikingState.suite
-    suite << TestVikingStateToString.suite
-    suite << TestCollisionTest.suite
-    suite << TestMonsterScript.suite
-    suite << TestInventory.suite
-    suite << TestMonster.suite
-    suite << TestSword.suite
-    suite << TestBottomPanelState.suite
-    suite << TestBottomPanel.suite
-    suite << TestLock.suite
-    suite << TestKey.suite
-    suite << TestStructuredWorld.suite
-    suite << TestTalk.suite
-    suite << TestTiledMapLoadStrategy.suite
-    suite << TestLocationLoader.suite
-    suite << TestConfiguration.suite
-    suite << TestTeleport.suite
 
     return suite
   end

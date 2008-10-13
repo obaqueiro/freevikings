@@ -62,21 +62,21 @@ module FreeVikings
 
       @loading_message = FreeVikings::FONTS['default'].create_text_box(120, 'LOADING')
 
-      paint_loading_screen @app_window
-
       levelset = FreeVikings::OPTIONS['levelsuite']
 
-      begin
-        @world = StructuredWorld.new(levelset, startpassword)
-      rescue StructuredWorld::PasswordError => pe
-        @log.error pe.message
-        @log.error "Password start failed, restarting without password"
-        startpassword = ''
-        retry
-      rescue LevelSuite::LevelSuiteLoadException => lle
-        @log.error "Could not load LevelSuite from directory '#{levelset}'. Setting default directory (#{FreeVikings::DEFAULT_LEVELSUITE_DIR})."
-        levelset = DEFAULT_LEVELSUITE_DIR
-        retry
+      do_loading do
+        begin
+          @world = StructuredWorld.new(levelset, startpassword)
+        rescue StructuredWorld::PasswordError => pe
+          @log.error pe.message
+          @log.error "Password start failed, restarting without password"
+          startpassword = ''
+          retry
+        rescue LevelSuite::LevelSuiteLoadException => lle
+          @log.error "Could not load LevelSuite from directory '#{levelset}'. Setting default directory (#{FreeVikings::DEFAULT_LEVELSUITE_DIR})."
+          levelset = DEFAULT_LEVELSUITE_DIR
+          retry
+        end
       end
 
       # Surface used to build the "picture" of a part of map and game objects
@@ -173,19 +173,17 @@ module FreeVikings
       initialized = false
 
       loop do 
-        # Show loading screen
-        paint_loading_screen @app_window
-
-        if ! initialized then
-          # First level.
-          initialized = true
-        else
-          
-          begin
-            level = @world.next_level
-          rescue StructuredWorld::NoMoreLevelException
-            @log.info "Congratulations! You explored all the world!"
-            exit_game
+        do_loading do
+          if ! initialized then
+            # First level.
+            initialized = true
+          else
+            begin
+              level = @world.next_level
+            rescue StructuredWorld::NoMoreLevelException
+              @log.info "Congratulations! You explored all the world!"
+              exit_game
+            end
           end
         end
 
@@ -196,14 +194,15 @@ module FreeVikings
         # Repeat one level until it's successfully finished
         begin
           if ! first_attempt then
-            paint_loading_screen @app_window
-            @world.rewind_location
+            do_loading do
+              @world.rewind_location
+            end
           end
 
-          result = every_level()
+          level_finished_successfully = every_level()
 
           first_attempt = false
-        end while ! result
+        end while ! level_finished_successfully
 
       end # loop
     end # public method game_loop
@@ -348,14 +347,49 @@ module FreeVikings
     end
 
     private
+
+    # shows loading screen with progressbar (uses Threads!) and runs given 
+    # block
+    def do_loading(&block)
+      @loading_animation_counter = 0
+
+      Thread.abort_on_exception = true
+
+      progressbar_t = Thread.new {
+        loop {
+          paint_loading_screen @app_window
+          sleep 0.3
+        }
+      }
+      progressbar_t.priority = 2
+
+      load_t = Thread.new {
+        block.call
+      }
+      load_t.priority = 1
+
+      load_t.join
+      Thread.kill progressbar_t      
+    end
+
+    # Updates loading screen. Should be called only by do_loading.
     def paint_loading_screen(screen)
-      screen.fill 0x0000000
+      if (! defined?(@loading_animation_counter) ||
+          (@loading_animation_counter > 100)) then
+        @loading_animation_counter = 1
+      else
+        @loading_animation_counter += 1
+      end
+      puts @loading_animation_counter
+     
+      screen.fill [0,0,0]
       screen.blit(@loading_message, [280,180])
+      screen.fill([255,255,255], 
+                  [30, 460, (@loading_animation_counter/100.0)*screen.w, 5])
       screen.flip
     end
 
     # Called from the end of game loop and from Game#exit_game
-    private
     def on_level_end
       if FreeVikings::OPTIONS['music'] then
         if @music then

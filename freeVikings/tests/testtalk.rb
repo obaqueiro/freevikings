@@ -96,7 +96,7 @@ class TestTalk < Test::Unit::TestCase
   end
 
   def testTooHighSpeakerNumber
-    assert_raise(Talk::SpeakerIDException,
+    assert_raise(Talk::TalkDataInvalidException,
                  "Two speakers are declared, speaker no.2 would be the third "\
                  "one. An exception must be raised.") do
       Talk.new OVERSPEAKER_TALK
@@ -108,6 +108,9 @@ class TestTalk < Test::Unit::TestCase
     attr_accessor :last_speech
     def say(str)
       @last_speech = str
+    end
+
+    def silence_please
     end
   end
 
