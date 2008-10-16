@@ -20,12 +20,12 @@ module FreeVikings
     # String. If it is given location with password password is selected as 
     # a starting location.
 
-    def initialize(campaign_dir, password='')
+    def initialize(campaign_dir)
       # @levelsuite = LevelSuite.new(campaign_dir)
       @levelsuite = LevelSuite.factory campaign_dir
-
-      next_level(password)
     end
+
+    # Both 'level' and 'location' are nil until you first call next_level!
 
     # Returns current Level
 
@@ -42,7 +42,7 @@ module FreeVikings
     def next_level(password='')
       # Load level with given password:
       if password != '' then
-        unless FreeVikings.valid_location_password?(password)
+        unless Level.valid_level_password?(password)
           raise PasswordError, "Password \"#{password}\" of type #{password.class} isn't a valid location password. A valid password must be #{String::LOCATION_PASSWORD_LENGTH} characters long and may contain alphanumeric characters only."
         end
         @level = @levelsuite.level_with_password(password)

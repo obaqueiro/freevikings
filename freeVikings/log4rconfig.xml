@@ -45,12 +45,14 @@
   <logger name="world log" level="ERROR">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
+    <trace>false</trace>
   </logger>
 
   <!-- Log for Location Loading Strategies output -->
   <logger name="location loading log" level="DEBUG">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
+    <trace>false</trace>
   </logger>
 
   <!-- Log for Map classe's debugging output -->

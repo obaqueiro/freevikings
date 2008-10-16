@@ -80,13 +80,14 @@ module FreeVikings
 
     class Frame
       WIDTH = FreeVikings::WIN_WIDTH
-      HEIGHT = FreeVikings::WIN_HEIGHT
+      HEIGHT = FreeVikings::WIN_HEIGHT - BottomPanel::HEIGHT
 
       def initialize
         @surface = RUDL::Surface.new [WIDTH, HEIGHT]
+        @surface.print [WIDTH/2-100, HEIGHT-20], "Press Escape to skip", [255,255,255]
       end
 
-      # You can paint anything on the frame surface.
+      # You can freely access the frame surface.
 
       attr_reader :surface
 
@@ -112,6 +113,8 @@ module FreeVikings
         @surface.fill bgcolour
         textbox = FreeVikings::FONTS['default'].create_text_box(Frame::WIDTH-2*MARGIN_SIDE, text, fgcolour)
         @surface.blit textbox, [MARGIN_SIDE, MARGIN_TOP]
+
+        @surface.print [WIDTH/2-100, HEIGHT-20], "Press Escape to skip", [255,255,255]
       end
     end
 

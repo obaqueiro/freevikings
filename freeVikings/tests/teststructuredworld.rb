@@ -11,8 +11,9 @@ class TestStructuredWorld < Test::Unit::TestCase
 
   def testLongPassword
     too_long_password = "aaa66"
+    w = StructuredWorld.new('../locs/TestsCampaign/AncientLevelSet')
     assert_raise(StructuredWorld::PasswordError, "Password \"#{too_long_password}\" is too long. An exception must be thrown.") do
-      StructuredWorld.new('../locs/TestsCampaign/AncientLevelSet', too_long_password)
+      w.next_level too_long_password
     end
   end
 end

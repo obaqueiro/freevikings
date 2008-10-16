@@ -1,7 +1,7 @@
 # level.rb
 # igneus 1.8.2005
 
-require 'locationloader.rb'
+autoload :LocationLoader, 'locationloader.rb'
 require 'levelsuite.rb'
 
 module FreeVikings
@@ -33,6 +33,17 @@ module FreeVikings
       load_from_xml
       @active_member = self
       @log.debug "Initialized a new level: directory: \"#{@dirname}\"; password: \"#{@password}\";"
+    end
+
+    LEVEL_PASSWORD_LENGTH = 4
+
+    # Says if password is a valid location password.
+    # Valid location password must be 4 characters long and may
+    # only contain word characters and digits.
+
+    def Level.valid_level_password?(password)
+      password.size == LEVEL_PASSWORD_LENGTH and 
+        password =~ /^[\d\w]+$/
     end
 
     # Says if specified directory contains the Level definition file.
@@ -135,8 +146,8 @@ module FreeVikings
       rescue NoMethodError
       end
     
-      unless FreeVikings.valid_location_password?(@password)
-        @log.error "Invalid location password '#{@password}'. Setting default (empty String)."
+      unless Level.valid_level_password?(@password)
+        @log.error "Invalid password '#{@password}'. Setting default (empty String)."
         @password = ''
       end
     end

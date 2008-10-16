@@ -1,3 +1,10 @@
+[16.October 2008]
+- StructuredWorld.rb, game.rb: removed argument 'password' 
+  of StructuredWorld.new;
+  StructuredWorld#next_level isn't first called from StructuredWorld#initialize
+- story.rb: added message "press Esc to skip" to storyframes
+- FreeVikings.valid_location_password -> Level.valid_level_password?
+
 [13.October 2008]
 - tests: removed TestTiledMapLoadStrategy and associated data, 'lib/' added
   to $:, errors in TestTalk fixed;

@@ -22,7 +22,9 @@ module FreeVikings
   DEFAULT_LEVELSUITE_DIR = 'locs/DefaultCampaign'
   DEFAULT_THEME_DIR = 'gfx/themes'
 
-  LOCATION_PASSWORD_LENGTH = 4
+  TESTED_LIB_VERSIONS = {
+    'RUDL' => '0.7.0.0',
+    'REXML' => '3.1.3'}
 
   # Options defaults:
 
@@ -72,12 +74,24 @@ module FreeVikings
     return FreeVikings::OPTIONS[key]
   end # FreeVikings.method_missing
 
-  # Says if a ((|password|)) is a valid location password.
-  # Valid location password must be 4 characters long and may
-  # only contain word characters and digits.
-  def FreeVikings.valid_location_password?(password)
-    password.size == FreeVikings::LOCATION_PASSWORD_LENGTH and 
-      password =~ /^[\d\w]+$/
-  end
+  # checks if all main libs have tested version.
+  # Makes use of Ruby's relativelly intelligent string-comparations
 
+  def FreeVikings.lib_versions_check
+    # RUDL
+    rudl_v = RUDL.versions['RUDL'].to_s
+    if rudl_v < TESTED_LIB_VERSIONS['RUDL'] then
+      STDERR.puts "Warning: Your RUDL version (#{rudl_v}) is older than latest version tested with freeVikings (#{TESTED_LIB_VERSIONS['RUDL']}). If you encounter problems with RUDL while you're playing, consider upgrading."
+    elsif rudl_v > TESTED_LIB_VERSIONS['RUDL'] then
+      STDERR.puts "Warning: Your RUDL version (#{rudl_v}) is newer than latest version tested with freeVikings (#{TESTED_LIB_VERSIONS['RUDL']}). Report any problems you may encounter."
+    end
+
+    # REXML
+    rexml_v = REXML::Version
+    if rexml_v < TESTED_LIB_VERSIONS['REXML'] then
+      STDERR.puts "Warning: Your REXML version (#{rexml_v}) is older than latest version tested with freeVikings (#{TESTED_LIB_VERSIONS['REXML']}). If you encounter problems with REXML while you're playing, consider upgrading."
+    elsif rexml_v > TESTED_LIB_VERSIONS['REXML'] then
+      STDERR.puts "Warning: Your REXML version (#{rexml_v}) is newer than latest version tested with freeVikings (#{TESTED_LIB_VERSIONS['REXML']}). Report any problems you may encounter."
+    end
+  end
 end

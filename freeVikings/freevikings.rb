@@ -6,12 +6,13 @@
 # FreeVikings project is trying to clone the brilliant
 # Lost Vikings game.
 
+# tell ruby to load libraries also from directory lib/:
+$: << './lib'
+
 # !!! more require-statements (SchwerEngine, Log4r) are at the end of this file
 require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
 require 'getoptlong'
-
-# tell ruby to load libraries also from directory lib/:
-$: << './lib'
+require 'level.rb'
 
 include FreeVikings
 
@@ -174,7 +175,7 @@ begin
     when "--delay"
       FreeVikings::OPTIONS['delay'] = argument.to_f / 1000
     when "--startpassword"
-      unless FreeVikings.valid_location_password?(argument)
+      unless Level.valid_level_password?(argument)
         raise "'#{argument}' is not a valid location password."
       end
       
@@ -250,6 +251,9 @@ require 'initfv.rb' # Init class (just btw.: in Hebrew - which doesn't use sylla
 $:.concat FreeVikings::CODE_DIRS
 
 require "alternatives.rb"
+
+# check versions of most important libraries:
+FreeVikings.lib_versions_check
 
 # This opens the game window, loads data and starts the game:
 FreeVikings::Init.new

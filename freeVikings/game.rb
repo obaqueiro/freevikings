@@ -65,8 +65,13 @@ module FreeVikings
       levelset = FreeVikings::OPTIONS['levelsuite']
 
       do_loading do
+        @log.info "Initializing world."
         begin
-          @world = StructuredWorld.new(levelset, startpassword)
+          @world = StructuredWorld.new(levelset)
+          if startpassword != '' then
+            @log.info "Initializing level - password '#{startpassword}'"
+            @world.next_level startpassword
+          end
         rescue StructuredWorld::PasswordError => pe
           @log.error pe.message
           @log.error "Password start failed, restarting without password"
@@ -170,22 +175,24 @@ module FreeVikings
     # regularly and refreshes the screen.
 
     def game_loop
-      initialized = false
+      first_level = true
 
-      loop do 
-        do_loading do
-          if ! initialized then
-            # First level.
-            initialized = true
-          else
+      loop do
+        # If password was given to Game.new, next_level has already 
+        # been called.
+        unless first_level && @world.level.kind_of?(Level) then
+          do_loading do
+            @log.info "Initializing level."
             begin
               level = @world.next_level
+              @log.info "Initialized level '#{level.title}'"
             rescue StructuredWorld::NoMoreLevelException
               @log.info "Congratulations! You explored all the world!"
               exit_game
             end
           end
         end
+        first_level = false
 
         @give_up = false
 
@@ -194,11 +201,13 @@ module FreeVikings
         # Repeat one level until it's successfully finished
         begin
           if ! first_attempt then
+            @log.info "Reloading level."
             do_loading do
               @world.rewind_location
             end
           end
 
+          @log.info "Play!"
           level_finished_successfully = every_level()
 
           first_attempt = false
@@ -380,7 +389,6 @@ module FreeVikings
       else
         @loading_animation_counter += 1
       end
-      puts @loading_animation_counter
      
       screen.fill [0,0,0]
       screen.blit(@loading_message, [280,180])
