@@ -93,14 +93,7 @@ module SchwerEngine
         return
       end
 
-      rect = paint_rect.dup
-
-      # This line "solves" one stupid problem I can't still get rid of.
-      # It's dirty because it makes the first row of tiles invisible.
-      # I can't find the bug which causes me to use this ####### dirty thing...
-      rect.top += @tile_height
-
-      surface.blit(@background, [0,0], (rect.to_a))      
+      surface.blit(@background, [0,0], (paint_rect.to_a))      
     end
 
     alias_method :paint, :paint_background
@@ -112,14 +105,7 @@ module SchwerEngine
         return
       end
 
-      rect = paint_rect.dup
-
-      # This line "solves" one stupid problem I can't still get rid of.
-      # It's dirty because it makes the first row of tiles invisible.
-      # I can't find the bug which causes me to use this ####### dirty thing...
-      rect.top += @tile_height
-
-      surface.blit(@foreground, [0,0], (rect.to_a))
+      surface.blit(@foreground, [0,0], (paint_rect.to_a))
     end
 
     # Says if given Rectangle is free of solid tiles.
@@ -128,8 +114,8 @@ module SchwerEngine
       leftmost_i = (rect.left / @tile_width).floor
       rightmost_i = (rect.right / @tile_width).floor
 
-      top_line = (rect.top / @tile_height).ceil
-      bottom_line = (rect.bottom / @tile_height).ceil
+      top_line = (rect.top / @tile_height).floor
+      bottom_line = (rect.bottom / @tile_height).floor
 
       if leftmost_i < 0 then
         leftmost_i = 0

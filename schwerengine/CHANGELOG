@@ -1,6 +1,8 @@
 [18.October 2008]
 - tests: removed class TestMap2
 - TestMap: tests which helped me better understand Map#area_free?
+- Rect#new_from_points, Rect#center
+- Map: solved "dirty thing problem"!
 
 [6.October 2008]
 - xmlmap2loadstrategy.rb: implemented loading 'old XML maps'

@@ -102,4 +102,29 @@ class TestRect < Test::Unit::TestCase
     r1.right = 50
     assert_equal 50, r1.w
   end
+
+  def testNewFromPoints_topleft_bottomright
+    r = @R.new_from_points([10,10], [20,20])
+    assert_equal @R.new(10,10,10,10), r
+  end
+
+  def testNewFromPoints_topright_bottomleft
+    r = @R.new_from_points([20,10], [10,20])
+    assert_equal @R.new(10,10,10,10), r
+  end
+
+  def testNewFromPoints3
+    r = @R.new_from_points([10,10], [60,20])
+    assert_equal @R.new(10,10,50,10), r
+  end
+
+  def testCenter1
+    r = @R.new 0,0,4,4
+    assert_equal [2,2], r.center
+  end
+
+  def testCenter2
+    r = @R.new 0,0,5,5
+    assert_equal [2,2], r.center
+  end
 end

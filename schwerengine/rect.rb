@@ -22,6 +22,22 @@ module SchwerEngine
       end
     end
 
+    # Accepts two points (2-element Arrays), creates Rectangle 
+    # which has them as corners
+
+    def Rectangle.new_from_points(p1, p2)
+      x1, y1 = p1
+      x2, y2 = p2
+
+      x = x1 < x2 ? x1 : x2
+      y = y1 < y2 ? y1 : y2
+
+      w = (x1 - x2).abs
+      h = (y1 - y2).abs
+
+      return Rectangle.new(x,y,w,h)
+    end
+
     # Returns new empty Rectangle
 
     def Rectangle.new_empty
@@ -157,6 +173,10 @@ module SchwerEngine
 
     def empty?
       w == 0 or h == 0
+    end
+
+    def center
+      [left+w/2, top+h/2]
     end
 
     def to_a
