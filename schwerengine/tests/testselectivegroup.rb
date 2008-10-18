@@ -1,6 +1,8 @@
 # testselectivegroup.rb
 # igneus 9.11.2005
 
+require 'testgroup.rb'
+
 class TestSelectiveGroup < TestGroup
 
   module FlagMixin

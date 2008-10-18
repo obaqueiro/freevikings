@@ -9,51 +9,7 @@ module SchwerEngine
 
   module Mock
 
-    # A location loading Strategy (for Location tests).
-    # It doesn't parse any XML files => the tests are quicker.
     class TestingMapLoadStrategy < MapLoadStrategy
-
-      def initialize
-        super(nil)
-      end
-
-      def load_script(location)
-      end
-
-      def load_map(blocks_matrix)
-	@blocks = blocks_matrix
-
-	# nacteni typu bloku
-	x = Tile.new nil, true
-	o = Tile.new nil, false
-	# nacteni umisteni bloku
-	blcks = [
-	  [x, x, x, x, x, x, x, x],
-	  [x, o, o, o, o, o, x, x],
-	  [x, o, o, o, o, o, x, x],
-	  [x, o, o, o, o, o, x, x],
-	  [x, o, o, o, o, o, x, x],
-	  [x, o, o, o, o, o, x, x],
-	  [x, o, o, o, o, o, x, x],
-	  [x, x, x, x, x, x, x, x]
-	]
-	@max_width = blcks[0].size
-        @max_height = blcks.size
-	# prochazime radky bloku:
-	blcks.each_index { |line_num|
-	  @blocks.push blcks[line_num]
-	}
-      end
-
-      def load_exit(location)
-      end
-
-      def load_start(location)
-      end
-    end # class TestingMapLoadStrategy
-
-    # Similar as class above, just for Map2
-    class TestingMap2LoadStrategy < Map2LoadStrategy
       def initialize
         super(nil)
 

@@ -24,11 +24,11 @@ module SchwerEngine::Tests
   require 'testitem.rb'
   require 'testgfxtheme.rb'
   require 'testmap.rb'
-  require 'testmap2.rb'
   require 'testmodel.rb'
   require 'testmodelloader.rb'
   require 'testtimelock.rb'
   require 'testgroup.rb'
+  require 'testselectivegroup.rb'
   require 'testselectivegroup.rb'
 end
 
@@ -43,7 +43,6 @@ class SchwerEngine::Tests::TestSuite
     suite << TestItem.suite
     suite << TestGfxTheme.suite
     suite << TestMap.suite
-    suite << TestMap2.suite
     suite << TestModel.suite
     suite << TestModelLoader.suite
     suite << TestTimeLock.suite
