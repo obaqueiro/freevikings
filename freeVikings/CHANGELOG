@@ -1,3 +1,16 @@
+[18.October 2008]
+- viking.rb: docs RD -> RDoc
+- gamestate.rb: Possibility to select viking/item also in other states than
+  PlayingGameState
+- Location#display_rect
+- handling of clicks moved from GameState to Game
+- new develmagic feature - in-game checking if a rect is free: click in the
+  game screen and drom to define checked rect - or double-click a Sprite
+  to check it's rect (includes new "monster" TestRect)
+- Viking#descend_onto_ground modified because "map dirty thing problem" 
+  has been solved (after cca four years of being ignored)
+- freevikings.rb: develmagic accessible only in development version
+
 [16.October 2008]
 - StructuredWorld.rb, game.rb: removed argument 'password' 
   of StructuredWorld.new;

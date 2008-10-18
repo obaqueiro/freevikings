@@ -14,11 +14,7 @@
 
 ======== Code ==========================================================
 
-(-) SchwerEngine::Map: remove 'dirty thing' (where is the problem? in map.rb?
-    Map seems to be tested well. Bug may be in Viking, which is one big mess)
-
-(-) All levels with old maps: move everything 40px higher (new loader fixed
-    ancient error...)?
+(-) Fix levels
 
 (-) Enable Tiled maps with more tileset images
 
@@ -29,8 +25,19 @@
 (-) Set up some check for new releases of libraries we are using
     (RUDL, script, Log4r, REXML)
 
-(-) Menu: add a message if a bad password is given (also to the GUI,
-    not only to a console)
+(-) Less blit operations (replace huge blits with clipping) - it should
+    increase frame rate
+
+(-) Menu issues:
+
+    (-) Menu: add a message if a bad password is given (also to the GUI,
+        not only to a console)
+
+    (-) Possibility to change keys (movement, inventory control etc.)
+
+    (-) Switch on/off sound
+
+    (-) Select levelsuite directory
 
 (-) Shield tasks:
 
@@ -58,8 +65,6 @@
     Let's "fix" it adding one empty line to Tiled maps :( - BAD IDEA.
     Seems that at least small maps haven't got this problem.
 
-(-) Fix wrong displaying of map's last row
-
 (-) Map's borders are solid, so it is impossible to go out of the map
 
 (-) File.open in the script should receive address relative to level directory
@@ -81,8 +86,6 @@
 
 (-) User's (and system?) configuration file (with possibility to define
     multiple location storage places)
-
-(-) Possibility to change keys (movement, inventory control etc.)
 
 (-) Game objects which weren't given any theme should wait till they are
     registered in a location and try to get it's theme - not raise exception

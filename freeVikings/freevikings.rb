@@ -138,10 +138,10 @@ OPTIONS_DEF = [
 
                ["--sound", "-S", GetoptLong::REQUIRED_ARGUMENT,
                 "Switch sound on/off", 
-                "on|off"]
+                "on|off"],
 
-               #, ["--develmagic", "-D", GetoptLong::NO_ARGUMENT,
-               # ""]
+               ["--develmagic", "-D", GetoptLong::NO_ARGUMENT,
+                "Enables some dark debugging magic"]
               ]
 
 # here is every argument-definition Array sliced to what GetoptLong wants;
@@ -194,7 +194,9 @@ begin
         raise ArgumentError, "Unknown argument '#{argument}' of option '--sound' - only possible arguments are 'on' or 'off'"
       end
     when "--develmagic"
-      FreeVikings::OPTIONS['develmagic'] = true
+      if FreeVikings::VERSION == 'DEV' then
+        FreeVikings::OPTIONS['develmagic'] = true
+      end
     end
   end # options.each block
 rescue GetoptLong::InvalidOption => ioex

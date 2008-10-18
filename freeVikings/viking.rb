@@ -10,10 +10,6 @@ require 'sophisticatedspritemixins.rb'
 require 'talkable.rb'
 require 'transportable.rb'
 
-=begin
-= Viking
-=end
-
 module FreeVikings
 
   class Viking < Sprite
@@ -39,43 +35,27 @@ module FreeVikings
 
     public
 
-=begin
---- Viking::BASE_VELOCITY
-Viking's default velocity in pixels per second.
-=end
+    # Viking's default velocity in pixels per second.
 
     BASE_VELOCITY = 70
 
-=begin
---- Viking::WIDTH
---- Viking::HEIGHT
-Sizes of the vikings' graphics.
-=end
+    # Sizes of the vikings' graphics.
 
     WIDTH = 80
     HEIGHT = 100
 
-=begin
---- Viking::MAX_ENERGY
-Initial number of energy points. The viking should never have more then 
-on the beginninig.
-=end
+    # Initial number of energy points. The viking should never have more then 
+    # on the beginninig.
 
     MAX_ENERGY = 3
 
-=begin
---- Viking::KNOCK_OUT_DURATION
-Time in seconds for which the viking is unusable after he is knocked
-out (e.g. when he falls from a high place).
-=end
+    # Time in seconds for which the viking is unusable after he is knocked
+    # out (e.g. when he falls from a high place).
 
     KNOCK_OUT_DURATION = 4
 
-=begin
---- Viking.new(name, start_position=[0,0])
-Creates a new viking. Parameter ((|name|)) is a (({String})),
-((|start_position|)) should be an (({Array})) or a (({Rectangle})).
-=end
+    # Creates a new viking. Parameter name is a String,
+    # start_position should be an Array or a Rectangle.
 
     def initialize(name, start_position=[0,0])
       super()
@@ -98,12 +78,7 @@ Creates a new viking. Parameter ((|name|)) is a (({String})),
       @location = NullLocation.instance
     end
 
-=begin
---- Viking.createWarior(name, start_position)
---- Viking.createSprinter(name, start_position)
---- Viking.createShielder(name, start_position)
-Factory methods which create subclasses' instances.
-=end
+    # Factory methods which create subclasses' instances.
 
     def Viking.createWarior(name, start_position)
       return Warior.new(name, start_position)
@@ -117,49 +92,31 @@ Factory methods which create subclasses' instances.
       return Shielder.new(name, start_position)
     end
 
-=begin
---- Viking#name => aString
-Returns ((<Viking>))'s name.
-=end
+    # Returns Viking's name.
 
     attr_reader :name
 
-=begin
---- Viking#state => aVikingState
-Returns ((<Viking>))'s state. To learn more about it, study documentation 
-for class (({VikingState})).
-=end
+    # Returns Viking's state. To learn more about it, study documentation 
+    # for class VikingState.
 
     attr_reader :state
 
-=begin
---- Viking#energy => aFixnum
-Returns ((<Viking>))'s energy as a number which shouldn't ever overgrow
-((<Viking::MAX_ENERGY>)) and descend under zero.
-=end
+    # Returns Viking's energy as a number which shouldn't ever overgrow
+    # Viking::MAX_ENERGY and descend under zero.
 
     attr_reader :energy
 
-=begin
---- Viking#portrait => aPortrait
-Returns a (({Portrait})) of the ((<Viking>)).
-=end
+    # Returns a Portrait of the Viking.
 
     attr_reader :portrait
 
-=begin
---- Viking#inventory => anInventory
-((<Viking>))'s (({Inventory})).
-=end
+    # Viking's Inventory.
 
     attr_reader :inventory
 
-=begin
---- Viking#hurt => anInteger
-Takes the ((<Viking>)) off one energy point.
-If the energy falls onto zero, ((<Viking#destroy>)) is called.
-Returns his energy after the injury.
-=end
+    # Takes the Viking off one energy point.
+    # If the energy falls onto zero, Viking#destroy is called.
+    # Returns his energy after the injury.
 
     def hurt
       @energy -= 1
@@ -167,10 +124,8 @@ Returns his energy after the injury.
       return @energy
     end
 
-=begin
---- Viking#hurt_and_knockout => anInteger
-Hurts the viking and knocks him out for ((<Viking::KNOCK_OUT_DURATION>)) seconds.
-=end
+    # Hurts the viking and knocks him out for Viking::KNOCK_OUT_DURATION 
+    # seconds.
 
     def hurt_and_knockout
       @state.knockout
@@ -178,12 +133,9 @@ Hurts the viking and knocks him out for ((<Viking::KNOCK_OUT_DURATION>)) seconds
       hurt
     end
 
-=begin
---- Viking#heal => aBoolean
-If the ((<Viking>)) doesn't have full energy (see ((<Viking::MAX_ENERGY>))), 
-adds him one energy point and returns ((|true|)).
-Otherwise ((|false|)) is returned and nothing added.
-=end
+    # If the Viking doesn't have full energy (see Viking::MAX_ENERGY), 
+    # adds him one energy point and returns true.
+    # Otherwise false is returned and nothing added.
 
     def heal
       if @energy < MAX_ENERGY
@@ -194,15 +146,13 @@ Otherwise ((|false|)) is returned and nothing added.
       end
     end
 
-=begin
---- Viking#destroy => aViking
-Sets energy to zero, deletes the ((<Viking>)) from the (({Location})) and
-adds a new (({Sprite})) representing a corpse into it.
-This method is called when the ((<Viking>)) is killed directly 
-without any discussion (e.g. when a skyscraper falls onto his uncovered head) 
-or when his energy falls onto zero (see ((<Viking#hurt>))).
-Returns the ((<Viking>)) itself.
-=end
+    # Sets energy to zero, deletes the Viking from the Location and
+    # adds a new Sprite representing a corpse into it.
+    # This method is called when the Viking is killed directly 
+    # without any discussion (e.g. when a skyscraper falls onto his uncovered 
+    # head) 
+    # or when his energy falls onto zero (see Viking#hurt).
+    # Returns the Viking itself.
 
     def destroy
       @energy = 0
@@ -212,11 +162,7 @@ Returns the ((<Viking>)) itself.
       self
     end
 
-=begin
---- Viking#space_func_on
---- Viking#space_func_off
-Switch on/off ((<Viking>))'s first special ability.
-=end
+    # Switch on/off Viking's first special ability.
 
     def space_func_on
     end
@@ -224,11 +170,7 @@ Switch on/off ((<Viking>))'s first special ability.
     def space_func_off
     end
 
-=begin
---- Viking#d_func_on
---- Viking#d_func_off
-Switch on/off ((<Viking>))'s second special ability.
-=end
+    # Switch on/off Viking's second special ability.
 
     def d_func_on
     end
@@ -236,12 +178,9 @@ Switch on/off ((<Viking>))'s second special ability.
     def d_func_off
     end
 
-=begin
---- Viking#use_item => aBoolean
-Tries to use the active (({Item})) from the ((<Viking>))'s (({Inventory})).
-If it is successfull, the used (({Item})) is ejected and ((|true|)) returned, 
-((|false|)) otherwise.
-=end
+    # Tries to use the active Item from the Viking's Inventory.
+    # If it is successfull, the used Item is ejected and true returned, 
+    # false otherwise.
 
     def use_item
       if @inventory.active.apply(self) then
@@ -250,6 +189,9 @@ If it is successfull, the used (({Item})) is ejected and ((|true|)) returned,
       end
       return false
     end
+
+    # Called by objects which transport vikings (lifts, ...)
+    # to update viking's position
 
     def transport_move(delta_x, delta_y, transporter)
       unless transporter == @transported_by
@@ -264,13 +206,10 @@ If it is successfull, the used (({Item})) is ejected and ((|true|)) returned,
       end
     end
 
-=begin
---- Viking#update => nil
-Updates ((<Viking>))'s internal state.
-=end
+    # Updates Viking's internal state.
 
     def update
-      collect_items # sebere vsechno, na co narazi :o)
+      collect_items
 
       update_knockout
 
@@ -289,31 +228,31 @@ Updates ((<Viking>))'s internal state.
       nil
     end
 
-=begin
---- Viking#fall
-This method causes the ((<Viking>)) to fall. For this purpose you could also 
-use
-
-(({aViking.state.fall}))
-
-where ((|aViking|)) is ((<Viking>)) instance, but don't do this, because
-((<Viking#fall>)) does important work for the mechanism of fall injury
-detection.
-=end
+    # This method causes the Viking to fall. For this purpose you could also 
+    # use
+    #
+    # aViking.state.fall
+    #
+    # where aViking is Viking instance, but don't do this, because
+    # Viking#fall does important work for the mechanism of fall injury
+    # detection.
 
     def fall
       @start_fall = @rect.top
       @state.fall
     end
 
+    private
     def descend_onto_ground
       tile_size = @location.map.tile_height
 
       if on_ground? and not (@rect.bottom % tile_size == 0) then
           @rect.top += tile_size - (@rect.bottom % tile_size)
       end
+      @rect.top -= 1
     end
 
+    private
     def descend_onto_static_object
       while @location.area_free?(@rect) do
         @rect.top += 1
@@ -361,8 +300,6 @@ detection.
 
     private
     def try_to_fall
-      # Zkusme, jestli by viking nemohl zacit padat.
-      # Pokud muze zacit padat, zacne padat:
       if not @state.rising? and not @state.falling? and not on_some_surface?
 	fall
 	@log.debug "try_to_fall: #{@name} starts falling because there's a free space under him."

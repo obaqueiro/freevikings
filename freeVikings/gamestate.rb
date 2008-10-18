@@ -78,13 +78,15 @@ module FreeVikings
     def serve_keyup(event, location)
     end
 
-    # Argument location is a Location instance. (Location just played.)
     def serve_mouseclick(event, location)
+      @context.mouse_click event.pos
     end
 
-    # Argument location is a Location instance. (Location just played.)
     def serve_mouserelease(event, location)
+      @context.mouse_release event.pos
     end
+
+    public
 
     def paused?
       false
@@ -154,32 +156,6 @@ module FreeVikings
         @context.team.active.d_func_off
       end
     end # private method serve_keyup
-
-    def serve_mouseclick(event, location)
-      if y_in_bottompanel(event.pos[1]) then
-        Log4r::Logger['freeVikings log'].info "Mouse click in the bottompanel area."
-        game_screen_height = Game::WIN_HEIGHT - BottomPanel::HEIGHT
-        pos_in_the_panel = [event.pos[0], event.pos[1] - game_screen_height]
-        @context.bottompanel.mouseclick(pos_in_the_panel)
-      end
-    end
-
-    def serve_mouserelease(event, location)
-      if y_in_bottompanel(event.pos[1]) then
-        Log4r::Logger['freeVikings log'].info "Mouse release in the bottompanel area."
-        game_screen_height = Game::WIN_HEIGHT - BottomPanel::HEIGHT
-        pos_in_the_panel = [event.pos[0], event.pos[1] - game_screen_height]
-        @context.bottompanel.mouserelease(pos_in_the_panel)
-      end
-    end
-
-    def y_in_bottompanel(y)
-      if y >= FreeVikings::WIN_HEIGHT - BottomPanel::HEIGHT then
-        return true
-      else
-        return false
-      end
-    end
   end # class PlayingGameState
 
   class PausedGameState < GameState

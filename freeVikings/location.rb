@@ -350,6 +350,15 @@ module FreeVikings
 
     alias_method :is_area_free?, :area_free?
 
+    # Returns rectangle of the map to be displayed (see 
+    # Location#centered_view_rect for rules)
+
+    def display_rect(w,h)
+      mr = @map.rect
+      a = @team.active.rect.center
+      return centered_view_rect(mr.w, mr.h, w, h, a)
+    end
+
     private
 
     # vraci pole ctyr prvku definujicich obdelnik centrovany predanymi 
