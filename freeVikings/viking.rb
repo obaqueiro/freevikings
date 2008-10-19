@@ -178,6 +178,22 @@ module FreeVikings
     def d_func_off
     end
 
+    # Switch on/off ActiveObjects which viking can reach (in Lost Vikings 1
+    # the same keys which switch active objects do also change viking's state
+    # if he is "bubbled" or mounted as an operator on some machine)
+
+    def s_f_func_on
+      @location.active_objects_on_rect(@rect.expand(1,1)).each { |o|
+        o.activate 
+      }
+    end
+
+    def s_f_func_off
+      @location.active_objects_on_rect(@rect.expand(1,1)).each { |o| 
+        o.deactivate 
+      }
+    end
+
     # Tries to use the active Item from the Viking's Inventory.
     # If it is successfull, the used Item is ejected and true returned, 
     # false otherwise.

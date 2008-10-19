@@ -10,7 +10,7 @@
     <password>TEDD</password>
     <map src="ice_loc.xml"/>
     <script src="ice_monsters.rb"/>
-    <start horiz="80" vertic="300" />
+    <start horiz="80" vertic="299" />
     <exit horiz="1820" vertic="760" />
   </body>
 </location>

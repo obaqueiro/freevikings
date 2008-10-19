@@ -16,7 +16,7 @@ require 'monsters/flyingplatform.rb'
 require 'monsters/arrowshooter.rb'
 require 'monsters/snail.rb'
 
-TS = LOCATION.map.class::TILE_SIZE
+TS = LOCATION.map.tile_size
 
 module Meadow
   BLUEROOM_FLOOR = 28 * TS

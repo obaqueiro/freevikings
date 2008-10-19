@@ -2,6 +2,7 @@
 # igneus 6.10.2005
 
 require 'transportable.rb'
+require 'transporter.rb'
 
 module FreeVikings
 
@@ -9,7 +10,9 @@ module FreeVikings
   # Any Sprite which includes Transportable can be given 
   # a lift by this lift.
 
-  class Lift < Sprite#< Bridge
+  class Lift < Sprite
+
+    include Transporter
 
 =begin
 --- Lift::VELOCITY
@@ -38,7 +41,7 @@ abs of vertical velocity.
 
       @y = ys.sort      # Array of destinations created by Bridge.new
 
-      @transported = [] # Array of the transported sprites
+      init_transporter
 
       @dest = 0         # subscript of the next destination y
     end
@@ -97,15 +100,13 @@ It is useful mainly for two-y lifts.
     end
 
     def update
-      update_transported_sprites
       old_rect = @rect.dup
 
       update_position
 
       delta_y = @rect.top - old_rect.top
-      @transported.each {|s|
-        s.transport_move(0, delta_y, self)
-      }
+
+      update_transported_sprites 0, delta_y
     end
 
     def location=(new_location)
@@ -161,25 +162,6 @@ Alias to ((<Lift#move_down>)).
       end
     end
 
-    def update_transported_sprites
-      colliding_sprites = @location.sprites_on_rect(@rect)
-
-      @transported.delete_if {|s|
-        unless s.rect.collides? @rect
-          s.end_transport self
-          # puts 'Good bye'
-          true
-        end
-      }
-
-      colliding_sprites.each {|s|
-        if s.kind_of? Transportable and
-            (not @transported.include? s) then
-          @transported.push s
-          s.start_transport self
-        end
-      }
-    end
   end # class Lift
 end # module FreeVikings
 

@@ -1,3 +1,13 @@
+[19.October 2008]
+- levels SwitchPlace & Antarctic Visitors & Peaceful Meadow fixed
+- gamestate.rb: added some keys to imitate LV2: INSERT uses item, Z and X
+  switch characters, left shift uses viking's 'second ability'
+- viking.rb: core of S/F key functions moved from GameState to Viking;
+- viking.rb, transporter.rb: viking's rect expanded when looking for active
+  objects to activate; Transporter's rect expanded when looking for sprites 
+  to transport
+- monsters/lift.rb: includes Transporter
+
 [18.October 2008]
 - viking.rb: docs RD -> RDoc
 - gamestate.rb: Possibility to select viking/item also in other states than

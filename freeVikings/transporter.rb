@@ -6,11 +6,17 @@ module FreeVikings
   # Mixin for objects which transport vikings
   # (such as various flying platforms etc.)
   #
-  # See monsters/flyingplatform.rb for example
+  # See monsters/flyingplatform.rb and monsters/lift.rb for example
 
   module Transporter
 
     private
+
+    # call this from YourTransporterClass#initialize, please
+
+    def init_transporter
+      @transported = []
+    end
 
     # Finds sprites which should be transported
     # and transports them.
@@ -18,10 +24,12 @@ module FreeVikings
     # update_transported_sprites(-12,60) moves sprites 12px left and 60px down
 
     def update_transported_sprites(delta_x, delta_y)
-      colliding_sprites = @location.sprites_on_rect(@rect)
+      collision_rect = @rect.expand(1,1)
+
+      colliding_sprites = @location.sprites_on_rect(collision_rect)
 
       @transported.delete_if {|s|
-        unless s.rect.collides? @rect
+        unless s.rect.collides? collision_rect
           s.end_transport self
           # puts 'Good bye'
           true
@@ -40,12 +48,6 @@ module FreeVikings
       @transported.each {|s|
         s.transport_move(delta_x, delta_y, self)
       }
-    end
-
-    # call this from YourTransporterClass#initialize, please
-
-    def init_transporter
-      @transported = []
     end
   end
 end

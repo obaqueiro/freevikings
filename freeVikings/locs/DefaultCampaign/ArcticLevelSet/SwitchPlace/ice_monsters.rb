@@ -23,7 +23,7 @@ module IceLand
     end
   end
 
-  CORRIDOR_HEIGHT = 3 * Map::TILE_SIZE
+  CORRIDOR_HEIGHT = 3 * LOCATION.map.tile_size
 
   module FirstCorridor
     CEILING = 280
@@ -36,12 +36,12 @@ module IceLand
   end # module FirstCorridor
 
   module SecondCorridor
-    FLOOR = 6*Map::TILE_SIZE
+    FLOOR = 6*LOCATION.map.tile_size
   end # module SecondCorridor
 
   module ThirdCorridor
-    FLOOR = 11 * Map::TILE_SIZE
-    BEGIN_X = 42 * Map::TILE_SIZE
+    FLOOR = 11 * LOCATION.map.tile_size
+    BEGIN_X = 42 * LOCATION.map.tile_size
   end
 
   module FourthCorridor
@@ -49,14 +49,14 @@ module IceLand
     # The corridor before the last.
     # Baleog must help his friend Erik with the bear and the switch.
     # Two arrows through the hole in the wall...
-    CEILING = 13 * Map::TILE_SIZE
+    CEILING = 13 * LOCATION.map.tile_size
     FLOOR = CEILING + CORRIDOR_HEIGHT
-    BEGIN_X = 21 * Map::TILE_SIZE
-    END_X = 47 * Map::TILE_SIZE
+    BEGIN_X = 21 * LOCATION.map.tile_size
+    END_X = 47 * LOCATION.map.tile_size
   end # module FourthCorridor
 
   module CorridorToExit
-    FLOOR = 21*Map::TILE_SIZE
+    FLOOR = 21*LOCATION.map.tile_size
     BEGIN_X = 320
     END_X = 1920
   end # module CorridorToExit
@@ -187,7 +187,7 @@ pos = [FirstCorridor::APPLEBAY_X, FirstCorridor::FLOOR]
 downshaft_trapdoors = TwoTrapDoors.new(pos)
 downshaft_trapdoors.in
 
-pos = [FirstCorridor::END_X - 4*Map::TILE_SIZE, FirstCorridor::CEILING - IceBoard::HEIGHT]
+pos = [FirstCorridor::END_X - 4*LOCATION.map.tile_size, FirstCorridor::CEILING - IceBoard::HEIGHT]
 secondcorridor_trapdoors = TwoTrapDoors.new(pos)
 secondcorridor_trapdoors.in
 
@@ -197,7 +197,7 @@ trapdoors_to_exit_corridor.in
 
 # === ITEMS:
 
-LOCATION.add_item Apple.new([FirstCorridor::APPLEBAY_X + 2*Map::TILE_SIZE - 0.5*Apple::WIDTH,170])
+LOCATION.add_item Apple.new([FirstCorridor::APPLEBAY_X + 2*LOCATION.map.tile_size - 0.5*Apple::WIDTH,170])
 LOCATION.add_item Killtoy.new([985, 330])
 
 # === ACTIVE OBJECTS:
@@ -211,7 +211,7 @@ appleswitch_proc = Proc.new do |switch_state|
     secondcorridor_trapdoors.in
   end
 end
-switch = Switch.new([FirstCorridor::APPLEBAY_X + (2 * Map::TILE_SIZE) - Switch::WIDTH/2, 80], LOCATION.theme, false, appleswitch_proc)
+switch = Switch.new([FirstCorridor::APPLEBAY_X + (2 * LOCATION.map.tile_size) - Switch::WIDTH/2, 80], LOCATION.theme, false, appleswitch_proc)
 LOCATION.add_active_object switch
 
 # The group of three switches over the first corridor. Erik can reach every 
@@ -239,7 +239,7 @@ pr = Proc.new {|state|
     downshaft_trapdoors.out
   end
 }
-downshaft_trapdoor_opening_switch = Switch.new([ThirdCorridor::BEGIN_X+4*Map::TILE_SIZE, ThirdCorridor::FLOOR-2*Map::TILE_SIZE], LOCATION.theme, true, pr)
+downshaft_trapdoor_opening_switch = Switch.new([ThirdCorridor::BEGIN_X+4*LOCATION.map.tile_size, ThirdCorridor::FLOOR-2*LOCATION.map.tile_size], LOCATION.theme, true, pr)
 LOCATION.add_active_object(downshaft_trapdoor_opening_switch)
 
 # The switch in the fourth corridor.
@@ -248,7 +248,7 @@ LOCATION.add_active_object(downshaft_trapdoor_opening_switch)
 pr = Proc.new {
   trapdoors_to_exit_corridor.out  
 }
-last_eriks_switch = Switch.new([FourthCorridor::END_X+Map::TILE_SIZE, FourthCorridor::CEILING+Map::TILE_SIZE+5], LOCATION.theme, false, pr)
+last_eriks_switch = Switch.new([FourthCorridor::END_X+LOCATION.map.tile_size, FourthCorridor::CEILING+LOCATION.map.tile_size+5], LOCATION.theme, false, pr)
 LOCATION.add_active_object last_eriks_switch
 
 # === MONSTERS:
@@ -262,7 +262,7 @@ second_bear = WalkingBear.new([1780, SecondCorridor::FLOOR - Bear::HEIGHT], 230)
 LOCATION.add_sprite second_bear
 
 # The bear from the fourth corridor
-floor_begin_x = FourthCorridor::BEGIN_X + 3 * Map::TILE_SIZE
+floor_begin_x = FourthCorridor::BEGIN_X + 3 * LOCATION.map.tile_size
 floor_length = FourthCorridor::END_X - floor_begin_x
 center_x = floor_begin_x + floor_length / 2
 bear_from_c4 = WalkingBear.new([center_x, FourthCorridor::FLOOR - Bear::HEIGHT], floor_length/2 * 3/5)

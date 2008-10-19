@@ -4,23 +4,28 @@
 
 ======== RubyCampaign ==================================================
 
-(-) Repair Assembler tileset (the black stripes are awful!)
+(-) [DT] Repair Assembler tileset (the black stripes are awful!)
 
-(-) Finish Assembler level
+(-) [DT] Finish Assembler level
 
 ======== Graphics ======================================================
 
-(-) Some image for teleport (cca 80x120px)
+(-) [DT] Some image for teleport (cca 80x120px)
 
 ======== Code ==========================================================
 
-(-) Fix levels
+(-) [DT] Fix levels (from Stairs to Hell on)
+
+(-) Fix going down with a lift (does bad things in Meadow level)
 
 (-) Enable Tiled maps with more tileset images
 
-(-) Better - more realistic - physics (jumping etc.)
+(-) Variable tile size (not only 40x40) (it should be possible now -
+    but I need some map to test if it's true)
 
-(-) Visual drag&drop of items; highlighting
+(-) [VI] Better - more realistic - physics (jumping etc.)
+
+(-) [UI] Visual drag&drop of items; highlighting
 
 (-) Set up some check for new releases of libraries we are using
     (RUDL, script, Log4r, REXML)
@@ -28,7 +33,7 @@
 (-) Less blit operations (replace huge blits with clipping) - it should
     increase frame rate
 
-(-) Menu issues:
+(-) [UI] Menu issues:
 
     (-) Menu: add a message if a bad password is given (also to the GUI,
         not only to a console)
@@ -41,11 +46,11 @@
 
 (-) Shield tasks:
 
-    (-) Olaf's shield shouldn't move awfully when Olaf's too quick
+    (-) [VI] Olaf's shield shouldn't move awfully when Olaf's too quick
 
     (-) Transporter#update_transported_sprites: less cycles
 
-    (-) Vikings should rest on Olaf's shield only if it's over his head
+    (-) [VI] Vikings should rest on Olaf's shield only if it's over his head
 
 (-) Move all requirement stuff to one file (freevikings.rb), so that it can be 
     controlled easily
@@ -54,49 +59,44 @@
     instead, add Entity#unregister (without argument, every Entity will have
     reference of the Location)
 
-(-) Show level name, description and author at the beginning of level
+(-) [UI] Show level name, description and author at the beginning of level
 
 (-) release tool: add task: mail to freevikings-users mailing list
-
-(-) Fix bug "not displayed first row of tiles"
-    (See schwerengine/map.rb L75; find a similar thing in painting of
-    game objects; remove both)
-    Seems that old XML maps haven't got this problem.
-    Let's "fix" it adding one empty line to Tiled maps :( - BAD IDEA.
-    Seems that at least small maps haven't got this problem.
 
 (-) Map's borders are solid, so it is impossible to go out of the map
 
 (-) File.open in the script should receive address relative to level directory
 
-(-) Some teleporting animation
+(-) [GO] Some teleporting animation
     (It's possible to implement it as a Sprite,   e.g. Teleport::Animation)
 
-(-) Delete items using mouse: drag item and drop it over trash icon
+(-) [UI] Delete items using mouse: drag item and drop it over trash icon
 
-(-) Repair ArrowShooter
+(-) [GO] Repair ArrowShooter
 
-(-) Bomb
+(-) Wall/monster-smashing feature
 
-(-) Smashable wall (bomb/Erik's head)
+    (-) [GO] Bomb
 
-(-) Erik's 'head-smash' feature
+    (-) [GO] Smashable wall
+
+    (-) [VI] Erik's 'head-smash' feature
+
+(-) [GO] Ladder
 
 (-) Possibility to define starting point for each viking separately
 
-(-) User's (and system?) configuration file (with possibility to define
+(-) [UI] User's (and system?) configuration file (with possibility to define
     multiple location storage places)
 
 (-) Game objects which weren't given any theme should wait till they are
     registered in a location and try to get it's theme - not raise exception
 
-(-) Variable tile size (not only 40x40)
-
 (-) Move all items to a separate directory items/ ?
 
-(-) Repair the Snail (this monster seems to be out of order)
+(-) [GO] Repair the Snail (this monster seems to be out of order)
 
-(-) Make all setup stuff accessible from the menu (e.g. define location 
+(-) [UI] Make all setup stuff accessible from the menu (e.g. define location 
     storage places, choose a campaign to be played, music etc.)
 
 (-) Possibility to change game speed (useful on newer machines, where 
@@ -107,7 +107,7 @@
 
 (-) Skinnable vikings
 
-(-) Complex tutorial level set
+(-) [DT] Complex tutorial level set
 
 (-) developer's manual: finish level tutorial
 
@@ -119,3 +119,10 @@
     and event should be sent if set to true and music ends
 
 (-) release tool: add task: post file to SF
+
+============= TASK TYPE CODES:
+
+[GO] game objects
+[VI] vikings
+[UI] user interface and related stuff
+[DT] data (maps, pictures, scripts, ...)

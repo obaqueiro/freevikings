@@ -14,7 +14,7 @@
     <password>TUXY</password>
     <map src="antarcticvisitors_loc.xml"/>
     <script src="antarcticvisitors_script.rb"/>
-    <start horiz="1000" vertic="60" />
+    <start horiz="1000" vertic="59" />
     <exit horiz="1100" vertic="280" />
   </body>
 </location>

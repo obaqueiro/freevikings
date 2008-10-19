@@ -126,20 +126,20 @@ module FreeVikings
 	# Funkcni klavesy:
       when K_SPACE
 	@context.team.active.space_func_on
-      when K_d
+      when K_d, K_LSHIFT
 	@context.team.active.d_func_on
       when K_s, K_UP
-        location.active_objects_on_rect(@context.team.active.rect).each { |o| o.activate }
+        @context.team.active.s_f_func_on
       when K_f, K_DOWN
-        location.active_objects_on_rect(@context.team.active.rect).each { |o| o.deactivate }
-      when K_e, K_u
+        @context.team.active.s_f_func_off
+      when K_e, K_u, K_INSERT
         @context.team.active.use_item
       when K_p, K_TAB
         @context.bottompanel.browse_inventory!
         @context.pause
-      when K_RCTRL, K_PAGEDOWN
+      when K_RCTRL, K_PAGEDOWN, K_z
 	@context.team.previous
-      when K_PAGEUP
+      when K_PAGEUP, K_x
 	@context.team.next
       else
         super(keyevent, location)
@@ -152,7 +152,7 @@ module FreeVikings
 	@context.team.active.stop
       when K_SPACE
         @context.team.active.space_func_off
-      when K_d
+      when K_d, K_LSHIFT
         @context.team.active.d_func_off
       end
     end # private method serve_keyup

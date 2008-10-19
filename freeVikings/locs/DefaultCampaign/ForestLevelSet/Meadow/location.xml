@@ -10,7 +10,7 @@
     <password>MEDW</password>
     <map src="meadow_loc.xml"/>
     <script src="meadow_script.rb"/>
-    <start horiz="250" vertic="500"/>
+    <start horiz="250" vertic="499"/>
     <exit horiz="2080" vertic="1040"/>
   </body>
 </location>

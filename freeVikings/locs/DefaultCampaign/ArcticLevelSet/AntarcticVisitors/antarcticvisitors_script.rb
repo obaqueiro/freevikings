@@ -17,7 +17,7 @@ include FreeVikings
 # processor time eating monsters (e.g. dozens of penguins).
 FUNLESS = false
 
-TS = LOCATION.map.class::TILE_SIZE
+TS = LOCATION.map.tile_size
 
 # -- EXIT AREA --
 # EXIT is closed behind the locked door.
