@@ -75,10 +75,6 @@ module SchwerEngine
         else
           ExpandedLayerDataLoader.new(layers.last, layer, map_sizes).load
         end
-
-        # I don't know why, but Tiled maps have the first row of tiles invisible.
-        # This is a dirty trick to make it visible - add one row of empty tiles
-        layers.last.unshift( [0] * @max_width )
       end
       @max_height += 1
 

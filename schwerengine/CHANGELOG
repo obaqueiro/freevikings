@@ -1,8 +1,14 @@
+[19.October 2008]
+- TiledMapLoadStrategy: yesterday I solved ancient "stupid problem" in Map,
+  so today I could delete line which was here to "solve" it by adding one
+  more row of tiles at the top of a map
+
 [18.October 2008]
 - tests: removed class TestMap2
 - TestMap: tests which helped me better understand Map#area_free?
 - Rect#new_from_points, Rect#center
 - Map: solved "dirty thing problem"!
+- level ArcticTutorial: EXIT moved 40 px down (fix because of change in Map)
 
 [6.October 2008]
 - xmlmap2loadstrategy.rb: implemented loading 'old XML maps'
