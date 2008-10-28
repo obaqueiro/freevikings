@@ -14,11 +14,7 @@
 
 ======== Code ==========================================================
 
-(-) [DT] Fix levels (from Stairs to Hell on)
-
 (-) Fix going down with a lift (does bad things in Meadow level)
-
-(-) Enable Tiled maps with more tileset images
 
 (-) Variable tile size (not only 40x40) (it should be possible now -
     but I need some map to test if it's true)
@@ -33,6 +29,9 @@
 (-) Less blit operations (replace huge blits with clipping) - it should
     increase frame rate
 
+(-) Fix displaying of some 'void row' under the end of map (it shouldn't be
+    displayed!)
+
 (-) [UI] Menu issues:
 
     (-) Menu: add a message if a bad password is given (also to the GUI,
@@ -43,6 +42,8 @@
     (-) Switch on/off sound
 
     (-) Select levelsuite directory
+
+    (-) Add switching of threaded/non-threaded loading to menu?
 
 (-) Shield tasks:
 

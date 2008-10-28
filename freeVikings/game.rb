@@ -47,6 +47,11 @@ module FreeVikings
 
     GAME_SCREEN_HEIGHT = FreeVikings::WIN_HEIGHT - BottomPanel::HEIGHT
 
+    # If set to true, loading is threaded (with progressbar);
+    # set to false for debugging (threads do some evil things with
+    # exception tracks etc.)
+    FANCY_THREADED_LOADING = true
+
     # == Public instance methods
     #
     # Argument window should be a RUDL::Surface (or RUDL::DisplaySurface).
@@ -247,6 +252,7 @@ module FreeVikings
         # If password was given to Game.new, next_level has already 
         # been called.
         unless first_level && @world.level.kind_of?(Level) then
+          exit_game_please = false
           do_loading do
             @log.info "Initializing level."
             begin
@@ -254,8 +260,14 @@ module FreeVikings
               @log.info "Initialized level '#{level.title}'"
             rescue StructuredWorld::NoMoreLevelException
               @log.info "Congratulations! You explored all the world!"
-              exit_game
+              exit_game_please = true
             end
+          end
+          # Game#exit_game executes 'throw'; it can't be done inside 
+          # do_loading, because do_loading uses threads and throw inside
+          # a thread causes ThreadError
+          if exit_game_please then
+            exit_game
           end
         end
         first_level = false
@@ -398,7 +410,7 @@ module FreeVikings
       
       location.paint(@map_view, location.team.active.center)
       @app_window.blit(@map_view, [0,0])
-      
+
       @state.change_view(@app_window)
 
       @app_window.blit(@bottompanel.image, [0, WIN_HEIGHT - BottomPanel::HEIGHT])
@@ -426,25 +438,32 @@ module FreeVikings
     # shows loading screen with progressbar (uses Threads!) and runs given 
     # block
     def do_loading(&block)
-      @loading_animation_counter = 0
+      if FANCY_THREADED_LOADING then
+        # Loading with threads and nice progressbar
+        @loading_animation_counter = 0
 
-      Thread.abort_on_exception = true
+        Thread.abort_on_exception = true
 
-      progressbar_t = Thread.new {
-        loop {
-          paint_loading_screen @app_window
-          sleep 0.3
+        progressbar_t = Thread.new {
+          loop {
+            paint_loading_screen @app_window
+            sleep 0.3
+          }
         }
-      }
-      progressbar_t.priority = 2
+        progressbar_t.priority = 2
 
-      load_t = Thread.new {
+        load_t = Thread.new {
+          block.call
+        }
+        load_t.priority = 1
+
+        load_t.join
+        Thread.kill progressbar_t
+      else
+        # Loading without threads and progressbar
+        paint_loading_screen(@app_window)
         block.call
-      }
-      load_t.priority = 1
-
-      load_t.join
-      Thread.kill progressbar_t      
+      end
     end
 
     # Updates loading screen. Should be called only by do_loading.
@@ -458,8 +477,10 @@ module FreeVikings
      
       screen.fill [0,0,0]
       screen.blit(@loading_message, [280,180])
-      screen.fill([255,255,255], 
-                  [30, 460, (@loading_animation_counter/100.0)*screen.w, 5])
+      if FANCY_THREADED_LOADING then
+        screen.fill([255,255,255], 
+                    [30, 460, (@loading_animation_counter/100.0)*screen.w, 5])
+      end
       screen.flip
     end
 

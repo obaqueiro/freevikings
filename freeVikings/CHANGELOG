@@ -1,3 +1,11 @@
+[28.October 2008]
+- level Stairs to Hell: y coordinate of all objects fixed
+- game.rb: fixed error at end of world (throw inside Thread caused 
+           ThreadError);
+           possibility to switch off threaded loading
+- testing level using multiple tilesets-
+  
+
 [19.October 2008]
 - levels SwitchPlace & Antarctic Visitors & Peaceful Meadow fixed
 - gamestate.rb: added some keys to imitate LV2: INSERT uses item, Z and X

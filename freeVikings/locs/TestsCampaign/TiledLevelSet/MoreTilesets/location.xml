@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Map with more tilesets</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>MRTS</password>
+    <map src="more_loc.tmx"/>
+    <script src=""/>
+    <start horiz="80" vertic="180"/>
+    <exit horiz="280" vertic="200"/>
+  </body>
+</location>
