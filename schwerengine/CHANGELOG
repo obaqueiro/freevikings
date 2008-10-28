@@ -1,3 +1,6 @@
+[28.October 2008]
+- tiledmaploadstrategy.rb: more than one tileset may be used
+
 [19.October 2008]
 - TiledMapLoadStrategy: yesterday I solved ancient "stupid problem" in Map,
   so today I could delete line which was here to "solve" it by adding one

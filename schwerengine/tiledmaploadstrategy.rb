@@ -12,7 +12,7 @@ module SchwerEngine
       super(source)
 
       @doc = REXML::Document.new(@source)
-      @tiletypes = []
+      @tiles = {}
 
       @map_version = @doc.root.attributes['version']
       @log.info "Loading TilEd map version '#{@map_version}'"
@@ -31,21 +31,35 @@ module SchwerEngine
       load_tiles
     end
 
+    TileSet = Struct.new(:name, :firstgid, :tile_width, :tile_height, :image, :num_tiles)
+
+    # !!! Tilesets with different tile sizes can't be used in one map -
+    # such use will lead to an error !!!
+
     def load_tilesets
       @log.info "Loading tilesets."
 
-      f = get_tileset_file
+      @tilesets = []
 
-      @tiletypes = [nil] # tile 0 is nil
+      @doc.root.each_element('tileset') {|ts|
+        name = ts.attributes['name']
+        firstgid = ts.attributes['firstgid'].to_i
+        tile_width = ts.attributes['tilewidth'].to_i
+        tile_height = ts.attributes['tileheight'].to_i
+        f = ts.elements["image"].attributes['source']
+        image = RUDL::Surface.load_new @dir+"/"+f
+        num_tiles = (image.w/@tile_width) * (image.h/@tile_height)
 
-      @tileset_image = RUDL::Surface.load_new @dir+"/"+f
+        ts = TileSet.new(name, firstgid, tile_width, tile_height, image, num_tiles)
+        @log.debug("Loaded tileset '"+ts.inspect+"'")
 
-      0.step(@tileset_image.h - @tile_height, @tile_height) do |y|
-        0.step(@tileset_image.w - @tile_width, @tile_width) do |x|
-          tile_rect = [x, y, @tile_width, @tile_height]
-          @tiletypes.push tile_rect
+        if ts.tile_width != @tile_width || ts.tile_height != @tile_height then
+          @log.error "Tileset has wrong tile sizes! (${ts.tile_width}x${ts.tile_height} while map tile sizes are #{@tile_width}x#{@tile_height})"
+          next
         end
-      end
+
+        @tilesets.push ts
+      }
     end
 
     # creates @blocks, @background and @foreground
@@ -147,19 +161,17 @@ module SchwerEngine
           line.each_with_index do |tile_id,x|
             # Tiled reserves tile id 0 for 'no tile'; tile_id other than 0
             # with no tile is suspicious.
-            if @tiletypes[tile_id] == nil then
+            begin
+              tile = get_tile(tile_id)
+            rescue NoTileException
               @log.error "No tile with id '#{tile_id}'" if tile_id != 0
               next
             end
             
-            s.blit @tileset_image, [x*@tile_width, y*@tile_height], @tiletypes[tile_id]
+            s.blit tile.surface, [x*@tile_width, y*@tile_height], tile.rect
           end
         end
       end
-    end
-
-    def get_tileset_file
-      @doc.root.elements['tileset'].elements["image"].attributes['source']
     end
 
     def load_tile_sizes
@@ -202,6 +214,51 @@ module SchwerEngine
       unless @properties['solid_layer']
         @properties['solid_layer'] = @doc.root.get_elements('layer').last.attributes['name']
       end
+    end
+
+    class NoTileException < RuntimeError
+    end
+
+    # surface is RUDL::Surface of tileset
+    # rect is 4-element Array (part of surface which represents the tile)
+    Tile = Struct.new(:surface, :rect)
+
+    # Tries to find tile with given id (Integer) in loaded tilesets.
+    # Raises TiledMapLoadStrategy::NoTileException if tile isn't found.
+    # Uses Hash @tiles to store tiles which have already been found.
+
+    def get_tile(id)
+      if id == 0 then
+        raise NoTileException, "Tile id 0 is reserved for Tiled and means 'no tile', 'empty space'."
+      end
+
+      if @tiles[id] then
+        return @tiles[id]
+      end
+
+      tileset = @tilesets.find {|ts|
+        (ts.firstgid <= id) && (ts.firstgid + ts.num_tiles > id)
+      }
+      if tileset == nil then
+        raise NoTileException, "Tile with id '#{id}' not found in any tileset."
+      end
+
+      tile_i = id - tileset.firstgid
+
+      columns = tileset.image.w / @tile_width
+      rows = tileset.image.h / @tile_height
+
+      tile_col = tile_i % columns
+      tile_row = tile_i / columns
+
+      tile = Tile.new(tileset.image, [tile_col*@tile_width,
+                                      tile_row*@tile_height,
+                                      @tile_width,
+                                      @tile_height])
+      @log.debug "New tile: id='#{id}', tileset='#{tileset.name}', i,c,r=#{tile_i},#{tile_col},#{tile_row}"
+
+      @tiles[id] = tile
+      return tile
     end
 
     # Small strategy classes. They are needed to be able to load differently
