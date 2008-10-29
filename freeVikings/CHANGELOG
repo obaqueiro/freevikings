@@ -1,3 +1,13 @@
+[29.October 2008]
+- transporter.rb, monsters/lift.rb: Fixed "lift down problem":
+  Transporter#update_transported_sprites divided into two methods,
+  because Transporters, which move transported sprites also in y-axis,
+  have to move themselves between updating list of transported sprites
+  and moving them in order to ensure that area to which transported sprites 
+  are moved is already free at the time of the operation
+- added testing level using Tiled map with tiles 32x32 px (works well without
+  any additional modifications to SchwerEngine)
+
 [28.October 2008]
 - level Stairs to Hell: y coordinate of all objects fixed
 - game.rb: fixed error at end of world (throw inside Thread caused 

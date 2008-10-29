@@ -4,20 +4,15 @@
 
 ======== RubyCampaign ==================================================
 
-(-) [DT] Repair Assembler tileset (the black stripes are awful!)
-
-(-) [DT] Finish Assembler level
-
 ======== Graphics ======================================================
 
 (-) [DT] Some image for teleport (cca 80x120px)
 
 ======== Code ==========================================================
 
-(-) Fix going down with a lift (does bad things in Meadow level)
-
-(-) Variable tile size (not only 40x40) (it should be possible now -
-    but I need some map to test if it's true)
+(-) Transporter: Transporter doesn't search for Transportables,
+    but vice versa: Transportables register at the Transporter when they find 
+    him
 
 (-) [VI] Better - more realistic - physics (jumping etc.)
 
@@ -29,10 +24,13 @@
 (-) Less blit operations (replace huge blits with clipping) - it should
     increase frame rate
 
-(-) Fix displaying of some 'void row' under the end of map (it shouldn't be
-    displayed!)
+(-) [UI] Add dialog "Back to menu/Restart level/Cancel"
+
+(-) [UI] Add some "dead animation" on level restart
 
 (-) [UI] Menu issues:
+
+    (-) Menu scrolls if it is too long
 
     (-) Menu: add a message if a bad password is given (also to the GUI,
         not only to a console)

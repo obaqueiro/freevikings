@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Tile size 32x32 px</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+  </info>
+
+  <body>
+    <password>3232</password>
+    <map src="custom_tilesize_32x32.tmx"/>
+    <script src=""/>
+    <start horiz="60" vertic="45"/>
+    <exit horiz="784" vertic="795"/>
+  </body>
+</location>

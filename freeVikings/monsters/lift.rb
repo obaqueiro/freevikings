@@ -100,13 +100,13 @@ It is useful mainly for two-y lifts.
     end
 
     def update
-      old_rect = @rect.dup
+      unless in_destination?
+        d = delta_y
 
-      update_position
-
-      delta_y = @rect.top - old_rect.top
-
-      update_transported_sprites 0, delta_y
+        find_transported_sprites
+        @rect.top += d
+        move_transported_sprites 0, d
+      end
     end
 
     def location=(new_location)
@@ -150,18 +150,17 @@ Alias to ((<Lift#move_down>)).
       @y[@dest] == @rect.top
     end
 
-    def update_position
-      if @rect.top != @y[@dest] then
-        total_delta_y = (@y[@dest] - @rect.top)
+    def delta_y
+      total_delta_y = (@y[@dest] - @rect.top)
 
-        if total_delta_y.abs <= 10 then
-          @rect.top = @y[@dest]
-        else
-          @rect.top += total_delta_y.signum * VELOCITY * @location.ticker.delta
-        end
+      d = total_delta_y.signum * VELOCITY * @location.ticker.delta
+
+      if d.abs > total_delta_y.abs then
+        return total_delta_y
+      else
+        return d
       end
     end
-
   end # class Lift
 end # module FreeVikings
 

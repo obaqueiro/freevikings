@@ -15,5 +15,6 @@
     <level>SmallestCave</level>
     <level>MultiLayer2</level>
     <level>MoreTilesets</level>
+    <level>CustomTileSize</level>
   </suite>
 </levelsuite>

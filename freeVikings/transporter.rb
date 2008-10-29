@@ -24,7 +24,16 @@ module FreeVikings
     # update_transported_sprites(-12,60) moves sprites 12px left and 60px down
 
     def update_transported_sprites(delta_x, delta_y)
-      collision_rect = @rect.expand(1,1)
+      find_transported_sprites
+      move_transported_sprites(delta_x, delta_y)      
+    end
+
+    # If you need to do something between finding transported sprites
+    # and moving them (e.g. move the Transporter itself), you can
+    # use the two parts of Transporter#update_transported_sprites separately:
+
+    def find_transported_sprites
+      collision_rect = @rect.expand(1,2)
 
       colliding_sprites = @location.sprites_on_rect(collision_rect)
 
@@ -44,7 +53,9 @@ module FreeVikings
           s.start_transport self
         end
       }
+    end
 
+    def move_transported_sprites(delta_x, delta_y)
       @transported.each {|s|
         s.transport_move(delta_x, delta_y, self)
       }
