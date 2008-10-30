@@ -10,13 +10,36 @@
 
 ======== Code ==========================================================
 
-(-) Transporter: Transporter doesn't search for Transportables,
-    but vice versa: Transportables register at the Transporter when they find 
-    him
+(-) Level music stops when level is exitted (either given up or finished)
+
+(-) [GO] Repair ArrowShooter
+
+(-) Wall/monster-smashing feature
+
+    (-) [GO] Bomb
+
+    (-) [GO] Smashable wall
+
+    (-) [VI] Erik's 'head-smash' feature
+
+(-) [GO] Ladder
+
+(-) [UI] Delete items using mouse: drag item and drop it over trash icon
+
+(-) mouse actions are state independent -> they shouldn't
+    be given to GameState
+
+(-) Transporter tasks
+
+    (-) Transporter: Transporter doesn't search for Transportables,
+        but vice versa: Transportables register at the Transporter when 
+        they find him
+
+    (-) Transporter#update_transported_sprites: less cycles
 
 (-) [VI] Better - more realistic - physics (jumping etc.)
 
-(-) [UI] Visual drag&drop of items; highlighting
+(-) [UI] During drag&drop highlight vikings which can receive item
 
 (-) Set up some check for new releases of libraries we are using
     (RUDL, script, Log4r, REXML)
@@ -47,8 +70,6 @@
 
     (-) [VI] Olaf's shield shouldn't move awfully when Olaf's too quick
 
-    (-) Transporter#update_transported_sprites: less cycles
-
     (-) [VI] Vikings should rest on Olaf's shield only if it's over his head
 
 (-) Move all requirement stuff to one file (freevikings.rb), so that it can be 
@@ -68,20 +89,6 @@
 
 (-) [GO] Some teleporting animation
     (It's possible to implement it as a Sprite,   e.g. Teleport::Animation)
-
-(-) [UI] Delete items using mouse: drag item and drop it over trash icon
-
-(-) [GO] Repair ArrowShooter
-
-(-) Wall/monster-smashing feature
-
-    (-) [GO] Bomb
-
-    (-) [GO] Smashable wall
-
-    (-) [VI] Erik's 'head-smash' feature
-
-(-) [GO] Ladder
 
 (-) Possibility to define starting point for each viking separately
 

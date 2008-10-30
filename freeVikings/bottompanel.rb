@@ -43,6 +43,9 @@ module FreeVikings
       @inventory_views = {}
       @team.each {|v| @inventory_views[v] = InventoryView.new(v, self)}
 
+      # slot for item exchanged by drag-and-drop
+      @dragged_item = nil
+
       change_state NormalBottomPanelState.new(@team)
     end
 
@@ -85,6 +88,8 @@ module FreeVikings
     def_delegator :@state, :left
     def_delegator :@state, :right
 
+    DraggedItemWrapper = Struct.new(:item, :owner, :position)
+
     # pos is a two-element array (standard [x,y] coordinates as used in RUDL
     # etc.). Remember that [0,0] is the top-left corner of the panel, not 
     # of the game screen!
@@ -97,21 +102,23 @@ module FreeVikings
         @team.active = @team[i]
       elsif a = spot_inside_item(*pos) then
         viking_index, item_index = a
-        @last_clicked_item = item_index
-        @last_clicked_viking = viking_index
 
         begin
           @team[viking_index].inventory.active_index = item_index
+          @dragged_item = DraggedItemWrapper.new
+          @dragged_item.owner = @team[viking_index]
+          @dragged_item.item = @dragged_item.owner.inventory.erase_active
+          @dragged_item.position = pos
         rescue Inventory::EmptySlotRequiredException
-          # The exception is just informative. We know it can appear
-          # here and nothing dangerous can occur when we pretend
-          # we can't see it.
+          # No dragging may be done.
+          @dragged_item = nil
         end
 
       end
     end
 
     # About pos see documentation of method mouseclick.
+
     def mouserelease(pos)
       if a = spot_inside_item(*pos) || b = spot_inside_portrait(*pos) then
         if a then
@@ -119,18 +126,28 @@ module FreeVikings
         else
           viking_index = b
         end
-        if @last_clicked_viking != nil && viking_index != @last_clicked_viking then
-          source_viking = @team[@last_clicked_viking]
+
+        if @dragged_item then
           dest_viking = @team[viking_index]
-          if source_viking.rect.collides?(dest_viking.rect) &&
-              ! dest_viking.inventory.full? then
-            source_viking.inventory.active_index = @last_clicked_item
-            dest_viking.inventory.put(source_viking.inventory.erase_active)
+
+          if (! @dragged_item.owner.rect.collides?(dest_viking.rect)) ||
+              dest_viking.inventory.full? then
+            # Storno exchange operation
+            @dragged_item.owner.inventory.put @dragged_item.item
+            @dragged_item = nil
+            return
           end
+
+          dest_viking.inventory.put(@dragged_item.item)
+          @dragged_item = nil
         end
       end
-      @last_clicked_viking = nil
-      @last_clicked_item = nil
+    end
+
+    def mousemove(pos)
+      if @dragged_item then
+        @dragged_item.position = pos
+      end
     end
 
     # Paints itself onto the surface. Doesn't worry about the surface's
@@ -169,6 +186,14 @@ module FreeVikings
                                     inventory_view_pos, 
                                     (@team.active == vik),
                                     show_off)
+
+        if @dragged_item then
+          x, y = @dragged_item.position
+          image = @dragged_item.item.image
+          x -= image.w/2
+          y -= image.h/2
+          surface.blit image, [x,y]
+        end
       end
     end
 

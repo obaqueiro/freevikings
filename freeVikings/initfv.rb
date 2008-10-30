@@ -100,6 +100,12 @@ module FreeVikings
         FVConfiguratorButton.new(graphics_menu, "Display fps", "display_fps", {"yes" => true, "no" => false})
         QuitButton.new(graphics_menu)
 
+        # Submenu: Sound
+        sound_menu = Menu.new(menu, "Sound", nil, nil)
+
+        FVConfiguratorButton.new(sound_menu, "Level music", 'sound', {'on' => true, 'off' => false})
+        QuitButton.new(sound_menu)
+
         # Submenu: Credits
         Credits.new(menu, [['Jakub Pavlik', 'programming, graphics, levels'],
                            ['Ingo Fulfs', 'graphics, music']])

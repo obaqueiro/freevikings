@@ -214,6 +214,13 @@ module FreeVikings
       end
     end
 
+    def mouse_move(pos)
+      if y_in_bottompanel(pos[1]) then
+        pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
+        @bottompanel.mousemove(pos_in_the_panel)
+      end
+    end
+
     private
 
     def y_in_bottompanel(y)

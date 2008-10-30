@@ -38,15 +38,17 @@ module FreeVikings
         exit
       end
 
-      if event.is_a? KeyDownEvent
+      if event.kind_of? KeyDownEvent
 	serve_keydown(event, location)
-      elsif event.is_a? KeyUpEvent
+      elsif event.kind_of? KeyUpEvent
 	serve_keyup(event, location)
-      elsif event.is_a? MouseButtonDownEvent
+      elsif event.kind_of?  MouseButtonDownEvent
         serve_mouseclick(event, location)
-      elsif event.is_a? MouseButtonUpEvent
+      elsif event.kind_of? MouseButtonUpEvent
         serve_mouserelease(event, location)
-      end # if
+      elsif event.kind_of?  MouseMotionEvent
+        serve_mousemove(event, location)
+      end 
     end
 
     # Argument location is a Location instance. (Location just played.)
@@ -84,6 +86,10 @@ module FreeVikings
 
     def serve_mouserelease(event, location)
       @context.mouse_release event.pos
+    end
+
+    def serve_mousemove(event, location)
+      @context.mouse_move event.pos
     end
 
     public
