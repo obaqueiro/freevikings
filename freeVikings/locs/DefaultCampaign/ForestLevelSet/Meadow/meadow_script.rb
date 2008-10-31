@@ -43,7 +43,7 @@ apexes = ApexRow.new([19*TS,BLUEROOM_FLOOR - TS], 4, LOCATION.theme)
 LOCATION << apexes
 
 # Snail in the left corridor:
-snail = Snail.new([60, LEFT_CORRIDOR_FLOOR - Snail::HEIGHT])
+snail = Snail.new([200, LEFT_CORRIDOR_FLOOR - Snail::HEIGHT-1])
 LOCATION << snail
 
 # The left 'lift' bridge:
@@ -113,7 +113,7 @@ exit_door = Door.new([49*TS, BLUEROOM_FLOOR-3*TS], true)
 LOCATION << exit_door
 
 # the snail which waits at the EXIT to say the vikings goodbye
-exit_snail = Snail.new([53*TS, BLUEROOM_FLOOR - Snail::HEIGHT])
+exit_snail = Snail.new([53*TS, BLUEROOM_FLOOR - Snail::HEIGHT - 1])
 LOCATION << exit_snail
 
 # lock which opens the door

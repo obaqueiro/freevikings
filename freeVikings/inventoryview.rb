@@ -104,7 +104,7 @@ module FreeVikings
 
       time = Time.now.to_f
 
-      0.upto(3) do |k|
+      0.upto(@inventory.num_slots-1) do |k|
         item_position = ITEM_POSITIONS[k]
 
         @image.blit(@item_bg, item_position)

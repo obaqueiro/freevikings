@@ -1,3 +1,14 @@
+[31.October 2008]
+- level music stops again when level is exitted (it was broken)
+- monsters/snail.rb: fixed possible cause of "snail out of map" problem
+- Meadow level: fixed position of snails
+- trash.rb, bottompanel.rb, bottompanelstate.rb, inventory.rb, 
+  inventoryview.rb, gfx/trash.rb: visual trash added (with possibility
+  to put there items in the regular way either using keyboard or mouse)
+- bomb.rb, testing level for Bomb: new game object - bomb (currently
+  it just kills vikings and other sprites, in future it will also destroy
+  walls)
+
 [30.October 2008]
 - bottompanel.rb, game.rb, gamestate.rb: Dragged item is shown during
   drag&drop item exchange

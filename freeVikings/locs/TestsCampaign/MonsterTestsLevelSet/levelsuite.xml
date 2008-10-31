@@ -25,5 +25,6 @@
     <level>ManyItems</level>
     <level>Teleport</level>
     <level>Conversation</level>
+    <level>BombEtc</level>
   </suite>
 </levelsuite>

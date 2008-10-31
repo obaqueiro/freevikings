@@ -126,7 +126,7 @@ module FreeVikings
       @give_up = true
     end
 
-    # Returns to the menu.
+    # Returns to the menu. Called on user-requested game end.
 
     def exit_game
       on_level_end
@@ -493,7 +493,7 @@ module FreeVikings
 
     # Called from the end of game loop and from Game#exit_game
     def on_level_end
-      if FreeVikings::OPTIONS['music'] then
+      if FreeVikings::OPTIONS['sound'] then
         if @music then
           if @music.busy? then
             @music.fade_out 2000

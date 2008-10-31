@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Bomb</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Location for testing of bomb - as a tool for killing monsters,
+      vikings and destroying destroyable objects (such as some special walls)
+    </description>
+  </info>
+
+  <body>
+    <password>BUMB</password>
+    <map src="bomb_loc.xml"/>
+    <script src="bomb_script.rb"/>
+    <exit horiz="500" vertic="360" />
+    <start horiz="50" vertic="140" />
+  </body>
+</location>

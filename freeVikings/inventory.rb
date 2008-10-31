@@ -33,6 +33,13 @@ module FreeVikings
       @active_index = 0
     end
 
+    # This method is here for InventoryView, which has to display also
+    # Trash inventory correctly
+
+    def num_slots
+      return SLOTS
+    end
+
     def put(item)
       if full? then
         raise NoSlotFreeException, "There is no free inventory slot " \

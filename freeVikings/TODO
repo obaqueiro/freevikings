@@ -6,28 +6,34 @@
 
 ======== Graphics ======================================================
 
+(-) [UI] Nice image for trash
+
 (-) [DT] Some image for teleport (cca 80x120px)
 
 ======== Code ==========================================================
 
-(-) Level music stops when level is exitted (either given up or finished)
-
-(-) [GO] Repair ArrowShooter
-
 (-) Wall/monster-smashing feature
 
-    (-) [GO] Bomb
+    (-) bomb - visual explosion
 
     (-) [GO] Smashable wall
+
+    (-) bomb - wall smashing
+
+    (-) bomb should kill only Heroes and Monsters - not all Sprites
 
     (-) [VI] Erik's 'head-smash' feature
 
 (-) [GO] Ladder
 
-(-) [UI] Delete items using mouse: drag item and drop it over trash icon
-
 (-) mouse actions are state independent -> they shouldn't
     be given to GameState
+
+(-) Fix bug "1 px under vikings"
+
+(-) Entity#init_images should be something like protected (I don't know 
+    exactly what 'protected' means IN RUBY; maybe it should be even private
+    and called using instance_eval)
 
 (-) Transporter tasks
 
@@ -59,8 +65,6 @@
         not only to a console)
 
     (-) Possibility to change keys (movement, inventory control etc.)
-
-    (-) Switch on/off sound
 
     (-) Select levelsuite directory
 
@@ -99,8 +103,6 @@
     registered in a location and try to get it's theme - not raise exception
 
 (-) Move all items to a separate directory items/ ?
-
-(-) [GO] Repair the Snail (this monster seems to be out of order)
 
 (-) [UI] Make all setup stuff accessible from the menu (e.g. define location 
     storage places, choose a campaign to be played, music etc.)

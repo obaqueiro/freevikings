@@ -6,6 +6,7 @@ require 'forwardable'
 
 require 'bottompanelstate.rb'
 require 'inventoryview.rb'
+require 'trash.rb'
 
 module FreeVikings
 
@@ -36,12 +37,15 @@ module FreeVikings
 
     def initialize(team)
       @team = team
+      @trash = Trash.new
+
       @image = RUDL::Surface.new [WIDTH, HEIGHT]
 
       init_gfx
 
       @inventory_views = {}
       @team.each {|v| @inventory_views[v] = InventoryView.new(v, self)}
+      @inventory_views[@trash] = InventoryView.new(@trash, self)
 
       # slot for item exchanged by drag-and-drop
       @dragged_item = nil
@@ -57,6 +61,7 @@ module FreeVikings
 
     def browse_inventory!
       change_state InventoryBrowsingBottomPanelState.new(@team)
+      @trash.dump
     end
 
     def_delegator :@state, :inventory_browsing?
@@ -66,7 +71,7 @@ module FreeVikings
     # to each other.
 
     def exchange_items!
-      change_state ItemsExchangeBottomPanelState.new(@team)
+      change_state ItemsExchangeBottomPanelState.new(@team, @trash)
     end
 
     def_delegator :@state, :items_exchange?
@@ -76,6 +81,7 @@ module FreeVikings
 
     def go_normal!
       change_state NormalBottomPanelState.new(@team)
+      @trash.dump
     end
 
     def_delegator :@state, :normal?
@@ -120,6 +126,11 @@ module FreeVikings
     # About pos see documentation of method mouseclick.
 
     def mouserelease(pos)
+      if spot_inside_trash(*pos)
+        @dragged_item = nil
+        return
+      end
+
       if a = spot_inside_item(*pos) || b = spot_inside_portrait(*pos) then
         if a then
           viking_index, item_index = a
@@ -130,17 +141,20 @@ module FreeVikings
         if @dragged_item then
           dest_viking = @team[viking_index]
 
-          if (! @dragged_item.owner.rect.collides?(dest_viking.rect)) ||
-              dest_viking.inventory.full? then
-            # Storno exchange operation
-            @dragged_item.owner.inventory.put @dragged_item.item
+          if @dragged_item.owner.rect.collides?(dest_viking.rect) &&
+              ! dest_viking.inventory.full? then
+            # operation succeeded
+            dest_viking.inventory.put(@dragged_item.item)
             @dragged_item = nil
             return
           end
-
-          dest_viking.inventory.put(@dragged_item.item)
-          @dragged_item = nil
         end
+      end
+
+      # either there was no exchange or exchange is unsuccessfull:
+      if @dragged_item then
+        @dragged_item.owner.inventory.put @dragged_item.item
+        @dragged_item = nil
       end
     end
 
@@ -157,43 +171,16 @@ module FreeVikings
       surface.fill([60,60,60])
 
       @team.each_with_index do |vik, i|
-        # paint face:
-        face_position = [i * (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE), 0]
-	surface.blit(@face_bg, face_position)
-        portrait_img = if @team.active == vik && vik.alive? then
-                         vik.portrait.active
-                       elsif not vik.alive?
-                         vik.portrait.kaput
-                       else
-                         vik.portrait.unactive
-                       end
-        surface.blit(portrait_img, face_position)
+        paint_member(surface, vik, i)
+      end
+      paint_member(surface, @trash, @team.size+1)
 
-        # paint the lives:
-        lives_y = VIKING_FACE_SIZE
-        vik.energy.times {|j| 
-          live_position = [face_position[0] + j * LIFE_SIZE, lives_y]
-          surface.blit(@energy_punkt, live_position)
-        }
-
-        # paint inventory contents:
-        inventory_view_pos = [(i * (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE)) + INVENTORY_VIEW_SIZE, 0]
-        show_off = items_exchange? && 
-          vik != @team.active && 
-          ((! vik.rect.collides?(@team.active.rect)) || vik.inventory.full?)
-
-        @inventory_views[vik].paint(surface, 
-                                    inventory_view_pos, 
-                                    (@team.active == vik),
-                                    show_off)
-
-        if @dragged_item then
-          x, y = @dragged_item.position
-          image = @dragged_item.item.image
-          x -= image.w/2
-          y -= image.h/2
-          surface.blit image, [x,y]
-        end
+      if @dragged_item then
+        x, y = @dragged_item.position
+        image = @dragged_item.item.image
+        x -= image.w/2
+        y -= image.h/2
+        surface.blit image, [x,y]
       end
     end
 
@@ -205,6 +192,45 @@ module FreeVikings
     end
 
     private
+
+    # paints portrait and inventory of viking or trash
+    # 'i' is Integer telling if the member should be painted
+    # first, second, ...
+
+    def paint_member(surface, member, i)
+      # paint face:
+      face_position = [i * (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE), 0]
+      surface.blit(@face_bg, face_position)
+      portrait_img = if @team.active == member && member.alive? then
+                       member.portrait.active
+                     elsif not member.alive?
+                       member.portrait.kaput
+                     else
+                       member.portrait.unactive
+                     end
+
+      surface.blit(portrait_img, face_position)
+
+      # paint the lives:
+      if member.is_a? Viking then
+        lives_y = VIKING_FACE_SIZE
+        member.energy.times {|j| 
+          live_position = [face_position[0] + j * LIFE_SIZE, lives_y]
+          surface.blit(@energy_punkt, live_position)
+        }
+      end
+      
+      # paint inventory contents:
+      inventory_view_pos = [(i * (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE)) + INVENTORY_VIEW_SIZE, 0]
+      show_off = items_exchange? && 
+        member != @team.active && 
+        ((! member.rect.collides?(@team.active.rect)) || member.inventory.full?)
+      
+      @inventory_views[member].paint(surface, 
+                                     inventory_view_pos, 
+                                     (@team.active == member),
+                                     show_off)
+    end
 
     def init_gfx
       @face_bg = RUDL::Surface.load_new(GFX_DIR+'/face_bg.tga')
@@ -221,6 +247,20 @@ module FreeVikings
         viking_index = x / (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)
         return viking_index if viking_index < @team.size
       end
+      return nil
+    end
+
+    def spot_inside_trash(x, y)
+      one_viking_view_size = (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE)
+      trash_icon_start = 4 * one_viking_view_size
+      trash_inventory_end = trash_icon_start + one_viking_view_size
+
+      if (y < VIKING_FACE_SIZE) and
+          x > trash_icon_start and
+          x < trash_inventory_end then
+        return true
+      end
+
       return nil
     end
 

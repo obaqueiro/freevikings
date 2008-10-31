@@ -101,11 +101,11 @@ module FreeVikings
 
   class ItemsExchangeBottomPanelState < BottomPanelState
 
-    def initialize(team)
+    def initialize(team, trash)
       super(team)
       # A temporary Team containing only the vikings which participate
       # on the items exchange:
-      @exchange_participants = Team.new(*(@team.members_on_rect(@team.active.rect)))
+      @exchange_participants = Team.new(*(@team.members_on_rect(@team.active.rect) << trash))
       # We need the active member of the original team (stored in variable
       # @team) to be also an active member of the @exchange_participants Team
       while @exchange_participants.active != @team.active do

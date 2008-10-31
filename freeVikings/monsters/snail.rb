@@ -1,19 +1,6 @@
 # snail.rb
 # igneus 13.10.2005
 
-=begin
-= NAME
-Snail
-
-= DESCRIPTION
-A vociferously green snail with a violet shell.
-Goes up and down and spits poisonous spittles.
-Stops on the Shield, turns back on the wall or on the edge of a gorge which
-is wide enough to let him fall down.
-
-= Superclass
-Sprite
-=end
 
 require 'sophisticatedspritestate.rb'
 require 'sophisticatedspritemixins.rb'
@@ -22,14 +9,12 @@ require 'shooting.rb'
 
 module FreeVikings
 
-  class Snail < Sprite
+  # A vociferously green snail with a violet shell.
+  # Goes up and down and spits poisonous spittles.
+  # Stops on the Shield, turns back on the wall or on the edge of a gorge which
+  # is wide enough to let him fall down.
 
-=begin
-= Included mixins
-SophisticatedSpriteMixins::Walking
-Monster
-MonsterMixins::ShieldSensitive
-=end
+  class Snail < Sprite
 
     include SophisticatedSpriteMixins::Walking
     include Monster
@@ -44,20 +29,17 @@ MonsterMixins::ShieldSensitive
 
     GO_BETWEEN_SHOOTING = 120
 
-=begin
---- Snail.new(position)
-You can see class (({Snail})) is a very comfortable to use.
-The only argument needed during the initialization is the position to place
-the new (({Snail})). 
-So use a lot of snails anywhere :o) !
-=end
+    # You can see class Snail is a very comfortable to use.
+    # The only argument needed during the initialization is the position 
+    # to place the new Snail. 
+    # So use a lot of snails anywhere :o) !
 
     def initialize(position)
       super(position)
       @state = SophisticatedSpriteState.new
       @energy = 2
       @way_length = 0
-      move_right
+      # move_right
     end
 
     attr_reader :state
@@ -70,10 +52,12 @@ So use a lot of snails anywhere :o) !
         @rect.left += way_change
 
         update_shoot(way_change)
+      elsif @spittle then
+        # snail waits until spittle hits something
+        update_spittle_waiting
       else
-        if @spittle then
-          update_spittle_waiting
-        end
+        # snail is new; let's start move
+        move_right
       end
     end
 
