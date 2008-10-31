@@ -1,3 +1,6 @@
+[31.October 2008]
+- two new methods for TimeLock (end_time and time_left)
+
 [28.October 2008]
 - tiledmaploadstrategy.rb: more than one tileset may be used
 
