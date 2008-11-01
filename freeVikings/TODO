@@ -16,13 +16,11 @@
 
     (-) bomb - visual explosion
 
-    (-) [GO] Smashable wall
-
-    (-) bomb - wall smashing
-
-    (-) bomb should kill only Heroes and Monsters - not all Sprites
+    (-) visual effect of wall smashing
 
     (-) [VI] Erik's 'head-smash' feature
+
+    (-) bomb's flame can't reach behind wall or shield
 
 (-) [GO] Ladder
 
@@ -54,6 +52,12 @@
     increase frame rate
 
 (-) [UI] Add dialog "Back to menu/Restart level/Cancel"
+
+(-) Variable number of heroes (from 1 up to 4?); more heroes
+    (aside of Fang and Scorch from Lost Vikings 2 I would like to add at least
+    one totally new hero - Olaf's wife Hildegard);
+    Heroes are defined in location.xml; possibility to modify team on-the-fly
+    from inside level
 
 (-) [UI] Add some "dead animation" on level restart
 

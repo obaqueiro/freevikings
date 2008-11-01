@@ -84,8 +84,12 @@ module FreeVikings
 
           if s.class == BombSprite && s.explosion_forced == false then
             s.force_explosion
-          else
+            next
+          end
+
+          if s.is_a?(Hero) or s.is_a?(Monster) then
             s.destroy
+            next
           end
         }
 
@@ -93,7 +97,16 @@ module FreeVikings
         @location.items_on_rect(flame_rect).each {|i|
           if i.class == Bomb then
             @location.delete_item i
-            @location << BombSprite.new(i.rect, 1.5)
+            b = BombSprite.new(i.rect)
+            @location << b
+            b.force_explosion
+          end
+        }
+
+        # destroy walls
+        @location.static_objects_on_rect(flame_rect).each {|o|
+          if o.class == Wall then
+            o.bash
           end
         }
 
