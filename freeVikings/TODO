@@ -14,7 +14,8 @@
 
 (-) Wall/monster-smashing feature
 
-    (-) bomb - visual explosion
+    (-) bomb - animated flame (use gfx/flame_bit.tga);
+             - destruction should be done by Flame, not BombSprite
 
     (-) visual effect of wall smashing
 
@@ -40,6 +41,12 @@
         they find him
 
     (-) Transporter#update_transported_sprites: less cycles
+
+(-) Add z coordinate to game objects (so that their placement can be better
+    controlled)
+
+(-) Clean up SchwerEngine: some better configuration then through global 
+    constant GFX_DIR etc.
 
 (-) [VI] Better - more realistic - physics (jumping etc.)
 

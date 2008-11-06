@@ -9,20 +9,18 @@ module FreeVikings
 
     # A location loading Strategy (for Location tests).
     # It doesn't parse any XML files => the tests are quicker.
+
     class TestingMapLoadStrategy < MapLoadStrategy
 
       def initialize
         super(nil)
-      end
 
-      def load_map(blocks_matrix)
-	@blocks = blocks_matrix
+        @tile_width = @tile_height = 40
 
-	# nacteni typu bloku
-	x = Tile.new nil, true
-	o = Tile.new nil, false
-	# nacteni umisteni bloku
-	blcks = [
+	x = true
+	o = false
+
+	@blocks = [
 	  [x, x, x, x, x, x, x, x],
 	  [x, o, o, o, o, o, x, x],
 	  [x, o, o, o, o, o, x, x],
@@ -32,18 +30,22 @@ module FreeVikings
 	  [x, o, o, o, o, o, x, x],
 	  [x, x, x, x, x, x, x, x]
 	]
-	@max_width = blcks[0].size
-        @max_height = blcks.size
-	# prochazime radky bloku:
-	blcks.each_index { |line_num|
-	  @blocks.push blcks[line_num]
-	}
+      end
+
+      # methods imitating behaviour of LocationLoader (it is common for my
+      # mock objects that they often mock more then one "real object")
+
+      def map_loader
+        self
       end
 
       def load_exit(location)
       end
 
       def load_start(location)
+      end
+
+      def load_script(location)
       end
     end # class TestingMapLoadStrategy
 

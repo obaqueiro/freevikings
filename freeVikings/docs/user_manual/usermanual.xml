@@ -355,7 +355,7 @@
     </para>
     <para>
       Items are collected as vikings touch them, so you don't to bother
-      with pushing any key to collect them. They are storted in vikings'
+      with pushing any key to collect them. They are stored in vikings'
       inventories. Every inventory has four slots and if these are full,
       viking cannot collect any more items. To make some slots free,
       viking can either delete some item (which might be useful later!)
@@ -374,7 +374,8 @@
     </para>
     <para>
       You can select another item in viking's inventory also by clicking on it.
-      Unfortunatelly deleting items using a mouse hasn't been implemented yet.
+      Mouse can also be used to delete item: click it and drag it 
+      to the trash icon.
     </para>
     <para>
       The most complicated case: you need to move one of Baleog's items 
@@ -392,11 +393,10 @@
     <graphic fileref="images/inventory_move.png"/>
     <para>
       You can do the same - move items between vikings - also using a mouse.
-      But it has a slight disadvantage - while this operation has no
-      real-time visual effect, you have to check yourself that the vikings
-      touch etc. If the item doesn't disappear from one and appear in another
-      inventory, try again, try to move vikings, ... (or learn to use
-      the 'keyboard way' and wait for next release with better mouse support).
+      Click an item and drop it over some other viking's portrait or
+      inventory. It should appear in his inventory. If it returns to
+      the inventory where you picked it, you should ensure that the two vikings
+      touch each other (otherwise they can't give items to each other).
     </para>
   </chapter>
 

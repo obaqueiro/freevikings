@@ -30,13 +30,14 @@ class TestLocation < Test::Unit::TestCase
   end
 
   def testSpritesOnRect
-    sprite = Sprite.new([90,90])
+    sprite = Sprite.new([1000,1000])
     @loc.add_sprite sprite
-    assert_equal 1, @loc.sprites_on_rect(Rectangle.new(80,80,20,20)).size, "I made one sprite waiting on position [12,12], so there must be one found."
+    found_sprites = @loc.sprites_on_rect(Rectangle.new(990,990,20,20))
+    assert_equal 1, found_sprites.size, "I made one sprite waiting on position [1000,1000], so there must be one found."
   end
 
   def testTopLeftValidPosition
-    valid_position = Rectangle.new(3 * Map::TILE_SIZE, 3 * Map::TILE_SIZE, WIDTH, HEIGHT)
+    valid_position = Rectangle.new(3 * @loc.map.tile_size, 3 * @loc.map.tile_size, WIDTH, HEIGHT)
     assert @loc.area_free?(valid_position), "Rectangle does not collide with any of the blocks - it's position should be considered valid."
   end
 
@@ -49,7 +50,7 @@ class TestLocation < Test::Unit::TestCase
   # mela byt platna.
 
   def testValidPositionOnTheTilesEdge
-    r = Rectangle.new(Map::TILE_SIZE*2, Map::TILE_SIZE, WIDTH, HEIGHT)
+    r = Rectangle.new(@loc.map.tile_size*2, @loc.map.tile_size, WIDTH, HEIGHT)
     assert @loc.area_free?(r), "Rectangle is on the edge of the valid zone, but it's position should still be considered valid."
   end
 
@@ -61,8 +62,8 @@ class TestLocation < Test::Unit::TestCase
   # To by nemelo byt mozne.
 
   def testInvalidPositionWithFeetInTheBlock
-    position = Rectangle.new(1.5*Map::TILE_SIZE, 
-                             @loc.background.h - (@sprite.image.h + Map::TILE_SIZE/2),
+    position = Rectangle.new(1.5*@loc.map.tile_size, 
+                             @loc.map.height - (@sprite.image.h + @loc.map.tile_size/2),
                              WIDTH,
                              HEIGHT)
     assert_equal false, @loc.area_free?(position), "Position mustn't be considered valid when the Rectangle has it's bottom edge in the solid block"

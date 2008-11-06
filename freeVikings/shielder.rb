@@ -66,7 +66,7 @@ module FreeVikings
     private
 
     def init_images
-      @image = Model.load_new(File.open('gfx/models/olaf_model.xml'))
+      @image = Model.load_new(File.open(FreeVikings::GFX_DIR + '/models/olaf_model.xml'))
 
       @portrait = Portrait.new 'olaf_face.tga', 'olaf_face_unactive.gif', 'dead_face.png'
     end

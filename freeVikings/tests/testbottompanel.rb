@@ -35,6 +35,8 @@ class TestBottomPanel < Test::Unit::TestCase
     # Click onto the first item in Johann's inventory:
     spot_in_johanns_first_item = [BottomPanel::VIKING_FACE_SIZE + 5, 5]
     @bottompanel.mouseclick(spot_in_johanns_first_item)
+    @bottompanel.mouserelease(spot_in_johanns_first_item)
+
     assert_equal "knife", @johann.inventory.active, "We've simulated click onto a 'knife', so it must be active."
   end
 end

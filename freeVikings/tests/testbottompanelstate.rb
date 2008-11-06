@@ -32,8 +32,9 @@ class TestItemsExchangeBottomPanelState < Test::Unit::TestCase
     @viking2 = Viking.new 'Vali'
     @viking3 = Viking.new 'Ve'
     @team = Team.new @viking1, @viking2, @viking3
+    @trash = Viking.new 'trash'
 
-    @state = ItemsExchangeBottomPanelState.new @team
+    @state = ItemsExchangeBottomPanelState.new @team, @trash
   end
 
   def testGiveItemToSomeoneWhoseInventoryIsFull

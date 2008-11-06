@@ -143,12 +143,6 @@ module FreeVikings
 
     attr_reader :theme
 
-    # Returns a RUDL::Surface with Map blocks painted.
-
-    def background
-      @map.background
-    end
-
     # == Talk related methods
 
     # Starts a new talk.

@@ -112,29 +112,36 @@
     <section>
       <title>New map</title>
       <para>
-	Now we will try to design a new map using
-	<application>Tiled</application>. First you must have some tiles.
-	Soon you will use your own fancy tiles or the awful ones which come
-	packed with freeVikings, but now we will use the tiles I have prepared
-	for this tutorial. Make a new directory somewhere. Then copy the image
-	file with tiles to that directory. They are in the directory 
-	with examples for this chapter:
-	<filename>freeVikings/docs/develop_guide/examples/CH1_FirstMap/simple_tiles.png</filename>
+	Before starting a new map in Tiled, create a directory for it.
+	Every freeVikings level has to be stored in it's own directory.
+      </para>
+      <para>
+	Now we can design the map. First you must have some tiles.
+	I have prepared a very simple set of two tiles for you -
+	you will find the image in the directory of examples for this chapter:
+	<filename>develop_guide/examples/CH1_FirstMap/simple_tiles.png</filename>.
+	Copy it to the directory you prepared for your new map.
       </para>
       <para>
 	Go to <application>Tiled</application> and create a new map 
-	(menu File, item New, or 
-	<keycombo><keysym>Ctrl</keysym><keysym>N</keysym></keycombo>).
-	A dialog will pop up, change the default values to those you can 
-	see on the image below. Currently freeVikings can only work with tiles
-	of size 40x40 pixels (maybe one day I'll make it more flexible) and 
-	maps should have at least 16x12 tiles, because a smaller map doesn't
+	(<menuchoice>
+	<guimenu>File</guimenu> <guimenuitem>New</guimenuitem>
+	<shortcut>
+	  <keycombo><keysym>Ctrl</keysym><keysym>N</keysym></keycombo>
+	</shortcut>
+	</menuchoice>).
+	A dialog will pop up. Change the default values to those you can 
+	see on the image below. Tile size 40x40 px is the most common one
+	for freeVikings map (most of freeVikings standard tilesets are
+	made in this tile size and so is also the tileset I prepared
+	for this tutorial).
+	Maps should have at least 16x12 tiles, because a smaller map doesn't
 	fill the game window (and it's so small, that there will be no fun 
 	for the vikings I think).
 	<graphic fileref="images/tiled_newmap.png"/>
       </para>
       <para>
-	It's the time to load the tiles. From menu Tileset choose item 
+	Load the tiles. From menu Tileset choose item 
 	New tileset. If you want you can change the Tileset name, but it is 
 	of no importance. What is important is to tick the checkbox
 	labelled "Reference tileset image" and then click on the Browse button
@@ -171,65 +178,14 @@
 	(sometimes useful).
       </para>
       <para>
-	So I have designed the map and saved it in the directory where I have
-	the tileset image.
 	<graphic fileref="images/tiled_firstmap1.png"/>
-	My (very simple) idea is that 
-	the vikings will start in the top left corner and they'll always go
-	down, in every story some tough monster will be waiting to eat them.
-	After they bash the last monster, they will get into the lift
-	which will take them to the EXIT in the top right corner of the map.
-	Now we have the map, in the future chapters we'll add monsters etc.
-      </para>
-      <para>
-	What I should have, but haven't told you:
-	<itemizedlist>
-	  <listitem><para>vikings are of size 80x100 px</para></listitem>
-	  <listitem><para>so every corridor must be at least three 
-	  tiles high</para></listitem>
-	  <listitem><para>and every shaft at least three tiles 
-	  wide</para></listitem>
-	</itemizedlist>
-	or the vikings won't be able to pass through...
-      </para>
-    </section>
-
-    <section>
-      <title>Metadata</title>
-      <para>
-	The map is nearly ready to use. We have to add just some additional
-	information for the freeVikings game engine. First we add information
-	about the solid layer.
-      </para>
-      <para>
-	<application>Tiled</application> gives you a possibility to have 
-	a multi-layer map and freeVikings support them. Usually you have
-	one layer, which is called "solid layer". It's the layer of solid tiles
-	which the vikings can't go through. Then you can have one or more
-	layers, which are there just to make the map nicer. But of course 
-	the game engine doesn't know which layer you want to be the solid one.
-      </para>
-      <para>
-	From menu Map choose the item Properties. A small window will pop up,
-	where you can edit a list of key-value pairs.
-	<graphic fileref="images/tiled_mapproperties.png"/>
-	Add a new pair with key "solid_layer" and value, which is the name of 
-	the layer you want to be solid (names of layers are in the layers panel
-	on the right side of the <application>Tiled</application> window).
-      </para>
-      <tip>
-	<title>One more property</title>
-	<para>
-	  <application>Tiled</application> sometimes "forgets" the last 
-	  property from the list, so it can be useful to add one more
-	  property (e.g. key "axb7", value "7785") which would be forgotten
-	  if <application>Tiled</application> had a bad day.
-	  (I haven't still found out when and why this error in 
-	  <application>Tiled</application> occurs.
-	</para>
-      </tip>
-      <para>
-	Now you can save the map, it is ready to use.
+	On the screenshot you can see example map which you can find
+	in directory of examples for this chapter 
+	(<filename>develop_guide/examples/CH1_FirstMap/</filename>).
+	It is small (16x12 tiles - i.e. 640 x 480 px, because tile is
+	40 x 40 px) and has a really stupid idea: vikings start at the
+	top left corner and go down the stairs until they reach exit,
+	which will be placed somewhere at the bottom right corner.
       </para>
     </section>
 
@@ -237,15 +193,11 @@
       <title>Location data</title>
       <para>
 	Before being able to run freeVikings with our new map, we must
-	create a text file which describes it. From historic reasons
-	this file is called "location file" and it's name is always
+	create a text file which describes it. 
+	This file is called "location file" and it's name is always
 	<filename>location.xml</filename>.
 	It's a XML file with special
-	tags, so I recommend you to use some XML-friendly editor 
-	(I usually use <application>Emacs</application>, less often
-	<application>Scintilla</application> or 
-	<application>FreeRide</application>; both of them come with Ruby
-	One-Click-Installer).
+	tags.
 	I assume you know at least the basics of XML (or HTML),
 	but even if you don't it shouldn't be a problem for you to get the
 	idea quickly and make the description files like an old XML guru.
@@ -267,8 +219,8 @@
   &lt;body&gt;
     &lt;password&gt;FRMP&lt;/password&gt;
     &lt;map src="<emphasis>firstmap_loc.tmx</emphasis>"/&gt;
-    &lt;start horiz="<emphasis>50</emphasis>" vertic="<emphasis>60</emphasis>"/&gt;
-    &lt;exit horiz="<emphasis>1110</emphasis>" vertic="<emphasis>70</emphasis>"/&gt;
+    &lt;start horiz="<emphasis>70</emphasis>" vertic="<emphasis>60</emphasis>"/&gt;
+    &lt;exit horiz="<emphasis>520</emphasis>" vertic="<emphasis>320</emphasis>"/&gt;
   &lt;/body&gt;
 &lt;/location&gt;
       </programlisting>
@@ -315,8 +267,8 @@
       <section>
 	<title>Start and Exit</title>
 	<programlisting>
-    &lt;start horiz="<emphasis>50</emphasis>" vertic="<emphasis>60</emphasis>"/&gt;
-    &lt;exit horiz="<emphasis>1110</emphasis>" vertic="<emphasis>70</emphasis>"/&gt;	  
+    &lt;start horiz="<emphasis>70</emphasis>" vertic="<emphasis>60</emphasis>"/&gt;
+    &lt;exit horiz="<emphasis>520</emphasis>" vertic="<emphasis>320</emphasis>"/&gt;	  
 	</programlisting>
 	<para>
 	  Both tags have the same structure. Values of attributes horiz and 
@@ -336,31 +288,169 @@
 	  position of the EXIT point that all of them have to reach to
 	  pass to the next level.
 	</para>
+	<para>
+	  How to get the right position of start and exit?
+	  Ask Tiled to show grid and coordinates:
+	  <menuchoice>
+	    <guimenu>View</guimenu>
+	    <guimenuitem>Show Grid</guimenuitem>
+	    <shortcut>
+	      <keysym>Ctrl</keysym><keysym>G</keysym>
+	    </shortcut>
+	  </menuchoice>
+	  and then
+	  <menuchoice>
+	    <guimenu>View</guimenu>
+	    <guimenuitem>Show Coordinates</guimenuitem>
+	  </menuchoice>
+	  <graphic fileref="images/tiled_firstmap_start.png" />
+	  I decided to start in the top left corner. Viking is 80px wide
+	  and 100px high.
+	  Surface of the first step is 5th row of tiles (y = 4*40 = 160px).
+	  Vikings' y-coordinate has to be "floor - viking_height", i.e.
+	  160 - 100 = 60. x-coordinatecan be anything higher than 40
+	  (because first column of tiles is a wall)
+	</para>
+	<programlisting>
+	  &lt;start horiz="<emphasis>70</emphasis>" vertic="<emphasis>60</emphasis>"/&gt;
+	</programlisting>
+	<para>
+	  Note that you don't have to place vikings directly on the floor
+	  as I've just done. You can as well place them somewhere in the free
+	  space so that they fall at the beginning of level.
+	</para>
+	<para>
+	  <graphic fileref="images/tiled_firstmap_exit.png" />
+	  Position of exit is computed in a similar way. Exit's size is
+	  40x40px (same as size of tile).
+	</para>
+	<programlisting>
+	  &lt;exit horiz="<emphasis>520</emphasis>" vertic="<emphasis>320</emphasis>"/&gt;	  
+	</programlisting>
       </section>
     </section>
 
     <section>
       <title>Try it!</title>
       <para>
-	We are now prepared to 
+	Our new map is now ready to the first test! Go to the freeVikings 
+	directory and invoke freevikings.rb as follows:
+	<screen>
+	  <prompt>[igneus@vidhost freeVikings]$</prompt> <userinput>./freevikings.rb -l YOUR/LEVEL/DIRECTORY</userinput>
+	</screen>
+	For example I want to play the example level for this chapter:
+	<screen>
+	  <prompt>[igneus@vidhost freeVikings]$</prompt> <userinput>./freevikings.rb -l ./docs/develop_guide/examples/CH1_FirstMap/</userinput>
+	</screen>
+	Option <option>-l</option> tells freeVikings to load level
+	(or, as you will see later, a set of levels) from directory
+	given as argument to the option. So when you start new game
+	as usual, instead of the familiar first ice level with bear
+	you see your new level!
+	<graphic fileref="images/firstmap_test.png" />
       </para>
     </section>
-  </chapter> 
+  </chapter>
 
   <!-- ====================================================================
-       Chapter: FREEVIKINGS BASICS
-       Basic concepts of the game world.
+       Chapter: TILESETS
+       ==================================================================== -->
+
+  <chapter>
+    <title>Tilesets</title>
+
+    <para>
+      In the previous chapter we created a simple map built of two tiles.
+      Any game developer must have laughed a lot - two tiles are a really
+      poor tileset. You can look at tilesets shipped with freeVikings -
+      you can find them in directory <filename>gfx/tilesets/</filename>.
+      Since all of them are really poor, you'll probably want to make your
+      own.
+    </para>
+    <note>
+      <title>Where are tilesets for most freeVikings standard levels?</title>
+      <para>
+	Most of levels from the default campaign (ice levels etc.) are
+	legacy from "pre-Tiled" epoch. They are built of tiles stored
+	file-per-tile; you can find them in subdirectories of
+	<filename>gfx/themes/</filename> (together with images
+	of some theme-specific objects).
+      </para>
+    </note>
+    <para>
+      Tileset is simply a PNG image where tiles are painted next to each other
+      without any gaps. All tiles of a tileset must be of the same size.
+      Recommended tile size is 40x40px. However, freeVikings releases after 0.6
+      support even custom-sized tilesets. The only limitation is that
+      all tilesets used in one map have the same size (even if Tiled
+      provides limited possibility to combine different tile sizes in one map!)
+    </para>
+    <para>
+      It is really important that your tileset image is in PNG format, because
+      Tiled can't work with other graphic formats (freeVikings can).
+    </para>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: SCRIPTING
+       Writing location scripts.
+       ==================================================================== -->
+
+  <chapter>
+    <title>Scripting</title>
+
+    <para>
+      For reading of this chapter it is strongly recommended that you've
+      spent a few hours programming in Ruby, because otherwise you will have
+      big problems - it isn't hard to understand and copy basic syntactic
+      constructs, but as soon as errors occur, you can't go on without
+      some Ruby programming experience.
+    </para>
+    <para>
+      Look at the directory with examples for this chapter 
+      (<filename>examples/CH3_Scripting/</filename>). I have prepared
+      two levels for you. In directory <filename>FullLevel</filename>
+      you will find level with several objects - you can try it right now
+      to see how it works and look into it as to kind of reference.
+      Directory <filename>EmptyLevel</filename> contains the same map
+      as FullLevel, but without any objects. You should copy
+      EmptyLevel somewhere and follow this tutorial. If you
+      follow it carefully step-by-step, you will finally get
+      the same as is in FullLevel.
+    </para>
+
+    <section>
+      <title>Tell freeVikings about a script file</title>
+      <para>
+	huh
+      </para>
+    </section>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: ADVANCED MAP TOPICS
+       more layers; solid layer; foreground and background layers
+       ==================================================================== -->
+
+  <chapter>
+    <title>Advanced mapping topics</title>
+
+    <para>
+      To know full magic of freeVikings map creation, you should be able
+      to add some background to your map and possibly also some
+      foreground so that os some places vikings can e.g. walk behind
+      a semi-transparent wall.
+    </para>
+  </chapter>
+
+  <!-- ====================================================================
+       Chapter: GAME OBJECTS
        What is the Location, StaticObjects, ActiveObjects, Sprites, Items,
        what are they good for.
        ==================================================================== -->
 
   <!-- ====================================================================
-       Chapter: SCRIPTING
-       Writing location scripts with all the fancy stuff.
-       ==================================================================== -->
-
-  <!-- ====================================================================
-       Chapter: COOL STUFF
+       Chapter: FROM SEPARATE LEVEL TO COMPLEX WORLD
        About themes, passwords, level suites.
        ==================================================================== -->
 

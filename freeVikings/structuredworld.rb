@@ -43,7 +43,7 @@ module FreeVikings
       # Load level with given password:
       if password != '' then
         unless Level.valid_level_password?(password)
-          raise PasswordError, "Password \"#{password}\" of type #{password.class} isn't a valid location password. A valid password must be #{String::LOCATION_PASSWORD_LENGTH} characters long and may contain alphanumeric characters only."
+          raise PasswordError, "Password \"#{password}\" of type #{password.class} isn't a valid location password. A valid password must be #{Level::LEVEL_PASSWORD_LENGTH} characters long and may contain alphanumeric characters only."
         end
         @level = @levelsuite.level_with_password(password)
         create_location

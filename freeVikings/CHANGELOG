@@ -1,3 +1,16 @@
+[6.November 2008]
+- tests/...: fixes of tests broken after modifications in BottomPanel,
+  Map loading etc.
+- monstermixins.rb: RD->RDoc; fixed one problem in mixin HeroBashing;
+  documentation for HeroBashing improved
+- structuredworld.rb: fixed error in log message
+- location.rb: removed method Location#background
+- warior.rb, sprinter.rb, shielder.rb: a bit cleaner way of loading Model
+(Modifications listed above took 2 hours and were done because of fixing broken
+tests.)
+- bomb.rb: Bomb has a visible flame
+- docs/develop_guide/ : on Monday or so I worked on the Developer's guide
+
 [1.November 2008]
 - bomb.rb: bomb only kills Heroes and Monsters, not all sprites;
            fired bombs are forced to explode

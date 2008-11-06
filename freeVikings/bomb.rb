@@ -3,9 +3,11 @@
 
 module FreeVikings
 
-  # Bomb is a very nice and safe item. However, once it is used,
-  # it becomes explosive and destroys monsters, vikings and even some
-  # other objects (like some walls).
+  # Bomb is a very nice and safe item. However, once it is used
+  # by a viking (or touched by flame of exploding bomb), it is replaced
+  # with instance of Bomb::BombSprite, which looks nearly the same like
+  # Bomb, but is animated and explodes after some time, killing Monsters,
+  # Heroes, destroying walls and initiating other bombs.
 
   class Bomb < Item
 
@@ -17,8 +19,11 @@ module FreeVikings
       @image = Image.load 'bomb1.tga'
     end
 
-    # Actually, BombSprite (which is a highly destructive Sprite) is 
-    # what makes fun. Not Bomb (which is an Item) itself.
+    # See what has been said in documentation of class Bomb.
+    #
+    # When exploding, BombSprite makes use of another internal object -
+    # Bomb::BombSprite::Flame, which makes animated flame effect and does
+    # the actual work of destruction.
 
     class BombSprite < Sprite
 
@@ -74,6 +79,9 @@ module FreeVikings
         unless @explosion_timer.free? then
           return true
         end
+
+        # place flame in the location:
+        @location << Flame.new(@rect.center)
 
         flame_rect = @rect.expand(90, 40)
 
@@ -137,6 +145,36 @@ module FreeVikings
         n.top += @location.ticker.delta * VELOCITY
         return n
       end
-    end
-  end
-end
+
+      public
+
+      # When Bomb::BombSprite explodes, places Bomb::BombSprite::Flame
+      # into the Location; Flame makes an animated flame effect and kills
+      # Monsters, Heroes, destroys destroyable walls and initiates
+      # Bombs. It also forces BombSprites to explode sooner.
+
+      class Flame < Sprite
+
+        WIDTH = 180
+        HEIGHT = 80
+
+        # position isn't handled as a position of top-left corner,
+        # but as a position of center!
+        def initialize(position)
+          super([position[0]-WIDTH/2, position[1]-HEIGHT/2])
+          @flame_img = Image.load 'flame_bit.tga'
+          s = RUDL::Surface.new [@rect.w, @rect.h]
+          s.fill [255,0,0]
+          @image = Image.wrap s
+          @display_lock = TimeLock.new(1)
+        end
+
+        def update
+          if @display_lock.free? then
+            @location.delete_sprite self
+          end
+        end
+      end # class Bomb::BombSprite::Flame
+    end # class Bomb::BombSprite
+  end # class Bomb
+end # module FreeVikings

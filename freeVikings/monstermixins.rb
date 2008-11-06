@@ -1,33 +1,30 @@
 # monstermixins.rb
 # igneus 29.6.2005
 
-=begin
-= MonsterMixins
-Mixin modules from namespace ((<MonsterMixins>)) contain methods which
-can be useful for programming different types of monsters.
-=end
-
 module FreeVikings
+
+  # Mixin modules from namespace MonsterMixins contain methods which
+  # can be useful for programming different types of monsters.
 
   module MonsterMixins
 
-=begin
-== HeroBashing
-
---- HeroBashing#bash_heroes
-Finds all the colliding Heroes and hurts them.
-If the instance variable ((|@angry|)) is true, hurts every Hero twice.
-Class variable ((|@@bash_delay|)) must contain a number which means a delay 
-between two strikes in seconds. (It's because on the quicker computers
-((<HeroBashing>)) monsters would be quicker killers than on the slower ones.)
-=end
+    # Mixin for Monsters which want to periodically try to hit colliding
+    # Heroes.
+    #
+    # How to use?
+    # - include MonsterMixins::HeroBashing in your Monster Sprite
+    # - if you want to set your custom delay between to strikes to Heroes,
+    #   set instance variable @bash_delay (number of seconds)
+    # - if you want your Monster to take Heroes two lifes at once,
+    #   set instance variable @angry to true
+    # - call method bash_heroes in update; it checks if a strike should be made
+    #   and tries to hit some Hero
 
     module HeroBashing
 
       @@bash_delay = 3
 
       def bash_heroes
-        @bash_delay = @@bash_delay unless defined? @bash_delay
         @last_bash = 0 unless @last_bash
 
         return unless ready_to_attack?
@@ -40,25 +37,34 @@ between two strikes in seconds. (It's because on the quicker computers
       end
 
       def ready_to_attack?
-        @location.ticker.now >= (@last_bash + @bash_delay)
+        if ! defined?(@last_bash) then
+          @last_bash = @location.ticker.now - 2 * bash_delay
+        end
+
+        return @location.ticker.now >= (@last_bash + bash_delay)
+      end
+
+      # Returns delay between two strikes to colliding Heroes.
+      # It's mainly for internal use inside the code of mixin.
+
+      def bash_delay
+        if defined? @bash_delay
+          @bash_delay
+        else
+          @@bash_delay
+        end
       end
     end # module HeroBashing
 
-=begin
-== ShieldSensitive
-Mixin for (({Monster}))s which need to react onto a collision 
-with a (({Shield})). (Typical reaction is to stop or to turn and escape.)
-To be a ((<ShieldSensitive>)) a (({Monster})) must be a sort 
-of a SophisticatedSprite. (See documentation 
-for (({SophisticatedSpriteState})) and (({SophisticatedSpriteMixins})).)
-=end
+    # Mixin for Monsters which need to react onto a collision 
+    # with a Shield. (Typical reaction is to stop or to turn and escape.)
+    # To be a ShieldSensitive a Monster must be a sort 
+    # of a SophisticatedSprite. (See documentation 
+    # for SophisticatedSpriteState and SophisticatedSpriteMixins.)
 
     module ShieldSensitive
 
-=begin
---- ShieldSensitive#stopped_by_shield?
-Detects if the (({Monster})) collides with any (({Shield})).
-=end
+      # Detects if the Monster collides with any Shield.
 
       def stopped_by_shield?
         if @location.sprites_on_rect(self.rect).find {|s| 
@@ -69,12 +75,9 @@ Detects if the (({Monster})) collides with any (({Shield})).
         return false
       end
 
-=begin
---- ShieldSensitive#serve_shield_collision
-If the (({Monster})) collides ith a (({Shield})), it yields into a given block.
-If there is no (({Shield})) and the (({Monster})) is standing, it gets up
-and goes right.
-=end
+      # If the Monster collides ith a Shield, it yields into a given block.
+      # If there is no Shield and the Monster is standing, it gets up
+      # and goes right.
 
       def serve_shield_collision
         if stopped_by_shield? then
