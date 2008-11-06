@@ -1,3 +1,8 @@
+[6.November 2008]
+- model.rb: RD->RDoc
+- map.rb & associated test: added methods Map#point_free? and
+  Map#largest_free_rect
+
 [31.October 2008]
 - two new methods for TimeLock (end_time and time_left)
 

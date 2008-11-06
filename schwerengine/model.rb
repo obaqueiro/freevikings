@@ -3,41 +3,29 @@
 
 module SchwerEngine
 
-=begin
-= NAME
-Model
-
-= DESCRIPTION
-((<Model>)) is an associative container which binds a Sprite, it's states
-and images for these states.
-
-= Superclass
-Object
-=end
+  # Model is an associative container which binds a Sprite, it's states
+  # and images for these states.
 
   class Model
 
-=begin
---- Model.new(hash=nil)
-* ((|hash|)) is an optional argument. It can contain hash with (({String}))
-  keys and (({Image})) compatible values. It is used as a set of
-  state=>image pairs if supplied.
-
-Example:
-Let's have a (({Sprite})) ((|bar|)). We want to make an (({Model}))
-for it.
-
-i = Image.load 'foo.png'
-
-- one way of doing things
-
-  bank = Model.new(bar)
-  bank.add_pair 'foo_state', i
-
-- another way which is as good as the first one
-
-  bank = Model.new(bar, {'foo_state' => i})
-=end
+    # hash:: is an optional argument. It can contain hash with String
+    #        keys and Image compatible values. It is used as a set of
+    #        state=>image pairs if supplied.
+    #
+    # Example:
+    # Let's have a Sprite bar. We want to make a Model
+    # for it.
+    #
+    # i = Image.load 'foo.png'
+    #
+    # - one way of doing things
+    #
+    #   bank = Model.new(bar)
+    #   bank.add_pair 'foo_state', i
+    #
+    # - another way which is as good as the first one
+    #
+    #   bank = Model.new(bar, {'foo_state' => i})
 
     def initialize(hash=nil)
       @log = Log4r::Logger['images log']
@@ -50,11 +38,8 @@ i = Image.load 'foo.png'
       end
     end
 
-=begin
---- Model.load_new(xml_source)
-Loads a new (({Model})) from a valid REXML-parsable XML source
-((|xml_source|)) and returns it.
-=end
+    # Loads a new Model from a valid REXML-parsable XML source
+    # xml_source and returns it.
 
     def Model.load_new(xml_source)
       m = Model.new
@@ -64,15 +49,13 @@ Loads a new (({Model})) from a valid REXML-parsable XML source
       return m
     end
 
-=begin
---- Model#add_pair(state, image_object)
-Associates the SchwerEngine::Image object with a state state (usually a String,
-eventually a Numeric, a boolean value or something else).
-It controls if the image has sizes equal to the sizes of the sprite which is 
-the Model's owner. If the sizes aren't same, RuntimeError is thrown.
-This exception is thrown after the image is associated with the state, so you 
-can just catch the exception and go on without problems.
-=end
+    # Associates the SchwerEngine::Image object with a state state 
+    # (usually a String, eventually a Numeric, a boolean value or something 
+    # else). It controls if the image has sizes equal to the sizes 
+    # of the sprite which is  the Model's owner. If the sizes aren't same, 
+    # RuntimeError is thrown.
+    # This exception is thrown after the image is associated with the state, 
+    # so you can just catch the exception and go on without problems.
 
     def add_pair(state, image_object)
       @log.debug "Associating image #{image_object.to_s} - #{image_object.name} with a state #{state.to_s}"
@@ -98,11 +81,8 @@ can just catch the exception and go on without problems.
       return self
     end
 
-=begin
---- Model#image(sprite)
-Returns the Image for owner's recent state.
-Argument ((|sprite|)) is an object which responds to (({state})).
-=end
+    # Returns the Image for owner's recent state.
+    # Argument sprite is an object which responds to state.
 
     def image(sprite)
       begin
@@ -112,21 +92,15 @@ Argument ((|sprite|)) is an object which responds to (({state})).
       end
     end
 
-=begin
---- Model::ImageWithBadSizesException (exception class)
-This exception is thrown when an image which has different sizes than
-the owner is added into an ((<Model>)). It's important that the exception
-is thrown just ((*after*)) the image is added, so if you expect it, you
-can catch the exception and carry on whistling...
-=end
+    # This exception is thrown when an image which has different sizes than
+    # the owner is added into an Model. It's important that the exception
+    # is thrown just after the image is added, so if you expect it, you
+    # can catch the exception and carry on whistling...
     class ImageWithBadSizesException < RuntimeError
     end
 
-=begin
---- Model::NoImageAssignedException (exception class)
-Exceptions of this type are thrown by ((<Model#image>)) if there
-is no image for the owner's state in the ((<Model>)).
-=end
+    # Exceptions of this type are thrown by Model#image if there
+    # is no image for the owner's state in the Model.
     class NoImageAssignedException < RuntimeError
       def initialize(state)
         @message = "No image assigned for a state #{state.to_s}."
@@ -135,10 +109,7 @@ is no image for the owner's state in the ((<Model>)).
       alias_method :to_s, :message
     end # class NoImageAssignedException
 
-=begin
---- Model::ModelLoader
-Small objects used to load Model from XML source
-=end
+    # Small objects used to load Model from XML source
 
     class ModelLoader
 

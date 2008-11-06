@@ -144,6 +144,114 @@ module SchwerEngine
       return true # solid tile hasn't been found yet, area is free
     end
 
+    # Says if given point [x,y] is in a free area
+
+    def point_free?(xy_ary)
+      x, y = xy_ary
+
+      if x < 0 || y < 0 || x > width || y > height then
+        return false
+      end
+
+      row = (y/@tile_height)
+      col = (x/@tile_width)
+
+      # solid tile is true, free tile false => return negation of tile
+      return ! @blocks[row][col]
+    end
+
+    # accepts a Rectangle or Array of two numbers (position of a point)
+    # and returns Rectangle containing that point or Rectangle and
+    # expanded as much as possible (but where more ways of expansion
+    # are, just one is returned and it is not granted to be the way
+    # of biggest area).
+    # If point or Rectangle isn't free, empty Rectangle on given position
+    # is returned.
+    # !!! If a non-free Rectangle is given, empty rectangle is returned
+    # regardless of any part of given Rectangle being free or not!
+
+    def largest_free_rect(position)
+      if position.is_a? Rectangle then
+        if ! area_free?(position) then
+          return Rectangle.new(position.left, position.top, 0, 0)
+        end
+
+        expanded = position
+      else
+        # position is Array [x,y]
+        x,y = position
+
+        if ! point_free?(position) then
+          return Rectangle.new(x,y,0,0)
+        end
+
+        expanded = Rectangle.new(x,y,0,0)
+      end
+
+      right_border_column = expanded.right / @tile_width
+      left_border_column = expanded.left / @tile_width
+      top_border_row = expanded.top / @tile_height
+      bottom_border_row = expanded.bottom / @tile_height
+
+      # expand to the right:
+      catch :jump do
+        loop do
+          top_border_row.upto(bottom_border_row) do |row|
+            if @blocks[row][right_border_column+1] == true then
+              throw :jump
+            end
+          end
+          right_border_column += 1
+        end
+      end
+
+      # expand to the left:
+      catch :jump do      
+        loop do
+          top_border_row.upto(bottom_border_row) do |row|
+            if @blocks[row][left_border_column-1] == true then
+              throw :jump
+            end
+          end
+          left_border_column -= 1
+        end
+      end
+
+      # expand up:
+      catch :jump do
+        loop do
+          left_border_column.upto(right_border_column) do |col|
+            if @blocks[top_border_row-1][col] == true then
+              throw :jump
+            end
+          end
+          top_border_row -= 1
+        end
+      end
+
+      # expand down:
+      catch :jump do
+        loop do
+          left_border_column.upto(right_border_column) do |col|
+            if @blocks[bottom_border_row+1][col] == true then
+              throw :jump
+            end
+          end
+          bottom_border_row += 1
+        end
+      end
+
+      x = left_border_column * @tile_width
+      y = top_border_row * @tile_height
+      # I don't understand well why in following two lines
+      # values of right and bottom border have to be incremented - it may be
+      # a bug!
+      w = ((right_border_column+1) * @tile_width) - x
+      h = ((bottom_border_row+1) * @tile_height) - y
+
+      return Rectangle.new(x,y,w,h)
+    end
+
     private
 
     def lock

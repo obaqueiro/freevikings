@@ -54,4 +54,22 @@ class TestMap < Test::Unit::TestCase
     assert_equal(false, @map.area_free?(RECT.new(200,60,40,40)))
   end
 
+  def testLargestFreeRect_OK
+    center = [80,80]
+    assert_equal RECT.new(40,40,200,240), @map.largest_free_rect(center)
+  end
+
+  def testLargestFreeRect_error
+    center = [0,0]
+    assert_equal RECT.new(0,0,0,0), @map.largest_free_rect(center), "[0,0] is not in a free area - returned rect must be empty"
+  end
+
+  def testPointFree
+    assert_equal true, @map.point_free?([50,50]), "Point in free area"
+    assert_equal false, @map.point_free?([10,10]), "Point in solid tile"
+
+    assert_equal false, @map.point_free?([-50, -50]), "Point out of map"
+    assert_equal false, @map.point_free?([70000, 80000]), "Point out of map"
+  end
+
 end # class TestMap
