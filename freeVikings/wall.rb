@@ -16,10 +16,12 @@ module FreeVikings
 
     BRICK_SIZE = 40
 
-    OK, DAMAGED, DISAPPEARING = 2, 1, 0
+    OK, DISAPPEARING, KO = 2, 1, 0
 
-    def initialize(position, bricks_width, bricks_height)
+    def initialize(position, bricks_width, bricks_height, location)
       super(position)
+
+      @location = location
 
       @bricks_width = bricks_width
       @bricks_height = bricks_height
@@ -27,13 +29,13 @@ module FreeVikings
       @rect.w = @bricks_width * BRICK_SIZE
       @rect.h = @bricks_height * BRICK_SIZE
 
-      @solid = true
+      @state = OK
 
       create_images
     end
 
     def solid?
-      @solid
+      @state != KO
     end
 
     # Called when wall is hit by Erik's head or bomb
@@ -41,28 +43,68 @@ module FreeVikings
     def bash
       return unless solid?
 
-      @image = @image_destr
-      @solid = false
+      @state = DISAPPEARING
+      @destroy_brick = 0
+      @destroy_time = Time.now.to_f
+
+      @location.add_sprite self
+    end
+
+    def update
+      time_since_bash = Time.now.to_f - @destroy_time
+
+      while (time_since_bash / 0.3) > @destroy_brick do
+        if (@destroy_brick < num_bricks) then
+          @image.image.blit @damaged.image, brick_coordinates(@destroy_brick)
+        end
+        if ((@destroy_brick - 1) <= num_bricks) &&
+            ((@destroy_brick - 1) >= 0) then
+          @image.image.blit @destroyed.image, brick_coordinates(@destroy_brick-1)
+        end
+        @destroy_brick += 1
+      end
+
+      if @destroy_brick > num_bricks then
+        @state = KO
+        @location.delete_sprite self
+      end
+    end
+
+    # Accepts brick's index, returns it's coordinates [relative to Wall's
+    # rectangle]
+
+    def brick_coordinates(i)
+      if i < 0 then
+        raise ArgumentError, "Index must be equal or greater to 0."
+      end
+      if i >= num_bricks then
+        raise ArgumentError, "Index out of range: Wall has '#{num_bricks}' bricks."
+      end
+
+      return [(i % @bricks_width) * BRICK_SIZE,
+              (i / @bricks_width) * BRICK_SIZE]
+    end
+
+    def num_bricks
+      @bricks_width * @bricks_height
     end
 
     private
 
     def create_images
       s = RUDL::Surface.new [@rect.w, @rect.h]
-      r = RUDL::Surface.new [@rect.w, @rect.h]
 
       @brick = Image.load 'brick.tga'
+      @damaged = Image.load 'brick_damaged.tga'
       @destroyed = Image.load 'brick_destroyed.tga'
 
       0.upto(@bricks_width) {|col|
         0.upto(@bricks_height) {|row|
           s.blit @brick.image, [col*BRICK_SIZE, row*BRICK_SIZE]
-          r.blit @destroyed.image, [col*BRICK_SIZE, row*BRICK_SIZE]
         }
       }
 
-      @image = @image_ok = Image.wrap(s)
-      @image_destr = Image.wrap r
+      @image = Image.wrap(s)
     end
   end
 end

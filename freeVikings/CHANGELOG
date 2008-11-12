@@ -2,6 +2,7 @@
 - game.rb: possibility to cancel loading of a level (press Escape)
 - bomb.rb: Flame is animated; destruction is done by Flame, not by
   BombSprite
+- wall.rb: animated destruction
 
 [6.November 2008]
 - tests/...: fixes of tests broken after modifications in BottomPanel,

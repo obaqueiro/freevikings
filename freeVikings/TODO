@@ -14,13 +14,13 @@
 
 (-) Wall/monster-smashing feature
 
-    (-) visual effect of wall smashing
-
     (-) [VI] Erik's 'head-smash' feature
 
     (-) bomb's flame can't reach behind wall or shield
 
     (-) Dropped bomb stops on a shield
+
+    (-) Destroyed wall's tile should be invisible or semi-transparent
 
 (-) [GO] Ladder
 
@@ -28,6 +28,8 @@
     be given to GameState
 
 (-) Fix bug "1 px under vikings"
+
+(-) [UI] error in script is shown in kind of dialog window
 
 (-) Entity#init_images should be something like protected (I don't know 
     exactly what 'protected' means IN RUBY; maybe it should be even private
@@ -42,7 +44,8 @@
     (-) Transporter#update_transported_sprites: less cycles
 
 (-) Add z coordinate to game objects (so that their placement can be better
-    controlled)
+    controlled - some objects might want to be before vikings;
+    other ones want to be behind some other objects, ...)
 
 (-) Clean up SchwerEngine: some better configuration then through global 
     constant GFX_DIR etc.
@@ -57,17 +60,7 @@
 (-) Less blit operations (replace huge blits with clipping) - it should
     increase frame rate
 
-(-) [UI] Add dialog "Back to menu/Restart level/Cancel"
-
-(-) Variable number of heroes (from 1 up to 4?); more heroes
-    (aside of Fang and Scorch from Lost Vikings 2 I would like to add at least
-    one totally new hero - Olaf's wife Hildegard);
-    Heroes are defined in location.xml; possibility to modify team on-the-fly
-    from inside level
-
-(-) [UI] Add some "dead animation" on level restart
-
-(-) [UI] Menu issues:
+(-) [UI] Menu / configuration issues:
 
     (-) Menu scrolls if it is too long
 
@@ -79,6 +72,19 @@
     (-) Select levelsuite directory
 
     (-) Add switching of threaded/non-threaded loading to menu?
+
+    (-) [UI] User's (and system?) configuration file (with possibility 
+        to define multiple location storage places)
+
+(-) [UI] Add dialog "Back to menu/Restart level/Cancel"
+
+(-) Variable number of heroes (from 1 up to 4?); more heroes
+    (aside of Fang and Scorch from Lost Vikings 2 I would like to add at least
+    one totally new hero - Olaf's wife Hildegard);
+    Heroes are defined in location.xml; possibility to modify team on-the-fly
+    from inside level
+
+(-) [UI] Add some "dead animation" on level restart
 
 (-) Shield tasks:
 
@@ -105,9 +111,6 @@
     (It's possible to implement it as a Sprite,   e.g. Teleport::Animation)
 
 (-) Possibility to define starting point for each viking separately
-
-(-) [UI] User's (and system?) configuration file (with possibility to define
-    multiple location storage places)
 
 (-) Game objects which weren't given any theme should wait till they are
     registered in a location and try to get it's theme - not raise exception

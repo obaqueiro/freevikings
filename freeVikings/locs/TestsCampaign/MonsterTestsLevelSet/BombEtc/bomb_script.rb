@@ -23,4 +23,4 @@ FLOOR = 11*TS
 }
 
 # wall
-LOCATION << Wall.new([1000, FLOOR-4*TS], 2, 4)
+LOCATION << Wall.new([1000, FLOOR-4*TS], 2, 4, LOCATION)
