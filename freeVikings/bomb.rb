@@ -80,43 +80,8 @@ module FreeVikings
           return true
         end
 
-        # place flame in the location:
+        # place flame in the location; Flame does all the destructive work
         @location << Flame.new(@rect.center)
-
-        flame_rect = @rect.expand(90, 40)
-
-        @location.sprites_on_rect(flame_rect).each {|s|
-          if s == self then
-            next
-          end
-
-          if s.class == BombSprite && s.explosion_forced == false then
-            s.force_explosion
-            next
-          end
-
-          if s.is_a?(Hero) or s.is_a?(Monster) then
-            s.destroy
-            next
-          end
-        }
-
-        # fire on bombs
-        @location.items_on_rect(flame_rect).each {|i|
-          if i.class == Bomb then
-            @location.delete_item i
-            b = BombSprite.new(i.rect)
-            @location << b
-            b.force_explosion
-          end
-        }
-
-        # destroy walls
-        @location.static_objects_on_rect(flame_rect).each {|o|
-          if o.class == Wall then
-            o.bash
-          end
-        }
 
         @location.delete_sprite self
 
@@ -163,16 +128,106 @@ module FreeVikings
         def initialize(position)
           super([position[0]-WIDTH/2, position[1]-HEIGHT/2])
           @flame_img = Image.load 'flame_bit.tga'
+
           s = RUDL::Surface.new [@rect.w, @rect.h]
-          s.fill [255,0,0]
+          red = [255,0,0]
+          s.fill red
+          s.set_colorkey red
+
           @image = Image.wrap s
           @display_lock = TimeLock.new(1)
+
+          @explosion_time = Time.now.to_f
+
+          @state = EXPAND
+          @animation_counter = 0
         end
 
+        def location=(l)
+          super(l)
+        end
+
+        # internal state codes
+        EXPAND, KILL, DISMISS, DONE = 1,2,3,4
+        # time of expand/dismiss animation (in seconds)
+        ANIMATION_TIME = 1
+        ANIMATION_FRAMES = 10
+        FRAME_TIME = ANIMATION_TIME / ANIMATION_FRAMES
+
         def update
-          if @display_lock.free? then
+          time = Time.now.to_f
+          time_since_expl = (time - @explosion_time)
+
+          case @state
+          when EXPAND
+            while (time_since_expl / FRAME_TIME) > @animation_counter do
+              @animation_counter += 1
+
+              if @animation_counter > ANIMATION_FRAMES then
+                @state = KILL
+                break
+              end
+
+              offset_x = (@rect.w / 2) - ((@rect.w / 2) / ANIMATION_FRAMES) * @animation_counter
+              offset_y = (@rect.h / 2) - ((@rect.h / 2) / ANIMATION_FRAMES) * @animation_counter
+              # vertical part of flame
+              x = (@rect.w / 2) - (@flame_img.w / 2)
+              [offset_y, @rect.h - (offset_y + @flame_img.h)].each {|y|
+                @image.image.blit(@flame_img.image, [x,y])
+              }
+
+              # horizontal part of flame
+              y = (@rect.h / 2) - (@flame_img.h / 2)
+              [offset_x, @rect.w - (offset_x + @flame_img.w)].each {|x|
+                @image.image.blit(@flame_img.image, [x,y])
+              }
+            end
+          when KILL
+            do_destruction
+            @state = DISMISS
+          when DISMISS
             @location.delete_sprite self
+            @state = DONE
           end
+        end
+
+        private
+
+        # Does all the destructive work
+
+        def do_destruction
+          @location.sprites_on_rect(@rect).each {|s|
+            if s == self then
+              next
+            end
+
+            if s.class == BombSprite && s.explosion_forced == false then
+              s.force_explosion
+              next
+            end
+
+            if s.is_a?(Hero) or s.is_a?(Monster) then
+              s.destroy
+              next
+            end
+          }
+
+          # fire on bombs
+          @location.items_on_rect(@rect).each {|i|
+            if i.class == Bomb then
+              @location.delete_item i
+              b = BombSprite.new(i.rect)
+              @location << b
+              b.force_explosion
+            end
+          }
+
+          # destroy walls
+          @location.static_objects_on_rect(@rect).each {|o|
+            if o.class == Wall then
+              o.bash
+            end
+          }
         end
       end # class Bomb::BombSprite::Flame
     end # class Bomb::BombSprite

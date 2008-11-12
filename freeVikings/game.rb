@@ -171,6 +171,12 @@ module FreeVikings
       @state = DevelopmentMagicGameState.new self
     end
 
+    # This method is called from LocationInfoGameState to start playing.
+
+    def run_location
+      @state = PlayingGameState.new self
+    end
+
     # Methods called by GameState; pos is a two-element Array
     # (position of mouse inside window)
 
@@ -432,14 +438,6 @@ module FreeVikings
       end
     end
 
-    public
-
-    # This method is called from LocationInfoGameState to start playing.
-
-    def run_location
-      @state = PlayingGameState.new self
-    end
-
     private
 
     # shows loading screen with progressbar (uses Threads!) and runs given 
@@ -451,21 +449,37 @@ module FreeVikings
 
         Thread.abort_on_exception = true
 
+        load_t = Thread.new {
+          Thread.current.priority = 1
+          Thread.stop
+
+          block.call
+        }
+
+        loading_cancelled = false
+
         progressbar_t = Thread.new {
+          Thread.current.priority = 2
+          load_t.run
+
           loop {
+            EventQueue.get.each {|event|
+              if event.is_a?(KeyDownEvent) && event.key == K_ESCAPE then
+                Thread.kill load_t
+                loading_cancelled = true
+              end
+            }
             paint_loading_screen @app_window
             sleep 0.3
           }
         }
-        progressbar_t.priority = 2
-
-        load_t = Thread.new {
-          block.call
-        }
-        load_t.priority = 1
 
         load_t.join
         Thread.kill progressbar_t
+
+        if loading_cancelled then
+          throw :return_to_menu
+        end
       else
         # Loading without threads and progressbar
         paint_loading_screen(@app_window)

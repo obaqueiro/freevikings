@@ -14,14 +14,13 @@
 
 (-) Wall/monster-smashing feature
 
-    (-) bomb - animated flame (use gfx/flame_bit.tga);
-             - destruction should be done by Flame, not BombSprite
-
     (-) visual effect of wall smashing
 
     (-) [VI] Erik's 'head-smash' feature
 
     (-) bomb's flame can't reach behind wall or shield
+
+    (-) Dropped bomb stops on a shield
 
 (-) [GO] Ladder
 
