@@ -1,18 +1,12 @@
 # verticalstate.rb
 # igneus 23.5.2005
 
-# Abstraktni trida VerticalState a jeji podtridy.
-# Soucast noveho pojeti myslenky VikingState.
-
 require 'stateproprieties.rb'
 
-=begin
-= VerticalState
-VerticalState subclasses' objects are used in VikingState to hold
-the y-axis movement state information.
-=end
-
 module FreeVikings
+
+  # VerticalState subclasses' objects are used in VikingState to hold
+  # the y-axis movement state information.
 
   class VerticalState
 

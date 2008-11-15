@@ -18,6 +18,10 @@ module FreeVikings
       @ability = SprinterAbility.new self
       @state.ability = @ability
       @jump_start_y = nil 
+
+      # Value of Time.now.to_f at the point viking started to walk;
+      # it is used to determine whether he can run
+      @walk_start_time = -1
     end
 
     def space_func_on
@@ -47,6 +51,8 @@ module FreeVikings
           space_func_off
         end
       end
+
+try_
     end
 
     private

@@ -12,20 +12,21 @@
 
 ======== Code ==========================================================
 
+(-) mouse actions are state independent -> they shouldn't
+    be given to GameState
+
 (-) Wall/monster-smashing feature
 
-    (-) [VI] Erik's 'head-smash' feature
+    (-) [VI] Erik's 'head-smash' feature (depends on rewriting VikingState -
+             whole design of VikingState must be changed, because
+             vertical and horizontal state can't be so much "standalone" -
+             it leads to unknown states etc.)
 
     (-) bomb's flame can't reach behind wall or shield
 
     (-) Dropped bomb stops on a shield
 
-    (-) Destroyed wall's tile should be invisible or semi-transparent
-
 (-) [GO] Ladder
-
-(-) mouse actions are state independent -> they shouldn't
-    be given to GameState
 
 (-) Fix bug "1 px under vikings"
 

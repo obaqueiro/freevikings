@@ -129,12 +129,6 @@ module FreeVikings
           super([position[0]-WIDTH/2, position[1]-HEIGHT/2])
           @flame_img = Image.load 'flame_bit.tga'
 
-          s = RUDL::Surface.new [@rect.w, @rect.h]
-          red = [255,0,0]
-          s.fill red
-          s.set_colorkey red
-
-          @image = Image.wrap s
           @display_lock = TimeLock.new(1)
 
           @explosion_time = Time.now.to_f
@@ -143,16 +137,27 @@ module FreeVikings
           @animation_counter = 0
         end
 
-        def location=(l)
-          super(l)
-        end
-
         # internal state codes
         EXPAND, KILL, DISMISS, DONE = 1,2,3,4
         # time of expand/dismiss animation (in seconds)
         ANIMATION_TIME = 1
         ANIMATION_FRAMES = 10
         FRAME_TIME = ANIMATION_TIME / ANIMATION_FRAMES
+
+        def location=(l)
+          super(l)
+
+          unless @location.area_free?(@rect) then
+            # In future @rect should be shrinked here so that flame
+            # can't reach behind solid tiles, shield etc.
+          end
+
+          s = RUDL::Surface.new [@rect.w, @rect.h]
+          red = [255,0,0]
+          s.fill red
+          s.set_colorkey red      
+          @image = Image.wrap s
+        end
 
         def update
           time = Time.now.to_f

@@ -105,7 +105,11 @@ module FreeVikings
       @give_up = nil
     end # initialize
 
-    public
+    # == Interface for GameState
+
+    # BottomPanel which displays the vikings' portraits, life statistics
+    # and inventories.
+    attr_reader :bottompanel
 
     # RUDL::DisplaySurface on which the game world is displayed.
     # It's that one which was given as an argument to the constructor.
@@ -114,10 +118,6 @@ module FreeVikings
     def team
       @world.location.team
     end
-
-    # BottomPanel which displays the vikings' portraits, life statistics
-    # and inventories.
-    attr_reader :bottompanel
 
     # This method is called by the GameState when a player presses
     # the give up key (F6 by default). Causes location reloading.
@@ -140,23 +140,6 @@ module FreeVikings
       @state = PausedGameState.new self
     end
 
-    # Similar to Game#pause, but switches to ConversationGameState instead of
-    # PausedGameState.
-    # Return back to PlayingGameState by call to Game#unpause.
-
-    def go_conversation
-      @world.location.pause
-      @state = ConversationGameState.new self
-    end
-
-    # Very, very similar to Game#go_conversation,
-    # but used when Story occurs (instead of Talk)
-
-    def go_story
-      @world.location.pause
-      @state = StoryGameState.new self
-    end
-
     # After Game#pause switches back to the playing mode and unpauses 
     # the Sprites
 
@@ -177,74 +160,9 @@ module FreeVikings
       @state = PlayingGameState.new self
     end
 
-    # Methods called by GameState; pos is a two-element Array
-    # (position of mouse inside window)
-
-    def mouse_click(pos)
-      if y_in_bottompanel(pos[1]) then
-        @log.debug "Mouse click in the bottompanel area."
-        pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
-        @bottompanel.mouseclick(pos_in_the_panel)
-      else
-        if FreeVikings.develmagic? then
-          if (@develmagic_click_time != nil) && 
-              (Time.now.to_f - @develmagic_click_time < 1) then
-            # process double-click: get sprites rect
-            lopos = pos_in_location(pos)
-            sps = @world.location.sprites_on_rect(Rectangle.new(lopos[0], lopos[1], 5, 5))
-            @develmagic_click_time = nil
-            @develmagic_click = nil
-            if s = sps.shift then
-              @world.location << TestRect.new(s.rect)
-            end
-          else
-            @develmagic_click = pos_in_location(pos)
-            @develmagic_click_time = Time.now.to_f
-          end
-        end
-      end
-    end
-
-    def mouse_release(pos)
-      if y_in_bottompanel(pos[1]) then
-        @log.info "Mouse release in the bottompanel area."
-        pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
-        @bottompanel.mouserelease(pos_in_the_panel)
-      end
-
-      if FreeVikings.develmagic? && @develmagic_click != nil then
-        develmagic_release = pos_in_location(pos)
-        rect = Rectangle.new_from_points @develmagic_click, develmagic_release
-        @develmagic_click = nil
-        @world.location.add_sprite TestRect.new(rect)
-      end
-    end
-
-    def mouse_move(pos)
-      if y_in_bottompanel(pos[1]) then
-        pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
-        @bottompanel.mousemove(pos_in_the_panel)
-      end
-    end
-
-    private
-
-    def y_in_bottompanel(y)
-      if y >= GAME_SCREEN_HEIGHT then
-        return y - GAME_SCREEN_HEIGHT
-      else
-        return false
-      end
-    end
-
-    # Accepts position in window, returns position in location
-
-    def pos_in_location(pos)
-      display_rect = @world.location.display_rect(@map_view.w, @map_view.h)
-      return [pos[0]+display_rect.left, pos[1]+display_rect.top]
-    end
-
     public
+
+    # == Methods of game loop
 
     # When this method is called, the real fun begins (well, I know freeVikings
     # don't provide the real fun yet, but after a long startup procedure you
@@ -440,6 +358,8 @@ module FreeVikings
 
     private
 
+    # == Methods concerning loading screen
+
     # shows loading screen with progressbar (uses Threads!) and runs given 
     # block
     def do_loading(&block)
@@ -505,8 +425,36 @@ module FreeVikings
       screen.flip
     end
 
-    # Called from the end of game loop and from Game#exit_game
+    # == Helper methods for state switching from inside game loop
+
+    # Similar to Game#pause, but switches to ConversationGameState instead of
+    # PausedGameState.
+    # Return back to PlayingGameState by call to Game#unpause.
+
+    def go_conversation
+      @world.location.pause
+      @state = ConversationGameState.new self
+    end
+
+    # Very, very similar to Game#go_conversation,
+    # but used when Story occurs (instead of Talk)
+
+    def go_story
+      @world.location.pause
+      @state = StoryGameState.new self
+    end
+
+    # == Various methods
+
+    # Called from the end of game loop and from Game#exit_game;
+
     def on_level_end
+      destroy_music
+    end
+
+    # Ends level music and destroys the RUDL::Music object
+
+    def destroy_music
       if FreeVikings::OPTIONS['sound'] then
         if @music then
           if @music.busy? then
@@ -517,5 +465,74 @@ module FreeVikings
       end
     end
 
+    # == Mouse event handlers; 
+    # pos is position in window [x,y]
+
+    def mouse_click(pos)
+      if y_in_bottompanel(pos[1]) then
+        @log.debug "Mouse click in the bottompanel area."
+        pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
+        @bottompanel.mouseclick(pos_in_the_panel)
+      else
+        if FreeVikings.develmagic? then
+          if (@develmagic_click_time != nil) && 
+              (Time.now.to_f - @develmagic_click_time < 1) then
+            # process double-click: get sprites rect
+            lopos = pos_in_location(pos)
+            sps = @world.location.sprites_on_rect(Rectangle.new(lopos[0], lopos[1], 5, 5))
+            @develmagic_click_time = nil
+            @develmagic_click = nil
+            if s = sps.shift then
+              @world.location << TestRect.new(s.rect)
+            end
+          else
+            @develmagic_click = pos_in_location(pos)
+            @develmagic_click_time = Time.now.to_f
+          end
+        end
+      end
+    end
+
+    def mouse_release(pos)
+      if y_in_bottompanel(pos[1]) then
+        @log.info "Mouse release in the bottompanel area."
+        pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
+        @bottompanel.mouserelease(pos_in_the_panel)
+      end
+
+      if FreeVikings.develmagic? && @develmagic_click != nil then
+        develmagic_release = pos_in_location(pos)
+        rect = Rectangle.new_from_points @develmagic_click, develmagic_release
+        @develmagic_click = nil
+        @world.location.add_sprite TestRect.new(rect)
+      end
+    end
+
+    def mouse_move(pos)
+      if y_in_bottompanel(pos[1]) then
+        pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
+        @bottompanel.mousemove(pos_in_the_panel)
+      end
+    end
+
+    # == Methods determining position
+
+    # Accepts y position in window; returns y position in bottompanel
+    # or false
+
+    def y_in_bottompanel(y)
+      if y >= GAME_SCREEN_HEIGHT then
+        return y - GAME_SCREEN_HEIGHT
+      else
+        return false
+      end
+    end
+
+    # Accepts position in window, returns position in location
+
+    def pos_in_location(pos)
+      display_rect = @world.location.display_rect(@map_view.w, @map_view.h)
+      return [pos[0]+display_rect.left, pos[1]+display_rect.top]
+    end
   end # class Game
 end # module FreeVikings
