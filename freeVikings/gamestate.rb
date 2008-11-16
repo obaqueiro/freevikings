@@ -33,21 +33,12 @@ module FreeVikings
     # Processes the event (RUDL::Event).
     # Argument location is a Location instance. (Location just played.)
     def serve_event(event, location)
-      if event.is_a? QuitEvent then
-        Log4r::Logger['init log'].info "Window closed by the user - exiting."
-        exit
-      end
-
       if event.kind_of? KeyDownEvent
 	serve_keydown(event, location)
       elsif event.kind_of? KeyUpEvent
 	serve_keyup(event, location)
-      elsif event.kind_of?  MouseButtonDownEvent
-        serve_mouseclick(event, location)
-      elsif event.kind_of? MouseButtonUpEvent
-        serve_mouserelease(event, location)
-      elsif event.kind_of?  MouseMotionEvent
-        serve_mousemove(event, location)
+      else
+        raise ArgumentError, "Unsupported event class '#{event.class}'"
       end 
     end
 
@@ -79,20 +70,6 @@ module FreeVikings
     # Argument location is a Location instance. (Location just played.)
     def serve_keyup(event, location)
     end
-
-    def serve_mouseclick(event, location)
-      @context.mouse_click event.pos
-    end
-
-    def serve_mouserelease(event, location)
-      @context.mouse_release event.pos
-    end
-
-    def serve_mousemove(event, location)
-      @context.mouse_move event.pos
-    end
-
-    public
 
     def paused?
       false

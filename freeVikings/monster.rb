@@ -1,11 +1,14 @@
 # monster.rb
 # igneus 22.2.2005
 
-# Mixin oznacujici tridu jako tridu nepratel.
-
 require 'monsters/tombstone.rb'
 
 module FreeVikings
+
+  # General mixin module for Monster Sprites.
+  # Every monster class must include it (asking if this mixin has been
+  # included is the way how e.g. Baleog's sword finds out which Sprite
+  # to hurt and which not.)
   
   module Monster
 

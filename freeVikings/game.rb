@@ -47,11 +47,6 @@ module FreeVikings
 
     GAME_SCREEN_HEIGHT = FreeVikings::WIN_HEIGHT - BottomPanel::HEIGHT
 
-    # If set to true, loading is threaded (with progressbar);
-    # set to false for debugging (threads do some evil things with
-    # exception tracks etc.)
-    FANCY_THREADED_LOADING = true
-
     # == Public instance methods
     #
     # Argument window should be a RUDL::Surface (or RUDL::DisplaySurface).
@@ -159,8 +154,6 @@ module FreeVikings
     def run_location
       @state = PlayingGameState.new self
     end
-
-    public
 
     # == Methods of game loop
 
@@ -315,7 +308,18 @@ module FreeVikings
     def every_frame(location)
       # Serve events:
       RUDL::EventQueue.get.each do |event|
-        @state.serve_event(event, location)
+        if event.is_a? QuitEvent then
+          Log4r::Logger['init log'].info "Window closed by the user - exiting."
+          exit
+        elsif event.kind_of?  MouseButtonDownEvent
+          mouse_click(event.pos)
+        elsif event.kind_of? MouseButtonUpEvent
+          mouse_release(event.pos)
+        elsif event.kind_of?  MouseMotionEvent
+          mouse_move(event.pos)
+        elsif event.kind_of?(KeyDownEvent) || event.kind_of?(KeyUpEvent)
+          @state.serve_event(event, location)
+        end
       end
 
       if FreeVikings::OPTIONS['music'] then
@@ -363,7 +367,7 @@ module FreeVikings
     # shows loading screen with progressbar (uses Threads!) and runs given 
     # block
     def do_loading(&block)
-      if FANCY_THREADED_LOADING then
+      if FreeVikings::OPTIONS['progressbar_loading'] then
         # Loading with threads and nice progressbar
         @loading_animation_counter = 0
 
@@ -389,7 +393,7 @@ module FreeVikings
                 loading_cancelled = true
               end
             }
-            paint_loading_screen @app_window
+            paint_loading_screen @app_window, true
             sleep 0.3
           }
         }
@@ -408,7 +412,7 @@ module FreeVikings
     end
 
     # Updates loading screen. Should be called only by do_loading.
-    def paint_loading_screen(screen)
+    def paint_loading_screen(screen, progressbar=false)
       if (! defined?(@loading_animation_counter) ||
           (@loading_animation_counter > 100)) then
         @loading_animation_counter = 1
@@ -418,7 +422,7 @@ module FreeVikings
      
       screen.fill [0,0,0]
       screen.blit(@loading_message, [280,180])
-      if FANCY_THREADED_LOADING then
+      if progressbar then
         screen.fill([255,255,255], 
                     [30, 460, (@loading_animation_counter/100.0)*screen.w, 5])
       end
@@ -464,6 +468,8 @@ module FreeVikings
         end
       end
     end
+
+    public
 
     # == Mouse event handlers; 
     # pos is position in window [x,y]
@@ -514,6 +520,8 @@ module FreeVikings
         @bottompanel.mousemove(pos_in_the_panel)
       end
     end
+
+    private
 
     # == Methods determining position
 

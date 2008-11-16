@@ -88,6 +88,22 @@ def print_help_and_exit
   exit
 end
 
+# Method used for options with on/off argument.
+# Accepts String argument.
+# If argument is positive, returns true, if negative, returns false,
+# if unknown, raises ArgumentError
+
+def on_off_option(argument)
+  case argument.downcase
+  when 'off', 'no', 'false'
+    return false
+  when 'on', 'yes', 'true' then
+    return true
+  else
+    raise ArgumentError, "Unknown argument '#{argument}' of option '--sound' - only possible arguments are 'on' or 'off'"
+  end
+end
+
 # Standard arguments for GetoptLong.new are Arrays of three members:
 # long option, short option and argument flag.
 # I added two more which are used to generate help:
@@ -141,7 +157,11 @@ OPTIONS_DEF = [
                 "on|off"],
 
                ["--develmagic", "-D", GetoptLong::NO_ARGUMENT,
-                "Enables some dark debugging magic"]
+                "Enables some dark debugging magic"],
+
+               ["--progressbar", "-B", GetoptLong::REQUIRED_ARGUMENT,
+               "Show progressbar while loading",
+               "on|off"]
               ]
 
 # here is every argument-definition Array sliced to what GetoptLong wants;
@@ -185,18 +205,13 @@ begin
     when "--skip-password"
       FreeVikings::OPTIONS["display_password"] = false
     when "--sound"
-      case argument.downcase
-      when 'off'
-        FreeVikings::OPTIONS['sound'] = false
-      when 'on' then
-        FreeVikings::OPTIONS['sound'] = true
-      else
-        raise ArgumentError, "Unknown argument '#{argument}' of option '--sound' - only possible arguments are 'on' or 'off'"
-      end
+      FreeVikings::OPTIONS['sound'] = on_off_option(argument)
     when "--develmagic"
       if FreeVikings::VERSION == 'DEV' then
         FreeVikings::OPTIONS['develmagic'] = true
       end
+    when "--progressbar"
+      FreeVikings::OPTIONS['progressbar_loading'] = on_off_option(argument)
     end
   end # options.each block
 rescue GetoptLong::InvalidOption => ioex

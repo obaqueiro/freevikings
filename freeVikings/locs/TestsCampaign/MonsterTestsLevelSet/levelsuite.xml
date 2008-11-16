@@ -26,5 +26,6 @@
     <level>Teleport</level>
     <level>Conversation</level>
     <level>BombEtc</level>
+    <level>Ladder</level>
   </suite>
 </levelsuite>

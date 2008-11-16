@@ -1,3 +1,15 @@
+[16.November 2008]
+- sprinter.rb: fixed a piece of dirt from yesterday
+- game.rb: fixed method visibility after yesterday's cleanup
+- ladder.rb + testing level + graphic: beginning of a new game object 
+  (currently doesn't do anything, just shows)
+- monster.rb: documentation modified
+- freevikings.rb, fvdef.rb, initfv.rb, game.rb: Loading progressbar made 
+  optional (switching with both option and menu)
+- game.rb, gamestate.rb: Only keyboard events are given to GameState,
+  other events are state independent and as such are served directly
+  in Game#every_frame
+
 [15.November 2008]
 - gfx/brick_destroyed.tga: destroyed brick is now invisible
 - vikingstate.rb, horizontalstate.rb, verticalstate.rb: RD -> RDoc

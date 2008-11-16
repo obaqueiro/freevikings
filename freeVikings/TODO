@@ -6,27 +6,43 @@
 
 ======== Graphics ======================================================
 
+(-) Full spritesheets for all three vikings according to the developers'
+    manual
+
 (-) [UI] Nice image for trash
 
 (-) [DT] Some image for teleport (cca 80x120px)
 
 ======== Code ==========================================================
 
-(-) mouse actions are state independent -> they shouldn't
-    be given to GameState
+(-) Menu.new should yield the new Menu into block to provide conventional
+    way of defining nested structures:
+    Menu.new() do |menu|
+      Item.new(menu)
+      Menu.new(menu) do |submenu|
+        ...
+      end
+    end
 
 (-) Wall/monster-smashing feature
-
     (-) [VI] Erik's 'head-smash' feature (depends on rewriting VikingState -
              whole design of VikingState must be changed, because
              vertical and horizontal state can't be so much "standalone" -
              it leads to unknown states etc.)
-
     (-) bomb's flame can't reach behind wall or shield
-
     (-) Dropped bomb stops on a shield
 
 (-) [GO] Ladder
+    (-) Vikings are less then 80px wide
+    (-) Vikings can climb
+
+(-) Third "solidness" of static objects: 1. solid, 2. not solid, 3. not solid,
+    but vikings can stand on top of it (Shield, Van and Ladder should behave
+    like this)
+
+(-) [GO] Olaf's van: all vikings can be inside but just Olaf can drive it;
+    it only moves when it has enough fuel; it has attributes similar to Olaf
+    (vikings can stay on it's deck; monsters can't pass through it)
 
 (-) Fix bug "1 px under vikings"
 
@@ -37,11 +53,9 @@
     and called using instance_eval)
 
 (-) Transporter tasks
-
     (-) Transporter: Transporter doesn't search for Transportables,
         but vice versa: Transportables register at the Transporter when 
         they find him
-
     (-) Transporter#update_transported_sprites: less cycles
 
 (-) Add z coordinate to game objects (so that their placement can be better
@@ -62,20 +76,13 @@
     increase frame rate
 
 (-) [UI] Menu / configuration issues:
-
     (-) Menu scrolls if it is too long
-
     (-) Menu: add a message if a bad password is given (also to the GUI,
         not only to a console)
-
     (-) Possibility to change keys (movement, inventory control etc.)
-
-    (-) Select levelsuite directory
-
-    (-) Add switching of threaded/non-threaded loading to menu?
-
-    (-) [UI] User's (and system?) configuration file (with possibility 
+    (-) User's (and system?) configuration file (with possibility 
         to define multiple location storage places)
+    (-) define location storage places, choose a campaign to be played
 
 (-) [UI] Add dialog "Back to menu/Restart level/Cancel"
 
@@ -88,9 +95,7 @@
 (-) [UI] Add some "dead animation" on level restart
 
 (-) Shield tasks:
-
     (-) [VI] Olaf's shield shouldn't move awfully when Olaf's too quick
-
     (-) [VI] Vikings should rest on Olaf's shield only if it's over his head
 
 (-) Move all requirement stuff to one file (freevikings.rb), so that it can be 
@@ -117,9 +122,6 @@
     registered in a location and try to get it's theme - not raise exception
 
 (-) Move all items to a separate directory items/ ?
-
-(-) [UI] Make all setup stuff accessible from the menu (e.g. define location 
-    storage places, choose a campaign to be played, music etc.)
 
 (-) Possibility to change game speed (useful on newer machines, where 
     vikings move terribly slowly)

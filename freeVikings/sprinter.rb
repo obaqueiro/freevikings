@@ -51,8 +51,6 @@ module FreeVikings
           space_func_off
         end
       end
-
-try_
     end
 
     private

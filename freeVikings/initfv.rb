@@ -97,7 +97,11 @@ module FreeVikings
         graphics_menu = Menu.new(menu, "Graphics", nil, nil)
         
         DisplayModeChooseButton.new(graphics_menu, @window)
-        FVConfiguratorButton.new(graphics_menu, "Display fps", "display_fps", {"yes" => true, "no" => false})
+        FVConfiguratorButton.new(graphics_menu, "Display fps", "display_fps", 
+                                 {"yes" => true, "no" => false})
+        FVConfiguratorButton.new(graphics_menu, "Progressbar", 
+                                 "progressbar_loading", 
+                                 {"on" => true, "off" => false})
         QuitButton.new(graphics_menu)
 
         # Submenu: Sound

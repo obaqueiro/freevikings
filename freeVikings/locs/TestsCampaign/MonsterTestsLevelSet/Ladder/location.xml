@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Ladder</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Level for testing of Ladder.
+    </description>
+  </info>
+
+  <body>
+    <password>LDDR</password>
+    <map src="ladder_loc.xml"/>
+    <script src="ladder_script.rb"/>
+    <exit horiz="280" vertic="200" />
+    <start horiz="50" vertic="140" />
+  </body>
+</location>
