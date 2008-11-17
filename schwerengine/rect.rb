@@ -12,13 +12,13 @@ of the game world.
 
 module SchwerEngine
 
-  class Rectangle < Array
+  class Rectangle
 
     def initialize(*coordinates)
       if coordinates.size >= 4 then
-        super(coordinates[0..3])
+        @array = Array.new(coordinates[0..3])
       else
-        super(coordinates[0][0..3])
+        @array = Array.new(coordinates[0][0..3])
       end
     end
 
@@ -38,6 +38,11 @@ module SchwerEngine
       return Rectangle.new(x,y,w,h)
     end
 
+    def ==(r2)
+      self.left == r2.left && self.top == r2.top &&
+        self.w == r2.w && self.h == r2.h
+    end
+
     # Returns new empty Rectangle
 
     def Rectangle.new_empty
@@ -52,6 +57,18 @@ module SchwerEngine
 	return true
       end
       return false
+    end
+
+    def at(i)
+      @array.at(i)
+    end
+
+    def [](i)
+      @array[i]
+    end
+
+    def []=(i, v)
+      @array[i] = v
     end
 
     def left
@@ -84,6 +101,9 @@ module SchwerEngine
       self[2] = i
     end
 
+    alias_method :width, :w
+    alias_method :width=, :w=
+
     def h
       at 3
     end
@@ -91,6 +111,9 @@ module SchwerEngine
     def h=(i)
       self[3] = i
     end
+
+    alias_method :height, :h
+    alias_method :height=, :h=
 
     def bottom
       top + h
@@ -126,6 +149,36 @@ module SchwerEngine
     def expand(expand_x=0, expand_y=0)
       Rectangle.new(left - expand_x, top - expand_y,
                     w + 2 * expand_x, h + 2 * expand_y)
+    end
+
+    # Expand itself.
+
+    def expand!(expand_x=0, expand_y=0)
+      self.left -= expand_x
+      self.w += 2 * expand_x
+      self.top -= expand_y
+      self.h += 2 * expand_y
+
+      return self
+    end
+
+    # Moves Rectangle; returns self
+    # r = Rectangle.new(100,100,10,10) # => [100,100,10,10]
+    # r.move!(50,-10) # => [150,90,10,10]
+
+    def move!(d_x, d_y)
+      self.left += d_x
+      self.top += d_y
+
+      return self
+    end
+
+    def move_x!(d_x)
+      move!(d_x, 0)
+    end
+
+    def move_y!(d_y)
+      move!(0, d_y)
     end
 
     # Returns area of the Rectangle
@@ -184,7 +237,11 @@ module SchwerEngine
     end
 
     def to_s
-      "[#{left}, #{top}, #{w}, #{h}]"
+      "#{left}, #{top}, #{w}, #{h}"
+    end
+
+    def inspect
+      "#<#{self.class}:#{self.object_id} [#{left}, #{top}, #{w}, #{h}]>"
     end
 
     # Does self contain r?

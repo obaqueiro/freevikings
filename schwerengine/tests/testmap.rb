@@ -18,7 +18,7 @@ class TestMap < Test::Unit::TestCase
 
   def testRect
     r = self.class::RECT.new(0, 0, TILE_SIZE * 8, TILE_SIZE * 8)
-    assert(r.eql?(@map.rect), "The two rectangles (#{r.to_s} and #{@map.rect.to_s}) should contain the same numbers => eql? is expected to be true.")
+    assert_equal r, @map.rect, "The two rectangles (#{r.to_s} and #{@map.rect.to_s}) should contain the same numbers => eql? is expected to be true."
   end
 
   def testNonFreeArea

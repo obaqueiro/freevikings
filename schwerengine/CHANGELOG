@@ -1,3 +1,14 @@
+[17.November 2008]
+- tests/test.rb: automatic requirement of tests (similar to the one used in
+  freeVikings tests);
+  tests/testlocation.rb removed
+- rect.rb, tests/testrect.rb: added methods move!, move_x!, move_y!, expand!;
+  changed implementation: Rectangle doesn't inherit from Array,
+  but delegates some methods (inheritance did weird things in tests)
+- rect.rb, relativerect.rb, schwerengine.rb, tests:
+  implemented class RelativeRect
+- tests/test.rb: fixed displaying of progress
+
 [6.November 2008]
 - model.rb: RD->RDoc
 - map.rb & associated test: added methods Map#point_free? and

@@ -68,6 +68,12 @@ class TestRect < Test::Unit::TestCase
     assert_equal @R.new(4, 5, 7, 5), s, "'Expand 1px in x axis' means 'left-=1, right+=1'"
   end
 
+  def testExpand!
+    r = @R.new 5, 5, 5, 5
+    r.expand!(1,1)
+    assert_equal @R.new(4,4,7,7), r
+  end
+
   def testArea
     r = @R.new 0,0,2,2
     assert_equal 4, r.area, "Area of a square of size 2 is 4."
@@ -126,5 +132,12 @@ class TestRect < Test::Unit::TestCase
   def testCenter2
     r = @R.new 0,0,5,5
     assert_equal [2,2], r.center
+  end
+
+  def testMove!
+    r = @R.new 100,100,100,100
+    r.move!(10,-10)
+    assert_equal 110, r.left
+    assert_equal 90, r.top
   end
 end

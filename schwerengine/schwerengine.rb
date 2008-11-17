@@ -58,6 +58,7 @@ module SchwerEngine
 
       # Basics
       require 'schwerengine/rect.rb'
+      require 'schwerengine/relativerect.rb'
       require 'schwerengine/gfxtheme.rb'
       require 'schwerengine/pausable.rb'
       require 'schwerengine/ticker.rb'
