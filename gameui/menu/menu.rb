@@ -45,6 +45,9 @@ module GameUI
       # title must be a String. Argument surface is 
       # a RUDL::Surface onto which the Menu will paint it's contents.
       # Parameter text_renderer must be a GameUI::TextRenderer instance.
+      #
+      # If a block is given, new Menu yields itself providing a traditional
+      # way of creating nested structures.
 
       def initialize(parent, title, surface, text_renderer, x=DEFAULT_X, y=DEFAULT_Y, width=DEFAULT_WIDTH)
         super(parent)
@@ -76,6 +79,10 @@ module GameUI
         # the user presses a key
         @move = NO
         @last_move_time = 0
+
+        if block_given?
+          yield self
+        end
       end
 
       attr_reader :text_renderer
