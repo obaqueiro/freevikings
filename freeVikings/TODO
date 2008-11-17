@@ -15,14 +15,9 @@
 
 ======== Code ==========================================================
 
-(-) Menu.new should yield the new Menu into block to provide conventional
-    way of defining nested structures:
-    Menu.new() do |menu|
-      Item.new(menu)
-      Menu.new(menu) do |submenu|
-        ...
-      end
-    end
+(-) [GO] Ladder
+    (-) Vikings are less then 80px wide
+    (-) Vikings can climb
 
 (-) Wall/monster-smashing feature
     (-) [VI] Erik's 'head-smash' feature (depends on rewriting VikingState -
@@ -32,13 +27,15 @@
     (-) bomb's flame can't reach behind wall or shield
     (-) Dropped bomb stops on a shield
 
-(-) [GO] Ladder
-    (-) Vikings are less then 80px wide
-    (-) Vikings can climb
+(-) Viking's rect isn't constant, but may have variable size and
+    is dependent on image used (display rect defined in model file
+    for every image?)
+
+(-) Support for spritesheets
 
 (-) Third "solidness" of static objects: 1. solid, 2. not solid, 3. not solid,
-    but vikings can stand on top of it (Shield, Van and Ladder should behave
-    like this)
+    so that it is possible to or jum through it, but vikings can stand 
+    on top of it (Shield, Van and Ladder should behave like this)
 
 (-) [GO] Olaf's van: all vikings can be inside but just Olaf can drive it;
     it only moves when it has enough fuel; it has attributes similar to Olaf

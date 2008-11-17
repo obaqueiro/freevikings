@@ -67,54 +67,61 @@ module FreeVikings
         @log.info "Game ended; skipping menu -> exiting."
       else
         # Top menu
-        menu = TopMenu.new(@window)
+        top_menu = TopMenu.new(@window) do |menu|
 
-        # Submenu: Start Game
-        start_menu = Menu.new(menu, "Start Game", nil, nil)
-        ActionButton.new(start_menu, "New Game", Proc.new {
-                           @log.info "Starting new game."
-                           Game.new(@window).game_loop
-                         })
-        PasswordEdit.new(start_menu, "Password", FreeVikings::OPTIONS['startpassword'], Proc.new {
-                           @log.info "Starting the game with password '#{FreeVikings::OPTIONS['startpassword']}'."
-                           Game.new(@window, FreeVikings::OPTIONS['startpassword']).game_loop
-                         })
-        # SubSubmenu: Select Level (nifty feature for developers)
-        if FreeVikings::VERSION == 'DEV' && ARGV[0] == 'megahIte' then
-          select_level_menu = Menu.new(start_menu, "SELECT LEVEL", nil, nil)
-          StructuredWorld.new(FreeVikings::OPTIONS['levelsuite']).levels.each do |l|
-            ActionButton.new(select_level_menu, l.title, Proc.new {
-                               @log.info "Starting the game with password '#{l.password}'."
-                               Game.new(@window, l.password).game_loop
+          # Submenu: Start Game
+          Menu.new(menu, "Start Game", nil, nil) do |start_menu|
+            ActionButton.new(start_menu, "New Game", Proc.new {
+                               @log.info "Starting new game."
+                               Game.new(@window).game_loop
                              })
+            PasswordEdit.new(start_menu, "Password", FreeVikings::OPTIONS['startpassword'], Proc.new {
+                               @log.info "Starting the game with password '#{FreeVikings::OPTIONS['startpassword']}'."
+                               Game.new(@window, FreeVikings::OPTIONS['startpassword']).game_loop
+                             })
+            # SubSubmenu: Select Level (nifty feature for developers)
+            if FreeVikings::VERSION == 'DEV' && ARGV[0] == 'megahIte' then
+              Menu.new(start_menu, "SELECT LEVEL", nil, nil) do |sellevel_menu|
+                StructuredWorld.new(FreeVikings::OPTIONS['levelsuite']).levels.each do |l|
+                  ActionButton.new(sellevel_menu, l.title, Proc.new {
+                                     @log.info "Starting the game with password '#{l.password}'."
+                                     Game.new(@window, l.password).game_loop
+                                   })
+                end
+                QuitButton.new(select_level_menu)
+              end
+            end
+
+            QuitButton.new(start_menu)
           end
-          QuitButton.new(select_level_menu)
+          
+          # Submenu: Graphics
+          Menu.new(menu, "Graphics", nil, nil) do |graphics_menu|
+          
+            DisplayModeChooseButton.new(graphics_menu, @window)
+            FVConfiguratorButton.new(graphics_menu, 
+                                     "Display fps", "display_fps", 
+                                     {"yes" => true, "no" => false})
+            FVConfiguratorButton.new(graphics_menu, "Progressbar", 
+                                     "progressbar_loading", 
+                                     {"on" => true, "off" => false})
+            QuitButton.new(graphics_menu)
+          end
+
+          # Submenu: Sound
+          Menu.new(menu, "Sound", nil, nil) do |sound_menu|
+
+            FVConfiguratorButton.new(sound_menu, "Level music", 'sound', 
+                                     {'on' => true, 'off' => false})
+            QuitButton.new(sound_menu)
+          end
+
+          # Submenu: Credits
+          Credits.new(menu, [['Jakub Pavlik', 'programming, graphics, levels'],
+                             ['Ingo Fulfs', 'graphics, music']])
+          
+          QuitButton.new(menu, QuitButton::QUIT)
         end
-
-        QuitButton.new(start_menu)
-        
-        # Submenu: Graphics
-        graphics_menu = Menu.new(menu, "Graphics", nil, nil)
-        
-        DisplayModeChooseButton.new(graphics_menu, @window)
-        FVConfiguratorButton.new(graphics_menu, "Display fps", "display_fps", 
-                                 {"yes" => true, "no" => false})
-        FVConfiguratorButton.new(graphics_menu, "Progressbar", 
-                                 "progressbar_loading", 
-                                 {"on" => true, "off" => false})
-        QuitButton.new(graphics_menu)
-
-        # Submenu: Sound
-        sound_menu = Menu.new(menu, "Sound", nil, nil)
-
-        FVConfiguratorButton.new(sound_menu, "Level music", 'sound', {'on' => true, 'off' => false})
-        QuitButton.new(sound_menu)
-
-        # Submenu: Credits
-        Credits.new(menu, [['Jakub Pavlik', 'programming, graphics, levels'],
-                           ['Ingo Fulfs', 'graphics, music']])
-        
-        QuitButton.new(menu, QuitButton::QUIT)
 
         # The endless 'menu loop'.
         # Is ended from inside TopMenu by unwinding the stack.
@@ -129,7 +136,7 @@ module FreeVikings
           catch(:return_to_menu) do
             clear_screen
             begin
-              menu.run
+              top_menu.run
             rescue Menu::QuitEventAcceptedException
               # User closed the window; let's terminate...
               @log.info "Game terminated by user."
