@@ -140,4 +140,13 @@ class TestRect < Test::Unit::TestCase
     assert_equal 110, r.left
     assert_equal 90, r.top
   end
+
+  def testCopyValues
+    r = @R.new(10,10,10,10)
+    s = @R.new(20,15,50,60)
+
+    r.copy_values s
+
+    assert_equal s, r, "Rects should have same values"
+  end
 end

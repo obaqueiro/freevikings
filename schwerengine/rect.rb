@@ -49,6 +49,17 @@ module SchwerEngine
       Rectangle.new(0,0,0,0)
     end
 
+    # Takes values from another rect
+
+    def copy_values(rect)
+      self.left = rect.left
+      self.top = rect.top
+      self.w = rect.w
+      self.h = rect.h
+
+      return self
+    end
+
     def collides?(rect)
       if self.left <= rect.right and
 	  rect.left <= self.right and

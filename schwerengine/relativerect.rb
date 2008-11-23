@@ -28,8 +28,6 @@ module SchwerEngine
       # against some forgotten inherited methods - they will raise error 
       # immediately when they try to access @array
       @array = nil 
-
-      puts self.inspect
     end
 
     # Receives two Rectangles.

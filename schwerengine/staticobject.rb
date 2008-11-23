@@ -14,6 +14,27 @@ module SchwerEngine
       false
     end
 
+    # Tells if the object is semisolid (i.e. it is possible to stand on it,
+    # but also to go or jump through it)
+
+    def semisolid?
+      false
+    end
+
+    def at_least_semisolid?
+      solid? || semisolid?
+    end
+
+    def solidness
+      if solid? then
+        return 'solid'
+      elsif semisolid? then
+        return 'semisolid'
+      else
+        return 'free'
+      end
+    end
+
     def register_in(location)
       location.add_static_object self
     end
