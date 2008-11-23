@@ -1,3 +1,11 @@
+[23.November 2008]
+- viking.rb: Viking#collision_rect is smaller than Viking#paint_rect (it's
+  70px wide now)
+- game.rb, location.rb: one huge blit operation replaced with clipping;
+  unfortunatelly it didn't increase frame rate... :(
+- game.rb: Game#paint_loading_screen - progressbar doesn't go behind window 
+  frame
+
 [16.November 2008]
 - sprinter.rb: fixed a piece of dirt from yesterday
 - game.rb: fixed method visibility after yesterday's cleanup

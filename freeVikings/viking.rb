@@ -39,7 +39,8 @@ module FreeVikings
 
     BASE_VELOCITY = 70
 
-    # Sizes of the vikings' graphics.
+    # Sizes of the vikings' graphics. (Not of their collision area, which is
+    # a bit smaller!)
 
     WIDTH = 80
     HEIGHT = 100
@@ -60,10 +61,15 @@ module FreeVikings
     def initialize(name, start_position=[0,0])
       super()
       @log = Log4r::Logger['viking log']
+      @log.debug("Initialising Viking '#{@name}'")
+
       @name = name
       @state = VikingState.new
-      @log.debug("Viking #{@name} initialised.")
-      @rect = Rectangle.new start_position[0], start_position[1], WIDTH, HEIGHT
+
+      # @paint_rect is wider than @collision_rect
+      @rect = @collision_rect = Rectangle.new(start_position[0], start_position[1], WIDTH-10, HEIGHT)
+      @paint_rect = RelativeRectangle.new(@rect, -5, 0, 10, 0)
+
       @energy = MAX_ENERGY
 
       @portrait = nil
@@ -113,6 +119,10 @@ module FreeVikings
     # Viking's Inventory.
 
     attr_reader :inventory
+
+    # RelativeRectangle dependent on Viking#rect; a bit smaller.
+
+    attr_reader :paint_rect
 
     # Takes the Viking off one energy point.
     # If the energy falls onto zero, Viking#destroy is called.
@@ -218,7 +228,7 @@ module FreeVikings
       new_rect = Rectangle.new(@rect.left + delta_x, @rect.top + delta_y,
                                @rect.w, @rect.h)
       if @location.area_free?(new_rect) then
-        @rect = new_rect
+        @rect.copy_values new_rect
       end
     end
 
@@ -237,7 +247,7 @@ module FreeVikings
       fall_if_head_on_the_ceiling
       try_to_descend
 
-      update_rect_w_h
+      # update_rect_w_h
 
       @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
 
@@ -294,7 +304,7 @@ module FreeVikings
       next_pos = Rectangle.new(next_left, next_top, @rect.w, @rect.h)
       if @location.area_free?(next_pos) then
 	@log.debug "move_xy: Viking #{name}'s next position is all right."
-        @rect = next_pos
+        @rect.copy_values next_pos
         return true
       else
         return false
@@ -306,7 +316,7 @@ module FreeVikings
       next_pos = Rectangle.new(@rect.left, next_top, @rect.w, @rect.h)
       if @location.area_free?(next_pos) then
         @log.debug "move_y_only: Viking #{name} cannot move horizontally, but his vertical coordinate was updated successfully."
-        @rect = next_pos
+        @rect.copy_values next_pos
         return true
       else
         @log.debug "move_y_only: Viking #{name} cannot move in any axis."

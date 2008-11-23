@@ -254,7 +254,8 @@ module FreeVikings
       end
 
       mr = @map.rect
-      displayed_rect = centered_view_rect(mr.w, mr.h, surface.w, surface.h, center)
+      surfr = Rectangle.new(*surface.clip)
+      displayed_rect = centered_view_rect(mr.w, mr.h, surfr.w, surfr.h, center)
 
       @map.paint_background(surface, displayed_rect)
       @staticobjects.paint(surface, displayed_rect)

@@ -47,6 +47,9 @@ module FreeVikings
 
     GAME_SCREEN_HEIGHT = FreeVikings::WIN_HEIGHT - BottomPanel::HEIGHT
 
+    # rectangle of map view inside game window
+    MAPVIEW_RECT = [0, 0, FreeVikings::WIN_WIDTH, WIN_HEIGHT - BottomPanel::HEIGHT]
+
     # == Public instance methods
     #
     # Argument window should be a RUDL::Surface (or RUDL::DisplaySurface).
@@ -88,10 +91,6 @@ module FreeVikings
         end
       end
 
-      # Surface used to build the "picture" of a part of map and game objects
-      # which is then displayed on the screen
-      @map_view = RUDL::Surface.new([WIN_WIDTH, WIN_HEIGHT - BottomPanel::HEIGHT])
-      
       # State of the game (GameState instance).
       @state = nil
       
@@ -342,9 +341,10 @@ module FreeVikings
       if location.story then
         go_story
       end
-      
-      location.paint(@map_view, location.team.active.center)
-      @app_window.blit(@map_view, [0,0])
+
+      @app_window.clip = MAPVIEW_RECT
+      location.paint(@app_window, location.team.active.center)
+      @app_window.unset_clip
 
       @state.change_view(@app_window)
 
@@ -424,7 +424,8 @@ module FreeVikings
       screen.blit(@loading_message, [280,180])
       if progressbar then
         screen.fill([255,255,255], 
-                    [30, 460, (@loading_animation_counter/100.0)*screen.w, 5])
+                    [30, 460, 
+                     (@loading_animation_counter/100.0)*(screen.w-60), 5])
       end
       screen.flip
     end
@@ -539,7 +540,7 @@ module FreeVikings
     # Accepts position in window, returns position in location
 
     def pos_in_location(pos)
-      display_rect = @world.location.display_rect(@map_view.w, @map_view.h)
+      display_rect = @world.location.display_rect(MAPVIEW_RECT.w, MAPVIEW_RECT.h)
       return [pos[0]+display_rect.left, pos[1]+display_rect.top]
     end
   end # class Game

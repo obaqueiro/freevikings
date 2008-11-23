@@ -15,8 +15,21 @@
 
 ======== Code ==========================================================
 
+(-) Third "solidness" of static objects: 1. solid, 2. not solid, 3. not solid,
+    so that it is possible to or jump through it, but vikings can stand 
+    on top of it (Shield, Van and Ladder should behave like this)
+    (add support for semisolidness to Viking)
+
+(-) Make compiled version of SchwerEngine::Rectangle (Profiling told me that
+    program spends 
+	14% of time in Rectangle#at (2530 calls), 
+	8% in Rectangle#left (1272 calls)
+	7% in Rectangle#collides (172 calls))
+	etc.
+
+(-) Redesign VikingState (current design is pretty useless and immature)
+
 (-) [GO] Ladder
-    (-) Vikings are less then 80px wide
     (-) Vikings can climb
 
 (-) Wall/monster-smashing feature
@@ -27,15 +40,14 @@
     (-) bomb's flame can't reach behind wall or shield
     (-) Dropped bomb stops on a shield
 
-(-) Viking's rect isn't constant, but may have variable size and
-    is dependent on image used (display rect defined in model file
-    for every image?)
-
-(-) Support for spritesheets
-
-(-) Third "solidness" of static objects: 1. solid, 2. not solid, 3. not solid,
-    so that it is possible to or jum through it, but vikings can stand 
-    on top of it (Shield, Van and Ladder should behave like this)
+(-) [UI] Menu / configuration issues:
+    (-) Menu scrolls if it is too long
+    (-) Menu: add a message if a bad password is given (also to the GUI,
+        not only to a console)
+    (-) Possibility to change keys (movement, inventory control etc.)
+    (-) User's (and system?) configuration file (with possibility 
+        to define multiple location storage places)
+    (-) define location storage places, choose a campaign to be played
 
 (-) [GO] Olaf's van: all vikings can be inside but just Olaf can drive it;
     it only moves when it has enough fuel; it has attributes similar to Olaf
@@ -44,6 +56,14 @@
 (-) Fix bug "1 px under vikings"
 
 (-) [UI] error in script is shown in kind of dialog window
+
+(-) [UI] During drag&drop highlight vikings which can receive item
+
+(-) Viking's rect isn't constant, but may have variable size and
+    is dependent on image used (display rect defined in model file
+    for every image?)
+
+(-) Support for spritesheets
 
 (-) Entity#init_images should be something like protected (I don't know 
     exactly what 'protected' means IN RUBY; maybe it should be even private
@@ -64,22 +84,8 @@
 
 (-) [VI] Better - more realistic - physics (jumping etc.)
 
-(-) [UI] During drag&drop highlight vikings which can receive item
-
 (-) Set up some check for new releases of libraries we are using
     (RUDL, script, Log4r, REXML)
-
-(-) Less blit operations (replace huge blits with clipping) - it should
-    increase frame rate
-
-(-) [UI] Menu / configuration issues:
-    (-) Menu scrolls if it is too long
-    (-) Menu: add a message if a bad password is given (also to the GUI,
-        not only to a console)
-    (-) Possibility to change keys (movement, inventory control etc.)
-    (-) User's (and system?) configuration file (with possibility 
-        to define multiple location storage places)
-    (-) define location storage places, choose a campaign to be played
 
 (-) [UI] Add dialog "Back to menu/Restart level/Cancel"
 
