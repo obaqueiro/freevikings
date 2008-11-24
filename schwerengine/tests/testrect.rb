@@ -74,6 +74,17 @@ class TestRect < Test::Unit::TestCase
     assert_equal @R.new(4,4,7,7), r
   end
 
+  def testExpand2
+    r = @R.new 5, 5, 5, 5
+    assert_equal @R.new(4,2,8,12), r.expand2(1,2,3,4)
+  end
+
+  def testExpand2!
+    r = @R.new 5, 5, 5, 5
+    r.expand2!(1,2,3,4)
+    assert_equal @R.new(4,2,8,12), r
+  end
+
   def testArea
     r = @R.new 0,0,2,2
     assert_equal 4, r.area, "Area of a square of size 2 is 4."

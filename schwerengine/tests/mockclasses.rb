@@ -10,23 +10,26 @@ module SchwerEngine
   module Mock
 
     class TestingMapLoadStrategy < MapLoadStrategy
-      def initialize
+      # Accepts a block; yields two values into it: solid tile and soft tile.
+      # Block should return two-dimensional Array of tiles -
+      # e.g.
+      # TestingMapLoadStrategy.new do |x,o|
+      #   [
+      #    [x,x,x,x],
+      #    [x,o,o,x],
+      #    [x,o,o,x],
+      #    [x,x,x,x]
+      #   ]
+      # end
+      def initialize(tw=40, th=40)
         super(nil)
 
         o = false
         x = true
-        @blocks = [
-                   [x, x, x, x, x, x, x, x],
-                   [x, o, o, o, o, o, x, x],
-                   [x, o, o, o, o, o, x, x],
-                   [x, o, o, o, o, o, x, x],
-                   [x, o, o, o, o, o, x, x],
-                   [x, o, o, o, o, o, x, x],
-                   [x, o, o, o, o, o, x, x],
-                   [x, x, x, x, x, x, x, x]         
-                  ]
+        @blocks = yield x,o
 
-        @tile_width = @tile_height = 40
+        @tile_width = tw
+        @tile_height = 40
       end
     end
 

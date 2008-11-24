@@ -44,6 +44,18 @@ module SchwerEngine
       raise "Tile width and height are different - use 'tile_width' and 'tile_height'!"
     end
 
+    # Height of map in tiles
+
+    def tile_rows
+      @blocks.size
+    end
+
+    # Width of map in tiles
+
+    def tile_columns
+      @blocks[0].size
+    end
+
     # width of the map in px
 
     def width
@@ -111,24 +123,9 @@ module SchwerEngine
     # Says if given Rectangle is free of solid tiles.
 
     def area_free?(rect)
-      leftmost_i = (rect.left / @tile_width).floor
-      rightmost_i = (rect.right / @tile_width).floor
-
-      top_line = (rect.top / @tile_height).floor
-      bottom_line = (rect.bottom / @tile_height).floor
-
-      if leftmost_i < 0 then
-        leftmost_i = 0
-      end
-      if rightmost_i > (@blocks.first.size - 1) then
-        rightmost_i = @blocks.first.size - 1
-      end
-      if top_line < 0 then
-        top_line = 0
-      end
-      if bottom_line > (@blocks.size - 1) then
-        bottom_line = @blocks.size - 1
-      end
+      tl = rect.top_left
+      leftmost_i, top_line = pixels_to_tiles(tl)
+      rightmost_i, bottom_line = pixels_to_tiles(rect.bottom_right)
 
       #print "["
       top_line.upto(bottom_line) do |line_i|
@@ -153,8 +150,7 @@ module SchwerEngine
         return false
       end
 
-      row = (y/@tile_height)
-      col = (x/@tile_width)
+      col, row = pixels_to_tiles xy_ary
 
       # solid tile is true, free tile false => return negation of tile
       return ! @blocks[row][col]
@@ -188,10 +184,9 @@ module SchwerEngine
         expanded = Rectangle.new(x,y,0,0)
       end
 
-      right_border_column = expanded.right / @tile_width
-      left_border_column = expanded.left / @tile_width
-      top_border_row = expanded.top / @tile_height
-      bottom_border_row = expanded.bottom / @tile_height
+      right_border_column, bottom_border_row = pixels_to_tiles(expanded.bottom_right)
+      left_border_column, top_border_row = pixels_to_tiles(expanded.top_left)
+
 
       # expand to the right:
       catch :jump do
@@ -250,6 +245,68 @@ module SchwerEngine
       h = ((bottom_border_row+1) * @tile_height) - y
 
       return Rectangle.new(x,y,w,h)
+    end
+
+    # (Surface here is a synonym to floor, ground etc., not to RUDL::Surface
+    # instance!)
+    # Finds top-most surface (i.e. top of a first solid tile found while 
+    # searching the given area from top downwards) in rectangle and returns 
+    # Rectangle 0px high and wide as the surface found.
+
+    def find_surface(rect)
+      left_i, top_i = pixels_to_tiles(rect.top_left)
+      right_i, bottom_i = pixels_to_tiles(rect.bottom_right)
+
+      top_i.upto(bottom_i) do |row|
+        left_i.upto(right_i) do |col|
+          begin
+            if @blocks[row][col] == true then
+              y = row * @tile_height
+              x = col * @tile_width
+              w = @tile_width
+
+              # Extend the surface as much as possible:
+              (col-1).downto(0) {|i|
+                if @blocks[row][i] == true &&
+                    @blocks[row-1][i] == false then
+                  x -= @tile_width
+                  w += @tile_width
+                else
+                  break
+                end
+              }
+              (col+1).upto(tile_columns-1) {|i|
+                if @blocks[row][i] == true &&
+                    @blocks[row-1][i] == false then
+                  w += @tile_width
+                else
+                  break
+                end
+              }
+              return Rectangle.new(x,y,w,0) 
+            end
+          rescue StandardError
+            puts "row: '#{row}' column: '#{col}'"        
+            raise
+          end
+        end
+      end
+
+      return nil
+    end
+
+    # Accepts [x,y] Array of pixel values and returns Array 
+    # of tile index values
+
+    def pixels_to_tiles(xy)
+      column, row = xy[0].to_i / @tile_width, xy[1].to_i / @tile_height
+
+      column = 0 if column < 0
+      column = tile_columns-1 if column >= tile_columns
+      row = 0 if row < 0
+      row = tile_rows-1 if row >= tile_rows
+
+      return [column,row]
     end
 
     private

@@ -13,7 +13,19 @@ class TestMap < Test::Unit::TestCase
   TILE_SIZE = 40
 
   def setup
-    @map = Map.new(Mock::TestingMapLoadStrategy.new)
+    strat = Mock::TestingMapLoadStrategy.new do |x,o|
+      [
+       [x, x, x, x, x, x, x, x],
+       [x, o, o, o, o, o, x, x],
+       [x, o, o, o, o, o, x, x],
+       [x, o, o, o, o, o, x, x],
+       [x, o, o, o, o, o, x, x],
+       [x, o, o, o, o, o, x, x],
+       [x, o, o, o, o, o, x, x],
+       [x, x, x, x, x, x, x, x]         
+      ]
+    end
+    @map = Map.new(strat)
   end
 
   def testRect
@@ -43,7 +55,7 @@ class TestMap < Test::Unit::TestCase
   end
 
   def testNonFreeOnTheEdgeOfFreeAreaBottomCollision
-    assert_equal(false, @map.area_free?(RECT.new(100,240,40,40)))
+    assert_equal(false, @map.area_free?(RECT.new(100,240,40,41)))
   end
 
   def testFreeOnTheEdgeOfFreeAreaRightCollision
@@ -72,4 +84,11 @@ class TestMap < Test::Unit::TestCase
     assert_equal false, @map.point_free?([70000, 80000]), "Point out of map"
   end
 
+  def testFindSurfaceNoSurface
+    assert_equal nil, @map.find_surface(RECT.new(60,60,60,60)), "No surface in rectangle"
+  end
+
+  def testFindSurface
+    assert_equal RECT.new(@map.tile_width, 7*@map.tile_height, 5*@map.tile_width, 0), @map.find_surface(RECT.new(60,60,60,1000))
+  end
 end # class TestMap

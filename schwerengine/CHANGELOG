@@ -1,5 +1,13 @@
+[24.November 2008]
+- rect.rb: added method Rectangle#expand2 (and ! variant);
+  methods to get coordinates of corners
+- tests/mockclasses.rb: TestingMapLoadStrategy modified so that I might
+  define new map inside the test
+- map.rb: Map#find_surface; Map#pixels_to_tiles; Map#area_free? and 
+  Map#largest_free_rect modified to use Map#pixels_to_tiles
+
 [23.November 2008]
-- rect.rb: Rect#copy_values
+- rect.rb: Rectangle#copy_values
 - staticobject.rb: added support for semisolidness
 
 [17.November 2008]

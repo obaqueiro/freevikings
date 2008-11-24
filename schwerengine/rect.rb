@@ -39,7 +39,8 @@ module SchwerEngine
     end
 
     def ==(r2)
-      self.left == r2.left && self.top == r2.top &&
+      r2.kind_of?(Rectangle) &&
+        self.left == r2.left && self.top == r2.top &&
         self.w == r2.w && self.h == r2.h
     end
 
@@ -150,6 +151,24 @@ module SchwerEngine
       self.w = r - left
     end
 
+    # Methods returning [x,y] coordinates of corners
+
+    def top_left
+      [self.left, self.top]
+    end
+
+    def top_right
+      [self.right, self.top]
+    end
+
+    def bottom_left
+      [self.left, self.bottom]
+    end
+
+    def bottom_right
+      [self.right, self.bottom]
+    end
+
     # Returns an expanded copy of itself.
     # The expansion is done so that the rectangle's center stays on place and
     # it's edges move.
@@ -169,6 +188,24 @@ module SchwerEngine
       self.w += 2 * expand_x
       self.top -= expand_y
       self.h += 2 * expand_y
+
+      return self
+    end
+
+    # Expands every rect's side given amount of pixels.
+
+    def expand2(left, right, top, bottom)
+      return Rectangle.new(self.left - left,
+                           self.top - top,
+                           self.w + left + right,
+                           self.h + top + bottom)
+    end
+
+    def expand2!(left, right, top, bottom)
+      self.left -= left
+      self.top -= top
+      self.w += left + right
+      self.h += top + bottom
 
       return self
     end
