@@ -10,7 +10,9 @@ one such viking - his name is Erik).
 
 module FreeVikings
 
-  class Shield < SchwerEngine::Sprite
+  class Shield < SchwerEngine::Entity
+
+    include StaticObject
 
     WIDTH = 15
     HEIGHT = 80
@@ -28,21 +30,19 @@ It's a man (or woman, monster, ...) who carries the shield.
       init_images
     end
 
+    def semisolid?
+      if state == 'top'
+        return true
+      else
+        return false
+      end
+    end
+
     # Not Thor himself is able to destroy Olaf's shield.
 
     def destroy
       false
     end
-
-    # This method doesn't do much. The real update stuff has moved
-    # into the unofficial_update method. See comments to learn why.
-
-    def update
-      unless @shielder.alive?
-        @location.delete_sprite self # 'destroy' wouldn't do anything
-        return
-      end
-    end # method update
 
     # Method unofficial_update is a hack to ensure the Shield is updated
     # just after the Shielder. Simply: after the Shielder is updated, it calls
@@ -50,7 +50,7 @@ It's a man (or woman, monster, ...) who carries the shield.
     # It's important to update them subsequently,
     # because they have to move together.
 
-    def unofficial_update
+    def unofficial_update(location)
       @rect.left = case state
                      when 'top'
                        @shielder.rect.left 
@@ -68,7 +68,7 @@ It's a man (or woman, monster, ...) who carries the shield.
       @rect.h = image.h
       @rect.w = image.w
 
-      @location.sprites_on_rect(self.rect).each do |s|
+      location.sprites_on_rect(self.rect).each do |s|
         if s.kind_of? Shot and @shielder.kind_of? s.hunted_type
           s.destroy
         end

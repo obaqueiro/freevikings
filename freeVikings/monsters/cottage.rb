@@ -19,6 +19,10 @@ module FreeVikings
       super(pos)
     end
 
+    def semisolid?
+      true
+    end
+
     def init_images
       @image = Image.load 'cottage.tga'
 

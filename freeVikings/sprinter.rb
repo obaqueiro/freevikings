@@ -25,7 +25,7 @@ module FreeVikings
     end
 
     def space_func_on
-      return if not on_some_surface?
+      return if not @state.standing?
       @ability.space_on
     end
 

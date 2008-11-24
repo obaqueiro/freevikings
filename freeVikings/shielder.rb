@@ -24,8 +24,7 @@ module FreeVikings
 
     def location=(location)
       @location = location
-      @location.add_sprite @shield
-      @shield.update
+      @location << @shield
     end
 
     def destroy
@@ -35,7 +34,7 @@ module FreeVikings
 
     def update
       super
-      @shield.unofficial_update
+      @shield.unofficial_update @location
     end
 
     def shield_use

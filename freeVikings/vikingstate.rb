@@ -55,6 +55,6 @@ module FreeVikings
   end # class VikingState
 end # module FreeVikings
 
-# Vlozime tridy HorizontalState a VerticalState:
+# require classes HorizontalState a VerticalState:
 require "horizontalstate.rb"
 require "verticalstate.rb"

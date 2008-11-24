@@ -67,8 +67,8 @@ module FreeVikings
       @state = VikingState.new
 
       # @paint_rect is wider than @collision_rect
-      @rect = @collision_rect = Rectangle.new(start_position[0], start_position[1], WIDTH-10, HEIGHT)
-      @paint_rect = RelativeRectangle.new(@rect, -5, 0, 10, 0)
+      @rect = @collision_rect = Rectangle.new(start_position[0], start_position[1], WIDTH-10, HEIGHT-1)
+      @paint_rect = RelativeRectangle.new(@rect, -5, 0, 10, 1)
 
       @energy = MAX_ENERGY
 
@@ -225,7 +225,7 @@ module FreeVikings
         return
       end
 
-      new_rect = Rectangle.new(@rect.left + delta_x, @rect.top + delta_y,
+      new_rect = Rectangle.new(@rect.left + delta_x.to_i, @rect.top + delta_y.to_i,
                                @rect.w, @rect.h)
       if @location.area_free?(new_rect) then
         @rect.copy_values new_rect
@@ -247,8 +247,6 @@ module FreeVikings
       fall_if_head_on_the_ceiling
       try_to_descend
 
-      # update_rect_w_h
-
       @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
 
       nil
@@ -266,24 +264,6 @@ module FreeVikings
     def fall
       @start_fall = @rect.top
       @state.fall
-    end
-
-    private
-    def descend_onto_ground
-      tile_size = @location.map.tile_height
-
-      if on_ground? and not (@rect.bottom % tile_size == 0) then
-          @rect.top += tile_size - (@rect.bottom % tile_size)
-      end
-      @rect.top -= 1
-    end
-
-    private
-    def descend_onto_static_object
-      while @location.area_free?(@rect) do
-        @rect.top += 1
-      end
-      @rect.top -= 1
     end
 
     # Looks if the viking hasn't fallen too deep.
@@ -326,7 +306,7 @@ module FreeVikings
 
     private
     def try_to_fall
-      if not @state.rising? and not @state.falling? and not on_some_surface?
+      if not @state.rising? and not @state.falling? and not on_ground?
 	fall
 	@log.debug "try_to_fall: #{@name} starts falling because there's a free space under him."
       end
@@ -334,20 +314,20 @@ module FreeVikings
 
     private
     def try_to_descend
-      if @state.falling? and on_some_surface? then
-        @log.debug "try_to_descend: #{@name} descended onto some solid surface."
+      if @state.falling?
+        # Rectangle 'lowerpos' is Rectangle of viking's width, height equal
+        # to change of position, placed under his feet
         lowerpos = Rectangle.new(@rect.left, 
-                                 @rect.top + @location.ticker.delta * BASE_VELOCITY, 
+                                 @rect.bottom,
                                  @rect.w, 
-                                 @rect.h)
+                                 (@location.ticker.delta * BASE_VELOCITY).to_i)
 
-        if @location.static_objects.area_free? lowerpos
-          descend_onto_ground
-        else
-          descend_onto_static_object
+        floor = @location.find_surface(lowerpos)
+
+        if floor != nil then
+          @rect.top = (floor.top - @rect.h) - 1
+          check_fall_injury
         end
-
-        check_fall_injury
       end
     end
 
@@ -359,12 +339,6 @@ module FreeVikings
         @log.debug "fall_if_head_on_the_ceiling: #{@name} stroke ceiling with his head and starts falling."
         fall
       end
-    end
-
-    private
-    def update_rect_w_h
-      @rect.h = image.h
-      @rect.w = image.w
     end
 
     private
@@ -382,22 +356,6 @@ module FreeVikings
                                @rect.w, 
                                @rect.h)
       return ! @location.area_free?(lowerpos)
-    end
-
-    private
-    def on_shield?
-      if Viking.shield and 
-          Viking.shield.rect.collides?(@rect) and
-          CollisionTest.bottom_collision?(@rect, Viking.shield.rect) then
-        return true
-      else
-        return false
-      end
-    end
-
-    private
-    def on_some_surface?
-      on_ground? or on_shield?
     end
 
     private

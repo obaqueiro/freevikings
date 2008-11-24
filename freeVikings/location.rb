@@ -63,6 +63,24 @@ module FreeVikings
         } == nil
       end
 
+      def @staticobjects.find_surface(rect)
+        su = nil
+
+        @members.each do |m|
+          if m.at_least_semisolid? then
+            # surface inside the searched rect?
+            if m.rect.top >= rect.top && m.rect.collides?(rect) then
+              # is it the highest one?
+              if (su == nil) || (m.rect.top < su.top) then
+                su = m.rect
+              end
+            end
+          end
+        end
+
+        return su
+      end
+
       loader.load_exit(self)
       loader.load_start(self)
 
@@ -344,6 +362,26 @@ module FreeVikings
     end
 
     alias_method :is_area_free?, :area_free?
+
+    # See documentation of SchwerEngine::Map#find_surface for what it does;
+    # in addition to searching Map, also static objects are searched 
+    # for surface.
+
+    def find_surface(rect)
+      s_map = @map.find_surface rect
+      s_stos = @staticobjects.find_surface rect      
+
+      # Return the highest of surfaces found:
+      if s_map == nil then
+        return s_stos
+      elsif s_stos == nil then
+        return s_map
+      elsif s_map.top < s_stos.top then
+        return s_map
+      else
+        return s_stos
+      end
+    end
 
     # Returns rectangle of the map to be displayed (see 
     # Location#centered_view_rect for rules)

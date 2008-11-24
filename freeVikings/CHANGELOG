@@ -1,3 +1,16 @@
+[24.November 2008]
+- sophisticatedspritestate.rb: RD->RDoc
+- location.rb: Location#find_surface
+- viking.rb: New descending mechanism (using Location#find_surface);
+  error "1px under viking fixed not considered error any more;
+  fixed by making collision rect 1px lower"
+- monsters/cottage.rb: made semi-solid (first semi-solid object in the game)
+- shielder.rb, shield.rb: Shield changed from Sprite to semi-solid
+  StaticObject; works better now (vikings don't fall through it)
+- sprinter.rb Sprinter#space_func_on: fixed error "Erik can't jump from shield"
+  and caused two new errors
+- RubyCampaign/Intro: start moved 10px up
+
 [23.November 2008]
 - viking.rb: Viking#collision_rect is smaller than Viking#paint_rect (it's
   70px wide now)

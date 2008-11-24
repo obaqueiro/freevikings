@@ -29,11 +29,11 @@ module FreeVikings
       private
 
       def next_left
-        next_left = @rect.left + (velocity_horiz * @location.ticker.delta)
+        (@rect.left + (velocity_horiz * @location.ticker.delta)).to_i
       end
 
       def next_top
-        next_top = @rect.top + (velocity_vertic * @location.ticker.delta)
+        (@rect.top + (velocity_vertic * @location.ticker.delta)).to_i
       end
 
       def next_position

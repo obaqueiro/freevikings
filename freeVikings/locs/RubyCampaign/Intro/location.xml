@@ -11,7 +11,7 @@
     <music>freevikings-lvlmusic.xm</music>
     <map src="intro_loc.tmx"/>
     <script src="intro_script.rb"/>
-    <start horiz="230" vertic="60"/>
+    <start horiz="230" vertic="50"/>
     <exit horiz="2340" vertic="240"/>
   </body>
 </location>

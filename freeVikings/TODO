@@ -15,10 +15,18 @@
 
 ======== Code ==========================================================
 
-(-) Third "solidness" of static objects: 1. solid, 2. not solid, 3. not solid,
-    so that it is possible to or jump through it, but vikings can stand 
-    on top of it (Shield, Van and Ladder should behave like this)
-    (add support for semisolidness to Viking)
+(-) Fix error "Erik can jump very high pressing Space again and again"
+
+(-) Fix error "Erik can't jump when he is walking"
+
+(-) Add z coordinate to game objects (so that their placement can be better
+    controlled - some objects might want to be before vikings;
+    other ones want to be behind some other objects, ...)
+    (Very important now, because Shield is often hidden behind other
+    Static objects)
+
+(-) Vikings remember the surface they are standing on so that it isn't 
+    necessary to check for fall in every iteration of frame cycle
 
 (-) Make compiled version of SchwerEngine::Rectangle (Profiling told me that
     program spends 
@@ -53,8 +61,6 @@
     it only moves when it has enough fuel; it has attributes similar to Olaf
     (vikings can stay on it's deck; monsters can't pass through it)
 
-(-) Fix bug "1 px under vikings"
-
 (-) [UI] error in script is shown in kind of dialog window
 
 (-) [UI] During drag&drop highlight vikings which can receive item
@@ -74,10 +80,6 @@
         but vice versa: Transportables register at the Transporter when 
         they find him
     (-) Transporter#update_transported_sprites: less cycles
-
-(-) Add z coordinate to game objects (so that their placement can be better
-    controlled - some objects might want to be before vikings;
-    other ones want to be behind some other objects, ...)
 
 (-) Clean up SchwerEngine: some better configuration then through global 
     constant GFX_DIR etc.
