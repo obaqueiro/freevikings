@@ -154,6 +154,20 @@ module FreeVikings
       @state = PlayingGameState.new self
     end
 
+    # takes screenshot and saves it in the current working directory
+    # with some unique filename
+
+    def take_screenshot
+      letters = 'freeVikingsscreenshot'.split //
+      begin
+        filename = ''
+        12.times { filename += letters[rand(letters.size)] }
+        filename += '.bmp'
+      end while File.exist?(filename)
+      @app_window.save_bmp filename
+      @log.info "Screenshot saved to file '#{filename}'"
+    end
+
     # == Methods of game loop
 
     # When this method is called, the real fun begins (well, I know freeVikings

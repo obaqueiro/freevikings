@@ -39,7 +39,7 @@ module FreeVikings
         @log.info "Game exitted."
       rescue => e
         @log.info "Uncaught exception detected. Please, send the crash log file 'log/crash.log' together with a detailed description what you were doing when the game crashed to <severus@post.cz>. Your bug report will help me a lot."
-        @log.fatal "Uncaught exception (#{e.class}): " + e.message
+        @log.fatal "Uncaught exception (#{e.class})" + e.message
         raise
       end
     end
@@ -88,7 +88,7 @@ module FreeVikings
                                      Game.new(@window, l.password).game_loop
                                    })
                 end
-                QuitButton.new(select_level_menu)
+                QuitButton.new(sellevel_menu)
               end
             end
 

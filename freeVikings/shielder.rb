@@ -24,7 +24,9 @@ module FreeVikings
 
     def location=(location)
       @location = location
-      @location << @shield
+      if @location.class == Location
+        @location << @shield
+      end
     end
 
     def destroy

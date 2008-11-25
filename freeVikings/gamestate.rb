@@ -54,6 +54,8 @@ module FreeVikings
         FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
       when K_F2
 	@context.give_up_game
+      when K_F10
+        @context.take_screenshot
       when K_F11
         if FreeVikings.develmagic?
           @context.go_develmagic
