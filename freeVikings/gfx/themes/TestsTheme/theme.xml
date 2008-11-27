@@ -7,7 +7,7 @@
   </info>
 
   <data>
-    <image name="switch_on" image="switch_test_on.tga" />
-    <image name="switch_off" image="switch_test_off.tga" />
+    <!-- <image name="switch_on" image="switch_test_on.tga" />
+    <image name="switch_off" image="switch_test_off.tga" /> -->
   </data>
 </gfx_theme>

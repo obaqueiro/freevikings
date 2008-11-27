@@ -1,3 +1,15 @@
+[27.November 2008]
+- DefaultTheme is theme of TestsCampaign
+- TestsTheme doesn't have special look of Switch
+- Tiles for testing levels remade (from black and white something to 
+  blue bricks)
+- gfx/teleport.png, gfx/trash.png: new Ingo's graphics
+- teleport.rb: now uses Ingo's image
+- inventoryview.rb: mess; need for new implementation of trash; deleted
+- bottompanel.rb: some functionality moved to new class VikingView;
+  InventoryView removed; removed Observer pattern
+- bpvikingview.rb: replacement of InventoryView and part of BottomPanel
+
 [25.November 2008]
 - shielder.rb: doesn't add Shield to NullLocation
 - gamestate.rb, game.rb: Screenshot taking (I had to implement this to be able

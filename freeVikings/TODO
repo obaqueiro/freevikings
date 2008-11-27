@@ -6,17 +6,20 @@
 
 ======== Graphics ======================================================
 
-(-) Remake test tiles to some less confusing and awful;
-    remove special testing skin of Switch
-
 (-) Full spritesheets for all three vikings according to the developers'
     manual
 
-(-) [UI] Nice image for trash
-
-(-) [DT] Some image for teleport (cca 80x120px)
+(-) Image for unactive teleport
 
 ======== Code ==========================================================
+
+(-) Fix BottomPanel
+    (-) active viking has coloured portrait
+    (-) selection box shows differently according to the state
+    (-) participating vikings are displayed differently during exchange
+    (-) implement trash in a new way (not as a fake viking)
+
+(-) Christmas bonus level(set?)
 
 (-) Fix error "Erik can jump very high pressing Space again and again"
 
@@ -28,6 +31,9 @@
     (Very important now, because Shield is often hidden behind other
     Static objects)
 
+(-) [GO] Ladder
+    (-) Vikings can climb
+
 (-) Vikings remember the surface they are standing on so that it isn't 
     necessary to check for fall in every iteration of frame cycle
 
@@ -38,10 +44,9 @@
 	7% in Rectangle#collides (172 calls))
 	etc.
 
-(-) Redesign VikingState (current design is pretty useless and immature)
+(-) Support for "Tiled tilesets" into "poor fV XML maps"?
 
-(-) [GO] Ladder
-    (-) Vikings can climb
+(-) Redesign VikingState (current design is pretty useless and immature)
 
 (-) Wall/monster-smashing feature
     (-) [VI] Erik's 'head-smash' feature (depends on rewriting VikingState -

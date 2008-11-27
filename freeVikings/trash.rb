@@ -10,7 +10,7 @@ module FreeVikings
   class Trash
 
     def initialize
-      @image = Image.load 'trash.tga'
+      @image = Image.load 'trash.png'
       @portrait = MockPortrait.new @image.image
       @inventory = TrashInventory.new
     end

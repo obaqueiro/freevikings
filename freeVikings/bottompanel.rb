@@ -5,7 +5,8 @@ require 'observer'
 require 'forwardable'
 
 require 'bottompanelstate.rb'
-require 'inventoryview.rb'
+require 'bpvikingview.rb'
+
 require 'trash.rb'
 
 module FreeVikings
@@ -20,18 +21,8 @@ module FreeVikings
     # standard library). It notifies all observers whenever it's internal
     # state changes. A BottomPanelState instance is always sent to them.
 
-    include Observable
-
-
-    ACTIVE_SELECTION_BLINK_DELAY = 1
-
-    VIKING_FACE_SIZE = 60
-    LIFE_SIZE = 20
-    ITEM_SIZE = 30
-    INVENTORY_VIEW_SIZE = 2 * ITEM_SIZE
-
-    HEIGHT = VIKING_FACE_SIZE + LIFE_SIZE
     WIDTH = 640
+    HEIGHT = VikingView::HEIGHT
 
     # Argument team is a Team of heroes who will be displayed on the panel.
 
@@ -41,11 +32,11 @@ module FreeVikings
 
       @image = RUDL::Surface.new [WIDTH, HEIGHT]
 
-      init_gfx
-
-      @inventory_views = {}
-      @team.each {|v| @inventory_views[v] = InventoryView.new(v, self)}
-      @inventory_views[@trash] = InventoryView.new(@trash, self)
+      @viking_views = {}
+      @team.each_with_index {|v,i|
+        pos = [i * VikingView::WIDTH, 0]
+        @viking_views[v] = VikingView.new(v, pos)
+      }
 
       # slot for item exchanged by drag-and-drop
       @dragged_item = nil
@@ -171,9 +162,8 @@ module FreeVikings
       surface.fill([60,60,60])
 
       @team.each_with_index do |vik, i|
-        paint_member(surface, vik, i)
+        @viking_views[vik].paint(surface)
       end
-      paint_member(surface, @trash, @team.size+1)
 
       if @dragged_item then
         x, y = @dragged_item.position
@@ -193,69 +183,25 @@ module FreeVikings
 
     private
 
-    # paints portrait and inventory of viking or trash
-    # 'i' is Integer telling if the member should be painted
-    # first, second, ...
-
-    def paint_member(surface, member, i)
-      # paint face:
-      face_position = [i * (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE), 0]
-      surface.blit(@face_bg, face_position)
-      portrait_img = if @team.active == member && member.alive? then
-                       member.portrait.active
-                     elsif not member.alive?
-                       member.portrait.kaput
-                     else
-                       member.portrait.unactive
-                     end
-
-      surface.blit(portrait_img, face_position)
-
-      # paint the lives:
-      if member.is_a? Viking then
-        lives_y = VIKING_FACE_SIZE
-        member.energy.times {|j| 
-          live_position = [face_position[0] + j * LIFE_SIZE, lives_y]
-          surface.blit(@energy_punkt, live_position)
-        }
-      end
-      
-      # paint inventory contents:
-      inventory_view_pos = [(i * (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE)) + INVENTORY_VIEW_SIZE, 0]
-      show_off = items_exchange? && 
-        member != @team.active && 
-        ((! member.rect.collides?(@team.active.rect)) || member.inventory.full?)
-      
-      @inventory_views[member].paint(surface, 
-                                     inventory_view_pos, 
-                                     (@team.active == member),
-                                     show_off)
-    end
-
-    def init_gfx
-      @face_bg = RUDL::Surface.load_new(GFX_DIR+'/face_bg.tga')
-      @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.png')
-    end # init_display
-
     # If the point defined by coordinates x,y is inside some
     # viking's portrait, returns the viking's index in the team.
     # Otherwise nil is returned.
 
     def spot_inside_portrait(x, y)
-      if (y < VIKING_FACE_SIZE) and
-          (x % (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)) < VIKING_FACE_SIZE then
-        viking_index = x / (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)
+      if (y < VikingView::VIKING_FACE_SIZE) and
+          (x % (VikingView::VIKING_FACE_SIZE + VikingView::INVENTORY_VIEW_SIZE)) < VikingView::VIKING_FACE_SIZE then
+        viking_index = x / (VikingView::VIKING_FACE_SIZE + VikingView::INVENTORY_VIEW_SIZE)
         return viking_index if viking_index < @team.size
       end
       return nil
     end
 
     def spot_inside_trash(x, y)
-      one_viking_view_size = (INVENTORY_VIEW_SIZE + VIKING_FACE_SIZE)
+      one_viking_view_size = (VikingView::INVENTORY_VIEW_SIZE + VikingView::VIKING_FACE_SIZE)
       trash_icon_start = 4 * one_viking_view_size
       trash_inventory_end = trash_icon_start + one_viking_view_size
 
-      if (y < VIKING_FACE_SIZE) and
+      if (y < VikingView::VIKING_FACE_SIZE) and
           x > trash_icon_start and
           x < trash_inventory_end then
         return true
@@ -269,19 +215,19 @@ module FreeVikings
     # Otherwise nil is returned.
 
     def spot_inside_item(x, y)
-      if (y < INVENTORY_VIEW_SIZE) and
-          (x % (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)) > VIKING_FACE_SIZE then
-        x_in_view = x % INVENTORY_VIEW_SIZE
-        y_in_view = y % INVENTORY_VIEW_SIZE
+      if (y < VikingView::INVENTORY_VIEW_SIZE) and
+          (x % (VikingView::VIKING_FACE_SIZE + VikingView::INVENTORY_VIEW_SIZE)) > VikingView::VIKING_FACE_SIZE then
+        x_in_view = x % VikingView::INVENTORY_VIEW_SIZE
+        y_in_view = y % VikingView::INVENTORY_VIEW_SIZE
 
-        viking_index = x / (VIKING_FACE_SIZE + INVENTORY_VIEW_SIZE)
-        item_index = if x_in_view >= ITEM_SIZE and y_in_view >= ITEM_SIZE then
+        viking_index = x / (VikingView::VIKING_FACE_SIZE + VikingView::INVENTORY_VIEW_SIZE)
+        item_index = if x_in_view >= VikingView::ITEM_SIZE and y_in_view >= VikingView::ITEM_SIZE then
                        3
-                     elsif y_in_view >= ITEM_SIZE then
+                     elsif y_in_view >= VikingView::ITEM_SIZE then
                        2
-                     elsif x_in_view >= ITEM_SIZE then
+                     elsif x_in_view >= VikingView::ITEM_SIZE then
                        1
-                     elsif x_in_view <= ITEM_SIZE and y_in_view <= ITEM_SIZE then
+                     elsif x_in_view <= VikingView::ITEM_SIZE and y_in_view <= VikingView::ITEM_SIZE then
                        0
                      end
         return [viking_index, item_index] if viking_index < @team.size
@@ -294,8 +240,6 @@ module FreeVikings
 
     def change_state(new_state)
       @state = new_state
-      changed
-      notify_observers(@state)
     end
 
   end # class BottomPanel

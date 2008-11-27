@@ -8,8 +8,10 @@ module FreeVikings
 
   class Teleport < ActiveObject
 
+    BASE_HEIGHT = 8
+
     WIDTH = 80
-    HEIGHT = 120
+    HEIGHT = 120 - BASE_HEIGHT
 
     # Argument destination should be either position (Rectangle or Array)
     # or Teleport. It's a place, where a teleported viking shows up.
@@ -17,8 +19,16 @@ module FreeVikings
     def initialize(position, destination=nil)
       super(position)
 
+      @collision_rect = @rect
+      @paint_rect = @collision_rect.expand2(0,0,0,BASE_HEIGHT)
+
       self.destination = destination
     end
+
+    # paint_rect and collision_rect are different!
+
+    attr_reader :collision_rect
+    attr_reader :paint_rect
 
     def destination=(d)
       if d != nil && !([Teleport, Rectangle, Array].find {|t| t == d.class})
@@ -79,7 +89,7 @@ module FreeVikings
     def teleport_sprite(s)
       d = destination
       x = d.left + d.w/2 - s.rect.w/2
-      y = d.bottom - s.rect.h
+      y = d.bottom - (s.rect.h + 1)
 
       s.rect.left = x
       s.rect.top = y
@@ -91,13 +101,10 @@ module FreeVikings
 
     def init_images
       # create a pseudo-image:
-      sa = RUDL::Surface.new [WIDTH, HEIGHT]
-      sa.fill [10,50,250]
-
       si  = RUDL::Surface.new [WIDTH, HEIGHT]
-      sa.fill [10,150,200]
+      si.fill [10,150,200]
 
-      @active_image = Image.wrap sa
+      @active_image = Image.load 'teleport.png'
       @inactive_image = Image.wrap si
     end
   end # class Teleport
