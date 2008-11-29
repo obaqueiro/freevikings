@@ -113,6 +113,8 @@ module FreeVikings
       end
     end
 
+    attr_reader :exchange_participants
+
     def items_exchange?
       true
     end

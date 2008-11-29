@@ -1,3 +1,14 @@
+[28.November 2008]
+- bottompanel.rb, bpvikingview.rb, game.rb, gamestate.rb, inventory.rb:
+  after hours of work BottomPanel is repaired after reconstruction;
+  it isn't cleaner, but has new Ingo's trash and highlighting of item
+  exchange participants;
+  the only known bug now is in displaying of old-school (keyboard driven)
+  item transaction
+- TODO: added screenshot key description
+- added three new versions of Ingo's teleport graphics
+
+
 [27.November 2008]
 - DefaultTheme is theme of TestsCampaign
 - TestsTheme doesn't have special look of Switch

@@ -14,10 +14,12 @@
 ======== Code ==========================================================
 
 (-) Fix BottomPanel
-    (-) active viking has coloured portrait
-    (-) selection box shows differently according to the state
-    (-) participating vikings are displayed differently during exchange
-    (-) implement trash in a new way (not as a fake viking)
+    (-) exchange works - blinking is box around the exchanged item
+
+(-) Shield disappears after Olaf's death
+
+(-) Escape in the "progressbar mode" loading suspends progressbar thread
+    (useful because loading thread sometimes starves)
 
 (-) Christmas bonus level(set?)
 

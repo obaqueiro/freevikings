@@ -31,7 +31,13 @@ module FreeVikings
     def initialize
       @items = []
       @active_index = 0
+      @observer = nil
     end
+
+    # One object at a time (usually a VikingView) can sign up as observer.
+    # It must have method 'inventory_changed' (without arguments)
+
+    attr_writer :observer
 
     # This method is here for InventoryView, which has to display also
     # Trash inventory correctly
@@ -46,6 +52,9 @@ module FreeVikings
         " to place the item #{item} into."
       end
       @items.push item
+
+      notify_observer
+
       @active_index = @items.size - 1
     end
 
@@ -56,6 +65,9 @@ module FreeVikings
       if @active_index == @items.size then
         @active_index -= 1 unless @active_index == 0
       end
+
+      notify_observer
+
       return item
     end
 
@@ -84,6 +96,9 @@ module FreeVikings
       unless @items[i]
         raise EmptySlotRequiredException, "Slot #{i} is empty, it cannot be made active."
       end
+
+      notify_observer
+
       @active_index = i
     end
 
@@ -128,6 +143,16 @@ module FreeVikings
     def [](index)
       at index
     end
+
+    private
+
+    def notify_observer
+      if @observer then
+        @observer.inventory_changed
+      end
+    end
+
+    public
 
     # This exception is raised by the slot-accessing methods 
     # Inventory#active_index=, Inventory#first, Inventory#second,

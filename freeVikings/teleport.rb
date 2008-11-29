@@ -100,12 +100,8 @@ module FreeVikings
     # called from Entity#initialize
 
     def init_images
-      # create a pseudo-image:
-      si  = RUDL::Surface.new [WIDTH, HEIGHT]
-      si.fill [10,150,200]
-
-      @active_image = Image.load 'teleport.png'
-      @inactive_image = Image.wrap si
+      @active_image = Image.load 'teleport_red.png'
+      @inactive_image = Image.load 'teleport_green.png'
     end
   end # class Teleport
 end # module FreeVikings

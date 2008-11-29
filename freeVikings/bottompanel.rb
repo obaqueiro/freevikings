@@ -28,20 +28,32 @@ module FreeVikings
 
     def initialize(team)
       @team = team
-      @trash = Trash.new
+      @trash = Trash.new [VikingView::WIDTH*3, 0]
 
       @image = RUDL::Surface.new [WIDTH, HEIGHT]
 
-      @viking_views = {}
+      @viking_views = @viking_views_hash = {}
+      @viking_views_array = []
       @team.each_with_index {|v,i|
         pos = [i * VikingView::WIDTH, 0]
-        @viking_views[v] = VikingView.new(v, pos)
+        view = VikingView.new(v, pos)
+
+        v.inventory.observer = view
+
+        @viking_views[v] = view
+        @viking_views_array << view
       }
 
+      # slot for clicked item (before it is possible to decide if it was just
+      # clicked or if it is dragged)
+      @clicked_item = nil
       # slot for item exchanged by drag-and-drop
       @dragged_item = nil
 
       change_state NormalBottomPanelState.new(@team)
+
+      change_active_viking
+      repaint_image
     end
 
     extend Forwardable
@@ -53,6 +65,7 @@ module FreeVikings
     def browse_inventory!
       change_state InventoryBrowsingBottomPanelState.new(@team)
       @trash.dump
+      unhighlight
     end
 
     def_delegator :@state, :inventory_browsing?
@@ -63,6 +76,15 @@ module FreeVikings
 
     def exchange_items!
       change_state ItemsExchangeBottomPanelState.new(@team, @trash)
+
+      @team.each {|viking|
+        if @state.exchange_participants.include?(viking) then
+          @viking_views[viking].highlight
+        else
+          @viking_views[viking].unhighlight
+        end
+      }
+      @trash.highlight
     end
 
     def_delegator :@state, :items_exchange?
@@ -73,6 +95,7 @@ module FreeVikings
     def go_normal!
       change_state NormalBottomPanelState.new(@team)
       @trash.dump
+      unhighlight
     end
 
     def_delegator :@state, :normal?
@@ -85,7 +108,90 @@ module FreeVikings
     def_delegator :@state, :left
     def_delegator :@state, :right
 
+    # Must be called whenever active viking is changed (to ensure that
+    # right portrait is highlighted).
+
+    def change_active_viking
+      @viking_views_array.each {|view|
+        view.deactivate
+      }
+      @viking_views[@team.active].activate
+    end
+
+    private
+
+    # == Private methods which support mouse-driven transactions with items
+
     DraggedItemWrapper = Struct.new(:item, :owner, :position)
+
+    # Takes some item for drag&drop operation
+
+    def start_drag_item(pos)
+      @dragged_item = @clicked_item
+      @clicked_item = nil
+      @dragged_item.position = pos
+      @dragged_item.item = @dragged_item.owner.inventory.erase_active
+
+      exchange_participants = Team.new(* @team.members_on_rect(@team.active.rect))
+      @team.each {|viking|
+        if exchange_participants.include?(viking) then
+          @viking_views[viking].highlight
+        else
+          @viking_views[viking].unhighlight
+        end
+      }
+      @trash.highlight
+    end
+
+    # Moves dragged item to given position
+
+    def drag_item(pos)
+      @dragged_item.position = pos
+    end
+
+    # Drops the dragged item
+
+    def drop_item(pos)
+      if spot_inside_trash(*pos)
+        @dragged_item = nil
+        repaint_image
+        return
+      end
+
+      # item isn't dropped into trash; let's try if it's dropped 
+      # over some viking
+      if @dragged_item then
+        if a = spot_inside_item(*pos) || b = spot_inside_portrait(*pos) then
+          if a then
+            viking_index, item_index = a
+          else
+            viking_index = b
+          end
+
+          dest_viking = @team[viking_index]
+
+          if @dragged_item.owner.rect.collides?(dest_viking.rect) &&
+              ! dest_viking.inventory.full? then
+            # operation succeeded
+            dest_viking.inventory.put(@dragged_item.item)
+            @dragged_item = nil
+            return
+          end
+        end
+      end
+
+      # if exchange was unsuccessfull, cancel it:
+      if @dragged_item then
+        # Mouse operations don't cause pause, so owner's inventory may be
+        # filled during the exchange operation.
+        unless @dragged_item.owner.inventory.full?
+          @dragged_item.owner.inventory.put @dragged_item.item
+        end
+        @dragged_item = nil
+      end
+    end
+
+    public
 
     # pos is a two-element array (standard [x,y] coordinates as used in RUDL
     # etc.). Remember that [0,0] is the top-left corner of the panel, not 
@@ -102,86 +208,85 @@ module FreeVikings
 
         begin
           @team[viking_index].inventory.active_index = item_index
-          @dragged_item = DraggedItemWrapper.new
-          @dragged_item.owner = @team[viking_index]
-          @dragged_item.item = @dragged_item.owner.inventory.erase_active
-          @dragged_item.position = pos
+          @clicked_item = DraggedItemWrapper.new
+          @clicked_item.owner = @team[viking_index]
         rescue Inventory::EmptySlotRequiredException
           # No dragging may be done.
-          @dragged_item = nil
+          @clicked_item = nil
         end
-
       end
     end
 
     # About pos see documentation of method mouseclick.
 
     def mouserelease(pos)
-      if spot_inside_trash(*pos)
-        @dragged_item = nil
+      if @clicked_item then
+        @clicked_item = nil
+      end
+
+      unless @dragged_item
         return
       end
 
-      if a = spot_inside_item(*pos) || b = spot_inside_portrait(*pos) then
-        if a then
-          viking_index, item_index = a
-        else
-          viking_index = b
-        end
+      unhighlight
 
-        if @dragged_item then
-          dest_viking = @team[viking_index]
-
-          if @dragged_item.owner.rect.collides?(dest_viking.rect) &&
-              ! dest_viking.inventory.full? then
-            # operation succeeded
-            dest_viking.inventory.put(@dragged_item.item)
-            @dragged_item = nil
-            return
-          end
-        end
-      end
-
-      # either there was no exchange or exchange is unsuccessfull:
-      if @dragged_item then
-        @dragged_item.owner.inventory.put @dragged_item.item
-        @dragged_item = nil
-      end
+      drop_item pos
     end
 
     def mousemove(pos)
+      if @clicked_item then
+        start_drag_item pos
+      end
       if @dragged_item then
-        @dragged_item.position = pos
+        drag_item pos
       end
     end
+
+    # Should be called in every frame before first call to BottomPanel#image;
+    # updates the image if needed
+
+    def update
+      if inventory_browsing? ||
+          items_exchange? ||
+          @viking_views_array.find {|v| v.need_update? } then
+        repaint_image
+        @viking_views_array.each {|v| v.updated }
+      end
+    end
+
+    # Returns a RUDL::Surface with contents of self (without dragged item).
+
+    attr_reader :image
+
+    # Paints itself onto a surface. Paints dragged item (which is not 
+    # on BottomPanel#image)
+
+    def paint(surface, position)
+      surface.blit @image, position
+
+      if @dragged_item then
+        x, y = @dragged_item.position
+        img = @dragged_item.item.image
+        x -= img.w/2
+        y -= img.h/2
+        surface.blit img, [position[0]+x, position[1]+y]
+      end      
+    end
+
+    private
 
     # Paints itself onto the surface. Doesn't worry about the surface's
     # size!
 
-    def paint(surface)
-      surface.fill([60,60,60])
+    def repaint_image
+      @image.fill([60,60,60])
 
       @team.each_with_index do |vik, i|
-        @viking_views[vik].paint(surface)
+        @viking_views[vik].paint(@image)
       end
 
-      if @dragged_item then
-        x, y = @dragged_item.position
-        image = @dragged_item.item.image
-        x -= image.w/2
-        y -= image.h/2
-        surface.blit image, [x,y]
-      end
+      @trash.paint(@image)
     end
-
-    # Returns a RUDL::Surface with updated contents of self.
-
-    def image
-      paint(@image)
-      @image
-    end
-
-    private
 
     # If the point defined by coordinates x,y is inside some
     # viking's portrait, returns the viking's index in the team.
@@ -197,16 +302,10 @@ module FreeVikings
     end
 
     def spot_inside_trash(x, y)
-      one_viking_view_size = (VikingView::INVENTORY_VIEW_SIZE + VikingView::VIKING_FACE_SIZE)
-      trash_icon_start = 4 * one_viking_view_size
-      trash_inventory_end = trash_icon_start + one_viking_view_size
-
-      if (y < VikingView::VIKING_FACE_SIZE) and
-          x > trash_icon_start and
-          x < trash_inventory_end then
+      point_rect = [x,y,0,0]
+      if @trash.rect.contains?(point_rect) then
         return true
       end
-
       return nil
     end
 
@@ -235,11 +334,29 @@ module FreeVikings
       return nil
     end
 
+    STATE_METHODS = {NormalBottomPanelState => :normal,
+      InventoryBrowsingBottomPanelState => :browse,
+      ItemsExchangeBottomPanelState => :exchange}
+
     # Changes the state of the BottomPanel to new_state and notifies all 
     # observers about the change
 
     def change_state(new_state)
       @state = new_state
+
+      @viking_views_array.each {|v| 
+        set_view_mode_according_to_state v
+      }
+    end
+
+    def set_view_mode_according_to_state(view)
+      method = STATE_METHODS[@state.class]
+      view.send method
+    end
+
+    def unhighlight
+      @viking_views_array.each {|v| v.unhighlight }
+      @trash.unhighlight
     end
 
   end # class BottomPanel

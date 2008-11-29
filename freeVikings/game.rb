@@ -48,7 +48,10 @@ module FreeVikings
     GAME_SCREEN_HEIGHT = FreeVikings::WIN_HEIGHT - BottomPanel::HEIGHT
 
     # rectangle of map view inside game window
-    MAPVIEW_RECT = [0, 0, FreeVikings::WIN_WIDTH, WIN_HEIGHT - BottomPanel::HEIGHT]
+    MAPVIEW_RECT = [0, 0, 
+                    FreeVikings::WIN_WIDTH, WIN_HEIGHT - BottomPanel::HEIGHT]
+    BOTTOMPANEL_RECT = [0, FreeVikings::WIN_HEIGHT - BottomPanel::HEIGHT, 
+                        FreeVikings::WIN_WIDTH, BottomPanel::HEIGHT]
 
     # == Public instance methods
     #
@@ -343,6 +346,7 @@ module FreeVikings
 
       unless location.team.active.alive?
         location.team.next
+        @bottompanel.change_active_viking
       end
 
       # nearly all the game state (position of heroes etc.) is updated here
@@ -356,13 +360,15 @@ module FreeVikings
         go_story
       end
 
+      @bottompanel.update
+
       @app_window.clip = MAPVIEW_RECT
       location.paint(@app_window, location.team.active.center)
       @app_window.unset_clip
 
       @state.change_view(@app_window)
 
-      @app_window.blit(@bottompanel.image, [0, WIN_HEIGHT - BottomPanel::HEIGHT])
+      @bottompanel.paint(@app_window, BOTTOMPANEL_RECT)
 
       if FreeVikings.display_fps? then
         @app_window.fill([0,0,0], [8,8,60,12])

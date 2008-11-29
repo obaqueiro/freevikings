@@ -54,7 +54,7 @@ module FreeVikings
         FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
       when K_F2
 	@context.give_up_game
-      when K_F10
+      when K_F10, K_PRINT
         @context.take_screenshot
       when K_F11
         if FreeVikings.develmagic?
@@ -124,8 +124,10 @@ module FreeVikings
         @context.pause
       when K_RCTRL, K_PAGEDOWN, K_z
 	@context.team.previous
+        @context.bottompanel.change_active_viking
       when K_PAGEUP, K_x
 	@context.team.next
+        @context.bottompanel.change_active_viking
       else
         super(keyevent, location)
       end

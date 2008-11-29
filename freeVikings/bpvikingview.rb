@@ -23,14 +23,33 @@ module FreeVikings
       ITEM_POSITIONS = [[0,0],        [ITEM_SIZE,0],
                         [0,ITEM_SIZE],[ITEM_SIZE, ITEM_SIZE]]
 
+      # Colour of highlighted viking's background
+      HIGHLIGHT_COLOUR = [150, 100, 100]
+
       def initialize(viking, position)
         @viking = viking
         @rect = Rectangle.new position[0], position[1], WIDTH, HEIGHT
 
         @active = false
         @mode = :normal
+        @highlighted = false
+
+        @need_update = false
 
         init_gfx
+      end
+
+      # Says if something important has been changed and BottomPanel
+      # should be repainted
+
+      def need_update?
+        @need_update
+      end
+
+      # Tells VikingView that the requested update has been done
+
+      def updated
+        @need_update = false
       end
 
       def paint(surface)
@@ -45,7 +64,11 @@ module FreeVikings
 
       def paint_face(surface)
         face_position = @rect.top_left
-        surface.blit(@face_bg, face_position)
+        if @highlighted then
+          surface.fill HIGHLIGHT_COLOUR, [face_position[0], face_position[1], @face_bg.w, @face_bg.h]
+        else
+          surface.blit(@face_bg, face_position)
+        end
         portrait_img = if @active then
                          @viking.portrait.active
                        elsif not @viking.alive?
@@ -93,28 +116,49 @@ module FreeVikings
 
       public
 
+      # method called by Inventory (VikingView is observer of Inventory)
+
+      def inventory_changed
+        @need_update = true
+      end
+
       # == Set viking view active (colourful portrait) or unactive
 
       def activate
+        @need_update = true
         @active = true
       end
 
       def deactivate
+        @need_update = true
         @active = false
       end
 
       # == Set inventory select box mode
 
       def normal
+        @need_update = true
         @mode = :normal
       end
 
       def browse
+        @need_update = true
         @mode = :browsing
       end
 
       def exchange
+        @need_update = true
         @mode = :exchange
+      end
+
+      # == Set viking view highlighted (for items exchange mode)
+
+      def highlight
+        @highlighted = true
+      end
+
+      def unhighlight
+        @highlighted = false
       end
 
       private
@@ -122,21 +166,13 @@ module FreeVikings
       # Should the selection box be displayed? (Calculates with blinking.)
 
       def show_selection_box?
-        if @mode == :normal
-          return true
-        end
-
-        unless @active
-          return true
-        end
-
-        if (@active and 
+        if @active and
             (@mode == :browsing || @mode == :exchange) and 
-            (Time.now.to_f % ACTIVE_SELECTION_BLINK_DELAY > 0.2)) then
-          return true
+            (Time.now.to_f % ACTIVE_SELECTION_BLINK_DELAY < 0.2) then
+          return false
         end
 
-        return false
+        return true
       end
 
       # Returns an image for the current type of selection box.
