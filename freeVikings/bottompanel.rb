@@ -50,11 +50,15 @@ module FreeVikings
       # slot for item exchanged by drag-and-drop
       @dragged_item = nil
 
-      change_state NormalBottomPanelState.new(@team)
+      change_state NormalBottomPanelState.new(self)
 
       change_active_viking
       repaint_image
     end
+
+    # reader methods for BottomPanelState
+    attr_reader :team
+    attr_reader :trash
 
     extend Forwardable
 
@@ -63,7 +67,7 @@ module FreeVikings
     # active team-member.
 
     def browse_inventory!
-      change_state InventoryBrowsingBottomPanelState.new(@team)
+      change_state InventoryBrowsingBottomPanelState.new(self)
       @trash.dump
       unhighlight
     end
@@ -75,7 +79,12 @@ module FreeVikings
     # to each other.
 
     def exchange_items!
-      change_state ItemsExchangeBottomPanelState.new(@team, @trash)
+      # it is impossible to exchange non-existing item...
+      if @team.active.inventory.empty? then
+        return
+      end
+
+      change_state ItemsExchangeBottomPanelState.new(self)
 
       @team.each {|viking|
         if @state.exchange_participants.include?(viking) then
@@ -93,7 +102,7 @@ module FreeVikings
     # and goes the default way.
 
     def go_normal!
-      change_state NormalBottomPanelState.new(@team)
+      change_state NormalBottomPanelState.new(self)
       @trash.dump
       unhighlight
     end
@@ -338,13 +347,12 @@ module FreeVikings
       InventoryBrowsingBottomPanelState => :browse,
       ItemsExchangeBottomPanelState => :exchange}
 
-    # Changes the state of the BottomPanel to new_state and notifies all 
-    # observers about the change
+    # Changes the state of BottomPanel to new_state
 
     def change_state(new_state)
       @state = new_state
 
-      @viking_views_array.each {|v| 
+      @viking_views_array.each {|v|
         set_view_mode_according_to_state v
       }
     end

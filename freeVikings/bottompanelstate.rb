@@ -10,8 +10,8 @@ module FreeVikings
 
   class BottomPanelState
 
-    def initialize(team)
-      @team = team
+    def initialize(panel)
+      @panel = panel
     end
 
     def up
@@ -44,7 +44,7 @@ module FreeVikings
     private
 
     def active_inventory
-      @team.active.inventory
+      @panel.team.active.inventory
     end
 
   end # class BottomPanelState
@@ -90,7 +90,7 @@ module FreeVikings
     end
 
     def delete_active_item
-      @team.active.inventory.erase_active
+      @panel.team.active.inventory.erase_active
     end
 
     def inventory_browsing?
@@ -101,14 +101,14 @@ module FreeVikings
 
   class ItemsExchangeBottomPanelState < BottomPanelState
 
-    def initialize(team, trash)
-      super(team)
+    def initialize(panel)
+      super(panel)
       # A temporary Team containing only the vikings which participate
       # on the items exchange:
-      @exchange_participants = Team.new(*(@team.members_on_rect(@team.active.rect) << trash))
+      @exchange_participants = Team.new(*(@panel.team.members_on_rect(@panel.team.active.rect) << @panel.trash))
       # We need the active member of the original team (stored in variable
       # @team) to be also an active member of the @exchange_participants Team
-      while @exchange_participants.active != @team.active do
+      while @exchange_participants.active != @panel.team.active do
         @exchange_participants.next
       end
     end
@@ -134,14 +134,16 @@ module FreeVikings
 
       begin
         @exchange_participants.send(methodname)
+        unless @exchange_participants.active.is_a? BottomPanel::Trash then
+          @panel.team.active = @exchange_participants.active
+          @panel.change_active_viking
+        end
         @exchange_participants.active.inventory.put exchanged_item
       rescue Inventory::NoSlotFreeException
         # The destination inventory is full.
         # We must switch to another viking and give the item to him.
         retry
       end
-
-      @team.active = @exchange_participants.active
     end
   end
 end # module FreeVikings

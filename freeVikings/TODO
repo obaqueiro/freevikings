@@ -9,17 +9,17 @@
 (-) Full spritesheets for all three vikings according to the developers'
     manual
 
-(-) Image for unactive teleport
+(-) New background for portraits in bottompanel (in two versions: normal
+    and highlighted) + similar pair of backgrounds for trash
+
+(-) Snow tileset
 
 ======== Code ==========================================================
 
 (-) Fix BottomPanel
-    (-) exchange works - blinking is box around the exchanged item
-
-(-) Shield disappears after Olaf's death
-
-(-) Escape in the "progressbar mode" loading suspends progressbar thread
-    (useful because loading thread sometimes starves)
+    (-) select box can blink in trash (it may be solved by creating
+        additional team in BottomPanel, which would be used in ItemsExchange
+        state and would include Trash)
 
 (-) Christmas bonus level(set?)
 

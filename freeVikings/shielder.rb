@@ -30,6 +30,7 @@ module FreeVikings
     end
 
     def destroy
+      @location.delete_static_object @shield
       Viking.shield = nil # remove the shield reference (shield disappeared)
       super
     end
