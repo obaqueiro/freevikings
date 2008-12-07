@@ -31,6 +31,8 @@ module FreeVikings
 
       WIDTH = HEIGHT = 30
 
+      DEFAULT_Z_VALUE = 101
+
       def initialize(pos, seconds_to_explosion=4)
         super(pos)
         @seconds_to_explosion = seconds_to_explosion
@@ -122,6 +124,8 @@ module FreeVikings
 
         WIDTH = 180
         HEIGHT = 80
+
+        DEFAULT_Z_VALUE = 101
 
         # position isn't handled as a position of top-left corner,
         # but as a position of center!

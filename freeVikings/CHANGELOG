@@ -1,3 +1,18 @@
+[7.December 2008]
+- sprinter.rb, sophisticatedspritestate.rb: Erik is able again to jump
+  when he is walking
+- location.rb, viking.rb, shield.rb, sprinter.rb, warior.rb, shielder.rb: 
+  added support for z (layer index) (-> shield never more disappears behind 
+  other static objects, but fps is probably decreased a bit)
+- switch.rb, teleport.rb, helpbutton.rb: methods 'activate' and 'deactivate'
+  receive argument
+- helpbutton.rb: RD->RDoc
+- ladder.rb: code finished (Ladder is ActiveObject now)
+- viking.rb, verticalstate.rb, horizontalstate.rb, gamestate.rb:
+  Vikings can climb up and down on a ladder.
+- Ladder testing level modified (two more ladders, exit achievable only
+  by climbing two of them)
+
 [4.December 2008]
 - bottompanel.rb, bottompanelstate.rb: "keyboard-driven exchange of items" 
   has more proper visual representation (biggest displaying bug fixed);

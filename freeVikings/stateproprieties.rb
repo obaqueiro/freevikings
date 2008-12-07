@@ -17,9 +17,9 @@ module FreeVikings
       true
     end
 
-    def to_s
-      'moving'
-    end
+#     def to_s
+#       'moving'
+#     end
   end
 
   module NotMovingStateProprieties

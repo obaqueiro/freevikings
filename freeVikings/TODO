@@ -14,7 +14,14 @@
 
 (-) Snow tileset
 
+(-) Climbing images for Baleog and Olaf; better one for Erik
+
 ======== Code ==========================================================
+
+(-) Viking doesn't fall when he hits ceiling while climbing a ladder
+
+(-) RubyCampaign: boat isn't deep below the viking and moves at the same 
+    speed as he.
 
 (-) Fix BottomPanel
     (-) select box can blink in trash (it may be solved by creating
@@ -23,18 +30,11 @@
 
 (-) Christmas bonus level(set?)
 
-(-) Fix error "Erik can jump very high pressing Space again and again"
+(-) Possibility to change game speed (useful on newer machines, where 
+    vikings move terribly slowly)
+    It is in options (-v) and vikings move quicker then, but not the monsters!
 
-(-) Fix error "Erik can't jump when he is walking"
-
-(-) Add z coordinate to game objects (so that their placement can be better
-    controlled - some objects might want to be before vikings;
-    other ones want to be behind some other objects, ...)
-    (Very important now, because Shield is often hidden behind other
-    Static objects)
-
-(-) [GO] Ladder
-    (-) Vikings can climb
+(-) Increase default game speed
 
 (-) Vikings remember the surface they are standing on so that it isn't 
     necessary to check for fall in every iteration of frame cycle
@@ -46,7 +46,7 @@
 	7% in Rectangle#collides (172 calls))
 	etc.
 
-(-) Support for "Tiled tilesets" into "poor fV XML maps"?
+(-) Support for "tileset images" into "poor fV XML maps"?
 
 (-) Redesign VikingState (current design is pretty useless and immature)
 
@@ -60,6 +60,7 @@
 
 (-) [UI] Menu / configuration issues:
     (-) Menu scrolls if it is too long
+    (-) Widget for selecting a file or folder
     (-) Menu: add a message if a bad password is given (also to the GUI,
         not only to a console)
     (-) Possibility to change keys (movement, inventory control etc.)
@@ -138,10 +139,6 @@
 
 (-) Move all items to a separate directory items/ ?
 
-(-) Possibility to change game speed (useful on newer machines, where 
-    vikings move terribly slowly)
-    It is in options (-v) and vikings move quicker then, but not the monsters!
-
 (-) Installation
 
 (-) Skinnable vikings
@@ -158,6 +155,12 @@
     and event should be sent if set to true and music ends
 
 (-) release tool: add task: post file to SF
+
+======== Funny but useless features ====================================
+
+(-) When doing nothing vikings show how much they are bored. After cca ten
+    minutes they fall asleep. From time to time they wake up, say something
+    and fall asleep again.
 
 ============= TASK TYPE CODES:
 

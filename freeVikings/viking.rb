@@ -18,6 +18,8 @@ module FreeVikings
     include Talkable
     include Transportable
 
+    DEFAULT_Z_VALUE = 100
+
     # As Olaf is initialized he gives a reference to his shield
     # here so the vikings can check collision with a shield quickly without
     # searching for it every update.
@@ -194,14 +196,78 @@ module FreeVikings
 
     def s_f_func_on
       @location.active_objects_on_rect(@rect.expand(1,1)).each { |o|
-        o.activate 
+        o.activate self
       }
     end
 
     def s_f_func_off
       @location.active_objects_on_rect(@rect.expand(1,1)).each { |o| 
-        o.deactivate 
+        o.deactivate self
       }
+    end
+
+    def move_left
+      if @state.climbing? then
+        fall        
+      end
+
+      @state.move_left
+    end
+
+    def move_right
+      if @state.climbing? then
+        fall
+      end
+
+      @state.move_right
+    end
+
+    # Normally falls back to s_f_func_on or s_f_func_off,
+    # but on ladder makes the viking move.
+
+    def up
+      if @state.climbing? then
+        @state.vertical_state = ClimbingUpState.new(@state)
+      else
+        s_f_func_on
+      end
+    end
+
+    def down
+      if @state.climbing? then
+        @state.vertical_state = ClimbingDownState.new(@state)
+      else
+        s_f_func_off
+      end
+    end
+
+    # Viking stops on the ladder
+
+    def climb_stop
+      unless @state.climbing?
+        return
+      end
+
+      @state.vertical_state = ClimbingHavingRestState.new(@state)
+    end
+
+    # Called by Ladder when it is activated by Viking
+
+    def climb(ladder, direction)
+      if (ladder.rect.center[0] - @rect.center[0]).abs > 20 then
+        return
+      end
+
+      @rect.left = ladder.collision_rect.center[0] - @rect.w/2
+      @state.vertical_state = case direction
+                              when :up
+                                ClimbingUpState.new(@state)
+                              when :down
+                                ClimbingDownState.new(@state)
+                              else
+                                raise ArgumentError, "Bad direction '#{direction}'"
+                              end
+      @ladder = ladder
     end
 
     # Tries to use the active Item from the Viking's Inventory.
@@ -243,6 +309,7 @@ module FreeVikings
         @log.warn "update: Viking #{name} cannot move in any axis. He could have stucked."
       end
 
+      update_climbing
       try_to_fall
       fall_if_head_on_the_ceiling
       try_to_descend
@@ -304,12 +371,24 @@ module FreeVikings
       end
     end
 
+    def update_climbing
+      if @state.climbing? then
+        if @state.velocity_vertic < 0 && 
+            @rect.top < (@ladder.rect.top - 30) then
+          @rect.top = @ladder.rect.top - (@rect.h + 1)
+          @state.vertical_state = OnGroundState.new(@state)
+        end
+      end
+    end
+
     private
     def try_to_fall
-      if not @state.rising? and not @state.falling? and not on_ground?
-	fall
-	@log.debug "try_to_fall: #{@name} starts falling because there's a free space under him."
+      if @state.climbing? or @state.rising? or @state.falling? or on_ground?
+        return
       end
+
+      fall
+      @log.debug "try_to_fall: #{@name} starts falling because there's a free space under him."
     end
 
     private

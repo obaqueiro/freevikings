@@ -50,11 +50,17 @@ module FreeVikings
 
     def unknockout
     end
+
+    def to_s
+      self.class::STRING_VALUE
+    end
   end # class HorizontalState
 
   class LeftWalkingState < HorizontalState
 
     include MovingStateProprieties
+
+    STRING_VALUE = 'moving'
 
     def initialize(wrapper, direction='right')
       super(wrapper, direction)
@@ -66,6 +72,8 @@ module FreeVikings
   class RightWalkingState < HorizontalState
 
     include MovingStateProprieties
+
+    STRING_VALUE = 'moving'
     
     def initialize(wrapper, direction='right')
       super(wrapper, direction)
@@ -84,10 +92,6 @@ module FreeVikings
     end
 
     STRING_VALUE = 'standing'
-
-    def to_s
-      STRING_VALUE
-    end
   end # class StandingState
 
   class KnockedOutState < HorizontalState
@@ -100,10 +104,6 @@ module FreeVikings
     end
 
     STRING_VALUE = 'knocked-out'
-
-    def to_s
-      STRING_VALUE
-    end
 
     def move_left
     end

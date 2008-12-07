@@ -25,8 +25,12 @@ It's a man (or woman, monster, ...) who carries the shield.
 =end
 
     def initialize(shielder)
+      super([0,0])
       @shielder = shielder
+
+      @z = @shielder.z
       @rect = Rectangle.new 0,0,WIDTH,HEIGHT
+
       init_images
     end
 

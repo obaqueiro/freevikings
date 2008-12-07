@@ -26,7 +26,7 @@ module FreeVikings
     # but in the freeVikings game only three-member Team is used.
 
     def initialize(*members)
-      @members = members
+      @members = members.dup
       @active = 0 # index aktivniho clena tymu
     end
 

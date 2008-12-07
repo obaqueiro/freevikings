@@ -42,7 +42,7 @@ module FreeVikings
     # (It's not a bug, it's a feature! You can teleport for example a monster -
     # if you are skilled enough...)
 
-    def activate
+    def activate(who=nil)
       # If destination is undefined, teleport is unactive
       if ! has_destination? then
         return

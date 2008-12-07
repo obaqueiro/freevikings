@@ -13,7 +13,7 @@
     <password>LDDR</password>
     <map src="ladder_loc.xml"/>
     <script src="ladder_script.rb"/>
-    <exit horiz="280" vertic="200" />
+    <exit horiz="250" vertic="50" />
     <start horiz="50" vertic="140" />
   </body>
 </location>

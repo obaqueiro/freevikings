@@ -5,7 +5,7 @@ module FreeVikings
 
   # Ladder is a game object which enables vikings to climb up.
 
-  class Ladder < Entity
+  class Ladder < ActiveObject
 
     include StaticObject
 
@@ -30,6 +30,23 @@ module FreeVikings
 
     def solid?
       false
+    end
+
+    def semisolid?
+      true
+    end
+
+    def activate(who)
+      who.climb(self, :up)
+    end
+
+    def deactivate(who)
+      who.climb(self, :down)
+    end
+
+    def register_in(l)
+      l.add_static_object self
+      l.add_active_object self
     end
 
     private

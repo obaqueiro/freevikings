@@ -276,10 +276,27 @@ module FreeVikings
       displayed_rect = centered_view_rect(mr.w, mr.h, surfr.w, surfr.h, center)
 
       @map.paint_background(surface, displayed_rect)
-      @staticobjects.paint(surface, displayed_rect)
-      @activeobjectmanager.paint(surface, displayed_rect)
-      @itemmanager.paint(surface, displayed_rect)
-      @spritemanager.paint(surface, displayed_rect)
+
+      (@staticobjects.members_on_rect(displayed_rect) +
+       @activeobjectmanager.members_on_rect(displayed_rect) +
+       @itemmanager.members_on_rect(displayed_rect) +
+       @spritemanager.members_on_rect(displayed_rect)).sort! {|a,b|
+        # puts a.class
+        # puts b.class
+        if a.z < b.z then
+          -1
+        elsif a.z == b.z then
+          0
+        else
+          1
+        end
+      }.each {|o|
+        offset = [o.rect.left - displayed_rect.left, 
+                  o.rect.top - displayed_rect.top]
+
+        surface.blit o.image, offset
+      }
+
       @map.paint_foreground(surface, displayed_rect)
     end
 

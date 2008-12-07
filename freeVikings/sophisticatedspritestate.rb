@@ -45,6 +45,14 @@ module FreeVikings
       @vertical_state.moving?
     end
 
+    def on_ground?
+      @vertical_state.is_a? OnGroundState
+    end
+
+    def climbing?
+      @vertical_state.climbing?
+    end
+
     def right?
       @horizontal_state.direction == 'right'
     end

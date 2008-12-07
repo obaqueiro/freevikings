@@ -4,6 +4,7 @@
   <load_pre>
     <image sym="left">vikings/erik/erik_stand_left.tga</image>
     <image sym="right">vikings/erik/erik_stand_right.tga</image>
+    <image sym="climb">vikings/erik/erik_climbing.tga</image>
   </load_pre>
 
   <states>
@@ -27,6 +28,14 @@
 
     <state name="onground_jumping_left" sym="left"/>
     <state name="onground_jumping_right" sym="right"/>
+
+    <state name="climbingUp_standing_left" sym="climb"/>
+    <state name="climbingDown_standing_left" sym="climb"/>
+    <state name="climbingRest_standing_left" sym="climb"/>
+
+    <state name="climbingUp_standing_right" sym="climb"/>
+    <state name="climbingDown_standing_right" sym="climb"/>
+    <state name="climbingRest_standing_right" sym="climb"/>
 
   </states>
 </model>

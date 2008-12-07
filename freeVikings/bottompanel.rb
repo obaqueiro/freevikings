@@ -27,8 +27,9 @@ module FreeVikings
     # Argument team is a Team of heroes who will be displayed on the panel.
 
     def initialize(team)
-      @team = team
       @trash = Trash.new [VikingView::WIDTH*3, 0]
+
+      @team = team
 
       @image = RUDL::Surface.new [WIDTH, HEIGHT]
 

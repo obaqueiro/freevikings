@@ -29,6 +29,14 @@ module FreeVikings
     def descend # dosednuti, zastaveni padu.
       @wrapper.vertical_state = OnGroundState.new @wrapper
     end
+
+    def to_s
+      self.class::STRING_VALUE
+    end
+
+    def climbing?
+      false
+    end
   end # class VerticalState
 
 
@@ -41,10 +49,6 @@ module FreeVikings
     end
 
     STRING_VALUE = 'onground'
-
-    def to_s
-      STRING_VALUE
-    end
   end # class OnGroundState
 
   class FallingState < VerticalState
@@ -55,11 +59,7 @@ module FreeVikings
       @velocity = VELOCITY_BASE
     end
 
-    STRING_VALUE = 'falling'
-
-    def to_s
-      STRING_VALUE
-    end
+    STRING_VALUE = 'falling'    
   end # class FallingState
 
   class RisingState < VerticalState
@@ -71,9 +71,51 @@ module FreeVikings
     end
 
     STRING_VALUE = 'rising'
-
-    def to_s
-      STRING_VALUE
-    end
   end # class RisingState
+
+  class ClimbingUpState < VerticalState
+    include MovingStateProprieties
+
+    def initialize(wrapper)
+      super wrapper
+      @velocity = - VELOCITY_BASE
+    end
+
+    STRING_VALUE = 'climbingUp'
+
+    def climbing?
+      true
+    end
+  end
+
+  class ClimbingDownState < VerticalState
+    include MovingStateProprieties
+
+    def initialize(wrapper)
+      super wrapper
+      @velocity = VELOCITY_BASE
+    end
+
+    STRING_VALUE = 'climbingDown'
+
+    def climbing?
+      true
+    end
+  end
+
+  class ClimbingHavingRestState < VerticalState
+    include NotMovingStateProprieties
+
+    def initialize(wrapper)
+      super wrapper
+      @velocity = 0
+    end
+
+    STRING_VALUE = 'climbingRest'
+
+    def climbing?
+      true
+    end
+  end
+
 end # module FreeVikings

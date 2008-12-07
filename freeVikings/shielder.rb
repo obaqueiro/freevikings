@@ -12,6 +12,8 @@ module FreeVikings
 
     FAVOURITE_COLOUR = [190, 190, 0]
 
+    DEFAULT_Z_VALUE = Viking::DEFAULT_Z_VALUE + 0
+
     def initialize(name, start_position)
       super(name, start_position)
       init_images

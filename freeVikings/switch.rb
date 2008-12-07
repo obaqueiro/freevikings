@@ -38,11 +38,11 @@ module FreeVikings
     attr_reader :state
     attr_accessor :action
 
-    def activate
+    def activate(who=nil)
       switch
     end
 
-    def deactivate
+    def deactivate(who=nil)
       switch
     end
 

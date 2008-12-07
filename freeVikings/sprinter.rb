@@ -12,6 +12,8 @@ module FreeVikings
 
     FAVOURITE_COLOUR = [180,0,0]
 
+    DEFAULT_Z_VALUE = Viking::DEFAULT_Z_VALUE + 2
+
     def initialize(name, start_position)
       super(name, start_position)
       init_images
@@ -25,7 +27,9 @@ module FreeVikings
     end
 
     def space_func_on
-      return if not @state.standing?
+      return if not @state.on_ground?
+      return if @state.knocked_out?
+
       @ability.space_on
     end
 

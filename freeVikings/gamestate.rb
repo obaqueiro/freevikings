@@ -108,14 +108,17 @@ module FreeVikings
 	@context.team.active.move_left
       when K_RIGHT
 	@context.team.active.move_right
-	# Funkcni klavesy:
+      when K_UP
+        @context.team.active.up
+      when K_DOWN
+        @context.team.active.down
       when K_SPACE
 	@context.team.active.space_func_on
       when K_d, K_LSHIFT
 	@context.team.active.d_func_on
-      when K_s, K_UP
+      when K_s
         @context.team.active.s_f_func_on
-      when K_f, K_DOWN
+      when K_f
         @context.team.active.s_f_func_off
       when K_e, K_u, K_INSERT
         @context.team.active.use_item
@@ -137,6 +140,8 @@ module FreeVikings
       case keyevent.key
       when K_LEFT, K_RIGHT
 	@context.team.active.stop
+      when K_UP, K_DOWN
+        @context.team.active.climb_stop
       when K_SPACE
         @context.team.active.space_func_off
       when K_d, K_LSHIFT

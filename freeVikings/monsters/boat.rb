@@ -24,10 +24,7 @@ module FreeVikings
 
     def initialize(pos, xs)
       super(pos)
-      @paint_rect = Rectangle.new(@rect.left - 20,
-                                  @rect.top - 30,
-                                  160,
-                                  60)
+      @paint_rect = RelativeRectangle.new(@rect, -20, -30, 40, 30)
       @xs = xs
       @dest = 0 # index of next x
       init_transporter
@@ -77,7 +74,7 @@ module FreeVikings
       end
 
       @rect.left += delta_x
-      @paint_rect.left += delta_x
+      # @paint_rect.left += delta_x
 
       update_transported_sprites delta_x, 0
     end
