@@ -19,13 +19,13 @@ module SchwerEngine
     # Called when the player presses the activation key (S or UP) 
     # with the viking standing at the ActiveObject.
 
-    def activate
+    def activate(who=nil)
     end
 
     # Called when the player presses the deactivation key (F or DOWN) 
     # with the viking standing at the ActiveObject.
 
-    def deactivate
+    def deactivate(who=nil)
     end
 
     # Called when the ActiveObject is stroken by some gun (a sword, an arrow).

@@ -14,6 +14,8 @@ module SchwerEngine
 
     WIDTH = HEIGHT = 0
 
+    DEFAULT_Z_VALUE = 0
+
     # Arguments:
     # initial_position:: should be a Rectangle or an Array.
     #   If it is an Array and WIDTH and HEIGHT constants
@@ -49,6 +51,8 @@ module SchwerEngine
 
       @theme = theme
 
+      @z = self.class::DEFAULT_Z_VALUE
+
       init_images if self.respond_to? :init_images
     end
 
@@ -66,6 +70,12 @@ module SchwerEngine
     # These two methods should always be aliases of each other.
     attr_reader :rect
     alias_method :collision_rect, :rect
+
+    # Number which tells in which layer the object is. Objects with
+    # higher numbers are painted later (in front of the others with lower 
+    # numbers).
+    # Default value for most objects is 0.
+    attr_reader :z
 
     # Rectangle of the graphics. By default it is the same 
     # as Entity#collision_rect.
