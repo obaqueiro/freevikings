@@ -72,15 +72,37 @@ module SchwerEngine
     end
 
     def at(i)
-      @array.at(i)
+      case i
+      when 0
+        return @x
+      when 1
+        return @y
+      when 2
+        return @w
+      when 3
+        return @h
+      else
+        raise ArgumentError, "Index invalid."
+      end
     end
 
     def [](i)
-      @array[i]
+      at i
     end
 
     def []=(i, v)
-      @array[i] = v
+      case i
+      when 0
+        @x = v
+      when 1
+        @y = v
+      when 2
+        @w = v
+      when 3
+        @h = v
+      else
+        raise ArgumentError, "Index invalid."
+      end
     end
 
     attr_accessor :x

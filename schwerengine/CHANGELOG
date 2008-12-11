@@ -1,3 +1,6 @@
+[11.December 2008]
+- rect2.rb: repaired methods at, [], []=
+
 [7.December 2008]
 - entity.rb: added z (layer index)
 - rect2.rb: attempt to optimize Rect without compiled extensions
