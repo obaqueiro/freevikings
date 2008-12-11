@@ -12,13 +12,22 @@
 (-) New background for portraits in bottompanel (in two versions: normal
     and highlighted) + similar pair of backgrounds for trash
 
-(-) Snow tileset
+======== Features for the Christmas release ============================
 
-(-) Climbing images for Baleog and Olaf; better one for Erik
+(-) Christmas bonus level(set?)
+    (-) Snow tileset
+    (-) Present box
+
+(-) Game speed
+    (-) Possibility to change game speed (useful on newer machines, where 
+        vikings move terribly slowly)
+        It is in options (-v) and vikings move quicker then, 
+        but not the monsters!
+    (-) Increase default game speed
+    (-) Code (option-switchable) which tests for highest possible game speed
+        at given frame rate
 
 ======== Code ==========================================================
-
-(-) Viking doesn't fall when he hits ceiling while climbing a ladder
 
 (-) RubyCampaign: boat isn't deep below the viking and moves at the same 
     speed as he.
@@ -27,14 +36,6 @@
     (-) select box can blink in trash (it may be solved by creating
         additional team in BottomPanel, which would be used in ItemsExchange
         state and would include Trash)
-
-(-) Christmas bonus level(set?)
-
-(-) Possibility to change game speed (useful on newer machines, where 
-    vikings move terribly slowly)
-    It is in options (-v) and vikings move quicker then, but not the monsters!
-
-(-) Increase default game speed
 
 (-) Vikings remember the surface they are standing on so that it isn't 
     necessary to check for fall in every iteration of frame cycle
@@ -73,8 +74,6 @@
     (vikings can stay on it's deck; monsters can't pass through it)
 
 (-) [UI] error in script is shown in kind of dialog window
-
-(-) [UI] During drag&drop highlight vikings which can receive item
 
 (-) Viking's rect isn't constant, but may have variable size and
     is dependent on image used (display rect defined in model file

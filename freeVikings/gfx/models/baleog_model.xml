@@ -11,6 +11,7 @@ Model description for Baleog.
   <load_pre>
     <image sym="left">vikings/baleog/baleog_stand_left.tga</image>
     <image sym="right">vikings/baleog/baleog_stand_right.tga</image>
+    <image sym="climb">vikings/baleog/baleog_stand_right.tga</image>
 
     <animation sym="stand_left">
       <image>vikings/baleog/baleog_stand_left.tga</image>
@@ -59,5 +60,14 @@ Model description for Baleog.
     <state name="falling_bow-stretching_right" sym="shoot_right"/>
     <state name="falling_sword-fighting_left" sym="left"/>
     <state name="falling_sword-fighting_right" sym="right"/>
+
+    <state name="climbingUp_standing_left" sym="climb"/>
+    <state name="climbingDown_standing_left" sym="climb"/>
+    <state name="climbingRest_standing_left" sym="climb"/>
+
+    <state name="climbingUp_standing_right" sym="climb"/>
+    <state name="climbingDown_standing_right" sym="climb"/>
+    <state name="climbingRest_standing_right" sym="climb"/>
+
   </states>
 </model>

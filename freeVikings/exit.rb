@@ -10,6 +10,8 @@ module FreeVikings
 
   class Exit < Entity
 
+    WIDTH = HEIGHT = 40
+
     include StaticObject
 
     def initialize(position)
@@ -23,14 +25,16 @@ module FreeVikings
     # on the EXIT.
 
     def team_exited?(team)
-      sprites_ex = @location.sprites_on_rect(self.rect)
-      team_members_ex = sprites_ex.find_all {|s| team.member? s }
-
-      if team_members_ex.size == team.alive_size then
-        return true
-      else
-        return false
+      team.each do |member|
+        unless member.alive?
+          next
+        end
+        unless member.collision_rect.collides? @rect
+          return false
+        end
       end
+
+      return true
     end
   end
 end

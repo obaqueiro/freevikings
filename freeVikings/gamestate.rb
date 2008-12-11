@@ -47,13 +47,17 @@ module FreeVikings
       case event.key
       when K_q, K_ESCAPE
         end_game
+      when K_F2
+	@context.give_up_game
       when K_F3
 	@context.app_window.toggle_fullscreen
         FreeVikings::OPTIONS['fullscreen'] = @context.app_window.fullscreen?
       when K_F4
         FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
-      when K_F2
-	@context.give_up_game
+      when K_F9
+        if FreeVikings.develmagic?
+          @context.team.active.destroy
+        end
       when K_F10, K_PRINT
         @context.take_screenshot
       when K_F11

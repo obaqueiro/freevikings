@@ -96,7 +96,7 @@ module FreeVikings
     end
 
     def rising?
-      velocity_vertic < 0
+      @vertical_state.is_a? RisingState
     end
 
     def descend

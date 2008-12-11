@@ -1,3 +1,20 @@
+[11.December 2008]
+- trying to solve problem with exitting from Ladder testing level I looked 
+  at code of class Exit, added width and height (so that exit area is not
+  just the top-left corner, but whole area of the image) and rewrote method 
+  Exit#team_exited?, which was awfully uneffective
+- added climbing states to models of Olaf and Baleog (although I haven't
+  painted special images for them because graphics of vikings should
+  be replaced as soon as possible)  
+- viking.rb: viking stops moving horizontally before he starts climbing
+  (bug fix)
+- sophisticatedspritestate.rb: modified method SophisticatedSpriteState#rising?
+  so that it returns false when viking is climbing; then he doesn't fall when
+  he hits ceiling while climbing, just stops
+- gamestate.rb: if development magic is on, F9 kills active viking (sadistic,
+  but sometimes useful...)
+- game.rb: fix bug which caused crash after the last viking was killed with F9
+
 [7.December 2008]
 - sprinter.rb, sophisticatedspritestate.rb: Erik is able again to jump
   when he is walking

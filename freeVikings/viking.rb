@@ -258,6 +258,9 @@ module FreeVikings
         return
       end
 
+      # Viking must stop walking before trying to climb
+      @state.stop
+
       @rect.left = ladder.collision_rect.center[0] - @rect.w/2
       @state.vertical_state = case direction
                               when :up
@@ -374,7 +377,7 @@ module FreeVikings
     def update_climbing
       if @state.climbing? then
         if @state.velocity_vertic < 0 && 
-            @rect.top < (@ladder.rect.top - 30) then
+            @rect.top < (@ladder.rect.top - HEIGHT/2) then
           @rect.top = @ladder.rect.top - (@rect.h + 1)
           @state.vertical_state = OnGroundState.new(@state)
         end
@@ -388,6 +391,7 @@ module FreeVikings
       end
 
       fall
+
       @log.debug "try_to_fall: #{@name} starts falling because there's a free space under him."
     end
 

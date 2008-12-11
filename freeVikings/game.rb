@@ -345,7 +345,14 @@ module FreeVikings
       end
 
       unless location.team.active.alive?
-        location.team.next
+        begin
+          location.team.next
+        rescue Team::NotATeamMemberAliveException
+          # No team member lives; (it only occurs here if last living viking
+          # is killed by the evil user pressing F9) return; in every_level 
+          # exit will be detected in the test of frame cycle.
+          return
+        end
         @bottompanel.change_active_viking
       end
 
