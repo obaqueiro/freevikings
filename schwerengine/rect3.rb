@@ -242,6 +242,10 @@ module SchwerEngine
       return self
     end
 
+    def move(d_x, d_y)
+      Rectangle.new @x+d_x, @y+d_y, @w, @h
+    end
+
     # Moves Rectangle; returns self
     # r = Rectangle.new(100,100,10,10) # => [100,100,10,10]
     # r.move!(50,-10) # => [150,90,10,10]

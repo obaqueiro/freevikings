@@ -13,6 +13,7 @@
 - group.rb: Group#members_on_rect yields members which collide with the given 
   rect, so it is possible to decrease number of iterations over Arrays 
   in the application
+- rect3.rb: Rectangle#move()
 
 [11.December 2008]
 - rect2.rb: repaired methods at, [], []=
