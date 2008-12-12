@@ -260,6 +260,9 @@ module FreeVikings
 
       # Viking must stop walking before trying to climb
       @state.stop
+      # and end any ability-connected activities
+      @state.ability.space_off
+      @state.ability.d_off
 
       @rect.left = ladder.collision_rect.center[0] - @rect.w/2
       @state.vertical_state = case direction
@@ -376,10 +379,21 @@ module FreeVikings
 
     def update_climbing
       if @state.climbing? then
+        # At the top of ladder
         if @state.velocity_vertic < 0 && 
             @rect.top < (@ladder.rect.top - HEIGHT/2) then
-          @rect.top = @ladder.rect.top - (@rect.h + 1)
-          @state.vertical_state = OnGroundState.new(@state)
+          delta_y = @ladder.rect.top - (@rect.h + 1) - @rect.top
+          if @location.area_free?(@rect.move(0,delta_y)) then
+            @rect.move!(0,delta_y)
+            @state.vertical_state = OnGroundState.new(@state)
+          end
+        end
+
+        # At the bottom of ladder
+        if @state.velocity_vertic > 0 &&
+            @rect.top > (@ladder.rect.bottom - 5) then
+          @ladder = nil
+          fall
         end
       end
     end

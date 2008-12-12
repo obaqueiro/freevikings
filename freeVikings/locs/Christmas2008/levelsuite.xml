@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>Christmas 2008</title>
+    <author>Jakub Pavlik /severus@post.cz/</author>
+    <description>
+      Small Christmas gift for you.
+    </description>
+  </info>
+
+  <theme>DefaultTheme</theme>
+
+  <suite>
+    <level>HolyHole</level>
+    <!-- <level>Climbin</level>
+	 <level>WisdomCave</level>
+	 <level>HappyLEnd</level> -->
+  </suite>
+</levelsuite>

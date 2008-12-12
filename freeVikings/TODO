@@ -12,17 +12,20 @@
 (-) New background for portraits in bottompanel (in two versions: normal
     and highlighted) + similar pair of backgrounds for trash
 
-======== Features for the Christmas release ============================
+======== Features for the Christmas release (0.7) ======================
+
+/ Features are frozen, no more except of those listed here will be added;
+  list won't be expanded - with exception of important bugfixes /
+
+(-) [BUG] Repair bottompanel - it should show life loss immediatelly
 
 (-) Christmas bonus level(set?)
     (-) Tiles
-        (-) snow
-        (-) underground cave
         (-) tree
         (-) christmas tree decorations
     (-) new objects
-        (-) Present box
-        (-) runic stones
+        (-) Present box (item)
+        (-) runic stones (active object, cca 60*80px)
         (-) some flying monster (ghost? bat? raven?)
 
 (-) Game speed
@@ -34,11 +37,13 @@
     (-) Code (option-switchable) which tests for highest possible game speed
         at given frame rate
 
-(-) RubyCampaign: boat isn't deep below the viking and moves at the same 
+(-) [BUG] RubyCampaign: boat isn't deep below the viking and moves at the same 
     speed as he.
     (problem with RelativeRect and Rect v.2 ?)
 
 ======== Code ==========================================================
+
+(-) SchwerEngine: all rect versions should have methods move, move_y, move_x
 
 (-) Fix BottomPanel
     (-) select box can blink in trash (it may be solved by creating

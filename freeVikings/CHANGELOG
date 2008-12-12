@@ -3,6 +3,10 @@
   'a.XX_on_rect(r).each {}' replaced by 'a.XX_on_rect(r) {}' (less iterations -
   new feature of SchwerEngine::Group)
 - utils/tiletester.rb: repaired
+- viking.rb, vikingstate.rb, LDDR level: solved two ladder issues: 
+  viking doesn't "pop" on the top of ladder if the area over ladder isn't free;
+  he also falls when he reaches bottom of a ladder
+- new tilesets and new campaign 'Christmas 2008'
 
 [11.December 2008]
 - trying to solve problem with exitting from Ladder testing level I looked 

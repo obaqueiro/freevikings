@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Holy Hole</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Baleog, Olaf and Erik went deep into the forest to hunt some wild
+      pig for the Christmas Eve. But instead of a pig they discovered...
+    </description>
+  </info>
+
+  <body>
+    <password>HOAL</password>
+    <map src="holyhole_loc.tmx"/>
+    <script src="holyhole_script.rb"/>
+    <start horiz="50" vertic="240" />
+    <exit horiz="480" vertic="1720" />
+  </body>
+</location>

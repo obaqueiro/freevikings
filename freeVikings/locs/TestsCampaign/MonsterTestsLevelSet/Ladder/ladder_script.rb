@@ -10,3 +10,8 @@ LOCATION << Ladder.new([640, 40], 10)
 
 # ladder to the exit
 LOCATION << Ladder.new([250, 40], 6)
+
+# ladder to test special cases: 
+# bottom end of ladder over solid surface and
+# top end of ladder not far from ceiling
+LOCATION << Ladder.new([50, 100], 5)

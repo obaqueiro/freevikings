@@ -36,7 +36,7 @@ module FreeVikings
     # the viking's state and image, so a reference to it must be given to the
     # VikingState.
 
-    attr_writer :ability
+    attr_accessor :ability
 
     # Produces a string describing the state. This string has three parts
     # separated by underscore. The first one describes the vertical state,
