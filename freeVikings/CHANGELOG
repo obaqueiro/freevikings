@@ -2,6 +2,7 @@
 - viking.rb, monstermixins.rb:
   'a.XX_on_rect(r).each {}' replaced by 'a.XX_on_rect(r) {}' (less iterations -
   new feature of SchwerEngine::Group)
+- utils/tiletester.rb: repaired
 
 [11.December 2008]
 - trying to solve problem with exitting from Ladder testing level I looked 

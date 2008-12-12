@@ -15,8 +15,15 @@
 ======== Features for the Christmas release ============================
 
 (-) Christmas bonus level(set?)
-    (-) Snow tileset
-    (-) Present box
+    (-) Tiles
+        (-) snow
+        (-) underground cave
+        (-) tree
+        (-) christmas tree decorations
+    (-) new objects
+        (-) Present box
+        (-) runic stones
+        (-) some flying monster (ghost? bat? raven?)
 
 (-) Game speed
     (-) Possibility to change game speed (useful on newer machines, where 
@@ -29,7 +36,7 @@
 
 (-) RubyCampaign: boat isn't deep below the viking and moves at the same 
     speed as he.
-    (problem with RelativeRect and Rect v.2)
+    (problem with RelativeRect and Rect v.2 ?)
 
 ======== Code ==========================================================
 
@@ -161,6 +168,8 @@
 (-) When doing nothing vikings show how much they are bored. After cca ten
     minutes they fall asleep. From time to time they wake up, say something
     and fall asleep again.
+
+(-) Voice of Thor
 
 ============= TASK TYPE CODES:
 

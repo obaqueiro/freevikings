@@ -3,32 +3,38 @@
 # tiletester.rb
 # igneus 22.9.2005
 
-# An utility for tiles test.
+# An utility for tiles testing.
 # It's designed for the location designers to test the developed
 # tiles quickly and effectively.
 
-# Unless 'freeVikings/util' is the working directory,
-# 'freeVikings' must be added into the features path.
-if `pwd` != File.dirname(__FILE__) then
-  $: << File.dirname(File.dirname(__FILE__))
-end
-
-require 'images.rb'
 require 'RUDL'
 require 'optparse'
 
 class TileTester
 
-  include FreeVikings
   include RUDL
 
   TS = TILE_SIZE = 40
 
-  def initialize(surface, width, height, files)
+  def initialize(surface, width, height, input)
     @surface = surface
     @width = width
     @height = height
-    @files = files
+    @files = []
+    input.each do |i|
+      begin
+        # argument is number
+        k = Integer i
+        @files << [k]
+      rescue ArgumentError
+        # argument is file name
+        if @files.last && @files.last.size == 1 then
+          @files.last << i
+        else
+          @files << [1, i]
+        end
+      end
+    end
     @images = []
     load_images
   end
@@ -61,7 +67,7 @@ class TileTester
     tile_num = 0
     0.upto(@height - 1) do |line|
       0.upto(@width - 1) do |column|
-        tile_surface = @images[tile_num % @images.size].image
+        tile_surface = @images[tile_num % @images.size]
         surface.blit(tile_surface, [column * TS, line * TS])
         tile_num += 1
       end
@@ -72,7 +78,8 @@ class TileTester
     @images.clear
 
     @files.each do |f|
-      @images << Image.new(f)
+      s = Surface.load_new(f[1])
+      f[0].times { @images << s }
     end
 
     @img = Surface.new([@surface.w, @surface.h])
