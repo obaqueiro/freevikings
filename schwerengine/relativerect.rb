@@ -13,7 +13,7 @@ module SchwerEngine
   # if the "leader" is garbage collected. (i.e. any method may raise
   # WeakRef::RefError - defined in weakref.rb in Ruby's standard library)
 
-  class RelativeRectangle < Rectangle
+  class RelativeRectangle < Old::Rectangle
 
     # Accepts "leader" Rectangle and four numeric values:
     # differences of position (x, y), width and height.

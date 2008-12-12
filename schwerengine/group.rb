@@ -69,7 +69,14 @@ rects collide with (({Rectangle})) ((|rect|)).
 =end
 
     def members_on_rect(rect)
-      @members.find_all { |member| rect.collides? member.rect }
+      @members.find_all { |member| 
+        if rect.collides? member.rect then
+          yield(member) if block_given?
+          true
+        else
+          false
+        end
+      }
     end
 
 =begin

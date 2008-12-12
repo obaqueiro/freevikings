@@ -3,28 +3,28 @@
 
 module SchwerEngine
 
-  # Version of class Rectangle optimized by replacing internal Array
-  # with four numeric variables. (This optimization increased fps
-  # of freeVikings from 3-4 to 6-8!)
+  # Version of class Rectangle optimized by replacing dynamic computation
+  # of Rectangle#right with static values
 
   class Rectangle
 
-    RECTANGLE_VERSION = 2
+    RECTANGLE_VERSION = 3
 
     def initialize(*coordinates)
       if coordinates[0].is_a? Rectangle then
-        r = coordinates[0]
-        @x = r.x
-        @y = r.y
-        @w = r.w
-        @h = r.h
+        copy_values coordinates[0]
       else
-        @x,@y,@w,@h = if coordinates.size >= 4 then
-                        coordinates
-                      else
-                        raise ArgumentError, "4 numeric arguments needed"
-                      end
+        if coordinates.size < 4 then
+          raise ArgumentError, "4 numeric arguments needed"
+        end
+        @x = coordinates[0]
+        @y = coordinates[1]
+        @w = coordinates[2]
+        @h = coordinates[3]
       end
+
+      @right = @x + @w
+      @bottom = @y + @h
     end
 
     # Accepts two points (2-element Arrays), creates Rectangle 
@@ -66,17 +66,28 @@ module SchwerEngine
       @w = rect.w
       @h = rect.h
 
+      @right = @x + @w
+      @bottom = @y + @h
+
       return self
     end
 
     def collides?(rect)
-      if @x <= rect.right and
-	  rect.left <= self.right and
-	  @y <= rect.bottom and
-	  rect.top <= self.bottom then
-	return true
-      end
-      return false
+      # if @x <= rect.right and
+      #     rect.left <= @right and
+      #     @y <= rect.bottom and
+      #     rect.top <= @bottom then
+      #   return true
+      #  end
+      #  return false
+
+      # Small optimization
+      return false if @x >= rect.right
+      return false if rect.left > @right
+      return false if @y > rect.bottom
+      return false if rect.top > @bottom
+
+      return true
     end
 
     def at(i)
@@ -111,22 +122,38 @@ module SchwerEngine
       else
         raise ArgumentError, "Index invalid."
       end
+
+      @right = @x + @w
+      @bottom = @y + @h
     end
 
-    attr_accessor :x
+    attr_reader :x
     alias_method :left, :x
+
+    def x=(nx)
+      @x = nx
+
+      @right = @x + @w
+      @bottom = @y + @h
+    end
     alias_method(:left=, :x=)
 
-    attr_accessor :y
+    attr_reader :y
     alias_method :top, :y
+
+    def y=(ny)
+      @y = ny
+
+      @right = @x + @w
+      @bottom = @y + @h
+    end
     alias_method(:top=, :y=)
       
     attr_accessor :w
     attr_accessor :h
 
-    def bottom
-      @y + @h
-    end
+    attr_reader :bottom
+    attr_reader :right
 
     def bottom=(b)
       if b < @y then
@@ -134,10 +161,9 @@ module SchwerEngine
       end
 
       @h = b - @y
-    end
 
-    def right
-      @x + @w
+      @right = @x + @w
+      @bottom = @y + @h
     end
 
     def right=(r)
@@ -146,6 +172,9 @@ module SchwerEngine
       end
 
       @w = r - @x
+
+      @right = @x + @w
+      @bottom = @y + @h
     end
 
     # Methods returning [x,y] coordinates of corners
@@ -155,15 +184,15 @@ module SchwerEngine
     end
 
     def top_right
-      [self.right, @y]
+      [@right, @y]
     end
 
     def bottom_left
-      [@x, self.bottom]
+      [@x, @bottom]
     end
 
     def bottom_right
-      [self.right, self.bottom]
+      [@right, @bottom]
     end
 
     # Returns an expanded copy of itself.
@@ -186,6 +215,9 @@ module SchwerEngine
       @y -= expand_y
       @h += 2 * expand_y
 
+      @right = @x + @w
+      @bottom = @y + @h
+
       return self
     end
 
@@ -204,6 +236,9 @@ module SchwerEngine
       @w += left + right
       @h += top + bottom
 
+      @right = @x + @w
+      @bottom = @y + @h
+
       return self
     end
 
@@ -214,6 +249,9 @@ module SchwerEngine
     def move!(d_x, d_y)
       @x += d_x
       @y += d_y
+
+      @right = @x + @w
+      @bottom = @y + @h
 
       return self
     end
@@ -255,15 +293,15 @@ module SchwerEngine
       else
         result.top = rect.top
       end
-      if rect.right < self.right then
+      if rect.right < @right then
         result.right = rect.right
       else
         result.right = self.right
       end
-      if rect.bottom < self.bottom
+      if rect.bottom < @bottom
         result.bottom = rect.bottom
       else
-        result.bottom = self.bottom
+        result.bottom = @bottom
       end
 
       return result
@@ -292,8 +330,8 @@ module SchwerEngine
     # Does self contain r?
 
     def contains?(r)
-      left <= r.left && right >= r.right &&
-        top <= r.top && bottom >= r.bottom
+      @x <= r.left && @right >= r.right &&
+        @y <= r.top && @bottom >= r.bottom
     end
   end # class Rectangle
 end # module FreeVikings

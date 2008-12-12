@@ -57,7 +57,8 @@ module SchwerEngine
     SchwerEngine.module_eval do
 
       # Basics
-      require 'schwerengine/rect2.rb'
+      require 'schwerengine/rect3.rb'
+      require 'schwerengine/rect.rb' # parent of RelativeRect
       require 'schwerengine/relativerect.rb'
       require 'schwerengine/gfxtheme.rb'
       require 'schwerengine/pausable.rb'

@@ -13,7 +13,7 @@ class TestRect < Test::Unit::TestCase
   include SchwerEngine
 
   def setup
-    @R = Rectangle
+    @R = Old::Rectangle
     @r1 = @R.new 60,60,60,60
   end
 
@@ -159,5 +159,11 @@ class TestRect < Test::Unit::TestCase
     r.copy_values s
 
     assert_equal s, r, "Rects should have same values"
+  end
+
+  def testEqualToNil
+    assert_nothing_raised("To ensure fix of one bug") do
+      @R.new(0,0,10,10) == nil
+    end
   end
 end

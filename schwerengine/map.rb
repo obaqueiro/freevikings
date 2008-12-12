@@ -123,6 +123,11 @@ module SchwerEngine
     # Says if given Rectangle is free of solid tiles.
 
     def area_free?(rect)
+      if rect.left < 0 || rect.right > width ||
+          rect.top < 0 || rect.bottom > height then
+        return false
+      end
+
       tl = rect.top_left
       leftmost_i, top_line = pixels_to_tiles(tl)
       rightmost_i, bottom_line = pixels_to_tiles(rect.bottom_right)
@@ -297,14 +302,12 @@ module SchwerEngine
 
     # Accepts [x,y] Array of pixel values and returns Array 
     # of tile index values
+    #
+    # It isn't guaranted that given tile indexes are inside the map!
+    # Check yourself!
 
     def pixels_to_tiles(xy)
       column, row = xy[0].to_i / @tile_width, xy[1].to_i / @tile_height
-
-      column = 0 if column < 0
-      column = tile_columns-1 if column >= tile_columns
-      row = 0 if row < 0
-      row = tile_rows-1 if row >= tile_rows
 
       return [column,row]
     end

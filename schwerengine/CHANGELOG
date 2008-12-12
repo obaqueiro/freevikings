@@ -1,9 +1,26 @@
+[12.December 2008]
+- rect3.rb: further optimization of rect2.rb:
+  Rectangle#right and #bottom aren't computed dynamically, they are
+  implemented as numeric variables updated each time other internals are
+  changed; Rectangle#collides? is also optimized a bit
+- rect2.rb, rect3.rb: Rectangle#== repaired
+- rect.rb: isolated in module SchwerEngine::Old
+- tests/testrectN.rb: test cases for all three Rectangle classes
+- relativerect.rb: is child of Old::Rectangle
+- map.rb: 
+    Map#area_free?: area out of map isn't free
+    Map#pixels_to_tiles: less tests (done by area_free?)
+- group.rb: Group#members_on_rect yields members which collide with the given 
+  rect, so it is possible to decrease number of iterations over Arrays 
+  in the application
+
 [11.December 2008]
 - rect2.rb: repaired methods at, [], []=
 
 [7.December 2008]
 - entity.rb: added z (layer index)
-- rect2.rb: attempt to optimize Rect without compiled extensions
+- rect2.rb: attempt to optimize Rect without compiled extensions by replacing
+  internal Array with 4 Numeric variables
 
 [24.November 2008]
 - rect.rb: added method Rectangle#expand2 (and ! variant);
