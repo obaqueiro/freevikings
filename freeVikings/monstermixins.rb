@@ -29,7 +29,7 @@ module FreeVikings
 
         return unless ready_to_attack?
 
-        @location.heroes_on_rect(@rect).each {|s|
+        @location.heroes_on_rect(@rect) {|s|
             s.hurt
             s.hurt if @angry # attacks twice per round if angry
             @last_bash = @location.ticker.now
@@ -67,9 +67,7 @@ module FreeVikings
       # Detects if the Monster collides with any Shield.
 
       def stopped_by_shield?
-        if @location.sprites_on_rect(self.rect).find {|s| 
-            s.kind_of? Shield
-          } then
+        if Viking.shield && @rect.collides?(Viking.shield.rect)
           return true
         end
         return false

@@ -195,13 +195,13 @@ module FreeVikings
     # if he is "bubbled" or mounted as an operator on some machine)
 
     def s_f_func_on
-      @location.active_objects_on_rect(@rect.expand(1,1)).each { |o|
+      @location.active_objects_on_rect(@rect.expand(1,1)) { |o|
         o.activate self
       }
     end
 
     def s_f_func_off
-      @location.active_objects_on_rect(@rect.expand(1,1)).each { |o| 
+      @location.active_objects_on_rect(@rect.expand(1,1)) { |o| 
         o.deactivate self
       }
     end
@@ -443,7 +443,7 @@ module FreeVikings
 
     private
     def collect_items
-      @location.items_on_rect(rect).each do |i|
+      @location.items_on_rect(rect) do |i|
         begin
           @inventory.put i
           @location.delete_item i

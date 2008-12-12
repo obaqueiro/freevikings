@@ -281,8 +281,6 @@ module FreeVikings
        @activeobjectmanager.members_on_rect(displayed_rect) +
        @itemmanager.members_on_rect(displayed_rect) +
        @spritemanager.members_on_rect(displayed_rect)).sort! {|a,b|
-        # puts a.class
-        # puts b.class
         if a.z < b.z then
           -1
         elsif a.z == b.z then
