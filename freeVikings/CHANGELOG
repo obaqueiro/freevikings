@@ -1,3 +1,6 @@
+[13.December 2008]
+- started work on gfx/runestone.png
+
 [12.December 2008]
 - viking.rb, monstermixins.rb:
   'a.XX_on_rect(r).each {}' replaced by 'a.XX_on_rect(r) {}' (less iterations -

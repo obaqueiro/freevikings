@@ -43,6 +43,9 @@
 
 ======== Code ==========================================================
 
+(-) Model: if unknown state occurs, just log an error message and don't
+    raise exception (or possibility to switch off exception)
+
 (-) SchwerEngine: all rect versions should have methods move, move_y, move_x
 
 (-) Fix BottomPanel
