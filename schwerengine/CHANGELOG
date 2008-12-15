@@ -1,3 +1,7 @@
+[15.December 2008]
+- tiledmaploadstrategy.rb: possibility to switch off displaying of a layer
+  (layer property 'display' with value 'no' or 'false')
+
 [12.December 2008]
 - rect3.rb: further optimization of rect2.rb:
   Rectangle#right and #bottom aren't computed dynamically, they are

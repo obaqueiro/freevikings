@@ -67,18 +67,40 @@ module SchwerEngine
     def load_tiles
       @log.info "Loading tiles."
 
-      # first get tile ids from every layer:
+      # try to find solid layer
+      solid_layer = nil
+      solid_layer_name = @properties['solid_layer']
 
       layers = []
       layer_names = []
 
       @doc.root.each_element('layer') do |layer|
         layers.push []
-        layer_names.push layer.attributes['name']
+        layer_name = layer.attributes['name']
+        layer_names.push layer_name
 
         layer_data = layer.elements['data']
 
         map_sizes = [@max_width, @max_height]
+
+        # Read layer properties
+        skip_painting = false
+        layer.each_element('properties') {|ps|
+          ps.each_element('property') {|p|
+            case p.attributes['name']
+            when 'display'
+              if p.attributes['value'] == 'false' || p.attributes['value'] == 'no' then
+                if layer_name != solid_layer_name then
+                  @log.error "Omitting layer '#{layer_name}' from painting - attribute 'display' set to false."
+                  skip_painting = true
+                else
+                  @log.error "Layer '#{layer_name}' must be displayed, because it's a solid layer."
+                end
+              end
+            end
+          }
+        }
+        next if skip_painting
 
         if layer_data.attributes['encoding'] then
           unless layer_data.attributes['encoding'] == 'base64'
@@ -92,12 +114,8 @@ module SchwerEngine
       end
       @max_height += 1
 
-      # then find solid layer and fill @blocks:
-
-      solid_layer = nil
-
-      solid_layer_i = layer_names.index(@properties['solid_layer'])
-
+      # get data from the solid layer
+      solid_layer_i = layer_names.index(solid_layer_name)
       if solid_layer_i == nil then
         @log.error "Solid layer not found. Highest layer is considered to be solid."
         solid_layer = layers.last
