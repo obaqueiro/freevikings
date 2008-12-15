@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<gfxtheme>
+  <info>
+    <name>Underground Cave</name>
+    <directory>themes/UndergroundCave</directory>
+  </info>
+
+  <data>
+    <image name="bridge" image="wooden_bridge.png" />
+  </data>
+</gfxtheme>

@@ -18,7 +18,6 @@ module FreeVikings
   WIN_WIDTH = 640
   WIN_HEIGHT = 480
 
-  CODE_DIRS = ['monsters', 'ext'] # directories with additional source files
   DEFAULT_LEVELSUITE_DIR = 'locs/DefaultCampaign'
   DEFAULT_THEME_DIR = 'gfx/themes'
 

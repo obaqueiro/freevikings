@@ -1,7 +1,7 @@
 # monster.rb
 # igneus 22.2.2005
 
-require 'monsters/tombstone.rb'
+require 'tombstone.rb'
 
 module FreeVikings
 

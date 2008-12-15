@@ -14,8 +14,8 @@ a location script).
 Shooter
 =end
 
-require 'monsters/shooter.rb'
-require 'monsters/redshot.rb'
+require 'shooter.rb'
+require 'redshot.rb'
 
 module FreeVikings
 

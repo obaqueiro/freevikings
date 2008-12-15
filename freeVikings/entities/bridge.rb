@@ -1,9 +1,10 @@
 # bridge.rb
 # igneus 19.6.2005
 
-# A bridge for the vikings.
-
 module FreeVikings
+
+  # A bridge for the vikings.
+  # !!! Bridge.new needs two arguments: position and theme!
 
   class Bridge < Entity
 

@@ -1,7 +1,7 @@
 # arrowshooter.rb
 # igneus 10.10.2005
 
-require 'monsters/shooter.rb'
+require 'entities/shooter.rb'
 
 module FreeVikings
 

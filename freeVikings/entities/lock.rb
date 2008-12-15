@@ -13,6 +13,8 @@ module FreeVikings
 
     include StaticObject
 
+    WIDTH = HEIGHT = 30
+
     # =begin
     # = Constants
     #

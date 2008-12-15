@@ -6,7 +6,7 @@
 FlyingPlatform
 =end
 
-require 'monsters/bridge.rb'
+require 'bridge.rb'
 require 'transporter.rb'
 
 module FreeVikings

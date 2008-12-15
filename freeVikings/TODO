@@ -17,6 +17,10 @@
 / Features are frozen, no more except of those listed here will be added;
   list won't be expanded - with exception of important bugfixes /
 
+(-) Olaf's shield disappears when climbing
+
+(-) [FIX] fix DefaultCampaign - where requires from 'monsters/'
+
 (-) [BUG] Repair bottompanel - it should show life loss immediatelly
 
 (-) Christmas bonus level(set?)
@@ -25,8 +29,8 @@
         (-) christmas tree decorations
     (-) new objects
         (-) Present box (item)
-        (-) runic stones (active object, cca 60*80px)
         (-) some flying monster (ghost? bat? raven?)
+        (-) some nice walking underground monster
 
 (-) Game speed
     (-) Possibility to change game speed (useful on newer machines, where 
@@ -43,8 +47,15 @@
 
 ======== Code ==========================================================
 
+(-) show level name and password in window title:
+    "freeVikings 0.8: First level [FRST]"
+
+(-) fix selecting viking using mouse
+
 (-) Model: if unknown state occurs, just log an error message and don't
     raise exception (or possibility to switch off exception)
+
+(-) Possibility to load images from level directory
 
 (-) SchwerEngine: all rect versions should have methods move, move_y, move_x
 
@@ -139,6 +150,8 @@
 (-) [UI] Show level name, description and author at the beginning of level
 
 (-) release tool: add task: mail to freevikings-users mailing list
+
+(-) release tool: option -P to checkout (ommit empty directories)
 
 (-) Map's borders are solid, so it is impossible to go out of the map
 

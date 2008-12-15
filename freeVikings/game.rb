@@ -13,7 +13,7 @@ require 'structuredworld.rb'
 require 'gamestate.rb'
 require 'bottompanel.rb'
 
-require 'monsters/testrect.rb'
+require 'entities/testrect.rb'
 
 module FreeVikings
 

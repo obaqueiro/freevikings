@@ -6,8 +6,10 @@
 # FreeVikings project is trying to clone the brilliant
 # Lost Vikings game.
 
-# tell ruby to load libraries also from directory lib/:
+# tell ruby to load libraries also from directories 'lib/' (redistributed
+# libraries) and 'entities/' (game objects):
 $: << './lib'
+$: << './entities'
 
 # !!! more require-statements (SchwerEngine, Log4r) are at the end of this file
 require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
@@ -263,9 +265,6 @@ include SchwerEngine
 SchwerEngine.config = FreeVikings
 
 require 'initfv.rb' # Init class (just btw.: in Hebrew - which doesn't use syllables in the written text - 'Init' would probably be written the same as 'Anat', which is a goddess known from the Kenaan mythology)
-
-
-$:.concat FreeVikings::CODE_DIRS
 
 require "alternatives.rb"
 

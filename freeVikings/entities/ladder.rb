@@ -9,6 +9,8 @@ module FreeVikings
 
     include StaticObject
 
+    DEFAULT_Z_VALUE = 0
+
     WIDTH = 80
     BIT_HEIGHT = 40
 

@@ -1,3 +1,19 @@
+[15.December 2008]
+- gfx/runes_[large, small].png: runes for rune stones and rune gems
+- entities from top directory moved to 'entities' (with exception of vikings,
+  sword and shield);
+  also entities from directory 'monsters' moved there
+- gfx/runestone.png: awful, but I can't make it better for now
+- game.rb, some entities: fixed require statements (requiring from 'monsters')
+- fvdef.rb, freevikings.rb: 'entities/' added to $:, 'monsters/' removed
+- entities/runestone.rb: three classes of different runic stones
+- entities/door.rb: @rect.w changes according to state of the object
+- gfx/themes/UndergroundCave (new theme, now has just a bridge)
+- entities/bridge.rb: added comment about initialisation
+- entities/fallingstone.rb: New funny game object which likes to kill vikings
+- level HolyHole: nearly ready (needs just apexes and some monsters)
+- ... (most probably I forgot a lot of things...)
+
 [13.December 2008]
 - started work on gfx/runestone.png
 

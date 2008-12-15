@@ -25,7 +25,7 @@ StaticObject
 
     include StaticObject
 
-    WIDTH = 40
+    WIDTH = 80
     HEIGHT = 120
 
 =begin
@@ -39,6 +39,9 @@ from (({Entity}))) and optionally if the ((<Door>)) is closed, default is true.
     def initialize(position, closed=true)
       super(position)
       @closed = true
+      if @closed then
+        @rect.w = 40
+      end
     end
 
 =begin
@@ -61,6 +64,7 @@ Makes the ((<Door>)) open.
 
     def open
       @closed = false
+      @rect.w = 80
       self
     end
 
@@ -71,6 +75,7 @@ Closes the ((<Door>)).
 
     def close
       @closed = true
+      @rect.w = 40
       self
     end
 
