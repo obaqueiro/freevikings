@@ -3,7 +3,7 @@
 
 # Script of the testing location for monster class Penguin
 
-load 'monsters/penguin.rb'
+load 'penguin.rb'
 
 penguin = Penguin.new [300, 11*40-Penguin::HEIGHT]
 LOCATION << penguin

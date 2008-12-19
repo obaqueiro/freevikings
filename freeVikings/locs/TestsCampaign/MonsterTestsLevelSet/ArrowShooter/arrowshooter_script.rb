@@ -2,7 +2,7 @@
 # igneus 10.10.2005
 
 require 'switch.rb'
-require 'monsters/arrowshooter.rb'
+require 'arrowshooter.rb'
 
 shooter = ArrowShooter.new [8*40, 9*40]
 LOCATION << shooter

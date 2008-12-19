@@ -1,5 +1,6 @@
 [18.December 2008]
-- DefaultCampaign, RubyCampaign: fixed requirement statements of moved entities
+- DefaultCampaign, RubyCampaign, TestsCampaign/MonsterTestsLevelSet: 
+  fixed requirement statements of moved entities
 
 [15.December 2008]
 - gfx/runes_[large, small].png: runes for rune stones and rune gems

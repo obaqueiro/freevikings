@@ -3,7 +3,7 @@
 
 # First test of monster class Snail.
 
-load 'monsters/snail.rb'
+load 'snail.rb'
 
 TS = 40
 

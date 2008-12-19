@@ -1,7 +1,7 @@
 # walkbear_test_script.rb
 # igneus 24.9.2005
 
-require 'monsters/orangehead.rb'
+require 'orangehead.rb'
 require 'talk.rb'
 
 FLOOR = 440
