@@ -6,7 +6,7 @@
 require 'switch'
 require 'apple'
 require 'killtoy'
-require 'monsters/bear'
+require 'bear'
 
 # === CONSTANTS:
 

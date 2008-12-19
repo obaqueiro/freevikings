@@ -2,9 +2,9 @@
 # igneus 9.6.2005
 # Lokacni skript pridavajici potvory do lokace Yellow Hall
 
-require 'monsters/plasmashooter.rb'
-require 'monsters/robot.rb'
-require 'monsters/lift.rb'
+require 'plasmashooter.rb'
+require 'robot.rb'
+require 'lift.rb'
 require 'switch.rb'
 require 'apple.rb'
 require 'story.rb'

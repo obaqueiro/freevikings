@@ -1,9 +1,9 @@
 # stairs_script.rb
 # igneus 22.7.2006
 
-require 'monsters/lift'
+require 'lift'
 require 'helpbutton'
-require 'monsters/animatedapex'
+require 'animatedapex'
 require 'switch'
 require 'door'
 require 'killtoy'

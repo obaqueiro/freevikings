@@ -5,9 +5,9 @@
 
 require 'helpbutton.rb'
 require 'switch.rb'
-require 'monsters/apex.rb'
-require 'monsters/bridge.rb'
-require 'monsters/bear.rb'
+require 'apex.rb'
+require 'bridge.rb'
+require 'bear.rb'
 
 include FreeVikings
 

@@ -2,7 +2,7 @@
 # igneus 14.3.2005
 # Skript priser pro lokaci dark_loc.xml
 
-require 'monsters/apex.rb'
+require 'apex.rb'
 
 include FreeVikings
 

@@ -3,9 +3,9 @@
 
 # Script of the overcrowded location full of penguins.
 
-require 'monsters/lift.rb'
-require 'monsters/penguin.rb'
-require 'monsters/apex.rb'
+require 'lift.rb'
+require 'penguin.rb'
+require 'apex.rb'
 require 'door.rb'
 require 'lock.rb'
 require 'key.rb'

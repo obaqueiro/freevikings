@@ -10,11 +10,11 @@ require 'lock.rb'
 require 'key.rb'
 require 'apple.rb'
 
-require 'monsters/apex.rb'
-require 'monsters/lift.rb'
-require 'monsters/flyingplatform.rb'
-require 'monsters/arrowshooter.rb'
-require 'monsters/snail.rb'
+require 'apex.rb'
+require 'lift.rb'
+require 'flyingplatform.rb'
+require 'arrowshooter.rb'
+require 'snail.rb'
 
 TS = LOCATION.map.tile_size
 
