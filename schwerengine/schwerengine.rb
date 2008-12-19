@@ -70,6 +70,7 @@ module SchwerEngine
       require 'schwerengine/animation.rb'
       require 'schwerengine/portrait.rb'
       require 'schwerengine/model.rb'
+      require 'schwerengine/spritesheet.rb'
 
       # Entities
       require 'schwerengine/entity.rb'

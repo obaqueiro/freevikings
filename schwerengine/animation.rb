@@ -90,7 +90,7 @@ Method common for all the (({Image}))-like objects. Returns the current image
     # Returns index of the current frame
 
     def current_frame
-      (Time.now.to_i / @delay) % @images.size
+      (Time.now.to_f / @delay) % @images.size
     end
 
     def w

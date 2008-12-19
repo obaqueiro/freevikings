@@ -1,3 +1,7 @@
+[19.December 2008]
+- spritesheet.rb: simple support for spritesheets
+- animation.rb: fixed one ancient error
+
 [15.December 2008]
 - tiledmaploadstrategy.rb: possibility to switch off displaying of a layer
   (layer property 'display' with value 'no' or 'false')
