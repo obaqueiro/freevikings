@@ -161,7 +161,7 @@ module FreeVikings
     def open_window
       @log.info "Initializing the game window."
       @window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
-      @window.set_caption('freeVikings ' + FreeVikings::VERSION)
+      @window.set_caption(FreeVikings::WIN_CAPTION)
       @window.toggle_fullscreen if FreeVikings::OPTIONS['fullscreen']
     end
 

@@ -20,7 +20,9 @@ module FreeVikings
 
     VELOCITY = 60
 
-    # ys is Array of x-positions of boats end points
+    DEFAULT_Z_VALUE = 105 # paint show in front of vikings
+
+    # xs is Array of x-positions of boat's way-points
 
     def initialize(pos, xs)
       super(pos)
@@ -30,7 +32,7 @@ module FreeVikings
       init_transporter
     end
 
-    # Boat has graphic_rect and paint_rect different!
+    # Boat has collision_rect and paint_rect different!
     # (It is the first class which has ever had it...)
 
     attr_reader :paint_rect
@@ -74,7 +76,6 @@ module FreeVikings
       end
 
       @rect.left += delta_x
-      # @paint_rect.left += delta_x
 
       update_transported_sprites delta_x, 0
     end

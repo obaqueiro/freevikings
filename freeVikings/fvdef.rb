@@ -56,6 +56,9 @@ module FreeVikings
     FreeVikings::VERSION = 'DEV'
   end
 
+  # caption of game window
+  WIN_CAPTION = 'freeVikings ' + FreeVikings::VERSION
+
   FONTS = {} # a hash of fonts
 
   # Module FreeVikings has a special querying feature.

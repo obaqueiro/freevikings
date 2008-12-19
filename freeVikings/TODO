@@ -17,10 +17,6 @@
 / Features are frozen, no more except of those listed here will be added;
   list won't be expanded - with exception of important bugfixes /
 
-(-) Olaf's shield disappears when climbing
-
-(-) [BUG] Repair bottompanel - it should show life loss immediatelly
-
 (-) Christmas bonus level(set?)
     (-) Tiles
         (-) tree
@@ -28,7 +24,7 @@
     (-) new objects
         (-) Present box (item)
         (-) some flying monster (ghost? bat? raven?)
-        (-) some nice walking underground monster
+        (-) LivingStone - animate all frames properly, finish code
 
 (-) Game speed
     (-) Possibility to change game speed (useful on newer machines, where 
@@ -39,14 +35,7 @@
     (-) Code (option-switchable) which tests for highest possible game speed
         at given frame rate
 
-(-) [BUG] RubyCampaign: boat isn't deep below the viking and moves at the same 
-    speed as he.
-    (problem with RelativeRect and Rect v.2 ?)
-
 ======== Code ==========================================================
-
-(-) show level name and password in window title:
-    "freeVikings 0.8: First level [FRST]"
 
 (-) fix selecting viking using mouse
 
@@ -103,8 +92,6 @@
 (-) Viking's rect isn't constant, but may have variable size and
     is dependent on image used (display rect defined in model file
     for every image?)
-
-(-) Support for spritesheets
 
 (-) Entity#init_images should be something like protected (I don't know 
     exactly what 'protected' means IN RUBY; maybe it should be even private

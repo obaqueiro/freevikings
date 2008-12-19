@@ -148,7 +148,7 @@ module FreeVikings
 
     def notify_observer
       if @observer then
-        @observer.inventory_changed
+        @observer.update_view
       end
     end
 

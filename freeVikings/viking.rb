@@ -78,12 +78,22 @@ module FreeVikings
 
       @inventory = Inventory.new
 
+      # y value of place where viking started falling; is used to compute
+      # if he should be hurt when touching a hard surface
       @start_fall = -1
+
       @knockout_duration = TimeLock.new
 
-      @transported_by = nil # an eventual transporter transporting the viking
+      # an eventual transporter transporting the viking
+      @transported_by = nil
+
+      # says if viking is trying to climb
+      @try_to_climb = false
 
       @location = NullLocation.instance
+
+      # BottomPanel::VikingView will be assigned here
+      @view = nil
     end
 
     # Factory methods which create subclasses' instances.
@@ -126,6 +136,11 @@ module FreeVikings
 
     attr_reader :paint_rect
 
+    def view=(v)
+      @view = v
+      @inventory.observer = v
+    end
+
     # Takes the Viking off one energy point.
     # If the energy falls onto zero, Viking#destroy is called.
     # Returns his energy after the injury.
@@ -133,6 +148,9 @@ module FreeVikings
     def hurt
       @energy -= 1
       destroy if @energy <= 0
+
+      @view.update_view
+
       return @energy
     end
 
@@ -152,6 +170,7 @@ module FreeVikings
     def heal
       if @energy < MAX_ENERGY
         @energy += 1
+        @view.update_view
         return true
       else
         return false
@@ -171,6 +190,7 @@ module FreeVikings
       @inventory.clear
       @location.add_sprite DeadViking.new([left, top])
       @location.delete_sprite self
+      @view.update_view
       self
     end
 
@@ -229,6 +249,7 @@ module FreeVikings
       if @state.climbing? then
         @state.vertical_state = ClimbingUpState.new(@state)
       else
+        @try_to_climb = true
         s_f_func_on
       end
     end
@@ -237,13 +258,17 @@ module FreeVikings
       if @state.climbing? then
         @state.vertical_state = ClimbingDownState.new(@state)
       else
+        @try_to_climb = true
         s_f_func_off
       end
     end
 
+    # Called whenever UP or DOWN key is released.
     # Viking stops on the ladder
 
     def climb_stop
+      @try_to_climb = false
+
       unless @state.climbing?
         return
       end
@@ -254,10 +279,11 @@ module FreeVikings
     # Called by Ladder when it is activated by Viking
 
     def climb(ladder, direction)
-      if (ladder.rect.center[0] - @rect.center[0]).abs > 20 then
+      if ! proper_ladder_collision?(ladder) then
         return
       end
 
+      @try_to_climb = false
       # Viking must stop walking before trying to climb
       @state.stop
       # and end any ability-connected activities
@@ -315,7 +341,8 @@ module FreeVikings
         @log.warn "update: Viking #{name} cannot move in any axis. He could have stucked."
       end
 
-      update_climbing
+      try_to_climb if @try_to_climb
+      update_climbing if @state.climbing?
       try_to_fall
       fall_if_head_on_the_ceiling
       try_to_descend
@@ -377,24 +404,37 @@ module FreeVikings
       end
     end
 
-    def update_climbing
-      if @state.climbing? then
-        # At the top of ladder
-        if @state.velocity_vertic < 0 && 
-            @rect.top < (@ladder.rect.top - HEIGHT/2) then
-          delta_y = @ladder.rect.top - (@rect.h + 1) - @rect.top
-          if @location.area_free?(@rect.move(0,delta_y)) then
-            @rect.move!(0,delta_y)
-            @state.vertical_state = OnGroundState.new(@state)
-          end
-        end
+    # When UP or DOWN key is pressed, viking regularly tries to find a ladder
+    # and climb it up/down
 
-        # At the bottom of ladder
-        if @state.velocity_vertic > 0 &&
-            @rect.top > (@ladder.rect.bottom - 5) then
-          @ladder = nil
-          fall
+    def try_to_climb
+      ladder = @location.active_objects_on_rect(@rect) {|ao|
+        if ao.is_a?(Ladder) && proper_ladder_collision?(ao) then
+          break ao
         end
+      }
+
+      if ladder.is_a? Ladder then
+        ladder.activate(self)
+      end
+    end
+
+    def update_climbing
+      # At the top of ladder
+      if @state.velocity_vertic < 0 && 
+          @rect.top < (@ladder.rect.top - HEIGHT/2) then
+        delta_y = @ladder.rect.top - (@rect.h + 1) - @rect.top
+        if @location.area_free?(@rect.move(0,delta_y)) then
+          @rect.move!(0,delta_y)
+          @state.vertical_state = OnGroundState.new(@state)
+        end
+      end
+
+      # At the bottom of ladder
+      if @state.velocity_vertic > 0 &&
+          @rect.top > (@ladder.rect.bottom - 5) then
+        @ladder = nil
+        fall
       end
     end
 
@@ -470,6 +510,12 @@ module FreeVikings
       end
     end
 
+    # Says if viking collides with the ladder so that he can climb it
+
+    def proper_ladder_collision?(ladder)
+      @rect.collides?(ladder.rect) &&
+        (ladder.rect.center[0] - @rect.center[0]).abs < 20
+    end
   end # class Viking
 end # module
 

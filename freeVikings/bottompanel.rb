@@ -39,8 +39,6 @@ module FreeVikings
         pos = [i * VikingView::WIDTH, 0]
         view = VikingView.new(v, pos)
 
-        v.inventory.observer = view
-
         @viking_views[v] = view
         @viking_views_array << view
       }

@@ -57,11 +57,11 @@ It's a man (or woman, monster, ...) who carries the shield.
     def unofficial_update(location)
       @rect.left = case state
                      when 'top'
-                       @shielder.rect.left 
+                       @shielder.paint_rect.left
                      when 'left'
-                       @shielder.rect.left - WIDTH - 2
+                       @shielder.paint_rect.left - WIDTH - 2
                      when 'right'
-                       @shielder.rect.right + 2
+                       @shielder.paint_rect.right + 2
                      end # case state
       @rect.top = case state
                      when 'top'

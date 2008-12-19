@@ -28,6 +28,8 @@ module FreeVikings
 
       def initialize(viking, position)
         @viking = viking
+        @viking.view = self
+
         @rect = Rectangle.new position[0], position[1], WIDTH, HEIGHT
 
         @active = false
@@ -116,9 +118,10 @@ module FreeVikings
 
       public
 
-      # method called by Inventory (VikingView is observer of Inventory)
+      # method called by Inventory and Viking (VikingView is observer 
+      # of Viking and his Inventory)
 
-      def inventory_changed
+      def update_view
         @need_update = true
       end
 

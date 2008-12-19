@@ -40,6 +40,7 @@ module FreeVikings
     def update
       super
       @shield.unofficial_update @location
+      update_shield_use
     end
 
     def shield_use
@@ -61,9 +62,11 @@ module FreeVikings
     SHIELD_GLIDE_ANTIACCELERATION = 0.5
 
     def velocity_vertic
-      if @ability.shield_use == ShielderAbility::SHIELD_TOP
+      if (! @state.climbing?) &&
+          @ability.shield_use == ShielderAbility::SHIELD_TOP
         return _velocity_vertic * SHIELD_GLIDE_ANTIACCELERATION
       end
+
       return _velocity_vertic
     end
 
@@ -73,6 +76,23 @@ module FreeVikings
       @image = Model.load_new(File.open(FreeVikings::GFX_DIR + '/models/olaf_model.xml'))
 
       @portrait = Portrait.new 'olaf_face.tga', 'olaf_face_unactive.gif', 'dead_face.png'
+    end
+
+    # if state is such that shield cannot be used (climbing or knockout),
+    # let it disappear; let it appear otherwise
+
+    def update_shield_use
+      if @state.climbing? || @state.knocked_out? then
+        if Viking.shield then
+          @location.delete_static_object @shield
+          Viking.shield = nil
+        end
+      else
+        if ! Viking.shield then
+          @location.add_static_object @shield
+          Viking.shield = @shield
+        end
+      end
     end
 
   end # class Shielder

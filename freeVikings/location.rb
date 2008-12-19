@@ -289,8 +289,8 @@ module FreeVikings
           1
         end
       }.each {|o|
-        offset = [o.rect.left - displayed_rect.left, 
-                  o.rect.top - displayed_rect.top]
+        offset = [o.paint_rect.left - displayed_rect.left, 
+                  o.paint_rect.top - displayed_rect.top]
 
         surface.blit o.image, offset
       }

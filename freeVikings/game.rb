@@ -127,6 +127,7 @@ module FreeVikings
 
     def exit_game
       on_level_end
+      @app_window.set_caption FreeVikings::WIN_CAPTION
       throw :return_to_menu
     end
 
@@ -226,6 +227,9 @@ module FreeVikings
           end
 
           @log.info "Play!"
+
+          @app_window.set_caption "#{FreeVikings::WIN_CAPTION}: #{@world.level.title} [#{@world.level.password}]"
+
           level_finished_successfully = every_level()
 
           first_attempt = false

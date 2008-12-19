@@ -27,5 +27,6 @@
     <level>Conversation</level>
     <level>BombEtc</level>
     <level>Ladder</level>
+    <level>LivingStone</level>
   </suite>
 </levelsuite>
