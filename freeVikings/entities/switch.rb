@@ -16,6 +16,11 @@ module FreeVikings
     WIDTH = 30
     HEIGHT = 30
 
+    # action should be a Proc (or object which listens to message 'call')
+    # and receive up to 2 arguments: first one is Boolean and announces
+    # Switche's new state (true = on, false = off), second argument
+    # is Switch itself (useful sometimes)
+
     def initialize(position, theme, on=false, action=Proc.new {})
       super(position, theme)
       @state = on
@@ -57,7 +62,7 @@ module FreeVikings
 
     def switch
       @state = (not @state)
-      @action.call(@state)
+      @action.call(@state, self)
     end
   end # class Switch
 end # module FreeVikings

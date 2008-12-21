@@ -249,7 +249,7 @@ module FreeVikings
       if @state.climbing? then
         @state.vertical_state = ClimbingUpState.new(@state)
       else
-        @try_to_climb = true
+        @try_to_climb = :up
         s_f_func_on
       end
     end
@@ -258,7 +258,7 @@ module FreeVikings
       if @state.climbing? then
         @state.vertical_state = ClimbingDownState.new(@state)
       else
-        @try_to_climb = true
+        @try_to_climb = :down
         s_f_func_off
       end
     end
@@ -284,7 +284,8 @@ module FreeVikings
       end
 
       @try_to_climb = false
-      # Viking must stop walking before trying to climb
+      @start_fall = -1
+      # Viking must stop walking before he can start climbing
       @state.stop
       # and end any ability-connected activities
       @state.ability.space_off
@@ -415,7 +416,12 @@ module FreeVikings
       }
 
       if ladder.is_a? Ladder then
-        ladder.activate(self)
+        if @try_to_climb == :down then
+          ladder.deactivate(self)
+        else
+          ladder.activate(self)
+        end
+        @try_to_climb = false
       end
     end
 
@@ -434,6 +440,11 @@ module FreeVikings
       if @state.velocity_vertic > 0 &&
           @rect.top > (@ladder.rect.bottom - 5) then
         @ladder = nil
+        fall
+      end
+
+      # Ladder might have disappeared:
+      if ! @rect.collides?(@ladder.rect) then
         fall
       end
     end

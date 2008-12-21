@@ -211,6 +211,7 @@ module FreeVikings
     def mouseclick(pos)
       if i = spot_inside_portrait(*pos) then
         @team.active = @team[i]
+        change_active_viking
       elsif a = spot_inside_item(*pos) then
         viking_index, item_index = a
 

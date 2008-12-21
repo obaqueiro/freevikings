@@ -1,6 +1,13 @@
 [21.December 2008]
-- entities/switch.rb: RD->RDoc
-- Christmas2008/Climbin: beginning of a script; metadata added to the map
+- entities/switch.rb: RD->RDoc;
+  added new argument passed to @action: Switch instance itself
+- Christmas2008/Climbin: metadata added to the map;
+  ladders and associated switches implemented
+- viking.rb: falls if ladder disappears;
+  fixed error "viking starts climbing up when meeting ladder with 'down'
+  button pressed"
+- bottompanel.rb: fixed error "viking selection using a mouse doesn't affect
+  portraits"
 
 [19.December 2008]
 - bottompanel.rb, bpvikingview.rb, viking.rb, inventory.rb:
@@ -10,7 +17,7 @@
   with a ladder and start climbing it (current system "press UP to try 
   to climb" was uncomfortable for the player - at least for me :) )
 - shielder.rb: shield disappears when Olaf is climbing or KO;
-  fixed error "Olaf clims slowly with shield over his head"
+  fixed error "Olaf climbs slowly with shield over his head"
 - shield.rb: Shield's position is determined according to Olaf's
   paint_rect, not collision_rect (looks better)
 - location.rb: fixed error: objects were painted according to their rect,

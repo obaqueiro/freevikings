@@ -46,6 +46,9 @@
 
 (-) SchwerEngine: all rect versions should have methods move, move_y, move_x
 
+(-) BottomPanel: modify mouse event handling: if item or portrait was clicked
+    shouldn't be determined in BottomPanel, but in VikingView!
+
 (-) Fix BottomPanel
     (-) select box can blink in trash (it may be solved by creating
         additional team in BottomPanel, which would be used in ItemsExchange
