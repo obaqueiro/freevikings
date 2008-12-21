@@ -1,3 +1,7 @@
+[21.December 2008]
+- entities/switch.rb: RD->RDoc
+- Christmas2008/Climbin: beginning of a script; metadata added to the map
+
 [19.December 2008]
 - bottompanel.rb, bpvikingview.rb, viking.rb, inventory.rb:
   Fixed problem "VikingView doesn't update on life loss":

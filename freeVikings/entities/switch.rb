@@ -1,21 +1,16 @@
 # switch.rb
 # igneus 9.6.2005
 
-=begin
-= NAME
-Switch
-= DESCRIPTION
-The switch you can switch by up/down arrow with a viking standing next to it.
-= Superclass
-ActiveObject
-=end
-
 require 'monster.rb'
 
 module FreeVikings
 
+  # You can switch it by up/down direction key with a viking standing next to 
+  # it or with keys S/F or using Baleog's sword or arrow.
+
   class Switch < ActiveObject
 
+    # Must be a Monster so that arrow and sword hit it.
     include Monster
 
     WIDTH = 30

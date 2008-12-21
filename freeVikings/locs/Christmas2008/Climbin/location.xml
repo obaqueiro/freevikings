@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Climbin'</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Olaf: "I always get sick when I have to climb a ladder."
+    </description>
+  </info>
+
+  <body>
+    <password>CLBG</password>
+    <theme>UndergroundCave</theme>
+    <map src="climbin_loc.tmx"/>
+    <script src="climbin_script.rb"/>
+    <start horiz="60" vertic="59" />
+    <exit horiz="80" vertic="400" />
+  </body>
+</location>
