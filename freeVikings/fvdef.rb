@@ -25,6 +25,10 @@ module FreeVikings
     'RUDL' => '0.7.0.0',
     'REXML' => '3.1.3'}
 
+  # gravity (in pixels per second**2)
+  # (most objects ignore it)
+  GRAVITY = 30
+
   # Options defaults:
 
   # Base directory searched for data directories

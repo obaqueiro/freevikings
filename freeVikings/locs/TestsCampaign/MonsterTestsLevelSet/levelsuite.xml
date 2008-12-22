@@ -28,5 +28,6 @@
     <level>BombEtc</level>
     <level>Ladder</level>
     <level>LivingStone</level>
+    <level>SmallStone</level>
   </suite>
 </levelsuite>

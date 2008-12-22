@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Happy LEnd</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Ooooooooooohh!
+    </description>
+  </info>
+
+  <body>
+    <password>HAND</password>
+    <theme>UndergroundCave</theme>
+    <map src="happylend_loc.tmx"/>
+    <script src="happylend_script.rb"/>
+    <start horiz="50" vertic="659" />
+    <exit horiz="1080" vertic="80" />
+  </body>
+</location>

@@ -240,7 +240,13 @@ module FreeVikings
       end
 
       @ticker.tick
-      @spritemanager.update
+
+      @spritemanager.each do |sprite|
+        sprite.update
+        unless rect_inside?(sprite.collision_rect)
+          sprite.destroy
+        end
+      end
     end
 
     # Tells all the Sprites in the Location to temporarily stop 

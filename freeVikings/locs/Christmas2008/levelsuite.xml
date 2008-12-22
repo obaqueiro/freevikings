@@ -14,7 +14,7 @@
   <suite>
     <level>HolyHole</level>
     <level>Climbin</level>
-    <!-- <level>WisdomCave</level>
-	 <level>HappyLEnd</level> -->
+    <!-- <level>WisdomCave</level>  -->
+    <level>HappyLEnd</level>
   </suite>
 </levelsuite>

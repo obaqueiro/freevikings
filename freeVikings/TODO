@@ -17,9 +17,10 @@
 / Features are frozen, no more except of those listed here will be added;
   list won't be expanded - with exception of important bugfixes /
 
-(-) Christmas bonus level(set?)
+(-) Christmas bonus levelset
     (-) Tiles
-        (-) tree
+        (-) snow on a tree
+        (-) redo snow to look more like snow
         (-) christmas tree decorations
     (-) new objects
         (-) Present box (item)
@@ -36,8 +37,6 @@
         at given frame rate
 
 ======== Code ==========================================================
-
-(-) fix selecting viking using mouse
 
 (-) Model: if unknown state occurs, just log an error message and don't
     raise exception (or possibility to switch off exception)
@@ -63,6 +62,9 @@
 	8% in Rectangle#left (1272 calls)
 	7% in Rectangle#collides (172 calls))
 	etc.
+
+(-) Pause game on focus loss, unpause on focus (should be just option -
+    it spares cpu time, but someone may not want this behavior)
 
 (-) Support for "tileset images" into "poor fV XML maps"?
 
@@ -91,6 +93,14 @@
     (vikings can stay on it's deck; monsters can't pass through it)
 
 (-) [UI] error in script is shown in kind of dialog window
+
+(-) High scores:
+    (-) how much time it took to make a level
+    (-) optionally level times could be viewed after finishing a level
+    (-) highscores on the website
+    (-) "Bonus mode?" - you gain points for time and for bonus tasks
+        (find a secret place; pick and use all items; do something with
+        a charecter which isn't very well-equipped for it; etc.)
 
 (-) Viking's rect isn't constant, but may have variable size and
     is dependent on image used (display rect defined in model file

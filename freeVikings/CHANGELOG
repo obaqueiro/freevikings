@@ -1,3 +1,10 @@
+[22.December 2008]
+- location.rb: SpriteManager#update removed, functionality moved to Location
+- entities/smallstone.rb: small game object, will be used together with
+  LivingStone
+- new level Christmas2008/HappyLEnd
+- new tileset: trunk of a tree with branches
+
 [21.December 2008]
 - entities/switch.rb: RD->RDoc;
   added new argument passed to @action: Switch instance itself
