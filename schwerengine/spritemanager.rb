@@ -67,6 +67,8 @@ Possibly quicker than ((<SpriteManager#members_on_rect>)).
     def_delegator :@heroes, :members_on_rect, :heroes_on_rect
     def_delegator :@monsters, :members_on_rect, :monsters_on_rect
 
+    def_delegator :@members, :each
+
     def add(object)
       super(object)
 
@@ -81,24 +83,6 @@ Possibly quicker than ((<SpriteManager#members_on_rect>)).
       @nested_groups.each do |g|
         g.delete(member)
       end
-    end
-
-    def update
-      @members.each { |sprite|
-        # If the sprite has got out of the map, we kill it.
-        # In the other case the sprite is updated.
-        begin
-          unless sprite.location.rect_inside?(sprite.rect) then
-            sprite.destroy
-            # @members.delete sprite
-          else
-            sprite.update
-          end
-        rescue NullLocation::NullLocationException
-          Log4r::Logger['freeVikings log'].fatal "Sprite #{sprite} doesn't have it's 'location' attribute set to a valid Location class."
-          raise
-        end
-      }
     end
 
     def pause
