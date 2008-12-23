@@ -18,7 +18,7 @@ module FreeVikings
 
     def initialize(initial_position)
       pos = initial_position
-      if pos.size >= 4 then
+      if pos.is_a? Rectangle then
         pos.top += pos.h - HEIGHT
       end
       pos.w = WIDTH

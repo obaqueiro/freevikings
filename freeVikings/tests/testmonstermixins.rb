@@ -37,8 +37,11 @@ class TestMonsterMixins < Test::Unit::TestCase
     shielder = Shielder.new("", SHIELDER_POS)
     shield = Shield.new(shielder)
 
+    Viking.shield = shield
+
     @location.add_sprite shielder
-    @location.add_sprite shield
+    @location << shield
+    shield.unofficial_update @location
   end
 
   def testStoppedByShield

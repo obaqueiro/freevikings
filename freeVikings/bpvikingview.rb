@@ -196,6 +196,13 @@ module FreeVikings
         @selection_box_yellow = RUDL::Surface.load_new(GFX_DIR+'/selection.tga')
         @selection_box_green = RUDL::Surface.load_new(GFX_DIR+'/selection_exchange.tga')
       end
+
+      # Vikings use this when they have no view (mainly in tests)
+
+      class NullView
+        def update_view
+        end
+      end
     end
   end
 end

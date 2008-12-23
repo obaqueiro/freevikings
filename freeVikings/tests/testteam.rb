@@ -12,6 +12,10 @@ class TestTeam < RUNIT::TestCase
 
   include FreeVikings
 
+  # interface of VikingView
+  def update_view
+  end
+
   def setup
     @viking1 = Viking.new 'Hans'
     @viking2 = Viking.new 'Olle'

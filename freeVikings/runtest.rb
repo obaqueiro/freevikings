@@ -1,15 +1,18 @@
 #!/usr/bin/ruby
 
 # runtest.rb
-# Skript pro spousteni testu, ktere jsou v oddelenem adresari.
+# Script for running tests
 
-# nahrajeme nastaveni log4r (to je pouzivano v nekterych z testovanych trid)
+# load Log4r setup
 require 'log4r'
 require 'log4rsetupload.rb'
 
+# add loading paths
 $:.push File.expand_path('.')
 $:.push File.expand_path('tests')
 $:.push File.expand_path('lib')
+$:.push File.expand_path('entities')
 
+# run tests
 Dir.chdir 'tests'
 require 'test.rb'

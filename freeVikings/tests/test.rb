@@ -34,7 +34,12 @@ include SchwerEngine
 
 # require all test source files
 test_files = Dir['test*.rb']
-test_files.each {|t| require t}
+exclude_files = [] # ['testlocation.rb', 'testviking.rb', 'testwarior.rb', 'testshielder.rb', 'testsprinter.rb']
+test_files.each {|t| 
+  unless exclude_files.include? t
+    require t
+  end
+}
 
 class FreeVikingsTestSuite < Test::Unit::TestSuite
   def self.suite

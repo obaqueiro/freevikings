@@ -5,7 +5,7 @@ require 'test/unit'
 
 require 'monster.rb'
 require 'mockclasses.rb'
-require 'monsters/tombstone.rb'
+require 'tombstone.rb'
 
 class TestMonster < Test::Unit::TestCase
 

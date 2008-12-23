@@ -29,5 +29,6 @@
     <level>Ladder</level>
     <level>LivingStone</level>
     <level>SmallStone</level>
+    <level>Troll</level>
   </suite>
 </levelsuite>

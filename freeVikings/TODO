@@ -25,7 +25,10 @@
     (-) new objects
         (-) Present box (item)
         (-) some flying monster (ghost? bat? raven?)
-        (-) LivingStone - animate all frames properly, finish code
+        (-) Cave troll - add hero detection, attacking and return to the
+            'command-mode';
+            he should have at least 3 energy points;
+            could have some more commands like [:exec, Proc {|troll| }]
 
 (-) Game speed
     (-) Possibility to change game speed (useful on newer machines, where 
@@ -77,6 +80,8 @@
              it leads to unknown states etc.)
     (-) bomb's flame can't reach behind wall or shield
     (-) Dropped bomb stops on a shield
+
+(-) [GO] LivingStone - animate all frames properly, finish code
 
 (-) [UI] Menu / configuration issues:
     (-) Menu scrolls if it is too long

@@ -7,6 +7,11 @@ require 'test/unit'
 
 require 'bottompanel.rb'
 
+class FreeVikings::BottomPanel::VikingView
+  def paint(surface)
+  end
+end
+
 class TestBottomPanel < Test::Unit::TestCase
 
   include FreeVikings
@@ -20,7 +25,7 @@ class TestBottomPanel < Test::Unit::TestCase
   end
 
   def testClickSwitchActiveViking
-    spot_in_gregs_portrait = [BottomPanel::VIKING_FACE_SIZE + BottomPanel::INVENTORY_VIEW_SIZE + 5, 5]
+    spot_in_gregs_portrait = [BottomPanel::VikingView::VIKING_FACE_SIZE + BottomPanel::VikingView::INVENTORY_VIEW_SIZE + 5, 5]
     @bottompanel.mouseclick(spot_in_gregs_portrait)
     assert_equal @greg, @team.active, "Greg must be active now, because we have simulated a mouse click on his portrait."
   end
@@ -33,7 +38,7 @@ class TestBottomPanel < Test::Unit::TestCase
     assert_equal "spoon", @johann.inventory.active, "A control assert. 'spoon' must be active, it was put into the inventory later then 'knife'."
 
     # Click onto the first item in Johann's inventory:
-    spot_in_johanns_first_item = [BottomPanel::VIKING_FACE_SIZE + 5, 5]
+    spot_in_johanns_first_item = [BottomPanel::VikingView::VIKING_FACE_SIZE + 5, 5]
     @bottompanel.mouseclick(spot_in_johanns_first_item)
     @bottompanel.mouserelease(spot_in_johanns_first_item)
 

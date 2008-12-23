@@ -70,6 +70,10 @@ module FreeVikings
         sprite.location = self
       end
 
+      def <<(s)
+        @sprites << s
+      end
+
       def delete_sprite(sprite)
         @sprites.delete sprite
       end
@@ -91,6 +95,12 @@ module FreeVikings
 
       def items_on_rect(rect)
         []
+      end
+
+      # Really mocked!
+
+      def find_surface(rect)
+        Rectangle.new(40, (8-1)*40, 40*8, 40)
       end
     end
 

@@ -93,7 +93,8 @@ module FreeVikings
       @location = NullLocation.instance
 
       # BottomPanel::VikingView will be assigned here
-      @view = nil
+      # (NullView is for tests etc.)
+      @view = BottomPanel::VikingView::NullView.new
     end
 
     # Factory methods which create subclasses' instances.

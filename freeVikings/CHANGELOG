@@ -1,3 +1,14 @@
+[23.December 2008]
+- tests: some tests broken by recent changes fixed
+- entities/troll.rb, gfx/troll.png, monster test level TRLL: 
+  new monster for caves 
+  (instead of LivingStone, which needs some more improvements
+  of Animation before it can be animated properly);
+- programwalker.rb: lisp-like scripting for Troll and other monsters
+  (I needed simple 'scripting language' with thin parser that serves commands
+  on demand)
+- viking.rb, bpvikingview.rb: Viking more friendly to tests
+
 [22.December 2008]
 - location.rb: SpriteManager#update removed, functionality moved to Location
 - entities/smallstone.rb: small game object, will be used together with

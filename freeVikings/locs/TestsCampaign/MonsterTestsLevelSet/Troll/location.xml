@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Troll</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      I love trolls...
+    </description>
+  </info>
+
+  <body>
+    <password>TRLL</password>
+    <map src="../Prototype/prototype_loc.xml"/>
+    <script src="troll_script.rb"/>
+    <exit horiz="500" vertic="360" />
+    <start horiz="50" vertic="140" />
+  </body>
+</location>

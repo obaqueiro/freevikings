@@ -34,8 +34,10 @@ class TestItemsExchangeBottomPanelState < Test::Unit::TestCase
     @team = Team.new @viking1, @viking2, @viking3
     @trash = Viking.new 'trash'
 
-    @state = ItemsExchangeBottomPanelState.new @team, @trash
+    @state = ItemsExchangeBottomPanelState.new self
   end
+
+  attr_reader :team
 
   def testGiveItemToSomeoneWhoseInventoryIsFull
     4.times {@viking2.inventory.put "knife"} # Vali's inventory is full now
