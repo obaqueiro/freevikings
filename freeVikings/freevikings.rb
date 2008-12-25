@@ -161,8 +161,8 @@ OPTIONS_DEF = [
                ["--develmagic", "-D", GetoptLong::NO_ARGUMENT,
                 "Enables some dark debugging magic"],
 
-               ["--progressbar", "-B", GetoptLong::REQUIRED_ARGUMENT,
-               "Show progressbar while loading",
+               ["--progressbar", "-B", GetoptLong::OPTIONAL_ARGUMENT,
+               "Show progressbar while loading (no argument means 'off')",
                "on|off"]
               ]
 
@@ -198,7 +198,7 @@ begin
       FreeVikings::OPTIONS['delay'] = argument.to_f / 1000
     when "--startpassword"
       unless Level.valid_level_password?(argument)
-        raise "'#{argument}' is not a valid location password."
+        raise "'#{argument}' is not a valid level password."
       end
       
       FreeVikings::OPTIONS["startpassword"] = argument.upcase
@@ -213,6 +213,9 @@ begin
         FreeVikings::OPTIONS['develmagic'] = true
       end
     when "--progressbar"
+      if argument == "" then
+        argument = 'off'
+      end
       FreeVikings::OPTIONS['progressbar_loading'] = on_off_option(argument)
     end
   end # options.each block

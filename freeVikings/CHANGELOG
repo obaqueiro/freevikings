@@ -1,3 +1,7 @@
+[25.December 2008]
+- freevikings.rb: option -B without argument switches progressbar off
+- entities/troll.rb: added soem agressive behavior
+
 [23.December 2008]
 - tests: some tests broken by recent changes fixed
 - entities/troll.rb, gfx/troll.png, monster test level TRLL: 

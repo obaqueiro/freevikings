@@ -17,6 +17,11 @@
 / Features are frozen, no more except of those listed here will be added;
   list won't be expanded - with exception of important bugfixes /
 
+(-) [GO] Cave Troll
+    (-) 3 lives
+    (-) cannot go or attack through shield
+    (-) some image at least for attack
+
 (-) Christmas bonus levelset
     (-) Tiles
         (-) snow on a tree
@@ -24,11 +29,7 @@
         (-) christmas tree decorations
     (-) new objects
         (-) Present box (item)
-        (-) some flying monster (ghost? bat? raven?)
-        (-) Cave troll - add hero detection, attacking and return to the
-            'command-mode';
-            he should have at least 3 energy points;
-            could have some more commands like [:exec, Proc {|troll| }]
+        (-) some flying monster (ghost? bat? raven? troll with angel wings?)
 
 (-) Game speed
     (-) Possibility to change game speed (useful on newer machines, where 
