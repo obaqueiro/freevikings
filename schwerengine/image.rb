@@ -13,6 +13,8 @@ datatype is RUDL::Surface, but it can change one day).
 Object
 =end
 
+require 'rudlmirror'
+
 module SchwerEngine
   class Image
 
@@ -76,8 +78,16 @@ Doesn't load image from file and creates it by wrapping an existing
       @image.h
     end
 
-    # Vyjimka tohoto typu je vyhozena, pokud soubor s obrazkem, ktery ma 
-    # byt nahran, neexistuje.
+    # Return mirrored copy of self
+
+    def mirror_x
+      Image.wrap @image.mirror_x
+    end
+
+    def mirror_y
+      Image.wrap @image.mirror_y
+    end
+
     class ImageFileNotFoundException < RuntimeError
     end
   end # class Image

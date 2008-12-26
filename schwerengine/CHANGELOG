@@ -1,3 +1,8 @@
+[26.December 2008]
+- rudlmore.rb: copied from freeVikings
+- image.rb: mirroring methods added
+- model.rb: Model#add_pair: possibility to switch off check of sizes
+
 [22.December 2008]
 - spritemanager.rb: SpriteManager#update removed, #each added
 

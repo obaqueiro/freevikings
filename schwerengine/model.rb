@@ -56,8 +56,9 @@ module SchwerEngine
     # RuntimeError is thrown.
     # This exception is thrown after the image is associated with the state, 
     # so you can just catch the exception and go on without problems.
+    # You may avoid the exception by setting argument 'check_sizes' to false.
 
-    def add_pair(state, image_object)
+    def add_pair(state, image_object, check_sizes=true)
       @log.debug "Associating image #{image_object.to_s} - #{image_object.name} with a state #{state.to_s}"
 
       # The image must be added before the bad-sizes exception is raised.
@@ -66,8 +67,9 @@ module SchwerEngine
       @images[state] = image_object
 
       if defined?(@width) then
-        if image_object.w != @width or
-            image_object.h != @height then
+        if (image_object.w != @width or
+            image_object.h != @height) &&
+            check_sizes then
           raise ImageWithBadSizesException, "Image of sizes "\
           "#{image_object.w}x#{image_object.h} inserted. (Previously "\
           "inserted images sized #{@widthx}#{@height} - usually you want "\

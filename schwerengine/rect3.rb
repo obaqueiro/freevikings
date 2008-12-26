@@ -3,6 +3,11 @@
 
 module SchwerEngine
 
+  # Shortcut for 'Rectangle.new(x,y,w,h)'
+  def R(x,y,w,h)
+    Rectangle.new x,y,w,h
+  end
+
   # Version of class Rectangle optimized by replacing dynamic computation
   # of Rectangle#right with static values
 
