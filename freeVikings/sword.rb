@@ -1,9 +1,9 @@
 # sword.rb
 # igneus 22.2.2005
 
-# Trida representujici kratky vikinsky mec
-
 module FreeVikings
+
+  # Baleog's sword
 
   class Sword < Sprite
 
@@ -11,9 +11,10 @@ module FreeVikings
     HEIGHT = 10
 
     def initialize(owner)
+      super([0,0])
       @owner = owner
+      @z = @owner.z+10
       @direction = 'right'
-      @rect = Rectangle.new 0,0,WIDTH, HEIGHT
       @monsters_damaged = false
       init_images
     end
@@ -30,13 +31,10 @@ module FreeVikings
       @owner.state.direction
     end
 
-=begin
---- Sword#draw
-This method must be called when a ((<Sword>)) is drawn from the sheath.
-Don't confuse with methods for drawing onto the screen.
-In the freeVikings code 'paint' identifier is used for methods which
-paint and draw graphics.
-=end
+    # This method must be called when a Sword is drawn from the sheath.
+    # Don't confuse with methods for drawing onto the screen.
+    # In the freeVikings code 'paint' identifier is used for methods which
+    # paint and draw graphics.
 
     def draw
       @monsters_damaged = false
@@ -59,11 +57,11 @@ paint and draw graphics.
                    end).to_i
     end
 
-# The Sword damages monsters only once per use.
-# A 'use' is a time between it's drawn and hidden in the sheath again.
-# So you can't just say Baleog to stand with a sword in front of him.
-# On quicker computers this trick would kill armies of dragons in a
-# few milliseconds.
+    # The Sword damages monsters only once per use.
+    # A 'use' is a time between it's drawn and hidden in the sheath again.
+    # So you can't just say Baleog to stand with a sword in front of him.
+    # On quicker computers this trick would kill armies of dragons in a
+    # few milliseconds.
 
     def clobber_monsters
       unless @monsters_damaged

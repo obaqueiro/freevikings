@@ -8,5 +8,7 @@
 
   <data>
     <image name="bridge" image="wooden_bridge.png" />
+
+    <image name="apex" image="uc_apex.png" />
   </data>
 </gfxtheme>

@@ -18,8 +18,6 @@
   list won't be expanded - with exception of important bugfixes /
 
 (-) [GO] Cave Troll
-    (-) 3 lives
-    (-) cannot go or attack through shield
     (-) some image at least for attack
 
 (-) Christmas bonus levelset
@@ -30,6 +28,10 @@
     (-) new objects
         (-) Present box (item)
         (-) some flying monster (ghost? bat? raven? troll with angel wings?)
+    (-) levels
+        (-) Climbin': flying goblins (two?), apexes
+        (-) Cave of Wisdom: everything
+        (-) Happy LEnd: GOs, Thor, exit
 
 (-) Game speed
     (-) Possibility to change game speed (useful on newer machines, where 
@@ -41,6 +43,12 @@
         at given frame rate
 
 ======== Code ==========================================================
+
+(-) Troll shouldn't go through the door... (try Christmas2008/HolyHole...)
+
+(-) Two ways of reloading a level: everything (for map development etc)
+    or just a script (map is preserved) - loading of some maps takes
+    a lot of time
 
 (-) Model: if unknown state occurs, just log an error message and don't
     raise exception (or possibility to switch off exception)

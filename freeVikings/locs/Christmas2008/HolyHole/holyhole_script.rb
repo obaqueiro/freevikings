@@ -14,6 +14,8 @@ require 'switch'
 require 'bridge'
 require 'bomb'
 require 'fallingstone'
+require 'troll'
+require 'apex'
 
 # Stone which can be read by vikings (some runic text is written on it)
 class SpeakingStone < ActiveObject
@@ -90,6 +92,10 @@ LOCATION << Lock.new([37*TS-Lock::WIDTH/2,73*TS],
                      Lock::BLUE)
 LOCATION << Key.new([46*TS+20, 60*TS], Key::BLUE)
 
+# Apexes:
+LOCATION << ApexRow.new([26*TS,77*TS], 9, LOCATION.theme)
+LOCATION << ApexRow.new([39*TS,77*TS], 9, LOCATION.theme)
+
 # Ladders to the exit
 LOCATION << Ladder.new([3*TS, 45*TS], 14)
 LOCATION << Ladder.new([13*TS, 59*TS], 7)
@@ -98,3 +104,15 @@ LOCATION << Ladder.new([3*TS, 66*TS], 9)
 # Falling stones
 LOCATION << FallingStoneEmitter.new([9*TS,60*TS])
 LOCATION << FallingStoneEmitter.new([14*TS,53*TS], 12.0)
+
+# Trolls: two brothers in one long corridor, one in each short corridor
+LOCATION << Troll.new([6*TS,75*TS-Troll::HEIGHT], 
+                      [:repeat, -1, [[:go, 6*TS], [:go, 21*TS]]])
+LOCATION << Troll.new([6*TS,75*TS-Troll::HEIGHT], 
+                      [:repeat, -1, [[:go, 6*TS], [:go, 12*TS]]])
+
+LOCATION << Troll.new([6*TS, 66*TS-Troll::HEIGHT], 
+                      [:repeat, -1, [[:go, 6*TS], [:go, 12*TS]]])
+
+LOCATION << Troll.new([3*TS, 59*TS-Troll::HEIGHT], 
+                      [:repeat, -1, [[:go, 3.5*TS], [:go, 11*TS]]])

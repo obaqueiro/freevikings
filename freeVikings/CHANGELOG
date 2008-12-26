@@ -1,3 +1,13 @@
+[26.December 2008]
+- shot.rb, entities/arrow.rb: RD->RDoc
+- sword.rb: fixed to work with z-ordered drawing (two lines in 'initialize')
+- troll.rb: fixed walking right; troll is stopped by shield;
+- entities/troll.rb: Troll (hopefully) finished
+- gfx/troll.png: added attack frame; spritesheet is very raw, but I won't
+  try to finish it these Christmas - there are more important things to do
+- theme UndergroundCave: new image for apex (not very good...)
+- level HolyHole: added trolls and apexes; level finished
+
 [25.December 2008]
 - freevikings.rb: option -B without argument switches progressbar off
 - entities/troll.rb: added soem agressive behavior

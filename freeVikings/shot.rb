@@ -1,16 +1,10 @@
 # shot.rb
 # igneus 26.2.2005
 
-=begin
-= NAME
-Shot
-
-= DESCRIPTION
-(({Shot})) is anything that flies left or right until it crashes into a wall
-or some (({Sprite})) of type((|@hunted_type|)) ((({Sprite})) by default).
-=end
-
 module FreeVikings
+
+  # Shot is anything that flies left or right until it crashes into a wall
+  # or some Sprite of type@hunted_type (Sprite by default).
 
   class Shot < Sprite
 

@@ -15,8 +15,9 @@
     <theme>UndergroundCave</theme>
     <map src="holyhole_loc.tmx"/>
     <script src="holyhole_script.rb"/>
-    <!-- <start horiz="50" vertic="240" /> -->
-    <start horiz="120" vertic="2800" />
+
+    <!-- real start --> <start horiz="50" vertic="240" />
+    <!-- testing start --> <!-- <start horiz="1440" vertic="2760" /> -->
     <exit horiz="480" vertic="1720" />
   </body>
 </location>
