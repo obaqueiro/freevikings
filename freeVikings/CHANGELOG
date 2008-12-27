@@ -21,6 +21,7 @@
   older objects
 - textbox.rb: RD->RDoc
 - entities/helpbutton.rb: help text is placed a bit higher to be more readable
+- utils/make_release.rb: omits empty directories in cvs checkout
 
 [26.December 2008]
 - shot.rb, entities/arrow.rb: RD->RDoc

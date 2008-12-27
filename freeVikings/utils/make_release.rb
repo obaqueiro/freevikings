@@ -66,7 +66,7 @@ module Tasks
     Dir.chdir $setup.tmpdir
     $setup.modules.each do |mod|
       puts "Checking out module #{mod}, branch #{branch_name(mod)}"
-      do_cvs "checkout -r "+branch_name(mod)+" "+mod
+      do_cvs "checkout -P -r "+branch_name(mod)+" "+mod
     end
   end
 
