@@ -68,6 +68,7 @@ module IceLand
     HEIGHT = 22
 
     def initialize(position)
+      super(position)
       @rect = Rectangle.new position[0], position[1], WIDTH, HEIGHT
       @image = Image.load('themes/IceTheme/iceboard.tga')
       @solid = true
@@ -83,6 +84,8 @@ module IceLand
     def solid?
       @solid
     end
+
+    alias_method :at_least_semisolid?, :solid?
   end # class IceBoard
   
   # A SwitchGroup is a Group of Switches.

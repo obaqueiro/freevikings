@@ -1,3 +1,27 @@
+[[[release 0.7] [12/27/2008] ----------------------------------------
+
+[27.December 2008]
+- entities/present.rb: fixed error in 'present deletion hack'
+- location.rb: modified comment to Location#talk=;
+  fixed Location#exited? - it waits for a talk to be completed
+- game.rb: commented-out two annoying logging outputs
+- level HappyLEnd finished
+- entities/switch.rb: Switch#switch: workaround for Procs with various arity
+- entities/lift.rb: includes StaticObject
+- viking.rb: added requirement of 'ladder.rb';
+  Viking#transport_move: y isn't changed according to argument, but
+  transporter's rect (it's a bit dirty, but works well);
+  BASE_VELOCITY increased to 100px/s
+- transporter.rb, transportable.rb: RD->RDoc; unregistering is now done by
+  Transportable, not Transporter
+  (I was - and I hope that successfully - trying to fix Lift...)
+- DefaultCampaign: all old levels made playable (i.a. by fixing Lift and
+  some more objects), unfinished level StairsToHell excluded;
+  however, they still need some refinements - e.g. to set z for some
+  older objects
+- textbox.rb: RD->RDoc
+- entities/helpbutton.rb: help text is placed a bit higher to be more readable
+
 [26.December 2008]
 - shot.rb, entities/arrow.rb: RD->RDoc
 - sword.rb: fixed to work with z-ordered drawing (two lines in 'initialize')

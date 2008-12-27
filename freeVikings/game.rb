@@ -508,7 +508,7 @@ module FreeVikings
 
     def mouse_click(pos)
       if y_in_bottompanel(pos[1]) then
-        @log.debug "Mouse click in the bottompanel area."
+        # @log.debug "Mouse click in the bottompanel area."
         pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
         @bottompanel.mouseclick(pos_in_the_panel)
       else
@@ -533,7 +533,7 @@ module FreeVikings
 
     def mouse_release(pos)
       if y_in_bottompanel(pos[1]) then
-        @log.info "Mouse release in the bottompanel area."
+        # @log.info "Mouse release in the bottompanel area."
         pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
         @bottompanel.mouserelease(pos_in_the_panel)
       end

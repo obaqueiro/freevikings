@@ -10,6 +10,14 @@ module FreeVikings
 
   module Transporter
 
+    # Transportable calls this, passing itself as argument, to request
+    # end of transport
+
+    def end_transport_of(sprite)
+      @transported.delete sprite
+      sprite.end_transport self
+    end
+
     private
 
     # call this from YourTransporterClass#initialize, please
@@ -35,21 +43,19 @@ module FreeVikings
     def find_transported_sprites
       collision_rect = @rect.expand(1,2)
 
-      colliding_sprites = @location.sprites_on_rect(collision_rect)
+#       @transported.delete_if {|s|
+#         unless s.rect.collides? collision_rect
+#           s.end_transport self
+#           # puts 'Good bye'
+#           true
+#         end
+#       }
 
-      @transported.delete_if {|s|
-        unless s.rect.collides? collision_rect
-          s.end_transport self
-          # puts 'Good bye'
-          true
-        end
-      }
-
-      colliding_sprites.each {|s|
+      @location.sprites_on_rect(collision_rect) {|s|
         if s.kind_of? Transportable and
             (not @transported.include? s) then
           @transported.push s
-          # puts 'Halle'
+          puts 'Halle'
           s.start_transport self
         end
       }

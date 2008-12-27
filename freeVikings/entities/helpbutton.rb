@@ -34,7 +34,7 @@ module FreeVikings
 
     def initialize(initial_position, help_text, location=NullLocation.instance)
       super(initial_position)
-      @helpbox = HelpBox.new @rect, help_text
+      @helpbox = HelpBox.new [@rect.center[0], @rect.center[1]-100], help_text
       @location = location
     end
 

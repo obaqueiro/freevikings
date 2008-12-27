@@ -9,6 +9,7 @@ require 'inventory.rb'
 require 'sophisticatedspritemixins.rb'
 require 'talkable.rb'
 require 'transportable.rb'
+require 'ladder.rb'
 
 module FreeVikings
 
@@ -39,7 +40,7 @@ module FreeVikings
 
     # Viking's default velocity in pixels per second.
 
-    BASE_VELOCITY = 70
+    BASE_VELOCITY = 100 # 70
 
     # Sizes of the vikings' graphics. (Not of their collision area, which is
     # a bit smaller!)
@@ -216,13 +217,13 @@ module FreeVikings
     # if he is "bubbled" or mounted as an operator on some machine)
 
     def s_f_func_on
-      @location.active_objects_on_rect(@rect.expand(1,1)) { |o|
+      @location.active_objects_on_rect(@rect.expand(1,2)) { |o|
         o.activate self
       }
     end
 
     def s_f_func_off
-      @location.active_objects_on_rect(@rect.expand(1,1)) { |o| 
+      @location.active_objects_on_rect(@rect.expand(1,2)) { |o| 
         o.deactivate self
       }
     end
@@ -321,14 +322,18 @@ module FreeVikings
 
     def transport_move(delta_x, delta_y, transporter)
       unless transporter == @transported_by
-        @log.warn "Unknown transporter #{transporter} is trying to move #{@name}"
+        @log.error "Unknown transporter #{transporter} is trying to move #{@name}"
         return
       end
 
-      new_rect = Rectangle.new(@rect.left + delta_x.to_i, @rect.top + delta_y.to_i,
-                               @rect.w, @rect.h)
+      new_rect = Rectangle.new(@rect.left + delta_x.to_i,
+                               transporter.rect.top-(HEIGHT+1),
+                               @rect.w, 
+                               @rect.h)
       if @location.area_free?(new_rect) then
         @rect.copy_values new_rect
+      else
+        transporter.end_transport_of self
       end
     end
 
@@ -348,6 +353,8 @@ module FreeVikings
       try_to_fall
       fall_if_head_on_the_ceiling
       try_to_descend
+
+      update_transport # defined in mixin Transportable
 
       @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
 

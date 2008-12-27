@@ -18,7 +18,7 @@
   <suite>
     <levelsuite>ArcticLevelSet</levelsuite>
     <levelsuite>ForestLevelSet</levelsuite>
-    <levelsuite>TechnoLevelSet</levelsuite>
+    <!-- <levelsuite>TechnoLevelSet</levelsuite> -->
     <!-- <levelsuite>EgyptLevelSet</levelsuite> -->
     <levelsuite>NuclearLabsLevelSet</levelsuite>
   </suite>

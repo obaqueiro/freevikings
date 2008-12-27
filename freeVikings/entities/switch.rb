@@ -62,7 +62,16 @@ module FreeVikings
 
     def switch
       @state = (not @state)
-      @action.call(@state, self)
+      if @action.arity == 1 then
+        @action.call(@state)
+      elsif @action.arity == 2 then
+        @action.call(@state,self)
+      elsif @action.arity == 0 then
+        @action.call
+      else
+        # Error may be raised or something...
+        @action.call(@state,self)
+      end 
     end
   end # class Switch
 end # module FreeVikings

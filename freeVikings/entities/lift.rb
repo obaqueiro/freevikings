@@ -13,28 +13,22 @@ module FreeVikings
   class Lift < Sprite
 
     include Transporter
+    include StaticObject
 
-=begin
---- Lift::VELOCITY
-abs of vertical velocity.
-=end
-
+    # abs of vertical velocity.
     VELOCITY = 40
 
     WIDTH = 80
     HEIGHT = 24 # a bit more to enable collisions on slower computers
 
-=begin
---- Lift.new(left, ys, theme=NullGfxTheme.instance)
-:((|left|)) = x coordinate
-:((|ys|)) = (({Array})) of y coordinates between which the Lift
- will move. Note (({sort})) is applied onto this (({Array})) at first.
-:((|theme|)) = (({GfxTheme})) instance
-=end
+    # left:: x coordinate
+    # ys:: Array of y coordinates between which the Lift
+    #  will move. Note sort is applied onto this Array at first.
+    # theme:: GfxTheme instance
 
     def initialize(left, ys, theme=NullGfxTheme.instance)
       super([left, ys[0]], theme)
-      #@theme = theme
+      @theme = theme
 
       @image = get_theme_image 'bridge'
       @rect.w = @image.image.w
@@ -46,11 +40,9 @@ abs of vertical velocity.
       @dest = 0         # subscript of the next destination y
     end
 
-=begin
---- Lift#dest=(dest)
-Only for those who know the source code of the class well. Don't use this if 
-you have another way to solve your problem! This is stinking!
-=end
+    # Only for those who know the source code of the class well. 
+    # Don't use this if 
+    # you have another way to solve your problem! This is stinking!
 
     attr_writer :dest
 
@@ -58,13 +50,10 @@ you have another way to solve your problem! This is stinking!
       true
     end
 
-=begin
---- Lift#move_up
-(({Lift})) starts moving up if it isn't on the top of it's
-route. Returns ((|true|)) or ((|false|)).
-=end
+    # Lift starts moving up if it isn't on the top of it's
+    # route. Returns true or false.
 
-    def move_up
+    def move_up(who=nil)
       if @dest > 0 then
         @dest -= 1 
         return true
@@ -72,13 +61,10 @@ route. Returns ((|true|)) or ((|false|)).
       return false
     end
 
-=begin
---- Lift#move_down
-(({Lift})) starts moving down if it isn't on the low end of it's
-route. Returns ((|true|)) or ((|false|)).
-=end
+    # Lift starts moving down if it isn't on the low end of it's
+    # route. Returns true or false.
 
-    def move_down
+    def move_down(who=nil)
       if @dest < (@y.size - 1) then
         @dest += 1
         return true
@@ -86,27 +72,27 @@ route. Returns ((|true|)) or ((|false|)).
       return false
     end
 
-=begin
---- Lift#next
-Starts moving to the next destination place. Calling this iterates through
-the places from the bottom up and then jumps to the low end and starts
-once more.
-
-It is useful mainly for two-y lifts.
-=end
+    # Starts moving to the next destination place. Calling this iterates 
+    # through
+    # the places from the bottom up and then jumps to the low end and starts
+    # once more.
+    #
+    # It is useful mainly for two-y lifts.
 
     def next
       @dest = (@dest + 1) % @y.size
     end
 
     def update
-      unless in_destination?
-        d = delta_y
-
-        find_transported_sprites
-        @rect.top += d
-        move_transported_sprites 0, d
+      if in_destination?
+        return
       end
+
+      d = delta_y
+
+      find_transported_sprites
+      @rect.top += d
+      move_transported_sprites 0, d
     end
 
     def location=(new_location)
@@ -117,31 +103,21 @@ It is useful mainly for two-y lifts.
       # It's because it can be driven by the cursor keys.
       if new_location.kind_of? NullLocation
         old_loc.activeobjectmanager.delete self
-      else
-        @location.activeobjectmanager.add self
       end
     end
 
-=begin
-== Active Object methods
-(({Lift})) is also an Active object.
-So the player can command it very intuitively by pressing up and down key.
-
---- Lift#activate
-Alias to ((<Lift#move_up>)).
-=end
+    # == Active Object methods
+    # Lift is also an Active object.
+    # So the player can command it very intuitively by pressing 
+    # up and down key.
 
     alias_method :activate, :move_up
-=begin
---- Lift#deactivate
-Alias to ((<Lift#move_down>)).
-=end
-
     alias_method :deactivate, :move_down
 
     def register_in(location)
       location.add_static_object self
       location.add_sprite self
+      location.add_active_object self
     end
 
     private
@@ -153,7 +129,7 @@ Alias to ((<Lift#move_down>)).
     def delta_y
       total_delta_y = (@y[@dest] - @rect.top)
 
-      d = total_delta_y.signum * VELOCITY * @location.ticker.delta
+      d = (total_delta_y.signum * VELOCITY * @location.ticker.delta).to_i
 
       if d.abs > total_delta_y.abs then
         return total_delta_y

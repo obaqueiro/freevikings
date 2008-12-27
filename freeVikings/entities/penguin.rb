@@ -48,6 +48,12 @@ module FreeVikings
       @image = Model.new({'left' => i_left, 'right' => i_right})
     end
 
+    # Method from interface Transporter; is ignored, because Penguin's
+    # transport is short-term (see update_transport)
+
+    def end_transport_of(t)
+    end
+
     private
 
     def update_transport

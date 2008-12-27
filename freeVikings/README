@@ -28,7 +28,7 @@ installation - play from wherever you unpack the archive.
 II. PLAYING
 
 ## chdir to the freeVikings directory:
-$ cd freeVikings-0.6-pre1/
+$ cd freeVikings/
 ## read about game controls:
 $ less HELP
 ## play!

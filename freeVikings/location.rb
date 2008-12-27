@@ -105,7 +105,7 @@ module FreeVikings
     # reached exit and 2. end story - if exists - has been finished)
 
     def exitted?
-      if @exitter.team_exited?(@team) && (@story == nil) then
+      if @exitter.team_exited?(@team) && (@story == nil) && (@talk == nil) then
         if @on_exit == nil then
           return true
         else
@@ -116,6 +116,8 @@ module FreeVikings
           @on_exit = nil
           return exitted?
         end
+      else
+        return false
       end
     end
 
@@ -164,8 +166,8 @@ module FreeVikings
     # == Talk related methods
 
     # Starts a new talk.
-    # Doesn't start it - it must have been started from elsewhere
-    # (usually from location script).
+    # Doesn't start (Location#start) it - it must have been started 
+    # from elsewhere (usually from location script).
 
     def talk=(t)
       if @talk then

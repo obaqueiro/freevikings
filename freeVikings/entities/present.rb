@@ -23,11 +23,17 @@ module FreeVikings
     def apply(who)
       begin
         who.inventory.put @given_item
+
         # After successfull application of item viking erases it;
         # but newly added item is automatically set active and viking
         # thinks that active item is the used item, so we have to set
         # the active index to point to the Present and not to the given item.
-        who.inventory.active_index -= 1
+        i = who.inventory.each_index {|j| 
+          if who.inventory[j].object_id == self.object_id then
+            break j
+          end
+        }
+        who.inventory.active_index = i
 
         return true
       rescue Inventory::NoSlotFreeException

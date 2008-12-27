@@ -9,30 +9,21 @@
 (-) Full spritesheets for all three vikings according to the developers'
     manual
 
-(-) New background for portraits in bottompanel (in two versions: normal
-    and highlighted) + similar pair of backgrounds for trash
-
-======== Features for the Christmas release (0.7) ======================
-
-/ Features are frozen, no more except of those listed here will be added;
-  list won't be expanded - with exception of important bugfixes /
-
-(-) Christmas bonus levelset
-    (-) levels
-        (-) Cave of Wisdom: everything
-        (-) Happy LEnd: Thor, exit, 
-                    - active tree decorations (blinking candles)
-
-(-) Game speed
-    (-) Possibility to change game speed (useful on newer machines, where 
-        vikings move terribly slowly)
-        It is in options (-v) and vikings move quicker then, 
-        but not the monsters!
-    (-) Increase default game speed
-    (-) Code (option-switchable) which tests for highest possible game speed
-        at given frame rate
+(-) New background for portraits in bottompanel 
+    (in two versions: 
+       -> normal
+       -> highlighted during exchange of items) 
+    + similar pair of backgrounds for trash
 
 ======== Code ==========================================================
+
+(-) Why don't trolls in HappyLEnd get angry?
+
+(-) Speech boxes should be placed in some cleverer way, so that all text
+    is visible (try to talk while standing at the end of map)
+
+(-) Viking standing on the top of a ladder must be able to climb it down.
+    (doesn't work now - 27.12.2008)
 
 (-) Unlocked lock disappears or is changed visually
 
@@ -56,6 +47,15 @@
     (-) select box can blink in trash (it may be solved by creating
         additional team in BottomPanel, which would be used in ItemsExchange
         state and would include Trash)
+
+(-) Game speed
+    (-) Possibility to change game speed (useful on newer machines, where 
+        vikings move terribly slowly)
+        It is in options (-v) and vikings move quicker then, 
+        but not the monsters!
+    (-) Increase default game speed
+    (-) Code (option-switchable) which tests for highest possible game speed
+        at given frame rate
 
 (-) Vikings remember the surface they are standing on so that it isn't 
     necessary to check for fall in every iteration of frame cycle

@@ -78,7 +78,7 @@ end_story = Story.new do |s|
   talk.start(team['Erik'], team['Baleog'], team['Olaf'])
   Story::TalkFrame.talk_to_frames(talk).each {|f| s << f}
 
-  s << Story::TextFrame.new("Yes, you successfully reached end of this campaign.\n\nCongratulations!")
+  s << Story::TextFrame.new("Yes, you successfully reached end of this campaign.\nCongratulations!")
 end
 
 LOCATION.on_exit = Proc.new { LOCATION.story = end_story }
