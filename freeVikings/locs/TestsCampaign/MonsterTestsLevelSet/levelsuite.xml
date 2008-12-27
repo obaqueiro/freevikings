@@ -30,5 +30,6 @@
     <level>LivingStone</level>
     <level>SmallStone</level>
     <level>Troll</level>
+    <level>FlyingTroll</level>
   </suite>
 </levelsuite>

@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>FlyingTroll</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Looks like Amor - but it's green. Flying troll!
+    </description>
+  </info>
+
+  <body>
+    <password>FLYL</password>
+    <map src="flytroll_loc.xml"/>
+    <script src="flytroll_script.rb"/>
+    <exit horiz="500" vertic="360" />
+    <start horiz="50" vertic="140" />
+  </body>
+</location>

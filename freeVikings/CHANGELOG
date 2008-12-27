@@ -7,10 +7,21 @@
   try to finish it these Christmas - there are more important things to do
 - theme UndergroundCave: new image for apex (not very good...)
 - level HolyHole: added trolls and apexes; level finished
+- entities/present.rb: present box (for level HappyLEnd)
+- entities/flyingtroll + testing level: new monster from the family of trolls;
+  has angel-like wings, shoots arrows, is 'programmable' (like Troll)
+- viking.rb: fixed error in fall+ladder+fall hurt detection
+- level Climbin' finished (paths of flying trolls might need some small
+  modification yet)
+- remade snow tiles (snowcover.png) - I studied one screenshot from LV1 and
+  tried to create a similar structure
+- new tileset: snow on branches of a tree (the same technique)
+- level HappyLEnd: added presents, new branches and snow on the tree,
+  first attempt to write Thor's code
 
 [25.December 2008]
 - freevikings.rb: option -B without argument switches progressbar off
-- entities/troll.rb: added soem agressive behavior
+- entities/troll.rb: added some agressive behavior
 
 [23.December 2008]
 - tests: some tests broken by recent changes fixed

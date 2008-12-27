@@ -17,21 +17,11 @@
 / Features are frozen, no more except of those listed here will be added;
   list won't be expanded - with exception of important bugfixes /
 
-(-) [GO] Cave Troll
-    (-) some image at least for attack
-
 (-) Christmas bonus levelset
-    (-) Tiles
-        (-) snow on a tree
-        (-) redo snow to look more like snow
-        (-) christmas tree decorations
-    (-) new objects
-        (-) Present box (item)
-        (-) some flying monster (ghost? bat? raven? troll with angel wings?)
     (-) levels
-        (-) Climbin': flying goblins (two?), apexes
         (-) Cave of Wisdom: everything
-        (-) Happy LEnd: GOs, Thor, exit
+        (-) Happy LEnd: Thor, exit, 
+                    - active tree decorations (blinking candles)
 
 (-) Game speed
     (-) Possibility to change game speed (useful on newer machines, where 
@@ -43,6 +33,8 @@
         at given frame rate
 
 ======== Code ==========================================================
+
+(-) Unlocked lock disappears or is changed visually
 
 (-) Troll shouldn't go through the door... (try Christmas2008/HolyHole...)
 

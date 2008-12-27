@@ -80,7 +80,7 @@ module FreeVikings
 
       # y value of place where viking started falling; is used to compute
       # if he should be hurt when touching a hard surface
-      @start_fall = -1
+      @start_fall = nil
 
       @knockout_duration = TimeLock.new
 
@@ -285,7 +285,7 @@ module FreeVikings
       end
 
       @try_to_climb = false
-      @start_fall = -1
+      @start_fall = nil
       # Viking must stop walking before he can start climbing
       @state.stop
       # and end any ability-connected activities
@@ -372,6 +372,8 @@ module FreeVikings
     # If so, he is hurt.
     private
     def check_fall_injury
+      return if @start_fall == nil
+
       @fall_height = @rect.top - @start_fall
       fall_velocity = velocity_vertic
       @state.descend

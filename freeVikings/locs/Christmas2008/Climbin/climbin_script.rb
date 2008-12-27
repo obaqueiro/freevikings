@@ -3,8 +3,16 @@
 
 require 'ladder'
 require 'switch'
+require 'flyingtroll'
+require 'door'
+require 'lock'
+require 'key'
+require 'killtoy'
+require 'apex'
 
 TS = LOCATION.map.tile_size
+
+# classes, class tuning etc. =================================================
 
 class FreeVikings::Ladder
 
@@ -83,6 +91,28 @@ class TrickyLadderSystem
   end
 end
 
+# FlyingTroll modified so that he has an item which he leaves on the place
+# of his death
+
+class FreeVikings::FlyingTroll
+
+  attr_accessor :my_treasure
+
+  alias_method :_destroy, :destroy
+
+  def destroy
+    c = @rect.center
+    @my_treasure.rect.left = c[0]
+    @my_treasure.rect.top = c[1]
+
+    @location << @my_treasure
+
+    _destroy
+  end
+end
+
+# content ====================================================================
+
 lsys = TrickyLadderSystem.new(LOCATION)
 
 # ladders:
@@ -113,3 +143,48 @@ switches.each {|s|
 0.upto(3) {|i| 
   lsys.add_pair(switches[i], ladders[i])
 }
+
+# door which closes way to the exit
+edoor = Door.new([4*TS, 24*TS])
+edoor.instance_eval { @locked_times = 2 }
+def edoor.unlock
+  @locked_times -= 1
+  if @locked_times <= 0 then
+    self.open
+  end
+end
+LOCATION << edoor
+
+# two locks which together open 'edoor'
+LOCATION << Lock.new([5*TS+5, 24*TS+10], Proc.new {edoor.unlock}, Lock::RED)
+LOCATION << Lock.new([5*TS+5, 24*TS+50], Proc.new {edoor.unlock}, Lock::GREEN)
+
+# Two flying trolls; each has his half of the space, where he flies.
+# They have keys.
+program1 = [:repeat, -1, [[:repeat, 2, [[:go, [8*TS,2*TS]],
+                                        [:go, [16*TS,4*TS]],
+                                        [:go, [26*TS,2*TS]]],
+                          [:go, [21*TS, 12*TS]],
+                          [:go, [10*TS,13*TS]]]]]
+t1 = FlyingTroll.new([6*TS,5*TS], program1)
+t1.my_treasure = Key.new([0,0], Key::RED)
+
+program2 = [:repeat, -1, [[:go, [6*TS,18*TS]],
+                          [:go, [17*TS,14*TS]],
+                          [:go, [26*TS, 20*TS]],
+                          [:go, [26*TS, 23*TS]],
+                          [:go, [13*TS, 23*TS+10]]]]
+t2 = FlyingTroll.new([6*TS,18*TS], program2)
+t2.my_treasure = Key.new([0,0], Key::GREEN)
+
+LOCATION << t1 << t2
+
+# Apexes under the ladders
+LOCATION << ApexRow.new([5*TS,28*TS], 11, LOCATION.theme)
+LOCATION << ApexRow.new([19*TS,28*TS], 10, LOCATION.theme)
+
+# A useful item...
+LOCATION << Killtoy.new([27*TS,2*TS])
+
+# Ladder to the exit:
+LOCATION << Ladder.new([55, 12*TS], 15)
