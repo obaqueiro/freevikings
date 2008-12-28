@@ -1,0 +1,15 @@
+--- %YAML:1.0
+# 0 = Erik; 1 = Baleog; 2 = Olaf
+speakers: 3
+talk: - speaker: 2
+        say: It's a pitty we have to go home - I like it here.
+      - speaker: 1
+        say: I especially like those with wings.
+      - speaker: 0
+        say: Does Thor hear us? Hopefully not...
+      - speaker: 0
+        say: Dear player, we wish you ...
+      - speaker: 1
+        say: ... merry Christmas ... 
+      - speaker: 2
+        say: and happy New Year 2009.

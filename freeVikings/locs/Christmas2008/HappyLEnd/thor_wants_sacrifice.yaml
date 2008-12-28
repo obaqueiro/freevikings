@@ -1,0 +1,13 @@
+--- %YAML:1.0
+# 0 = Thor; 1 = active viking
+speakers: 2
+talk: - speaker: 0
+        say: OK, blood of the killed trolls smells good.
+      - speaker: 1
+        say: It's a horrible odeur...
+      - speaker: 0
+        say: I accept your sacrifice, my sons.
+      - speaker: 0
+        say: "But as soon as you come home, tell your children:"
+      - speaker: 0
+        say: There is no Santa Claus and we won't celebrate any pseudogod's birthday!!!

@@ -1,0 +1,17 @@
+--- %YAML:1.0
+# 0-Thor, 1-Active viking
+speakers: 2
+talk: - speaker: 0
+        say: This is voice of Thor, vikings' god of thunder.
+      - speaker: 1
+        say: Ouch, I knew that...
+      - speaker: 0
+        say: I am really angry with you, Erik, Baleog and Olaf.
+      - speaker: 0
+        say: Will you stick to silly traditions of southern barbarians?
+      - speaker: 0
+        say: Trees with colourful lights, boxes packed in paper, toys for adult men...
+      - speaker: 0
+        say: I don't want to see you any more.
+      - speaker: 0
+        say: I got some trolls from Loki. May they gobble you all up!!!

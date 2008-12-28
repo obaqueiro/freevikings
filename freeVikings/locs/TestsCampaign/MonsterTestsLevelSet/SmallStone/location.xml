@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>SmallStone</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      SmallStone - small but deadly game object.
+    </description>
+  </info>
+
+  <body>
+    <password>SMST</password>
+    <map src="smallstone_loc.xml"/>
+    <script src="smallstone_script.rb"/>
+    <exit horiz="500" vertic="360" />
+    <start horiz="50" vertic="140" />
+  </body>
+</location>
