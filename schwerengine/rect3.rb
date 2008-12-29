@@ -95,6 +95,13 @@ module SchwerEngine
       return true
     end
 
+    # point is [x,y] Array
+
+    def point_inside?(point)
+      (point[0] >= @x && point[0] <= @right) && 
+        (point[1] >= @y && point[1] <= @bottom)
+    end
+
     def at(i)
       case i
       when 0

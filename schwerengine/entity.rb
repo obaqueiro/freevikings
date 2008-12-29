@@ -81,6 +81,8 @@ module SchwerEngine
     # as Entity#collision_rect.
     alias_method :paint_rect, :rect
 
+    attr_accessor :location
+
     # Adds itself into a Location location.
     # Does all the registration stuff transparently (some objects register 
     # themselves
