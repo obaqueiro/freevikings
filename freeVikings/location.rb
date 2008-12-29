@@ -306,6 +306,26 @@ module FreeVikings
       @map.paint_foreground(surface, displayed_rect)
     end
 
+    # Shortcuts for creating instance methods of Location which add/delete
+    # object in given group and give/take from him reference to self.
+    # Ignore them if you aren't working on Location itself...
+
+    def Location.def_add(group, object_name)
+      module_eval ""\
+      "def add_#{object_name}(o)\n"\
+      "  #{group}.add o\n"\
+      "  put_self o\n"\
+      "end"
+    end
+
+    def Location.def_delete(group, object_name)
+      module_eval ""\
+      "def delete_#{object_name}(o)\n"\
+      "  #{group}.delete o\n"\
+      "  put_nulllocation o\n"\
+      "end"
+    end
+
     # == In-Game objects addition, removal and collisions
 
     # The same as
@@ -314,24 +334,12 @@ module FreeVikings
 
     def <<(object)
       object.register_in self
+      put_self object
       return self
     end
 
-    # Location#add_sprite and Location#delete_sprite have an important 
-    # side effect. They set the argument's attribute 'location'. 
-    # Location#add_sprite sets it to the location itself, 
-    # Location#delete_sprite to the NullLocation instance (which
-    # is a null object)).
-
-    def add_sprite(sprite)
-      sprite.location = self
-      @spritemanager.add sprite
-    end
-
-    def delete_sprite(sprite)
-      @spritemanager.delete sprite
-      sprite.location = NullLocation.instance
-    end
+    def_add :@spritemanager, 'sprite'
+    def_delete :@spritemanager, 'sprite'
 
     def_delegator :@spritemanager, :members_on_rect, :sprites_on_rect
 
@@ -344,28 +352,23 @@ module FreeVikings
 
     # === Active Objects
 
-    def add_active_object(o)
-      @activeobjectmanager.add o
-      o.location = self
-    end
-
-    def delete_active_object(o)
-      @activeobjectmanager.delete o
-      o.location = NullLocation.instance
-    end
+    def_add :@activeobjectmanager, 'active_object'
+    def_delete :@activeobjectmanager, 'active_object'
 
     def_delegator :@activeobjectmanager, :members_on_rect, :active_objects_on_rect
 
     # === Items
 
-    def_delegator :@itemmanager, :add, :add_item
-    def_delegator :@itemmanager, :delete, :delete_item
+    def_add :@itemmanager, 'item'
+    def_delete :@itemmanager, 'item'
+
     def_delegator :@itemmanager, :members_on_rect, :items_on_rect
 
     # === Static Objects
 
-    def_delegator :@staticobjects, :add, :add_static_object
-    def_delegator :@staticobjects, :delete, :delete_static_object
+    def_add :@staticobjects, 'static_object'
+    def_delete :@staticobjects, 'static_object'
+
     def_delegator :@staticobjects, :members_on_rect, :static_objects_on_rect
 
     # == Predicates
@@ -467,6 +470,22 @@ module FreeVikings
         v.extend Hero # label all vikings as heroes
         self.add_sprite v # and add them into the location
       }
+    end
+
+    # Gives reference of self to object
+
+    def put_self(object)
+      if object.location != self then
+        object.location = self
+      end
+    end
+
+    # gives reference of NullLocation to object
+
+    def put_nulllocation(object)
+      if object.location == self then
+        object.location = NullLocation.instance
+      end
     end
 
   end # class Location

@@ -31,6 +31,11 @@ module FreeVikings
         @viking.view = self
 
         @rect = Rectangle.new position[0], position[1], WIDTH, HEIGHT
+        @portrait_rect = Rectangle.new(@rect.left, @rect.top, 
+                                       VIKING_FACE_SIZE, VIKING_FACE_SIZE)
+        @inventory_rect = Rectangle.new(@rect.left+VIKING_FACE_SIZE, @rect.top,
+                                        INVENTORY_VIEW_SIZE,
+                                        INVENTORY_VIEW_SIZE)
 
         @active = false
         @mode = :normal
@@ -40,6 +45,48 @@ module FreeVikings
 
         init_gfx
       end
+
+      attr_reader :viking
+
+      # == Methods about position of view
+
+      attr_reader :rect
+
+      # Returns Boolean.
+      # Says if given position is inside viking's portrait.
+
+      def pos_in_portrait?(pos)
+        return @portrait_rect.point_inside?(pos)
+      end
+
+      # Returns Boolean.
+      # Says if given position is inside viking's inventory.
+
+      def pos_in_inventory?(pos)
+        return @inventory_rect.point_inside?(pos)
+      end
+
+      # Returns index of item in inventory displayed at given position or nil.
+      # Nil is returned both if position is outside the inventory and if
+      # clicked inventory position is empty.
+
+      def pos_in_item?(pos)
+        unless pos_in_inventory?(pos)
+          return nil
+        end
+
+        xi = (pos[0] - @inventory_rect.left) / ITEM_SIZE
+        yi = (pos[1] - @inventory_rect.top) / ITEM_SIZE
+        i = yi*2 + xi
+
+        if @viking.inventory.at(i).null? then
+          return nil
+        else
+          return i
+        end
+      end
+
+      # == "Graphics update interface" for BottomPanel
 
       # Says if something important has been changed and BottomPanel
       # should be repainted
@@ -118,6 +165,8 @@ module FreeVikings
 
       public
 
+      # == Interface of notification by Viking
+
       # method called by Inventory and Viking (VikingView is observer 
       # of Viking and his Inventory)
 
@@ -125,7 +174,9 @@ module FreeVikings
         @need_update = true
       end
 
-      # == Set viking view active (colourful portrait) or unactive
+      # == State interface for BottomPanel
+
+      # === Set viking view active (colourful portrait) or unactive
 
       def activate
         @need_update = true
@@ -137,7 +188,7 @@ module FreeVikings
         @active = false
       end
 
-      # == Set inventory select box mode
+      # === Set inventory select box mode
 
       def normal
         @need_update = true
@@ -154,7 +205,7 @@ module FreeVikings
         @mode = :exchange
       end
 
-      # == Set viking view highlighted (for items exchange mode)
+      # === Set viking view highlighted (for items exchange mode)
 
       def highlight
         @highlighted = true

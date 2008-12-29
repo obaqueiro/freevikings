@@ -1,3 +1,14 @@
+[29.December 2008]
+- bottompanel.rb, bpvikingview.rb: 
+  cleaner way of determining where user clicked (done by VikingView, 
+  not by BottomPanel);
+  double-click on an item uses it
+- transporter.rb, transportable.rb: commented-out debugging output
+- location.rb: all objects get reference of Location
+- entities/lock.rb: unlocked Lock deletes itself from the Location
+- shielder.rb: Shield is informed about Olaf's transport, so it doesn't move
+  with a delay
+
 [[[release 0.7] [12/27/2008] ----------------------------------------
 
 [27.December 2008]

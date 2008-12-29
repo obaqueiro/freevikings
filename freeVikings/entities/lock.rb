@@ -87,6 +87,8 @@ module FreeVikings
         @unlock_action.call if @unlock_action
       end
 
+      @location.delete_static_object self
+
       return ! @locked
     end
 

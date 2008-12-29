@@ -24,6 +24,12 @@ module FreeVikings
     WIDTH = 640
     HEIGHT = VikingView::HEIGHT
 
+    # Maximum milliseconds between two clicks which are considered to be
+    # a double-click
+
+    DOUBLECLICK_MILLIS = 650
+    DOUBLECLICK_SECONDS = DOUBLECLICK_MILLIS.to_f / 1000
+
     # Argument team is a Team of heroes who will be displayed on the panel.
 
     def initialize(team)
@@ -46,6 +52,11 @@ module FreeVikings
       # slot for clicked item (before it is possible to decide if it was just
       # clicked or if it is dragged)
       @clicked_item = nil
+      # slot for clicked item (to wait if it won't be clicked soon again -
+      # double-clicked)
+      @clicked_item_dc = nil
+      # time of last click (to determine double-clicks) (aTime.to_f)
+      @last_click_time = 0
       # slot for item exchanged by drag-and-drop
       @dragged_item = nil
 
@@ -169,14 +180,9 @@ module FreeVikings
       # item isn't dropped into trash; let's try if it's dropped 
       # over some viking
       if @dragged_item then
-        if a = spot_inside_item(*pos) || b = spot_inside_portrait(*pos) then
-          if a then
-            viking_index, item_index = a
-          else
-            viking_index = b
-          end
-
-          dest_viking = @team[viking_index]
+        view = @viking_views_array.find {|vv| vv.rect.point_inside?(pos) }
+        if view then
+          dest_viking = view.viking
 
           if @dragged_item.owner.rect.collides?(dest_viking.rect) &&
               ! dest_viking.inventory.full? then
@@ -209,11 +215,26 @@ module FreeVikings
     # the viking/item is made active.
 
     def mouseclick(pos)
+      time_now = Time.now.to_f
+
       if i = spot_inside_portrait(*pos) then
         @team.active = @team[i]
         change_active_viking
       elsif a = spot_inside_item(*pos) then
         viking_index, item_index = a
+
+        # doubleclick?
+        if @clicked_item_dc &&
+            @team[viking_index] == @clicked_item_dc.owner &&
+            item_index == @team[viking_index].inventory.active_index &&
+            (time_now - DOUBLECLICK_SECONDS) <= @last_click_time then
+          @clicked_item_dc = nil
+          @clicked_item = nil
+          @team[viking_index].use_item
+          return
+        end
+
+        @clicked_item_dc = nil
 
         begin
           @team[viking_index].inventory.active_index = item_index
@@ -224,12 +245,15 @@ module FreeVikings
           @clicked_item = nil
         end
       end
+
+      @last_click_time = time_now
     end
 
     # About pos see documentation of method mouseclick.
 
     def mouserelease(pos)
       if @clicked_item then
+        @clicked_item_dc = @clicked_item
         @clicked_item = nil
       end
 
@@ -302,12 +326,15 @@ module FreeVikings
     # Otherwise nil is returned.
 
     def spot_inside_portrait(x, y)
-      if (y < VikingView::VIKING_FACE_SIZE) and
-          (x % (VikingView::VIKING_FACE_SIZE + VikingView::INVENTORY_VIEW_SIZE)) < VikingView::VIKING_FACE_SIZE then
-        viking_index = x / (VikingView::VIKING_FACE_SIZE + VikingView::INVENTORY_VIEW_SIZE)
-        return viking_index if viking_index < @team.size
+      pos = [x,y]
+      view = @viking_views_array.find {|vv| vv.rect.point_inside?(pos) }
+      return nil unless view
+
+      if view.pos_in_portrait?(pos) then
+        return @viking_views_array.index(view)
+      else
+        return nil
       end
-      return nil
     end
 
     def spot_inside_trash(x, y)
@@ -323,24 +350,20 @@ module FreeVikings
     # Otherwise nil is returned.
 
     def spot_inside_item(x, y)
-      if (y < VikingView::INVENTORY_VIEW_SIZE) and
-          (x % (VikingView::VIKING_FACE_SIZE + VikingView::INVENTORY_VIEW_SIZE)) > VikingView::VIKING_FACE_SIZE then
-        x_in_view = x % VikingView::INVENTORY_VIEW_SIZE
-        y_in_view = y % VikingView::INVENTORY_VIEW_SIZE
+      pos = [x,y]
 
-        viking_index = x / (VikingView::VIKING_FACE_SIZE + VikingView::INVENTORY_VIEW_SIZE)
-        item_index = if x_in_view >= VikingView::ITEM_SIZE and y_in_view >= VikingView::ITEM_SIZE then
-                       3
-                     elsif y_in_view >= VikingView::ITEM_SIZE then
-                       2
-                     elsif x_in_view >= VikingView::ITEM_SIZE then
-                       1
-                     elsif x_in_view <= VikingView::ITEM_SIZE and y_in_view <= VikingView::ITEM_SIZE then
-                       0
-                     end
-        return [viking_index, item_index] if viking_index < @team.size
+      view = @viking_views_array.find {|vv| 
+        vv.pos_in_inventory?(pos)
+      }
+
+      return nil unless view
+
+      i = view.pos_in_item?(pos)
+      if i == nil then
+        return nil
+      else
+        return [@viking_views_array.index(view), i]
       end
-      return nil
     end
 
     STATE_METHODS = {NormalBottomPanelState => :normal,

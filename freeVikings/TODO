@@ -9,23 +9,36 @@
 (-) Full spritesheets for all three vikings according to the developers'
     manual
 
-(-) New background for portraits in bottompanel 
-    (in two versions: 
-       -> normal
-       -> highlighted during exchange of items) 
-    + similar pair of backgrounds for trash
+(-) New graphic style of bottompanel (layout + images)
 
 ======== Code ==========================================================
+
+(-) All entities have reference of Location?
+
+(-) Viking standing on the top of a ladder must be able to climb it down.
+    (doesn't work now - 27.12.2008)
+
+(-) High scores:
+    (-) how much time it took to make a level
+    (-) optionally level times could be viewed after finishing a level
+    (-) highscores on the website
+
+(-) [UI] Menu / configuration issues:
+    (-) Menu scrolls if it is too long
+    (-) Widget for selecting a file or folder
+    (-) Menu: add a message if a bad password is given (also to the GUI,
+        not only to a console)
+    (-) Possibility to change keys (movement, inventory control etc.)
+    (-) User's (and system?) configuration file (with possibility 
+        to define multiple location storage places)
+    (-) define location storage places, choose a campaign to be played
+
+(-) [UI] Add dialog "Back to menu/Restart level/Cancel"
 
 (-) Why don't trolls in HappyLEnd get angry?
 
 (-) Speech boxes should be placed in some cleverer way, so that all text
     is visible (try to talk while standing at the end of map)
-
-(-) Viking standing on the top of a ladder must be able to climb it down.
-    (doesn't work now - 27.12.2008)
-
-(-) Unlocked lock disappears or is changed visually
 
 (-) Troll shouldn't go through the door... (try Christmas2008/HolyHole...)
 
@@ -39,9 +52,6 @@
 (-) Possibility to load images from level directory
 
 (-) SchwerEngine: all rect versions should have methods move, move_y, move_x
-
-(-) BottomPanel: modify mouse event handling: if item or portrait was clicked
-    shouldn't be determined in BottomPanel, but in VikingView!
 
 (-) Fix BottomPanel
     (-) select box can blink in trash (it may be solved by creating
@@ -84,29 +94,11 @@
 
 (-) [GO] LivingStone - animate all frames properly, finish code
 
-(-) [UI] Menu / configuration issues:
-    (-) Menu scrolls if it is too long
-    (-) Widget for selecting a file or folder
-    (-) Menu: add a message if a bad password is given (also to the GUI,
-        not only to a console)
-    (-) Possibility to change keys (movement, inventory control etc.)
-    (-) User's (and system?) configuration file (with possibility 
-        to define multiple location storage places)
-    (-) define location storage places, choose a campaign to be played
-
 (-) [GO] Olaf's van: all vikings can be inside but just Olaf can drive it;
     it only moves when it has enough fuel; it has attributes similar to Olaf
     (vikings can stay on it's deck; monsters can't pass through it)
 
 (-) [UI] error in script is shown in kind of dialog window
-
-(-) High scores:
-    (-) how much time it took to make a level
-    (-) optionally level times could be viewed after finishing a level
-    (-) highscores on the website
-    (-) "Bonus mode?" - you gain points for time and for bonus tasks
-        (find a secret place; pick and use all items; do something with
-        a charecter which isn't very well-equipped for it; etc.)
 
 (-) Viking's rect isn't constant, but may have variable size and
     is dependent on image used (display rect defined in model file
@@ -130,8 +122,6 @@
 (-) Set up some check for new releases of libraries we are using
     (RUDL, script, Log4r, REXML)
 
-(-) [UI] Add dialog "Back to menu/Restart level/Cancel"
-
 (-) Variable number of heroes (from 1 up to 4?); more heroes
     (aside of Fang and Scorch from Lost Vikings 2 I would like to add at least
     one totally new hero - Olaf's wife Hildegard);
@@ -139,10 +129,6 @@
     from inside level
 
 (-) [UI] Add some "dead animation" on level restart
-
-(-) Shield tasks:
-    (-) [VI] Olaf's shield shouldn't move awfully when Olaf's too quick
-    (-) [VI] Vikings should rest on Olaf's shield only if it's over his head
 
 (-) Move all requirement stuff to one file (freevikings.rb), so that it can be 
     controlled easily

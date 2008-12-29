@@ -43,6 +43,13 @@ module FreeVikings
       update_shield_use
     end
 
+    # Must tell Shield about change of position done by a Transporter
+    alias_method :_transport_move, :transport_move
+    def transport_move(delta_x, delta_y, transporter)
+      super(delta_x, delta_y, transporter)
+      @shield.unofficial_update @location
+    end
+
     def shield_use
       return 'top' if @ability.shield_use == ShielderAbility::SHIELD_TOP
       return 'left' if @state.direction == 'left'

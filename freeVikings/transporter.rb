@@ -55,7 +55,7 @@ module FreeVikings
         if s.kind_of? Transportable and
             (not @transported.include? s) then
           @transported.push s
-          puts 'Halle'
+          # puts 'Halle'
           s.start_transport self
         end
       }

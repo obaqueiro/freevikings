@@ -42,7 +42,7 @@ module FreeVikings
 
       unless @rect.expand(0,2).collides?(@transported_by.rect) then
         @transported_by.end_transport_of self
-        puts 'end'
+        # puts 'end'
       end
     end
 
