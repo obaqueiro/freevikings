@@ -105,7 +105,8 @@ module SchwerEngine
         return
       end
 
-      surface.blit(@background, [0,0], (paint_rect.to_a))      
+      where = (surface.clip ? surface.clip : [0,0])
+      surface.blit(@background, where, (paint_rect.to_a))      
     end
 
     alias_method :paint, :paint_background
@@ -117,7 +118,8 @@ module SchwerEngine
         return
       end
 
-      surface.blit(@foreground, [0,0], (paint_rect.to_a))
+      where = (surface.clip ? surface.clip : [0,0])
+      surface.blit(@foreground, where, (paint_rect.to_a))      
     end
 
     # Says if given Rectangle is free of solid tiles.

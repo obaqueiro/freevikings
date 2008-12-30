@@ -1,3 +1,7 @@
+[30.December 2008]
+- map.rb: fixed painting on Surface with clip (I didn't probably understand 
+          well what clip is...)
+
 [29.December 2008]
 - entity.rb: attribute 'location' added
 - rect3.rb: added method Rectangle#point_inside?
