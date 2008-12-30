@@ -130,7 +130,7 @@ module FreeVikings
       end
 
       def paint_lives(surface)
-        lives_y = VIKING_FACE_SIZE
+        lives_y = @rect.top + VIKING_FACE_SIZE
         @viking.energy.times {|j| 
           live_position = [@rect.left + j*LIFE_SIZE, lives_y]
           surface.blit(@energy_punkt, live_position)
@@ -138,17 +138,18 @@ module FreeVikings
       end
 
       def paint_inventory(surface)
-        inventory_view_pos = [@rect.left+VIKING_FACE_SIZE, @rect.top]
-
         time = Time.now.to_f
 
         inventory = @viking.inventory
+
+        inventory_x = @rect.left+VIKING_FACE_SIZE
+        inventory_y = @rect.top
 
         0.upto(inventory.num_slots-1) do |k|
           item = inventory[k]
 
           ip = ITEM_POSITIONS[k]
-          item_position = [ip[0] + @rect.left + VIKING_FACE_SIZE, ip[1]]
+          item_position = [inventory_x + ip[0], inventory_y + ip[1]]
 
           surface.blit(@item_bg, item_position)
           unless item.null?

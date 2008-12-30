@@ -1,3 +1,9 @@
+[30.December 2008]
+- viking.rb: Viking standing on the top of a ladder is able to climb it down.
+- game.rb, bottompanel.rb, bpvikingview.rb, location.rb:
+  variable placement of BottomPanel: not only at the bottom of window, but also
+  at the top, on the left or on the right
+
 [29.December 2008]
 - bottompanel.rb, bpvikingview.rb: 
   cleaner way of determining where user clicked (done by VikingView, 

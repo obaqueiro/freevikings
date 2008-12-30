@@ -534,7 +534,7 @@ module FreeVikings
     # Says if viking collides with the ladder so that he can climb it
 
     def proper_ladder_collision?(ladder)
-      @rect.collides?(ladder.rect) &&
+      @rect.expand2(0,0,0,2).collides?(ladder.rect) &&
         (ladder.rect.center[0] - @rect.center[0]).abs < 20
     end
   end # class Viking

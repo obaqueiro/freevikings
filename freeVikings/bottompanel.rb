@@ -17,32 +17,74 @@ module FreeVikings
 
   class BottomPanel
 
+    extend Forwardable
+
     # Class BottomPanel includes mixin Observable (a part of Ruby's
     # standard library). It notifies all observers whenever it's internal
     # state changes. A BottomPanelState instance is always sent to them.
 
-    WIDTH = 640
-    HEIGHT = VikingView::HEIGHT
+    
+    SIZES = {
+      :horizontal => [640, VikingView::HEIGHT],
+      :vertical => [VikingView::WIDTH, 480]
+    }
 
     # Maximum milliseconds between two clicks which are considered to be
     # a double-click
-
     DOUBLECLICK_MILLIS = 650
     DOUBLECLICK_SECONDS = DOUBLECLICK_MILLIS.to_f / 1000
 
     # Argument team is a Team of heroes who will be displayed on the panel.
+    # Orientation is either :horizontal or :vertical
 
-    def initialize(team)
-      @trash = Trash.new [VikingView::WIDTH*3, 0]
-
+    def initialize(team, placement=:bottom)
       @team = team
 
-      @image = RUDL::Surface.new [WIDTH, HEIGHT]
+      unless [:top, :bottom, :left, :right].include?(placement) then
+        raise ArgumentError, "Unknown placement '#{placement}' (#{placement.class})"
+      end
+
+      @placement = placement
+      case @placement
+      when :bottom
+        @orientation = :horizontal
+        x = 0
+        y = FreeVikings::WIN_HEIGHT-SIZES[:horizontal][1]
+      when :top
+        @orientation = :horizontal
+        x = 0
+        y = 0
+      when :left
+        @orientation = :vertical
+        x = 0
+        y = 0
+      when :right
+        @orientation = :vertical
+        x = FreeVikings::WIN_WIDTH - SIZES[:vertical][0]
+        y = 0
+      end
+
+      @rect = Rectangle.new(x,y,*(SIZES[@orientation]))
+
+      # trashe's position is relative to BottomPanel's rectangle,
+      # not to application window!
+      trash_pos = if @orientation == :vertical then
+                    [0, VikingView::HEIGHT*3]
+                  else
+                    [VikingView::WIDTH*3, 0]
+                  end
+      @trash = Trash.new trash_pos
+
+      @image = RUDL::Surface.new [@rect.w, @rect.h]
 
       @viking_views = @viking_views_hash = {}
       @viking_views_array = []
       @team.each_with_index {|v,i|
-        pos = [i * VikingView::WIDTH, 0]
+        pos = if @orientation == :horizontal then
+                [i * VikingView::WIDTH, 0]
+              else
+                [0, i * VikingView::HEIGHT]
+              end
         view = VikingView.new(v, pos)
 
         @viking_views[v] = view
@@ -66,11 +108,22 @@ module FreeVikings
       repaint_image
     end
 
-    # reader methods for BottomPanelState
-    attr_reader :team
-    attr_reader :trash
+    def width
+      @rect.w
+    end
 
-    extend Forwardable
+    def height
+      @rect.h
+    end
+
+    # interface for BottomPanelState
+    attr_reader :trash
+    attr_reader :team
+
+    # interface for Game:
+    attr_reader :orientation
+    attr_reader :placement
+    attr_reader :rect
 
     # The BottomPanel turns to inventory browsing mode in which
     # it is posible to move the selection box around the inventory of the 

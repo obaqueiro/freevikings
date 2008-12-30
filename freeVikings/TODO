@@ -13,24 +13,37 @@
 
 ======== Code ==========================================================
 
-(-) All entities have reference of Location?
-
-(-) Viking standing on the top of a ladder must be able to climb it down.
-    (doesn't work now - 27.12.2008)
+(-) placement of BottomPanel:
+    (-) setting in menu
+    (-) one of the F-keys switches placement in-game
 
 (-) High scores:
     (-) how much time it took to make a level
     (-) optionally level times could be viewed after finishing a level
     (-) highscores on the website
 
-(-) [UI] Menu / configuration issues:
+(-) Config file
+    (-) design:
+        (-) do we need a system-wide config? Probably not.
+        (-) format: XML? YAML? Ruby script? INI-like? other?
+        (-) structure
+    (-) game configurability
+        (-) configurable keys
+        (-) bottompanel: divide events from actions:
+            events:
+              click, quick_click(second in double-click), release
+              (each can be left/right/middle(button);
+              on portrait, inventory, item, whole view)
+            actions:
+              select-viking, select-item, use-active-item, use-item, 
+              delete-item, drag-item, drop-item
+
+(-) [UI] Menu issues:
     (-) Menu scrolls if it is too long
     (-) Widget for selecting a file or folder
     (-) Menu: add a message if a bad password is given (also to the GUI,
         not only to a console)
     (-) Possibility to change keys (movement, inventory control etc.)
-    (-) User's (and system?) configuration file (with possibility 
-        to define multiple location storage places)
     (-) define location storage places, choose a campaign to be played
 
 (-) [UI] Add dialog "Back to menu/Restart level/Cancel"

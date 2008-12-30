@@ -45,14 +45,6 @@ module FreeVikings
     include RUDL
     include RUDL::Constant
 
-    GAME_SCREEN_HEIGHT = FreeVikings::WIN_HEIGHT - BottomPanel::HEIGHT
-
-    # rectangle of map view inside game window
-    MAPVIEW_RECT = [0, 0, 
-                    FreeVikings::WIN_WIDTH, WIN_HEIGHT - BottomPanel::HEIGHT]
-    BOTTOMPANEL_RECT = [0, FreeVikings::WIN_HEIGHT - BottomPanel::HEIGHT, 
-                        FreeVikings::WIN_WIDTH, BottomPanel::HEIGHT]
-
     # == Public instance methods
     #
     # Argument window should be a RUDL::Surface (or RUDL::DisplaySurface).
@@ -272,7 +264,18 @@ module FreeVikings
         @log.warn "Sound is off."
       end
 
-      @bottompanel = BottomPanel.new location.team
+      @bottompanel = BottomPanel.new location.team, :right
+
+      # rectangle of map view inside game window
+      bp = @bottompanel
+      x = (bp.placement == :left ? bp.rect.right : 0)
+      w = (bp.orientation == :vertical ? 
+           FreeVikings::WIN_WIDTH - bp.rect.w : FreeVikings::WIN_WIDTH)
+      y = (bp.placement == :top ? bp.rect.bottom : 0)
+      h = (bp.orientation == :horizontal ?
+           FreeVikings::WIN_HEIGHT - bp.rect.h : FreeVikings::WIN_HEIGHT)
+      @mapview_rect = R(x,y,w,h)
+      p @mapview_rect
 
       frames = 0 # auxiliary variable for fps computing
       @frame_rate = 0
@@ -373,13 +376,13 @@ module FreeVikings
 
       @bottompanel.update
 
-      @app_window.clip = MAPVIEW_RECT
+      @app_window.clip = @mapview_rect.to_a
       location.paint(@app_window, location.team.active.center)
       @app_window.unset_clip
 
       @state.change_view(@app_window)
 
-      @bottompanel.paint(@app_window, BOTTOMPANEL_RECT)
+      @bottompanel.paint(@app_window, @bottompanel.rect.to_a)
 
       if FreeVikings.display_fps? then
         @app_window.fill([0,0,0], [8,8,60,12])
@@ -561,8 +564,8 @@ module FreeVikings
     # or false
 
     def y_in_bottompanel(y)
-      if y >= GAME_SCREEN_HEIGHT then
-        return y - GAME_SCREEN_HEIGHT
+      if @bottompanel.rect.point_inside?([10,y]) then
+        return y - @bottompanel.rect.top
       else
         return false
       end
@@ -571,7 +574,7 @@ module FreeVikings
     # Accepts position in window, returns position in location
 
     def pos_in_location(pos)
-      display_rect = @world.location.display_rect(MAPVIEW_RECT.w, MAPVIEW_RECT.h)
+      display_rect = @world.location.display_rect(@mapview_rect.w, @mapview_rect.h)
       return [pos[0]+display_rect.left, pos[1]+display_rect.top]
     end
   end # class Game
