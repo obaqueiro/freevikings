@@ -48,25 +48,59 @@ module GameUI
       #
       # If a block is given, new Menu yields itself providing a traditional
       # way of creating nested structures.
+      #
+      # x, y, width have default value 'nil' which says "Don't want to change".
+      # If you give nil for any of these, value is taken from parent
+      # (if menu has parent) or set to default value (see constants above)
+      #
+      # if text_renderer is set to nil, Menu tries to inherit it from parent -
+      # if no exists, exception is raised. surface behaves in the same way.
 
-      def initialize(parent, title, surface, text_renderer, x=DEFAULT_X, y=DEFAULT_Y, width=DEFAULT_WIDTH)
+      def initialize(parent, title, surface=nil, text_renderer=nil, 
+                     x=nil, y=nil, width=nil)
         super(parent)
 
         @menu_items = []
 
-        if parent
-          @x = parent.x
-          @y = parent.y
-          @width = parent.width
-          @surface = parent.surface
-          @text_renderer = parent.text_renderer
-        else
-          @x = x
-          @y = y
-          @width = width
-          @surface = surface
-          @text_renderer = text_renderer
-        end
+        @x = if x then
+               x
+             elsif parent
+               parent.x
+             else
+               DEFAULT_X
+             end
+        @y = if y then
+               y
+             elsif parent
+               parent.y
+             else
+               DEFAULT_Y
+             end
+        @width = if width then
+                   width
+                 elsif parent
+                   parent.width
+                 else
+                   DEFAULT_WIDTH
+                 end
+        @text_renderer = if text_renderer then
+                           text_renderer
+                         elsif parent then
+                           parent.text_renderer
+                         else
+                           raise "TextRenderer wasn't given and can't be "\
+                           "inherited from parent (parent doesn't exist). "\
+                           "Please, supply TextRenderer."
+                         end
+        @surface = if surface then
+                     surface
+                   elsif parent then
+                     parent.surface
+                   else
+                     raise "Surface wasn't supplied and can't be inherited "\
+                     "from parent menu (parent menu doesn't exist). Please, "\
+                     "supply Surface."
+                   end
 
         @update_rect = [@x, 0, @x+@width, @surface.h]
 

@@ -1,2 +1,6 @@
+[31.December 2008]
+- menu/menu.rb, menu/menus.rb: changed system of attribute inheritance
+  to a more useful and logical one
+
 [17.November 2008]
 - Menu.new optionally yields the new object (similar e.g. to File.open)

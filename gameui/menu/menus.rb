@@ -40,8 +40,13 @@ if __FILE__ == $0 then
   # Add some menu items:
   SelectableLabel.new(menu, "Label")
   
-  submenu = Menu.new(menu, "Submenu", nil, menu.text_renderer)
+  submenu = Menu.new(menu, "Submenu")
   SelectableLabel.new(submenu, "Schnupfen")
+
+  # Submenu with sizes different from parent menu
+  bigmenu = Menu.new(menu, "Big menu", nil, nil, nil, 300, 400)
+  SelectableLabel.new(bigmenu, "Blaffff............")
+  QuitButton.new(bigmenu)
 
   subsubmenu = Menu.new(submenu, "Subsubmenu", nil, submenu.text_renderer)
   SelectableLabel.new(subsubmenu, "Nothing")
