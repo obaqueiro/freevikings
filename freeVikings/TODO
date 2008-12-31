@@ -13,8 +13,6 @@
 
 ======== Code ==========================================================
 
-(-) Trash: trash shows it has 'eaten' an item by animation
-
 (-) High scores:
     (-) how much time it took to make a level
     (-) optionally level times could be viewed after finishing a level
@@ -22,7 +20,6 @@
 
 (-) Config file
     (-) design:
-        (-) do we need a system-wide config? Probably not.
         (-) format: XML? YAML? Ruby script? INI-like? other?
         (-) structure
     (-) game configurability

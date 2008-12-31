@@ -8,9 +8,9 @@
 - game.rb: fixed mouse controls for BottomPanel in right position
 - game.rb, gamestate.rb, bottompanel.rb, bpvikingview.rb: 
   F5 switches panel position in-game
-
 - bottompanel.rb, trash.rb: when an item is dropped into the trash,
   symbol of recyclation rotates for a while
+- created directory config/, configuration files moved there
 
 [30.December 2008]
 - viking.rb: Viking standing on the top of a ladder is able to climb it down.

@@ -8,5 +8,5 @@
 # neprijemnosti.
 
 require 'log4r/configurator'
-Log4r::Configurator.load_xml_file('log4rconfig.xml')
+Log4r::Configurator.load_xml_file('config/log4rconfig.xml')
 Log4r::Logger.global.level = Log4r::OFF
