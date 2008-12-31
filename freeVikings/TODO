@@ -13,9 +13,7 @@
 
 ======== Code ==========================================================
 
-(-) placement of BottomPanel:
-    (-) setting in menu
-    (-) one of the F-keys switches placement in-game
+(-) Trash: trash shows it has 'eaten' an item by animation
 
 (-) High scores:
     (-) how much time it took to make a level
@@ -40,6 +38,7 @@
 
 (-) [UI] Menu issues:
     (-) Menu scrolls if it is too long
+    (-) Width of menu can be changed
     (-) Widget for selecting a file or folder
     (-) Menu: add a message if a bad password is given (also to the GUI,
         not only to a console)

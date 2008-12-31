@@ -70,7 +70,7 @@ module FreeVikings
         top_menu = TopMenu.new(@window) do |menu|
 
           # Submenu: Start Game
-          Menu.new(menu, "Start Game", nil, nil) do |start_menu|
+          Menu.new(menu, "Start Game") do |start_menu|
             ActionButton.new(start_menu, "New Game", Proc.new {
                                @log.info "Starting new game."
                                Game.new(@window).game_loop
@@ -96,20 +96,27 @@ module FreeVikings
           end
           
           # Submenu: Graphics
-          Menu.new(menu, "Graphics", nil, nil) do |graphics_menu|
+          Menu.new(menu, "Graphics", nil,nil,nil,nil, 300) do |graphics_menu|
           
             DisplayModeChooseButton.new(graphics_menu, @window)
             FVConfiguratorButton.new(graphics_menu, 
-                                     "Display fps", "display_fps", 
+                                     "Display fps", 
+                                     "display_fps", 
                                      {"yes" => true, "no" => false})
-            FVConfiguratorButton.new(graphics_menu, "Progressbar", 
+            FVConfiguratorButton.new(graphics_menu, 
+                                     "Progressbar", 
                                      "progressbar_loading", 
                                      {"on" => true, "off" => false})
+            FVConfiguratorButton.new(graphics_menu,
+                                     "Panel placement",
+                                     'panel_placement',
+                                     {'bottom' => :bottom, 'top' => :top,
+                                       'left' => :left, 'right' => :right})
             QuitButton.new(graphics_menu)
           end
 
           # Submenu: Sound
-          Menu.new(menu, "Sound", nil, nil) do |sound_menu|
+          Menu.new(menu, "Sound") do |sound_menu|
 
             FVConfiguratorButton.new(sound_menu, "Level music", 'sound', 
                                      {'on' => true, 'off' => false})

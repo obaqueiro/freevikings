@@ -20,6 +20,7 @@ TAB, P    - Pauses the game and enables inventory manipulation
 F2        - Give up the level and start once more
 F3        - window/fullscreen mode
 F4        - Switch on/off the fps display
+F5        - Change placement of panel
 PrtScr    - Take screenshot (will be saved in the working directory as BMP
             with strange name)
 

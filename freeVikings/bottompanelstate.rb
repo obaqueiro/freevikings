@@ -119,13 +119,22 @@ module FreeVikings
       true
     end
 
+    # Direction keys move only between vikings, so ve (unlike 
+    # InventoryBrowsingBottomPanelState) need just two of them.
+    # So up is synonym for left and down for right, which is very natural when
+    # BottomPanel is placed vertically.
+
     def left
       move_selected_item(:previous)
     end
 
+    alias_method :up, :left
+
     def right
       move_selected_item(:next)
     end
+
+    alias_method :down, :right
 
     private
 

@@ -164,6 +164,20 @@ module FreeVikings
       @log.info "Screenshot saved to file '#{filename}'"
     end
 
+    # changes placement of panel
+
+    def change_panel_placement
+      @bottompanel.change_placement
+      bp = @bottompanel
+      x = (bp.placement == :left ? bp.rect.right : 0)
+      w = (bp.orientation == :vertical ? 
+           FreeVikings::WIN_WIDTH - bp.rect.w : FreeVikings::WIN_WIDTH)
+      y = (bp.placement == :top ? bp.rect.bottom : 0)
+      h = (bp.orientation == :horizontal ?
+           FreeVikings::WIN_HEIGHT - bp.rect.h : FreeVikings::WIN_HEIGHT)
+      @mapview_rect = R(x,y,w,h)
+    end
+
     # == Methods of game loop
 
     # When this method is called, the real fun begins (well, I know freeVikings
@@ -264,7 +278,8 @@ module FreeVikings
         @log.warn "Sound is off."
       end
 
-      @bottompanel = BottomPanel.new location.team, :right
+      @bottompanel = BottomPanel.new(location.team, 
+                                     FreeVikings::OPTIONS['panel_placement'])
 
       # rectangle of map view inside game window
       bp = @bottompanel
@@ -275,7 +290,6 @@ module FreeVikings
       h = (bp.orientation == :horizontal ?
            FreeVikings::WIN_HEIGHT - bp.rect.h : FreeVikings::WIN_HEIGHT)
       @mapview_rect = R(x,y,w,h)
-      p @mapview_rect
 
       frames = 0 # auxiliary variable for fps computing
       @frame_rate = 0
@@ -510,9 +524,10 @@ module FreeVikings
     # pos is position in window [x,y]
 
     def mouse_click(pos)
-      if y_in_bottompanel(pos[1]) then
+      if @bottompanel.rect.point_inside?(pos) then
         # @log.debug "Mouse click in the bottompanel area."
-        pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
+        pos_in_the_panel = [pos[0]-@bottompanel.rect.left, 
+                            pos[1]-@bottompanel.rect.top]
         @bottompanel.mouseclick(pos_in_the_panel)
       else
         if FreeVikings.develmagic? then
@@ -535,9 +550,10 @@ module FreeVikings
     end
 
     def mouse_release(pos)
-      if y_in_bottompanel(pos[1]) then
+      if @bottompanel.rect.point_inside?(pos) then
         # @log.info "Mouse release in the bottompanel area."
-        pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
+        pos_in_the_panel = [pos[0]-@bottompanel.rect.left, 
+                            pos[1]-@bottompanel.rect.top]
         @bottompanel.mouserelease(pos_in_the_panel)
       end
 
@@ -550,8 +566,9 @@ module FreeVikings
     end
 
     def mouse_move(pos)
-      if y_in_bottompanel(pos[1]) then
-        pos_in_the_panel = [pos[0], y_in_bottompanel(pos[1])]
+      if @bottompanel.rect.point_inside?(pos) then
+        pos_in_the_panel = [pos[0]-@bottompanel.rect.left, 
+                            pos[1]-@bottompanel.rect.top]
         @bottompanel.mousemove(pos_in_the_panel)
       end
     end
@@ -559,17 +576,6 @@ module FreeVikings
     private
 
     # == Methods determining position
-
-    # Accepts y position in window; returns y position in bottompanel
-    # or false
-
-    def y_in_bottompanel(y)
-      if @bottompanel.rect.point_inside?([10,y]) then
-        return y - @bottompanel.rect.top
-      else
-        return false
-      end
-    end
 
     # Accepts position in window, returns position in location
 

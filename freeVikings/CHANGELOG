@@ -1,3 +1,14 @@
+[31.December 2008]
+- fvdef.rb, initfv.rb: panel placement may be set in menu;
+  submenu "Graphics" is 50px wider than the rest (because of it)
+- topmenu.rb: RD->RDoc
+- bottompanelstate.rb: in ItemsExchangeBottomPanelState keys up and down
+  are synonyms for left and right (to make it more natural when
+  BottomPanel is placed vertically)
+- game.rb: fixed mouse controls for BottomPanel in right position
+- game.rb, gamestate.rb, bottompanel.rb, bpvikingview.rb: 
+  F5 switches panel position in-game
+
 [30.December 2008]
 - viking.rb: Viking standing on the top of a ladder is able to climb it down.
 - game.rb, bottompanel.rb, bpvikingview.rb, location.rb:

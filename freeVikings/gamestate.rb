@@ -54,6 +54,8 @@ module FreeVikings
         FreeVikings::OPTIONS['fullscreen'] = @context.app_window.fullscreen?
       when K_F4
         FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
+      when K_F5
+        @context.change_panel_placement
       when K_F9
         if FreeVikings.develmagic?
           @context.team.active.destroy

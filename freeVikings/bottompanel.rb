@@ -34,58 +34,24 @@ module FreeVikings
     DOUBLECLICK_MILLIS = 650
     DOUBLECLICK_SECONDS = DOUBLECLICK_MILLIS.to_f / 1000
 
+    # possibilities of panel placement; first is default
+    PLACEMENT = [:bottom, :top, :left, :right]
+
     # Argument team is a Team of heroes who will be displayed on the panel.
     # Orientation is either :horizontal or :vertical
 
     def initialize(team, placement=:bottom)
       @team = team
 
-      unless [:top, :bottom, :left, :right].include?(placement) then
-        raise ArgumentError, "Unknown placement '#{placement}' (#{placement.class})"
-      end
+      # Very powerful line of code:
+      change_placement(placement)
 
-      @placement = placement
-      case @placement
-      when :bottom
-        @orientation = :horizontal
-        x = 0
-        y = FreeVikings::WIN_HEIGHT-SIZES[:horizontal][1]
-      when :top
-        @orientation = :horizontal
-        x = 0
-        y = 0
-      when :left
-        @orientation = :vertical
-        x = 0
-        y = 0
-      when :right
-        @orientation = :vertical
-        x = FreeVikings::WIN_WIDTH - SIZES[:vertical][0]
-        y = 0
-      end
-
-      @rect = Rectangle.new(x,y,*(SIZES[@orientation]))
-
-      # trashe's position is relative to BottomPanel's rectangle,
-      # not to application window!
-      trash_pos = if @orientation == :vertical then
-                    [0, VikingView::HEIGHT*3]
-                  else
-                    [VikingView::WIDTH*3, 0]
-                  end
-      @trash = Trash.new trash_pos
-
-      @image = RUDL::Surface.new [@rect.w, @rect.h]
+      @trash = Trash.new trash_position
 
       @viking_views = @viking_views_hash = {}
       @viking_views_array = []
       @team.each_with_index {|v,i|
-        pos = if @orientation == :horizontal then
-                [i * VikingView::WIDTH, 0]
-              else
-                [0, i * VikingView::HEIGHT]
-              end
-        view = VikingView.new(v, pos)
+        view = VikingView.new(v, vikingview_position(i))
 
         @viking_views[v] = view
         @viking_views_array << view
@@ -124,6 +90,63 @@ module FreeVikings
     attr_reader :orientation
     attr_reader :placement
     attr_reader :rect
+
+    # changes placement; if no argument is given, takes next value from
+    # array PLACEMENT
+    #
+    # Reiniializes most of BottomPanel's internals (VikingViews, Trash)
+
+    def change_placement(value=nil)
+      if value == nil then
+        unless defined?(@placement)
+          # set default value
+          value = PLACEMENT[0]
+        else
+          # set next value
+          i = PLACEMENT.index(@placement)
+          ni = (i+1) % PLACEMENT.size
+          value = PLACEMENT[ni]
+        end
+      end
+
+      unless PLACEMENT.include?(value) then
+        raise ArgumentError, "Unknown placement '#{value}' (#{value.class})"
+      end
+
+      @placement = value
+
+      case @placement
+      when :bottom
+        @orientation = :horizontal
+        x = 0
+        y = FreeVikings::WIN_HEIGHT-SIZES[:horizontal][1]
+      when :top
+        @orientation = :horizontal
+        x = 0
+        y = 0
+      when :left
+        @orientation = :vertical
+        x = 0
+        y = 0
+      when :right
+        @orientation = :vertical
+        x = FreeVikings::WIN_WIDTH - SIZES[:vertical][0]
+        y = 0
+      end
+
+      @rect = Rectangle.new(x,y,*(SIZES[@orientation]))
+      @image = RUDL::Surface.new [@rect.w, @rect.h]
+
+      if defined?(@trash)
+        @trash.rect.left, @trash.rect.top = trash_position()
+        @team.each_with_index {|m,i|
+          v = @viking_views[m]
+          v.rect.left, v.rect.top = vikingview_position(i)
+        }
+
+        repaint_image
+      end
+    end
 
     # The BottomPanel turns to inventory browsing mode in which
     # it is posible to move the selection box around the inventory of the 
@@ -224,7 +247,7 @@ module FreeVikings
     # Drops the dragged item
 
     def drop_item(pos)
-      if spot_inside_trash(*pos)
+      if spot_inside_trash(pos)
         @dragged_item = nil
         repaint_image
         return
@@ -263,17 +286,14 @@ module FreeVikings
     # pos is a two-element array (standard [x,y] coordinates as used in RUDL
     # etc.). Remember that [0,0] is the top-left corner of the panel, not 
     # of the game screen!
-    #
-    # If the position is inside some panel icon (viking face/item), 
-    # the viking/item is made active.
 
     def mouseclick(pos)
       time_now = Time.now.to_f
 
-      if i = spot_inside_portrait(*pos) then
+      if i = spot_inside_portrait(pos) then
         @team.active = @team[i]
         change_active_viking
-      elsif a = spot_inside_item(*pos) then
+      elsif a = spot_inside_item(pos) then
         viking_index, item_index = a
 
         # doubleclick?
@@ -378,8 +398,7 @@ module FreeVikings
     # viking's portrait, returns the viking's index in the team.
     # Otherwise nil is returned.
 
-    def spot_inside_portrait(x, y)
-      pos = [x,y]
+    def spot_inside_portrait(pos)
       view = @viking_views_array.find {|vv| vv.rect.point_inside?(pos) }
       return nil unless view
 
@@ -390,9 +409,8 @@ module FreeVikings
       end
     end
 
-    def spot_inside_trash(x, y)
-      point_rect = [x,y,0,0]
-      if @trash.rect.contains?(point_rect) then
+    def spot_inside_trash(pos)
+      if @trash.rect.point_inside?(pos) then
         return true
       end
       return nil
@@ -402,8 +420,7 @@ module FreeVikings
     # item's image, an Array [viking_index, item_index] is returned.
     # Otherwise nil is returned.
 
-    def spot_inside_item(x, y)
-      pos = [x,y]
+    def spot_inside_item(pos)
 
       view = @viking_views_array.find {|vv| 
         vv.pos_in_inventory?(pos)
@@ -441,6 +458,28 @@ module FreeVikings
     def unhighlight
       @viking_views_array.each {|v| v.unhighlight }
       @trash.unhighlight
+    end
+
+    # Returns trashe's position according to current placement.
+    # (position is relative to panel, not window)
+
+    def trash_position
+      if @orientation == :vertical then
+        return [0, VikingView::HEIGHT*3]
+      else
+        return [VikingView::WIDTH*3, 0]
+      end
+    end
+
+    # Returns position of VikingView number i according to current placement.
+    # (position is relative to panel, not window)
+
+    def vikingview_position(i)
+      if @orientation == :horizontal then
+        return [i * VikingView::WIDTH, 0]
+      else
+        return [0, i * VikingView::HEIGHT]
+      end
     end
 
   end # class BottomPanel

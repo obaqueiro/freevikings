@@ -31,11 +31,16 @@ module FreeVikings
         @viking.view = self
 
         @rect = Rectangle.new position[0], position[1], WIDTH, HEIGHT
-        @portrait_rect = Rectangle.new(@rect.left, @rect.top, 
-                                       VIKING_FACE_SIZE, VIKING_FACE_SIZE)
-        @inventory_rect = Rectangle.new(@rect.left+VIKING_FACE_SIZE, @rect.top,
-                                        INVENTORY_VIEW_SIZE,
-                                        INVENTORY_VIEW_SIZE)
+
+        # rects of portrait and inventory are relative to @rect =>
+        # they don't need to be updated when view is moved
+        portrait_abs = Rectangle.new(@rect.left, @rect.top, 
+                                     VIKING_FACE_SIZE, VIKING_FACE_SIZE)
+        @portrait_rect = RelativeRectangle.new2(@rect, portrait_abs)
+        inventory_abs = Rectangle.new(@rect.left+VIKING_FACE_SIZE, @rect.top,
+                                      INVENTORY_VIEW_SIZE,
+                                      INVENTORY_VIEW_SIZE)
+        @inventory_rect = RelativeRectangle.new2(@rect, inventory_abs)
 
         @active = false
         @mode = :normal

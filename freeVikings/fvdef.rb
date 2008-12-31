@@ -46,6 +46,9 @@ module FreeVikings
   OPTIONS['display_password'] = true
   # Show animated progressbar while loading?
   OPTIONS['progressbar_loading'] = true
+  # Where to place panel traditionally called "BottomPanel"?
+  # Possible values listed in RDoc of BottomPanel.new
+  OPTIONS['panel_placement'] = :bottom
   # Use sound?
   OPTIONS['sound'] = true
   # Is "developer's magic" enabled or disabled?

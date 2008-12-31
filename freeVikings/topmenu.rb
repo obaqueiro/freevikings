@@ -1,48 +1,40 @@
 # topmenu.rb
 # igneus 3.9.2005
 
-=begin
-= FreeVikings game menu
-Menu for the freeVikings game is built on the base of classes from
-(({GameUI::Menus})).
-=end
 
 module FreeVikings
 
-=begin
-== TopMenu
-A top-level (({Menu})) class.
-Actually it isn't really top-level, it builds an indirect parent (({Menu})),
-but this indirect parent is only used to ask the player if he really wants
-to quit the menu - and the game.
-
-How do I make the 'indirect parent'? Look at ((<MenuHidingButton>)).
-=end
+  # Menu for the freeVikings game is built on the base of classes from
+  # GameUI::Menus.
+  # A top-level Menu class.
+  # Actually it isn't really top-level, it builds an indirect parent Menu,
+  # but this indirect parent is only used to ask the player if he really wants
+  # to quit the menu - and the game.
+  #
+  # How do I make the 'indirect parent'? Look at MenuHidingButton.
 
   class TopMenu < GameUI::Menus::Menu
 
-    MENU_WIDTH = 300
+    MENU_WIDTH = 250
 
     include GameUI::Menus
 
-=begin
---- TopMenu.new(surface)
-See, you can't use ((<TopMenu>)) as any other (({Menu}))'s child.
-Or, it isn't so much simple.
-=end
+    # TopMenu.new doesn't accept the same arguments as Menu.new, because
+    # TopMenu has all the information needed and even creates it's own
+    # parent menu.
 
     def initialize(surface)
       text_renderer = FreeVikings::FONTS['default']
       @x = surface.w/2 - MENU_WIDTH/2
       @y = 110
-      @width = 200
+      @width = MENU_WIDTH
 
       # Dialog 'Exit game - yes/no?'. The indirect parent.
       exit_dialog = create_exit_dialog(surface, text_renderer)
       ActionButton.new(exit_dialog, "Yes", Proc.new {throw :game_exit})
       hider = MenuHidingButton.new(exit_dialog, "No")
 
-      super(hider, "Menu", nil, nil)
+      super(hider, "Menu", nil, nil, @x, @y, @width)
     end
 
     private
@@ -54,13 +46,10 @@ Or, it isn't so much simple.
 
   end # class TopMenu
 
-=begin
-== MenuHidingButton
-A ((<MenuHidingButton>)) looks like a normal (({MenuItem})), but hides
-a (({Menu})) or any other useful object in itself.
-It makes it possible to 'rename' (({Menu})) - I use it to 'rename'
-menu "Menu" to "No" in the "Exit game?" menu.
-=end
+  # A MenuHidingButton looks like a normal MenuItem, but hides
+  # a Menu or any other useful object in itself.
+  # It makes it possible to 'rename' Menu - I use it to 'rename'
+  # menu "Menu" to "No" in the "Exit game?" menu.
 
   class MenuHidingButton < GameUI::Menus::Menu
 
@@ -119,22 +108,15 @@ menu "Menu" to "No" in the "Exit game?" menu.
     end
   end
 
-=begin
-== FVConfiguratorButton
-A (({ChooseButton})) button which is synchronized with some option 
-in (({FreeVikings::OPTIONS})).
-=end
+  # A ChooseButton button which is synchronized with some option 
+  # in FreeVikings::OPTIONS.
 
   class FVConfiguratorButton < GameUI::Menus::ChooseButton
 
-=begin
---- FVConfiguratorButton.new(parent, text, option_name, choices_hash, change_proc=nil)
-Arguments:
-* ((|option_name|)) - a key into (({FreeVikings::OPTIONS})) - e.g. 
-  'display_fps'
-* ((|choices_hash|)) - keys are displayed (({String}))s, values are values
-  for (({FreeVikings::OPTIONS})) - e.g. (({ {'yes' => true, 'no' => false} }))
-=end
+    # Arguments:
+    # option_name:: a key into FreeVikings::OPTIONS - e.g. 'display_fps'
+    # choices_hash:: keys are displayed Strings, values are values
+    # for FreeVikings::OPTIONS - e.g. {'yes' => true, 'no' => false}
 
     def initialize(parent, text, option_name, choices_hash, change_proc=nil)
       super(parent, text, choices_hash.keys)
