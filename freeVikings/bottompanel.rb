@@ -248,7 +248,9 @@ module FreeVikings
 
     def drop_item(pos)
       if spot_inside_trash(pos)
+        @trash.inventory.put @dragged_item.item
         @dragged_item = nil
+        @trash.dump
         repaint_image
         return
       end
@@ -354,7 +356,8 @@ module FreeVikings
     def update
       if inventory_browsing? ||
           items_exchange? ||
-          @viking_views_array.find {|v| v.need_update? } then
+          @viking_views_array.find {|v| v.need_update? } ||
+          @trash.need_update? then
         repaint_image
         @viking_views_array.each {|v| v.updated }
       end

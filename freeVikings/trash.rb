@@ -11,21 +11,51 @@ module FreeVikings
 
     class Trash
 
+      WIDTH = HEIGHT = 30
+
+      DUMP_ANIMATION_TIME = 2 # in seconds
+
       def initialize(position)
-        @image = Image.load 'trash.png'
-        @rect = Rectangle.new position[0], position[1], @image.w, @image.h
+        sst = SpriteSheet.load2('trash.png', 30, 30, [1,2,3,4])
+        @static_image = sst[1]
+        @dump_animation = Animation.new(0.25, [sst[1], sst[2], sst[3], sst[4]])
+
+        @rect = Rectangle.new position[0], position[1], WIDTH, HEIGHT
         @inventory = TrashInventory.new
         @highlighted = false
+
+        # Says if some item has been dumped recently
+        @dump_anim_lock = TimeLock.new 0
+        # Says if last painted image was the 'normal' one
+        @last_painted_static = false
       end
 
-      attr_reader :image
       attr_reader :inventory
       attr_reader :rect
+
+      def image
+        if @dump_anim_lock.free? then
+          @last_painted_static = true
+          return @static_image.image
+        else
+          @last_painted_static = false
+          return @dump_animation.image
+        end
+      end
+
+      # BottomPanel uses this method to check if Trash needs to be repainted
+
+      def need_update?
+        (! @dump_anim_lock.free?) || (! @last_painted_static)
+      end
 
       # removes item from inventory
 
       def dump
-        @inventory.erase_active
+        if @inventory.content != nil then
+          @dump_anim_lock = TimeLock.new DUMP_ANIMATION_TIME
+          @inventory.erase_active
+        end
       end
 
       def alive?
@@ -36,7 +66,7 @@ module FreeVikings
         if @highlighted then
           surface.fill VikingView::HIGHLIGHT_COLOUR, @rect.to_a
         end
-        surface.blit @image.image, @rect.top_left
+        surface.blit image, @rect.top_left
         if @inventory.content then
           surface.blit @inventory.content.image, @rect.top_left
         end
