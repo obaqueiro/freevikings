@@ -62,5 +62,10 @@ module SchwerEngine
 
     # hide some inherited methods:
     private :[]=, :left=, :top=, :w=, :h=, :bottom=, :right=, :expand!, :move!
+
+    def point_inside?(po)
+      po[0] >= self.left && po[0] <= self.right &&
+        po[1] >= self.top && po[1] <= self.bottom
+    end
   end
 end
