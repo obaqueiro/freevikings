@@ -267,6 +267,7 @@ module FreeVikings
           begin
             @music = Music.new(FreeVikings::MUSIC_DIR+'/'+music_file)
             @music.play
+            @music.volume = FreeVikings::CONFIG['Audio']['music volume']
           rescue SDLError => e
             @log.error e.message
             @music = nil

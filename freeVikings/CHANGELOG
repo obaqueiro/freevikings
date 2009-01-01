@@ -3,6 +3,10 @@
 - alternatives.rb: removed (remaining corpse of the compiled extensions 
   will be removed soon)
 - all files which deal with configuration: configuration files fully enabled
+- configuration.rb: on errors name of configuration file is reported;
+  Proc with condition can be used in the structure-defining script;
+  script loading is SyntaxError-safe
+- game.rb: music volume configurability
 
 [31.December 2008]
 - fvdef.rb, initfv.rb: panel placement may be set in menu;

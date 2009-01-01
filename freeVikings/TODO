@@ -27,8 +27,14 @@
 (-) Delete compiled extensions
 
 (-) Config file
+    (-) option to load some file instead of user's configuration file
+        or to load just the defaults
+    (-) write about it into the user's manual
+    (-) Sample user's configuration file with rich comments
     (-) game configurability
         (-) configurable keys
+        (-) order of vikings
+        (-) warp/smooth switching
 
 (-) High scores:
     (-) how much time it took to make a level
