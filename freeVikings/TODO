@@ -2,8 +2,6 @@
            ========== FreeVikings TODO file ==========
            ===========================================
 
-======== RubyCampaign ==================================================
-
 ======== Graphics ======================================================
 
 (-) Full spritesheets for all three vikings according to the developers'
@@ -11,27 +9,31 @@
 
 (-) New graphic style of bottompanel (layout + images)
 
+======== Web ===========================================================
+
+(-) Add something motivating on the index page 
+    (short description of the project [it should be near to the heading -
+    for Google to find it] + feature highlights + small screenshot)
+
 ======== Code ==========================================================
+
+(-) How level directories will be found (and defined in the configs)?
+
+(-) Configuration should say loudly in which file is the reported error
+
+(-) Small levels (like RubyCampaign/Intro with panel on the side) paint well -
+    unused part of the screen might be e.g. black
+
+(-) Delete compiled extensions
+
+(-) Config file
+    (-) game configurability
+        (-) configurable keys
 
 (-) High scores:
     (-) how much time it took to make a level
     (-) optionally level times could be viewed after finishing a level
     (-) highscores on the website
-
-(-) Config file
-    (-) design:
-        (-) format: XML? YAML? Ruby script? INI-like? other?
-        (-) structure
-    (-) game configurability
-        (-) configurable keys
-        (-) bottompanel: divide events from actions:
-            events:
-              click, quick_click(second in double-click), release
-              (each can be left/right/middle(button);
-              on portrait, inventory, item, whole view)
-            actions:
-              select-viking, select-item, use-active-item, use-item, 
-              delete-item, drag-item, drop-item
 
 (-) [UI] Menu issues:
     (-) Menu scrolls if it is too long

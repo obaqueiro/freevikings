@@ -30,7 +30,7 @@ enough).
 
     def submit
       if @edit_place.value.size >= PASSWORD_LENGTH then
-        FreeVikings::OPTIONS['startpassword'] = String.new(@edit_place.value)
+        FreeVikings::CONFIG['Game']['start password'] = String.new(@edit_place.value)
         PASSWORD_LENGTH.times {@edit_place.backspace}
 
         begin
@@ -44,7 +44,7 @@ enough).
       super
 
       # pre-insert the last used password if any
-      if password = FreeVikings::OPTIONS['startpassword'] then
+      if password = FreeVikings::CONFIG['Game']['start password'] then
         @edit_place.value = password
       end
     end

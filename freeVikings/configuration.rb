@@ -10,7 +10,7 @@ module FreeVikings
     def initialize(structure_filename)
       @log = Log4r::Logger['init log']
 
-      @structure = load_structure(defaults_filename)
+      @structure = Configuration.load_structure(structure_filename)
 
       # this Hash contains entries in sub-Hashes of categories
       @categories = empty_structure()
@@ -18,13 +18,36 @@ module FreeVikings
       @values = {}
     end
 
+    # Loads structure from file and returns it.
+
+    def Configuration.load_structure(filename)
+      config_script = Configuration.script(filename)
+
+      return config_script::CONFIG
+    end
+
+    def Configuration.load_empty_structure(filename)
+      s = Configuration.load_structure filename
+
+      h = {}
+      s.keys.each {|cat|
+        h[cat] = {}
+      }
+      return h
+    end
+
     # Call this method as many times as you want. It loads values from a given
     # configuration file and rewrites those already set.
 
     def load(filename)
-      s = script(filename)
+      s = Configuration.script(filename)
       c = s::CONFIG
+      load_hash c
+    end
 
+    # Loads configuration from Hash
+
+    def load_hash(c)
       c.each_pair do |cat_name, cat_hash|
         next unless validate_category(cat_name)
 
@@ -53,7 +76,7 @@ module FreeVikings
 
     # Loads script and performs some basic checks
 
-    def script(filename)
+    def Configuration.script(filename)
       config_script = Script.new(filename)
       unless config_script.const_defined?(:CONFIG)
         raise ArgumentError, "Configuration script '#{filename}' doesn't define constant CONFIG."
@@ -82,7 +105,7 @@ module FreeVikings
       condition = @structure[category][entry]
       if condition.is_a? Class then
         unless value.is_a? condition
-          @log error "Wrong type '#{value.class}' for entry '#{entry}' in category '#{category}' (must be '#{condition}')"
+          @log.error "Wrong type '#{value.class}' for entry '#{entry}' in category '#{category}' (must be '#{condition}')"
           return false
         end
       elsif condition.is_a? Array then
@@ -97,12 +120,6 @@ module FreeVikings
       return true
     end
 
-    def load_structure(filename)
-      config_script = script(filename)
-
-      return config_script::CONFIG
-    end
-
     # Returns empty copy of configuration hash structure
 
     def empty_structure
@@ -113,4 +130,16 @@ module FreeVikings
       return h
     end
   end
+end
+
+if __FILE__ == $0 then
+  require 'mocklog4r'
+  require 'pp'
+
+  c = FreeVikings::Configuration.new './config/structure.conf'
+
+  c.load './config/defaults.conf'
+  c.load '/home/igneus/.freeVikings/config.rb'
+
+  pp c
 end

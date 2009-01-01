@@ -55,10 +55,10 @@ module FreeVikings
     def start_menu
       @log.info "Starting game menu."
 
-      if FreeVikings::OPTIONS['menu'] == false then
+      if FreeVikings::CONFIG['Video']['menu'] == false then
         @log.info "Skipping menu as requested; starting the game directly."
         catch :return_to_menu do
-          if password = FreeVikings::OPTIONS['startpassword'] then
+          if password = FreeVikings::CONFIG['Game']['start password'] then
             Game.new(@window, password).game_loop
           else
             Game.new(@window).game_loop
@@ -75,14 +75,18 @@ module FreeVikings
                                @log.info "Starting new game."
                                Game.new(@window).game_loop
                              })
-            PasswordEdit.new(start_menu, "Password", FreeVikings::OPTIONS['startpassword'], Proc.new {
-                               @log.info "Starting the game with password '#{FreeVikings::OPTIONS['startpassword']}'."
-                               Game.new(@window, FreeVikings::OPTIONS['startpassword']).game_loop
+            PasswordEdit.new(start_menu, 
+                             "Password", 
+                             FreeVikings::CONFIG['Game']['start password'], 
+                             Proc.new {
+                               @log.info "Starting the game with password "\
+                               "'#{FreeVikings::CONFIG['Game']['start password']}'."
+                               Game.new(@window, FreeVikings::CONFIG['Game']['start password']).game_loop
                              })
             # SubSubmenu: Select Level (nifty feature for developers)
             if FreeVikings::VERSION == 'DEV' && ARGV[0] == 'megahIte' then
               Menu.new(start_menu, "SELECT LEVEL", nil, nil) do |sellevel_menu|
-                StructuredWorld.new(FreeVikings::OPTIONS['levelsuite']).levels.each do |l|
+                StructuredWorld.new(FreeVikings::CONFIG['Files']['levels'][0]).levels.each do |l|
                   ActionButton.new(sellevel_menu, l.title, Proc.new {
                                      @log.info "Starting the game with password '#{l.password}'."
                                      Game.new(@window, l.password).game_loop
@@ -101,15 +105,15 @@ module FreeVikings
             DisplayModeChooseButton.new(graphics_menu, @window)
             FVConfiguratorButton.new(graphics_menu, 
                                      "Display fps", 
-                                     "display_fps", 
+                                     "Video/display FPS", 
                                      {"yes" => true, "no" => false})
             FVConfiguratorButton.new(graphics_menu, 
                                      "Progressbar", 
-                                     "progressbar_loading", 
+                                     "Video/loading progressbar", 
                                      {"on" => true, "off" => false})
             FVConfiguratorButton.new(graphics_menu,
                                      "Panel placement",
-                                     'panel_placement',
+                                     'Video/panel placement',
                                      {'bottom' => :bottom, 'top' => :top,
                                        'left' => :left, 'right' => :right})
             QuitButton.new(graphics_menu)
@@ -118,7 +122,7 @@ module FreeVikings
           # Submenu: Sound
           Menu.new(menu, "Sound") do |sound_menu|
 
-            FVConfiguratorButton.new(sound_menu, "Level music", 'sound', 
+            FVConfiguratorButton.new(sound_menu, "Level music", 'Audio/music enabled', 
                                      {'on' => true, 'off' => false})
             QuitButton.new(sound_menu)
           end
@@ -169,7 +173,7 @@ module FreeVikings
       @log.info "Initializing the game window."
       @window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
       @window.set_caption(FreeVikings::WIN_CAPTION)
-      @window.toggle_fullscreen if FreeVikings::OPTIONS['fullscreen']
+      @window.toggle_fullscreen if FreeVikings::CONFIG['Video']['fullscreen']
     end
 
     def display_logo

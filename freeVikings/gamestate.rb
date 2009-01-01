@@ -51,23 +51,23 @@ module FreeVikings
 	@context.give_up_game
       when K_F3
 	@context.app_window.toggle_fullscreen
-        FreeVikings::OPTIONS['fullscreen'] = @context.app_window.fullscreen?
+        FreeVikings::CONFIG['Video']['fullscreen'] = @context.app_window.fullscreen?
       when K_F4
-        FreeVikings::OPTIONS['display_fps'] = ! FreeVikings::OPTIONS['display_fps']
+        FreeVikings::CONFIG['Video']['display FPS'] = ! FreeVikings::CONFIG['Video']['display FPS']
       when K_F5
         @context.change_panel_placement
       when K_F9
-        if FreeVikings.develmagic?
+        if FreeVikings::CONFIG['Development']['magic for developers']
           @context.team.active.destroy
         end
       when K_F10, K_PRINT
         @context.take_screenshot
       when K_F11
-        if FreeVikings.develmagic?
+        if FreeVikings::CONFIG['Development']['magic for developers']
           @context.go_develmagic
         end
       when K_F12
-        if FreeVikings.develmagic?
+        if FreeVikings::CONFIG['Development']['magic for developers']
           # Starts irb in the console=>fV developer can play with the internals
           require 'irb'
           IRB.start(__FILE__)

@@ -42,12 +42,12 @@ module FreeVikings
 
       # x-axis velocity of the sprite.
       def velocity_horiz
-        @state.velocity_horiz * self.class::BASE_VELOCITY * FreeVikings::OPTIONS['velocity_unit']
+        @state.velocity_horiz * self.class::BASE_VELOCITY * FreeVikings::CONFIG['game speed']
       end
 
       # y-axis velocity of the sprite
       def velocity_vertic
-        @state.velocity_vertic * self.class::BASE_VELOCITY * FreeVikings::OPTIONS['velocity_unit']
+        @state.velocity_vertic * self.class::BASE_VELOCITY * FreeVikings::CONFIG['game speed']
       end
     end # module Basic
 

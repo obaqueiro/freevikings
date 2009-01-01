@@ -64,7 +64,7 @@ module FreeVikings
 
       @loading_message = FreeVikings::FONTS['default'].create_text_box(120, 'LOADING')
 
-      levelset = FreeVikings::OPTIONS['levelsuite']
+      levelset = FreeVikings::CONFIG['Files']['levels'][0]
 
       do_loading do
         @log.info "Initializing world."
@@ -254,13 +254,13 @@ module FreeVikings
       location = @world.location
 
       # Display (or not) password of the level
-      if FreeVikings::OPTIONS["display_password"] then
+      if FreeVikings::CONFIG['Game']["show level password"] then
         @state = LocationInfoGameState.new(self, level)
       else
         run_location
       end
       
-      if FreeVikings::OPTIONS['sound'] then
+      if FreeVikings::CONFIG['Audio']['music enabled'] then
         @music = nil
         music_file = level.music
         if music_file then
@@ -279,7 +279,7 @@ module FreeVikings
       end
 
       @bottompanel = BottomPanel.new(location.team, 
-                                     FreeVikings::OPTIONS['panel_placement'])
+                                     FreeVikings::CONFIG['Video']['panel placement'])
 
       # rectangle of map view inside game window
       bp = @bottompanel
@@ -294,7 +294,7 @@ module FreeVikings
       frames = 0 # auxiliary variable for fps computing
       @frame_rate = 0
 
-      if FreeVikings::OPTIONS['profile'] then
+      if FreeVikings::CONFIG['Development']['profile'] then
         Profiler__::start_profile
       end
 
@@ -315,7 +315,7 @@ module FreeVikings
       # do what needs to be done at the end of level.
       on_level_end
 
-      if FreeVikings::OPTIONS['profile'] then
+      if FreeVikings::CONFIG['Development']['profile'] then
         exit # the END block which prints out profiler output will be called
       end
 
@@ -359,7 +359,7 @@ module FreeVikings
         end
       end
 
-      if FreeVikings::OPTIONS['music'] then
+      if FreeVikings::CONFIG['Audio']['music enabled'] then
         if @music && (! @music.busy?) then
           @music.play
         end
@@ -398,13 +398,14 @@ module FreeVikings
 
       @bottompanel.paint(@app_window, @bottompanel.rect.to_a)
 
-      if FreeVikings.display_fps? then
+      if FreeVikings::CONFIG['Video']['display FPS'] then
         @app_window.fill([0,0,0], [8,8,60,12])
         @app_window.print([10,10], "fps: #{@frame_rate}", [255,255,255])
       end
 
-      if FreeVikings::OPTIONS['delay'] != 0 then
-        sleep(FreeVikings::OPTIONS['delay'])
+      frame_delay = FreeVikings::CONFIG['Game']['frame delay']
+      if frame_delay != 0 then
+        sleep(frame_delay)
       end
     end
 
@@ -415,7 +416,7 @@ module FreeVikings
     # shows loading screen with progressbar (uses Threads!) and runs given 
     # block
     def do_loading(&block)
-      if FreeVikings::OPTIONS['progressbar_loading'] then
+      if FreeVikings::CONFIG['Video']['loading progressbar'] then
         # Loading with threads and nice progressbar
         @loading_animation_counter = 0
 
@@ -508,7 +509,7 @@ module FreeVikings
     # Ends level music and destroys the RUDL::Music object
 
     def destroy_music
-      if FreeVikings::OPTIONS['sound'] then
+      if FreeVikings::CONFIG['Audio']['music enabled'] then
         if @music then
           if @music.busy? then
             @music.fade_out 2000
@@ -530,7 +531,7 @@ module FreeVikings
                             pos[1]-@bottompanel.rect.top]
         @bottompanel.mouseclick(pos_in_the_panel)
       else
-        if FreeVikings.develmagic? then
+        if FreeVikings::CONFIG['Development']['magic for developers'] then
           if (@develmagic_click_time != nil) && 
               (Time.now.to_f - @develmagic_click_time < 1) then
             # process double-click: get sprites rect
@@ -557,7 +558,8 @@ module FreeVikings
         @bottompanel.mouserelease(pos_in_the_panel)
       end
 
-      if FreeVikings.develmagic? && @develmagic_click != nil then
+      if FreeVikings::CONFIG['Development']['magic for developers'] && 
+          @develmagic_click != nil then
         develmagic_release = pos_in_location(pos)
         rect = Rectangle.new_from_points @develmagic_click, develmagic_release
         @develmagic_click = nil

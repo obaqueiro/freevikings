@@ -15,6 +15,7 @@ $: << './entities'
 require 'fvdef.rb' # the FreeVikings module definition. Must be included first!
 require 'getoptlong'
 require 'level.rb'
+require 'configuration.rb'
 
 include FreeVikings
 
@@ -120,9 +121,6 @@ OPTIONS_DEF = [
                ["--ruby-warnings", "-w", GetoptLong::NO_ARGUMENT,
                 "Show ruby warnings"],
                
-               ["--extensions", "-x", GetoptLong::NO_ARGUMENT,
-                "DEPRECATED! Uses compiled C++ extensions instead of some of the critical classes. You must have built these extensions before you use this option."],
-               
                ["--fps",     "-F", GetoptLong::NO_ARGUMENT,
                 "Prints frames per second on the game screen"],
                
@@ -166,6 +164,11 @@ OPTIONS_DEF = [
                "on|off"]
               ]
 
+### Process commandline options:
+
+# Hash where options are stored before being loaded into Configuration
+cmdline_config = Configuration.load_empty_structure 'config/structure.conf'
+
 # here is every argument-definition Array sliced to what GetoptLong wants;
 # everything is then given into GetoptLong
 options = GetoptLong.new(*(OPTIONS_DEF.collect {|o_array| o_array.slice(0,3)}))
@@ -174,49 +177,46 @@ begin
   options.each do |option, argument|
     case option
     when "--profile"
-      FreeVikings::OPTIONS['profile'] = true
+      cmdline_config['Development']['profile'] = true
     when "--ruby-warnings"
       $VERBOSE = true
-    when "--extensions"
-      FreeVikings::OPTIONS['extensions'] = true
-      Log4r::Logger['init log'].error "Compiled extensions are never more supported. The program may not work well and crash soon."
     when "--fps"
-      FreeVikings::OPTIONS['display_fps'] = true
+      cmdline_config['Video']['display FPS'] = true
     when "--fullscreen"
-      FreeVikings::OPTIONS['fullscreen'] = true
+      cmdline_config['Video']['fullscreen'] = true
     when "--help"
       print_help_and_exit
     when "--levelsuite"
-      FreeVikings::OPTIONS['levelsuite'] = argument
+      cmdline_config['Files']['levels'] = [argument]
     when "--v-unit"
       if argument.to_i > 0 then
-        FreeVikings::OPTIONS['velocity_unit'] = argument.to_i
+        cmdline_config['Game']['game speed'] = argument.to_i
       else
         raise ArgumentError, "Argument of option '--v-unit' (-u) must be a real number higher than zero (given '#{argument}')"
       end
     when "--delay"
-      FreeVikings::OPTIONS['delay'] = argument.to_f / 1000
+      cmdline_config['Game']['frame delay'] = argument.to_f / 1000
     when "--startpassword"
       unless Level.valid_level_password?(argument)
         raise "'#{argument}' is not a valid level password."
       end
       
-      FreeVikings::OPTIONS["startpassword"] = argument.upcase
+      cmdline_config['Game']["start password"] = argument.upcase
     when "--skip-menu"
-      FreeVikings::OPTIONS["menu"] = false
+      cmdline_config['Video']["menu"] = false
     when "--skip-password"
-      FreeVikings::OPTIONS["display_password"] = false
+      cmdline_config['Game']["show level password"] = false
     when "--sound"
-      FreeVikings::OPTIONS['sound'] = on_off_option(argument)
+      cmdline_config['Audio']['music enabled'] = on_off_option(argument)
     when "--develmagic"
       if FreeVikings::VERSION == 'DEV' then
-        FreeVikings::OPTIONS['develmagic'] = true
+        cmdline_config['Development']['magic for developers'] = true
       end
     when "--progressbar"
       if argument == "" then
         argument = 'off'
       end
-      FreeVikings::OPTIONS['progressbar_loading'] = on_off_option(argument)
+      cmdline_config['Video']['loading progressbar'] = on_off_option(argument)
     end
   end # options.each block
 rescue GetoptLong::InvalidOption => ioex
@@ -229,17 +229,7 @@ rescue GetoptLong::InvalidOption => ioex
   exit
 end
 
-# This must be out of the block scope in which all the other
-# options are processed.
-# Ruby stdlib's 'profile' does terrible things when loaded in the block's
-# scope (try yourself!).
-if OPTIONS['profile'] then
-  require 'profiler'
-
-  END {
-    Profiler__::print_profile(STDERR)
-  }
-end
+### safely require Log4r
 
 # All the huge requirements are done here, after options are processed,
 # because it was terrible to type 'freevikings -h' (I can't remember that 
@@ -254,6 +244,35 @@ rescue LoadError
   require 'mocklog4r.rb'
 end
 
+### Load configuration files:
+
+# default:
+FreeVikings::CONFIG = Configuration.new('config/structure.conf')
+FreeVikings::CONFIG.load 'config/defaults.conf'
+# user's:
+ucfg = ENV['HOME']+'/.freeVikings/'+FreeVikings::USERS_CONFIGURATION_FILE_NAME
+if File.exist?(ucfg) then
+  FreeVikings::CONFIG.load ucfg
+end
+# add commandline options:
+FreeVikings::CONFIG.load_hash cmdline_config
+
+### Start profiling?
+
+# This must be out of the block scope in which all the other
+# options are processed.
+# Ruby stdlib's 'profile' does terrible things when loaded in the block's
+# scope (try yourself!).
+if FreeVikings::CONFIG['Development']['profile'] then
+  require 'profiler'
+
+  END {
+    Profiler__::print_profile(STDERR)
+  }
+end
+
+### safely require RUDL
+
 if defined?(Gem) then
   # RubyGems + RUDL = crash; let's bypass gems
   puts "RubyGems found; loading RUDL with 'gem_original_require', not 'require'"
@@ -262,14 +281,16 @@ else
   require 'RUDL'
 end
 
+### require SchwerEngine
+
 require 'schwerengine/schwerengine.rb'
 SchwerEngine.init(SchwerEngine::DISABLE_LOG4R_SETUP)
 include SchwerEngine
 SchwerEngine.config = FreeVikings
 
-require 'initfv.rb' # Init class (just btw.: in Hebrew - which doesn't use syllables in the written text - 'Init' would probably be written the same as 'Anat', which is a goddess known from the Kenaan mythology)
+### start Init (opens menu etc.)
 
-require "alternatives.rb"
+require 'initfv.rb' # Init class (just btw.: in Hebrew - which doesn't use syllables in the written text - 'Init' would probably be written the same as 'Anat', which is a goddess known from the Kenaan mythology)
 
 # check versions of most important libraries:
 FreeVikings.lib_versions_check

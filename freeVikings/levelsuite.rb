@@ -254,7 +254,7 @@ module FreeVikings
         return (@member_of ? @member_of.gfx_theme : NullGfxTheme.instance)     
       end
 
-      theme_def_file = FreeVikings.theme_dir+'/'+@theme_name+'/'+THEME_FILE
+      theme_def_file = FreeVikings::DEFAULT_THEME_DIR+'/'+@theme_name+'/'+THEME_FILE
       if File.exist? theme_def_file
         theme =  GfxTheme.new(theme_def_file, @member_of ? @member_of.gfx_theme : nil)
         @log.info "#{object_id}: Loaded theme '#{theme.name}' (file: #{theme_def_file}; ancestors: #{theme.ancestors.join(',')})."

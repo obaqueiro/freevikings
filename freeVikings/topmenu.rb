@@ -109,18 +109,18 @@ module FreeVikings
   end
 
   # A ChooseButton button which is synchronized with some option 
-  # in FreeVikings::OPTIONS.
+  # in FreeVikings::CONFIG.
 
   class FVConfiguratorButton < GameUI::Menus::ChooseButton
 
     # Arguments:
-    # option_name:: a key into FreeVikings::OPTIONS - e.g. 'display_fps'
+    # option_name:: name of configuration entry, e.g. 'Video/fullscreen'
     # choices_hash:: keys are displayed Strings, values are values
-    # for FreeVikings::OPTIONS - e.g. {'yes' => true, 'no' => false}
+    # for the configuration entry - e.g. {'yes' => true, 'no' => false}
 
     def initialize(parent, text, option_name, choices_hash, change_proc=nil)
       super(parent, text, choices_hash.keys)
-      @option_name = option_name
+      @category_name, @option_name = option_name.split('/')
       @choices_hash = choices_hash
     end
 
@@ -131,7 +131,7 @@ module FreeVikings
     private
 
     def changed(old_choice, new_choice)
-      FreeVikings::OPTIONS[@option_name] = @choices_hash[self.value]
+      FreeVikings::CONFIG[@category_name][@option_name] = @choices_hash[self.value]
     end
 
     # Tries to find and set the choice which has been already 
@@ -140,9 +140,14 @@ module FreeVikings
     def find_choice
       @choices.each_index do |i|
         key = @choices[i]
-        if @choices_hash[key] == FreeVikings::OPTIONS[@option_name] then
-          @choice = i
-          return
+        begin
+          if @choices_hash[key] == FreeVikings::CONFIG[@category_name][@option_name] then
+            @choice = i
+            return
+          end
+        rescue NoMethodError => e
+          Log4r::Logger['init log'].error("FVConfiguratorButton: category '#{@category_name}', entry '#{@option_name}': "+e.message)
+          raise
         end
       end
     end
@@ -151,7 +156,7 @@ module FreeVikings
   class DisplayModeChooseButton < FVConfiguratorButton
 
     def initialize(parent, window)
-      super(parent, "Mode", "fullscreen",
+      super(parent, "Mode", "Video/fullscreen",
             {"fullscreen" => true, "window" => false})
       @window = window
     end

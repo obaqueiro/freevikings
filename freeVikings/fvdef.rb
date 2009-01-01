@@ -12,14 +12,15 @@
 module FreeVikings
   GFX_DIR = 'gfx' # directory with graphics
   MUSIC_DIR = 'music'
-  OPTIONS = {} # hash with long options as keys
 
   # sizes of the game window
   WIN_WIDTH = 640
   WIN_HEIGHT = 480
 
   DEFAULT_LEVELSUITE_DIR = 'locs/DefaultCampaign'
-  DEFAULT_THEME_DIR = 'gfx/themes'
+  DEFAULT_THEME_DIR = GFX_DIR+'themes'
+
+  USERS_CONFIGURATION_FILE_NAME = 'config.rb'
 
   TESTED_LIB_VERSIONS = {
     'RUDL' => '0.7.0.0',
@@ -29,30 +30,8 @@ module FreeVikings
   # (most objects ignore it)
   GRAVITY = 30
 
-  # Options defaults:
-
-  # Base directory searched for data directories
-  OPTIONS['freevikings_home'] = '.'
-  # Directory with data of the LevelSuite to be played
-  OPTIONS['levelsuite'] = DEFAULT_LEVELSUITE_DIR
-  # Directory with subdirectories of themes
-  OPTIONS['theme_dir'] = DEFAULT_THEME_DIR
-  OPTIONS['velocity_unit'] = 1
-  # Delay (in milliseconds) in every iteration of the game loop
-  OPTIONS['delay'] = 0
-  # Show menu? (false = skip menu)
-  OPTIONS['menu'] = true
-  # Show password at the beginning of every level?
-  OPTIONS['display_password'] = true
-  # Show animated progressbar while loading?
-  OPTIONS['progressbar_loading'] = true
-  # Where to place panel traditionally called "BottomPanel"?
-  # Possible values listed in RDoc of BottomPanel.new
-  OPTIONS['panel_placement'] = :bottom
-  # Use sound?
-  OPTIONS['sound'] = true
-  # Is "developer's magic" enabled or disabled?
-  OPTIONS['develmagic'] = false
+  # Object which contains configuration
+  # CONFIG = Configuration.new('config/structure.conf')
 
   # get the version number
   if File.exist?('RELEASE')
@@ -67,23 +46,6 @@ module FreeVikings
   WIN_CAPTION = 'freeVikings ' + FreeVikings::VERSION
 
   FONTS = {} # a hash of fonts
-
-  # Module FreeVikings has a special querying feature.
-  # You can get any value from the hash OPTIONS (which is used
-  # to store configuration during the runtime) by calling
-  # FreeVikings#key or FreeVikings#key? where key is a key
-  # into the hash.
-  # NoMethodError can occur unless the key is defined.
-  def FreeVikings.method_missing(name, *args)
-    key = (name.to_s =~ /.*\?/ ? 
-           name.to_s.chop : name.to_s)
-
-    unless defined?(FreeVikings::OPTIONS[key])
-      raise NoMethodError, "Key #{key} undefined in FreeVikings::OPTIONS."
-    end
-
-    return FreeVikings::OPTIONS[key]
-  end # FreeVikings.method_missing
 
   # checks if all main libs have tested version.
   # Makes use of Ruby's relativelly intelligent string-comparations
