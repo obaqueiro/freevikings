@@ -9,12 +9,6 @@
 
 (-) New graphic style of bottompanel (layout + images)
 
-======== Web ===========================================================
-
-(-) Add something motivating on the index page 
-    (short description of the project [it should be near to the heading -
-    for Google to find it] + feature highlights + small screenshot)
-
 ======== Code ==========================================================
 
 (-) How level directories will be found (and defined in the configs)?

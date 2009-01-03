@@ -1,3 +1,6 @@
+[2.January 2009]
+- freevikings.rb: doesn't load personal config if HOME env. variable isn't defined
+
 [1.January 2009]
 - collisiontest.rb: RD->RDoc (why don't I move this to SchwerEngine?)
 - alternatives.rb: removed (remaining corpse of the compiled extensions 

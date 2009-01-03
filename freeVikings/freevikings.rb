@@ -250,9 +250,11 @@ end
 FreeVikings::CONFIG = Configuration.new('config/structure.conf')
 FreeVikings::CONFIG.load 'config/defaults.conf'
 # user's:
-ucfg = ENV['HOME']+'/.freeVikings/'+FreeVikings::USERS_CONFIGURATION_FILE_NAME
-if File.exist?(ucfg) then
-  FreeVikings::CONFIG.load ucfg
+if ENV['HOME'] then
+  ucfg = ENV['HOME']+'/.freeVikings/'+FreeVikings::USERS_CONFIGURATION_FILE_NAME
+  if File.exist?(ucfg) then
+    FreeVikings::CONFIG.load ucfg
+  end
 end
 # add commandline options:
 FreeVikings::CONFIG.load_hash cmdline_config
