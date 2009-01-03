@@ -23,6 +23,8 @@
 (-) Config file
     (-) option to load some file instead of user's configuration file
         or to load just the defaults
+    (-) check ENV['FREEVIKINGS_HOME'] before ENV['HOME'] (someone may have
+        a reason to place his config somewhere lese then in HOME/.freeVikings)
     (-) write about it into the user's manual
     (-) Sample user's configuration file with rich comments
     (-) game configurability
@@ -108,6 +110,8 @@
 (-) [GO] Olaf's van: all vikings can be inside but just Olaf can drive it;
     it only moves when it has enough fuel; it has attributes similar to Olaf
     (vikings can stay on it's deck; monsters can't pass through it)
+
+(-) [DOC] Create manpage of freeVikings
 
 (-) [UI] error in script is shown in kind of dialog window
 
