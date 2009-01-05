@@ -21,7 +21,8 @@ module FreeVikings
     # a starting location.
 
     def initialize(campaign_dir)
-      # @levelsuite = LevelSuite.new(campaign_dir)
+      @log = Log4r::Logger['world log']
+
       @levelsuite = LevelSuite.factory campaign_dir
     end
 
@@ -73,7 +74,10 @@ module FreeVikings
         raise NoMoreLevelException, "No more level found. Currently loaded LevelSuite from directory '#{@levelsuite.dirname}'."
       end
 
+      @log.debug "Creating Location for level '#{@level.title}' with theme '#{@level.gfx_theme.name}'"
       @location = Location.new(@level.loader, @level.gfx_theme)
+
+      return @location
     end
 
     public

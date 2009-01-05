@@ -8,7 +8,7 @@ module FreeVikings
   class Configuration
 
     def initialize(structure_filename)
-      @log = Log4r::Logger['init log']
+      @log = Log4r::Logger['config log']
 
       @structure_filename = structure_filename
 

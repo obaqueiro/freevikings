@@ -1,3 +1,14 @@
+[5.January 2009]
+- removed content of directory ext/ (old compiled replacement for critical 
+  classes)
+- config/log4rconfig.rb: created special log for loading of configuration
+  and one common log for all cases where I'm too lazy to create new one.
+- freevikings.rb: configuration file is first searched in
+  $FREEVIKINGS_HOME, than in $HOME/.freeVikings
+- location.rb: configurable order of vikings
+- fvdef.rb: added missing slash which caused error in all levels with objects
+  using GfxTheme.
+
 [2.January 2009]
 - freevikings.rb: doesn't load personal config if HOME env. variable isn't defined
 

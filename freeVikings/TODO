@@ -12,24 +12,22 @@
 ======== Code ==========================================================
 
 (-) How level directories will be found (and defined in the configs)?
-
-(-) Configuration should say loudly in which file is the reported error
+    - array 'dirs with campaigns' - every entry will be assumed to be 
+      a directory containing levelsuite directories
+      (you will be able to choose one in a menu)
+    - 'default campaign' - address of a campaign directory or index
+      into Array of campaigns
 
 (-) Small levels (like RubyCampaign/Intro with panel on the side) paint well -
     unused part of the screen might be e.g. black
 
-(-) Delete compiled extensions
-
 (-) Config file
     (-) option to load some file instead of user's configuration file
         or to load just the defaults
-    (-) check ENV['FREEVIKINGS_HOME'] before ENV['HOME'] (someone may have
-        a reason to place his config somewhere lese then in HOME/.freeVikings)
     (-) write about it into the user's manual
     (-) Sample user's configuration file with rich comments
     (-) game configurability
         (-) configurable keys
-        (-) order of vikings
         (-) warp/smooth switching
 
 (-) High scores:

@@ -17,7 +17,7 @@
        All the messages are logged into this one file. It's like a closet -
        you flush nearly anything in ... -->
   <outputter name="loo">
-    <level>INFO</level>
+    <level>DEBUG</level>
     <type>FileOutputter</type>
     <filename>log/all.log</filename>
     <trunc>true</trunc>
@@ -40,16 +40,30 @@
     <outputter>loo</outputter>
   </logger>
 
+  <!-- Log for every class which doesn't need it's own (mainly for small
+       classes not widely used in the game engine) -->
+  <logger name="freeVikings log" level="WARN">
+    <outputter>stderr</outputter>
+    <outputter>loo</outputter>
+  </logger>
+
+  <!-- Log for loading of configuration - important e.g. for solving problems 
+       with user's custom configuration file etc. -->
+  <logger name="config log" level="WARN">
+    <outputter>stderr</outputter>
+    <outputter>loo</outputter>
+  </logger>
+
   <!-- Log for World mechanism (World and it's subclasses, LevelSuite, 
        Level) -->
-  <logger name="world log" level="ERROR">
+  <logger name="world log" level="WARN">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
     <trace>false</trace>
   </logger>
 
   <!-- Log for Location Loading Strategies output -->
-  <logger name="location loading log" level="WARN">
+  <logger name="location loading log" level="DEBUG">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
     <trace>false</trace>
@@ -70,13 +84,6 @@
   <!-- Log for images & themes related classes (from images.rb, 
        gfxtheme.rb) -->
   <logger name="images log" level="WARN">
-    <outputter>stderr</outputter>
-    <outputter>loo</outputter>
-  </logger>
-
-  <!-- Log for every class which doesn't need it's own (mainly for small
-       classes not widely used in the game engine) -->
-  <logger name="freeVikings log" level="WARN">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
   </logger>

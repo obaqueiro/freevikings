@@ -18,7 +18,7 @@ module FreeVikings
   WIN_HEIGHT = 480
 
   DEFAULT_LEVELSUITE_DIR = 'locs/DefaultCampaign'
-  DEFAULT_THEME_DIR = GFX_DIR+'themes'
+  DEFAULT_THEME_DIR = GFX_DIR+'/themes'
 
   USERS_CONFIGURATION_FILE_NAME = 'config.rb'
 

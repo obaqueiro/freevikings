@@ -21,13 +21,19 @@ module FreeVikings
     # a LocationLoadStrategy instance or to provide the same public interface.
     # Argument theme is a GfxTheme instance.
 
-    def initialize(loader, theme=NullGfxTheme.instance)
+    def initialize(loader, theme)
+      @log = Log4r::Logger['freeVikings log']
+
       @exitter = nil # objekt Exit - cesta do dalsi lokace
       @start = [0,0] # misto, kde zacinaji vikingove svou misi
 
       @ticker = Ticker.new
 
       @theme = theme
+      if @theme.is_a? NullGfxTheme then
+        @log.fatal "Location got NullGfxTheme instead of GfxTheme."
+        raise ArgumentError, "Location can't be initialized with a null theme."
+      end
 
       @map = Map.new(loader.map_loader)
       @spritemanager = SpriteManager.new
@@ -464,7 +470,19 @@ module FreeVikings
       baleog = Viking.createWarior("Baleog", self.start)
       erik = Viking.createSprinter("Erik", self.start)
       olaf = Viking.createShielder("Olaf", self.start)
-      @team = Team.new(erik, baleog, olaf)
+
+      # sort vikings according to the configuration
+      names = {
+        'baleog' => baleog, 
+        'erik' => erik, 'eric' => erik,
+        'olaf' => olaf
+      }
+      vikings = []
+      FreeVikings::CONFIG['Game']['order of vikings'].each {|name|
+        vikings.push(names[name.downcase])
+      }
+
+      @team = Team.new(*vikings)
       
       team.each { |v|
         v.extend Hero # label all vikings as heroes
