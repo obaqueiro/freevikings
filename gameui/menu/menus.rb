@@ -22,6 +22,7 @@ require 'items/choosebutton.rb'
 require 'items/actionbutton.rb'
 require 'items/textedit.rb'
 require 'items/credits.rb'
+require 'items/select.rb'
 
 
 ###   Self-test:   ###
@@ -46,6 +47,7 @@ if __FILE__ == $0 then
   # Submenu with sizes different from parent menu
   bigmenu = Menu.new(menu, "Big menu", nil, nil, nil, 300, 400)
   SelectableLabel.new(bigmenu, "Blaffff............")
+  SelectableLabel.new(bigmenu, "This is such a very high item, that it splits into more lines even in such a huge menu!!!!!!!!!!!!")
   QuitButton.new(bigmenu)
 
   subsubmenu = Menu.new(submenu, "Subsubmenu", nil, submenu.text_renderer)
@@ -54,7 +56,11 @@ if __FILE__ == $0 then
 
   QuitButton.new(submenu)
 
-  TextEdit.new(menu, "Name", '', 12)
+  Select.new(menu, "Select", [['ahoj', :ahoj], 
+                              ['tschiao', 12], 
+                              ['hello', 'value']])
+
+  TextEdit.new(menu, "edit text", '', 12)
   ChooseButton.new(menu, "Sex", ['male', 'female', 'unknown'])
   Credits.new(menu, [['Alex A.', 'programming'], 
                      #['Carl C.', 'coffee support'],

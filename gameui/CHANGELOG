@@ -1,3 +1,9 @@
+[8.January 2009]
+- menu/menu.rb: selector can be more than one line high if needed (accommodates
+  to menu items)
+- menu/items/select.rb: another way to choose from a set of items
+- menu/menus.rb: testing part updated
+
 [31.December 2008]
 - menu/menu.rb, menu/menus.rb: changed system of attribute inheritance
   to a more useful and logical one

@@ -257,8 +257,20 @@ module GameUI
           item = @menu_items[i]
           item.paint(@surface, [@x, y])
 
+          # paint selector if this item is the selected one
           if i == @selected then
-            @surface.blit(@selector, [@x, y])
+            sy = y
+            loop do
+              @surface.blit(@selector, [@x, sy])
+              if sy < (y + item.height - @selector.h) then
+                sy += @selector.h
+                if sy > (y + item.height - @selector.h) then
+                  sy = (y + item.height - @selector.h)
+                end
+              else
+                break
+              end
+            end
           end
 
           y = y + item.height
