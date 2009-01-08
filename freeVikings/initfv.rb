@@ -102,7 +102,15 @@ module FreeVikings
           # Submenu: Graphics
           Menu.new(menu, "Graphics", nil,nil,nil,nil, 300) do |graphics_menu|
           
-            DisplayModeChooseButton.new(graphics_menu, @window)
+            FVConfiguratorButton.new(graphics_menu,
+                                     "Mode", 
+                                     "Video/fullscreen",
+                                     {"fullscreen" => true, 
+                                       "window" => false},
+                                     Proc.new {|old,new|
+                                       @window.toggle_fullscreen
+                                     })
+            # DisplayModeChooseButton.new(graphics_menu, @window)
             FVConfiguratorButton.new(graphics_menu, 
                                      "Display fps", 
                                      "Video/display FPS", 

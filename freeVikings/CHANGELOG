@@ -1,3 +1,10 @@
+[8.January 2009]
+- passwordedit.rb: RD->RDoc
+- topmenu.rb: added change_proc feature (argument of FVC...new has always
+  been there, but didn't do anything), removed class DisplayModeChooseButton
+  (not needed - FVConfiguratorButton with right Proc can do the same work)
+- initfv.rb: DisplayModeChooseButton replaced with FVConfiguratorButton
+
 [5.January 2009]
 - removed content of directory ext/ (old compiled replacement for critical 
   classes)

@@ -119,7 +119,7 @@ module FreeVikings
     # for the configuration entry - e.g. {'yes' => true, 'no' => false}
 
     def initialize(parent, text, option_name, choices_hash, change_proc=nil)
-      super(parent, text, choices_hash.keys)
+      super(parent, text, choices_hash.keys, change_proc)
       @category_name, @option_name = option_name.split('/')
       @choices_hash = choices_hash
     end
@@ -150,20 +150,6 @@ module FreeVikings
           raise
         end
       end
-    end
-  end
-
-  class DisplayModeChooseButton < FVConfiguratorButton
-
-    def initialize(parent, window)
-      super(parent, "Mode", "Video/fullscreen",
-            {"fullscreen" => true, "window" => false})
-      @window = window
-    end
-
-    def changed(old_choice, new_choice)
-      super(old_choice, new_choice)
-      @window.toggle_fullscreen
     end
   end
 end # module FreeVikings

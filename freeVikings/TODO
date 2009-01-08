@@ -37,7 +37,6 @@
 
 (-) [UI] Menu issues:
     (-) Menu scrolls if it is too long
-    (-) Width of menu can be changed
     (-) Widget for selecting a file or folder
     (-) Menu: add a message if a bad password is given (also to the GUI,
         not only to a console)

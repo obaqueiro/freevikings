@@ -1,14 +1,11 @@
 # passwordedit.rb
 # igneus 10.9.2005
 
-=begin
-= PasswordEdit
-A modified text-editing widget for freeVikings menu.
-If a good password is inserted, location with that password is started.
-Otherwise parent menu is entered.
-=end
-
 module FreeVikings
+
+  # A modified text-editing widget for freeVikings menu.
+  # If a good password is inserted, location with that password is started.
+  # Otherwise parent menu is entered.
 
   class PasswordEdit < GameUI::Menus::TextEdit
 
@@ -16,11 +13,8 @@ module FreeVikings
 
     PASSWORD_LENGTH = 4
 
-=begin
---- PasswordEdit.new(parent, label, ready_proc)
-(({Proc})) ((|ready_proc|)) is called when the password is complete (is long
-enough).
-=end
+    # Proc ready_proc is called when the password is complete (is long
+    # enough).
 
     def initialize(parent, label, value, ready_proc)
       super(parent, label, value, PASSWORD_LENGTH, 
