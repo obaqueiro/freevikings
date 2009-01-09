@@ -259,7 +259,10 @@ if ENV['FREEVIKINGS_HOME'] then
     log.info "Loading user's configuration file '#{ucfg}'"
     FreeVikings::CONFIG.load ucfg
   else
-    log.error "Found environment variable FREEVIKINGS_HOME with value '#{ENV['FREEVIKINGS_HOME']}', but file '#{FreeVikings::USERS_CONFIGURATION_FILE_NAME}' not found in that directory. User's configuration couldn't be loaded."
+    log.error "Found environment variable FREEVIKINGS_HOME with value "\
+    "'#{ENV['FREEVIKINGS_HOME']}', but file "\
+    "'#{FreeVikings::USERS_CONFIGURATION_FILE_NAME}' not found in that "\
+    "directory. User's configuration couldn't be loaded."
   end
 elsif ENV['HOME'] then
   ucfg = ENV['HOME']+'/.freeVikings/'+FreeVikings::USERS_CONFIGURATION_FILE_NAME
@@ -267,7 +270,9 @@ elsif ENV['HOME'] then
     log.info "Loading user's configuration file '#{ucfg}'"
     FreeVikings::CONFIG.load ucfg
   else
-    log.error "Found environment variable HOME with value '#{ENV['HOME']}', but file '#{FreeVikings::USERS_CONFIGURATION_FILE_NAME}' not found in that directory. User's configuration couldn't be loaded."
+    log.error "Found environment variable HOME with value '#{ENV['HOME']}', "\
+    "but file '#{FreeVikings::USERS_CONFIGURATION_FILE_NAME}' not found in "\
+    "that directory. User's configuration couldn't be loaded."
   end
 end
 # add commandline options:

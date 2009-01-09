@@ -1,3 +1,8 @@
+[9.January 2009] FREEVIKINGS BROKEN UP! CHECK OUT OLDER VERSION TO PLAY!
+- initfv.rb: Select to choose campaign
+- structuredworld.rb, levelsuite.rb: requirement stuff cleared a bit
+- config/... : added new config entry (dirs with campaigns)
+
 [8.January 2009]
 - passwordedit.rb: RD->RDoc
 - topmenu.rb: added change_proc feature (argument of FVC...new has always

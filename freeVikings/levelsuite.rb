@@ -291,14 +291,11 @@ module FreeVikings
   end # class LevelSuite
 end # module FreeVikings
 
-
-
-require 'level.rb'
-
-
 # If this file is executed as a standalone script, loaded values are printed
 # out (this was used for testing of LevelSuite class instead of unit tests)
 if __FILE__ == $0 then
+  require 'level.rb'
+
   c = FreeVikings::LevelSuite.new('locs/DefaultCampaign')
 
   puts "\n----- LevelSuite test output:"

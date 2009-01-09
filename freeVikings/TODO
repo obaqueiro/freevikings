@@ -11,6 +11,9 @@
 
 ======== Code ==========================================================
 
+(-) [UI] Select shows the item currently selected with some sign next to it
+         and offers button 'Back'
+
 (-) How level directories will be found (and defined in the configs)?
     - array 'dirs with campaigns' - every entry will be assumed to be 
       a directory containing levelsuite directories

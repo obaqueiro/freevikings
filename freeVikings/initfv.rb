@@ -30,6 +30,7 @@ module FreeVikings
       load_font
       open_window
       display_logo
+      find_campaigns
 
       begin
         catch(:game_exit) do
@@ -98,6 +99,14 @@ module FreeVikings
 
             QuitButton.new(start_menu)
           end
+
+          # Select campaign
+          cs = @campaigns.keys.collect {|k| [k, @campaigns[k]]}
+          @play_campaign = cs[0][1]
+          Select.new(menu, "Campaign", cs,
+                     Proc.new {|old,new|
+                       @play_campaign = new
+                     })
           
           # Submenu: Graphics
           Menu.new(menu, "Graphics", nil,nil,nil,nil, 300) do |graphics_menu|
@@ -204,5 +213,45 @@ module FreeVikings
     def clear_screen
       @window.fill [0,0,0]
     end
+
+    # finds campaign directories
+
+    def find_campaigns
+      @campaigns = {} # 'name' => 'directory'
+
+      FreeVikings::CONFIG['Files']['dirs with campaigns'].each do |d|
+        Dir.foreach(d) do |file|
+          next unless File.directory?(file)
+
+          cadir = d+'/'+file
+          ca_title = nil
+
+          deffile = Dir.new(cadir).find {|f|
+            f == Level::DEFINITION_FILE_NAME || 
+            f == LevelSuite::DEFINITION_FILE_NAME
+          }
+
+          unless deffile
+            @log.warn "Campaign not found in directory '#{cadir}'"
+            next
+          end
+
+          File.open(cadir+'/'+deffile).each_line do |l|
+            if l =~ /<title>(.+)<\/title>/ then
+              ca_title = $1
+              @campaigns[ca_title] == cadir
+              @log.info "Campaign '#{ca_title}' found in directory '#{cadir}'"
+              break
+            end
+          end
+
+          unless ca_title
+            @log.error "Campaign definition file in directory '#{cadir}' does"\
+            " not contain element 'title' => campaign OMITTED!"
+          end
+        end
+      end
+    end
+
   end # class Init
 end # module FreeVikings

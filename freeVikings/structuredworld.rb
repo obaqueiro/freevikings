@@ -2,6 +2,7 @@
 # igneus 1.8.2005
 
 require 'levelsuite.rb'
+require 'level.rb'
 
 module FreeVikings
 

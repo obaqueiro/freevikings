@@ -33,7 +33,7 @@ module FreeVikings
   # Object which contains configuration
   # CONFIG = Configuration.new('config/structure.conf')
 
-  # get the version number
+  # get the version number (as String)
   if File.exist?('RELEASE')
     File.open('RELEASE') do |fr|
       FreeVikings::VERSION = fr.gets.chomp
