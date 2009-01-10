@@ -26,6 +26,9 @@ module FreeVikings
     def initialize
       @log = Log4r::Logger['init log']
 
+      @campaigns = {} # pairs 'name' => 'path'
+      @play_campaign = '' # directory with campaign to be played
+
       load_logo
       load_font
       open_window
@@ -60,9 +63,9 @@ module FreeVikings
         @log.info "Skipping menu as requested; starting the game directly."
         catch :return_to_menu do
           if password = FreeVikings::CONFIG['Game']['start password'] then
-            Game.new(@window, password).game_loop
+            Game.new(@window, @play_campaign, password).game_loop
           else
-            Game.new(@window).game_loop
+            Game.new(@window, @play_campaign).game_loop
           end
         end
         @log.info "Game ended; skipping menu -> exiting."
@@ -74,7 +77,7 @@ module FreeVikings
           Menu.new(menu, "Start Game") do |start_menu|
             ActionButton.new(start_menu, "New Game", Proc.new {
                                @log.info "Starting new game."
-                               Game.new(@window).game_loop
+                               Game.new(@window, @play_campaign).game_loop
                              })
             PasswordEdit.new(start_menu, 
                              "Password", 
@@ -82,7 +85,8 @@ module FreeVikings
                              Proc.new {
                                @log.info "Starting the game with password "\
                                "'#{FreeVikings::CONFIG['Game']['start password']}'."
-                               Game.new(@window, FreeVikings::CONFIG['Game']['start password']).game_loop
+                               Game.new(@window, @play_campaign,
+                                        FreeVikings::CONFIG['Game']['start password']).game_loop
                              })
             # SubSubmenu: Select Level (nifty feature for developers)
             if FreeVikings::VERSION == 'DEV' && ARGV[0] == 'megahIte' then
@@ -90,7 +94,9 @@ module FreeVikings
                 StructuredWorld.new(FreeVikings::CONFIG['Files']['levels'][0]).levels.each do |l|
                   ActionButton.new(sellevel_menu, l.title, Proc.new {
                                      @log.info "Starting the game with password '#{l.password}'."
-                                     Game.new(@window, l.password).game_loop
+                                     Game.new(@window, 
+                                              @play_campaign, 
+                                              l.password).game_loop
                                    })
                 end
                 QuitButton.new(sellevel_menu)
@@ -102,11 +108,14 @@ module FreeVikings
 
           # Select campaign
           cs = @campaigns.keys.collect {|k| [k, @campaigns[k]]}
-          @play_campaign = cs[0][1]
-          Select.new(menu, "Campaign", cs,
-                     Proc.new {|old,new|
-                       @play_campaign = new
-                     })
+          select = Select.new(menu, "Campaign", cs,
+                              Proc.new {|old,new|
+                                @play_campaign = new
+                              })
+          # set right initial value:
+          select.choice = cs.each_with_index {|p,i| 
+            break i if p[1] == @play_campaign 
+          }
           
           # Submenu: Graphics
           Menu.new(menu, "Graphics", nil,nil,nil,nil, 300) do |graphics_menu|
@@ -217,13 +226,14 @@ module FreeVikings
     # finds campaign directories
 
     def find_campaigns
-      @campaigns = {} # 'name' => 'directory'
-
       FreeVikings::CONFIG['Files']['dirs with campaigns'].each do |d|
+        @log.info "Looking for campaigns in directory '#{d}'"
         Dir.foreach(d) do |file|
-          next unless File.directory?(file)
-
           cadir = d+'/'+file
+
+          next unless File.directory?(cadir) # omit regular files
+          next if file =~ /^\.+$/ # omit . and ..
+
           ca_title = nil
 
           deffile = Dir.new(cadir).find {|f|
@@ -236,10 +246,12 @@ module FreeVikings
             next
           end
 
-          File.open(cadir+'/'+deffile).each_line do |l|
+          f = cadir+'/'+deffile
+          @log.debug "Searching file '#{f}' for campaign title"
+          File.open(f).each_line do |l|
             if l =~ /<title>(.+)<\/title>/ then
               ca_title = $1
-              @campaigns[ca_title] == cadir
+              @campaigns[ca_title] = cadir
               @log.info "Campaign '#{ca_title}' found in directory '#{cadir}'"
               break
             end
@@ -250,6 +262,18 @@ module FreeVikings
             " not contain element 'title' => campaign OMITTED!"
           end
         end
+      end
+
+      if @campaigns.empty? then
+        @log.error "No campaigns found. Please, give at least one directory "\
+        "with campaigns. Program will probably crash soon."
+        return
+      end
+
+      @play_campaign = @campaigns[FreeVikings::CONFIG['Files']['default campaign']]
+      unless @play_campaign
+        @log.error "Default campaign ('#{FreeVikings::CONFIG['Files']['default campaign']}') not found."
+        @play_campaign = @campaigns.values.first
       end
     end
 

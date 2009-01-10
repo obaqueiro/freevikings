@@ -17,16 +17,12 @@ require 'door.rb'
 
 include FreeVikings
 
-static_objects = LOCATION.static_objects
-
 # Add the door:
 door = Door.new(Rectangle.new(680,280,40,120))
-static_objects.add door
+LOCATION << door
 
 # A lock which can open the door:
-red_lock = Lock.new(Rectangle.new(830,320,30,30), Proc.new {door.open}, Lock::RED)
-static_objects.add red_lock
+LOCATION << Lock.new(Rectangle.new(830,320,30,30), Proc.new {door.open}, Lock::RED)
 
 # And a key to unlock the lock:
-red_key = Key.new(Rectangle.new(380,100,30,30), Key::RED)
-LOCATION.add_item red_key
+LOCATION <<  Key.new(Rectangle.new(380,100,30,30), Key::RED)

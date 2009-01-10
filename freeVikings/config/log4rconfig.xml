@@ -6,6 +6,7 @@
 
   <!-- Outputter for "global level logging" (used almost on startup) -->
   <outputter name="initout">
+    <level>DEBUG</level>
     <type>Log4r::StdoutOutputter</type>
     <formatter type="Log4r::PatternFormatter">
       <pattern>*** %m</pattern>

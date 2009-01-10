@@ -53,22 +53,24 @@ module FreeVikings
     # An initialization prepares the Game instance for use, but doesn't start 
     # the game. It doesn't change the contents of the window window and doesn't
     # receive any user events.
-    # It means you theoretically could create two Game objects, both working with
+    # It means you theoretically could create two Game objects, both working 
+    # with
     # the same window, and use them subsequently (or, if you were a devil, both
     # at once in a multithreaded application). But I wouldn't do that...
+    #
+    # levelset should be a directory where levelset to be played is.
 
-    def initialize(window, startpassword='')
+    def initialize(window, levelset, startpassword='')
       @app_window = window
 
       @log = Log4r::Logger['init log']
 
       @loading_message = FreeVikings::FONTS['default'].create_text_box(120, 'LOADING')
 
-      levelset = FreeVikings::CONFIG['Files']['levels'][0]
-
       do_loading do
         @log.info "Initializing world."
         begin
+          @log.debug "Levelset directory '#{levelset}'"
           @world = StructuredWorld.new(levelset)
           if startpassword != '' then
             @log.info "Initializing level - password '#{startpassword}'"

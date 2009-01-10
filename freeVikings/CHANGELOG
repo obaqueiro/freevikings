@@ -1,4 +1,10 @@
-[9.January 2009] FREEVIKINGS BROKEN UP! CHECK OUT OLDER VERSION TO PLAY!
+[10.January 2009]
+- structuredworld.rb: I just touched the documentation
+- initfv.rb, game.rb: finished selecting of campaign
+- locs/Tests.../Ancient.../First/first_script.rb: fixed (was broken)
+
+[9.January 2009] 
+- FREEVIKINGS BROKEN UP! CHECK OUT OLDER VERSION TO PLAY!
 - initfv.rb: Select to choose campaign
 - structuredworld.rb, levelsuite.rb: requirement stuff cleared a bit
 - config/... : added new config entry (dirs with campaigns)

@@ -17,7 +17,7 @@ module FreeVikings
     # as argument, it is possible to give a directory of any nested LevelSuite,
     # but it isn't very usual.)
     #
-    # The second argument, password, is voluntary and must be a 4-character
+    # The second argument, password, is optional and must be a 4-character
     # String. If it is given location with password password is selected as 
     # a starting location.
 

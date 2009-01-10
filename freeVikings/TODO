@@ -11,8 +11,13 @@
 
 ======== Code ==========================================================
 
-(-) [UI] Select shows the item currently selected with some sign next to it
-         and offers button 'Back'
+(-) [UI] Select 
+    (-) shows the item currently selected with some sign next to it
+        and offers button 'Back'
+    (-) Works well with mouse
+    (-) command line option -l works well (fix it!)
+        (It should add new campaign - not directory with campaigns -
+        and set it default)
 
 (-) How level directories will be found (and defined in the configs)?
     - array 'dirs with campaigns' - every entry will be assumed to be 
