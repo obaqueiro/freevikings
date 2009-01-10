@@ -26,8 +26,8 @@ module FreeVikings
     def initialize
       @log = Log4r::Logger['init log']
 
-      @campaigns = {} # pairs 'name' => 'path'
-      @play_campaign = '' # directory with campaign to be played
+      # directory with campaign to be played
+      @play_campaign = FreeVikings::CONFIG['Files']['default campaign']
 
       load_logo
       load_font
@@ -107,7 +107,7 @@ module FreeVikings
           end
 
           # Select campaign
-          cs = @campaigns.keys.collect {|k| [k, @campaigns[k]]}
+          cs = FreeVikings::CAMPAIGNS.keys.collect {|k| [k, FreeVikings::CAMPAIGNS[k]]}
           select = Select.new(menu, "Campaign", cs,
                               Proc.new {|old,new|
                                 @play_campaign = new
@@ -234,46 +234,28 @@ module FreeVikings
           next unless File.directory?(cadir) # omit regular files
           next if file =~ /^\.+$/ # omit . and ..
 
-          ca_title = nil
-
-          deffile = Dir.new(cadir).find {|f|
-            f == Level::DEFINITION_FILE_NAME || 
-            f == LevelSuite::DEFINITION_FILE_NAME
-          }
-
-          unless deffile
-            @log.warn "Campaign not found in directory '#{cadir}'"
-            next
-          end
-
-          f = cadir+'/'+deffile
-          @log.debug "Searching file '#{f}' for campaign title"
-          File.open(f).each_line do |l|
-            if l =~ /<title>(.+)<\/title>/ then
-              ca_title = $1
-              @campaigns[ca_title] = cadir
-              @log.info "Campaign '#{ca_title}' found in directory '#{cadir}'"
-              break
-            end
-          end
+          ca_title = LevelSuite.get_levelsuite_title(cadir)
 
           unless ca_title
             @log.error "Campaign definition file in directory '#{cadir}' does"\
             " not contain element 'title' => campaign OMITTED!"
+            next
           end
+
+          FreeVikings::CAMPAIGNS[ca_title] = cadir
         end
       end
 
-      if @campaigns.empty? then
+      if FreeVikings::CAMPAIGNS.empty? then
         @log.error "No campaigns found. Please, give at least one directory "\
         "with campaigns. Program will probably crash soon."
         return
       end
 
-      @play_campaign = @campaigns[FreeVikings::CONFIG['Files']['default campaign']]
+      @play_campaign = FreeVikings::CAMPAIGNS[FreeVikings::CONFIG['Files']['default campaign']]
       unless @play_campaign
         @log.error "Default campaign ('#{FreeVikings::CONFIG['Files']['default campaign']}') not found."
-        @play_campaign = @campaigns.values.first
+        @play_campaign = FreeVikings::CAMPAIGNS.values.first
       end
     end
 

@@ -83,6 +83,46 @@ module FreeVikings
       end
     end
 
+    # Looks into directory and returns title of found LevelSuite or nil
+
+    def LevelSuite.get_levelsuite_title(directory)
+      log = Log4r::Logger['world log']
+
+      log.debug "Looking for LevelSuite/Level in directory '#{directory}'"
+
+      deffile = if LevelSuite.is_levelsuite_directory?(directory)
+                  DEFINITION_FILE_NAME
+                elsif Level.is_level_directory?(directory)
+                  Level::DEFINITION_FILE_NAME
+                else
+                  nil
+                end
+
+      unless deffile
+        log.debug "Not found."
+        return nil
+      end
+
+      ca_title = nil
+      f = directory+'/'+deffile
+      log.debug "Searching file '#{f}' for title"
+      File.open(f).each_line do |l|
+        if l =~ /<title>(.+)<\/title>/ then
+          ca_title = $1
+          log.debug "Level(Suite) '#{ca_title}' found in directory '#{directory}'"
+          break
+        end
+      end
+
+      unless ca_title
+        log.error "Campaign definition file in directory '#{directory}' does"\
+        " not contain element 'title' => campaign OMITTED!"
+        ca_title = 'Untitled'
+      end
+
+      return ca_title
+    end
+
     # Returns a String with the name (usually a subpath) 
     # of the LevelSuite's directory.
 

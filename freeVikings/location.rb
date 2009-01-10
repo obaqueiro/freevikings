@@ -31,8 +31,8 @@ module FreeVikings
 
       @theme = theme
       if @theme.is_a? NullGfxTheme then
-        @log.fatal "Location got NullGfxTheme instead of GfxTheme."
-        raise ArgumentError, "Location can't be initialized with a null theme."
+        @log.error "Location got NullGfxTheme instead of GfxTheme."
+        # raise ArgumentError, "Location can't be initialized with a null theme."
       end
 
       @map = Map.new(loader.map_loader)

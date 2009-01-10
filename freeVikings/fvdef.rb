@@ -30,6 +30,10 @@ module FreeVikings
   # (most objects ignore it)
   GRAVITY = 30
 
+  # array of campaigns;
+  # each entry is a pair title=>path
+  CAMPAIGNS = {}
+
   # Object which contains configuration
   # CONFIG = Configuration.new('config/structure.conf')
 

@@ -11,21 +11,6 @@
 
 ======== Code ==========================================================
 
-(-) [UI] Select 
-    (-) shows the item currently selected with some sign next to it
-        and offers button 'Back'
-    (-) Works well with mouse
-    (-) command line option -l works well (fix it!)
-        (It should add new campaign - not directory with campaigns -
-        and set it default)
-
-(-) How level directories will be found (and defined in the configs)?
-    - array 'dirs with campaigns' - every entry will be assumed to be 
-      a directory containing levelsuite directories
-      (you will be able to choose one in a menu)
-    - 'default campaign' - address of a campaign directory or index
-      into Array of campaigns
-
 (-) Small levels (like RubyCampaign/Intro with panel on the side) paint well -
     unused part of the screen might be e.g. black
 
@@ -49,7 +34,7 @@
     (-) Menu: add a message if a bad password is given (also to the GUI,
         not only to a console)
     (-) Possibility to change keys (movement, inventory control etc.)
-    (-) define location storage places, choose a campaign to be played
+    (-) define location storage places
 
 (-) [UI] Add dialog "Back to menu/Restart level/Cancel"
 
@@ -95,7 +80,7 @@
 	7% in Rectangle#collides (172 calls))
 	etc.
 
-(-) Pause game on focus loss, unpause on focus (should be just option -
+(-) Pause game on focus loss (should be just option -
     it spares cpu time, but someone may not want this behavior)
 
 (-) Support for "tileset images" into "poor fV XML maps"?

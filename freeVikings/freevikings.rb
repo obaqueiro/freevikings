@@ -168,6 +168,9 @@ OPTIONS_DEF = [
 
 # Hash where options are stored before being loaded into Configuration
 cmdline_config = Configuration.load_empty_structure 'config/structure.conf'
+# some options aren't so simple to process, they need to be handled 
+# in a special way:
+additional_campaigns = []
 
 # here is every argument-definition Array sliced to what GetoptLong wants;
 # everything is then given into GetoptLong
@@ -187,7 +190,7 @@ begin
     when "--help"
       print_help_and_exit
     when "--levelsuite"
-      cmdline_config['Files']['levels'] = [argument]
+      additional_campaigns << argument
     when "--v-unit"
       if argument.to_i > 0 then
         cmdline_config['Game']['game speed'] = argument.to_i
@@ -278,6 +281,18 @@ end
 # add commandline options:
 log.info "Merging command-line options with configuration loaded from files."
 FreeVikings::CONFIG.load_hash cmdline_config
+# add special commandline options:
+# --levelsuite :
+additional_campaigns.each do |dir|
+  cname = LevelSuite.get_levelsuite_title(dir)
+  unless cname
+    raise "LevelSuite definition (i.e. file levelsuite.xml or location.xml) "\
+    "not found in directory '#{dir}' given by commandline option --levelsuite"
+  end
+
+  FreeVikings::CAMPAIGNS[cname] = dir
+  FreeVikings::CONFIG['Files']['default campaign'] = cname
+end
 
 ### Start profiling?
 

@@ -2,6 +2,9 @@
 - structuredworld.rb: I just touched the documentation
 - initfv.rb, game.rb: finished selecting of campaign
 - locs/Tests.../Ancient.../First/first_script.rb: fixed (was broken)
+- initfv.rb, freevikings.rb, levelsuite.rb: commandline option --levelsuite
+  fixed; some code (finding title of Level(Suite) in a directory) from 
+  initfv.rb moved to class LevelSuite and reused in freevikings.rb
 
 [9.January 2009] 
 - FREEVIKINGS BROKEN UP! CHECK OUT OLDER VERSION TO PLAY!
