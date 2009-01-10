@@ -24,7 +24,6 @@ module GameUI
         super(parent, text)
 
         @choices = choices
-        @choice = 0
 
         @images = create_images(text, choices)
 
@@ -34,19 +33,47 @@ module GameUI
         @choices.each_with_index do |c,i|
           SelectItem.new(self, c[0], i)
         end
+        QuitButton.new(self)
+
+        @choice = 0
+        @menu_items[@choice].selected = true
       end
 
       # This method is called by children to tell Select which value 
       # was selected. Accepts integer.
+      #
+      # calls 'change proc' and returns to parent menu
 
-      def select(i)
+      def entered_item(i)
         if i >= @choices.size then
           raise ArgumentError, "Index '#{i}' out of range (#{@choices.size} items)"
         end
 
-        do_change(@choice, i)
+        do_change(@choices[@choice][1], @choices[i][1])
+
+        @menu_items[@choice].selected = false
+        @menu_items[i].selected = true
+
         @choice = i
         quit
+      end
+
+      # Returns index of selected option
+
+      attr_reader :choice
+
+      # Sets index of selected option. Does not call 'change proc' or quit -
+      # it may be used e.g. to set default value
+
+      def choice=(i)
+        if i >= @choices.size then
+          raise ArgumentError, "Index '#{i}' out of range (#{@choices.size} items)"
+        end
+
+        @menu_items[@choice].selected = false
+        @menu_items[i].selected = true
+
+        @choice = i
       end
 
       def height
@@ -90,10 +117,23 @@ module GameUI
           super(parent)
           @image = create_image(text)
           @value = value
+          @selected = false
+          @selectsign = create_image('->')
+        end
+
+        # State of the item. True or false.
+        attr_accessor :selected
+
+        def paint(surface, coordinates)
+          ci = [coordinates[0]+25, coordinates[1]]
+          surface.blit @image, ci
+          if @selected then
+            surface.blit @selectsign, coordinates
+          end
         end
 
         def enter
-          @parent.select @value
+          @parent.entered_item @value
         end
       end
     end

@@ -1,3 +1,12 @@
+[10.January 2009]
+- menu/items/select.rb: change proc doesn't get indices but values;
+  added methods 'choice' and 'choice=';
+  method 'select' renamed to 'entered_item' (I frogot that method select
+  is defined in Menu and is important - it's replacement was breaking mouse
+  functionality);
+  QuitButton added;
+  special sign is shown next to selected item
+
 [8.January 2009]
 - menu/menu.rb: selector can be more than one line high if needed (accommodates
   to menu items)
