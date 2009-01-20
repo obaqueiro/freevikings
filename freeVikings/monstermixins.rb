@@ -25,7 +25,7 @@ module FreeVikings
       @@bash_delay = 3
 
       def bash_heroes
-        @last_bash = 0 unless @last_bash
+        @last_bash = 0 unless defined?(@last_bash)
 
         return unless ready_to_attack?
 
@@ -38,7 +38,7 @@ module FreeVikings
 
       def ready_to_attack?
         if ! defined?(@last_bash) then
-          @last_bash = @location.ticker.now - 2 * bash_delay
+          @last_bash = 0
         end
 
         return @location.ticker.now >= (@last_bash + bash_delay)

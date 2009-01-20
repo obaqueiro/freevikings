@@ -31,5 +31,6 @@
     <level>SmallStone</level>
     <level>Troll</level>
     <level>FlyingTroll</level>
+    <level>LockKeys</level>
   </suite>
 </levelsuite>

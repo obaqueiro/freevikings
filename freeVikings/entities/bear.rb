@@ -65,11 +65,9 @@ module FreeVikings
 
     VELOCITY = 50
 
-    RIGHT = 1
-    LEFT = -1
-
     def initialize(position, max_walk_length=100)
       super(position)
+      @bash_delay = 2
       @max_walk_length = max_walk_length
       @teritory_center = @rect.left + @rect.w / 2
       @walk_length = 0

@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Locks &amp; Keys</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Test locks and keys
+    </description>
+  </info>
+
+  <body>
+    <password>LKEI</password>
+    <map src="../Prototype/prototype_loc.xml"/>
+    <script src="lockkeys_script.rb"/>
+    <exit horiz="500" vertic="360" />
+    <start horiz="50" vertic="140" />
+  </body>
+</location>

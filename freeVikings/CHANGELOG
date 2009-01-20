@@ -1,3 +1,9 @@
+[20.January 2009]
+- monstermixins.rb: small cosmetic modification
+- entities/bear.rb: Bear attacks with delay of 2 seconds
+- level LockKeys: added to be able to see all versions of locks and keys 
+  in the game (because I wanted to test images contributed by Magnus Nygaard)
+
 [10.January 2009]
 - structuredworld.rb: I just touched the documentation
 - initfv.rb, game.rb: finished selecting of campaign
