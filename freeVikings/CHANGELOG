@@ -1,3 +1,7 @@
+[21.January 2009]
+- gfx/mjolnir.png, gfx/killtoy.tga, entities/killtoy.rb: Old "killtoy" 
+  replaced with new graphic made by Magnus Nygaard
+
 [20.January 2009]
 - monstermixins.rb: small cosmetic modification
 - entities/bear.rb: Bear attacks with delay of 2 seconds

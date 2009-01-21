@@ -156,7 +156,7 @@ module FreeVikings
     # with some unique filename
 
     def take_screenshot
-      letters = 'freeVikingsscreenshot'.split //
+      letters = 'freeVikingsscreenshot'.split(//)
       begin
         filename = ''
         12.times { filename += letters[rand(letters.size)] }

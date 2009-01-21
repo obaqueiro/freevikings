@@ -25,7 +25,7 @@ module FreeVikings
       @@bash_delay = 3
 
       def bash_heroes
-        @last_bash = 0 unless defined?(@last_bash)
+        @last_bash = 0 unless @last_bash
 
         return unless ready_to_attack?
 
@@ -37,7 +37,7 @@ module FreeVikings
       end
 
       def ready_to_attack?
-        if ! defined?(@last_bash) then
+        if ! @last_bash then
           @last_bash = 0
         end
 

@@ -1,16 +1,13 @@
 # killtoy.rb
 # igneus 29.6.2005
 
-=begin
-= Killtoy
-((<Killtoy>)) is a small Item, something like an orion-star used for
-the insidious fight. It is an Item magical abilities. When it is used,
-all the Monsters in the area die.
-=end
-
 require 'monster.rb'
 
 module FreeVikings
+
+  # Item which, when used, instantly kills all monsters in the surroundings
+  # of viking who used it.
+  # Looks like Mjolnir - hammer of Thor, vikings' god of thunder.
 
   class Killtoy < Item
 
@@ -18,7 +15,7 @@ module FreeVikings
     KILLRECT_HEIGHT = 350
 
     def init_images
-      @image = Image.load 'killtoy.tga'
+      @image = Image.load 'mjolnir.png'
     end
 
     def apply(user)
