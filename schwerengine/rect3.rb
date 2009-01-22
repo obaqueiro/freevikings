@@ -1,8 +1,6 @@
 # rect.rb
 # igneus 22.2.2005
 
-require 'inline'
-
 module SchwerEngine
 
   # Shortcut for 'Rectangle.new(x,y,w,h)'

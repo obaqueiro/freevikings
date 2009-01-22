@@ -1,3 +1,7 @@
+[22.January 2009]
+- rect3.rb: removed remaining 'require' after yesterday's RubyInline
+  optimization craziness
+
 [21.January 2009]
 - relativerect.rb: attempt to optimization: removed inheritance,
   implemented smallest set of methods to run freeVikings
