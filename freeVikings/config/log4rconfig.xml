@@ -64,7 +64,7 @@
   </logger>
 
   <!-- Log for Location Loading Strategies output -->
-  <logger name="location loading log" level="DEBUG">
+  <logger name="location loading log" level="WARN">
     <outputter>stderr</outputter>
     <outputter>loo</outputter>
     <trace>false</trace>

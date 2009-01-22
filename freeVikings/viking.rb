@@ -348,6 +348,10 @@ module FreeVikings
 
       update_knockout
 
+      # don't modify these variables!
+      @next_left = next_left
+      @next_top = next_top
+
       unless (move_xy or move_y_only)
         @log.warn "update: Viking #{name} cannot move in any axis. He could have stucked."
       end
@@ -396,7 +400,7 @@ module FreeVikings
 
     private
     def move_xy
-      @aux_rect.set_pos(next_left, next_top)
+      @aux_rect.set_pos(@next_left, @next_top)
       if @location.area_free?(@aux_rect) then
 	@log.debug "move_xy: Viking #{name}'s next position is all right."
         @rect.copy_pos @aux_rect
@@ -408,7 +412,7 @@ module FreeVikings
 
     private
     def move_y_only
-      @aux_rect.set_pos(@rect.left, next_top)
+      @aux_rect.set_pos(@rect.left, @next_top)
       if @location.area_free?(@aux_rect) then
         @log.debug "move_y_only: Viking #{name} cannot move horizontally, but his vertical coordinate was updated successfully."
         @rect.copy_pos @aux_rect

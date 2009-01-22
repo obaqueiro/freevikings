@@ -301,10 +301,13 @@ end
 # Ruby stdlib's 'profile' does terrible things when loaded in the block's
 # scope (try yourself!).
 if FreeVikings::CONFIG['Development']['profile'] then
-  require 'profiler'
+  # require 'profiler'
+  require 'ruby-prof'
 
   END {
-    Profiler__::print_profile(STDERR)
+    # Profiler__::print_profile(STDERR)
+    printer = RubyProf::FlatPrinter.new($profile_result)
+    printer.print(STDOUT, 0)
   }
 end
 

@@ -4,12 +4,21 @@
 
 ======== Graphics ======================================================
 
+!!! TODO LIST FOR GRAPHICS MOVES !!!
+while list of core features waiting for implementation remains here,
+requests on graphics and other content move to the forum
+(section Development > Graphics):
+[http://freevikings.sourceforge.net/phpBB3/]
+
 (-) Full spritesheets for all three vikings according to the developers'
     manual
 
 (-) New graphic style of bottompanel (layout + images)
 
 ======== Code ==========================================================
+
+(-) Piranhas: some randomness (they shouldn't bite all at the same time and
+    have the same speed)
 
 (-) Rename Killtoy to Mjolnir?
 

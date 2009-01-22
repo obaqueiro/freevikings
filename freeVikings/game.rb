@@ -298,7 +298,8 @@ module FreeVikings
       @frame_rate = 0
 
       if FreeVikings::CONFIG['Development']['profile'] then
-        Profiler__::start_profile
+        # Profiler__::start_profile
+        RubyProf.start
       end
 
       start_time = Time.now.to_f
@@ -319,6 +320,8 @@ module FreeVikings
       on_level_end
 
       if FreeVikings::CONFIG['Development']['profile'] then
+        $profile_result = RubyProf.stop
+
         exit # the END block which prints out profiler output will be called
       end
 

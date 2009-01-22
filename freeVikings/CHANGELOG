@@ -1,6 +1,18 @@
+[22.January 2009]
+- ability.rb: RD->RDoc
+- warior.rb: arrow speed-up
+- viking.rb: repeated calls of methods 'next_[left|top]' replaced with
+  instance variables with values assigned once per update
+- game.rb, freevikings.rb: profiler from Ruby's standard library replaced with
+  ruby-prof (ruby-prof is compiled and thus game runs at 2 fps during
+  profiling, while with stdlib profiler it was cca 0.1 fps :) )
+
 [21.January 2009]
 - gfx/mjolnir.png, gfx/killtoy.tga, entities/killtoy.rb: Old "killtoy" 
   replaced with new graphic made by Magnus Nygaard
+- game.rb: modification according to flog's warnings
+- viking.rb: many temporary "build-check-drop" Rectangles replaced
+  by two auxiliary Rectangle instances used repeatedly
 
 [20.January 2009]
 - monstermixins.rb: small cosmetic modification
