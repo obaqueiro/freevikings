@@ -1,3 +1,8 @@
+[21.January 2009]
+- relativerect.rb: attempt to optimization: removed inheritance,
+  implemented smallest set of methods to run freeVikings
+- rect3.rb: added methods set_pos, set_values, copy_pos
+
 [31.December 2008]
 - relativerect.rb: added method point_inside?
 

@@ -13,21 +13,17 @@ module SchwerEngine
   # if the "leader" is garbage collected. (i.e. any method may raise
   # WeakRef::RefError - defined in weakref.rb in Ruby's standard library)
 
-  class RelativeRectangle < Old::Rectangle
+  class RelativeRectangle # < Rectangle
 
     # Accepts "leader" Rectangle and four numeric values:
     # differences of position (x, y), width and height.
 
     def initialize(rect, d_x, d_y, d_w, d_h)
-      @rect = WeakRef.new rect
+      @rect = rect #WeakRef.new rect
       @d_x = d_x
       @d_y = d_y
       @d_w = d_w
       @d_h = d_h
-
-      # against some forgotten inherited methods - they will raise error 
-      # immediately when they try to access @array
-      @array = nil 
     end
 
     # Receives two Rectangles.
@@ -43,29 +39,53 @@ module SchwerEngine
                                    r2.h - r1.h)
     end
 
-    def at(i)
-      case i
-      when 0
-        return @rect.left + @d_x
-      when 1
-        return @rect.top + @d_y
-      when 2
-        return @rect.w + @d_w
-      when 3
-        return @rect.h + @d_h
-      else
-        return nil
-      end
+    def left
+      return @rect.left + @d_x
     end
 
-    alias_method :[], :at
+    def top
+      return @rect.top + @d_y
+    end
 
-    # hide some inherited methods:
-    private :[]=, :left=, :top=, :w=, :h=, :bottom=, :right=, :expand!, :move!
+    def w
+      return @rect.w + @d_w
+    end
+
+    def h
+      return @rect.h + @d_h
+    end
+
+    def right
+      left + w
+    end
+
+    def bottom
+      top + h
+    end
 
     def point_inside?(po)
       po[0] >= self.left && po[0] <= self.right &&
         po[1] >= self.top && po[1] <= self.bottom
     end
+
+    def top_left
+      [left, top]
+    end
+
+    def top_right
+      [right, top]
+    end
+
+    def bottom_left
+      [left, bottom]
+    end
+
+    def bottom_right
+      [right, bottom]
+    end
+
+    # hide some inherited methods:
+    #private :[]=, :left=, :top=, :w=, :h=, :bottom=, :right=, :expand!, :move!
+
   end
 end

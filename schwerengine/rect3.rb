@@ -1,6 +1,8 @@
 # rect.rb
 # igneus 22.2.2005
 
+require 'inline'
+
 module SchwerEngine
 
   # Shortcut for 'Rectangle.new(x,y,w,h)'
@@ -77,22 +79,51 @@ module SchwerEngine
       return self
     end
 
-    def collides?(rect)
-      # if @x <= rect.right and
-      #     rect.left <= @right and
-      #     @y <= rect.bottom and
-      #     rect.top <= @bottom then
-      #   return true
-      #  end
-      #  return false
+    # Takes just left-top values from given rect
 
-      # Small optimization
+    def copy_pos(rect)
+      @x = rect.left
+      @y = rect.top
+
+      @right = @x + @w
+      @bottom = @y + @h
+
+      return self
+    end
+
+    def set_values(x,y,w,h)
+      @x = x
+      @y = y
+      @w = w
+      @h = h
+
+      @right = @x + @w
+      @bottom = @y + @h
+
+      return self
+    end
+
+    def set_pos(x,y)
+      @x = x
+      @y = y
+
+      @right = @x + @w
+      @bottom = @y + @h
+
+      return self
+    end
+
+    def collides?(rect)
       return false if @x >= rect.right
       return false if rect.left > @right
       return false if @y > rect.bottom
       return false if rect.top > @bottom
 
       return true
+    end
+
+    def collides?(rect)
+      1 == collides(@x,@y,@w,@h, rect.left,rect.top,rect.w,rect.h)
     end
 
     # point is [x,y] Array
