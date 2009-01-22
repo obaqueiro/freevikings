@@ -72,6 +72,12 @@ module FreeVikings
       # @paint_rect is wider than @collision_rect
       @rect = @collision_rect = Rectangle.new(start_position[0], start_position[1], WIDTH-10, HEIGHT-1)
       @paint_rect = RelativeRectangle.new(@rect, -5, 0, 10, 1)
+      # auxiliary rectangle used for various checks
+      # (it must always have the same width and height as @rect!)
+      @aux_rect = @rect.dup
+      # another auxiliary rectangle used only in try_to_descend
+      # (don't use it anywhere else!)
+      @desc_rect = Rectangle.new 0,0,0,0
 
       @energy = MAX_ENERGY
 
@@ -326,12 +332,10 @@ module FreeVikings
         return
       end
 
-      new_rect = Rectangle.new(@rect.left + delta_x.to_i,
-                               transporter.rect.top-(HEIGHT+1),
-                               @rect.w, 
-                               @rect.h)
-      if @location.area_free?(new_rect) then
-        @rect.copy_values new_rect
+      @aux_rect.set_pos(@rect.left + delta_x.to_i,
+                        transporter.rect.top-(HEIGHT+1))
+      if @location.area_free?(@aux_rect) then
+        @rect.copy_pos @aux_rect
       else
         transporter.end_transport_of self
       end
@@ -392,10 +396,10 @@ module FreeVikings
 
     private
     def move_xy
-      next_pos = Rectangle.new(next_left, next_top, @rect.w, @rect.h)
-      if @location.area_free?(next_pos) then
+      @aux_rect.set_pos(next_left, next_top)
+      if @location.area_free?(@aux_rect) then
 	@log.debug "move_xy: Viking #{name}'s next position is all right."
-        @rect.copy_values next_pos
+        @rect.copy_pos @aux_rect
         return true
       else
         return false
@@ -404,10 +408,10 @@ module FreeVikings
 
     private
     def move_y_only
-      next_pos = Rectangle.new(@rect.left, next_top, @rect.w, @rect.h)
-      if @location.area_free?(next_pos) then
+      @aux_rect.set_pos(@rect.left, next_top)
+      if @location.area_free?(@aux_rect) then
         @log.debug "move_y_only: Viking #{name} cannot move horizontally, but his vertical coordinate was updated successfully."
-        @rect.copy_values next_pos
+        @rect.copy_pos @aux_rect
         return true
       else
         @log.debug "move_y_only: Viking #{name} cannot move in any axis."
@@ -475,12 +479,12 @@ module FreeVikings
       if @state.falling?
         # Rectangle 'lowerpos' is Rectangle of viking's width, height equal
         # to change of position, placed under his feet
-        lowerpos = Rectangle.new(@rect.left, 
-                                 @rect.bottom,
-                                 @rect.w, 
-                                 (@location.ticker.delta * BASE_VELOCITY).to_i)
+        @desc_rect.set_values(@rect.left, 
+                              @rect.bottom,
+                              @rect.w, 
+                              (@location.ticker.delta * BASE_VELOCITY).to_i)
 
-        floor = @location.find_surface(lowerpos)
+        floor = @location.find_surface(@desc_rect)
 
         if floor != nil then
           @rect.top = (floor.top - @rect.h) - 1
@@ -491,9 +495,11 @@ module FreeVikings
 
     private
     def fall_if_head_on_the_ceiling
+      return unless @state.rising?
+
       head_area = next_position
       head_area.h = 20
-      if @state.rising? and not @location.area_free?(head_area) then
+      unless @location.area_free?(head_area)
         @log.debug "fall_if_head_on_the_ceiling: #{@name} stroke ceiling with his head and starts falling."
         fall
       end
@@ -509,11 +515,9 @@ module FreeVikings
     private
     # Says if the viking is standing on a solid ground (tile or static object)
     def on_ground?
-      lowerpos = Rectangle.new(@rect.left, 
-                               @rect.top + @location.ticker.delta * BASE_VELOCITY, 
-                               @rect.w, 
-                               @rect.h)
-      return ! @location.area_free?(lowerpos)
+      @aux_rect.set_pos(@rect.left, 
+                        @rect.top + @location.ticker.delta * BASE_VELOCITY)
+      return ! @location.area_free?(@aux_rect)
     end
 
     private
