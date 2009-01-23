@@ -1,7 +1,7 @@
 # guardrobot.rb
 # igneus 1.8.2006
 
-require 'monster.rb'
+
 require 'monstermixins.rb'
 
 module FreeVikings

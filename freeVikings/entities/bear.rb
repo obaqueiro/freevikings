@@ -5,7 +5,7 @@
 
 require 'sophisticatedspritestate.rb'
 require 'sophisticatedspritemixins.rb'
-require 'monster.rb'
+
 require 'monstermixins.rb'
 
 module FreeVikings

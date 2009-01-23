@@ -4,7 +4,7 @@
 # Robot. Primitivni prisera, ktera chodi ze strany na stranu a 
 # prilezitostne napada kolemjdouci.
 
-require 'monster.rb'
+
 require 'monstermixins.rb'
 require 'sophisticatedspritestate.rb'
 require 'sophisticatedspritemixins.rb'

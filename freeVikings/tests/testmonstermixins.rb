@@ -5,7 +5,7 @@
 
 require 'test/unit'
 
-require 'monster.rb'
+
 require 'monstermixins.rb'
 require 'shield.rb'
 require 'shielder.rb'

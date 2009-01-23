@@ -1,8 +1,6 @@
 # switch.rb
 # igneus 9.6.2005
 
-require 'monster.rb'
-
 module FreeVikings
 
   # You can switch it by up/down direction key with a viking standing next to 

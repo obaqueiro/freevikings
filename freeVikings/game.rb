@@ -3,6 +3,13 @@
 
 require 'RUDL'
 
+require 'entity.rb'
+require 'sprite.rb'
+require 'staticobject.rb'
+require 'activeobject.rb'
+require 'item.rb'
+require 'heroandmonster.rb'
+
 require 'viking.rb'
 require 'team.rb'
 

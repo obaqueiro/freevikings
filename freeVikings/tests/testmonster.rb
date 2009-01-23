@@ -3,7 +3,7 @@
 
 require 'test/unit'
 
-require 'monster.rb'
+
 require 'mockclasses.rb'
 require 'tombstone.rb'
 

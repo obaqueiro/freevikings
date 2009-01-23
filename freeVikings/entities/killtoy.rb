@@ -1,7 +1,7 @@
 # killtoy.rb
 # igneus 29.6.2005
 
-require 'monster.rb'
+
 
 module FreeVikings
 

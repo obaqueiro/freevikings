@@ -2,7 +2,7 @@
 # igneus 22.10.2005
 
 require 'transportable.rb'
-require 'monster.rb'
+
 require 'sophisticatedspritestate.rb'
 require 'sophisticatedspritemixins.rb'
 require 'monstermixins.rb'

@@ -2,7 +2,6 @@
 # igneus 20.2.2005
 
 require 'shot.rb'
-require 'monster.rb'
 
 module FreeVikings
 

@@ -7,7 +7,7 @@ require 'test/unit'
 require 'mockclasses.rb'
 
 require 'sword.rb'
-require 'monster.rb'
+
 
 class TestSword < Test::Unit::TestCase
 

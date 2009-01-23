@@ -1,3 +1,9 @@
+[23.January 2009]
+- heroandmonster.rb entity.rb sprite.rb item.rb staticobject.rb activeobject.rb
+  some classes moved back from SchwerEngine, because they aren't general enough
+- many files: removed requirement of monster.rb (I learned some basics of 'sed'
+  because of it :) )
+
 [22.January 2009]
 - ability.rb: RD->RDoc
 - warior.rb: arrow speed-up
