@@ -17,6 +17,8 @@ requests on graphics and other content move to the forum
 
 ======== Code ==========================================================
 
+(-) Ingame menu should be small in the middle of screen, not full-height
+
 (-) Piranhas: some randomness (they shouldn't bite all at the same time and
     have the same speed)
 
@@ -50,8 +52,6 @@ requests on graphics and other content move to the forum
         not only to a console)
     (-) Possibility to change keys (movement, inventory control etc.)
     (-) define location storage places
-
-(-) [UI] Add dialog "Back to menu/Restart level/Cancel"
 
 (-) Why don't trolls in HappyLEnd get angry?
 

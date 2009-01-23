@@ -6,6 +6,8 @@
 - location.rb, zsortedgroup.rb: more efficient strategy of z-sorted painting -
   without sorting all game objects in every frame.
   Unfortunatelly it didn't bring a single fps :(
+- gamestate.rb: some documentation touched; one useless state removed
+- game.rb, gamestate.rb: ingame menu (restart/exit/back)
 
 [22.January 2009]
 - ability.rb: RD->RDoc

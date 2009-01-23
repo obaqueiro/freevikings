@@ -52,6 +52,8 @@ module FreeVikings
     include RUDL
     include RUDL::Constant
 
+    include GameUI::Menus # used in Game#ingame_menu
+
     # == Public instance methods
     #
     # Argument window should be a RUDL::Surface (or RUDL::DisplaySurface).
@@ -147,12 +149,6 @@ module FreeVikings
       @state = PlayingGameState.new self
     end
 
-    # Switches to the "development magic" mode (special level testing features)
-
-    def go_develmagic
-      @state = DevelopmentMagicGameState.new self
-    end
-
     # This method is called from LocationInfoGameState to start playing.
 
     def run_location
@@ -185,6 +181,24 @@ module FreeVikings
       h = (bp.orientation == :horizontal ?
            FreeVikings::WIN_HEIGHT - bp.rect.h : FreeVikings::WIN_HEIGHT)
       @mapview_rect = R(x,y,w,h)
+    end
+
+    # runs menu restart/exit/cancel
+
+    def ingame_menu
+      @world.location.pause
+
+      Menu.new(nil, "Menu", @app_window, FreeVikings::FONTS['default']) do |m|
+        ActionButton.new(m, "Restart level", 
+                         Proc.new { 
+                           give_up_game 
+                           m.quit
+                         })
+        ActionButton.new(m, "Exit game", Proc.new { exit_game })
+        QuitButton.new(m, QuitButton::BACK)
+      end.run
+
+      @world.location.unpause
     end
 
     # == Methods of game loop

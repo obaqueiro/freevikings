@@ -46,7 +46,7 @@ module FreeVikings
     def serve_keydown(event, location)
       case event.key
       when K_q, K_ESCAPE
-        end_game
+        @context.ingame_menu
       when K_F2
 	@context.give_up_game
       when K_F3
@@ -62,10 +62,6 @@ module FreeVikings
         end
       when K_F10, K_PRINT
         @context.take_screenshot
-      when K_F11
-        if FreeVikings::CONFIG['Development']['magic for developers']
-          @context.go_develmagic
-        end
       when K_F12
         if FreeVikings::CONFIG['Development']['magic for developers']
           # Starts irb in the console=>fV developer can play with the internals
@@ -281,17 +277,15 @@ module FreeVikings
     end
   end
 
-  class LocationInfoGameState < GameState
-    # This state is used on the beginning of every location.
-    # Location password and author is displayed until the player presses a key.
+  # This state is used on the beginning of every location.
+  # Location password and author is displayed until the player presses a key.
 
-=begin
---- LocationInfoGameState.new(context, level)
-Arguments:
-* ((|context|)) - a (({Game})) object
-* ((|level|)) - a (({Level})) object with the information about 
-  the (({Location})) prepared to play
-=end
+  class LocationInfoGameState < GameState
+
+    # Arguments:
+    # context:: a Game object
+    # level:: a Level object with the information about 
+    #         the Location prepared to play
 
     def initialize(context, level)
       super(context)
@@ -314,11 +308,4 @@ Arguments:
       @level_info_message = FreeVikings::FONTS['default'].create_text_box(120, message, [255,255,255], [0,0,0])
     end
   end # class LocationInfoGameState
-
-  class DevelopmentMagicGameState < GameState
-    # This state is used for level testing and development - enables viewing
-    # the map, relocating the vikings, etc.
-
-
-  end
 end # module
