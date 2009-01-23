@@ -1,3 +1,9 @@
+[23.January 2009]
+- schwerengine.rb,
+  entity.rb, sprite.rb, item.rb, activeobject.rb, staticobject.rb,
+  hero.rb, monster.rb:
+  classes which are very freeVikings-specific moved back to freeVikings
+
 [22.January 2009]
 - rect3.rb: removed remaining 'require' after yesterday's RubyInline
   optimization craziness

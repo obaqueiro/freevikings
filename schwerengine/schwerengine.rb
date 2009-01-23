@@ -72,16 +72,6 @@ module SchwerEngine
       require 'schwerengine/model.rb'
       require 'schwerengine/spritesheet.rb'
 
-      # Entities
-      require 'schwerengine/entity.rb'
-      require 'schwerengine/sprite.rb'
-      require 'schwerengine/item.rb'
-      require 'schwerengine/activeobject.rb'
-      require 'schwerengine/staticobject.rb'
-
-      require 'schwerengine/hero.rb'
-      require 'schwerengine/monster.rb'
-
       # Groups
       require 'schwerengine/group.rb'
       require 'schwerengine/selectivegroup.rb'
