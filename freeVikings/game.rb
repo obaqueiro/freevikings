@@ -188,7 +188,8 @@ module FreeVikings
     def ingame_menu
       @world.location.pause
 
-      Menu.new(nil, "Menu", @app_window, FreeVikings::FONTS['default']) do |m|
+      Menu.new(nil, "Menu", @app_window, FreeVikings::FONTS['default'],
+               nil, 100, nil, 150) do |m|
         ActionButton.new(m, "Restart level", 
                          Proc.new { 
                            give_up_game 
