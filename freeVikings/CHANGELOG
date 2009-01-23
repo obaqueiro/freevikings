@@ -3,6 +3,9 @@
   some classes moved back from SchwerEngine, because they aren't general enough
 - many files: removed requirement of monster.rb (I learned some basics of 'sed'
   because of it :) )
+- location.rb, zsortedgroup.rb: more efficient strategy of z-sorted painting -
+  without sorting all game objects in every frame.
+  Unfortunatelly it didn't bring a single fps :(
 
 [22.January 2009]
 - ability.rb: RD->RDoc

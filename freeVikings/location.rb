@@ -2,6 +2,7 @@
 # igneus 14.2.2005
 
 require 'forwardable'
+require 'zsortedgroup.rb'
 
 module FreeVikings
 
@@ -36,11 +37,12 @@ module FreeVikings
       end
 
       @map = Map.new(loader.map_loader)
+
       @spritemanager = SpriteManager.new
       @activeobjectmanager = Group.new
       @itemmanager = Group.new
-
       @staticobjects = Group.new
+      @objects = ZSortedGroup.new # Group of all objects
 
       @talk = nil # Slot for a Talk. 
       # (one talk at a time can be running in a Location)
@@ -291,18 +293,7 @@ module FreeVikings
 
       @map.paint_background(surface, displayed_rect)
 
-      (@staticobjects.members_on_rect(displayed_rect) +
-       @activeobjectmanager.members_on_rect(displayed_rect) +
-       @itemmanager.members_on_rect(displayed_rect) +
-       @spritemanager.members_on_rect(displayed_rect)).sort! {|a,b|
-        if a.z < b.z then
-          -1
-        elsif a.z == b.z then
-          0
-        else
-          1
-        end
-      }.each {|o|
+      @objects.members_on_rect(displayed_rect) {|o|
         offset = [surfr.left + (o.paint_rect.left - displayed_rect.left), 
                   surfr.top + (o.paint_rect.top - displayed_rect.top)]
 
@@ -320,6 +311,7 @@ module FreeVikings
       module_eval ""\
       "def add_#{object_name}(o)\n"\
       "  #{group}.add o\n"\
+      "  @objects.add o\n"\
       "  put_self o\n"\
       "end"
     end
@@ -328,6 +320,7 @@ module FreeVikings
       module_eval ""\
       "def delete_#{object_name}(o)\n"\
       "  #{group}.delete o\n"\
+      "  @objects.delete o\n"\
       "  put_nulllocation o\n"\
       "end"
     end
