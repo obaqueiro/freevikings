@@ -1,3 +1,6 @@
+[23.January 2009]
+- menu/menu.rb: added attribute height, fixed width error
+
 [10.January 2009]
 - menu/items/select.rb: change proc doesn't get indices but values;
   added methods 'choice' and 'choice=';

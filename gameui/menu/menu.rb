@@ -57,11 +57,29 @@ module GameUI
       # if no exists, exception is raised. surface behaves in the same way.
 
       def initialize(parent, title, surface=nil, text_renderer=nil, 
-                     x=nil, y=nil, width=nil)
+                     x=nil, y=nil, width=nil, height=nil)
         super(parent)
 
         @menu_items = []
 
+        @text_renderer = if text_renderer then
+                           text_renderer
+                         elsif parent then
+                           parent.text_renderer
+                         else
+                           raise "TextRenderer wasn't given and can't be "\
+                           "inherited from parent (parent doesn't exist). "\
+                           "Please, supply TextRenderer."
+                         end
+        @surface = if surface then
+                     surface
+                   elsif parent then
+                     parent.surface
+                   else
+                     raise "Surface wasn't supplied and can't be inherited "\
+                     "from parent menu (parent menu doesn't exist). Please, "\
+                     "supply Surface."
+                   end
         @x = if x then
                x
              elsif parent
@@ -83,26 +101,16 @@ module GameUI
                  else
                    DEFAULT_WIDTH
                  end
-        @text_renderer = if text_renderer then
-                           text_renderer
-                         elsif parent then
-                           parent.text_renderer
-                         else
-                           raise "TextRenderer wasn't given and can't be "\
-                           "inherited from parent (parent doesn't exist). "\
-                           "Please, supply TextRenderer."
-                         end
-        @surface = if surface then
-                     surface
-                   elsif parent then
-                     parent.surface
-                   else
-                     raise "Surface wasn't supplied and can't be inherited "\
-                     "from parent menu (parent menu doesn't exist). Please, "\
-                     "supply Surface."
-                   end
+        @height = if height then
+                    height
+                  elsif parent
+                    parent.height
+                  else
+                    # maximum height
+                    @surface.h - @y
+                  end
 
-        @update_rect = [@x, 0, @x+@width, @surface.h]
+        @update_rect = [@x, @y, @width, @height]
 
         @image = create_image(title)
         @selector = create_selector()
