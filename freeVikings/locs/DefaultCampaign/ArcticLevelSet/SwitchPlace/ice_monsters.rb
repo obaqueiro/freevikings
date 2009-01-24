@@ -150,14 +150,14 @@ module IceLand
 
     def in
       unless @in
-        each {|m| LOCATION.static_objects.add m}
+        each {|m| LOCATION.add_static_object m}
         @in = true
       end
     end
 
     def out
       if @in
-        each {|m| LOCATION.static_objects.delete m}
+        each {|m| LOCATION.delete_static_object m}
         @in = false
       end
     end

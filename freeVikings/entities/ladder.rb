@@ -7,7 +7,7 @@ module FreeVikings
 
   class Ladder < ActiveObject
 
-    include StaticObject
+    # include StaticObject
 
     DEFAULT_Z_VALUE = 0
 
@@ -47,7 +47,7 @@ module FreeVikings
     end
 
     def register_in(l)
-      l.add_static_object self
+      # l.add_static_object self
       l.add_active_object self
     end
 

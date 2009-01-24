@@ -90,6 +90,8 @@ module FreeVikings
       end
 
       loader.load_exit(self)
+      @objects.add @exitter
+
       loader.load_start(self)
 
       init_vikings_team

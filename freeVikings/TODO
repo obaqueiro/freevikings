@@ -15,6 +15,12 @@ requests on graphics and other content move to the forum
 
 (-) New graphic style of bottompanel (layout + images)
 
+======== to be done for release 0.8 ====================================
+
+(-) level Climbing:
+    why do both locks disappear on one key use?
+    switched-off ladder disappears
+
 ======== Code ==========================================================
 
 (-) web: add SF logo to phpBB3
@@ -75,9 +81,10 @@ requests on graphics and other content move to the forum
 (-) Speech boxes should be placed in some cleverer way, so that all text
     is visible (try to talk while standing at the end of map)
 
-(-) Why don't trolls in HappyLEnd get angry?
-
-(-) Troll shouldn't go through the door... (try Christmas2008/HolyHole...)
+(-) Trolls
+    (-) Why don't trolls in HappyLEnd get angry?
+    (-) Troll shouldn't go through the door... (try Christmas2008/HolyHole...)
+    (-) Trolls should attack Olaf's shield
 
 (-) Two ways of reloading a level: everything (for map development etc)
     or just a script (map is preserved) - loading of some maps takes

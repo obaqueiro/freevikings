@@ -3,7 +3,6 @@
 
 require 'programwalker.rb'
 require 'entities/arrow.rb'
-require 'monster'
 require 'monstermixins'
 
 module FreeVikings
