@@ -1,3 +1,7 @@
+[24.January 2008]
+- menu/menu.rb: added method expanded_height; fixed height inheritance
+  from parent menu
+
 [23.January 2009]
 - menu/menu.rb: added attribute height, fixed width error
 

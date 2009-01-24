@@ -104,7 +104,7 @@ module GameUI
         @height = if height then
                     height
                   elsif parent
-                    parent.height
+                    parent.expanded_height
                   else
                     # maximum height
                     @surface.h - @y
@@ -130,6 +130,15 @@ module GameUI
       attr_reader :text_renderer
 
       attr_reader :width
+
+      # Every menu has method 'height' inherited from MenuItem,
+      # which says, how high is the menu's title in parent menu and
+      # method 'expanded_height', which says, how high the menu is
+      # when it's active/running.
+
+      def expanded_height
+        @height
+      end
 
       attr_reader :x
 
