@@ -24,7 +24,7 @@ module GameUI
         @title_image = @image
 
         # @image contains title and list of people and their credits
-        @image = RUDL::Surface.new([parent.width, 200])
+        @image = RUDL::Surface.new([parent.width, 250])
         @image.blit(@title_image, [0,0])
 
         y = @title_image.h + Menu::TITLE_MARGIN_BOTTOM
