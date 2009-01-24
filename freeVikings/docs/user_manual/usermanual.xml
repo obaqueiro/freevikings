@@ -287,12 +287,15 @@
       <screen>
 	<prompt>$</prompt> <userinput>ruby freevikings -l locs/RubyCampaign</userinput>
       </screen>
-      Look at the directory locs. Currently it contains three
-      campaign:
+      Look at the directory locs. Currently it contains three or four
+      campaigns:
       <itemizedlist>
 	<listitem><para>DafaultCampaign - 6 levels of varying quality</para></listitem>
-	<listitem><para>RubyCampaign - one stupid, but hot-new level</para></listitem>
-	<listitem><para>TestsCampaign - 12 small stupid levels for testing of different features of the game (mainly monsters) and 2 ancient levels which I wasn't able to delete because of nostalgy</para></listitem>
+	<listitem><para>RubyCampaign - one level with a few unique objects and beginning of once-in-the-future possibly interesting story.</para></listitem>
+
+	<listitem><para>Christmas2008 - 3 large levels with two secret places and Thor :)</para></listitem>
+
+	<listitem><para>TestsCampaign - 12 small stupid levels for testing of different features of the game (mainly monsters) and 2 ancient levels which I wasn't able to delete because of nostalgy. (This campaign isn't included in some distributions, but you can always obtain it from CVS.)</para></listitem>
       </itemizedlist>
     </para>
   </chapter>
@@ -398,6 +401,34 @@
       the inventory where you picked it, you should ensure that the two vikings
       touch each other (otherwise they can't give items to each other).
     </para>
+  </chapter>
+
+  <!-- chapter: CONFIGURATION FILE -->
+
+  <chapter>
+    <title>Configuration file</title>
+
+    <para>
+      Since release 0.8 you cancustomise default behavior of freeVikings
+      by creating configuration file in your $HOME directory.
+    </para>
+    <para>
+      Create directory <filename>.freeVikings</filename> (trailing dot is 
+      important!) and copy
+      <filename>freeVikings/config/config.rb</filename> there.
+      It shouldn't be hard to modify it, because it contains many helpful
+      comments.
+    </para>
+    <para>
+      If you from any reason can't place your configuration file in the way
+      described above (e.g. your OS doesn't support folders with dot in name),
+      place it wherever you want and define
+      environment variable <envar>FREEVIKINGS_HOME</envar> which will contain
+      path to directory with your config.rb .
+    </para>
+    <screen>
+      <prompt>$</prompt> <userinput>export FREEVIKINGS_HOME=/home/igneus/my_freevikings_home</userinput>
+    </screen>
   </chapter>
 
   <!-- CHAPTER: TROUBLESHOOTING -->

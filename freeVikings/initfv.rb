@@ -74,7 +74,7 @@ module FreeVikings
         top_menu = TopMenu.new(@window) do |menu|
 
           # Submenu: Start Game
-          Menu.new(menu, "Start Game") do |start_menu|
+          BigMenu.new(menu, "Start Game") do |start_menu|
             ActionButton.new(start_menu, "New Game", Proc.new {
                                @log.info "Starting new game."
                                Game.new(@window, @play_campaign).game_loop
@@ -90,7 +90,7 @@ module FreeVikings
                              })
             # SubSubmenu: Select Level (nifty feature for developers)
             if FreeVikings::VERSION == 'DEV' && ARGV[0] == 'megahIte' then
-              Menu.new(start_menu, "SELECT LEVEL", nil, nil) do |sellevel_menu|
+              BigMenu.new(start_menu, "SELECT LEVEL", nil, nil) do |sellevel_menu|
                 StructuredWorld.new(FreeVikings::CONFIG['Files']['levels'][0]).levels.each do |l|
                   ActionButton.new(sellevel_menu, l.title, Proc.new {
                                      @log.info "Starting the game with password '#{l.password}'."
@@ -118,7 +118,7 @@ module FreeVikings
           }
           
           # Submenu: Graphics
-          Menu.new(menu, "Graphics", nil,nil,nil,nil, 300) do |graphics_menu|
+          BigMenu.new(menu, "Graphics", nil,nil,nil,nil, 300) do |graphics_menu|
           
             FVConfiguratorButton.new(graphics_menu,
                                      "Mode", 
@@ -146,7 +146,7 @@ module FreeVikings
           end
 
           # Submenu: Sound
-          Menu.new(menu, "Sound") do |sound_menu|
+          BigMenu.new(menu, "Sound") do |sound_menu|
 
             FVConfiguratorButton.new(sound_menu, "Level music", 'Audio/music enabled', 
                                      {'on' => true, 'off' => false})
@@ -155,7 +155,8 @@ module FreeVikings
 
           # Submenu: Credits
           Credits.new(menu, [['Jakub Pavlik', 'programming, graphics, levels'],
-                             ['Ingo Fulfs', 'graphics, music']])
+                             ['Ingo Fulfs', 'graphics, music'],
+                             ['Magnus Nygaard', 'graphics']])
           
           QuitButton.new(menu, QuitButton::QUIT)
         end

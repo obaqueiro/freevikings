@@ -4,6 +4,17 @@
 
 module FreeVikings
 
+  # Menu which is meant to be fullscreen and thus paints all the background 
+  # black.
+
+  class BigMenu < GameUI::Menus::Menu
+
+    def prepare
+      @surface.fill BACKGROUND_COLOUR
+      super
+    end
+  end
+
   # Menu for the freeVikings game is built on the base of classes from
   # GameUI::Menus.
   # A top-level Menu class.
@@ -13,7 +24,7 @@ module FreeVikings
   #
   # How do I make the 'indirect parent'? Look at MenuHidingButton.
 
-  class TopMenu < GameUI::Menus::Menu
+  class TopMenu < BigMenu
 
     MENU_WIDTH = 250
 
@@ -34,7 +45,7 @@ module FreeVikings
       ActionButton.new(exit_dialog, "Yes", Proc.new {throw :game_exit})
       hider = MenuHidingButton.new(exit_dialog, "No")
 
-      super(hider, "Menu", nil, nil, @x, @y, @width)
+      super(hider, "Menu", nil, nil, @x, @y, @width, 370)
     end
 
     private

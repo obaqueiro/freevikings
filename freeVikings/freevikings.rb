@@ -161,7 +161,11 @@ OPTIONS_DEF = [
 
                ["--progressbar", "-B", GetoptLong::OPTIONAL_ARGUMENT,
                "Show progressbar while loading (no argument means 'off')",
-               "on|off"]
+               "on|off"],
+
+               ["--config", "-c", GetoptLong::OPTIONAL_ARGUMENT,
+                "Load given file as user's configuration file; if path is omitted, user's config isn't loaded",
+                "path or nothing"]
               ]
 
 ### Process commandline options:
@@ -171,6 +175,7 @@ cmdline_config = Configuration.load_empty_structure 'config/structure.conf'
 # some options aren't so simple to process, they need to be handled 
 # in a special way:
 additional_campaigns = []
+load_users_config = :normal
 
 # here is every argument-definition Array sliced to what GetoptLong wants;
 # everything is then given into GetoptLong
@@ -220,6 +225,12 @@ begin
         argument = 'off'
       end
       cmdline_config['Video']['loading progressbar'] = on_off_option(argument)
+    when "--config"
+      if argument == "" then
+        load_users_config = :no
+      else
+        load_users_config = argument
+      end
     end
   end # options.each block
 rescue GetoptLong::InvalidOption => ioex
@@ -247,35 +258,49 @@ rescue LoadError
   require 'mocklog4r.rb'
 end
 
+log = Log4r::Logger['init log']
+
 ### Load configuration files:
 
 # default:
-log = Log4r::Logger['init log']
 log.info "Loading configuration: structure and default values."
 FreeVikings::CONFIG = Configuration.new('config/structure.conf')
 FreeVikings::CONFIG.load 'config/defaults.conf'
 # user's:
 log.info "Loading user's configuration file."
-if ENV['FREEVIKINGS_HOME'] then
-  ucfg = ENV['FREEVIKINGS_HOME']+FreeVikings::USERS_CONFIGURATION_FILE_NAME
-  if File.exist?(ucfg) then
-    log.info "Loading user's configuration file '#{ucfg}'"
-    FreeVikings::CONFIG.load ucfg
-  else
-    log.error "Found environment variable FREEVIKINGS_HOME with value "\
-    "'#{ENV['FREEVIKINGS_HOME']}', but file "\
-    "'#{FreeVikings::USERS_CONFIGURATION_FILE_NAME}' not found in that "\
-    "directory. User's configuration couldn't be loaded."
-  end
-elsif ENV['HOME'] then
-  ucfg = ENV['HOME']+'/.freeVikings/'+FreeVikings::USERS_CONFIGURATION_FILE_NAME
-  if File.exist?(ucfg) then
-    log.info "Loading user's configuration file '#{ucfg}'"
-    FreeVikings::CONFIG.load ucfg
-  else
-    log.error "Found environment variable HOME with value '#{ENV['HOME']}', "\
-    "but file '#{FreeVikings::USERS_CONFIGURATION_FILE_NAME}' not found in "\
-    "that directory. User's configuration couldn't be loaded."
+if load_users_config == :no then
+  log.info "User's configuration file not loaded as requested."
+else
+  if load_users_config.is_a? String then
+    ucfg = load_users_config
+    if File.exist? ucfg then
+      log.info "Loading user's configuration file '#{ucfg}'"
+      FreeVikings::CONFIG.load ucfg
+    else
+      @log.error "Configuration file '#{ucfg}' specified on the command-line"\
+      "not found."
+    end
+  elsif ENV['FREEVIKINGS_HOME'] then
+    ucfg = ENV['FREEVIKINGS_HOME']+FreeVikings::USERS_CONFIGURATION_FILE_NAME
+    if File.exist?(ucfg) then
+      log.info "Loading user's configuration file '#{ucfg}'"
+      FreeVikings::CONFIG.load ucfg
+    else
+      log.error "Found environment variable FREEVIKINGS_HOME with value "\
+      "'#{ENV['FREEVIKINGS_HOME']}', but file "\
+      "'#{FreeVikings::USERS_CONFIGURATION_FILE_NAME}' not found in that "\
+      "directory. User's configuration couldn't be loaded."
+    end
+  elsif ENV['HOME'] then
+    ucfg = ENV['HOME']+'/.freeVikings/'+FreeVikings::USERS_CONFIGURATION_FILE_NAME
+    if File.exist?(ucfg) then
+      log.info "Loading user's configuration file '#{ucfg}'"
+      FreeVikings::CONFIG.load ucfg
+    else
+      log.error "Found environment variable HOME with value '#{ENV['HOME']}', "\
+      "but file '#{FreeVikings::USERS_CONFIGURATION_FILE_NAME}' not found in "\
+      "that directory. User's configuration couldn't be loaded."
+    end
   end
 end
 # add commandline options:

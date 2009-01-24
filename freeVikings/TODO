@@ -17,10 +17,28 @@ requests on graphics and other content move to the forum
 
 ======== Code ==========================================================
 
-(-) Piranhas: some randomness (they shouldn't bite all at the same time and
-    have the same speed)
+(-) web: add SF logo to phpBB3
 
-(-) Rename Killtoy to Mjolnir?
+(-) Wall/monster-smashing feature
+    (-) [VI] Erik's 'head-smash' feature (depends on rewriting VikingState -
+             whole design of VikingState must be changed, because
+             vertical and horizontal state can't be so much "standalone" -
+             it leads to unknown states etc.)
+    (-) bomb's flame can't reach behind wall or shield
+    (-) Dropped bomb stops on a shield
+
+(-) [GO] Olaf's van: all vikings can be inside but just Olaf can drive it;
+    it only moves when it has enough fuel; it has attributes similar to Olaf
+    (vikings can stay on it's deck; monsters can't pass through it)
+
+(-) Pulling
+    (-) vikings can pull some objects
+    (-) [GO] Pullable block 80*80px
+
+(-) clean freevikings.rb up, especially loading of configs
+
+(-) GameUI::Menu, MenuItem: rename height and expanded_height
+    to item_height and menu_height (both variables and reader methods)
 
 (-) Automatic frame limit (optional)
 
@@ -29,11 +47,14 @@ requests on graphics and other content move to the forum
 (-) Small levels (like RubyCampaign/Intro with panel on the side) paint well -
     unused part of the screen might be e.g. black
 
+(-) In-game menu doesn't have effect on fps value
+
+(-) Piranhas: some randomness (they shouldn't bite all at the same time and
+    have the same speed)
+
+(-) Rename Killtoy to Mjolnir?
+
 (-) Config file
-    (-) option to load some file instead of user's configuration file
-        or to load just the defaults
-    (-) write about it into the user's manual
-    (-) Sample user's configuration file with rich comments
     (-) game configurability
         (-) configurable keys
         (-) warp/smooth switching
@@ -49,12 +70,12 @@ requests on graphics and other content move to the forum
     (-) Menu: add a message if a bad password is given (also to the GUI,
         not only to a console)
     (-) Possibility to change keys (movement, inventory control etc.)
-    (-) define location storage places
-
-(-) Why don't trolls in HappyLEnd get angry?
+    (-) add campaigns
 
 (-) Speech boxes should be placed in some cleverer way, so that all text
     is visible (try to talk while standing at the end of map)
+
+(-) Why don't trolls in HappyLEnd get angry?
 
 (-) Troll shouldn't go through the door... (try Christmas2008/HolyHole...)
 
@@ -100,19 +121,7 @@ requests on graphics and other content move to the forum
 
 (-) Redesign VikingState (current design is pretty useless and immature)
 
-(-) Wall/monster-smashing feature
-    (-) [VI] Erik's 'head-smash' feature (depends on rewriting VikingState -
-             whole design of VikingState must be changed, because
-             vertical and horizontal state can't be so much "standalone" -
-             it leads to unknown states etc.)
-    (-) bomb's flame can't reach behind wall or shield
-    (-) Dropped bomb stops on a shield
-
 (-) [GO] LivingStone - animate all frames properly, finish code
-
-(-) [GO] Olaf's van: all vikings can be inside but just Olaf can drive it;
-    it only moves when it has enough fuel; it has attributes similar to Olaf
-    (vikings can stay on it's deck; monsters can't pass through it)
 
 (-) [DOC] Create manpage of freeVikings
 

@@ -1,3 +1,9 @@
+[24.January 2009]
+- freevikings.rb: added option -c to load config from non-default path
+- initfv.rb, topmenu.rb: fixed problems caused by yesterday's digging in Menu
+- config/config.rb: sample user's configuration file
+- docs/user_manual/usermanual.xml: added chapter about configuration file
+
 [23.January 2009]
 - heroandmonster.rb entity.rb sprite.rb item.rb staticobject.rb activeobject.rb
   some classes moved back from SchwerEngine, because they aren't general enough
