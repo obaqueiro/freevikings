@@ -5,8 +5,14 @@
 - docs/user_manual/usermanual.xml: added chapter about configuration file
 - location.rb: exit is visible again (disappeared thanks to yesterday's
   painting cleanup)
-- level SwitchPlace: fixed (used to add static objects directly through
-  Location#static_objects#add => they were invisible...)
+- fixes of levels before release:
+  - level SwitchPlace: fixed (used to add static objects directly through
+    Location#static_objects#add => static objects were invisible...)
+  - entities/flyingtroll.rb: removed requirement of monster.rb
+  - entities/lock.rb: Added error which deleted lock on unlocking attempt
+    even if key wasn't right
+  - entities/ladder.rb: Ladder is semi-solid again
+  - level Climbin' : fixed Ladder-system
 
 [23.January 2009]
 - heroandmonster.rb entity.rb sprite.rb item.rb staticobject.rb activeobject.rb

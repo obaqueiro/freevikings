@@ -64,6 +64,7 @@ class TrickyLadderSystem
   def switch_changed(switch)
     if switch.off? then
       @location.delete_active_object @switches_and_ladders[switch]
+      @location.delete_static_object @switches_and_ladders[switch]
 
       @switches_and_ladders.each_pair {|sw, ld|
         next if sw == switch
@@ -84,6 +85,7 @@ class TrickyLadderSystem
       # let it disappear
       sw.silent_switch
       @location.delete_active_object @switches_and_ladders[sw]
+      @location.delete_static_object @switches_and_ladders[sw]
 
       # 'switch''s ladder appears
       @location << @switches_and_ladders[switch]

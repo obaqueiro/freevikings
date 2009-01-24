@@ -82,14 +82,14 @@ module FreeVikings
         raise AttemptToUnlockByANonKeyToolException, "#{key.class} is not a Key type."
       end
 
-      if key.colour == @colour then
-        @locked = false
-        @unlock_action.call if @unlock_action
+      if key.colour != @colour then
+        return false
       end
 
+      @locked = false
+      @unlock_action.call if @unlock_action
       @location.delete_static_object self
-
-      return ! @locked
+      return true
     end
 
     # Lock#unlock throws this exception if the given argument isn't of any 
