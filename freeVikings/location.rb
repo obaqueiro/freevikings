@@ -90,8 +90,6 @@ module FreeVikings
       end
 
       loader.load_exit(self)
-      @objects.add @exitter
-
       loader.load_start(self)
 
       init_vikings_team
@@ -160,8 +158,8 @@ module FreeVikings
 
     def exitter=(exitter)
       @exitter = exitter
-      @staticobjects.add exitter
       @exitter.location = self
+      @objects.add @exitter
     end
 
     # Returns an Array of size 2 which contains the coordinates 

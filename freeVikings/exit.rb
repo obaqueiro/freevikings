@@ -10,13 +10,12 @@ module FreeVikings
 
   class Exit < Entity
 
-    WIDTH = HEIGHT = 40
-
-    include StaticObject
+    WIDTH = 83
+    HEIGHT = 99
 
     def initialize(position)
       super position
-      @image = Image.load 'exit.tga'
+      @image = Image.load 'exit.png'
     end
 
     attr_accessor :location
