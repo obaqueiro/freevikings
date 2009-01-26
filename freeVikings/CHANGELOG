@@ -1,3 +1,7 @@
+[26.January 2009]
+- exit.rb: Exit#z # -> -100 (should be behind everything else)
+- levels of DefaultCampaign: updated position of exit
+
 [25.January 2009]
 - exit.rb, location.rb: Exit is not a static object
 - gfx/exit.png: replacement for old Exit by Magnus Nygaard

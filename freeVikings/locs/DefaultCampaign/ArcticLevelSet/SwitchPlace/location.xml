@@ -11,6 +11,6 @@
     <map src="ice_loc.xml"/>
     <script src="ice_monsters.rb"/>
     <start horiz="80" vertic="299" />
-    <exit horiz="1820" vertic="760" />
+    <exit horiz="1780" vertic="741" />
   </body>
 </location>

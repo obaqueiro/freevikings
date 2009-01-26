@@ -11,6 +11,6 @@
     <map src="yellowhall.xml"/>
     <script src="yellowhall_monsters.rb"/>
     <start horiz="240" vertic="380"/>
-    <exit horiz="1080" vertic="400"/>
+    <exit horiz="1040" vertic="381"/>
   </body>
 </location>

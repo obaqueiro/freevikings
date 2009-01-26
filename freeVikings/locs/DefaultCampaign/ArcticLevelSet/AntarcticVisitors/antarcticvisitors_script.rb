@@ -22,7 +22,7 @@ TS = LOCATION.map.tile_size
 # -- EXIT AREA --
 # EXIT is closed behind the locked door.
 
-exit_door = Door.new [31*TS-Door::WIDTH, 9*TS-Door::HEIGHT]
+exit_door = Door.new [32*TS-Door::WIDTH, 9*TS-Door::HEIGHT]
 LOCATION << exit_door
 
 exit_lock = Lock.new([32*TS+5, 9*TS-60], Proc.new { exit_door.open })

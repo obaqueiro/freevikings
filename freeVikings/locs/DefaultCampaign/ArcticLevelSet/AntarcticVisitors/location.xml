@@ -15,6 +15,6 @@
     <map src="antarcticvisitors_loc.xml"/>
     <script src="antarcticvisitors_script.rb"/>
     <start horiz="1000" vertic="59" />
-    <exit horiz="1100" vertic="280" />
+    <exit horiz="1100" vertic="261" />
   </body>
 </location>

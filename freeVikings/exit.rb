@@ -12,6 +12,7 @@ module FreeVikings
 
     WIDTH = 83
     HEIGHT = 99
+    DEFAULT_Z_VALUE = -100
 
     def initialize(position)
       super position
