@@ -28,7 +28,7 @@ module Tasks
            :export, # - CVS: export
            :rename, # - rename directory freeVikings to freeVikings-VERSION
            :archives, # - create archive
-           :ftp, # - ftp archive to web
+           # :ftp, # - ftp archive to web
            :freshmeat, :raa, # - update freshmeat and RAA entries
            :cleanup # - delete tmp dir
           ]

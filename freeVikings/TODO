@@ -17,9 +17,25 @@ requests on graphics and other content move to the forum
 
 ======== Code ==========================================================
 
-(-) Move EXIT in all levels
-
 (-) web: add SF logo to phpBB3
+
+(-) MasterPhW's objections
+    (-) user manual
+        - release tool: build user's manual
+        - README: link to user's manual
+    (-) fix documentation about -d option and comments in configs
+    (-) auto-fps-limiter
+    (-) it's confusing if monsters are killed (often accidentally -
+        MasterPhW couldn't find the first bear) when they aren't on the screen
+
+(-) Rename README to README.txt (even an unexperienced user of Windows should 
+    be able to read it);
+    Update make_release.rb
+
+(-) Rename LICENSES to LICENSES.txt (windows don't accept file LICENSES and
+    subfolder licenses/ in one folder)
+
+(-) Move EXIT in all levels
 
 (-) Wall/monster-smashing feature
     (-) [VI] Erik's 'head-smash' feature (depends on rewriting VikingState -
@@ -42,9 +58,16 @@ requests on graphics and other content move to the forum
 (-) GameUI::Menu, MenuItem: rename height and expanded_height
     to item_height and menu_height (both variables and reader methods)
 
-(-) Automatic frame limit (optional)
+(-) Frame limit
+    (-) Automatic frame limit (optional)
+    (-) setup in menu (auto/off/fixed value)
 
 (-) repair megahIte
+
+(-) release tool:
+    (-) sftp file to SF
+    (-) option of of basing release on some non-HEAD branch
+    (-) create user's manual
 
 (-) Small levels (like RubyCampaign/Intro with panel on the side) paint well -
     unused part of the screen might be e.g. black

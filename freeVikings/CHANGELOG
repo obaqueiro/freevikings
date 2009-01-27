@@ -1,3 +1,8 @@
+[27.January 2009]
+- utils/make_release.rb: task :ftp commented out
+- monster.rb: should have already be removed
+- TODO: added results of my communication with MasterPhW
+
 [26.January 2009]
 - exit.rb: Exit#z # -> -100 (should be behind everything else)
 - levels of DefaultCampaign: updated position of exit
