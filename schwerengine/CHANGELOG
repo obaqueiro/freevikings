@@ -3,6 +3,7 @@
   entity.rb, sprite.rb, item.rb, activeobject.rb, staticobject.rb,
   hero.rb, monster.rb:
   classes which are very freeVikings-specific moved back to freeVikings
+- rect3.rb: last zombie of experiments on 21.1. removed
 
 [22.January 2009]
 - rect3.rb: removed remaining 'require' after yesterday's RubyInline

@@ -120,10 +120,6 @@ module SchwerEngine
       return true
     end
 
-    def collides?(rect)
-      1 == collides(@x,@y,@w,@h, rect.left,rect.top,rect.w,rect.h)
-    end
-
     # point is [x,y] Array
 
     def point_inside?(point)
