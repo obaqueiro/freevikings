@@ -32,5 +32,6 @@
     <level>Troll</level>
     <level>FlyingTroll</level>
     <level>LockKeys</level>
+    <level>FireballSpitter</level>
   </suite>
 </levelsuite>

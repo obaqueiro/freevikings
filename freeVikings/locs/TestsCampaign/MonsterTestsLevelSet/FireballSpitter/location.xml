@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Fireball Spitter</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Deadly object.
+    </description>
+  </info>
+
+  <body>
+    <password>FYRR</password>
+    <map src="../Prototype/prototype_loc.xml"/>
+    <script src="fllspitter_script.rb"/>
+    <exit horiz="500" vertic="360" />
+    <start horiz="50" vertic="140" />
+  </body>
+</location>
