@@ -36,9 +36,9 @@ module FreeVikings
     # Hash where Colour constants are keys and corresponding Image objects
     # values.
 
-    @@images = {RED => Image.load('lock_red.tga'),
-                GREEN => Image.load('lock_green.tga'),
-                BLUE => Image.load('lock_blue.tga')}
+    @@images = {RED => Image.load('lock_red.png'),
+                GREEN => Image.load('lock_green.png'),
+                BLUE => Image.load('lock_blue.png')}
 
     # Arguments:
     # position:: is the same as at any other Entity.

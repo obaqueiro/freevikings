@@ -1,6 +1,8 @@
 [30.January 2009]
 - gfx/fireball.png: gfx/brick* : replaced by nogath's
 - wall.rb: image filenames updated
+- entities/key.rb, entities/lock.rb, gfx/key_*, gfx/lock_*:
+  old graphics of lock and keys replaced by Magnus'es
 
 [29.January 2009]
 - gfx/fireball.png, gfx/stone_fireballspitter.png,

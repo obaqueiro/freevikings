@@ -23,9 +23,9 @@ module FreeVikings
     # Hash where Lock::Colour constants are keys and corresponding Image 
     # objects values.
 
-    @@images = {RED => Image.load('key_red.tga'),
-                GREEN => Image.load('key_green.tga'),
-                BLUE => Image.load('key_blue.tga')}
+    @@images = {RED => Image.load('key_red.png'),
+                GREEN => Image.load('key_green.png'),
+                BLUE => Image.load('key_blue.png')}
 
     def initialize(position, colour=RED)
       super(position)
