@@ -94,8 +94,8 @@ module FreeVikings
     def create_images
       s = RUDL::Surface.new [@rect.w, @rect.h]
 
-      @brick = Image.load 'brick.tga'
-      @damaged = Image.load 'brick_damaged.tga'
+      @brick = Image.load 'brick.png'
+      @damaged = Image.load 'brick_damaged.png'
       @destroyed = Image.load 'brick_destroyed.tga'
 
       0.upto(@bricks_width) {|col|
