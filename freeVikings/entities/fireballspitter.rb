@@ -9,8 +9,6 @@ module FreeVikings
 
   class FireballSpitter < Sprite
 
-    include StaticObject
-
     WIDTH = 40
     HEIGHT = 80
     PAINT_WIDTH = 80
@@ -54,12 +52,7 @@ module FreeVikings
     end
 
     def register_in(loc)
-      loc.add_static_object self
       loc.add_sprite self
-    end
-
-    def solid?
-      true
     end
   end
 end

@@ -20,6 +20,7 @@ module FreeVikings
       @image = Model.new()
       @image.add_pair('left', Image.load('arrow_left.tga'))
       @image.add_pair('right', Image.load('arrow_right.tga'))
+
       @hunted_type = Monster
     end
 

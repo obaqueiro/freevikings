@@ -17,7 +17,25 @@ requests on graphics and other content move to the forum
 
 ======== Code ==========================================================
 
-(-) web: add SF logo to phpBB3
+(-) [GO] press(es)
+
+(-) [GO] broken game objects
+    (-) repair Wall (seems that it doesn't work)
+    (-) repair FireballSpitter (in testing level 'to left' one works well,
+        'to right' one doesn't)
+
+(-) method Entity.location_handlers() which accepts one or more Symbol 
+    arguments and creates register_in and unregister_in methods
+    use:
+    class MyBear < Sprite
+      location_handlers :sprite, :static_object
+    end
+
+(-) remove never more used graphics (they just make archives big and
+    cause confusement when someone looks into gfx/)
+
+(-) create spritesheets from one-per-frame images;
+    remove mirroring (mirrored version easily made by Surface#mirror_x)
 
 (-) MasterPhW's objections
     (-) user manual
@@ -34,6 +52,11 @@ requests on graphics and other content move to the forum
 
 (-) Rename LICENSES to LICENSES.txt (windows don't accept file LICENSES and
     subfolder licenses/ in one folder)
+
+(-) LevelSuite data loaded at application start (or when some levelsuite
+    is first requested), not at start of every game;
+    quicker searching for level with given password (internal Hash in 
+    LevelSuite?)
 
 (-) Move EXIT in all levels
 
@@ -96,6 +119,7 @@ requests on graphics and other content move to the forum
         not only to a console)
     (-) Possibility to change keys (movement, inventory control etc.)
     (-) add campaigns
+    (-) password input works well with mouse
 
 (-) Speech boxes should be placed in some cleverer way, so that all text
     is visible (try to talk while standing at the end of map)

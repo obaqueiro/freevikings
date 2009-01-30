@@ -9,7 +9,7 @@ module FreeVikings
 
     include MonsterMixins::ShieldSensitive
 
-    SPEED = 350
+    SPEED = 250
     WIDTH = HEIGHT = 32
 
     # direction is :left or :right
@@ -48,7 +48,7 @@ module FreeVikings
                else
                  frame_names.collect {|n| spritesheet[n] }
                end
-      @image = Animation.new(0.2, frames)
+      @image = Animation.new(0.4, frames)
     end
   end
 end
