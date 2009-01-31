@@ -156,7 +156,8 @@ module FreeVikings
           # Submenu: Credits
           Credits.new(menu, [['Jakub Pavlik', 'programming, graphics, levels'],
                              ['Ingo Fulfs', 'graphics, music'],
-                             ['Magnus Nygaard', 'graphics']])
+                             ['Magnus Nygaard', 'graphics'],
+                             ['Federico Borrone', 'graphics']])
           
           QuitButton.new(menu, QuitButton::QUIT)
         end

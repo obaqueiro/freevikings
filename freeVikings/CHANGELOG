@@ -1,3 +1,7 @@
+[31.January 2009]
+- gfx/stone_firespitter.png: replaced by nogath's
+- iitfv.rb: Federico Borrone AKA nogath added to Credits
+
 [30.January 2009]
 - gfx/fireball.png: gfx/brick* : replaced by nogath's
 - wall.rb: image filenames updated

@@ -24,6 +24,9 @@ requests on graphics and other content move to the forum
     (-) repair FireballSpitter (in testing level 'to left' one works well,
         'to right' one doesn't)
 
+(-) Credits not hard-coded, but loaded from a data file (even the one who isn't
+    able to run freeVikings can see who contributed)
+
 (-) method Entity.location_handlers() which accepts one or more Symbol 
     arguments and creates register_in and unregister_in methods
     use:
