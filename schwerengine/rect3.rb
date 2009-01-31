@@ -186,8 +186,19 @@ module SchwerEngine
     end
     alias_method(:top=, :y=)
       
-    attr_accessor :w
-    attr_accessor :h
+    attr_reader :w
+
+    def w=(nw)
+      @w = nw
+      @right = @x + @w
+    end
+
+    attr_reader :h
+
+    def h=(nh)
+      @h = nh
+      @bottom = @y + @h
+    end
 
     attr_reader :bottom
     attr_reader :right

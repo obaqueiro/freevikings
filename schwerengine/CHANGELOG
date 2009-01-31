@@ -1,3 +1,8 @@
+[31.January 2009]
+- rect.rb, rect2.rb: removed
+- rect3.rb: after more than 2 hours of debugging FreeVikings::Wall
+  and FreeVikings::Bomb I found an error in Rectangle#w= and h=
+
 [23.January 2009]
 - schwerengine.rb,
   entity.rb, sprite.rb, item.rb, activeobject.rb, staticobject.rb,
