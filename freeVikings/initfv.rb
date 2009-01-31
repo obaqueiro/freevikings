@@ -154,10 +154,7 @@ module FreeVikings
           end
 
           # Submenu: Credits
-          Credits.new(menu, [['Jakub Pavlik', 'programming, graphics, levels'],
-                             ['Ingo Fulfs', 'graphics, music'],
-                             ['Magnus Nygaard', 'graphics'],
-                             ['Federico Borrone', 'graphics']])
+          Credits.new(menu, load_credits)
           
           QuitButton.new(menu, QuitButton::QUIT)
         end
@@ -259,6 +256,21 @@ module FreeVikings
         @log.error "Default campaign ('#{FreeVikings::CONFIG['Files']['default campaign']}') not found."
         @play_campaign = FreeVikings::CAMPAIGNS.values.first
       end
+    end
+
+    # loads data from file CREDITS and returns them in data structure 
+    # acceptable for corresponding GameUI menu item
+
+    def load_credits
+      c = []
+
+      File.open('CREDITS', 'r').each_line do |line|
+        name, credits = line.split(':')
+        credits.strip!
+        c << [name, credits]
+      end
+
+      return c
     end
 
   end # class Init

@@ -233,7 +233,7 @@ module FreeVikings
 
           # destroy walls
           @location.static_objects_on_rect(@rect).each {|o|
-            if o.class == Wall then
+            if o.is_a? Wall then
               o.bash
             end
           }

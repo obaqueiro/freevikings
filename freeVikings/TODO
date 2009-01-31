@@ -19,13 +19,8 @@ requests on graphics and other content move to the forum
 
 (-) [GO] press(es)
 
-(-) [GO] broken game objects
-    (-) repair Wall (seems that it doesn't work)
-    (-) repair FireballSpitter (in testing level 'to left' one works well,
-        'to right' one doesn't)
-
-(-) Credits not hard-coded, but loaded from a data file (even the one who isn't
-    able to run freeVikings can see who contributed)
+(-) Credits
+    (-) longer (yes, it's time to make them scrollable!)
 
 (-) method Entity.location_handlers() which accepts one or more Symbol 
     arguments and creates register_in and unregister_in methods
@@ -48,13 +43,6 @@ requests on graphics and other content move to the forum
     (-) auto-fps-limiter
     (-) it's confusing if monsters are killed (often accidentally -
         MasterPhW couldn't find the first bear) when they aren't on the screen
-
-(-) Rename README to README.txt (even an unexperienced user of Windows should 
-    be able to read it);
-    Update make_release.rb
-
-(-) Rename LICENSES to LICENSES.txt (windows don't accept file LICENSES and
-    subfolder licenses/ in one folder)
 
 (-) LevelSuite data loaded at application start (or when some levelsuite
     is first requested), not at start of every game;

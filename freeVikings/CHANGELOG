@@ -1,6 +1,15 @@
 [31.January 2009]
 - gfx/stone_firespitter.png: replaced by nogath's
-- iitfv.rb: Federico Borrone AKA nogath added to Credits
+- initfv.rb: Federico Borrone AKA nogath added to Credits
+- gfx/brick_destroyed.tga: empty image removed
+- bomb.rb: moved to entities/ (I must have forgotten to do so earlier)
+- README -> README.txt, LICENSE -> LICENSE.txt,
+  (because of users of Windows: README should be readable even for total
+  Windows newbie and thus it should have a proper extension;
+  LICENSE makes name-clash with directory licenses/ on Windows filesystems.)
+- util/make_release.rb: changed README filename
+- CREDITS, initfv.rb: credits aren't hard-coded in the code of menu,
+  but loaded from file CREDITS
 
 [30.January 2009]
 - gfx/fireball.png: gfx/brick* : replaced by nogath's

@@ -21,7 +21,7 @@ module Tasks
            :make_branch, # - CVS: make branch
            :create_directory, # - create directory in /tmp and chdir there
            :checkout_new_branch, # - CVS: checkout new branch
-           :readme, # - modify README
+           :readme, # - modify README.txt
            :release, # - create RELEASE
            :commit, # - CVS: commit
            :remove_sandbox, # - remove the CVS working directory
@@ -70,18 +70,18 @@ module Tasks
     end
   end
 
-  def readme # - modify README
+  def readme # - modify README.txt
     # add version tag and date:
     Dir.chdir $setup.tmpdir+'/freeVikings'
     a = []
-    File.open('README', 'r') do |f|
+    File.open('README.txt', 'r') do |f|
       f.each {|l| a << l}
     end
     a[1].gsub!(/X+/) {|match| $setup.version.ljust(match.size)}
     a[1].gsub!(/D+/) {|match| Time.now.strftime('%m/%d/%Y').ljust(match.size)}
 
     unless $setup.pretend
-      File.open('README', 'w') do |f|
+      File.open('README.txt', 'w') do |f|
         a.each {|l| f.puts l}
       end
     else

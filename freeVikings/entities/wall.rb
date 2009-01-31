@@ -41,7 +41,7 @@ module FreeVikings
     # Called when wall is hit by Erik's head or bomb
 
     def bash
-      return unless solid?
+      return if @state != OK
 
       @state = DISAPPEARING
       @destroy_brick = 0
@@ -51,6 +51,8 @@ module FreeVikings
     end
 
     def update
+      return if @state == OK
+
       time_since_bash = Time.now.to_f - @destroy_time
 
       while (time_since_bash / 0.3) > @destroy_brick do
@@ -67,6 +69,7 @@ module FreeVikings
       if @destroy_brick > num_bricks then
         @state = KO
         @location.delete_sprite self
+        # @location.delete_static_object self
       end
     end
 
@@ -93,10 +96,12 @@ module FreeVikings
 
     def create_images
       s = RUDL::Surface.new [@rect.w, @rect.h]
+      s.set_colorkey [255,0,255]
 
       @brick = Image.load 'brick.png'
       @damaged = Image.load 'brick_damaged.png'
-      @destroyed = Image.load 'brick_destroyed.tga'
+      @destroyed = Image.wrap(RUDL::Surface.new([BRICK_SIZE, BRICK_SIZE]))
+      @destroyed.image.fill s.colorkey
 
       0.upto(@bricks_width) {|col|
         0.upto(@bricks_height) {|row|
