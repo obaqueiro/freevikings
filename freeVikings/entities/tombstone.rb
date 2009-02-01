@@ -11,10 +11,11 @@ module FreeVikings
 
   class Tombstone < Sprite
 
-    TIME_OF_EXISTENCY = 3
-
     HEIGHT = 50
     WIDTH = 50
+
+    FRAMES = 8
+    FRAME_TIME = 0.2 # in seconds
 
     def initialize(initial_position)
       pos = initial_position
@@ -23,9 +24,12 @@ module FreeVikings
       end
       pos.w = WIDTH
       pos.h = HEIGHT
+
       super pos
-      @appear_time = Time.now.to_i
-      @state = StateStone.new
+
+      @state = 0
+
+      @anim_lock = TimeLock.new(FRAME_TIME)
     end
 
     def hurt
@@ -33,57 +37,28 @@ module FreeVikings
     end
 
     def update
-      if @location.ticker.now >= @appear_time + @state.duration then
-        @appear_time += @state.duration
-        if @state.next.nil? then
-          destroy
-          return
-        else
-          @state = @state.next.new
-        end
+      return unless @anim_lock.free?
+
+      @state += 1
+
+      if @state >= FRAMES then
+        destroy
+        return
       end
+
+      @image = @images[@state]
+      @anim_lock.reset
     end
 
-    def image
-      @state.image.image
+    def init_images
+      frnames = %w(1 2 3 4 5 6)
+      tombstone = SpriteSheet.load2('tombstone.png', 50, 50, frnames)
+      
+      @images = frnames.collect {|n| tombstone[n] }
+      @images.concat [Image.load('puff_cloud1.tga'),
+                      Image.load('puff_cloud2.tga')]
+
+      @image = @images[0]
     end
-
-    attr_reader :state
-
-    private
-
-    class State
-      attr_reader :to_s
-      attr_reader :image
-      attr_reader :duration
-      attr_reader :next
-    end # class TombStoneState
-
-    class StateStone < State
-      def initialize
-        @to_s = 'stone'
-        @image = Image.load 'tombstone.tga'
-        @duration = 2.5
-        @next = StateBigCloud
-      end
-    end # class StateStone
-
-    class StateBigCloud < State
-      def initialize
-        @to_s = 'puff1'
-        @image = Image.load 'puff_cloud1.tga'
-        @duration = 0.5
-        @next = StateSmallCloud
-      end
-    end # class StateBigCloud
-
-    class StateSmallCloud < State
-      def initialize
-        @to_s = 'puff2'
-        @image = Image.load 'puff_cloud2.tga'
-        @duration = 0.5
-        @next = nil
-      end
-    end # class StateSmallCloud
   end # class Tombstone
 end # module FreeVikings
