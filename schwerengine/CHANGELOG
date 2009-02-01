@@ -1,3 +1,6 @@
+[1.February 2009]
+- timelock.rb: added method TimeLock#reset
+
 [31.January 2009]
 - rect.rb, rect2.rb: removed
 - rect3.rb: after more than 2 hours of debugging FreeVikings::Wall

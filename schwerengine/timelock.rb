@@ -16,18 +16,23 @@ module SchwerEngine
 
     def initialize(seconds_to_expiry=0, timer=Time)
       @timer = timer
-      @seconds_to_expiry = seconds_to_expiry
-      @start_time = timer.now.to_i
+      reset(seconds_to_expiry)
+    end
+
+    # Resets timer - makes it locked again.
+    # Optional argument can be used to change lock's time to expiry.
+
+    def reset(seconds_to_expiry=nil)
+      if seconds_to_expiry != nil then
+        @seconds_to_expiry = seconds_to_expiry
+      end
+      @start_time = @timer.now.to_f
     end
 
     # Answers the question 'is the TimeLock free yet?'.
 
     def free?
-      if time_now >= end_time then
-        return true
-      else
-        return false
-      end
+      time_now >= end_time
     end
 
     # Returns Float saying how many seconds are left before the TimeLock
