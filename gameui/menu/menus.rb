@@ -22,6 +22,7 @@ require 'items/choosebutton.rb'
 require 'items/actionbutton.rb'
 require 'items/textedit.rb'
 require 'items/credits.rb'
+require 'items/scrollingcredits.rb'
 require 'items/select.rb'
 
 
@@ -62,11 +63,21 @@ if __FILE__ == $0 then
 
   TextEdit.new(menu, "edit text", '', 12)
   ChooseButton.new(menu, "Sex", ['male', 'female', 'unknown'])
-  Credits.new(menu, [['Alex A.', 'programming'], 
-                     #['Carl C.', 'coffee support'],
-                     #['Devis D.', 'graphics, music, money'],
-                     ['Elvis Exploiter E. Expert Engonyama Erruptor', 
-                      'his totally different vision of software development is extremely useful']])
+
+  credits_data = [['Alex A.', 'programming'], 
+                  ['Carl C.', 'coffee support'],
+                  ['Devis D.', 'graphics, music, money'],
+                  ['Elvis Exploiter E. Expert Engonyama Erruptor', 
+                   'his totally different vision of software development is extremely useful']]
+
+  Credits.new(menu, credits_data)
+
+  credits_data += [['Frank Foe', 'fate & fake pfeffer'],
+                   ['George Grunge', 'musical support'],
+                   ['Hans Hutchinsson', 'consultations'],
+                   ['Isac Ibsen', 'inspirative sketches']]
+
+  ScrollingCredits.new(menu, credits_data)
 
   QuitButton.new(menu)
 

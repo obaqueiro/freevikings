@@ -1,5 +1,7 @@
 [1.February 2009]
 - menu/items/credits.rb: place for the fourth developer :)
+- menu/menus.rb, menu/items/scrollingcredits.rb: not yet finished variant
+  of Credits widget with unlimited space for developers (scrolls)
 
 [24.January 2008]
 - menu/menu.rb: added method expanded_height; fixed height inheritance
