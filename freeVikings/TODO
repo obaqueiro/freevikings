@@ -17,10 +17,30 @@ requests on graphics and other content move to the forum
 
 ======== Code ==========================================================
 
-(-) [GO] press(es)
+(-) [UI] scrolling credits (finish)
+    (-) must show title
+    (I always make widget Credits a bit higher when a new contributor appears;
+    soon it won't be possible :) )
 
-(-) Credits
-    (-) longer (yes, it's time to make them scrollable!)
+(-) Move EXIT in all levels
+
+(-) Pulling
+    (-) vikings can pull some objects
+    (-) [GO] Pullable block 80*80px
+
+(-) Wall/monster-smashing feature
+    (-) [VI] Erik's 'head-smash' feature (depends on rewriting VikingState -
+             whole design of VikingState must be changed, because
+             vertical and horizontal state can't be so much "standalone" -
+             it leads to unknown states etc.)
+    (-) bomb's flame can't reach behind wall or shield
+    (-) Dropped bomb stops on a shield
+
+(-) Frame limit
+    (-) Automatic frame limit (optional)
+    (-) setup in menu (auto/off/fixed value)
+
+(-) [GO] press(es)
 
 (-) method Entity.location_handlers() which accepts one or more Symbol 
     arguments and creates register_in and unregister_in methods
@@ -32,15 +52,14 @@ requests on graphics and other content move to the forum
 (-) remove never more used graphics (they just make archives big and
     cause confusement when someone looks into gfx/)
 
+(-) create CVS module for miniruby
+
 (-) create spritesheets from one-per-frame images;
     remove mirroring (mirrored version easily made by Surface#mirror_x)
 
 (-) MasterPhW's objections
     (-) user manual
-        - release tool: build user's manual
         - README: link to user's manual
-    (-) fix documentation about -d option and comments in configs
-    (-) auto-fps-limiter
     (-) it's confusing if monsters are killed (often accidentally -
         MasterPhW couldn't find the first bear) when they aren't on the screen
 
@@ -49,32 +68,14 @@ requests on graphics and other content move to the forum
     quicker searching for level with given password (internal Hash in 
     LevelSuite?)
 
-(-) Move EXIT in all levels
-
-(-) Wall/monster-smashing feature
-    (-) [VI] Erik's 'head-smash' feature (depends on rewriting VikingState -
-             whole design of VikingState must be changed, because
-             vertical and horizontal state can't be so much "standalone" -
-             it leads to unknown states etc.)
-    (-) bomb's flame can't reach behind wall or shield
-    (-) Dropped bomb stops on a shield
-
 (-) [GO] Olaf's van: all vikings can be inside but just Olaf can drive it;
     it only moves when it has enough fuel; it has attributes similar to Olaf
     (vikings can stay on it's deck; monsters can't pass through it - really?)
-
-(-) Pulling
-    (-) vikings can pull some objects
-    (-) [GO] Pullable block 80*80px
 
 (-) clean freevikings.rb up, especially loading of configs
 
 (-) GameUI::Menu, MenuItem: rename height and expanded_height
     to item_height and menu_height (both variables and reader methods)
-
-(-) Frame limit
-    (-) Automatic frame limit (optional)
-    (-) setup in menu (auto/off/fixed value)
 
 (-) repair megahIte
 
@@ -82,6 +83,9 @@ requests on graphics and other content move to the forum
     (-) sftp file to SF
     (-) option of of basing release on some non-HEAD branch
     (-) create user's manual
+    (-) add winbin creation
+        (but it should print a huge warning that winbin package shouldn't be 
+         uploaded without previous test on Windows :) )
 
 (-) Small levels (like RubyCampaign/Intro with panel on the side) paint well -
     unused part of the screen might be e.g. black

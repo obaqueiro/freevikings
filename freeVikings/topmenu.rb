@@ -37,7 +37,7 @@ module FreeVikings
     def initialize(surface)
       text_renderer = FreeVikings::FONTS['default']
       @x = surface.w/2 - MENU_WIDTH/2
-      @y = 110
+      @y = 90
       @width = MENU_WIDTH
 
       # Dialog 'Exit game - yes/no?'. The indirect parent.

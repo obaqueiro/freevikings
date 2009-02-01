@@ -145,11 +145,11 @@ CONFIG = {
     # Value: any number (higher than 3 or 4 makes game unplayable)
     'game speed' => 1,
 
-    # Milliseconds to sleep in every frame.
-    # (Set this to 10 or 20 if freeVikings
+    # Seconds to sleep in every frame.
+    # (Set this to 0.010 or 0.020 if freeVikings
     # have fps higher then 20 and vikings move suspiciously slowly)
     #
-    # Value: any number less than 100
+    # Value: any number between 0 and 0.10
     'frame delay' => 0,
   }
 }

@@ -1,3 +1,14 @@
+[1.February 2009]
+- entities/tombstone.rb: removed funny useless state classes (in 2005 I was
+  writing freeVikings and reading book about Design Patterns, but not 
+  everywhere I was able to use them properly...), added nogath's animated
+  tombstone graphic
+- gfx/tombstone.png: spritesheet of animated tombstone
+- config/config.rb, config/defaults.conf, freevikings.rb: 
+  fixed documentation about entry 'frame delay' (option -d)
+- topmenu.rb: menu placed a bit higher (for longer credits to fit on the 
+  screen)
+
 [31.January 2009]
 - gfx/stone_firespitter.png: replaced by nogath's
 - initfv.rb: Federico Borrone AKA nogath added to Credits

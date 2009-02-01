@@ -139,7 +139,7 @@ OPTIONS_DEF = [
                 "NUMBER"],
                
                ["--delay",   "-d", GetoptLong::REQUIRED_ARGUMENT,
-                "Number of milliseconds to sleep in every iteration of the main loop (it is very useful if the game runs on your computer with fps 40 or even higher - try 10 milliseconds)",
+                "Number of seconds to sleep in every iteration of the main loop (it is very useful if the game runs on your computer with fps 40 or even higher - try 0.010)",
                 "MILLISECONDS"],
                
                ["--startpassword", "-s", GetoptLong::REQUIRED_ARGUMENT,
