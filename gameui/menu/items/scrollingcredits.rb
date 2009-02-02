@@ -5,7 +5,7 @@ module GameUI
   module Menus
 
     VIEW_HEIGHT = 200
-    SCROLLING_SPEED = 20.0 # pixels per second
+    SCROLLING_SPEED = 35.0 # pixels per second
 
     # Credits enhanced by scrolling
 
@@ -18,7 +18,8 @@ module GameUI
         @title_image = @image
 
         @image = RUDL::Surface.new([parent.width, 
-                                    VIEW_HEIGHT+@title_image.h+Credits::SPACE])
+                                    @title_image.h+Credits::SPACE+VIEW_HEIGHT])
+        @image.blit(@title_image, [0,0])
 
         text_surfaces = []
         credits_height = 0
@@ -35,16 +36,14 @@ module GameUI
           credits_height += im.h
         end
 
-        @image.blit(@title_image, [0,0])
-
-        @credits_image = RUDL::Surface.new [@width, credits_height]
+        credits_image = RUDL::Surface.new [@width, credits_height]
         y = 0
         text_surfaces.each do |s|
-          @credits_image.blit s, [0,y]
+          credits_image.blit s, [0,y]
           y += s.h + Credits::SPACE
         end
 
-        @scroller = ScrollingImage.new(@credits_image, VIEW_HEIGHT, 
+        @scroller = ScrollingImage.new(credits_image, VIEW_HEIGHT, 
                                        SCROLLING_SPEED)
 
         QuitButton.new(self)
@@ -112,7 +111,10 @@ module GameUI
                                  @image.w, @image.h]
         end
 
-        dy = coordinates[1] + ty
+        dy = coordinates[1]
+        if ty > 0 then
+          dy += ty
+        end
         sy = ty >= 0 ? 0 : -ty
         sh = @view_height - ty
         

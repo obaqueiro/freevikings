@@ -1,3 +1,7 @@
+[2.February 2009]
+- menu/items/scrollingcredits.rb: finally seems to work well
+  (title isn't being overwritten, speed of scrolling is constant)
+
 [1.February 2009]
 - menu/items/credits.rb: place for the fourth developer :)
 - menu/menus.rb, menu/items/scrollingcredits.rb: not yet finished variant
