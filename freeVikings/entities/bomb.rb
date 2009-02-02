@@ -59,7 +59,7 @@ module FreeVikings
           return false
         end
 
-        if @location.area_free?(next_position) then
+        if area_free?(next_position) then
           @rect = next_position
           return true
         else
@@ -67,6 +67,8 @@ module FreeVikings
           return false
         end
       end
+
+
 
       def start_timer
         if ! defined?(@explosion_timer) then
@@ -106,6 +108,16 @@ module FreeVikings
       end
 
       private
+
+      def area_free?(rect)
+        if Viking.shield then
+          if rect.collides? Viking.shield.rect then
+            return false
+          end
+        end
+
+        return @location.area_free?(rect)
+      end
 
       def next_position
         n = @rect.dup
