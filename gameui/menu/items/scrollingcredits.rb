@@ -33,7 +33,7 @@ module GameUI
           im.blit(name_img, [0,0])
           im.blit(credit_img, [Credits::INDENT,name_img.h])
           text_surfaces << im
-          credits_height += im.h
+          credits_height += im.h + Credits::SPACE
         end
 
         credits_image = RUDL::Surface.new [@width, credits_height]
