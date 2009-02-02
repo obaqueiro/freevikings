@@ -2,20 +2,9 @@
            ========== FreeVikings TODO file ==========
            ===========================================
 
-======== Graphics ======================================================
-
-!!! TODO LIST FOR GRAPHICS MOVES !!!
-while list of core features waiting for implementation remains here,
-requests on graphics and other content move to the forum
-(section Development > Graphics):
-[http://freevikings.sourceforge.net/phpBB3/]
-
-(-) Full spritesheets for all three vikings according to the developers'
-    manual
-
-(-) New graphic style of bottompanel (layout + images)
-
 ======== Code ==========================================================
+
+(-) Update User's manual on the web
 
 (-) Move EXIT in all levels
 
@@ -52,8 +41,6 @@ requests on graphics and other content move to the forum
     remove mirroring (mirrored version easily made by Surface#mirror_x)
 
 (-) MasterPhW's objections
-    (-) user manual
-        - README: link to user's manual
     (-) it's confusing if monsters are killed (often accidentally -
         MasterPhW couldn't find the first bear) when they aren't on the screen
 
@@ -76,10 +63,13 @@ requests on graphics and other content move to the forum
 (-) release tool:
     (-) sftp file to SF
     (-) option of of basing release on some non-HEAD branch
-    (-) create user's manual
+    (-) create user's manual (! update it's location in README !)
     (-) add winbin creation
         (but it should print a huge warning that winbin package shouldn't be 
          uploaded without previous test on Windows :) )
+    (-) release tool: add task: mail to freevikings-users mailing list
+    (-) release tool: option -P to checkout (ommit empty directories)
+
 
 (-) Small levels (like RubyCampaign/Intro with panel on the side) paint well -
     unused part of the screen might be e.g. black
@@ -118,16 +108,10 @@ requests on graphics and other content move to the forum
     (-) Troll shouldn't go through the door... (try Christmas2008/HolyHole...)
     (-) Trolls should attack Olaf's shield
 
-(-) Two ways of reloading a level: everything (for map development etc)
-    or just a script (map is preserved) - loading of some maps takes
-    a lot of time
-
 (-) Model: if unknown state occurs, just log an error message and don't
     raise exception (or possibility to switch off exception)
 
 (-) Possibility to load images from level directory
-
-(-) SchwerEngine: all rect versions should have methods move, move_y, move_x
 
 (-) Fix BottomPanel
     (-) select box can blink in trash (it may be solved by creating
@@ -145,13 +129,6 @@ requests on graphics and other content move to the forum
 
 (-) Vikings remember the surface they are standing on so that it isn't 
     necessary to check for fall in every iteration of frame cycle
-
-(-) Make compiled version of SchwerEngine::Rectangle (Profiling told me that
-    program spends 
-	14% of time in Rectangle#at (2530 calls), 
-	8% in Rectangle#left (1272 calls)
-	7% in Rectangle#collides (172 calls))
-	etc.
 
 (-) Pause game on focus loss (should be just option -
     it spares cpu time, but someone may not want this behavior)
@@ -194,7 +171,7 @@ requests on graphics and other content move to the forum
     Heroes are defined in location.xml; possibility to modify team on-the-fly
     from inside level
 
-(-) [UI] Add some "dead animation" on level restart
+(-) [UI] Add some 'video' (e.g. viking's funeral as in LV1) on level restart
 
 (-) Move all requirement stuff to one file (freevikings.rb), so that it can be 
     controlled easily
@@ -205,12 +182,6 @@ requests on graphics and other content move to the forum
 
 (-) [UI] Show level name, description and author at the beginning of level
 
-(-) release tool: add task: mail to freevikings-users mailing list
-
-(-) release tool: option -P to checkout (ommit empty directories)
-
-(-) Map's borders are solid, so it is impossible to go out of the map
-
 (-) File.open in the script should receive address relative to level directory
 
 (-) [GO] Some teleporting animation
@@ -220,8 +191,6 @@ requests on graphics and other content move to the forum
 
 (-) Game objects which weren't given any theme should wait till they are
     registered in a location and try to get it's theme - not raise exception
-
-(-) Move all items to a separate directory items/ ?
 
 (-) Installation
 
