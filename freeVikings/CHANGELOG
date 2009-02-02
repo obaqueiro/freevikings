@@ -1,3 +1,7 @@
+[2.February 2009]
+- initfv.rb: ScrollingCredits widget used in the menu (yeah! unlimited space
+  for new developers! :) )
+
 [1.February 2009]
 - entities/tombstone.rb: removed funny useless state classes (in 2005 I was
   writing freeVikings and reading book about Design Patterns, but not 
