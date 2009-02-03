@@ -17,15 +17,35 @@
     <title>Installation</title>
 
     <para>
-      Game is written completely in Ruby. While Ruby is an interpreted 
+      Game is written completely in Ruby. Because Ruby is an interpreted 
       programming language, it isn't needed (and most probably even not 
       possible) to compile the code. You just have to install Ruby
       interpreter and a few libraries. Both the interpreter and all needed
       libraries are licensed by open source licenses and you can download
       them all for free.
     </para>
+
+    <section>
+      <title>Painless way: "Binary distribution"</title>
+      <para>
+	If you downloaded "binary distribution" for Windows (available since
+	release 0.7), you can skip this chapter. Package contains everything
+	you need to play freeVikings.
+      </para>
+    </section>
+
     <section>
       <title>Ruby - get it and install</title>
+      <note>
+	<title>Ruby version</title>
+	<para>
+	  freeVikings have been developed on Ruby 1.8.4 and tested on 
+	  Ruby 1.8.6. Some time ago I successfully tested the game 
+	  on development version of Ruby branch 1.9, but until compatibility
+	  with 1.9 is officially declared, it's much safer to install
+	  1.8 in order to play the game.
+	</para>
+      </note>
       <section>
 	<title>Linux</title>
 	<para>
@@ -47,26 +67,6 @@
 	  the interpreter, documentation, interactive shell, ri documentation
 	  browser, many useful libraries and Nice Ruby IDE.
 	</para>
-	<para>
-	  If you are installing Ruby from the One Click Installer,
-	  you might want <emphasis>not to check</emphasis> option 
-	  "Enable RubyGems" (see image below).
-	  <graphic fileref="images/oneclickrubygems.png"/>
-	  If you check this option, the installer appends option '-rubygems' 
-	  to environment variable <envar>RUBYOPT</envar> which causes
-	  Ruby to always load RubyGems.
-	  FreeVikings before release 0.6 (and many more applications
-	  built upon the RUDL library) wouldn't work then.
-	  On the other side, you may want to <emphasis>check</emphasis>
-	  this option, because some useful libraries (such as Log4r, which
-	  is useful when you want to see detailed freeVikings debugging
-	  data) are included in the installer as gems. But even if you
-	  don't check this option, you can still use RubyGems when you need -
-	  just start ruby from the commandline with option '-rubygems':
-	  <screen>
-	    <prompt>&gt;</prompt> <userinput>ruby -rubygems freevikings.rb</userinput>
-	  </screen>
-	</para>
       </section>
     </section>
 
@@ -78,31 +78,20 @@
 	  <listitem><para>RUDL 
 	  (get from SourceForge)</para></listitem>
 	</itemizedlist>
-	Those which should be included in Ruby distributions and you need 
-	to install them if they aren't:
-	<itemizedlist>
-	  <listitem><para>REXML 
-	  (usually packed with Ruby)</para></listitem>
-	  <listitem><para>YAML</para></listitem>
-	</itemizedlist>
 	Optional:
 	<itemizedlist>
 	  <listitem><para>Log4r 
 	  (included in Ruby One-Click installer as a gem; 
 	  optional since fV 0.6, get from RAA)</para></listitem>
 	</itemizedlist>
-	Redistributed with freeVikings:
-	<itemizedlist>
-	  <listitem><para>script 
-	  (included since fV 0.6; get from RAA 
-	  in order to play older versions)</para></listitem>
-	</itemizedlist>
       </para>
 
       <section>
 	<title>RUDL</title>
 	<para>
-	  RUDL is SDL port for Ruby. 
+	  RUDL is one of multiple ports of library 
+	  <ulink url="http://www.libsdl.org">SDL</ulink> to Ruby.
+	  (It's sometimes said to be the most buggy one. :), but I like it.)
 	</para>
 	<section>
 	  <title>Linux</title>
@@ -165,52 +154,6 @@
       </section>
 
       <section>
-	<title>REXML</title>
-	
-	<para>
-	  REXML is a very powerful XML-processing library and (I think since
-	  ruby-1.8.2) it is distributed together with Ruby as a part of it's
-	  library. So if you installed Ruby e.g. from source or on Windows
-	  from the One-Click installer, you already have REXML.
-	</para>
-	<para>
-	  Some Linux distro-makers like to provide it 
-	  as a separate packege so look for it.
-	</para>
-	<para>
-	  Simple test to check if REXML is present in your system:
-	  <screen>
-	    <prompt>[igneus@vidhost tmp]$</prompt> <userinput>irb</userinput>
-	    <prompt>irb(main):001:0></prompt> <userinput>require 'rexml/document'</userinput>
-	    <computeroutput>=> true</computeroutput>
-	  </screen>
-	  Great!
-	  <screen>
-	    <prompt>irb(main):001:0></prompt> <userinput>require 'rexml/document'</userinput>
-<computeroutput>LoadError: no such file to load -- rexml/document
-        from (irb):1:in `require'
-        from (irb):1</computeroutput>
-	  </screen>
-	  Here, unfortunatelly, you will have to try to find REXML.
-	  You can found the archive 
-	  at <ulink url="http://raa.ruby-lang.org/project/rexml/"/>.
-	  Unpack it and follow instructions from the file INSTALL.
-	</para>
-      </section>
-
-      <section>
-	<title>YAML</title>
-	<para>
-	  I can't remember if YAML is distributed together with Ruby or not.
-	  I hope it is (I have ruby-1.9.0 source for playing and it includes
-	  YAML library), but if you get LoadError either on freeVikings
-	  start or on level loading, saying, that you haven't YAML,
-	  it's time to look for the library and send me an e-mail
-	  (Hey, your manual is incomplete!).
-	</para>
-      </section>
-
-      <section>
 	<title>Log4r</title>
 	<para>
 	  Since freeVikings 0.6 you don't need this library to run freeVikings,
@@ -234,9 +177,6 @@
 	  <screen>
 	    <prompt>$</prompt> <userinput>gem install log4r</userinput>
 	  </screen>
-	  (If you have problems using gems, don't ask me - I haven't solved 
-	  them yet myself.)
-	  Remember that you can't use this for freeVikings before release 0.6.
 	</para>
 	<para>
 	  The second way is to download Log4r as an archive and install it
@@ -246,15 +186,16 @@
 	</para>
       </section>
 
-      <section>
-	<title>Script</title>
+      <note>
+	<title>Redistributed libraries</title>
 	<para>
-	  This small but great library is distributed together with freeVikings
-	  since release 0.6, but if you want to play older versions, you
-	  can get it 
-	  at <ulink url="http://raa.ruby-lang.org/project/script/"/>.
+	  Since release 0.6 part of library script 
+	  (exactly one file: <filename>lib/script.rb</filename>)
+	  by Joel VanderWerf is distributed with freeVikings.
+	  For more information on this library see 
+	  <ulink url="http://raa.ruby-lang.org/project/script/"/>.
 	</para>
-      </section>
+      </note>
     </section>
   </chapter>
 
@@ -262,42 +203,37 @@
 
   <chapter>
     <title>Running freeVikings</title>
-    <para>
-      You have installed Ruby and all required libraries. Now you can try 
-      to run freeVikings. For the first time it is useful to invoke
-      game from the command line, because if it crashes, you see the error
-      output.
-    </para>
-    <para>
-      You may also want to give some arguments. Type
-      <screen>
-	<prompt>$</prompt> <userinput>ruby freevikings --help</userinput>
-      </screen>
-      for full listing of supported options.
-    </para>
-    <para>
-      Example: disable sound (e.g. you hate freeVikings music or want to
-      listen to your favourite mp3s while playing freeVikings).
-      <screen>
-	<prompt>$</prompt> <userinput>ruby freevikings --sound off</userinput>
-      </screen>
-    </para>
-    <para>
-      Another example: Play other campaign than the Default one.
-      <screen>
-	<prompt>$</prompt> <userinput>ruby freevikings -l locs/RubyCampaign</userinput>
-      </screen>
-      Look at the directory locs. Currently it contains three or four
-      campaigns:
-      <itemizedlist>
-	<listitem><para>DafaultCampaign - 6 levels of varying quality</para></listitem>
-	<listitem><para>RubyCampaign - one level with a few unique objects and beginning of once-in-the-future possibly interesting story.</para></listitem>
+    <section>
+      <title>Windows "binary" release</title>
+      <para>
+	Unpack the release archive and execute batch file 
+	<filename>freevikings.bat</filename>. It will start freeVikings
+	using the interpreter and libraries shipped together with the game 
+	(regardless you have Ruby installed on your system or not).
+      </para>
+    </section>
 
-	<listitem><para>Christmas2008 - 3 large levels with two secret places and Thor :)</para></listitem>
+    <section>
+      <title>"Source" release</title>
+      <para>
+	You have installed Ruby and all required libraries. Now you can try 
+	to run freeVikings. For the first time it is useful to invoke
+	game from the command line, because if it crashes, you see the error
+	output.
+      </para>
+      <screen>
+	<prompt>[~]$</prompt> cd freeVikings
+	<prompt>[~/freeVikings]$</prompt> ruby freevikings.rb
+      </screen>
+    </section>
 
-	<listitem><para>TestsCampaign - 12 small stupid levels for testing of different features of the game (mainly monsters) and 2 ancient levels which I wasn't able to delete because of nostalgy. (This campaign isn't included in some distributions, but you can always obtain it from CVS.)</para></listitem>
-      </itemizedlist>
+    <para>
+      freeVikings accept many useful commandline options. To learn more about 
+      them, execute
     </para>
+    <screen>
+      <prompt>[~/freeVikings]$</prompt> ruby freevikings.rb --help
+    </screen>
   </chapter>
 
   <!-- chapter: CONTROLS -->
@@ -366,7 +302,7 @@
     </para>
     <para>
       On the image below you can see the bottom of game screen.
-      Active viking is Erik (his portraid is coloured - the others are black 
+      Active viking is Baleog (his portraid is coloured - the others are black 
       and white). The yellow frame shows which item in the inventory is active.
       <graphic fileref="images/inventory_normal.png"/>
       Press <keycap>Tab</keycap>. Game is paused and the yellow frame
@@ -387,13 +323,12 @@
       Now press <keycap>Tab</keycap> (pauses game, switches to 
       'inventory mode') and then <keycap>Space</keycap> (which switches
       to 'items exchanging mode'). Frame in active viking's inventory
-      is now green - see image below -  and blinking. Inventories of
+      is now green and blinking. Inventories of
       vikings which can't participate in the exchange get darker
       (see Olaf's). Use cursor keys left/right to move active item between 
       vikings. Than push <keycap>Space</keycap> to switch to 'normal inventory 
       mode' again.
     </para>
-    <graphic fileref="images/inventory_move.png"/>
     <para>
       You can do the same - move items between vikings - also using a mouse.
       Click an item and drop it over some other viking's portrait or
@@ -458,5 +393,19 @@
       </orderedlist>
       I'll do my best to help you.
     </para>
+  </chapter>
+
+  <chapter>
+    <title>Known bugs</title>
+
+    <section>
+      <title>Infinite loading</title>
+      <para>
+	Sometimes loading of a level takes forever. It is caused by
+	the way how progressbar is implemented. To avoid this annoying error
+	(if it occurs more often), disable progressbar in the menu
+	(section Graphics) or in your configuration file.
+      </para>
+    </section>
   </chapter>
 </book>
