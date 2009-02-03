@@ -15,6 +15,6 @@
     <map src="climbin_loc.tmx"/>
     <script src="climbin_script.rb"/>
     <start horiz="60" vertic="59" />
-    <exit horiz="80" vertic="400" />
+    <exit horiz="55" vertic="381" />
   </body>
 </location>

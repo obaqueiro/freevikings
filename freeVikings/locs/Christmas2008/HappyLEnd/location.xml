@@ -15,6 +15,6 @@
     <map src="happylend_loc.tmx"/>
     <script src="happylend_script.rb"/>
     <start horiz="50" vertic="659" />
-    <exit horiz="1130" vertic="40" />
+    <exit horiz="1120" vertic="21" />
   </body>
 </location>

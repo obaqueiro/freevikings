@@ -154,9 +154,7 @@ module FreeVikings
           end
 
           # Submenu: Credits
-          cred_data = load_credits
-          p cred_data
-          ScrollingCredits.new(menu, cred_data)
+          ScrollingCredits.new(menu, load_credits)
           
           QuitButton.new(menu, QuitButton::QUIT)
         end
@@ -267,7 +265,6 @@ module FreeVikings
       c = []
 
       File.open('CREDITS', 'r').each_line do |line|
-        puts "+++#{line}"
         name, credits = line.split(':')
         credits.strip!
         c << [name, credits]

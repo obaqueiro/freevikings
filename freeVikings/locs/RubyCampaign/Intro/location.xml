@@ -12,6 +12,6 @@
     <map src="intro_loc.tmx"/>
     <script src="intro_script.rb"/>
     <start horiz="230" vertic="50"/>
-    <exit horiz="2340" vertic="240"/>
+    <exit horiz="2320" vertic="221"/>
   </body>
 </location>

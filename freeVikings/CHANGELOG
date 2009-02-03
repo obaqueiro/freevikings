@@ -1,8 +1,11 @@
 [3.February 2009]
-- doc/user_manual/usermanual.xml, Makefile:
+- docs/user_manual/usermanual.xml, Makefile:
   I updated the User's manual (deleted sections about disabling Rubygems
   and libraries which are distributed as part of Ruby's standard library);
   also deleted unused images and updated one
+- levels of campaigns 'Save Ruby' and 'Christmas 2008': exit moved
+- initfv.rb: removed debugging output written yesterday to debug
+  widget GameUI::Menus::ScrollingCredits
 
 [2.February 2009]
 - initfv.rb: ScrollingCredits widget used in the menu (yeah! unlimited space

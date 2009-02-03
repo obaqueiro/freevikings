@@ -18,6 +18,6 @@
 
     <!-- real start --> <start horiz="50" vertic="240" />
     <!-- testing start --> <!-- <start horiz="1440" vertic="2760" /> -->
-    <exit horiz="480" vertic="1720" />
+    <exit horiz="480" vertic="1701" />
   </body>
 </location>
