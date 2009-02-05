@@ -326,10 +326,24 @@ module FreeVikings
       start_time = Time.now.to_f
 
       frame_delay = FreeVikings::CONFIG['Game']['frame delay']
-      @frame_limitter = if frame_delay != 0 then
+      @frame_limitter = case frame_delay
+                        when :auto
+                          FrameLimitter.new(FreeVikings::FRAME_LIMIT)
+                        when :off
+                          UnlimitedFrameLimitter.new
+                        when Numeric
+                          if frame_delay < 0 then
+                            raise "Invalid frame delay '#{frame_delay}': must"\
+                            " be positive number."
+                          end
+                          if frame_delay >= 1 then
+                            raise "Invalid frame delay '#{frame_delay}':"\
+                            "must be positive number smaller than 1."
+                          end
                           ConstantDelayFrameLimitter.new(frame_delay)
                         else
-                          FrameLimitter.new(FreeVikings::FRAME_LIMIT)
+                          raise "Unexpected frame delay '#{frame_delay}' "\
+                          "(#{frame_delay.class})"
                         end
 
       # The frame loop: serve events, update game state

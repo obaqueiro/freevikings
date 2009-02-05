@@ -12,9 +12,8 @@ module FreeVikings
     TEST_FRAMES = 30
 
     # frame_limit is maximum number of frames per second;
-    # nil means 'no limit'
 
-    def initialize(frame_limit=nil)
+    def initialize(frame_limit)
       @frame_limit = frame_limit
 
       reset
@@ -104,7 +103,6 @@ module FreeVikings
 
     def update_delay
       return unless @fps > @frame_limit
-      return if @delay == nil
       
       time_per_frame = total_time / @frames
       wanted_time_per_frame = 1.0 / @frame_limit
@@ -130,7 +128,7 @@ module FreeVikings
     # delay should be real number (seconds; usually 0 <= delay < 1)
 
     def initialize(delay)
-      super()
+      super(0)
       @delay = delay
     end
 
@@ -141,6 +139,23 @@ module FreeVikings
     private
 
     # rewritten parent's useless method; leave it empty
+
+    def update_delay
+    end
+  end
+
+  # Frame limitter with no delay;
+  # just computes fps. It's a bit something like a mock-class :)
+
+  class UnlimitedFrameLimitter < FrameLimitter
+    def initialize()
+      super(0)
+    end
+
+    def perform_delay
+    end
+
+    private
 
     def update_delay
     end

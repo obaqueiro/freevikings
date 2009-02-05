@@ -8,6 +8,8 @@
 - framelimitter.rb: unit for automatic frame limitting (and fps computation)
 - fvdef.rb: constant defining maximum fps before game behaves strange
 - game.rb: added FrameLimitter
+- config/structure.conf, config/defaults.conf, config/config.rb,
+  game.rb: extended frame delay setup in configuration file
 
 [3.February 2009]
 - docs/user_manual/usermanual.xml, Makefile:

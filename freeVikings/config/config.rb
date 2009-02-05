@@ -145,11 +145,11 @@ CONFIG = {
     # Value: any number (higher than 3 or 4 makes game unplayable)
     'game speed' => 1,
 
-    # Seconds to sleep in every frame.
-    # (Set this to 0.010 or 0.020 if freeVikings
-    # have fps higher then 20 and vikings move suspiciously slowly)
+    # Seconds to sleep in every frame in order to limit frame rate.
+    # Unless you really know that you want something else, use :auto,
+    # which should be safe and do exactly what you want.
     #
-    # Value: any number between 0 and 0.10
-    'frame delay' => 0,
+    # Value: :auto, :off or any number between 0 and 0.10
+    'frame delay' => :auto,
   }
 }
