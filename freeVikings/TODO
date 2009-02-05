@@ -4,8 +4,12 @@
 
 ======== Code ==========================================================
 
+(-) Fix tests
+
 (-) Pulling
     (-) vikings can pull some objects
+        - walking viking, when he can't walk on, start's pulling instead of
+          just stopping
     (-) [GO] Pullable block 80*80px
 
 (-) Wall/monster-smashing feature
@@ -14,9 +18,6 @@
              vertical and horizontal state can't be so much "standalone" -
              it leads to unknown states etc.)
     (-) bomb's flame can't reach behind wall or shield
-
-(-) Frame limit
-    (-) setup in config & menu: auto/off/fixed value
 
 (-) [GO] press(es)
 
@@ -65,7 +66,6 @@
     (-) release tool: add task: mail to freevikings-users mailing list
     (-) release tool: option -P to checkout (ommit empty directories)
 
-
 (-) Small levels (like RubyCampaign/Intro with panel on the side) paint well -
     unused part of the screen might be e.g. black
 
@@ -91,9 +91,9 @@
     (-) Widget for selecting a file or folder
     (-) Menu: add a message if a bad password is given (also to the GUI,
         not only to a console)
+    (-) password input works well with mouse
     (-) Possibility to change keys (movement, inventory control etc.)
     (-) add campaigns
-    (-) password input works well with mouse
 
 (-) Speech boxes should be placed in some cleverer way, so that all text
     is visible (try to talk while standing at the end of map)

@@ -6,7 +6,6 @@ require 'deadviking.rb'
 require 'vikingstate.rb'
 require 'collisiontest.rb'
 require 'inventory.rb'
-require 'sophisticatedspritemixins.rb'
 require 'talkable.rb'
 require 'transportable.rb'
 require 'ladder.rb'
@@ -15,7 +14,6 @@ module FreeVikings
 
   class Viking < Sprite
 
-    include SophisticatedSpriteMixins::Walking
     include Talkable
     include Transportable
 
@@ -25,8 +23,6 @@ module FreeVikings
     # here so the vikings can check collision with a shield quickly without
     # searching for it every update.
     @@shield = nil
-
-    protected
 
     def Viking.shield
       @@shield
@@ -147,6 +143,22 @@ module FreeVikings
     def view=(v)
       @view = v
       @inventory.observer = v
+    end
+
+    def move_left
+      @state.move_left
+    end
+
+    def move_right
+      @state.move_right
+    end
+
+    def stop
+      @state.stop
+    end
+
+    def standing?
+      @state.standing?
     end
 
     # Takes the Viking off one energy point.
@@ -445,7 +457,7 @@ module FreeVikings
 
     def update_climbing
       # At the top of ladder
-      if @state.velocity_vertic < 0 && 
+      if velocity_vertic < 0 && 
           @rect.top < (@ladder.rect.top - HEIGHT/2) then
         delta_y = @ladder.rect.top - (@rect.h + 1) - @rect.top
         if @location.area_free?(@rect.move(0,delta_y)) then
@@ -455,7 +467,7 @@ module FreeVikings
       end
 
       # At the bottom of ladder
-      if @state.velocity_vertic > 0 &&
+      if velocity_vertic > 0 &&
           @rect.top > (@ladder.rect.bottom - 5) then
         @ladder = nil
         fall
@@ -501,7 +513,7 @@ module FreeVikings
     def fall_if_head_on_the_ceiling
       return unless @state.rising?
 
-      head_area = next_position
+      head_area = Rectangle.new @next_left, @next_top, @rect.w, @rect.h
       head_area.h = 20
       unless @location.area_free?(head_area)
         @log.debug "fall_if_head_on_the_ceiling: #{@name} stroke ceiling with his head and starts falling."
@@ -545,6 +557,25 @@ module FreeVikings
       @rect.expand2(0,0,0,2).collides?(ladder.rect) &&
         (ladder.rect.center[0] - @rect.center[0]).abs < 20
     end
+
+    def next_left
+      (@rect.left + (velocity_horiz * @location.ticker.delta)).to_i
+    end
+
+    def next_top
+      (@rect.top + (velocity_vertic * @location.ticker.delta)).to_i
+    end
+
+    # x-axis velocity of the sprite.
+    def velocity_horiz
+      @state.velocity_horiz * self.class::BASE_VELOCITY * FreeVikings::CONFIG['game speed']
+    end
+
+    # y-axis velocity of the sprite
+    def velocity_vertic
+      @state.velocity_vertic * self.class::BASE_VELOCITY * FreeVikings::CONFIG['game speed']
+    end
+
   end # class Viking
 end # module
 

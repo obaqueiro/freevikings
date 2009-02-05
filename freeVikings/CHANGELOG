@@ -10,6 +10,14 @@
 - game.rb: added FrameLimitter
 - config/structure.conf, config/defaults.conf, config/config.rb,
   game.rb: extended frame delay setup in configuration file
+- viking.rb: removed useless 'protected' (only instance methods can be 
+  protected)
+  removed inclusion of SophisticatedSpriteMixins::Walking
+  (I want to change internals of class Viking, but don't want to affect
+  e.g. Bear)
+- vikingstate2.rb, tests/testvikingstate.rb: preparing replacement 
+  for VikingState (VikingState needs to be replaced by something cleaner
+  in order to add some missing states)
 
 [3.February 2009]
 - docs/user_manual/usermanual.xml, Makefile:
