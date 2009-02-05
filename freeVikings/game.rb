@@ -17,8 +17,10 @@ require 'location.rb'
 require 'nullocation.rb'
 
 require 'structuredworld.rb'
+
 require 'gamestate.rb'
 require 'bottompanel.rb'
+require 'framelimitter.rb'
 
 require 'entities/testrect.rb'
 
@@ -316,9 +318,6 @@ module FreeVikings
            FreeVikings::WIN_HEIGHT - bp.rect.h : FreeVikings::WIN_HEIGHT)
       @mapview_rect = R(x,y,w,h)
 
-      frames = 0 # auxiliary variable for fps computing
-      @frame_rate = 0
-
       if FreeVikings::CONFIG['Development']['profile'] then
         # Profiler__::start_profile
         RubyProf.start
@@ -326,16 +325,19 @@ module FreeVikings
 
       start_time = Time.now.to_f
 
+      frame_delay = FreeVikings::CONFIG['Game']['frame delay']
+      @frame_limitter = if frame_delay != 0 then
+                          ConstantDelayFrameLimitter.new(frame_delay)
+                        else
+                          FrameLimitter.new(FreeVikings::FRAME_LIMIT)
+                        end
+
       # The frame loop: serve events, update game state
       while (not location.exitted?) and (not @give_up) do
         # Following method serves events, updates sprites, ...
         every_frame(location)
 
         @app_window.flip
-
-        frames += 1
-        s = Time.now.to_f - start_time
-        @frame_rate = (frames / s).to_i unless s == 0
       end
 
       # do what needs to be done at the end of level.
@@ -426,14 +428,13 @@ module FreeVikings
 
       @bottompanel.paint(@app_window, @bottompanel.rect.to_a)
 
+      @frame_limitter.frame_tick
+      @frame_limitter.perform_delay
+
       if FreeVikings::CONFIG['Video']['display FPS'] then
         @app_window.fill([0,0,0], [8,8,60,12])
-        @app_window.print([10,10], "fps: #{@frame_rate}", [255,255,255])
-      end
-
-      frame_delay = FreeVikings::CONFIG['Game']['frame delay']
-      if frame_delay != 0 then
-        sleep(frame_delay)
+        @app_window.print([10,10], "fps: #{@frame_limitter.fps}", 
+                          [255,255,255])
       end
     end
 

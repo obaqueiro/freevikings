@@ -16,21 +16,15 @@ module FreeVikings
   GFX_DIR = '../gfx'
 end
 
-# Run tests of compiled extensions if extensions are available
-begin
-  require '../ext/test/test.rb'
-  $extensions_loaded = true
-rescue LoadError => le
-  puts "+++ COULD NOT LOAD TESTS OF THE COMPILED EXTENSIONS. (#{le.message})"
-  $extensions_loaded = false
-end
-
 # SchwerEngine: Bundle where a lot of freeVikings code has been moved.
 # It is needed for most fV classes to work.
 require 'schwerengine/schwerengine.rb' 
 SchwerEngine.config = FreeVikings
 SchwerEngine.init
 include SchwerEngine
+
+['entity.rb', 'sprite.rb', 'item.rb', 'activeobject.rb',
+ 'staticobject.rb', 'heroandmonster.rb'].each {|f| require f }
 
 # require all test source files
 test_files = Dir['test*.rb']

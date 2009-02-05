@@ -17,6 +17,9 @@ module FreeVikings
   WIN_WIDTH = 640
   WIN_HEIGHT = 480
 
+  # maximum fps
+  FRAME_LIMIT = 20
+
   DEFAULT_LEVELSUITE_DIR = 'locs/DefaultCampaign'
   DEFAULT_THEME_DIR = GFX_DIR+'/themes'
 

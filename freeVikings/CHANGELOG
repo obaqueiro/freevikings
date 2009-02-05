@@ -1,3 +1,14 @@
+[5.February 2009]
+- tests/test.rb: removed requirement of tests of compiled extensions;
+  added requirement of some files returned from SchwerEngine
+- tests/testvikingstate.rb: empty TestSuite removed
+- freevikings.rb: I found that option -d works with milliseconds,
+  but configfile's entry 'frame delay' with seconds - and changed cmdline
+  option to accept seconds too.
+- framelimitter.rb: unit for automatic frame limitting (and fps computation)
+- fvdef.rb: constant defining maximum fps before game behaves strange
+- game.rb: added FrameLimitter
+
 [3.February 2009]
 - docs/user_manual/usermanual.xml, Makefile:
   I updated the User's manual (deleted sections about disabling Rubygems

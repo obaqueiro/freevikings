@@ -140,7 +140,7 @@ OPTIONS_DEF = [
                
                ["--delay",   "-d", GetoptLong::REQUIRED_ARGUMENT,
                 "Number of seconds to sleep in every iteration of the main loop (it is very useful if the game runs on your computer with fps 40 or even higher - try 0.010)",
-                "MILLISECONDS"],
+                "SECONDS"],
                
                ["--startpassword", "-s", GetoptLong::REQUIRED_ARGUMENT,
                 "Jump to a level with password PASSWORD (you can see the password always at the beginning of every level)",
@@ -203,7 +203,7 @@ begin
         raise ArgumentError, "Argument of option '--v-unit' (-u) must be a real number higher than zero (given '#{argument}')"
       end
     when "--delay"
-      cmdline_config['Game']['frame delay'] = argument.to_f / 1000
+      cmdline_config['Game']['frame delay'] = argument.to_f
     when "--startpassword"
       unless Level.valid_level_password?(argument)
         raise "'#{argument}' is not a valid level password."

@@ -16,8 +16,7 @@
     (-) bomb's flame can't reach behind wall or shield
 
 (-) Frame limit
-    (-) Automatic frame limit (optional)
-    (-) setup in menu (auto/off/fixed value)
+    (-) setup in config & menu: auto/off/fixed value
 
 (-) [GO] press(es)
 
