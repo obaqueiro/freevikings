@@ -4,6 +4,15 @@
 - gfx/healingpotion.png: new image by Magnus
 - entities/healingpotion.rb: 'superhealing' item
 - level ManyItems (IMYI): added HealingPotions
+- entities/bear.rb: removed useless superclass; removed use 
+  of SophisticatedSpriteState
+- level Arctic Tutorial (ATUT): fixed some constant references
+- sprinter.rb: favourite colour changed to blue
+- sprinter.rb, warior.rb, shielder.rb: init_images public, called as in all
+  normal Entities from Entity#initialize
+- horizontalstate.rb, sophisticatedspritestate.rb, vikingstate.rb, viking.rb:
+  slowly progressing towards new VikingState: horizontal direction isn't
+  connected with VikingState
 
 [5.February 2009]
 - tests/test.rb: removed requirement of tests of compiled extensions;

@@ -59,15 +59,30 @@ module FreeVikings
 
     def initialize(name, start_position=[0,0])
       super()
+
+
+      # Patch to replace uncomfortable Model's hardcoded behavior
+      def @image.image(viking)
+        i = @images[viking.state_str]
+        if i == nil then
+          raise Model::NoImageAssignedException.new(viking.state)
+        end
+
+        return i.image
+      end
+
       @log = Log4r::Logger['viking log']
       @log.debug("Initialising Viking '#{@name}'")
 
       @name = name
       @state = VikingState.new
+      @direction = 1
+      @direction_str = 'right'
 
       # @paint_rect is wider than @collision_rect
       @rect = @collision_rect = Rectangle.new(start_position[0], start_position[1], WIDTH-10, HEIGHT-1)
       @paint_rect = RelativeRectangle.new(@rect, -5, 0, 10, 1)
+
       # auxiliary rectangle used for various checks
       # (it must always have the same width and height as @rect!)
       @aux_rect = @rect.dup
@@ -76,8 +91,6 @@ module FreeVikings
       @desc_rect = Rectangle.new 0,0,0,0
 
       @energy = MAX_ENERGY
-
-      @portrait = nil
 
       @inventory = Inventory.new
 
@@ -123,6 +136,17 @@ module FreeVikings
 
     attr_reader :state
 
+    # Returns String describing current state - used as key into Model
+    SEP = '_'
+    def state_str
+      @state.vertical_state.to_s + SEP + \
+      (@ability.to_s ? @ability.to_s : @state.horizontal_state.to_s) + SEP + \
+      @direction_str
+    end
+
+    # for Sword only, should be removed soon
+    attr_reader :direction_str
+
     # Returns Viking's energy as a number which shouldn't ever overgrow
     # Viking::MAX_ENERGY and descend under zero.
 
@@ -143,14 +167,6 @@ module FreeVikings
     def view=(v)
       @view = v
       @inventory.observer = v
-    end
-
-    def move_left
-      @state.move_left
-    end
-
-    def move_right
-      @state.move_right
     end
 
     def stop
@@ -254,7 +270,9 @@ module FreeVikings
         fall        
       end
 
-      @state.move_left
+      @state.move
+      @direction = -1
+      @direction_str = 'left'
     end
 
     def move_right
@@ -262,7 +280,9 @@ module FreeVikings
         fall
       end
 
-      @state.move_right
+      @state.move
+      @direction = 1
+      @direction_str = 'right'
     end
 
     # Normally falls back to s_f_func_on or s_f_func_off,
@@ -571,7 +591,7 @@ module FreeVikings
 
     # x-axis velocity of the sprite.
     def velocity_horiz
-      @state.velocity_horiz * self.class::BASE_VELOCITY * FreeVikings::CONFIG['game speed']
+      @state.velocity_horiz * self.class::BASE_VELOCITY * @direction * FreeVikings::CONFIG['game speed']
     end
 
     # y-axis velocity of the sprite

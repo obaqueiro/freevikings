@@ -26,18 +26,12 @@ module FreeVikings
 
     def initialize(wrapper, direction='right')
       @wrapper = wrapper
-      @direction = direction
     end
 
-    attr_reader :direction
     attr_reader :velocity
 
-    def move_left
-      @wrapper.horizontal_state = LeftWalkingState.new @wrapper, @direction
-    end
-
-    def move_right
-      @wrapper.horizontal_state = RightWalkingState.new @wrapper, @direction
+    def move
+      @wrapper.horizontal_state = WalkingState.new(@wrapper, @direction)
     end
 
     def stop
@@ -56,31 +50,17 @@ module FreeVikings
     end
   end # class HorizontalState
 
-  class LeftWalkingState < HorizontalState
+  class WalkingState < HorizontalState
 
     include MovingStateProprieties
 
     STRING_VALUE = 'moving'
 
-    def initialize(wrapper, direction='right')
-      super(wrapper, direction)
-      @velocity = -VELOCITY_BASE
-      @direction = "left"
-    end
-  end # class LeftWalkingState
-
-  class RightWalkingState < HorizontalState
-
-    include MovingStateProprieties
-
-    STRING_VALUE = 'moving'
-    
     def initialize(wrapper, direction='right')
       super(wrapper, direction)
       @velocity = VELOCITY_BASE
-      @direction = "right"
     end
-  end # class RightWalkingState
+  end # class LeftWalkingState
 
   class StandingState < HorizontalState
 

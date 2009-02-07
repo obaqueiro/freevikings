@@ -87,10 +87,10 @@ start_walk = 33 * TILE_SIZE
 end_walk = start_walk + (12 * TILE_SIZE)
 half_trace = ((end_walk - start_walk)/2)
 walk_length = half_trace - TILE_SIZE
-center_bear_x = start_walk + half_trace - (Bear::WIDTH / 2)
-bear_y = FLOOR - Bear::HEIGHT
+center_bear_x = start_walk + half_trace - (WalkingBear::WIDTH / 2)
+bear_y = FLOOR - WalkingBear::HEIGHT
 
-bear = WalkingBear.new(Rectangle.new(center_bear_x, bear_y, Bear::WIDTH, Bear::HEIGHT), walk_length)
+bear = WalkingBear.new(Rectangle.new(center_bear_x, bear_y, WalkingBear::WIDTH, WalkingBear::HEIGHT), walk_length)
 LOCATION << bear
 
 # A nice cooperation of a Bridge and a Switch. There's only one bridge and 

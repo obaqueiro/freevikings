@@ -30,8 +30,8 @@ module FreeVikings
       @vertical_state = OnGroundState.new self
     end
 
-    attr_writer :horizontal_state
-    attr_writer :vertical_state
+    attr_accessor :horizontal_state
+    attr_accessor :vertical_state
 
     def moving?
       @vertical_state.moving? or @horizontal_state.moving?
@@ -53,18 +53,6 @@ module FreeVikings
       @vertical_state.climbing?
     end
 
-    def right?
-      @horizontal_state.direction == 'right'
-    end
-
-    def left?
-      @horizontal_state.direction == 'left'
-    end
-
-    def direction
-      @horizontal_state.direction
-    end
-
     def stop
       @horizontal_state.stop
     end
@@ -73,22 +61,8 @@ module FreeVikings
       velocity_horiz == 0
     end
       
-    def move_left
-      @horizontal_state.move_left
-    end
-
-    def move_right
-      @horizontal_state.move_right
-    end
-
-    def move_back
-      if direction == 'left' then
-        move_right
-      elsif direction == 'right' then
-        move_left
-      else
-        raise "#{direction} is not a valid direction value."
-      end
+    def move
+      @horizontal_state.move
     end
 
     def rise
@@ -133,12 +107,6 @@ module FreeVikings
 
     def dump
       "<id:#{object_id} vv:#{velocity_vertic} vh:#{velocity_horiz}>"
-    end
-
-    def to_s
-      @vertical_state.to_s + CNTR + \
-      @horizontal_state.to_s + CNTR + \
-      @horizontal_state.direction
     end
   end # class SophisticatedSpriteState
 end # module FreeVikings

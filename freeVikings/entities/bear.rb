@@ -3,67 +3,21 @@
 
 # A nice Bear which can be dangerous too.
 
-require 'sophisticatedspritestate.rb'
-require 'sophisticatedspritemixins.rb'
-
 require 'monstermixins.rb'
 
 module FreeVikings
 
-  class Bear < Sprite
+  # WalkingBear.
+  # The Bear which walks around his initial position.
+  class WalkingBear < Sprite
 
     include Monster
     include MonsterMixins::HeroBashing
     include MonsterMixins::ShieldSensitive
-    include SophisticatedSpriteMixins::Walking
 
     WIDTH = 60
     HEIGHT = 80
     BASE_VELOCITY = 50
-
-    def initialize(position)
-      super([position[0], position[1], WIDTH, HEIGHT])
-      @state = SophisticatedSpriteState.new
-    end
-
-    attr_reader :state
-
-    def update
-      bash_heroes
-      serve_shield_collision { @state.stop }
-    end
-
-    def init_images
-      left = Image.load('bear_left.tga')
-      anim_left = Animation.new(0.3, 
-                                     [left,
-                                     Image.load('bear_left_walk.tga'),
-                                      left,
-                                      Image.load('bear_left_walk2.tga')]
-                                     )
-      right = Image.load('bear_right.tga')
-      anim_right = Animation.new(0.75, 
-                                     [right,
-                                     Image.load('bear_right_walk.tga'),
-                                      right,
-                                      Image.load('bear_right_walk2.tga')]
-                                     )
-
-      imgs = {
-        'onground_standing_left' => Image.load('bear_left.tga'),
-        'onground_standing_right' => Image.load('bear_right.tga'),
-        'onground_moving_left' => anim_left,
-        'onground_moving_right' => anim_right
-      }
-      @image = Model.new(imgs)
-    end
-  end # class Bear
-
-  # WalkingBear.
-  # The Bear which walks around his initial position.
-  class WalkingBear < Bear
-
-    VELOCITY = 50
 
     def initialize(position, max_walk_length=100)
       super(position)
@@ -71,45 +25,56 @@ module FreeVikings
       @max_walk_length = max_walk_length
       @teritory_center = @rect.left + @rect.w / 2
       @walk_length = 0
-      rand <= 0.5 ? move_left : move_right
+      @direction = (rand <= 0.5) ? -1 : 1
       new_walk_length
+    end
+
+    attr_reader :state
+
+    def image
+      if moving_left? then
+        return @anim_left.image
+      else
+        return @anim_right.image
+      end
     end
 
     def update
       @rect.left += velocity_horiz * @location.ticker.delta
-      turn if on_turn_point?
-      bash_heroes
-      serve_shield_collision {
-        if @state.direction == 'left' then
-          move_right
-        else
-          move_left
-        end
 
+      bash_heroes
+
+      if on_turn_point? || stopped_by_shield? then
+        turn
         new_walk_length
-      }
+      end
     end
 
     private
 
     def new_walk_length
       @walk_length = rand * @max_walk_length
-      @dest = @teritory_center + (@state.velocity_horiz * @walk_length)
+      @dest = @teritory_center + (@direction * @walk_length)
+    end
+
+    def moving_left?
+      @direction < 0
+    end
+
+    def moving_right?
+      @direction > 0
     end
 
     def turn
-      move_left if @rect.left >= @teritory_center
-      move_right if @rect.left <= @teritory_center
-
-      n = new_walk_length
-          end
+      @direction *= -1
+    end
 
     def on_turn_point?
-      if @state.velocity_horiz < 0 and 
+      if moving_left? and 
           @rect.left <= @dest then
         return true
       end
-      if @state.velocity_horiz > 0 and 
+      if moving_right? and 
           @rect.left >= @dest then
         return true
       end
@@ -118,8 +83,31 @@ module FreeVikings
     end
 
     def velocity_horiz
-      @state.velocity_horiz * BASE_VELOCITY
+      @direction * BASE_VELOCITY
     end
+
+    public
+
+    def init_images
+      right = Image.load('bear_right.tga')
+      left = Image.load('bear_left.tga')
+
+
+      @anim_left = Animation.new(0.3, 
+                                     [left,
+                                     Image.load('bear_left_walk.tga'),
+                                      left,
+                                      Image.load('bear_left_walk2.tga')]
+                                     )
+
+      @anim_right = Animation.new(0.75, 
+                                     [right,
+                                     Image.load('bear_right_walk.tga'),
+                                      right,
+                                      Image.load('bear_right_walk2.tga')]
+                                     )
+    end
+
   end # class WalkingBear
 
 end # module FreeVikings

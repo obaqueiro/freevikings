@@ -16,7 +16,6 @@ module FreeVikings
 
     def initialize(name, start_position)
       super(name, start_position)
-      init_images
       @ability = ShielderAbility.new self
       @state.ability = @ability
       @shield = Shield.new self
@@ -52,7 +51,7 @@ module FreeVikings
 
     def shield_use
       return 'top' if @ability.shield_use == ShielderAbility::SHIELD_TOP
-      return 'left' if @state.direction == 'left'
+      return 'left' if @direction_str == 'left'
       return 'right'
     end
 
@@ -77,13 +76,13 @@ module FreeVikings
       return _velocity_vertic
     end
 
-    private
-
     def init_images
       @image = Model.load_new(File.open(FreeVikings::GFX_DIR + '/models/olaf_model.xml'))
 
       @portrait = Portrait.new 'olaf_face.tga', 'olaf_face_unactive.gif', 'dead_face.png'
     end
+
+    private
 
     # if state is such that shield cannot be used (climbing or knockout),
     # let it disappear; let it appear otherwise

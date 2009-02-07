@@ -38,20 +38,6 @@ module FreeVikings
 
     attr_accessor :ability
 
-    # Produces a string describing the state. This string has three parts
-    # separated by underscore. The first one describes the vertical state,
-    # the second one the active ability or the horizontal state and
-    # the third one is left or right (the direction, where the viking is 
-    # looking).
-    # A typical situation:
-    #
-    # viking.to_s => 'onground_standing_right'
-
-    def to_s
-      @vertical_state.to_s + CNTR + \
-      (@ability.to_s ? @ability.to_s : @horizontal_state.to_s) + CNTR + \
-      @horizontal_state.direction
-    end
   end # class VikingState
 end # module FreeVikings
 

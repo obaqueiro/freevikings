@@ -10,13 +10,12 @@ module FreeVikings
 
     JUMP_HEIGHT = 1.3 * Viking::HEIGHT
 
-    FAVOURITE_COLOUR = [180,0,0]
+    FAVOURITE_COLOUR = [0,0,200]
 
     DEFAULT_Z_VALUE = Viking::DEFAULT_Z_VALUE + 2
 
     def initialize(name, start_position)
       super(name, start_position)
-      init_images
       @ability = SprinterAbility.new self
       @state.ability = @ability
       @jump_start_y = nil 
@@ -57,7 +56,6 @@ module FreeVikings
       end
     end
 
-    private
     def init_images
       @image = Model.load_new(File.open(FreeVikings::GFX_DIR+'/models/erik_model.xml'))
 
