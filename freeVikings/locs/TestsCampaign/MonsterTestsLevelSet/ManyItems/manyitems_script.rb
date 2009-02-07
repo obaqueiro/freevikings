@@ -4,8 +4,9 @@
 require 'key.rb'
 require 'apple.rb'
 require 'killtoy.rb'
+require 'healingpotion.rb'
 
-items = [Killtoy, Key, Apple]
+items = [Killtoy, Key, Apple, HealingPotion]
 
 TILE_SIZE = 40
 LOCATION_WIDTH = 36 * TILE_SIZE

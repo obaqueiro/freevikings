@@ -4,6 +4,15 @@
 
 ======== Code ==========================================================
 
+(-) New VikingState
+    (-) finish blog post (it could help to think about it)
+    (-) delete mirrored images of vikings, replace them programmatically
+    (-) write state tables for all vikings (including not yet implemented 
+        states)
+    (-) state table consistency check (for states which aren't included both
+        in table's keys and 'destinations')
+    (-) state attributes
+
 (-) Fix tests
 
 (-) Pulling

@@ -52,7 +52,7 @@ module FreeVikings
     # Time in seconds for which the viking is unusable after he is knocked
     # out (e.g. when he falls from a high place).
 
-    KNOCK_OUT_DURATION = 4
+    KNOCK_OUT_DURATION = 3
 
     # Creates a new viking. Parameter name is a String,
     # start_position should be an Array or a Rectangle.
@@ -183,18 +183,21 @@ module FreeVikings
       hurt
     end
 
-    # If the Viking doesn't have full energy (see Viking::MAX_ENERGY), 
-    # adds him one energy point and returns true.
-    # Otherwise false is returned and nothing added.
 
-    def heal
+    # Adds 'points' energy points and returns true.
+    # If Viking::MAX_ENERGY was exceeded, raises RuntimeError.
+    # However, at some places it might be OK to 'magically' give the Viking
+    # e.g. four points - then just catch the error.
+
+    def heal(points=1)
+      @energy += 1
+      @view.update_view
+      
       if @energy < MAX_ENERGY
-        @energy += 1
-        @view.update_view
-        return true
-      else
-        return false
+        raise "Maximum of energy points exceeded"
       end
+
+      return true
     end
 
     # Sets energy to zero, deletes the Viking from the Location and

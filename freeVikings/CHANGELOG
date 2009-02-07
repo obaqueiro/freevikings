@@ -1,3 +1,10 @@
+[7.February 2009]
+- viking.rb: Viking#heal made more general
+- entities/apple.rb: updated because of change in Viking#heal
+- gfx/healingpotion.png: new image by Magnus
+- entities/healingpotion.rb: 'superhealing' item
+- level ManyItems (IMYI): added HealingPotions
+
 [5.February 2009]
 - tests/test.rb: removed requirement of tests of compiled extensions;
   added requirement of some files returned from SchwerEngine
