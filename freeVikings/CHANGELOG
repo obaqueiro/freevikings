@@ -12,6 +12,8 @@
 - vikingstate.rb: removed (after moving Abilities to horizontal state
   VikingState is the same as SophisticatedSpriteState)
 - sophisticatedspritestate.rb: added method 'to_s'
+- model files and images of vikings: all mirrored images facing right removed
+  (generated programmatically)
 
 [7.February 2009]
 - viking.rb: Viking#heal made more general

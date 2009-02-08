@@ -11,23 +11,25 @@ Model description for Olaf (the yellow guy with shield).
   <load_pre>
     <!-- Simple standing images -->
     <image sym="left1">vikings/olaf/olaf_walk2_left.tga</image>
-    <image sym="right1">vikings/olaf/olaf_walk2_right.tga</image>
-    <image sym="climb">vikings/olaf/olaf_walk2_right.tga</image>
+    <image sym="right1" srcsym="left1" operation="mirror-x"/>
+
+    <image sym="left2">vikings/olaf/olaf_walk1_left.tga</image>
+    <image sym="right2" srcsym="left2" operation="mirror-x"/>
 
     <!-- Images used for the breathing-animation -->
-    <image sym="right_breath">vikings/olaf/olaf_breath_right.tga</image>
     <image sym="left_breath">vikings/olaf/olaf_breath_left.tga</image>
+    <image sym="right_breath" srcsym="left_breath" operation="mirror-x"/>
 
     <!-- Walking left -->
     <animation sym="move_left">
       <image sym="left1"/>
-      <image>vikings/olaf/olaf_walk1_left.tga</image>
+      <image sym="left2"/>
     </animation>
 
     <!-- Walking right -->
     <animation sym="move_right">
       <image sym="right1"/>
-      <image>vikings/olaf/olaf_walk1_right.tga</image>
+      <image sym="right2"/>
     </animation>
 
     <!-- Standing looking right -->
@@ -64,13 +66,13 @@ Model description for Olaf (the yellow guy with shield).
     <state name="falling_moving_right" sym="right1"/>
     <state name="falling_moving_left" sym="left1"/>
 
-    <state name="climbingUp_standing_left" sym="climb"/>
-    <state name="climbingDown_standing_left" sym="climb"/>
-    <state name="climbingRest_standing_left" sym="climb"/>
+    <state name="climbingUp_standing_left" sym="right1"/>
+    <state name="climbingDown_standing_left" sym="right1"/>
+    <state name="climbingRest_standing_left" sym="right1"/>
 
-    <state name="climbingUp_standing_right" sym="climb"/>
-    <state name="climbingDown_standing_right" sym="climb"/>
-    <state name="climbingRest_standing_right" sym="climb"/>
+    <state name="climbingUp_standing_right" sym="right1"/>
+    <state name="climbingDown_standing_right" sym="right1"/>
+    <state name="climbingRest_standing_right" sym="right1"/>
 
   </states>
 </model>

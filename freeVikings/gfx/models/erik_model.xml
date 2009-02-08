@@ -3,7 +3,7 @@
 <model>
   <load_pre>
     <image sym="left">vikings/erik/erik_stand_left.tga</image>
-    <image sym="right">vikings/erik/erik_stand_right.tga</image>
+    <image sym="right" srcsym="left" operation="mirror-x" />
     <image sym="climb">vikings/erik/erik_climbing.tga</image>
   </load_pre>
 

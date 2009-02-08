@@ -4,9 +4,9 @@
 
 ======== Code ==========================================================
 
+(-) Remove problem mentioned in comment in Baleog's modeler
+
 (-) New VikingState
-    (-) Model: mirroring
-    (-) delete mirrored images of vikings, replace them programmatically
     (-) there should be something like state table which says which states
         can follow after each other
     (-) remove modification of VikingState internals from Viking subclasses 
@@ -26,6 +26,9 @@
         - walking viking, when he can't walk on, start's pulling instead of
           just stopping
     (-) [GO] Pullable block 80*80px
+
+(-) SchwerEngine::Model::ModelLoader should catch XML syntax errors and
+    report them in a clever way.
 
 (-) Wall/monster-smashing feature
     (-) [VI] Erik's 'head-smash' feature (depends on rewriting VikingState -

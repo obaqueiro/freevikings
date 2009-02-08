@@ -10,21 +10,26 @@ Model description for Baleog.
 <model>
   <load_pre>
     <image sym="left">vikings/baleog/baleog_stand_left.tga</image>
-    <image sym="right">vikings/baleog/baleog_stand_right.tga</image>
-    <image sym="climb">vikings/baleog/baleog_stand_right.tga</image>
+    <image sym="right" srcsym="left" operation="mirror-x"/>
+
+    <image sym="breath_left">vikings/baleog/baleog_breath_left.tga</image>
+    <image sym="breath_right" srcsym="breath_left" operation="mirror-x"/>
 
     <animation sym="stand_left">
-      <image>vikings/baleog/baleog_stand_left.tga</image>
-      <image>vikings/baleog/baleog_breath_left.tga</image>
+      <image sym="left"/>
+      <image sym="breath_left"/>
     </animation>
 
     <animation sym="stand_right">
-      <image>vikings/baleog/baleog_stand_right.tga</image>
-      <image>vikings/baleog/baleog_breath_right.tga</image>
+      <image sym="right"/>
+      <image sym="breath_right"/>
     </animation>
 
     <image sym="shoot_left">baleog_shooting_left.png</image>
-    <image sym="shoot_right">baleog_shooting_right.png</image>
+    <image sym="shoot_right" srcsym="shoot_left" operation="mirror-x"/>
+
+    <image sym="ko_left">baleog_ko_left.png</image>
+    <image sym="ko_right" srcsym="ko_left" operation="mirror-x"/>
   </load_pre>
 
   <states>
@@ -34,8 +39,8 @@ Model description for Baleog.
     <state name="onground_moving_left" sym="left"/>
     <state name="onground_moving_right" sym="right"/>
 
-    <state name="onground_knocked-out_left" image="baleog_ko_left.png"/>
-    <state name="onground_knocked-out_right" image="baleog_ko_right.png"/>
+    <state name="onground_knocked-out_left" sym="ko_left"/>
+    <state name="onground_knocked-out_right" sym="ko_right"/>
 
     <state name="falling_standing_right" sym="right"/>
     <state name="falling_standing_left" sym="left"/>
@@ -48,26 +53,13 @@ Model description for Baleog.
     <state name="onground_sword-fighting_left" sym="left"/>
     <state name="onground_sword-fighting_right" sym="right"/>
 
-    <!-- Well, Baleog isn't able to shoot and cut with sword when he's
-	 falling. But everything went bad when I was testing freeVikings
-	 on 19th July 2005 and this paragraph solved the problem,
-	 so it's here until the problem is solved better.
+    <state name="climbingUp_standing_left" sym="left"/>
+    <state name="climbingDown_standing_left" sym="left"/>
+    <state name="climbingRest_standing_left" sym="left"/>
 
-	 (On 3rd January 2006 this comment moved from warior.rb to this file
-	 together with the Baleog's Model setup.
-	 I'm too lazy to try to solve this problem...) -->
-    <state name="falling_bow-stretching_left" sym="shoot_left"/>
-    <state name="falling_bow-stretching_right" sym="shoot_right"/>
-    <state name="falling_sword-fighting_left" sym="left"/>
-    <state name="falling_sword-fighting_right" sym="right"/>
-
-    <state name="climbingUp_standing_left" sym="climb"/>
-    <state name="climbingDown_standing_left" sym="climb"/>
-    <state name="climbingRest_standing_left" sym="climb"/>
-
-    <state name="climbingUp_standing_right" sym="climb"/>
-    <state name="climbingDown_standing_right" sym="climb"/>
-    <state name="climbingRest_standing_right" sym="climb"/>
+    <state name="climbingUp_standing_right" sym="left"/>
+    <state name="climbingDown_standing_right" sym="left"/>
+    <state name="climbingRest_standing_right" sym="left"/>
 
   </states>
 </model>
