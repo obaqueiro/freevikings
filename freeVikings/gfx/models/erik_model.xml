@@ -5,6 +5,8 @@
     <image sym="left">vikings/erik/erik_stand_left.tga</image>
     <image sym="right" srcsym="left" operation="mirror-x" />
     <image sym="climb">vikings/erik/erik_climbing.tga</image>
+    <image sym="bull-left">vikings/erik/erik_bullhead_left.tga</image>
+    <image sym="bull-right" srcsym="bull-left" operation="mirror-x"/>
   </load_pre>
 
   <states>
@@ -20,16 +22,14 @@
     <state name="falling_standing_left" sym="left"/>
     <state name="falling_moving_right" sym="right"/>
     <state name="falling_moving_left" sym="left"/>
-    <state name="falling_jumping_left" sym="left"/>
-    <state name="falling_jumping_right" sym="right"/>
 
     <state name="rising_standing_left" sym="left"/>
     <state name="rising_standing_right" sym="right"/>
     <state name="rising_moving_left" sym="left"/>
     <state name="rising_moving_right" sym="right"/>
 
-    <state name="onground_jumping_left" sym="left"/>
-    <state name="onground_jumping_right" sym="right"/>
+    <state name="onground_bullhead_left" sym="bull-left"/>
+    <state name="onground_bullhead_right" sym="bull-right"/>
 
     <state name="climbingUp_standing_left" sym="climb"/>
     <state name="climbingDown_standing_left" sym="climb"/>

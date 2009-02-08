@@ -14,6 +14,9 @@
 - sophisticatedspritestate.rb: added method 'to_s'
 - model files and images of vikings: all mirrored images facing right removed
   (generated programmatically)
+- sprinter.rb, Erik's model file: added missing feature, Erik's magical
+  helmet which can destroy Walls (actually the implementation isn't complete
+  yet, but Erik already can destroy walls)
 
 [7.February 2009]
 - viking.rb: Viking#heal made more general

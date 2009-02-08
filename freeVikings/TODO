@@ -4,13 +4,19 @@
 
 ======== Code ==========================================================
 
-(-) Remove problem mentioned in comment in Baleog's modeler
+(-) Wall/monster-smashing feature
+    (-) [VI] Erik's 'head-smash' feature
+        (-) damage monsters
+        (-) time limit
+        (-) makes Erik KO (also on solid wall!)
+    (-) bomb's flame can't reach behind wall or shield
 
 (-) New VikingState
+    (-) what should happen if Erik 'bull-heading' starts falling?
     (-) there should be something like state table which says which states
         can follow after each other
     (-) remove modification of VikingState internals from Viking subclasses 
-        (e.g. Warior assigns VikingState#horizontal_state)
+        (e.g. Warior & Sprinter assign VikingState#horizontal_state)
     (-) test that Baleog can't use his abilities while climbing a Ladder
 
 (-) Fix tests
@@ -29,13 +35,6 @@
 
 (-) SchwerEngine::Model::ModelLoader should catch XML syntax errors and
     report them in a clever way.
-
-(-) Wall/monster-smashing feature
-    (-) [VI] Erik's 'head-smash' feature (depends on rewriting VikingState -
-             whole design of VikingState must be changed, because
-             vertical and horizontal state can't be so much "standalone" -
-             it leads to unknown states etc.)
-    (-) bomb's flame can't reach behind wall or shield
 
 (-) [GO] press(es)
 

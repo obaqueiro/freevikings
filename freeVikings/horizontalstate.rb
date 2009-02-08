@@ -115,4 +115,19 @@ module FreeVikings
     end
   end
 
+  # This is state connected with Eric's special ability - magical helmet
+  # which can kill some monsters and destroy walls
+
+  class BullHeadState < HorizontalState
+
+    include MovingState
+
+    STRING_VALUE = 'bullhead'
+
+    def initialize(wrapper)
+      super(wrapper)
+      @velocity = VELOCITY_BASE * 2
+    end
+  end
+
 end
