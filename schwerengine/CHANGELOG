@@ -1,3 +1,6 @@
+[8.February 2009]
+- model.rb: Model::ModelLoader: added support for mirroring
+
 [1.February 2009]
 - timelock.rb: added method TimeLock#reset
 

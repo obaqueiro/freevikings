@@ -146,8 +146,28 @@ module SchwerEngine
 
       def load_image(element)
         symbolic_name = element.attributes['sym']
-        image = element.text
-        @named_images[symbolic_name] = Image.load image
+        if element.has_text? then
+          image = element.text
+          @named_images[symbolic_name] = Image.load image
+        else
+          source_sym = element.attributes['srcsym']
+          operation = element.attributes['operation']
+
+          if (! source_sym) || (! operation) then
+            raise "Malformed element 'image'."
+          end
+
+          unless @named_images[source_sym]
+            raise "Unknown image with sym '#{source_sym}'"
+          end
+
+          case operation
+          when 'mirror-x'
+            @named_images[symbolic_name] = @named_images[source_sym].mirror_x
+          else
+            raise "Unknown operation '#{operation}'"
+          end
+        end
       end
 
       def load_animation(element)
