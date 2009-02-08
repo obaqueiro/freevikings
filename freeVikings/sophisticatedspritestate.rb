@@ -24,14 +24,28 @@ module FreeVikings
 
     CNTR = CNCTNTR = CONCATENATOR = '_'
 
+    RIGHT = [1, 'right']
+    LEFT = [-1, 'left']
+
     def initialize
       # On the beginning the sprite does not move in any axis.
       @horizontal_state = StandingState.new self
       @vertical_state = OnGroundState.new self
+      turn_right
     end
 
     attr_accessor :horizontal_state
     attr_accessor :vertical_state
+
+    attr_reader :direction
+
+    def turn_right
+      @direction_num, @direction = RIGHT
+    end
+
+    def turn_left
+      @direction_num, @direction = LEFT
+    end
 
     def moving?
       @vertical_state.moving? or @horizontal_state.moving?
@@ -98,7 +112,7 @@ module FreeVikings
     end
 
     def velocity_horiz
-      @horizontal_state.velocity
+      @horizontal_state.velocity * @direction_num
     end
 
     def velocity_vertic
@@ -108,5 +122,10 @@ module FreeVikings
     def dump
       "<id:#{object_id} vv:#{velocity_vertic} vh:#{velocity_horiz}>"
     end
+
+    def to_s
+      @vertical_state.to_s+CNTR+@horizontal_state.to_s+CNTR+@direction
+    end
+
   end # class SophisticatedSpriteState
 end # module FreeVikings

@@ -16,8 +16,6 @@ module FreeVikings
 
     def initialize(name, start_position)
       super(name, start_position)
-      @ability = SprinterAbility.new self
-      @state.ability = @ability
       @jump_start_y = nil 
 
       # Value of Time.now.to_f at the point viking started to walk;
@@ -29,17 +27,15 @@ module FreeVikings
       return if not @state.on_ground?
       return if @state.knocked_out?
 
-      @ability.space_on
+      @state.rise
+      @jump_start_y = @rect.bottom unless @jump_start_y
     end
 
     def space_func_off
-      @ability.space_off
-      @jump_start_y = nil
-    end
+      return unless @state.rising?
 
-    def jump
-      @state.rise
-      @jump_start_y = @rect.bottom unless @jump_start_y
+      @state.fall
+      @jump_start_y = nil
     end
 
     alias_method :_update, :update

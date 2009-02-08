@@ -23,8 +23,10 @@
     <state name="falling_jumping_left" sym="left"/>
     <state name="falling_jumping_right" sym="right"/>
 
-    <state name="rising_jumping_left" sym="left"/>
-    <state name="rising_jumping_right" sym="right"/>
+    <state name="rising_standing_left" sym="left"/>
+    <state name="rising_standing_right" sym="right"/>
+    <state name="rising_moving_left" sym="left"/>
+    <state name="rising_moving_right" sym="right"/>
 
     <state name="onground_jumping_left" sym="left"/>
     <state name="onground_jumping_right" sym="right"/>

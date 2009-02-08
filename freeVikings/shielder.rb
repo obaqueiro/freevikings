@@ -14,11 +14,13 @@ module FreeVikings
 
     DEFAULT_Z_VALUE = Viking::DEFAULT_Z_VALUE + 0
 
+    SHIELD_TOP = true
+    SHIELD_FRONT = false
+
     def initialize(name, start_position)
       super(name, start_position)
-      @ability = ShielderAbility.new self
-      @state.ability = @ability
       @shield = Shield.new self
+      @shield_use = SHIELD_FRONT
 
       Viking.shield = @shield # reference to the shield for all vikings
     end
@@ -50,15 +52,15 @@ module FreeVikings
     end
 
     def shield_use
-      return 'top' if @ability.shield_use == ShielderAbility::SHIELD_TOP
-      return 'left' if @direction_str == 'left'
+      return 'top' if @shield_use == SHIELD_TOP
+      return 'left' if @state.direction == 'left'
       return 'right'
     end
 
     def space_func_on
-      @ability.space_on
+      @shield_use = ! @shield_use
 
-      if shield_use != 'top' then
+      if @shield_use != SHIELD_TOP then
         @start_fall = @rect.top
       end
     end
@@ -69,7 +71,7 @@ module FreeVikings
 
     def velocity_vertic
       if (! @state.climbing?) &&
-          @ability.shield_use == ShielderAbility::SHIELD_TOP
+          @shield_use == SHIELD_TOP
         return _velocity_vertic * SHIELD_GLIDE_ANTIACCELERATION
       end
 

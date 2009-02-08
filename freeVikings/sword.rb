@@ -28,7 +28,7 @@ module FreeVikings
     end
 
     def state
-      @owner.direction_str
+      @owner.state.direction
     end
 
     # This method must be called when a Sword is drawn from the sheath.
@@ -49,7 +49,7 @@ module FreeVikings
 
     def update_position
       @rect.top = (@owner.rect.top + @owner.rect.h / 2.2).to_i
-      @rect.left = (case @owner.direction_str
+      @rect.left = (case state
                    when 'left'
                      @owner.rect.left - self.rect.w + @owner.rect.w/5
                    when 'right'

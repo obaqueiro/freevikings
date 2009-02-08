@@ -12,17 +12,19 @@ module FreeVikings
     VELOCITY_BASE = 1
   end
 
-  module MovingStateProprieties
+  module MovingState
     def moving?
       true
     end
-
-#     def to_s
-#       'moving'
-#     end
   end
 
-  module NotMovingStateProprieties
+  module NotMovingState
+
+    def initialize(wrapper)
+      super(wrapper)
+      @velocity = 0
+    end
+
     def moving?
       false
     end

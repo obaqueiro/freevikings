@@ -24,22 +24,22 @@ module FreeVikings
     # Maybe one day this argument will be removed and two classes -
     # LeftStandingState and RightStandingState - added.
 
-    def initialize(wrapper, direction='right')
+    def initialize(wrapper)
       @wrapper = wrapper
     end
 
     attr_reader :velocity
 
     def move
-      @wrapper.horizontal_state = WalkingState.new(@wrapper, @direction)
+      @wrapper.horizontal_state = WalkingState.new(@wrapper)
     end
 
     def stop
-      @wrapper.horizontal_state = StandingState.new @wrapper, @direction
+      @wrapper.horizontal_state = StandingState.new @wrapper
     end
 
     def knockout
-      @wrapper.horizontal_state = KnockedOutState.new @wrapper, @direction
+      @wrapper.horizontal_state = KnockedOutState.new @wrapper
     end
 
     def unknockout
@@ -52,36 +52,26 @@ module FreeVikings
 
   class WalkingState < HorizontalState
 
-    include MovingStateProprieties
+    include MovingState
 
     STRING_VALUE = 'moving'
 
-    def initialize(wrapper, direction='right')
-      super(wrapper, direction)
+    def initialize(wrapper)
+      super(wrapper)
       @velocity = VELOCITY_BASE
     end
   end # class LeftWalkingState
 
   class StandingState < HorizontalState
 
-    include NotMovingStateProprieties
-
-    def initialize(wrapper, direction='right')
-      super(wrapper, direction)
-      @velocity = 0
-    end
+    include NotMovingState
 
     STRING_VALUE = 'standing'
   end # class StandingState
 
   class KnockedOutState < HorizontalState
 
-    include NotMovingStateProprieties
-
-    def initialize(wrapper, direction='right')
-      super(wrapper, direction)
-      @velocity = 0
-    end
+    include NotMovingState
 
     STRING_VALUE = 'knocked-out'
 
@@ -95,8 +85,34 @@ module FreeVikings
     end
 
     def unknockout
-      @wrapper.horizontal_state = StandingState.new @wrapper, @direction
+      @wrapper.horizontal_state = StandingState.new @wrapper
     end
   end # class KnockedOutState
+
+  class SwordFightingState < HorizontalState
+
+    include NotMovingState
+
+    STRING_VALUE = 'sword-fighting'
+
+    def move
+    end
+
+    def stop
+    end
+  end
+
+  class BowStretchingState < HorizontalState
+
+    include NotMovingState
+
+    STRING_VALUE = 'bow-stretching'
+
+    def move
+    end
+
+    def stop
+    end
+  end
 
 end

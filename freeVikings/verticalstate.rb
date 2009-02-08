@@ -41,7 +41,7 @@ module FreeVikings
 
 
   class OnGroundState < VerticalState
-    include NotMovingStateProprieties
+    include NotMovingState
 
     def initialize(wrapper)
       super wrapper
@@ -52,7 +52,7 @@ module FreeVikings
   end # class OnGroundState
 
   class FallingState < VerticalState
-    include MovingStateProprieties
+    include MovingState
 
     def initialize(wrapper)
       super wrapper
@@ -63,7 +63,7 @@ module FreeVikings
   end # class FallingState
 
   class RisingState < VerticalState
-    include MovingStateProprieties
+    include MovingState
 
     def initialize(wrapper)
       super wrapper
@@ -74,7 +74,7 @@ module FreeVikings
   end # class RisingState
 
   class ClimbingUpState < VerticalState
-    include MovingStateProprieties
+    include MovingState
 
     def initialize(wrapper)
       super wrapper
@@ -89,7 +89,7 @@ module FreeVikings
   end
 
   class ClimbingDownState < VerticalState
-    include MovingStateProprieties
+    include MovingState
 
     def initialize(wrapper)
       super wrapper
@@ -104,7 +104,7 @@ module FreeVikings
   end
 
   class ClimbingHavingRestState < VerticalState
-    include NotMovingStateProprieties
+    include NotMovingState
 
     def initialize(wrapper)
       super wrapper

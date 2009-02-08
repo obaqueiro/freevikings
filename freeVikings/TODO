@@ -5,15 +5,21 @@
 ======== Code ==========================================================
 
 (-) New VikingState
-    (-) finish blog post (it could help to think about it)
+    (-) Model: mirroring
     (-) delete mirrored images of vikings, replace them programmatically
-    (-) write state tables for all vikings (including not yet implemented 
-        states)
-    (-) state table consistency check (for states which aren't included both
-        in table's keys and 'destinations')
-    (-) state attributes
+    (-) there should be something like state table which says which states
+        can follow after each other
+    (-) remove modification of VikingState internals from Viking subclasses 
+        (e.g. Warior assigns VikingState#horizontal_state)
+    (-) test that Baleog can't use his abilities while climbing a Ladder
 
 (-) Fix tests
+
+(-) Great Testing Level
+    When I test some core feature (e.g. modifications in VikingState),
+    I usually do it by playing some level, most usually ATUT.
+    But there should be some level with as many different objects as possible,
+    to be able to test vikings in many ways.
 
 (-) Pulling
     (-) vikings can pull some objects
@@ -29,6 +35,12 @@
     (-) bomb's flame can't reach behind wall or shield
 
 (-) [GO] press(es)
+
+(-) Code of class Sword is very strange and should be cleaned;
+    fix Sword's Z
+
+(-) Shield: Shield should't kill shots, but shots should destroy themselves
+    when they hit Shield
 
 (-) method Entity.location_handlers() which accepts one or more Symbol 
     arguments and creates register_in and unregister_in methods

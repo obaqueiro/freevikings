@@ -1,3 +1,18 @@
+[8.February 2009]
+- vikingstate.rb, sophisticatedspritestate.rb, viking.rb, shielder.rb,
+  sword.rb, warior.rb:
+  direction moved back to VikingState, but not to HorizontalState
+- horizontalstate.rb: removed remains of direction from here
+- ability.rb, sprinter.rb, gfx/models/erik_model.xml, shielder.rb:
+  SprinterAbility removed (functionality moved to class Sprinter);
+  ShielderAbility removed ( -"-                         Shielder);
+  WariorAbility           (                             Warior)
+- horizontalstate.rb, stateproprieties.rb: (Not)MovingStateProprieties
+  renamed to (Not)MovingState
+- vikingstate.rb: removed (after moving Abilities to horizontal state
+  VikingState is the same as SophisticatedSpriteState)
+- sophisticatedspritestate.rb: added method 'to_s'
+
 [7.February 2009]
 - viking.rb: Viking#heal made more general
 - entities/apple.rb: updated because of change in Viking#heal

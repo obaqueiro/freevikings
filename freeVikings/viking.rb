@@ -2,8 +2,7 @@
 # igneus 20.1.2004
 
 require 'deadviking.rb'
-
-require 'vikingstate.rb'
+require 'sophisticatedspritestate.rb'
 require 'collisiontest.rb'
 require 'inventory.rb'
 require 'talkable.rb'
@@ -60,24 +59,11 @@ module FreeVikings
     def initialize(name, start_position=[0,0])
       super()
 
-
-      # Patch to replace uncomfortable Model's hardcoded behavior
-      def @image.image(viking)
-        i = @images[viking.state_str]
-        if i == nil then
-          raise Model::NoImageAssignedException.new(viking.state)
-        end
-
-        return i.image
-      end
-
       @log = Log4r::Logger['viking log']
       @log.debug("Initialising Viking '#{@name}'")
 
       @name = name
-      @state = VikingState.new
-      @direction = 1
-      @direction_str = 'right'
+      @state = SophisticatedSpriteState.new
 
       # @paint_rect is wider than @collision_rect
       @rect = @collision_rect = Rectangle.new(start_position[0], start_position[1], WIDTH-10, HEIGHT-1)
@@ -135,17 +121,6 @@ module FreeVikings
     # for class VikingState.
 
     attr_reader :state
-
-    # Returns String describing current state - used as key into Model
-    SEP = '_'
-    def state_str
-      @state.vertical_state.to_s + SEP + \
-      (@ability.to_s ? @ability.to_s : @state.horizontal_state.to_s) + SEP + \
-      @direction_str
-    end
-
-    # for Sword only, should be removed soon
-    attr_reader :direction_str
 
     # Returns Viking's energy as a number which shouldn't ever overgrow
     # Viking::MAX_ENERGY and descend under zero.
@@ -270,9 +245,8 @@ module FreeVikings
         fall        
       end
 
+      @state.turn_left
       @state.move
-      @direction = -1
-      @direction_str = 'left'
     end
 
     def move_right
@@ -280,9 +254,8 @@ module FreeVikings
         fall
       end
 
+      @state.turn_right
       @state.move
-      @direction = 1
-      @direction_str = 'right'
     end
 
     # Normally falls back to s_f_func_on or s_f_func_off,
@@ -591,7 +564,7 @@ module FreeVikings
 
     # x-axis velocity of the sprite.
     def velocity_horiz
-      @state.velocity_horiz * self.class::BASE_VELOCITY * @direction * FreeVikings::CONFIG['game speed']
+      @state.velocity_horiz * self.class::BASE_VELOCITY * FreeVikings::CONFIG['game speed']
     end
 
     # y-axis velocity of the sprite
