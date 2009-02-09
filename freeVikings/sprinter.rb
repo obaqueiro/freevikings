@@ -1,12 +1,11 @@
 # sprinter.rb
 # igneus 1.2.2005
 
-# Trida na miru pro Erika. Sprinter umi rychle behat a skakat, hlavou
-# muze rozbijet zdi.
-
 require 'wall.rb'
 
 module FreeVikings
+
+  # Viking that can jump and bash Monsters and Walls with his magical helmet.
 
   class Sprinter < Viking
 
@@ -16,13 +15,14 @@ module FreeVikings
 
     DEFAULT_Z_VALUE = Viking::DEFAULT_Z_VALUE + 2
 
+    # maximum time (in seconds) Eric can sprint against a wall or monster
+    BULL_RUN_LIMIT = 3
+
     def initialize(name, start_position)
       super(name, start_position)
       @jump_start_y = nil 
-
-      # Value of Time.now.to_f at the point viking started to walk;
-      # it is used to determine whether he can run
-      @walk_start_time = -1
+      @bullrun_timeout = TimeLock.new(0)
+      @magical_helmet_rect = nil
     end
 
     def space_func_on
@@ -44,25 +44,48 @@ module FreeVikings
     def d_func_on
       return unless @state.moving_horizontally?
       @state.horizontal_state = BullHeadState.new(@state)
+      @bullrun_timeout.reset(BULL_RUN_LIMIT)
+
+      # Rectangle used to find collision with Walls and Monsters;
+      # exceeds @rect a bit, so crash isn't prevented by 'stop on solid object'
+      # system
+      ar = Rectangle.new(0,0,20,40)
+      ar.top = @rect.top+20
+      ar.left = if @state.direction == 'right' then
+                  @rect.right
+                else
+                  @rect.left-ar.w
+                end
+      @magical_helmet_rect = RelativeRectangle.new2(@rect, ar)
     end
 
     def d_func_off
       return unless @state.horizontal_state.is_a?(BullHeadState)
       @state.stop
+      @bullrun_timeout.reset(0)
     end
 
     alias_method :_update, :update
 
     def update
-      update_bullhead
+      if @state.horizontal_state.is_a?(BullHeadState) then
+        update_bullhead
+      end
+
       _update
-      if not @jump_start_y.nil?
-        # Nasledujici podminka ma smysl pouze ve svete, kde osa y ma nulu 
-        # nahore; v normalnim svete by bylo nutne prehodit
-        # mensence a mensitele v rozdilu.
+
+      if @state.rising?
+        # Condition below only makes sense in a world where y axis
+        # has its zero at the top and y coordinate raises as moving down.
         if (@jump_start_y - @rect.bottom) >= JUMP_HEIGHT
           space_func_off
         end
+      end
+
+      if @state.horizontal_state.is_a?(BullHeadState) &&
+          @state.falling? then
+        d_func_off
+        @state.move # walking instead of bull-run
       end
     end
 
@@ -74,16 +97,52 @@ module FreeVikings
 
     private
 
-    def update_bullhead
-      return unless @state.horizontal_state.is_a?(BullHeadState)
+    # called in every update when Eric is using his magical helmet
 
-      @location.static_objects_on_rect(@rect).each {|o|
+    def update_bullhead
+      # viking stopped
+      unless @state.moving_horizontally? then
+        d_func_off
+        return
+      end
+      # time out
+      if @bullrun_timeout.free? then
+        d_func_off
+        @state.move
+        return
+      end
+
+      # bash Walls
+      @location.static_objects_on_rect(@magical_helmet_rect) do |o|
         if o.is_a?(Wall) then
           o.bash
           d_func_off
-          break
+          bull_crash
+          return
         end
-      }
+      end
+
+      unless @location.area_free?(@magical_helmet_rect)
+        bull_crash
+        return
+      end
+
+      # bash Monsters
+      @location.sprites_on_rect(@magical_helmet_rect) do |o|
+        if o.is_a?(Monster) then
+          o.hurt
+          d_func_off
+          bull_crash
+          return
+        end
+      end
+    end
+
+    # called when Eric hits something (Monster, Wall or something solid)
+    # with his magical helmet
+
+    def bull_crash
+      knockout
     end
   end # class
 end # module

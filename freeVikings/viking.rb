@@ -169,11 +169,14 @@ module FreeVikings
     # seconds.
 
     def hurt_and_knockout
-      @state.knockout
-      @knockout_duration = TimeLock.new KNOCK_OUT_DURATION, @location.ticker
+      knockout
       hurt
     end
 
+    def knockout
+      @state.knockout
+      @knockout_duration = TimeLock.new KNOCK_OUT_DURATION, @location.ticker
+    end
 
     # Adds 'points' energy points and returns true.
     # If Viking::MAX_ENERGY was exceeded, raises RuntimeError.

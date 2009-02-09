@@ -68,7 +68,9 @@ module FreeVikings
 
       if @destroy_brick > num_bricks then
         @state = KO
-        @location.delete_sprite self
+        l = @location
+        l.delete_static_object self
+        l.delete_sprite self
         # @location.delete_static_object self
       end
     end

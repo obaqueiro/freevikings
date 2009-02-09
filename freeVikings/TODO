@@ -5,19 +5,24 @@
 ======== Code ==========================================================
 
 (-) Wall/monster-smashing feature
-    (-) [VI] Erik's 'head-smash' feature
-        (-) damage monsters
-        (-) time limit
-        (-) makes Erik KO (also on solid wall!)
     (-) bomb's flame can't reach behind wall or shield
 
 (-) New VikingState
-    (-) what should happen if Erik 'bull-heading' starts falling?
     (-) there should be something like state table which says which states
         can follow after each other
     (-) remove modification of VikingState internals from Viking subclasses 
         (e.g. Warior & Sprinter assign VikingState#horizontal_state)
     (-) test that Baleog can't use his abilities while climbing a Ladder
+    (-) fix Snail
+    (-) code saying which state can come after which should be
+        in VikingState OR in Viking subclasses, not in both
+
+(-) Web:
+    (-) Fix links width ("Documentation" shouldn't exceed the frame)
+    (-) Replace that ancient Baleog's graphic under the links
+    (-) Classify links (General, Development)
+
+(-) Speed up tombstone animation
 
 (-) Fix tests
 

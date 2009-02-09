@@ -1,3 +1,10 @@
+[9.February 2009]
+- sprinter.rb: full implementation of magical helmet
+  (can bash Walls and Monsters; clever state changes - falling etc;
+  Eric knocked out when he hits wall, Wall or Monster)
+- viking.rb: added method knockout
+- entities/wall.rb: destroyed Wall deletes itself from the Location properly
+
 [8.February 2009]
 - vikingstate.rb, sophisticatedspritestate.rb, viking.rb, shielder.rb,
   sword.rb, warior.rb:
