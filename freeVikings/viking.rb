@@ -97,6 +97,8 @@ module FreeVikings
       # BottomPanel::VikingView will be assigned here
       # (NullView is for tests etc.)
       @view = BottomPanel::VikingView::NullView.new
+
+      @pulled_object = nil
     end
 
     # Factory methods which create subclasses' instances.
@@ -357,27 +359,73 @@ module FreeVikings
     def update
       collect_items
 
-      update_knockout
+      update_knockout if @state.knocked_out?
 
       # don't modify these variables!
       @next_left = next_left
       @next_top = next_top
 
-      unless (move_xy or move_y_only)
-        @log.warn "update: Viking #{name} cannot move in any axis. He could have stucked."
+      if @state.moving?
+        unless do_move
+          @log.warn "update: Viking #{name} cannot move in any axis. He could have stucked."
+        end
       end
 
       try_to_climb if @try_to_climb
       update_climbing if @state.climbing?
-      try_to_fall
-      fall_if_head_on_the_ceiling
-      try_to_descend
+
+      try_to_fall unless @state.moving_vertically?
+
+      if @state.moving_vertically? then
+        fall_if_head_on_the_ceiling
+        try_to_descend
+      end
+
+      if @state.horizontal_state.is_a?(PullingState) then
+        update_pulling
+      elsif @state.moving_horizontally?
+        try_to_pull
+      end
 
       update_transport # defined in mixin Transportable
 
       @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
 
       nil
+    end
+
+    def try_to_pull
+      a = Rectangle.new(0,0,10,HEIGHT-20)
+      a.left = if @state.direction == 'left'
+                 @rect.left - a.w
+               else
+                 @rect.right
+               end
+      a.top = @rect.top + 10
+      @location.static_objects_on_rect(a) {|o|
+        if o.respond_to?(:pull) then
+          @pulled_object = o
+          break
+        end
+      }
+
+      return unless @pulled_object
+
+      @state.horizontal_state = PullingState.new(@state)
+    end
+
+    def update_pulling
+      unless @state.moving_horizontally?
+        @state.stop
+        @pulled_object = nil
+      end
+
+      d = if @state.direction == 'right' then
+            @next_left            
+          else
+            @next_left - @pulled_object.rect.w
+          end
+      @pulled_object.pull(d)
     end
 
     # This method causes the Viking to fall. For this purpose you could also 
@@ -409,27 +457,28 @@ module FreeVikings
       end
     end
 
-    private
-    def move_xy
+    def do_move
       @aux_rect.set_pos(@next_left, @next_top)
       if @location.area_free?(@aux_rect) then
+
 	@log.debug "move_xy: Viking #{name}'s next position is all right."
         @rect.copy_pos @aux_rect
         return true
-      else
-        return false
-      end
-    end
 
-    private
-    def move_y_only
-      @aux_rect.set_pos(@rect.left, @next_top)
-      if @location.area_free?(@aux_rect) then
-        @log.debug "move_y_only: Viking #{name} cannot move horizontally, but his vertical coordinate was updated successfully."
-        @rect.copy_pos @aux_rect
-        return true
+      elsif @state.moving_vertically?
+
+        # try to move only in axis y
+        @aux_rect.set_pos(@rect.left, @next_top)
+        if @location.area_free?(@aux_rect) then
+          @log.debug "move_y_only: Viking #{name} cannot move horizontally, but his vertical coordinate was updated successfully."
+          @rect.copy_pos @aux_rect
+          return true
+        else
+          @log.debug "move_y_only: Viking #{name} cannot move in any axis."
+          return false
+        end
+
       else
-        @log.debug "move_y_only: Viking #{name} cannot move in any axis."
         return false
       end
     end
@@ -522,7 +571,7 @@ module FreeVikings
 
     private
     def update_knockout
-      if @state.knocked_out? and @knockout_duration.free? then
+      if @knockout_duration.free? then
         @state.unknockout
       end
     end

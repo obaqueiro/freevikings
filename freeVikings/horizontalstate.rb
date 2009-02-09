@@ -130,4 +130,16 @@ module FreeVikings
     end
   end
 
+  class PullingState < HorizontalState
+
+    include MovingState
+
+    STRING_VALUE = 'pulling'
+
+    def initialize(wrapper)
+      super(wrapper)
+      @velocity = VELOCITY_BASE * 0.6
+    end
+  end
+
 end

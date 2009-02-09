@@ -4,18 +4,25 @@
 
 ======== Code ==========================================================
 
-(-) Wall/monster-smashing feature
-    (-) bomb's flame can't reach behind wall or shield
+(-) Pulling
+    (-) vikings can pull some objects
+        - walking viking, when he can't walk on, start's pulling instead of
+          just stopping
+    (-) [GO] Pullable block 80*80px
+        (-) doesn't blink awfully when pulled (must be painted after viking's 
+            update)
+	(-) can fall into hole 80*80px
+        (-) as a Sprite: falls down
 
 (-) New VikingState
-    (-) there should be something like state table which says which states
-        can follow after each other
     (-) remove modification of VikingState internals from Viking subclasses 
         (e.g. Warior & Sprinter assign VikingState#horizontal_state)
-    (-) test that Baleog can't use his abilities while climbing a Ladder
-    (-) fix Snail
     (-) code saying which state can come after which should be
         in VikingState OR in Viking subclasses, not in both
+    (-) there should be something like state table which says which states
+        can follow after each other
+    (-) test that Baleog can't use his abilities while climbing a Ladder
+    (-) fix all sophisticated sprites (Snail, Penguin, Robot)
 
 (-) Web:
     (-) Fix links width ("Documentation" shouldn't exceed the frame)
@@ -26,17 +33,14 @@
 
 (-) Fix tests
 
+(-) Wall/monster-smashing feature
+    (-) bomb's flame can't reach behind wall or shield
+
 (-) Great Testing Level
     When I test some core feature (e.g. modifications in VikingState),
     I usually do it by playing some level, most usually ATUT.
     But there should be some level with as many different objects as possible,
     to be able to test vikings in many ways.
-
-(-) Pulling
-    (-) vikings can pull some objects
-        - walking viking, when he can't walk on, start's pulling instead of
-          just stopping
-    (-) [GO] Pullable block 80*80px
 
 (-) SchwerEngine::Model::ModelLoader should catch XML syntax errors and
     report them in a clever way.
@@ -48,6 +52,9 @@
 
 (-) Shield: Shield should't kill shots, but shots should destroy themselves
     when they hit Shield
+
+(-) Paralaxed background (optional) - owners of strong computers
+    may appreciate a way to use up their powerfull processors...
 
 (-) method Entity.location_handlers() which accepts one or more Symbol 
     arguments and creates register_in and unregister_in methods

@@ -4,6 +4,13 @@
   Eric knocked out when he hits wall, Wall or Monster)
 - viking.rb: added method knockout
 - entities/wall.rb: destroyed Wall deletes itself from the Location properly
+- gfx/bigbrick.rb: one older nogath's contribution
+- entities/bigbrick.rb, testing level BigBrick:
+  new game object: brick which can be pulled
+- horizontalstate.rb: added state PullingState
+- erik's model file: added testing graphic for pulling (not commited into CVS -
+  pulling will cause error...)
+- viking.rb: beginning of implementation of pulling
 
 [8.February 2009]
 - vikingstate.rb, sophisticatedspritestate.rb, viking.rb, shielder.rb,

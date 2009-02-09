@@ -7,6 +7,8 @@
     <image sym="climb">vikings/erik/erik_climbing.tga</image>
     <image sym="bull-left">vikings/erik/erik_bullhead_left.tga</image>
     <image sym="bull-right" srcsym="bull-left" operation="mirror-x"/>
+    <image sym="pull-right">pushsketch.png</image>
+    <image sym="pull-left" srcsym="pull-right" operation="mirror-x"/>
   </load_pre>
 
   <states>
@@ -17,6 +19,9 @@
 
     <state name="onground_knocked-out_left" image="erik_ko_left.png"/>
     <state name="onground_knocked-out_right" image="erik_ko_right.png"/>
+
+    <state name="onground_pulling_left" sym="pull-left"/>
+    <state name="falling_pulling_left" sym="pull-left"/>
 
     <state name="falling_standing_right" sym="right"/>
     <state name="falling_standing_left" sym="left"/>

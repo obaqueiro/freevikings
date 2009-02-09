@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>Big Brick</title>
+    <author>Jakub Pavlik - severus@post.cz</author>
+    <description>
+      BigBrick here
+      BigBrick there
+      BigBrick simply everywhere
+      (DJ Bobo?)
+    </description>
+  </info>
+
+  <body>
+    <password>BGBR</password>
+    <map src="bigbrick_loc.xml"/>
+    <script src="bigbrick_script.rb"/>
+    <exit horiz="500" vertic="301" />
+    <start horiz="480" vertic="60" />
+  </body>
+</location>
