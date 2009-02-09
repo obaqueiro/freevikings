@@ -84,6 +84,15 @@ module SchwerEngine
       [right, bottom]
     end
 
+    def collides?(rect)
+      return false if left >= rect.right
+      return false if rect.left > right
+      return false if top > rect.bottom
+      return false if rect.top > bottom
+
+      return true
+    end
+
     # hide some inherited methods:
     #private :[]=, :left=, :top=, :w=, :h=, :bottom=, :right=, :expand!, :move!
 

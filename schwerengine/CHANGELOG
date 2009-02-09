@@ -1,3 +1,6 @@
+[9.February 2009]
+- relativerect.rb: added method 'collides?'
+
 [8.February 2009]
 - model.rb: Model::ModelLoader: added support for mirroring
 
