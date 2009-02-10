@@ -366,6 +366,12 @@ module FreeVikings
       @next_top = next_top
 
       if @state.moving?
+        if @state.horizontal_state.is_a?(PullingState) then
+          update_pulling
+        elsif @state.moving_horizontally?
+          try_to_pull
+        end
+
         unless do_move
           @log.warn "update: Viking #{name} cannot move in any axis. He could have stucked."
         end
@@ -381,12 +387,6 @@ module FreeVikings
         try_to_descend
       end
 
-      if @state.horizontal_state.is_a?(PullingState) then
-        update_pulling
-      elsif @state.moving_horizontally?
-        try_to_pull
-      end
-
       update_transport # defined in mixin Transportable
 
       @log.debug("update: #{@name}'s state: #{@state.to_s} #{@state.dump}")
@@ -395,7 +395,7 @@ module FreeVikings
     end
 
     def try_to_pull
-      a = Rectangle.new(0,0,10,HEIGHT-20)
+      a = Rectangle.new(0,0,30,40)
       a.left = if @state.direction == 'left'
                  @rect.left - a.w
                else
@@ -411,13 +411,27 @@ module FreeVikings
 
       return unless @pulled_object
 
+      @pull_zone = RelativeRectangle.new2(@rect, a)
       @state.horizontal_state = PullingState.new(@state)
     end
 
     def update_pulling
+      # viking stopped?
       unless @state.moving_horizontally?
         @state.stop
         @pulled_object = nil
+        return
+      end
+
+      # lost touch with pulled object?
+      unless @pulled_object.rect.collides?(@pull_zone)
+        if @state.moving_horizontally? then
+          @state.move
+        else
+          @state.stop
+        end
+        @pulled_object = nil
+        return
       end
 
       d = if @state.direction == 'right' then

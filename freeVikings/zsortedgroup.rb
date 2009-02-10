@@ -54,5 +54,13 @@ module FreeVikings
       @members_presence.delete o
       @members.delete o
     end
+
+    def include?(o)
+      if @members_presence[o] then
+        return true
+      else
+        return false
+      end
+    end
   end
 end

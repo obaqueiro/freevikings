@@ -1,3 +1,10 @@
+[10.February 2009]
+- location.rb: Location#delete_... doesn't give the object NullLocation
+  if it still has any reference in @objects (fixed bug)
+- entities/bigbrick.rb: BigBrick can fall
+- viking.rb: pulling without blinking
+- Eric's model: added states for pulling to the right
+
 [9.February 2009]
 - sprinter.rb: full implementation of magical helmet
   (can bash Walls and Monsters; clever state changes - falling etc;

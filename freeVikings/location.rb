@@ -321,7 +321,9 @@ module FreeVikings
       "def delete_#{object_name}(o)\n"\
       "  #{group}.delete o\n"\
       "  @objects.delete o\n"\
-      "  put_nulllocation o\n"\
+      "  unless @objects.include?(o)\n"\
+      "    put_nulllocation o\n"\
+      "  end\n"\
       "end"
     end
 

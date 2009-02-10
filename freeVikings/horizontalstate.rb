@@ -75,10 +75,7 @@ module FreeVikings
 
     STRING_VALUE = 'knocked-out'
 
-    def move_left
-    end
-
-    def move_right
+    def move
     end
 
     def stop

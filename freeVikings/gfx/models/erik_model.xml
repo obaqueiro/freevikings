@@ -22,6 +22,8 @@
 
     <state name="onground_pulling_left" sym="pull-left"/>
     <state name="falling_pulling_left" sym="pull-left"/>
+    <state name="onground_pulling_right" sym="pull-right"/>
+    <state name="falling_pulling_right" sym="pull-right"/>
 
     <state name="falling_standing_right" sym="right"/>
     <state name="falling_standing_left" sym="left"/>
