@@ -35,7 +35,17 @@ module FreeVikings
 
     # Viking's default velocity in pixels per second.
 
-    BASE_VELOCITY = 100 # 70
+    BASE_VELOCITY = 100
+
+    @@velocity = BASE_VELOCITY
+
+    def Viking.velocity
+      @@velocity
+    end
+
+    def Viking.velocity=(v)
+      @@velocity = v
+    end
 
     # Sizes of the vikings' graphics. (Not of their collision area, which is
     # a bit smaller!)
@@ -465,7 +475,7 @@ module FreeVikings
       @fall_height = @rect.top - @start_fall
       fall_velocity = velocity_vertic
       @state.descend
-      if (@fall_height >= 3 * HEIGHT and fall_velocity >= BASE_VELOCITY) then
+      if (@fall_height >= 3 * HEIGHT and fall_velocity >= @@velocity) then
         @log.debug "descend: #{@name} has felt from a big height (#{@fall_height}) and is hurt."
         hurt_and_knockout
       end
@@ -560,7 +570,7 @@ module FreeVikings
         @desc_rect.set_values(@rect.left, 
                               @rect.bottom,
                               @rect.w, 
-                              (@location.ticker.delta * BASE_VELOCITY).to_i)
+                              (@location.ticker.delta * @@velocity).to_i)
 
         floor = @location.find_surface(@desc_rect)
 
@@ -594,7 +604,7 @@ module FreeVikings
     # Says if the viking is standing on a solid ground (tile or static object)
     def on_ground?
       @aux_rect.set_pos(@rect.left, 
-                        @rect.top + @location.ticker.delta * BASE_VELOCITY)
+                        @rect.top + @location.ticker.delta * @@velocity)
       return ! @location.area_free?(@aux_rect)
     end
 
@@ -630,12 +640,12 @@ module FreeVikings
 
     # x-axis velocity of the sprite.
     def velocity_horiz
-      @state.velocity_horiz * self.class::BASE_VELOCITY * FreeVikings::CONFIG['game speed']
+      @state.velocity_horiz * @@velocity # * FreeVikings::CONFIG['game speed']
     end
 
     # y-axis velocity of the sprite
     def velocity_vertic
-      @state.velocity_vertic * self.class::BASE_VELOCITY * FreeVikings::CONFIG['game speed']
+      @state.velocity_vertic * @@velocity # * FreeVikings::CONFIG['game speed']
     end
 
   end # class Viking

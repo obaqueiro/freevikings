@@ -133,6 +133,12 @@ module FreeVikings
       when K_PAGEUP, K_x
 	@context.team.next
         @context.bottompanel.change_active_viking
+      when K_PLUS, K_KP_PLUS
+        Viking.velocity += 10
+      when K_MINUS, K_KP_MINUS
+        if Viking.velocity > 10 then
+          Viking.velocity -= 10
+        end
       else
         super(keyevent, location)
       end

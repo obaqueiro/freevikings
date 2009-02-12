@@ -450,6 +450,10 @@ module FreeVikings
         @app_window.print([10,10], "fps: #{@frame_limitter.fps}", 
                           [255,255,255])
       end
+
+      # current velocity of the vikings:
+      @app_window.fill [0,0,0], [200,8,170,12]
+      @app_window.print [202,10], "speed: #{Viking.velocity}pxps", [255,255,255]
     end
 
     private

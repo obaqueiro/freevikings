@@ -4,6 +4,10 @@
 
 ======== Code ==========================================================
 
+(-) viking.rb: re-enable game speed feature after the test of speed
+
+(-) fix level SwitchPlace
+
 (-) Pulling
     (-) vikings can pull some objects
         - when pulling viking turns back, he stops pulling, game doesn't crash

@@ -1,3 +1,8 @@
+[12.February 2009]
+- viking.rb, gamestate.rb: quick implementation of simple system which
+  simplifies testing of speed of vikings (keys + and - change speed, it's 
+  displayed at the top of screen); 'game speed' option temporarily discarded
+
 [10.February 2009]
 - location.rb: Location#delete_... doesn't give the object NullLocation
   if it still has any reference in @objects (fixed bug)
