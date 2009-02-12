@@ -2,6 +2,8 @@
 - viking.rb, gamestate.rb: quick implementation of simple system which
   simplifies testing of speed of vikings (keys + and - change speed, it's 
   displayed at the top of screen); 'game speed' option temporarily discarded
+- utils/make_release.rb: (probably unsuccessfull) attempt to mechanize sftp
+  of package to SF
 
 [10.February 2009]
 - location.rb: Location#delete_... doesn't give the object NullLocation

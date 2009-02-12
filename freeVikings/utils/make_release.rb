@@ -28,7 +28,7 @@ module Tasks
            :export, # - CVS: export
            :rename, # - rename directory freeVikings to freeVikings-VERSION
            :archives, # - create archive
-           # :ftp, # - ftp archive to web
+           :ftp, # - ftp archive to web
            :freshmeat, :raa, # - update freshmeat and RAA entries
            :cleanup # - delete tmp dir
           ]
@@ -154,17 +154,12 @@ module Tasks
   def ftp # - ftp archives to web
     Dir.chdir $setup.tmpdir
     
-    print 'Give password for freevikings.wz.cz@freevikings.wz.cz: '
-    password = gets.chomp
-    
-    yafc_invocation = "yafc -m none freevikings.wz.cz:#{password}@freevikings.wz.cz"
-    yafc_commands = "cd packages\n"+"mkdir #{$setup.ftp_dir_version}\n"+"cd #{$setup.ftp_dir_version}\n"+"put -f freeVikings-#{$setup.dir_version}/RELEASE\n"
-    Dir['*.tar.gz'].each {|f| yafc_commands += "put -f #{f}\n"}
-    # Well, it's a shame, but I'm not familiar with pipes in ruby,
-    # so stdin for yafc will be written to a file and the file than
-    # given to yafc using cat...
-    File.open("yafccommands", 'w') {|f| f.puts yafc_commands}
-    system "cat yafccommands | #{yafc_invocation}"
+    yafc_invocation = "yafc ssh://igneus_cz@frs.sourceforge.net"
+
+    IO.popen(yafc_invocation, 'w') do |ftp|
+      yafc.puts "cd uploads"
+      Dir['*.tar.gz'].each {|f| yafc.puts "put -f #{f}" }
+    end
   end
 
   # freshmeat.net: release focus
