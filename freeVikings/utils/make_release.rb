@@ -138,6 +138,7 @@ module Tasks
   def archives # - create archives
     Dir.chdir $setup.tmpdir
 
+    puts "moving 'gameui' and 'schwerengine' to directory 'lib/'"
     system "mv gameui freeVikings-#{$setup.dir_version}/lib"
     system "mv schwerengine freeVikings-#{$setup.dir_version}/lib"
 
@@ -157,8 +158,8 @@ module Tasks
     yafc_invocation = "yafc ssh://igneus_cz@frs.sourceforge.net"
 
     IO.popen(yafc_invocation, 'w') do |ftp|
-      yafc.puts "cd uploads"
-      Dir['*.tar.gz'].each {|f| yafc.puts "put -f #{f}" }
+      ftp.puts "cd uploads"
+      Dir['*.tar.gz'].each {|f| ftp.puts "put -f #{f}" }
     end
   end
 

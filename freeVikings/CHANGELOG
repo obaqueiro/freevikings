@@ -1,3 +1,6 @@
+[13.February 2009]
+- gfx/bigbrick.png: update ("pure pixelart" version, again by nogath)
+
 [12.February 2009]
 - viking.rb, gamestate.rb: quick implementation of simple system which
   simplifies testing of speed of vikings (keys + and - change speed, it's 
