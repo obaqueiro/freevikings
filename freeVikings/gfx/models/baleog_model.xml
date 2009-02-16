@@ -61,5 +61,9 @@ Model description for Baleog.
     <state name="climbingDown_standing_right" sym="left"/>
     <state name="climbingRest_standing_right" sym="left"/>
 
+    <state name="onground_pulling_left" sym="left"/>
+    <state name="falling_pulling_left" sym="left"/>
+    <state name="onground_pulling_right" sym="right"/>
+    <state name="falling_pulling_right" sym="right"/>
   </states>
 </model>

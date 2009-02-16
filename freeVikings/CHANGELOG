@@ -1,3 +1,14 @@
+[16.February 2009]
+- viking.rb: viking pulling right isn't catched inside the brick;
+  removed last forgotten reference to Ability (made error on climbing);
+  viking can't pull when he's rising;
+  removed error "short 'pull blink'" when pulling viking stops and then goes
+  back;
+  it isn't possible to start pulling directly from 'bull-head' state
+- Vikings' models: added states for pulling;
+  Eric's special testing image commented out (it isn't in CVS)
+- entities/bigbrick.rb: brick can't be pulled into a solid tile (or object)
+
 [13.February 2009]
 - gfx/bigbrick.png: update ("pure pixelart" version, again by nogath)
 

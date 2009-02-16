@@ -21,7 +21,12 @@ module FreeVikings
 
     def initialize(pos)
       super(pos)
+
+      # used to test for possibility of falling
       @fall_rect = Rectangle.new(@rect.left+2,@rect.bottom,@rect.w-4,@rect.h/2)
+
+      # used to test if next position is free
+      @test_rect = Rectangle.new(0,0,@rect.w,@rect.h)
     end
 
     def solid?
@@ -29,10 +34,22 @@ module FreeVikings
     end
 
     def pull(new_x)
+      @test_rect.top = @rect.top
+
+      if new_x < @rect.left
+        @test_rect.left = new_x
+        @test_rect.w = @rect.left - new_x - 1
+      else
+        @test_rect.left = @rect.right + 1
+        @test_rect.w = new_x - @rect.left - 1
+      end
+
+      unless @location.area_free?(@test_rect)
+        return false
+      end
+
       @rect.left = new_x
-
       try_to_fall
-
       return true
     end
 

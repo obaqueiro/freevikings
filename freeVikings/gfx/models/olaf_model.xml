@@ -74,5 +74,9 @@ Model description for Olaf (the yellow guy with shield).
     <state name="climbingDown_standing_right" sym="right1"/>
     <state name="climbingRest_standing_right" sym="right1"/>
 
+    <state name="onground_pulling_left" sym="left1"/>
+    <state name="falling_pulling_left" sym="left1"/>
+    <state name="onground_pulling_right" sym="right1"/>
+    <state name="falling_pulling_right" sym="right1"/>
   </states>
 </model>

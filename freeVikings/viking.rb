@@ -318,9 +318,6 @@ module FreeVikings
       @start_fall = nil
       # Viking must stop walking before he can start climbing
       @state.stop
-      # and end any ability-connected activities
-      @state.ability.space_off
-      @state.ability.d_off
 
       @rect.left = ladder.collision_rect.center[0] - @rect.w/2
       @state.vertical_state = case direction
@@ -378,7 +375,8 @@ module FreeVikings
       if @state.moving?
         if @state.horizontal_state.is_a?(PullingState) then
           update_pulling
-        elsif @state.moving_horizontally?
+        elsif @state.moving_horizontally? && ! @state.rising? &&
+            ! @state.horizontal_state.is_a?(BullHeadState)
           try_to_pull
         end
 
@@ -412,6 +410,7 @@ module FreeVikings
                  @rect.right
                end
       a.top = @rect.top + 10
+      @pulled_object = nil
       @location.static_objects_on_rect(a) {|o|
         if o.respond_to?(:pull) then
           @pulled_object = o
@@ -445,7 +444,7 @@ module FreeVikings
       end
 
       d = if @state.direction == 'right' then
-            @next_left            
+            @next_left + @rect.w
           else
             @next_left - @pulled_object.rect.w
           end

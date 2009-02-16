@@ -8,15 +8,6 @@
 
 (-) fix level SwitchPlace
 
-(-) Pulling
-    (-) vikings can pull some objects
-        - when pulling viking turns back, he stops pulling, game doesn't crash
-        - walking viking, when he can't walk on, start's pulling instead of
-          just stopping
-        - Eric can't start pulling when he is sprinting against a BigBrick
-    (-) [GO] Pullable block 80*80px
-        (-) can't be pulled through a solid wall
-
 (-) New VikingState
     (-) particular states aren't implemented as classes, but as a small bunch 
         of data;
