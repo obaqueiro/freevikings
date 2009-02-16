@@ -151,5 +151,11 @@ CONFIG = {
     #
     # Value: :auto, :off or any number between 0 and 0.10
     'frame delay' => :auto,
+
+    # If Viking is hurt and has a healing item in his inventory, should he
+    # use it automatically?
+    #
+    # Value: true or false
+    'auto-use healing items' => false
   }
 }

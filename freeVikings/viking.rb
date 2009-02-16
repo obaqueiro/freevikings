@@ -8,6 +8,7 @@ require 'inventory.rb'
 require 'talkable.rb'
 require 'transportable.rb'
 require 'ladder.rb'
+require 'apple.rb'
 
 module FreeVikings
 
@@ -171,6 +172,10 @@ module FreeVikings
     def hurt
       @energy -= 1
       destroy if @energy <= 0
+
+      if FreeVikings::CONFIG['Game']['auto-use healing items'] then
+        try_auto_heal
+      end
 
       @view.update_view
 
@@ -619,6 +624,13 @@ module FreeVikings
           # Then '@location.delete_item i' isn'texecuted and nothing
           # is changed.
         end
+
+        # collected item may be a healing item; if player has set it up so,
+        # try touse it automatically:
+        if FreeVikings::CONFIG['Game']['auto-use healing items'] &&
+            @energy < MAX_ENERGY then
+          try_auto_heal
+        end
       end
     end
 
@@ -645,6 +657,20 @@ module FreeVikings
     # y-axis velocity of the sprite
     def velocity_vertic
       @state.velocity_vertic * @@velocity # * FreeVikings::CONFIG['game speed']
+    end
+
+    # Searches inventory for a healing item and if someone is found,
+    # it's selected and used.
+
+    def try_auto_heal
+      @inventory.each_with_index do |item,idx|
+        if item.is_a?(Apple) || item.is_a?(HealingPotion) then
+          @inventory.active_index = idx
+          use_item
+          @view.update_view
+          break
+        end
+      end
     end
 
   end # class Viking

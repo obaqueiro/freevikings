@@ -27,6 +27,8 @@
      "multiple-present objects": objects which are e.g. Sprite and StaticObject
      at the same time) - either rename the class or split it into two
 
+(-) In-game menu doesn't have effect on fps value
+
 (-) Web:
     (-) Fix links width ("Documentation" shouldn't exceed the frame)
     (-) Replace that ancient Baleog's graphic under the links
@@ -53,7 +55,7 @@
 (-) Code of class Sword is very strange and should be cleaned;
     fix Sword's Z
 
-(-) Shield: Shield should't kill shots, but shots should destroy themselves
+(-) Shield: Shield shouldn't kill shots, but shots should destroy themselves
     when they hit Shield
 
 (-) Paralaxed background (optional) - owners of strong computers
@@ -106,8 +108,6 @@
 
 (-) Small levels (like RubyCampaign/Intro with panel on the side) paint well -
     unused part of the screen might be e.g. black
-
-(-) In-game menu doesn't have effect on fps value
 
 (-) Piranhas: some randomness (they shouldn't bite all at the same time and
     have the same speed)
@@ -227,15 +227,11 @@
 
 (-) Installation
 
-(-) Skinnable vikings
-
 (-) [DT] Complex tutorial level set
 
 (-) developer's manual: finish level tutorial
 
 (-) RDoc documentation (convert RD to RDoc)
-
-(-) Items autouse (healing items mainly) as in LV2 (only as option)
 
 (-) Repair RUDL:  Music.post_end_event shouldn't require argument
     and event should be sent if set to true and music ends

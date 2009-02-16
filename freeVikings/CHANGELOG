@@ -8,6 +8,9 @@
 - Vikings' models: added states for pulling;
   Eric's special testing image commented out (it isn't in CVS)
 - entities/bigbrick.rb: brick can't be pulled into a solid tile (or object)
+- inventory.rb: added method each_with_index; implementation of some methods
+  replaced with delegation
+- viking.rb, config files: optional auto-use of healing items
 
 [13.February 2009]
 - gfx/bigbrick.png: update ("pure pixelart" version, again by nogath)

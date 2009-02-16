@@ -1,6 +1,8 @@
 # inventory.rb
 # igneus 21.6.2005
 
+require 'forwardable'
+
 module FreeVikings
 
   # Inventory is a box with four slots. Viking can collect items and put them
@@ -24,6 +26,8 @@ module FreeVikings
   #   inventory, the item is collected automatically.
 
   class Inventory
+
+    extend Forwardable
 
     SLOTS = 4
     MAX_INDEX = SLOTS - 1
@@ -118,13 +122,9 @@ module FreeVikings
       at 3
     end
 
-    def each
-      @items.each {|i| yield i}
-    end
-
-    def each_index
-      @items.each_index {|i| yield i}
-    end
+    def_delegator :@items, :each
+    def_delegator :@items, :each_index
+    def_delegator :@items, :each_with_index
 
     # Returns indexth item from the Inventory or a NullItem instance if 
 
