@@ -1,3 +1,8 @@
+[10.May 2009]
+- bpvikingview.rb, trash.rb, gfx/panel/*: adding Ingo's improvements 
+  on BottomPanel;
+  created new directory gfx/panel, some panel-connected graphics moved there
+
 [16.February 2009]
 - viking.rb: viking pulling right isn't catched inside the brick;
   removed last forgotten reference to Ability (made error on climbing);

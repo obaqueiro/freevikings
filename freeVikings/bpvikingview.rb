@@ -246,12 +246,12 @@ module FreeVikings
       end
 
       def init_gfx
-        @face_bg = RUDL::Surface.load_new(GFX_DIR+'/face_bg.tga')
+        @face_bg = RUDL::Surface.load_new(GFX_DIR+'/panel/face_bg.png')
         @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.png')
 
-        @item_bg = RUDL::Surface.load_new(GFX_DIR+'/item_bg.tga')
-        @selection_box_yellow = RUDL::Surface.load_new(GFX_DIR+'/selection.tga')
-        @selection_box_green = RUDL::Surface.load_new(GFX_DIR+'/selection_exchange.tga')
+        @item_bg = RUDL::Surface.load_new(GFX_DIR+'/panel/item01.png')
+        @selection_box_yellow = RUDL::Surface.load_new(GFX_DIR+'/panel/yellow_box.png')
+        @selection_box_green = RUDL::Surface.load_new(GFX_DIR+'/panel/green_box.png')
       end
 
       # Vikings use this when they have no view (mainly in tests)

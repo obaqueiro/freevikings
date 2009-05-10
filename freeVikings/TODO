@@ -4,6 +4,10 @@
 
 ======== Code ==========================================================
 
+(-) Ingo's BottomPanel improvements:
+    (-) item background: randomly chosen
+    (-) background of whole panel, separators, background of energy points
+
 (-) viking.rb: re-enable game speed feature after the test of speed
 
 (-) fix level SwitchPlace

@@ -16,9 +16,10 @@ module FreeVikings
       DUMP_ANIMATION_TIME = 2 # in seconds
 
       def initialize(position)
-        sst = SpriteSheet.load2('trash.png', 30, 30, [1,2,3,4])
+        sst = SpriteSheet.load2('panel/trash.png', 30, 30, [1,2,3,4])
         @static_image = sst[1]
         @dump_animation = Animation.new(0.25, [sst[1], sst[2], sst[3], sst[4]])
+        @background = Image.load('panel/trash_background.png')
 
         @rect = Rectangle.new position[0], position[1], WIDTH, HEIGHT
         @inventory = TrashInventory.new
@@ -66,6 +67,7 @@ module FreeVikings
         if @highlighted then
           surface.fill VikingView::HIGHLIGHT_COLOUR, @rect.to_a
         end
+        surface.blit @background.image, @rect.top_left
         surface.blit image, @rect.top_left
         if @inventory.content then
           surface.blit @inventory.content.image, @rect.top_left
