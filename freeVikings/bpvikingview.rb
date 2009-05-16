@@ -136,10 +136,28 @@ module FreeVikings
 
       def paint_lives(surface)
         lives_y = @rect.top + VIKING_FACE_SIZE
-        @viking.energy.times {|j| 
+        Viking::MAX_ENERGY.times {|j|
+          # position of "live background"
           live_position = [@rect.left + j*LIFE_SIZE, lives_y]
-          surface.blit(@energy_punkt, live_position)
+          # position of the red/blue/grey point itself
+          point_position = [live_position[0]+1, live_position[1]+1]
+
+          surface.blit(@energy_bg, live_position)
+          if @viking.energy >= j then
+            surface.blit(@energy, point_position)
+          else
+            surface.blit(@energy_lost, point_position)
+          end
         }
+        if @viking.energy > Viking::MAX_ENERGY then
+          (@viking.energy - Viking::MAX_ENERGY).times {|k|
+            live_position = [@rect.left + (Viking::MAX_ENERGY+k)*LIFE_SIZE, 
+                             lives_y]
+            point_position = [live_position[0]+1, live_position[1]+1]
+            surface.blit(@energy_bg, live_position)
+            surface.blit(@energy_extra, point_position)
+          }
+        end
       end
 
       def paint_inventory(surface)
@@ -160,7 +178,6 @@ module FreeVikings
           unless item.null?
             surface.blit(item.image, item_position)
           end
-
           if inventory.active_index == k then
             if show_selection_box? then
               surface.blit(selection_box, item_position)
@@ -247,7 +264,11 @@ module FreeVikings
 
       def init_gfx
         @face_bg = RUDL::Surface.load_new(GFX_DIR+'/panel/face_bg.png')
-        @energy_punkt = RUDL::Surface.load_new(GFX_DIR+'/energypunkt.png')
+
+        @energy_bg = RUDL::Surface.load_new(GFX_DIR+'/panel/energyp_background.png')
+        @energy = RUDL::Surface.load_new(GFX_DIR+'/panel/energypoint_red.png')
+        @energy_extra = RUDL::Surface.load_new(GFX_DIR+'/panel/energypoint_blue.png')
+        @energy_lost = RUDL::Surface.load_new(GFX_DIR+'/panel/energypoint_grey.png')
 
         @item_bg = RUDL::Surface.load_new(GFX_DIR+'/panel/item01.png')
         @selection_box_yellow = RUDL::Surface.load_new(GFX_DIR+'/panel/yellow_box.png')
