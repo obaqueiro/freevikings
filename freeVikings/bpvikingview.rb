@@ -26,6 +26,9 @@ module FreeVikings
       # Colour of highlighted viking's background
       HIGHLIGHT_COLOUR = [150, 100, 100]
 
+      # How many energy points could theoretically be displayed
+      MAX_DISPLAYABLE_ENERGY = 5
+
       def initialize(viking, position)
         @viking = viking
         @viking.view = self
@@ -136,28 +139,32 @@ module FreeVikings
 
       def paint_lives(surface)
         lives_y = @rect.top + VIKING_FACE_SIZE
-        Viking::MAX_ENERGY.times {|j|
+
+        MAX_DISPLAYABLE_ENERGY.times {|j|
           # position of "live background"
           live_position = [@rect.left + j*LIFE_SIZE, lives_y]
           # position of the red/blue/grey point itself
-          point_position = [live_position[0]+1, live_position[1]+1]
+          point_position = [live_position[0]+2, live_position[1]+2]
 
-          surface.blit(@energy_bg, live_position)
-          if @viking.energy >= j then
-            surface.blit(@energy, point_position)
-          else
-            surface.blit(@energy_lost, point_position)
-          end
-        }
-        if @viking.energy > Viking::MAX_ENERGY then
-          (@viking.energy - Viking::MAX_ENERGY).times {|k|
-            live_position = [@rect.left + (Viking::MAX_ENERGY+k)*LIFE_SIZE, 
-                             lives_y]
-            point_position = [live_position[0]+1, live_position[1]+1]
+          l = j+1 # iterations count from 0, energy points from 1
+
+          if l <= Viking::MAX_ENERGY then
+            surface.blit(@energy_bg, live_position)
+            if @viking.energy >= l then
+              # red
+              surface.blit(@energy, point_position)
+            else
+              # grey
+              surface.blit(@energy_lost, point_position)
+            end
+          elsif @viking.energy >= l then
+            # extra (blue)
             surface.blit(@energy_bg, live_position)
             surface.blit(@energy_extra, point_position)
-          }
-        end
+          else
+            break
+          end
+        }
       end
 
       def paint_inventory(surface)

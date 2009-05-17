@@ -26,8 +26,8 @@ module FreeVikings
   USERS_CONFIGURATION_FILE_NAME = 'config.rb'
 
   TESTED_LIB_VERSIONS = {
-    'RUDL' => '0.7.0.0',
-    'REXML' => '3.1.3'}
+    'RUDL' => '0.7.1.0',
+    'REXML' => '3.1.7.2'}
 
   # gravity (in pixels per second**2)
   # (most objects ignore it)

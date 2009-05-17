@@ -1,3 +1,10 @@
+[17.May 2009]
+- gfx/panel/*: added Ingo's backgrounds and separators
+- bottompanel.rb: support for background image; improved documentation
+  of methods 'repaint_image' and 'paint'
+- bpvikingview.rb: fixed placement of energy points; refactoring
+- fvdef.rb: updated highest tested versions of libraries
+
 [16.May 2009]
 - gfx/panel/*, gfx/apple.png: added more elements of Ingo's improvements
   on BottomPanel

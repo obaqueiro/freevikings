@@ -50,7 +50,7 @@ module FreeVikings
     end
 
     def init_images
-      @image = Image.load('help.tga')
+      @image = Image.load('help_button.png')
     end
 
     # This class is fully stand-alone, but it is defined inside HelpButton,

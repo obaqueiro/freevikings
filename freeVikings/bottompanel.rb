@@ -71,6 +71,12 @@ module FreeVikings
       change_state NormalBottomPanelState.new(self)
 
       change_active_viking
+
+      @background_images = {
+        :horizontal => Image.load('panel/panel_horiz.png'),
+        :vertical => Image.load('panel/panel_vertic.png')
+      }
+
       repaint_image
     end
 
@@ -367,8 +373,7 @@ module FreeVikings
 
     attr_reader :image
 
-    # Paints itself onto a surface. Paints dragged item (which is not 
-    # on BottomPanel#image)
+    # Blits @image onto given surface and paints dragged item (if any) there.
 
     def paint(surface, position)
       surface.blit @image, position
@@ -384,11 +389,15 @@ module FreeVikings
 
     private
 
-    # Paints itself onto the surface. Doesn't worry about the surface's
-    # size!
+    # Repaints surface @image (to be called whenever anything shown 
+    # on the panel is changed).
+    # Doesn't paint dragged item - this, if any, is painted by method 'paint',
+    # because animation of dragged item needs to be updated continuously,
+    # while in this method mostly stuff more sparsely updated is painted.
 
     def repaint_image
-      @image.fill([60,60,60])
+      # @image.fill([60,60,60])
+      @image.blit @background_images[@orientation].image, [0,0]
 
       @team.each_with_index do |vik, i|
         @viking_views[vik].paint(@image)
