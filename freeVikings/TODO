@@ -4,9 +4,9 @@
 
 ======== Code ==========================================================
 
-(-) Ingo's BottomPanel improvements:
-    (-) item background: randomly chosen
-    (-) separators
+(-) resource manager ( => no image is loaded twice etc. );
+    it should have mechanism to mark resource as undeletable (images always
+    used for UI)
 
 (-) HelpButton: second 'S' key makes the text disappear
 

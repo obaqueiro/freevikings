@@ -110,6 +110,8 @@ module FreeVikings
       end
 
       def paint(surface)
+        surface.blit @stable_parts, @rect.top_left
+
         paint_face(surface)
         paint_lives(surface)
         paint_inventory(surface)
@@ -123,8 +125,6 @@ module FreeVikings
         face_position = @rect.top_left
         if @highlighted then
           surface.fill HIGHLIGHT_COLOUR, [face_position[0], face_position[1], @face_bg.w, @face_bg.h]
-        else
-          surface.blit(@face_bg, face_position)
         end
         portrait_img = if @active then
                          @viking.portrait.active
@@ -172,16 +172,13 @@ module FreeVikings
 
         inventory = @viking.inventory
 
-        inventory_x = @rect.left+VIKING_FACE_SIZE
-        inventory_y = @rect.top
-
         0.upto(inventory.num_slots-1) do |k|
           item = inventory[k]
 
           ip = ITEM_POSITIONS[k]
-          item_position = [inventory_x + ip[0], inventory_y + ip[1]]
+          item_position = [@inventory_rect.left + ip[0], 
+                           @inventory_rect.top + ip[1]]
 
-          surface.blit(@item_bg, item_position)
           unless item.null?
             surface.blit(item.image, item_position)
           end
@@ -277,9 +274,26 @@ module FreeVikings
         @energy_extra = RUDL::Surface.load_new(GFX_DIR+'/panel/energypoint_blue.png')
         @energy_lost = RUDL::Surface.load_new(GFX_DIR+'/panel/energypoint_grey.png')
 
-        @item_bg = RUDL::Surface.load_new(GFX_DIR+'/panel/item01.png')
+        @item_bgs = Dir[GFX_DIR+'/panel/item*.png'].collect {|f|
+          RUDL::Surface.load_new(f)
+        }
+
         @selection_box_yellow = RUDL::Surface.load_new(GFX_DIR+'/panel/yellow_box.png')
         @selection_box_green = RUDL::Surface.load_new(GFX_DIR+'/panel/green_box.png')
+
+        # surface holding parts of the view which never change
+        @stable_parts = RUDL::Surface.new [@rect.w, @rect.h]
+        fuchsia = [255,0,255]
+        @stable_parts.fill fuchsia
+        @stable_parts.set_colorkey fuchsia
+        @stable_parts.blit @face_bg, [0,0]
+
+        0.upto(@viking.inventory.num_slots-1) do |k|
+          ip = ITEM_POSITIONS[k]
+          item_position = [VIKING_FACE_SIZE + ip[0], 
+                           ip[1]]
+          @stable_parts.blit(@item_bgs[rand(@item_bgs.size)], item_position)
+        end
       end
 
       # Vikings use this when they have no view (mainly in tests)

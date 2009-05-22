@@ -1,9 +1,16 @@
+[22.May 2009]
+- bottompanel.rb, bpvikingview.rb: finished applying Ingo's improvements
+  of BottomPanel: added separators (lines) between vikings and randomly
+  generated backgrounds in inventories
+
 [17.May 2009]
 - gfx/panel/*: added Ingo's backgrounds and separators
 - bottompanel.rb: support for background image; improved documentation
   of methods 'repaint_image' and 'paint'
 - bpvikingview.rb: fixed placement of energy points; refactoring
 - fvdef.rb: updated highest tested versions of libraries
+- entities/helpbutton.rb, gfx/help.tga, gfx/help_button.png:
+  image of HelpButton replaced by Ingo's new version
 
 [16.May 2009]
 - gfx/panel/*, gfx/apple.png: added more elements of Ingo's improvements

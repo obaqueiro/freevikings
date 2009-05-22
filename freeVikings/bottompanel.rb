@@ -37,6 +37,9 @@ module FreeVikings
     # possibilities of panel placement; first is default
     PLACEMENT = [:bottom, :top, :left, :right]
 
+    VIEW_WIDTH_WITH_SPACING = VikingView::WIDTH + 3
+    VIEW_HEIGHT_WITH_SPACING = VikingView::HEIGHT + 4
+
     # Argument team is a Team of heroes who will be displayed on the panel.
     # Orientation is either :horizontal or :vertical
 
@@ -72,13 +75,33 @@ module FreeVikings
 
       change_active_viking
 
-      @background_images = {
-        :horizontal => Image.load('panel/panel_horiz.png'),
-        :vertical => Image.load('panel/panel_vertic.png')
-      }
+      init_backgrounds
 
       repaint_image
     end
+
+    private
+
+    # prepares background image (in horizontal and vertical version)
+
+    def init_backgrounds
+      # backgrounds
+      h = Image.load('panel/panel_horiz.png')
+      v = Image.load('panel/panel_vertic.png')
+      # separators
+      sh = Image.load('panel/seperator.png')
+      sv = Image.load('panel/seperator2.png')
+
+      # add separators
+      1.upto(3) do |i|
+        h.image.blit sh.image, [i*VIEW_WIDTH_WITH_SPACING - 2, 0]
+        v.image.blit sv.image, [0, i*VIEW_HEIGHT_WITH_SPACING - 3]
+      end
+
+      @background_images = {:horizontal => h,:vertical => v}
+    end
+
+    public
 
     def width
       @rect.w
@@ -477,9 +500,9 @@ module FreeVikings
 
     def trash_position
       if @orientation == :vertical then
-        return [0, VikingView::HEIGHT*3]
+        return [0, VIEW_HEIGHT_WITH_SPACING*3]
       else
-        return [VikingView::WIDTH*3, 0]
+        return [VIEW_WIDTH_WITH_SPACING*3, 0]
       end
     end
 
@@ -488,9 +511,9 @@ module FreeVikings
 
     def vikingview_position(i)
       if @orientation == :horizontal then
-        return [i * VikingView::WIDTH, 0]
+        return [i * VIEW_WIDTH_WITH_SPACING, 0]
       else
-        return [0, i * VikingView::HEIGHT]
+        return [0, i * VIEW_HEIGHT_WITH_SPACING]
       end
     end
 
