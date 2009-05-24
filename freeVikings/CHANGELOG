@@ -1,3 +1,6 @@
+[24.May 2009]
+- gfx/panel/seperator2.png: 120px wide now (as needed)
+
 [22.May 2009]
 - bottompanel.rb, bpvikingview.rb: finished applying Ingo's improvements
   of BottomPanel: added separators (lines) between vikings and randomly
