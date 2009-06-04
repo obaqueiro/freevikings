@@ -136,6 +136,15 @@ module FreeVikings
       throw :return_to_menu
     end
 
+    # Pretends that level was finished successfully and forces new level to be
+    # loaded (works only when "developers' magic" is in use)
+
+    def magically_finish_level
+      return unless FreeVikings::CONFIG['Development']['magic for developers']
+
+      @magic_exit = true
+    end
+
     # Pauses all the Sprites and switches into the inventory browsing mode.
 
     def pause
@@ -346,8 +355,11 @@ module FreeVikings
                           "(#{frame_delay.class})"
                         end
 
+      # says if level is exitted by the dark power of developers' magic
+      @magic_exit = false
+
       # The frame loop: serve events, update game state
-      while (not location.exitted?) and (not @give_up) do
+      while (not location.exitted?) and (not @give_up) and (not @magic_exit) do
         # Following method serves events, updates sprites, ...
         every_frame(location)
 
@@ -363,7 +375,9 @@ module FreeVikings
         exit # the END block which prints out profiler output will be called
       end
 
-      if (location.team.alive_size < location.team.size) or @give_up
+      if @magic_exit then
+        return true
+      elsif (location.team.alive_size < location.team.size) or @give_up then
         if @give_up == true then
           @log.info "Game given up. Try once more."
         else

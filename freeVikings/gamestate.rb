@@ -45,29 +45,43 @@ module FreeVikings
     # Argument location is a Location instance. (Location just played.)
     def serve_keydown(event, location)
       case event.key
+
       when K_q, K_ESCAPE
         @context.ingame_menu
+
       when K_F2
 	@context.give_up_game
+
       when K_F3
 	@context.app_window.toggle_fullscreen
         FreeVikings::CONFIG['Video']['fullscreen'] = @context.app_window.fullscreen?
+
       when K_F4
         FreeVikings::CONFIG['Video']['display FPS'] = ! FreeVikings::CONFIG['Video']['display FPS']
+
       when K_F5
         @context.change_panel_placement
+
       when K_F9
         if FreeVikings::CONFIG['Development']['magic for developers']
           @context.team.active.destroy
         end
+
       when K_F10, K_PRINT
         @context.take_screenshot
+
+      when K_SCROLLOCK
+        if FreeVikings::CONFIG['Development']['magic for developers']
+          @context.magically_finish_level
+        end
+
       when K_F12
         if FreeVikings::CONFIG['Development']['magic for developers']
           # Starts irb in the console=>fV developer can play with the internals
           require 'irb'
           IRB.start(__FILE__)
         end
+
       end
     end
 

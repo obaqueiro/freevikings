@@ -4,6 +4,13 @@
 
 ======== Code ==========================================================
 
+(-) exception inside location script can't break down whole application -
+    error is shown and player can choose if he wants to play the damaged
+    level, skip to the next one or return to menu.
+
+(-) some problem in SophisticatedSpriteState (e.g. in levels with snail) 
+    - fix it
+
 (-) resource manager ( => no image is loaded twice etc. );
     it should have mechanism to mark resource as undeletable (images always
     used for UI)
@@ -39,6 +46,8 @@
     (-) Fix links width ("Documentation" shouldn't exceed the frame)
     (-) Replace that ancient Baleog's graphic under the links
     (-) Classify links (General, Development)
+    (-) RSS feed of news on CVS (anyone can easily track project activity)
+        (it's possible that we can use some of SF's services for this?)
 
 (-) Speed up tombstone animation
 

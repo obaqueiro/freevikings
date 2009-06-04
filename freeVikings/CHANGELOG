@@ -1,3 +1,7 @@
+[4.June 2009]
+- game.rb, gamestate.rb: added new "spell" of "developers' magic" - key which
+  forces new level to be loaded as if all vikings reached EXIT
+
 [24.May 2009]
 - gfx/panel/seperator2.png: 120px wide now (as needed)
 
