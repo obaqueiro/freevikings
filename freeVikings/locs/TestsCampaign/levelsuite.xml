@@ -20,5 +20,6 @@
     <levelsuite>AncientLevelSet</levelsuite>
     <levelsuite>MonsterTestsLevelSet</levelsuite>
     <levelsuite>TiledLevelSet</levelsuite>
+    <levelsuite>CoreTestsLevelSet</levelsuite>
   </suite>
 </levelsuite>

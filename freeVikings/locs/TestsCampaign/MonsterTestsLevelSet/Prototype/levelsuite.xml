@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>Individual Starting Points</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Levels to prototype starting points defined for each viking individually.
+    </description>
+  </info>
+
+  <suite>
+    <levelsuite>OneDissident</levelsuite>
+  </suite>
+</levelsuite>

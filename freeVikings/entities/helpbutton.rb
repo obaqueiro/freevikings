@@ -38,15 +38,22 @@ module FreeVikings
       @location = location
     end
 
-    # Shows the help text.
+    # Shows the help text (or hides it, if it is being shown).
 
     def activate(who=nil)
-      HelpButton.show_new_helpbox @helpbox, @location
+      unless @helpbox.in?
+        HelpButton.show_new_helpbox @helpbox, @location
+      else
+        deactivate
+      end
     end
 
-    # Does nothing.
+    # Makes the help text disappear.
 
     def deactivate(who=nil)
+      if @helpbox.in? then
+        @helpbox.disappear
+      end
     end
 
     def init_images
@@ -60,10 +67,10 @@ module FreeVikings
 
     class HelpBox < DisappearingTextBox
 
-      BACKGROUND_COLOUR = [241,96,96]
+      BACKGROUND_COLOUR = [200,0,0]
       FOREGROUND_COLOUR = [255,255,255]
       WIDTH = 260
-      BORDER_WIDTH = 8
+      BORDER_WIDTH = 4
 
       # Number of seconds. For such a long time the text is shown, 
       # then it disappears.

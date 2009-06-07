@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>Tests Campaign</title>
+    <author>Jakub Pavlik /severus@post.cz/</author>
+    <description>
+      Levels testing some core features - i.e. not new Entities and not 
+      anything connected with Tiled maps.
+    </description>
+  </info>
+
+  <theme>DefaultTheme</theme>
+
+  <suite>
+    <levelsuite>IndividualStartingPoints</levelsuite>
+  </suite>
+</levelsuite>
