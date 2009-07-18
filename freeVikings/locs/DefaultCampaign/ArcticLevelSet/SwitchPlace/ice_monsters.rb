@@ -261,20 +261,20 @@ bear = WalkingBear.new([FirstCorridor::BEAR_START_X, 320], 400)
 LOCATION.add_sprite(bear)
 
 # The bear which Erik must clobber on his own
-second_bear = WalkingBear.new([1780, SecondCorridor::FLOOR - Bear::HEIGHT], 230)
+second_bear = WalkingBear.new([1780, SecondCorridor::FLOOR - WalkingBear::HEIGHT], 230)
 LOCATION.add_sprite second_bear
 
 # The bear from the fourth corridor
 floor_begin_x = FourthCorridor::BEGIN_X + 3 * LOCATION.map.tile_size
 floor_length = FourthCorridor::END_X - floor_begin_x
 center_x = floor_begin_x + floor_length / 2
-bear_from_c4 = WalkingBear.new([center_x, FourthCorridor::FLOOR - Bear::HEIGHT], floor_length/2 * 3/5)
+bear_from_c4 = WalkingBear.new([center_x, FourthCorridor::FLOOR - WalkingBear::HEIGHT], floor_length/2 * 3/5)
 LOCATION.add_sprite bear_from_c4
 
 # Bears in the last corridor. Just for fun for Baleog.
 center = CorridorToExit::BEGIN_X + ((CorridorToExit::END_X - CorridorToExit::BEGIN_X) / 2)
 trace_length = (center - CorridorToExit::BEGIN_X) - 100 - 30
-y = CorridorToExit::FLOOR - Bear::HEIGHT
+y = CorridorToExit::FLOOR - WalkingBear::HEIGHT
 exitbear_1 = WalkingBear.new([center - 100, y], trace_length)
 exitbear_2 = WalkingBear.new([center + 100, y], trace_length)
 LOCATION.add_sprite exitbear_1

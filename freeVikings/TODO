@@ -4,9 +4,17 @@
 
 ======== Code ==========================================================
 
-(-) exception inside location script can't break down whole application -
-    error is shown and player can choose if he wants to play the damaged
-    level, skip to the next one or return to menu.
+(-) Level data (in location.xml)
+    (-) Possibility to define starting point for each viking separately
+        (prototyping levels started in TestsCampaign!)
+    (-) Possibility to choose which viking will be active on level start
+
+(-) Errors in levels
+    (-) exception inside location script can't break down whole application -
+        error is shown and player can choose if he wants to play the damaged
+        level, skip to the next one or return to menu.
+    (-) Non-fatal error in level is also reported to the player, not only 
+        to the console and log
 
 (-) some problem in SophisticatedSpriteState (e.g. in levels with snail) 
     - fix it
@@ -15,11 +23,7 @@
     it should have mechanism to mark resource as undeletable (images always
     used for UI)
 
-(-) HelpButton: second 'S' key makes the text disappear
-
 (-) viking.rb: re-enable game speed feature after the test of speed
-
-(-) fix level SwitchPlace
 
 (-) New VikingState
     (-) particular states aren't implemented as classes, but as a small bunch 
@@ -234,8 +238,6 @@
 
 (-) [GO] Some teleporting animation
     (It's possible to implement it as a Sprite,   e.g. Teleport::Animation)
-
-(-) Possibility to define starting point for each viking separately
 
 (-) Game objects which weren't given any theme should wait till they are
     registered in a location and try to get it's theme - not raise exception

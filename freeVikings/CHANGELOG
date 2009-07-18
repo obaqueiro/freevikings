@@ -1,3 +1,16 @@
+[18.July 2009]
+- level SwitchPlace: fixed error caused by deletion of useless monster class 
+  Bear some time ago
+
+[7.June 2009]
+- gfx/help_button.png: new image by Ingo
+- entities/helpbutton.rb: colour of helpbox changed (to darker red), slimmer
+  border;
+  when helpbox is being shown, another S or F key hides it immediatelly
+- locs/TestsCampaign/CoreTestsLevelSet/IndividualStartingPoints/:
+  began work on levels to prototype "individual starting points" (vikings
+  don't have to start all on the same place)
+
 [4.June 2009]
 - game.rb, gamestate.rb: added new "spell" of "developers' magic" - key which
   forces new level to be loaded as if all vikings reached EXIT
