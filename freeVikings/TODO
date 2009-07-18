@@ -16,6 +16,10 @@
     (-) Non-fatal error in level is also reported to the player, not only 
         to the console and log
 
+(-) Find new official font instead of Adlibn
+
+(-) add Ingo's title to menu
+
 (-) some problem in SophisticatedSpriteState (e.g. in levels with snail) 
     - fix it
 

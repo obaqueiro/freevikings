@@ -2,8 +2,8 @@
 # igneus 24.12.2005
 
 require 'rexml/document'
+require 'script'
 
-require 'locationscript.rb'
 require 'maploaderfactory.rb'
 require 'exit.rb'
 
@@ -68,9 +68,8 @@ module FreeVikings
 
       @log.info "Loading monsters from script #{scriptfile}"
 
-      # Pri nahravani skriptu muze nastat velke mnozstvi vyjimecnych situaci:
       begin
-        s = LocationScript.new(scriptfile) {|script| 
+        s = Script.new(scriptfile) {|script| 
           script.extend FreeVikings
           script.extend SchwerEngine
 
@@ -85,14 +84,12 @@ module FreeVikings
         # Backtrace is cut so that it ends on the scriptfile (doesn't continue
         # through the stack of core-methods-calls)
         msg = "#{ex.class} in script '#{scriptfile}': #{ex.message}"
-        scriptfile_regex = Regexp.new scriptfile
+
+        scriptshort = File.basename(scriptfile)
         begin
           n = ex.backtrace.shift
           msg += "\t" + n + "\n"
-        rescue TypeError
-          # scriptfile not found in backtrace. It's a pity, but...
-          break
-        end while not (n =~ scriptfile_regex)
+        end while (! ex.backtrace.empty?) && (! n.include?(scriptshort))
         msg.chop! # chop the last '\n' which is superfluous
 
         @log.error msg
