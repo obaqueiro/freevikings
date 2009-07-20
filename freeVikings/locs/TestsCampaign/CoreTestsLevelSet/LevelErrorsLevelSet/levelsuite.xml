@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<levelsuite>
+  <info>
+    <title>Level Errors</title>
+    <author>Jakub Pavlik /severus@post.cz/</author>
+    <description>
+      Every level in this set contains some error. We test how game engine 
+      can cope with various errors, especially in the scripts.
+    </description>
+  </info>
+
+  <theme>DefaultTheme</theme>
+
+  <suite>
+    <level>NameError</level>
+  </suite>
+</levelsuite>

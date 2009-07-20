@@ -138,9 +138,14 @@ module FreeVikings
 
     # Pretends that level was finished successfully and forces new level to be
     # loaded (works only when "developers' magic" is in use)
+    # Optional argument 'force', hwen set to true, enforces magical exit even
+    # if magic isn't in use (used in show_errors)
 
-    def magically_finish_level
-      return unless FreeVikings::CONFIG['Development']['magic for developers']
+    def magically_finish_level(force=false)
+      unless FreeVikings::CONFIG['Development']['magic for developers'] ||
+          force
+        return
+      end
 
       @magic_exit = true
     end
@@ -252,11 +257,12 @@ module FreeVikings
             exit_game
           end
         end
+
         first_level = false
+        first_attempt = true
 
         @give_up = false
-
-        first_attempt = true
+        @magic_exit = false # is level exitted using developers' magic?
 
         # Repeat one level until it's successfully finished
         begin
@@ -358,9 +364,6 @@ module FreeVikings
                           raise "Unexpected frame delay '#{frame_delay}' "\
                           "(#{frame_delay.class})"
                         end
-
-      # says if level is exitted by the dark power of developers' magic
-      @magic_exit = false
 
       # The frame loop: serve events, update game state
       while (not location.exitted?) and (not @give_up) and (not @magic_exit) do
@@ -552,7 +555,8 @@ module FreeVikings
                FreeVikings::FONTS['default'],
                nil, 100, nil, 150) do |m|
         ActionButton.new(m, "Continue", Proc.new { m.quit })
-        ActionButton.new(m, "Skip to next level", Proc.new {  })
+        ActionButton.new(m, "Skip to next level", 
+                         Proc.new { magically_finish_level(true); m.quit })
         ActionButton.new(m, "Exit", Proc.new { exit_game })
       end.run
     end

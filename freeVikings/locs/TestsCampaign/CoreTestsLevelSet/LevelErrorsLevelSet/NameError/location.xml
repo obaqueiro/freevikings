@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<location>
+  <info>
+    <title>NameError</title>
+    <author>Jakub Pavlík - severus@post.cz</author>
+    <description>
+      Script causes NameError
+    </description>
+  </info>
+
+  <body>
+    <password>NAME</password>
+    <map src="../../../MonsterTestsLevelSet/Prototype/prototype_loc.xml"/>
+    <script src="nameerror_script.rb"/>
+    <exit horiz="400" vertic="380" />
+    <start horiz="50" vertic="140" />
+  </body>
+</location>

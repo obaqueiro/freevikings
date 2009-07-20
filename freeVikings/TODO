@@ -8,9 +8,7 @@
     (-) Non-fatal error in level is also reported to the player, not only 
         to the console and log
         (-) show error message
-        (-) option 'skip to next level' works
-        (-) error message can be very long and there can be multiple ones:
-            message space should be scrollable
+            (-) develop GameUI menu item which shows long scrollable text
 
 (-) Level data (in location.xml)
     (-) Possibility to define starting point for each viking separately
