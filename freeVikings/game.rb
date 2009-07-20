@@ -271,6 +271,10 @@ module FreeVikings
 
           @app_window.set_caption "#{FreeVikings::WIN_CAPTION}: #{@world.level.title} [#{@world.level.password}]"
 
+          unless @world.errors.empty?
+            show_errors(@world.errors)
+          end
+
           level_finished_successfully = every_level()
 
           first_attempt = false
@@ -472,7 +476,7 @@ module FreeVikings
 
     private
 
-    # == Methods concerning loading screen
+    # == Methods concerning loading screen and error screen
 
     # shows loading screen with progressbar (uses Threads!) and runs given 
     # block
@@ -538,6 +542,19 @@ module FreeVikings
                      (@loading_animation_counter/100.0)*(screen.w-60), 5])
       end
       screen.flip
+    end
+
+    # Shows list of errors which occured during loading of level and asks
+    # if player wants to continue, skip to next level or exit.
+
+    def show_errors(list_of_errors)
+      Menu.new(nil, "Errors occured", @app_window, 
+               FreeVikings::FONTS['default'],
+               nil, 100, nil, 150) do |m|
+        ActionButton.new(m, "Continue", Proc.new { m.quit })
+        ActionButton.new(m, "Skip to next level", Proc.new {  })
+        ActionButton.new(m, "Exit", Proc.new { exit_game })
+      end.run
     end
 
     # == Helper methods for state switching from inside game loop

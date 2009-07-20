@@ -25,6 +25,8 @@ module FreeVikings
       @log = Log4r::Logger['world log']
 
       @levelsuite = LevelSuite.factory campaign_dir
+
+      @errors = []
     end
 
     # Both 'level' and 'location' are nil until you first call next_level!
@@ -37,25 +39,33 @@ module FreeVikings
 
     attr_reader :location
 
+    # List of Error messages which occured during loading of the latest level
+    # (Array of Strings)
+
+    attr_reader :errors
+
     # Does the same as next_location, but returns Level, not Location.
     # After StructuredWorld#next_level you can get the current Location
     # by call to StructuredWorld#rewind_location.
 
     def next_level(password='')
-      # Load level with given password:
-      if password != '' then
+
+      if password != '' then # Load level with given password:
+
         unless Level.valid_level_password?(password)
           raise PasswordError, "Password \"#{password}\" of type #{password.class} isn't a valid location password. A valid password must be #{Level::LEVEL_PASSWORD_LENGTH} characters long and may contain alphanumeric characters only."
         end
         @level = @levelsuite.level_with_password(password)
         create_location
         return @level
-      end
 
-      # Loading without password:
-      @level = @levelsuite.next_level
-      create_location
-      return @level
+      else # Loading without password:
+      
+        @level = @levelsuite.next_level
+        create_location
+        return @level
+
+      end
     end
 
     def rewind_location
@@ -76,7 +86,11 @@ module FreeVikings
       end
 
       @log.debug "Creating Location for level '#{@level.title}' with theme '#{@level.gfx_theme.name}'"
-      @location = Location.new(@level.loader, @level.gfx_theme)
+
+      loader = @level.make_loader
+      @location = Location.new(loader, @level.gfx_theme)
+
+      @errors = loader.errors
 
       return @location
     end

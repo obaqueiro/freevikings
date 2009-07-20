@@ -65,10 +65,10 @@ module FreeVikings
 
     attr_reader :music
 
-    # Returns a LocationLoadStrategy instance which is able to load 
+    # Creates and returns a LocationLoadStrategy instance which is able to load 
     # the data from the @dirname directory into the Location object.
 
-    def loader
+    def make_loader
       file = @dirname+'/'+DEFINITION_FILE_NAME
       @log.debug "Returned loader encapsulating file '#{file}'."
 

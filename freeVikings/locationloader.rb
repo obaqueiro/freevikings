@@ -23,6 +23,8 @@ module FreeVikings
     def initialize(source)
       @log = Log4r::Logger['world log']
 
+      @errors = []
+
       @source = source
 
       if @source.respond_to? :path then
@@ -42,6 +44,10 @@ module FreeVikings
     attr_reader :password
     attr_reader :start
     attr_reader :exit
+
+    # messages of errors which occured during level loading
+
+    attr_reader :errors
 
     # Returns instance of some subclass of MapLoadStrategy
 
@@ -93,6 +99,7 @@ module FreeVikings
         msg.chop! # chop the last '\n' which is superfluous
 
         @log.error msg
+        @errors << msg
       else
         @log.info "Script '#{scriptfile}' successfully loaded."
       end

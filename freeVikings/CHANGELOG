@@ -1,3 +1,11 @@
+[20.July 2009]
+- level.rb: small change of docs; method 'loader' renamed to more exact 
+  'make_loader'
+- structuredworld.rb: fixed one obscure place
+- locationloader.rb, structuredworld.rb: error messages collected in an Array
+  (accessible through reader method 'errors')
+- game.rb: when error occurs during menu loading, simple menu is offered
+
 [18.July 2009]
 - level SwitchPlace: fixed error caused by deletion of useless monster class 
   Bear some time ago
