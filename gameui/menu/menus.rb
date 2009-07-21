@@ -9,7 +9,11 @@ intended to be reused.
 =end
 
 unless defined?(RUDL)
-  require 'RUDL'
+  if defined?(Gem) then
+    gem_original_require 'RUDL'
+  else
+    require 'RUDL'
+  end
 end
 
 $:.push File.expand_path(File.dirname(__FILE__))
@@ -77,7 +81,7 @@ if __FILE__ == $0 then
                    ['Hans Hutchinsson', 'consultations'],
                    ['Isac Ibsen', 'inspirative sketches']]
 
-  ScrollingCredits.new(menu, credits_data)
+  ScrollingCredits.new(menu, credits_data, 'ScrolCredits')
 
   QuitButton.new(menu)
 

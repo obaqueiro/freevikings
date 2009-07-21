@@ -1,3 +1,7 @@
+[21.July 2009]
+- menu/menus.rb: made "gems resistent"; changed label of the second Credits
+- menu/items/textview.rb: started development of new widget (shows long text)
+
 [2.February 2009]
 - menu/items/scrollingcredits.rb: finally seems to work well
   (title isn't being overwritten, speed of scrolling is constant)
