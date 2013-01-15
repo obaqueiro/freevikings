@@ -1,0 +1,37 @@
+====== G a m e U I ======
+
+"Simple menu library for games using RUDL."
+
+
+== DESCRIPTION ==
+
+When you start writing a game, you don't bother with anything but the
+core. (Otherwise your project usually dies befory it starts.)
+After some time the core is working well and you start to make the game
+user-friendly. 
+Most of the games need some possibility to alter some configuration.
+Some kind of menu is usually used for this purpose.
+
+My first bigger game project, freeVikings (http://freevikings.wz.cz), 
+has come to the point when it is pretty enjoyable and I started to make
+the game more user-friendly. So I needed to make menu to access some
+features which should be alterable during the game. And I didn't find
+any library prepared for this purpose. GameUI is what I have written 
+on my own. It isn't perfect, but it works.
+
+At this time GameUI is in a very early stage of development and is strongly 
+binded with freeVikings. There is no actual versioning, snapshots are only 
+released with every new freeVikings version. And there is no guarantee 
+of future development or compatibility with older versions. So it isn't the
+best choice to use GameUI in your project now. Wait a year or so,
+I'm going to make this library more general and use it in more my projects.
+
+== LICENSE ==
+
+See LGPL.
+
+== INSTALLATION ==
+
+On systems where it is needed, become root (by su / sudo).
+
+$ install.rb

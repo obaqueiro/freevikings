@@ -1,0 +1,45 @@
+[21.July 2009]
+- menu/menus.rb: made "gems resistent"; changed label of the second Credits
+- menu/items/textview.rb: started development of new widget (shows long text)
+
+[2.February 2009]
+- menu/items/scrollingcredits.rb: finally seems to work well
+  (title isn't being overwritten, speed of scrolling is constant)
+  (another commit: fixed error "last person omitted thanks to forgotten 
+  spaces")
+
+[1.February 2009]
+- menu/items/credits.rb: place for the fourth developer :)
+- menu/menus.rb, menu/items/scrollingcredits.rb: not yet finished variant
+  of Credits widget with unlimited space for developers (scrolls)
+
+[24.January 2008]
+- menu/menu.rb: added method expanded_height; fixed height inheritance
+  from parent menu
+- menu/items/cretits.rb: made higher (there wasn't enough space 
+  for the third developer :) )
+
+[23.January 2009]
+- menu/menu.rb: added attribute height, fixed width error
+
+[10.January 2009]
+- menu/items/select.rb: change proc doesn't get indices but values;
+  added methods 'choice' and 'choice=';
+  method 'select' renamed to 'entered_item' (I frogot that method select
+  is defined in Menu and is important - it's replacement was breaking mouse
+  functionality);
+  QuitButton added;
+  special sign is shown next to selected item
+
+[8.January 2009]
+- menu/menu.rb: selector can be more than one line high if needed (accommodates
+  to menu items)
+- menu/items/select.rb: another way to choose from a set of items
+- menu/menus.rb: testing part updated
+
+[31.December 2008]
+- menu/menu.rb, menu/menus.rb: changed system of attribute inheritance
+  to a more useful and logical one
+
+[17.November 2008]
+- Menu.new optionally yields the new object (similar e.g. to File.open)
