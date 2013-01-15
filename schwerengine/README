@@ -1,0 +1,30 @@
+= Schwerengine
+
+== About
+
+Schwerengine is a game engine making framework for simple arcade games using 
+Ruby (programming language) and RUDL (SDL port for Ruby).
+
+'Schwer' means 'hard' in Deutch and it says something about the engine...
+It also says something about the engine's only developer's place 
+of residence.  It's Svermov (or, as I sometimes like to write it, Schwermoff) -
+suburb of Kladno (Europe > Central Europe > Czech republic > Bohemia; 
+near to Prague).
+
+== Namespace
+
+All the classes and mixin modules provided by the framework are packed
+into a namespace module SchwerEngine to prevent any name clashes.
+
+== History
+
+At the beginning was my first game, freeVikings (http://freevikings.wz.cz).
+I spent a lot of time bringing it up and improving it. And, actually, I have
+still been spending a lot of time on it. But new ideas have come and I have
+decided to make some more games.
+
+It is a very uncomfortable feeling when you find yourself trying to re-invent
+a wheel. When I found myself writing a class I had already written 
+for freeVikings I stopped working and thought about it for a while. You know
+what happened in my mind. I decided to create a bundle of classes useful
+for writing games. Here it is...

@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<!-- Ruby's Log4r modules's configuration file. -->
+
+<log4r_config>
+
+  <!-- Log for Location Loading Strategies output -->
+  <logger name="location loading log" level="ERROR">
+    <outputter>stderr</outputter>
+  </logger>
+
+  <!-- Log for Map classe's debugging output -->
+  <logger name="map log" level="WARN">
+    <outputter>stderr</outputter>
+  </logger>
+
+  <!-- Log for images & themes related classes (from images.rb, 
+       gfxtheme.rb) -->
+  <logger name="images log" level="WARN">
+    <outputter>stderr</outputter>
+  </logger>
+
+  <!-- Log for every class which doesn't need it's own (mainly for small
+       classes not widely used in the game engine) -->
+  <logger name="SchwerEngine log" level="ERROR">
+    <outputter>stderr</outputter>
+  </logger>
+
+</log4r_config>

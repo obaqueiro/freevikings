@@ -1,0 +1,164 @@
+[9.February 2009]
+- relativerect.rb: added method 'collides?'
+
+[8.February 2009]
+- model.rb: Model::ModelLoader: added support for mirroring
+
+[1.February 2009]
+- timelock.rb: added method TimeLock#reset
+
+[31.January 2009]
+- rect.rb, rect2.rb: removed
+- rect3.rb: after more than 2 hours of debugging FreeVikings::Wall
+  and FreeVikings::Bomb I found an error in Rectangle#w= and h=
+
+[23.January 2009]
+- schwerengine.rb,
+  entity.rb, sprite.rb, item.rb, activeobject.rb, staticobject.rb,
+  hero.rb, monster.rb:
+  classes which are very freeVikings-specific moved back to freeVikings
+- rect3.rb: last zombie of experiments on 21.1. removed
+
+[22.January 2009]
+- rect3.rb: removed remaining 'require' after yesterday's RubyInline
+  optimization craziness
+
+[21.January 2009]
+- relativerect.rb: attempt to optimization: removed inheritance,
+  implemented smallest set of methods to run freeVikings
+- rect3.rb: added methods set_pos, set_values, copy_pos
+
+[31.December 2008]
+- relativerect.rb: added method point_inside?
+
+[30.December 2008]
+- map.rb: fixed painting on Surface with clip (I didn't probably understand 
+          well what clip is...)
+
+[29.December 2008]
+- entity.rb: attribute 'location' added
+- rect3.rb: added method Rectangle#point_inside?
+
+[26.December 2008]
+- rudlmore.rb: copied from freeVikings
+- image.rb: mirroring methods added
+- model.rb: Model#add_pair: possibility to switch off check of sizes
+
+[22.December 2008]
+- spritemanager.rb: SpriteManager#update removed, #each added
+
+[19.December 2008]
+- spritesheet.rb: simple support for spritesheets
+- animation.rb: fixed one ancient error
+
+[15.December 2008]
+- tiledmaploadstrategy.rb: possibility to switch off displaying of a layer
+  (layer property 'display' with value 'no' or 'false')
+
+[12.December 2008]
+- rect3.rb: further optimization of rect2.rb:
+  Rectangle#right and #bottom aren't computed dynamically, they are
+  implemented as numeric variables updated each time other internals are
+  changed; Rectangle#collides? is also optimized a bit
+- rect2.rb, rect3.rb: Rectangle#== repaired
+- rect.rb: isolated in module SchwerEngine::Old
+- tests/testrectN.rb: test cases for all three Rectangle classes
+- relativerect.rb: is child of Old::Rectangle
+- map.rb: 
+    Map#area_free?: area out of map isn't free
+    Map#pixels_to_tiles: less tests (done by area_free?)
+- group.rb: Group#members_on_rect yields members which collide with the given 
+  rect, so it is possible to decrease number of iterations over Arrays 
+  in the application
+- rect3.rb: Rectangle#move()
+
+[11.December 2008]
+- rect2.rb: repaired methods at, [], []=
+
+[7.December 2008]
+- entity.rb: added z (layer index)
+- rect2.rb: attempt to optimize Rect without compiled extensions by replacing
+  internal Array with 4 Numeric variables
+
+[24.November 2008]
+- rect.rb: added method Rectangle#expand2 (and ! variant);
+  methods to get coordinates of corners
+- tests/mockclasses.rb: TestingMapLoadStrategy modified so that I might
+  define new map inside the test
+- map.rb: Map#find_surface; Map#pixels_to_tiles; Map#area_free? and 
+  Map#largest_free_rect modified to use Map#pixels_to_tiles
+
+[23.November 2008]
+- rect.rb: Rectangle#copy_values
+- staticobject.rb: added support for semisolidness
+
+[17.November 2008]
+- tests/test.rb: automatic requirement of tests (similar to the one used in
+  freeVikings tests);
+  tests/testlocation.rb removed
+- rect.rb, tests/testrect.rb: added methods move!, move_x!, move_y!, expand!;
+  changed implementation: Rectangle doesn't inherit from Array,
+  but delegates some methods (inheritance did weird things in tests)
+- rect.rb, relativerect.rb, schwerengine.rb, tests:
+  implemented class RelativeRect
+- tests/test.rb: fixed displaying of progress
+
+[6.November 2008]
+- model.rb: RD->RDoc
+- map.rb & associated test: added methods Map#point_free? and
+  Map#largest_free_rect
+
+[31.October 2008]
+- two new methods for TimeLock (end_time and time_left)
+
+[28.October 2008]
+- tiledmaploadstrategy.rb: more than one tileset may be used
+
+[19.October 2008]
+- TiledMapLoadStrategy: yesterday I solved ancient "stupid problem" in Map,
+  so today I could delete line which was here to "solve" it by adding one
+  more row of tiles at the top of a map
+
+[18.October 2008]
+- tests: removed class TestMap2
+- TestMap: tests which helped me better understand Map#area_free?
+- Rect#new_from_points, Rect#center
+- Map: solved "dirty thing problem"!
+- level ArcticTutorial: EXIT moved 40 px down (fix because of change in Map)
+
+[6.October 2008]
+- xmlmap2loadstrategy.rb: implemented loading 'old XML maps'
+  (most of freeVikings maps are in this format)
+- *map2*.rb: files renamed to *map*.rb (old Map and relatives replaced)
+- tile.rb removed (useless now)
+- *map*.rb: class names etc. modified ("2" removed: Map2 => Map etc.)
+
+[4.October 2008]
+- map2.rb: implemented methods paint_background and paint_foreground
+- tiledmap2loadstrategy.rb: implemented surface creation.
+
+[3.October 2008]
+- tiledmaploadstrategy.rb, xmlmaploadstrategy.rb: moved from freeVikings
+- tiledmap2loadstrategy.rb, map2.rb, map2loadstrategy.rb:
+  currently usable with freeVikings (collisions work, graphics not yet)
+
+[2.October 2008]
+- map2.rb, tiledmap2loadstrategy.rb : development of new Map class 
+  for freeVikings and associated loaders started
+- some tests removed
+
+[18.September 2008]
+- entity.rb, group.rb: Up to now every Entity had just one rectangle common
+  for collisions and graphics. Now these two can be defined different
+  (usually the collision rect is smaller and inside the graphics rect)
+
+[10.September 2008]
+- schwerengine.rb: Log4r isn't loaded if it has been loaded before
+  (it's a small hack for freeVikings :) )
+
+[28. August 2008]
+- Location.<< now returns the Location itself (so you can write 
+  C++-streams-like chained expressions)
+- new methods for (Rectangle.new_empty; empty? bottom=,right=, area, common)
+- Location now "gives" itself to ActiveObjects during their registering in 
+  the same way as to Sprites
