@@ -7,9 +7,7 @@
 # are being loaded. Init opens the application window, prints something
 # and then starts all the long-lasting stuff.
 
-require 'gameui/all'
-
-require 'rudlmore.rb'
+require 'gameui'
 
 require 'topmenu.rb'
 require 'passwordedit.rb'
@@ -185,20 +183,20 @@ module FreeVikings
 
     def load_logo
       @log.info "Loading the freeVikings logo."
-      @logo = RUDL::Surface.load_new GFX_DIR+'/fvlogo_new.tga'
+      @logo = Gosu::Image.new GFX_DIR+'/fvlogo_new.tga'
     end
 
     def load_font
       @log.info "Loading default font."
-      adlibn_ttf = RUDL::TrueTypeFont.new('fonts/adlibn.ttf', 16)
+      adlibn_ttf = Gosu::Font.new(16, :name => 'fonts/adlibn.ttf')
       @font = FreeVikings::FONTS['default'] = TextRenderer.new(adlibn_ttf)
     end
 
     def open_window
       @log.info "Initializing the game window."
-      @window = RUDL::DisplaySurface.new([WIN_WIDTH, WIN_HEIGHT])
-      @window.set_caption(FreeVikings::WIN_CAPTION)
-      @window.toggle_fullscreen if FreeVikings::CONFIG['Video']['fullscreen']
+      fullscreen = !! FreeVikings::CONFIG['Video']['fullscreen']
+      @window = Gosu::Window.new(WIN_WIDTH, WIN_HEIGHT, fullscreen)
+      @window.caption = FreeVikings::WIN_CAPTION
     end
 
     def display_logo

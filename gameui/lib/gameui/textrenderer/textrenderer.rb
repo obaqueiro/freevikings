@@ -1,8 +1,6 @@
 # textrenderer.rb
 # igneus 24.7.2005
 
-require 'RUDL'
-
 # TextRenderer is an utility class to render images with blocks of text
 # using RUDL::TrueTypeFont.
 # It's main goal is to simplify creation of help windows, dialog
@@ -11,9 +9,6 @@ require 'RUDL'
 # and I am going to use it in more games.
 
 class TextRenderer
-
-  include RUDL
-
   DEBUG = false
 
   DEFAULT_TEXT_COLOUR = [255,255,255]

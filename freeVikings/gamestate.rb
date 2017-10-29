@@ -1,17 +1,12 @@
 # gamestate.rb
 # igneus 28.1.2005
 
-require 'RUDL'
-
 module FreeVikings
 
   class GameState
     # Abstract superclass.
     # GameState instances represent different states of the game.
     # Their task is to process events (keyboard and mouse actions).
-
-    include RUDL
-    include RUDL::Constant
 
     # Argument context is a Game instance - the Game just running.
     def initialize(context)

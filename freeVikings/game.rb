@@ -1,8 +1,6 @@
 # game.rb
 # igneus 28.1.2005
 
-require 'RUDL'
-
 require 'entity.rb'
 require 'sprite.rb'
 require 'staticobject.rb'
@@ -50,10 +48,6 @@ module FreeVikings
   # I have a good mood for it, I will make @state go away.
 
   class Game
-
-    include RUDL
-    include RUDL::Constant
-
     include GameUI::Menus # used in Game#ingame_menu
 
     # == Public instance methods

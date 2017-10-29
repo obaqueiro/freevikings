@@ -8,14 +8,6 @@ It's been developed to be used in the freeVikings game, but is
 intended to be reused.
 =end
 
-unless defined?(RUDL)
-  if defined?(Gem) then
-    gem_original_require 'RUDL'
-  else
-    require 'RUDL'
-  end
-end
-
 $:.push File.expand_path(File.dirname(__FILE__))
 require 'menu.rb'
 

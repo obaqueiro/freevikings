@@ -1,7 +1,6 @@
 # menu.rb
 # igneus 3.9.2005
 
-require 'RUDL'
 require 'menuitem.rb'
 
 module GameUI
@@ -20,10 +19,6 @@ module GameUI
     # Use them to let the user configure the game, start or quit it.
 
     class Menu < MenuItem
-
-      include RUDL
-      include RUDL::Constant
-
       TITLE_MARGIN_BOTTOM = 20
 
       BACKGROUND_COLOUR = [0, 0, 0]

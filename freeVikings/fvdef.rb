@@ -26,7 +26,6 @@ module FreeVikings
   USERS_CONFIGURATION_FILE_NAME = 'config.rb'
 
   TESTED_LIB_VERSIONS = {
-    'RUDL' => '0.7.1.0',
     'REXML' => '3.1.7.2'}
 
   # gravity (in pixels per second**2)
@@ -58,14 +57,6 @@ module FreeVikings
   # Makes use of Ruby's relativelly intelligent string-comparations
 
   def FreeVikings.lib_versions_check
-    # RUDL
-    rudl_v = RUDL.versions['RUDL'].to_s
-    if rudl_v < TESTED_LIB_VERSIONS['RUDL'] then
-      STDERR.puts "Warning: Your RUDL version (#{rudl_v}) is older than latest version tested with freeVikings (#{TESTED_LIB_VERSIONS['RUDL']}). If you encounter problems with RUDL while you're playing, consider upgrading."
-    elsif rudl_v > TESTED_LIB_VERSIONS['RUDL'] then
-      STDERR.puts "Warning: Your RUDL version (#{rudl_v}) is newer than latest version tested with freeVikings (#{TESTED_LIB_VERSIONS['RUDL']}). Report any problems you may encounter."
-    end
-
     # REXML
     rexml_v = REXML::Version
     if rexml_v < TESTED_LIB_VERSIONS['REXML'] then

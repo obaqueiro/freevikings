@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+
+gem 'schwerengine', path: '../schwerengine'
+gem 'gameui', path: '../gameui'
+
+gem 'log4r'
+gem 'gosu'
+
+group :test do
+  gem 'test-unit'
+end

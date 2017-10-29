@@ -8,6 +8,7 @@
 
 # tell ruby to load libraries also from directories 'lib/' (redistributed
 # libraries) and 'entities/' (game objects):
+$: << '.'
 $: << './lib'
 $: << './entities'
 
@@ -336,19 +337,12 @@ if FreeVikings::CONFIG['Development']['profile'] then
   }
 end
 
-### safely require RUDL
-
-if defined?(Gem) then
-  # RubyGems + RUDL = crash; let's bypass gems
-  puts "RubyGems found; loading RUDL with 'gem_original_require', not 'require'"
-  gem_original_require 'RUDL'
-else
-  require 'RUDL'
-end
+require 'gosu'
+require 'gosu_patch.rb'
 
 ### require SchwerEngine
 
-require 'schwerengine/schwerengine.rb'
+require 'schwerengine'
 SchwerEngine.init(SchwerEngine::DISABLE_LOG4R_SETUP)
 include SchwerEngine
 SchwerEngine.config = FreeVikings
