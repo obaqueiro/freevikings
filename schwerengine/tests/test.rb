@@ -6,7 +6,7 @@
 # Schwerengine unit tests
 require 'test/unit/testsuite'
 
-require 'schwerengine.rb'
+require_relative '../lib/schwerengine.rb'
 SchwerEngine.init
 
 require 'mockclasses.rb'

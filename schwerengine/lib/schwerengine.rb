@@ -46,7 +46,7 @@ module SchwerEngine
     # load Log4r setup
     unless (flags & DISABLE_LOG4R_SETUP) > 0
       require 'log4r/configurator'
-      config = File.dirname(__FILE__)+'/log4rconfig.xml'
+      config = File.dirname(__FILE__)+'/schwerengine/log4rconfig.xml'
       Log4r::Configurator.load_xml_file(config)
       Log4r::Logger.global.level = Log4r::OFF
     end
@@ -57,32 +57,31 @@ module SchwerEngine
     SchwerEngine.module_eval do
 
       # Basics
-      require 'schwerengine/rect3.rb'
-      # require 'schwerengine/rect.rb' # parent of RelativeRect
-      require 'schwerengine/relativerect.rb'
-      require 'schwerengine/gfxtheme.rb'
-      require 'schwerengine/pausable.rb'
-      require 'schwerengine/ticker.rb'
-      require 'schwerengine/timelock.rb'
+      require_relative 'schwerengine/rect3.rb'
+      # require_relative 'schwerengine/rect.rb' # parent of RelativeRect
+      require_relative 'schwerengine/relativerect.rb'
+      require_relative 'schwerengine/gfxtheme.rb'
+      require_relative 'schwerengine/pausable.rb'
+      require_relative 'schwerengine/ticker.rb'
+      require_relative 'schwerengine/timelock.rb'
       
       # Graphics related stuff
-      require 'schwerengine/image.rb'
-      require 'schwerengine/animation.rb'
-      require 'schwerengine/portrait.rb'
-      require 'schwerengine/model.rb'
-      require 'schwerengine/spritesheet.rb'
+      require_relative 'schwerengine/image.rb'
+      require_relative 'schwerengine/animation.rb'
+      require_relative 'schwerengine/portrait.rb'
+      require_relative 'schwerengine/model.rb'
+      require_relative 'schwerengine/spritesheet.rb'
 
       # Groups
-      require 'schwerengine/group.rb'
-      require 'schwerengine/selectivegroup.rb'
-      require 'schwerengine/spritemanager.rb'
+      require_relative 'schwerengine/group.rb'
+      require_relative 'schwerengine/selectivegroup.rb'
+      require_relative 'schwerengine/spritemanager.rb'
       
       # Maps & relatives
-      require 'schwerengine/map.rb'
-      require 'schwerengine/maploadstrategy.rb'
-      require 'schwerengine/xmlmaploadstrategy.rb'
-      require 'schwerengine/tiledmaploadstrategy.rb'
-
+      require_relative 'schwerengine/map.rb'
+      require_relative 'schwerengine/maploadstrategy.rb'
+      require_relative 'schwerengine/xmlmaploadstrategy.rb'
+      require_relative 'schwerengine/tiledmaploadstrategy.rb'
     end
   end
 end
