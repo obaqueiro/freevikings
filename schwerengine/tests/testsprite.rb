@@ -7,8 +7,6 @@
 require 'testentity.rb'
 require 'mockclasses.rb'
 
-require 'sprite.rb'
-
 class TestSprite < TestEntity
 
   include SchwerEngine

@@ -4,9 +4,11 @@
 # igneus 13.2.2005
 
 # Schwerengine unit tests
-require 'test/unit/testsuite'
 
-require_relative '../lib/schwerengine.rb'
+$: << File.dirname(__FILE__)
+require 'test/unit'
+
+require '../lib/schwerengine.rb'
 SchwerEngine.init
 
 require 'mockclasses.rb'
@@ -20,6 +22,8 @@ SchwerEngine.config = SchwerEngineConfig
 module SchwerEngine::Tests
   # require all test source files
   test_files = Dir['test*.rb']
+  test_files.delete('test.rb')
+
   test_files.each {|t| require t}
 end
 

@@ -94,11 +94,11 @@ Method common for all the (({Image}))-like objects. Returns the current image
     end
 
     def w
-      image.w
+      image.width
     end
 
     def h
-      image.h
+      image.height
     end
   end # class Animation
 end # module SchwerEngine

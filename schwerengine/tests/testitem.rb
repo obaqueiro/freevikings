@@ -5,8 +5,6 @@
 
 require 'testentity.rb'
 
-require 'item.rb'
-
 class TestItem < TestEntity
 
   def setup

@@ -13,27 +13,23 @@ datatype is RUDL::Surface, but it can change one day).
 Object
 =end
 
-require 'rudlmirror'
-
 module SchwerEngine
   class Image
 
 =begin
---- Image.new(filename='')
-Loads image data from file. If no filename specified, makes an empty image 
-of size 1*1px.
+--- Image.new(filename)
+Loads image data from file.
 =end
 
-    def initialize(filename='')
-      if filename.size != 0
-        begin
-          @image = RUDL::Surface.load_new(filename)
-        rescue SDLError => ex
-          raise ImageFileNotFoundException, ex.message
-        end
-      else
-	@image = RUDL::Surface::new([1,1])
+    def initialize(filename=nil)
+      return if filename.nil?
+
+      begin
+        @image = Gosu::Image.new(filename)
+      rescue RuntimeError => ex
+        raise ImageFileNotFoundException, ex.message
       end
+
       @name = filename
     end
 
@@ -43,8 +39,8 @@ Loads image placed relatively to the directory specified in the constant
 (({GFX_DIR})).
 =end
 
-    def Image.load(filename)
-      Image.new(SchwerEngine.config::GFX_DIR+'/'+filename)
+    def self.load(filename)
+      new(SchwerEngine.config::GFX_DIR+'/'+filename)
     end
 
 =begin
@@ -53,8 +49,8 @@ Doesn't load image from file and creates it by wrapping an existing
 (({RUDL::Surface})) instead.
 =end
 
-    def Image.wrap(surface)
-      i = Image.new
+    def self.wrap(surface)
+      i = new
       i.instance_eval {
         @name = "Wrapped RUDL::Surface"
         @image = surface
@@ -71,11 +67,11 @@ Doesn't load image from file and creates it by wrapping an existing
     alias_method :surface, :image
 
     def w
-      @image.w
+      @image.width
     end
 
     def h
-      @image.h
+      @image.height
     end
 
     # Return mirrored copy of self

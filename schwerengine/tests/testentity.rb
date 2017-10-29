@@ -5,9 +5,7 @@
 
 require 'test/unit'
 
-require 'entity.rb'
-
-class TestEntity < Test::Unit::TestCase
+class TestEntity # skip < Test::Unit::TestCase
 
   include SchwerEngine
 

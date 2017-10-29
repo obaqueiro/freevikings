@@ -6,14 +6,12 @@
 
 require 'test/unit'
 
-require 'rect.rb'
-
 class TestRect < Test::Unit::TestCase
 
   include SchwerEngine
 
   def setup
-    @R = Old::Rectangle
+    @R = Rectangle
     @r1 = @R.new 60,60,60,60
   end
 

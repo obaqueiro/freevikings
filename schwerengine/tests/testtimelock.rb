@@ -4,8 +4,6 @@
 require 'test/unit'
 require 'mockclasses.rb'
 
-require 'timelock.rb'
-
 class TestTimeLock < Test::Unit::TestCase
 
   include SchwerEngine

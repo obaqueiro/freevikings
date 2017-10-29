@@ -11,9 +11,7 @@
 
 require 'test/unit'
 
-require 'group.rb'
-
-class TestGroup < Test::Unit::TestCase
+class TestGroup # skip < Test::Unit::TestCase
 
   include SchwerEngine
 

@@ -1,17 +1,8 @@
 # schwerengine.rb
 # igneus 28.10.2005
 
-# This is here because freeVikings load Log4r themselves and it is optional -
-# if Log4r isn't installed on the system, mock Log4r is loaded instead.
-unless defined?(Log4r) then
-  require 'log4r'
-end
-
-unless defined?(RUDL) then
-  require 'RUDL'
-end
-
-
+require 'log4r'
+require 'gosu'
 
 module SchwerEngine
   DISABLE_LOG4R_SETUP = 0001

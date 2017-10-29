@@ -48,13 +48,13 @@ class TestGfxTheme < Test::Unit::TestCase
   end
 
   def testDefaultGfxDir
-    doc_without_dir = StringIO.new("<gfx_theme><info><name>Dirless Theme</name></info><data></data>")
+    doc_without_dir = StringIO.new("<gfx_theme><info><name>Dirless Theme</name></info><data></data></gfx_theme>")
     t = GfxTheme.new(doc_without_dir)
     assert_equal GFX_DIR, t.gfx_directory, "'#{GFX_DIR}' is the default graphics directory. It must be set, when the 'directory' element is not accessible."
   end
 
   def testDefaultName
-    doc_without_name = StringIO.new("<gfx_theme><info></info><data></data>")
+    doc_without_name = StringIO.new("<gfx_theme><info></info><data></data></gfx_theme>")
     t = GfxTheme.new(doc_without_name)
     assert_equal "Nameless theme", t.name, "Element 'name' is not in the XML file, so a default name must be used."
   end

@@ -53,7 +53,7 @@ module SchwerEngine
     private
 
     def time_now
-      @timer.now.to_i
+      @timer.now.to_f
     end
   end # class TimeLock
 end # module SchwerEngine

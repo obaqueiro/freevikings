@@ -27,11 +27,12 @@ module SchwerEngine
       common_init filename
 
       names_and_rects.each_pair {|name,rect|
-        s = RUDL::Surface.new [rect.w, rect.h]
-        s.fill DEFAULT_COLORKEY
-        s.set_colorkey colorkey
-        s.blit @source.image, [0,0], rect.to_a
-        i = Image.wrap s
+        #s = RUDL::Surface.new [rect.w, rect.h]
+        #s.fill DEFAULT_COLORKEY
+        #s.set_colorkey colorkey
+        #s.blit @source.image, [0,0], rect.to_a
+        subimage = @source.image.subimage(*rect.to_a)
+        i = Image.wrap subimage
         @images[name] = i
       }
 
@@ -50,11 +51,12 @@ module SchwerEngine
 
         frames_h.times {|line|
           frames_w.times {|column|
-            s = RUDL::Surface.new [frame_width, frame_height]
-            s.fill DEFAULT_COLORKEY
-            s.set_colorkey colorkey
-            s.blit source.image, [0,0], [column*frame_width, line*frame_height, frame_width, frame_height]
-            i = Image.wrap s
+            #s = RUDL::Surface.new [frame_width, frame_height]
+            #s.fill DEFAULT_COLORKEY
+            #s.set_colorkey colorkey
+            #s.blit source.image, [0,0], [column*frame_width, line*frame_height, frame_width, frame_height]
+            subimage = source.image.subimage(column*frame_width, line*frame_height, frame_width, frame_height)
+            i = Image.wrap subimage
 
             break unless names[f]
 

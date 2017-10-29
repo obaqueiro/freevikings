@@ -8,8 +8,6 @@ require 'testrect.rb'
 
 class TestRect3 < TestRect
 
-  require 'rect3.rb'
-
   def setup
     @R = Rectangle
     @r1 = @R.new 60,60,60,60
